@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Gene_BlueFoot::menu_item" title="BlueFoot" translate="title" module="Gene_BlueFoot" sortOrder="50" parent="Magento_Backend::content" resource="Gene_BlueFoot::content_elements"/>
+
+        <add id="Gene_BlueFoot::attributes" title="Content Attributes" translate="title" module="Gene_BlueFoot" sortOrder="0" parent="Gene_BlueFoot::menu_item" action="bluefoot/entity_attribute" resource="Gene_BlueFoot::attribute"/>
+        <add id="Gene_BlueFoot::blocks" title="Content Blocks" translate="title" module="Gene_BlueFoot" sortOrder="10" parent="Gene_BlueFoot::menu_item" action="bluefoot/entity_contentblock" resource="Gene_BlueFoot::blocks"/>
+        <!--<add id="Gene_BlueFoot::types" title="Content Types" translate="title" module="Gene_BlueFoot" sortOrder="20" parent="Gene_BlueFoot::menu_item" action="bluefoot/attributes" resource="Gene_BlueFoot::types"/>-->
+    </menu>
+</config>

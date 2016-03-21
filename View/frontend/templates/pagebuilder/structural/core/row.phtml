@@ -1,0 +1,19 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Heading Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row
+ *
+ */
+//$_helper = Mage::helper('gene_cms');
+//$_image = $_helper->getImageUrl($this->getFormData('background_image'));
+$_image = false;
+$_color = $this->getFormData('background_color');
+?>
+<div class="bluefoot-row <?php echo $this->getFormData('css_classes'); ?><?php echo ($_image || $_color) ? ' with-media-background': ''; ?>" <?php if ($_image || $_color): ?>style="<?php echo ($_color) ? 'background-color:#' . $_color . ';' : '' ; ?><?php echo ($_image) ? 'background-image:url(' . $_image . ');' : '' ; ?>"<?php endif; ?>>
+    <?php echo $this->getRenderedChildHtml(); ?>
+</div>

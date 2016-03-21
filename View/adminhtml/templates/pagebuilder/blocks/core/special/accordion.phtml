@@ -1,0 +1,24 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Accordion Block Template
+ * @var $this Gene_Cms_Block_Entity_Pagebuilder_Block_Default
+ *
+ */
+?>
+<div class="gene-cms-accordion gene-cms-accordion-need-init">
+    {{#child_blocks.accordion_items}}
+        {{{html}}}
+    {{/child_blocks.accordion_items}}
+</div>
+
+<script type="text/javascript">
+    jQuery('.gene-cms-accordion-need-init').geneAccordion();
+    jQuery('.gene-cms-accordion-need-init').find('.gene-accordion-outer').first().addClass('active');
+    jQuery('.gene-cms-accordion-need-init').find('.gene-accordion-inner').first().css('display', '');
+    jQuery('.gene-cms-accordion-need-init').removeClass('gene-cms-accordion-need-init');
+</script>

@@ -1,0 +1,51 @@
+<?php
+
+namespace Gene\BlueFoot\Model\ResourceModel;
+
+/**
+ * Class Entity
+ *
+ * @package Gene\BlueFoot\Model\ResourceModel
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
+ */
+class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
+{
+    /**
+     * @param \Magento\Eav\Model\Entity\Context $context
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Eav\Model\Entity\Context $context,
+        \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot $entitySnapshot,
+        \Magento\Framework\Model\ResourceModel\Db\VersionControl\RelationComposite $entityRelationComposite,
+        $data = []
+    ) {
+        parent::__construct($context, $entitySnapshot, $entityRelationComposite, $data);
+        $this->setConnection('gene_bluefoot_entity_read', 'gene_bluefoot_entity_write');
+    }
+
+    /**
+     * Entity type getter and lazy loader
+     *
+     * @return \Magento\Eav\Model\Entity\Type
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getEntityType()
+    {
+        if (empty($this->_type)) {
+            $this->setType(\Gene\BlueFoot\Model\Entity::ENTITY);
+        }
+        return parent::getEntityType();
+    }
+
+    /**
+     * @return string
+     * @todo work out why we have to do this
+     */
+    public function getMainTable()
+    {
+        return \Gene\BlueFoot\Model\Entity::ENTITY;
+    }
+
+}

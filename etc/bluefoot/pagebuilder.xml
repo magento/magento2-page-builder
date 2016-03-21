@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="pagebuilder.xsd">
+    <plugins>
+        <js>
+            <plugin name="gene_widget_upload">
+                <file alias="bluefoot/dropzone" path="Gene_BlueFoot/js/resource/dropzone" />
+                <file alias="bluefoot/widget/upload" path="Gene_BlueFoot/js/widget/core/upload" />
+            </plugin>
+            <plugin name="gene_widget_color">
+                <file alias="bluefoot/widget/color" path="Gene_BlueFoot/js/widget/core/color" />
+            </plugin>
+            <plugin name="gene_widget_wysiwyg">
+                <file alias="bluefoot/widget/wysiwyg" path="Gene_BlueFoot/js/widget/core/wysiwyg" />
+            </plugin>
+            <plugin name="gene_widget_tags">
+                <file alias="bluefoot/widget/tags" path="Gene_BlueFoot/js/widget/core/tags" />
+            </plugin>
+            <plugin name="gene_widget_map">
+                <file alias="bluefoot/widget/map" path="Gene_BlueFoot/js/widget/core/map" />
+            </plugin>
+            <plugin name="gene_widget_child_blocks">
+                <file alias="bluefoot/widget/child_block" path="Gene_BlueFoot/js/widget/core/child_block" />
+            </plugin>
+            <plugin name="gene_widget_product_search">
+                <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/product" />
+            </plugin>
+        </js>
+    </plugins>
+
+    <widgets>
+        <widget name="gene_upload" label="Upload" alias="upload" inputType="file" group="Blue Foot" />
+        <widget name="gene_tag" label="Tag" alias="tags" inputType="text" group="Blue Foot" />
+        <widget name="gene_color" label="Color Picker" alias="color" inputType="text" group="Blue Foot" />
+        <widget name="gene_map" label="Google Map" alias="map" inputType="text" group="Blue Foot">
+            <data_model>Gene\BlueFoot\Model\Attribute\Data\Widget\Map</data_model>
+        </widget>
+        <widget name="gene_search_product" label="Product Search" alias="search/product" inputType="text" group="Blue Foot">
+            <data_model>Gene\BlueFoot\Model\Attribute\Data\Widget\Product</data_model>
+        </widget>
+        <widget name="gene_search_category" label="Category Search" alias="search/category" inputType="text" group="Blue Foot">
+            <data_model>Gene\BlueFoot\Model\Attribute\Data\Widget\Category</data_model>
+        </widget>
+        <widget name="gene_search_staticblock" label="Static Block Search" alias="search/staticblock" inputType="text" group="Blue Foot">
+            <data_model>Gene\BlueFoot\Model\Attribute\Data\Widget\StaticBlock</data_model>
+        </widget>
+    </widgets>
+
+    <content_blocks>
+        <templates>
+            <template name="core_heading" file="pagebuilder/blocks/core/basic/heading.phtml" />
+            <template name="core_textarea" file="pagebuilder/blocks/core/basic/textarea.phtml" />
+            <!--<template name="core_spacer" file="pagebuilder/blocks/core/basic/spacer.phtml" />-->
+            <!--<template name="core_hr" file="pagebuilder/blocks/core/basic/hr.phtml" />-->
+            <!--<template name="core_html" file="pagebuilder/blocks/core/basic/html.phtml" />-->
+            <!--<template name="core_static_block" file="pagebuilder/blocks/core/basic/static-block.phtml" />-->
+            <template name="core_image" file="pagebuilder/blocks/core/media/image.phtml" />
+            <!--<template name="core_driver" file="pagebuilder/blocks/core/media/driver.phtml" />-->
+            <!--<template name="core_slider" file="pagebuilder/blocks/core/media/slider.phtml" />-->
+            <!--<template name="core_slider_item" file="pagebuilder/blocks/core/media/slider-item.phtml" />-->
+            <!--<template name="core_product" file="pagebuilder/blocks/core/ecommerce/single.phtml" />-->
+            <!--<template name="core_product_list" file="pagebuilder/blocks/core/ecommerce/list.phtml" />-->
+            <!--<template name="core_accordion" file="pagebuilder/blocks/core/special/accordion.phtml" />-->
+            <!--<template name="core_accordion_item" file="pagebuilder/blocks/core/special/accordion-item.phtml" />-->
+            <!--<template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" />-->
+            <!--<template name="core_map" file="pagebuilder/blocks/core/special/map.phtml" />-->
+            <!--<template name="core_search" file="pagebuilder/blocks/core/special/search.phtml" />-->
+        </templates>
+        <renderers>
+            <renderer name="core_default" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock" />
+            <renderer name="core_heading" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Heading" />
+            <!--<renderer name="core_static_block" class="gene_cms/entity_pagebuilder_block_staticblock" />-->
+            <!--<renderer name="core_image" class="gene_cms/entity_pagebuilder_block_image" />-->
+            <!--<renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" />-->
+            <!--<renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" />-->
+            <!--<renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" />-->
+            <!--<renderer name="core_map" class="gene_cms/entity_pagebuilder_block_map" />-->
+        </renderers>
+    </content_blocks>
+
+    <structurals>
+        <structural code="row" icon="" name="Row" color="#a5a5a5">
+            <template file="Gene_BlueFoot::pagebuilder/structural/core/row.phtml" />
+            <renderer class="Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row" />
+            <fields>
+                <field code="template">
+                    <label><![CDATA[Template]]></label>
+                    <type>select</type>
+                    <code>template</code>
+                    <source_model>Gene\BlueFoot\Model\Stage\Source\Row\Template</source_model>
+                </field>
+                <field code="background_color">
+                    <label><![CDATA[Background Color]]></label>
+                    <type>widget</type>
+                    <widget>color</widget>
+                    <code>background_color</code>
+                </field>
+                <field code="background_image">
+                    <label><![CDATA[Background Image]]></label>
+                    <type>widget</type>
+                    <widget>upload</widget>
+                    <code>background_image</code>
+                </field>
+                <field code="css_classes">
+                    <group><![CDATA[Advanced]]></group>
+                    <label><![CDATA[CSS Classes]]></label>
+                    <type>widget</type>
+                    <widget>tags</widget>
+                    <code>css_classes</code>
+                </field>
+            </fields>
+        </structural>
+        <structural code="column" icon="" name="Column" color="#858585">
+            <template file="Gene_BlueFoot::pagebuilder/structural/core/column.phtml" />
+            <renderer class="Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Column" />
+            <fields>
+                <field code="remove_padding">
+                    <group><![CDATA[Advanced]]></group>
+                    <label><![CDATA[Remove Padding]]></label>
+                    <type>select</type>
+                    <code>remove_padding</code>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field code="css_classes">
+                    <group><![CDATA[Advanced]]></group>
+                    <label><![CDATA[CSS Classes]]></label>
+                    <type>widget</type>
+                    <widget>tags</widget>
+                    <code>css_classes</code>
+                </field>
+            </fields>
+        </structural>
+    </structurals>
+</config>

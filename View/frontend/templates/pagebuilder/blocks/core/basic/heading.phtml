@@ -1,0 +1,15 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Heading Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\Heading
+ *
+ */
+$_entity = $this->getEntity();
+$_headingType = strtolower($this->getAttributeText('heading_type'));
+?>
+<<?php echo $_headingType; ?> class="bluefoot-entity <?php echo $_entity->getCssClasses(); ?>"><span><?php echo $this->escapeHtml($_entity->getTitle()); ?></span></<?php echo $_headingType; ?>>

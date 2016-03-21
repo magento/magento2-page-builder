@@ -3,7 +3,7 @@
 </script>
 <script type="text/javascript">
     // Define a noConflict version of jQuery
-    define('cms-config', ['jquery-cms'], function (jQuery) {
+    define('bluefoot/cms-config', ['bluefoot/jquery'], function (jQuery) {
         return jQuery.parseJSON('<?php echo $this->getConfig(); ?>');
     });
 </script>
@@ -18,6 +18,14 @@
         <div class="gene-cms-modal" data-model="true">
             <div class="gene-cms-modal-title">{{{title}}} <a href="#" class="gene-cms-close"><i class="fa fa-times"></i></a></div>
             <div class="gene-cms-modal-content">{{{message}}}</div>
+            {{#fields}}
+                <div class="gene-cms-modal-field">
+                    <label>{{{label}}}:</label>
+                    <div class="gene-cms-modal-input">
+                        {{{input}}}
+                    </div>
+                </div>
+            {{/fields}}
             <div class="gene-cms-modal-buttons">
                 {{#buttons}}
                 <button type="button" class="gene-cms-modal-button {{class}}" data-button="{{code}}">{{label}}</button>
@@ -31,18 +39,30 @@
     <div class="gene-cms-stage gene-cms-stage-{{id}}">
         <div class="gene-cms-stage-panel">
             {{{panel}}}
+            <span class="gene-cms-stage-panel-control" title="<?php echo $this->__('Hide/Show Controls'); ?>"></span>
         </div>
         <div class="gene-cms-stage-content">
+            <div class="gene-cms-template"></div>
             <div class="gene-cms-stage-content-inner">
 
             </div>
-            <button type="button" class="gene-cms-add-row"><i class="fa fa-plus"></i> Add Row</button>
+            <button type="button" class="gene-cms-add-row"><i class="fa fa-plus"></i> <?php echo $this->__('Add Row'); ?></button>
         </div>
     </div>
 </script>
 
+<script id="gene-cms-stage-template-controls" type="x-tmpl-mustache">
+    <select name="gene-cms-templates">
+        {{#templates}}
+        <option value="{{id}}">{{name}}</option>
+        {{/templates}}
+    </select>
+    <button type="button" name="load-template"><?php echo $this->__('Load Template'); ?></button>
+    <button type="button" name="save-template"><?php echo $this->__('Save as Template'); ?></button>
+</script>
+
 <script id="gene-cms-stage-panel-template" type="x-tmpl-mustache">
-    <img src="//www.gene.co.uk/wp-content/themes/gene/images/logos/main.png" />
+    <span class="bluefoot-logo"><?php echo $this->__('% CMS & PageBuilder', 'BlueFoot'); ?></span>
     <div class="gene-cms-stage-panel-content-types">
         <ul class="gene-cms-stage-panel-content-types-ul">
             {{#content-type-groups}}
@@ -50,9 +70,9 @@
                 <a href="#" class="gene-cms-group-name">{{{icon}}} {{name}}</a>
                 <ul class="gene-cms-stage-panel-group-types gene-cms-stage-panel-group-types-{{code}}">
                 {{#types}}
-                    <li class="gene-cms-content-type">
-                        <a data-type="{{code}}" data-color="{{color}}" data-colortheme="{{color_theme}}" href="#" class="gene-cms-draggable gene-cms-theme-{{color_theme}}">
-                            <span class="gene-cms-content-type-icon" style="background: {{color}};">{{{icon}}}</span>
+                    <li class="gene-cms-content-type gene-cms-content-type-{{code}}">
+                        <a data-type="{{code}}" href="#" class="gene-cms-draggable">
+                            <span class="gene-cms-content-type-icon">{{{icon}}}</span>
                             <span class="gene-cms-content-type-name">{{name}}</span>
                         </a>
                     </li>
@@ -61,6 +81,7 @@
             </li>
             {{/content-type-groups}}
         </ul>
+        <span class="gene-logo"><?php echo $this->__('Built by <a href="http://gene.co.uk" target="_blank" title="Gene Commerce">Gene</a>'); ?></span>
     </div>
 </script>
 
@@ -69,13 +90,22 @@
         <div class="gene-cms-configure-sidebar-overlay"></div>
         <div class="gene-cms-configure-sidebar-container">
             <h2>
-                <span class="color: {{color}};">{{{icon}}}</span> {{ name }}
+                <span>{{{icon}}}</span> {{ name }}
                 <a href="#" class="gene-cms-configure-close gene-cms-close-configure"><i class="fa fa-times"></i></a>
             </h2>
+            <ul class="gene-cms-configure-sidebar-tabs">
+                {{#groups}}
+                    <li class="gene-cms-configure-sidebar-tab">
+                        <a href="#gene-cms-configure-sidebar-tab-content-{{ id }}">
+                            {{ name }}
+                        </a>
+                    </li>
+                {{/groups}}
+            </ul>
             <form action="" id="gene-cms-configure-form" class="gene-cms-configure-form">
                 {{#groups}}
-                    <div class="gene-cms-configure-group {{class}}">
-                        <h3>{{ name }}</h3>
+                    <div class="gene-cms-configure-group {{class}}" id="gene-cms-configure-sidebar-tab-content-{{ id }}">
+
                         <ul class="gene-cms-configure-group-fields">
                             {{#fields}}
                             <li class="gene-cms-configure-group-field gene-cms-{{code}}" data-field="{{code}}">
@@ -152,14 +182,14 @@
                     </g>
                 </svg>
 
-                <h3>Drag content types here, or add columns</h3>
+                <h3><?php echo $this->__('Drag content types here, or add columns'); ?></h3>
             </div>
         </div>
     </div>
 </script>
 
 <script id="gene-cms-option-template" type="x-tmpl-mustache">
-    <div class="gene-cms-options" style="background: {{color}};">
+    <div class="gene-cms-options">
         <div class="gene-cms-options-wrapper">
             <ul class="gene-cms-options-links">
                 {{#options}}
@@ -184,14 +214,14 @@
 </script>
 
 <script id="gene-cms-entity" type="x-tmpl-mustache">
-    <div data-type="{{code}}" data-color="{{color}}" href="#" style="border-color: {{color}};{{style}}" class="gene-cms-entity gene-cms-sortable gene-cms-theme-{{color_theme}}">
+    <div data-type="{{code}}" data-color="{{color}}" href="#" style="{{style}}" class="gene-cms-entity gene-cms-sortable">
         <span class="gene-cms-content-type-icon">{{{icon}}}</span>
         <span class="gene-cms-content-type-name">{{name}}</span>
     </div>
 </script>
 
 <script id="gene-cms-entity-preview" type="x-tmpl-mustache">
-    <div data-type="{{code}}" data-color="{{color}}" href="#" style="border-color: {{color}};{{style}}" class="gene-cms-entity gene-cms-entity-preview gene-cms-sortable gene-cms-theme-{{color_theme}}">
+    <div data-type="{{code}}" data-color="{{color}}" href="#" class="gene-cms-entity gene-cms-entity-preview gene-cms-sortable">
         {{{preview}}}
     </div>
 </script>

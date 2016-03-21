@@ -1,0 +1,41 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Map Block Template
+ * @var $this Gene_Cms_Block_Entity_Pagebuilder_Block_Map
+ *
+ */
+?>
+<div id="gene-cms-map-{{ entity_id }}" class="gene-cms-map-block" style="height:{{ map_height }}; width:{{ map_width }};">
+</div>
+<script type="text/javascript">
+    // Lat long object
+    var centerLatlng = new google.maps.LatLng( '{{ map.long }}',  '{{ map.lat }}');
+
+    // Map Options
+    var mapOptions = {
+        zoom: {{ map.zoom }},
+        center: centerLatlng,
+        mapTypeControl: false,
+        navigationControl: false,
+        draggable: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        zoomControl: false,
+        streetViewControl: false
+    };
+
+    // Init Map
+    map = new google.maps.Map(document.getElementById('gene-cms-map-{{ entity_id }}'), mapOptions);
+
+    // Display marker
+    marker = new google.maps.Marker({
+        draggable: true,
+        map: map,
+        position: centerLatlng
+    });
+</script>
