@@ -39,13 +39,15 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        /** @var EntitySetup $entitySetup */
+        /** @var \Gene\BlueFoot\Setup\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         $setup->startSetup();
 
+        // Install the default entities required for the system
         $entitySetup->installEntities();
 
         $setup->endSetup();
     }
+
 }

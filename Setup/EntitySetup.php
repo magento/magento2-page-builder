@@ -203,4 +203,5 @@ class EntitySetup extends EavSetup
     {
         return $this->eavConfig;
     }
+
 }

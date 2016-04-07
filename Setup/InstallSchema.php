@@ -99,6 +99,12 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Id'
         )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
+        )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
@@ -124,6 +130,9 @@ class InstallSchema implements InstallSchemaInterface
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity_datetime', ['entity_id', 'attribute_id', 'value']),
             ['entity_id', 'attribute_id', 'value']
+        )->addIndex(
+            $installer->getIdxName('gene_bluefoot_entity_datetime', ['store_id']),
+            ['store_id']
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity_datetime', 'attribute_id', 'eav_attribute', 'attribute_id'),
             'attribute_id',
@@ -135,6 +144,12 @@ class InstallSchema implements InstallSchemaInterface
             'entity_id',
             $installer->getTable('gene_bluefoot_entity'),
             'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $installer->getFkName('gene_bluefoot_entity_datetime', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $installer->getTable('store'),
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Gene BlueFoot Entity Datetime'
@@ -158,6 +173,12 @@ class InstallSchema implements InstallSchemaInterface
             null,
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Id'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
         )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -184,6 +205,9 @@ class InstallSchema implements InstallSchemaInterface
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity_decimal', ['entity_id', 'attribute_id', 'value']),
             ['entity_id', 'attribute_id', 'value']
+        )->addIndex(
+            $installer->getIdxName('gene_bluefoot_entity_decimal', ['store_id']),
+            ['store_id']
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity_decimal', 'attribute_id', 'eav_attribute', 'attribute_id'),
             'attribute_id',
@@ -195,6 +219,12 @@ class InstallSchema implements InstallSchemaInterface
             'entity_id',
             $installer->getTable('gene_bluefoot_entity'),
             'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $installer->getFkName('gene_bluefoot_entity_decimal', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $installer->getTable('store'),
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Gene BlueFoot Entity Decimal'
@@ -218,6 +248,12 @@ class InstallSchema implements InstallSchemaInterface
             null,
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Id'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
         )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -244,6 +280,9 @@ class InstallSchema implements InstallSchemaInterface
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity_int', ['entity_id', 'attribute_id', 'value']),
             ['entity_id', 'attribute_id', 'value']
+        )->addIndex(
+            $installer->getIdxName('gene_bluefoot_entity_int', ['store_id']),
+            ['store_id']
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity_int', 'attribute_id', 'eav_attribute', 'attribute_id'),
             'attribute_id',
@@ -255,6 +294,12 @@ class InstallSchema implements InstallSchemaInterface
             'entity_id',
             $installer->getTable('gene_bluefoot_entity'),
             'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $installer->getFkName('gene_bluefoot_entity_int', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $installer->getTable('store'),
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Gene BlueFoot Entity Int'
@@ -279,6 +324,12 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Id'
         )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
+        )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
@@ -301,6 +352,9 @@ class InstallSchema implements InstallSchemaInterface
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity_text', ['attribute_id']),
             ['attribute_id']
+        )->addIndex(
+            $installer->getIdxName('gene_bluefoot_entity_text', ['store_id']),
+            ['store_id']
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity_text', 'attribute_id', 'eav_attribute', 'attribute_id'),
             'attribute_id',
@@ -312,6 +366,12 @@ class InstallSchema implements InstallSchemaInterface
             'entity_id',
             $installer->getTable('gene_bluefoot_entity'),
             'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $installer->getFkName('gene_bluefoot_entity_text', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $installer->getTable('store'),
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Gene BlueFoot Entity Text'
@@ -335,6 +395,12 @@ class InstallSchema implements InstallSchemaInterface
             null,
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Id'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
         )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -361,6 +427,9 @@ class InstallSchema implements InstallSchemaInterface
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity_varchar', ['entity_id', 'attribute_id', 'value']),
             ['entity_id', 'attribute_id', 'value']
+        )->addIndex(
+            $installer->getIdxName('gene_bluefoot_entity_varchar', ['store_id']),
+            ['store_id']
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity_varchar', 'attribute_id', 'eav_attribute', 'attribute_id'),
             'attribute_id',
@@ -372,6 +441,12 @@ class InstallSchema implements InstallSchemaInterface
             'entity_id',
             $installer->getTable('gene_bluefoot_entity'),
             'entity_id',
+            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        )->addForeignKey(
+            $installer->getFkName('gene_bluefoot_entity_varchar', 'store_id', 'store', 'store_id'),
+            'store_id',
+            $installer->getTable('store'),
+            'store_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->setComment(
             'Gene BlueFoot Entity Varchar'

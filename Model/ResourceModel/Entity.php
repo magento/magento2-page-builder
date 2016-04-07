@@ -26,6 +26,26 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
     }
 
     /**
+     * Re-declare attribute model
+     *
+     * @return string
+     */
+    protected function _getDefaultAttributeModel()
+    {
+        return 'Gene\BlueFoot\Model\ResourceModel\Attribute';
+    }
+
+    /**
+     * Returns default Store ID
+     *
+     * @return int
+     */
+    public function getDefaultStoreId()
+    {
+        return \Magento\Store\Model\Store::DEFAULT_STORE_ID;
+    }
+
+    /**
      * Entity type getter and lazy loader
      *
      * @return \Magento\Eav\Model\Entity\Type
