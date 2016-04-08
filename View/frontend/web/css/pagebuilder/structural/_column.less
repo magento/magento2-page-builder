@@ -1,0 +1,81 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _column contains {less} for columns
+ *
+ */
+
+/*-- Generate column widths based on @column_count --*/
+
+.column-width(@column_count; @index: 1) when (@index =< @column_count) {
+  .column-width(@column_count; (@index + 1));
+  .@{prefix}-column-@{index} {
+    width: ( percentage(@index / @column_count) );
+  }
+}
+
+/*-- Tablet column width --*/
+
+.tablet-column-width(@column_count; @index: 1) when (@index =< @column_count) {
+  .tablet-column-width(@column_count; (@index + 1));
+  & when ( @index < (@column_count/2) ) {
+    .@{prefix}-column-@{index} {
+      width:50%;
+    }
+  }
+
+  & when ( @index >= (@column_count/2) ) {
+    .@{prefix}-column-@{index} {
+      width:100%;
+      &.bluefoot-fixed-height-item {
+        height:auto!important;
+      }
+    }
+  }
+}
+
+/*-- Mobile column width --*/
+
+.mobile-column-width(@column_count; @index: 1) when (@index =< @column_count) {
+  .mobile-column-width(@column_count; (@index + 1));
+
+  .@{prefix}-column-@{index} {
+    width:100%;
+    &.bluefoot-fixed-height-item {
+      height:auto!important;
+    }
+  }
+
+}
+
+/*-- Column styles --*/
+
+.@{prefix}-column {
+  float:left;
+  padding:@margin;
+  box-sizing:border-box;
+  min-height:1px;
+  &.right { float:right;}
+  &.@{prefix}-no-padding { padding:0; }
+}
+
+.column-width(@column_count);
+
+
+/*-- Responsive --*/
+
+
+@media all and (max-width: @tablet) {
+
+  .tablet-column-width(@column_count);
+
+}
+
+@media all and (max-width: @mobile) {
+
+  .mobile-column-width(@column_count);
+
+}

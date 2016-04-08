@@ -1,0 +1,49 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Conor Farrell <conor@gene.co.uk>
+ *
+ * Carousel Template - this carousel uses the jQuery plugin Slick <http://kenwheeler.github.io/slick/>
+ * Thanks to Ken Wheeler for allowing us to distribute his plugin with the Gene CMS
+ *
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ */
+$_entity = $this->getEntity();
+
+if ($_entity->getShowDots()):
+    $this->setCssClasses('bluefoot-slider-with-dots');
+endif;
+?>
+<?php if ($this->hasChildEntities('advanced_slider_items')): ?>
+
+    <?php $_collection = $this->getChildEntities('advanced_slider_items'); ?>
+    <div id="bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>" class="bluefoot-advanced-slider bluefoot-slider <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+        <?php foreach ($_collection as $_block): ?>
+            <?php echo $_block->toHtml(); ?>
+        <?php endforeach; ?>
+    </div>
+
+    <script type="text/javascript">
+        require(['jquery','slick'], function(jQuery) {
+            jQuery(function () {
+                /* [Slick JS] */
+                jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').slick({
+                    infinite: <?php echo ($_entity->getIsInfinite()) ? 'true' : 'false' ; ?>,
+                    dots: <?php echo ($_entity->getShowDots()) ? 'true' : 'false' ; ?>,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: <?php echo ($_entity->getShowArrows()) ? 'true' : 'false' ; ?>,
+                    autoplay: <?php echo ($_entity->getAutoplay()) ? 'true' : 'false' ; ?>,
+                    autoplaySpeed: <?php echo ($_entity->getAutoplayPlaySpeed()) ? $_entity->getAutoplayPlaySpeed() : '5000' ; ?>,
+                    fade: <?php echo ($_entity->getFade()) ? 'true' : 'false' ; ?>,
+                    prevArrow: '<button type="button" class="slick-prev button"><span><span>&lt;</span></span></button>',
+                    nextArrow: '<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>',
+                    <?php echo ($_entity->getSliderResponsiveSettings()) ? 'responsive:' . $_entity->getSliderResponsiveSettings()  : '' ; ?>
+                });
+            });
+        });
+    </script>
+
+<?php endif; ?>

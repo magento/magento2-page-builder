@@ -21,8 +21,11 @@
             <plugin name="gene_widget_child_blocks">
                 <file alias="bluefoot/widget/child_block" path="Gene_BlueFoot/js/widget/core/child_block" />
             </plugin>
-            <plugin name="gene_widget_product_search">
-                <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/product" />
+            <plugin name="gene_widget_category_search">
+                <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/category" />
+            </plugin>
+            <plugin name="gene_widget_staticblock_search">
+                <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/staticblock" />
             </plugin>
         </js>
     </plugins>
@@ -49,21 +52,25 @@
         <templates>
             <template name="core_heading" file="pagebuilder/blocks/core/basic/heading.phtml" />
             <template name="core_textarea" file="pagebuilder/blocks/core/basic/textarea.phtml" />
-            <!--<template name="core_spacer" file="pagebuilder/blocks/core/basic/spacer.phtml" />-->
-            <!--<template name="core_hr" file="pagebuilder/blocks/core/basic/hr.phtml" />-->
-            <!--<template name="core_html" file="pagebuilder/blocks/core/basic/html.phtml" />-->
-            <!--<template name="core_static_block" file="pagebuilder/blocks/core/basic/static-block.phtml" />-->
+            <template name="core_html" file="pagebuilder/blocks/core/basic/html.phtml" />
+            <template name="core_static_block" file="pagebuilder/blocks/core/basic/static-block.phtml" />
+            <template name="core_hr" file="pagebuilder/blocks/core/structural/hr.phtml" />
+            <template name="core_anchor" file="pagebuilder/blocks/core/structural/anchor.phtml" />
             <template name="core_image" file="pagebuilder/blocks/core/media/image.phtml" />
-            <!--<template name="core_driver" file="pagebuilder/blocks/core/media/driver.phtml" />-->
-            <!--<template name="core_slider" file="pagebuilder/blocks/core/media/slider.phtml" />-->
-            <!--<template name="core_slider_item" file="pagebuilder/blocks/core/media/slider-item.phtml" />-->
-            <!--<template name="core_product" file="pagebuilder/blocks/core/ecommerce/single.phtml" />-->
-            <!--<template name="core_product_list" file="pagebuilder/blocks/core/ecommerce/list.phtml" />-->
-            <!--<template name="core_accordion" file="pagebuilder/blocks/core/special/accordion.phtml" />-->
-            <!--<template name="core_accordion_item" file="pagebuilder/blocks/core/special/accordion-item.phtml" />-->
+            <template name="core_driver" file="pagebuilder/blocks/core/media/driver.phtml" />
+            <template name="core_slider" file="pagebuilder/blocks/core/media/slider.phtml" />
+            <template name="core_slider_item" file="pagebuilder/blocks/core/media/slider-item.phtml" />
+            <template name="core_advanced_slider" file="pagebuilder/blocks/core/media/advanced-slider.phtml" />
+            <template name="core_advanced_slider_item" file="pagebuilder/blocks/core/media/advanced-slider-item.phtml" />
+            <template name="core_product" file="pagebuilder/blocks/core/ecommerce/single.phtml" />
+            <template name="core_product_list" file="pagebuilder/blocks/core/ecommerce/list.phtml" />
+            <template name="core_accordion" file="pagebuilder/blocks/core/special/accordion.phtml" />
+            <template name="core_accordion_item" file="pagebuilder/blocks/core/special/accordion-item.phtml" />
             <!--<template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" />-->
-            <!--<template name="core_map" file="pagebuilder/blocks/core/special/map.phtml" />-->
-            <!--<template name="core_search" file="pagebuilder/blocks/core/special/search.phtml" />-->
+            <template name="core_map" file="pagebuilder/blocks/core/special/map.phtml" />
+            <template name="core_search" file="pagebuilder/blocks/core/special/search.phtml" />
+            <template name="core_tab" file="pagebuilder/blocks/core/special/tabs.phtml" />
+            <template name="core_tab_item" file="pagebuilder/blocks/core/special/tabs-item.phtml" />
         </templates>
         <renderers>
             <renderer name="core_default" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock" />
@@ -73,7 +80,7 @@
             <!--<renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" />-->
             <!--<renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" />-->
             <!--<renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" />-->
-            <!--<renderer name="core_map" class="gene_cms/entity_pagebuilder_block_map" />-->
+            <renderer name="core_map" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Map" />
         </renderers>
     </content_blocks>
 

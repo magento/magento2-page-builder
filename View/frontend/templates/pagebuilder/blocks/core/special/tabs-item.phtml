@@ -1,0 +1,21 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Tabs Item Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $this->getEntity();
+?>
+<div id="bluefoot-tab-<?php echo $_entity->getId(); ?>" class="bluefoot-tab-item bluefoot-tab-content bluefoot-full-width<?php echo ($this->getCount() == 1) ? ' active' : '' ; ?> <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    <div class="bluefoot-accordion-outer bluefoot-full-width">
+        <h4 class="bluefoot-accordion-link bluefoot-full-width bluefoot-mobile-only"><?php echo $_entity->getTitle(); ?></h4>
+        <div class="bluefoot-accordion-inner bluefoot-full-width bluefoot-tab-inner">
+            <?php echo $_entity->getTextarea(); ?>
+        </div>
+    </div>
+</div>

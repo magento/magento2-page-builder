@@ -1,0 +1,36 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Newsletter Signup Block Template
+ * @var $this Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Newsletter
+ *
+ */
+$_entity = $this->getEntity();
+?>
+<div class="block block-subscribe bluefoot-full-width bluefoot-newsletter <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    <div class="block-title">
+        <strong><span><?php echo $_entity->getTitle(); ?></span></strong>
+    </div>
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="bluefoot-newsletter-<?php echo $_entity->getId(); ?>">
+        <div class="block-content">
+            <div class="form-subscribe-header">
+                <label for="bluefoot-newsletter-field-<?php echo $_entity->getId(); ?>"><?php echo $_entity->getLabel(); ?></label>
+            </div>
+            <div class="input-box">
+                <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="bluefoot-newsletter-field-<?php echo $_entity->getId(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($_entity->getLabel($_entity->getLabel())) ?>"<?php echo ($_entity->getPlaceholder()) ? ' placeholder="' .  Mage::helper('core')->quoteEscape($_entity->getPlaceholder()) . '"' : ''; ?> class="input-text required-entry validate-email" />
+            </div>
+            <div class="actions">
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($_entity->getButtonText()) ?>" class="button"><span><span><?php echo $_entity->getButtonText() ?></span></span></button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        //<![CDATA[
+        var newsletterSubscriberFormDetail = new VarienForm('bluefoot-newsletter-<?php echo $_entity->getId(); ?>');
+        //]]>
+    </script>
+</div>

@@ -1,0 +1,16 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Button Item Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $this->getEntity();
+?>
+<button type="button" onclick="location.href='<?php echo $_entity->getLinkUrl(); ?>'" class="bluefoot-button button <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    <span><span><?php echo $_entity->getLinkText(); ?></span></span>
+</button>

@@ -1,0 +1,29 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Conor Farrell <conor@gene.co.uk>
+ *
+ * Advanced Slider Item Block Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\Abstract
+ *
+ */
+?>
+
+<div class="bluefoot-advanced-slider-item bluefoot-entity-align-{{ align }}" style="background: url('/media/gene-cms/{{ background_image }}');background-size:cover;background-position:center center;">
+    <div class="bluefoot-advanced-slider-content">
+        <h3>{{ title }}</h3>
+        {{#textarea}}
+        <div class="bluefoot-advanced-slider-text">
+            {{{ textarea }}}
+        </div>
+        {{/textarea}}
+
+        {{#link_text}}
+        <!-- if link text exists Do this -->
+        <button class="gene-bluefoot-block-button">{{ link_text }}</button>
+        {{/link_text}}
+
+    </div>
+</div>

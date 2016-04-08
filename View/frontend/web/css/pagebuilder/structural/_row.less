@@ -1,0 +1,40 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _row contains {less} for rows
+ *
+ */
+
+.@{prefix}-row {
+  margin-left:-@margin;
+  margin-right:-@margin;
+  box-sizing:border-box;
+  &.with-media-background, &.bluefoot-wrapper-row {
+    margin-left:0;
+    margin-right:0;
+  }
+  &:before, &:after {
+    content:'';
+    display:table;
+  }
+  &:after {
+    clear:both;
+  }
+}
+
+.col-main {
+  .@{prefix}-row {
+    >.@{prefix}-entity {
+      padding-left:@margin;
+      padding-right:@margin;
+      &.no-padding {
+        padding-left:0;
+        padding-right:0;
+        box-sizing:border-box;
+      }
+    }
+  }
+}

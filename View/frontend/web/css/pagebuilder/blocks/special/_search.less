@@ -1,0 +1,53 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _search contains {less} for search blocks
+ *
+ */
+
+.@{prefix}-search-form {
+  .form-search {
+    position: relative;
+    padding:0;
+  }
+
+  label {
+    display: none;
+  }
+
+  input[type="search"], input[type="text"] {
+    width: 100%;
+    height: @common_height;
+    padding-right: @common_height;
+  }
+
+  .search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: @common_height;
+    height: @common_height;
+    padding:0;
+    border: 0;
+    background: none;
+    color:#999999;
+    font-size:20px;
+    .transition;
+    &:before {
+      content: 's';
+      text-transform:none;
+      font-family: '@{prefix}-icons';
+      text-align:center;
+      width: @common_height;
+      height: @common_height;
+      line-height: @common_height;
+    }
+    &:hover {
+      color:white;
+    }
+  }
+
+}

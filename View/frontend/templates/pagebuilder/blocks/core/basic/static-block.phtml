@@ -1,0 +1,20 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Static Block Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $this->getEntity();
+?>
+<?php
+// Check if the block is active on the current store
+if (Mage::getModel('cms/block')->setStoreId(Mage::app()->getStore()->getId())->load($_entity->getBlockId())->getIsActive()): ?>
+    <div class="bluefoot-static-block <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($_entity->getBlockId())->toHtml();?>
+    </div>
+<?php endif; ?>

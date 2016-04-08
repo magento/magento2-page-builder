@@ -1,0 +1,46 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Map Block Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\Map
+ *
+ */
+$_entity = $this->getEntity();
+$_map = $this->getMapData();
+
+// @todo - move this into a map block
+$_style = '';
+if ($_entity->getMapHeight()): $_style .= 'height:' . $_entity->getMapHeight(); endif;
+if ($_entity->getMapWidth()): $_style .= 'width:' . $_entity->getMapWidth(); endif;
+$this->setStyle($_style);
+?>
+<?php if ($_map): ?>
+    <script type="text/javascript" src="//maps.google.com/maps/api/js"></script>
+    <div id="bluefoot-map-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-map <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    </div>
+    <script type="text/javascript">
+        // Lat long object
+        var centerLatlng = new google.maps.LatLng( <?php echo $_map->getLong(); ?>,  <?php echo $_map->getLat(); ?>);
+
+        // Map Options
+        var mapOptions = {
+            zoom: <?php echo $_map->getZoom(); ?>,
+            center: centerLatlng,
+            scrollwheel: false
+        };
+
+        // Init Map
+        map = new google.maps.Map(document.getElementById('bluefoot-map-<?php echo $_entity->getEntityId(); ?>'), mapOptions);
+
+        // Display marker
+        marker = new google.maps.Marker({
+            draggable: true,
+            map: map,
+            position: centerLatlng
+        });
+    </script>
+<?php endif; ?>
