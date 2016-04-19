@@ -1,0 +1,88 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _common contains core classes used throughout the BlueFoot admin
+ *
+ */
+
+.transition {
+  transition:.5s;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+}
+
+.bluefoot-logo {
+  width:@logoWidth;
+  height:@logoHeight;
+  text-indent:-9999px;
+  display:block;
+  background:url('images/main-logo.png') center center no-repeat;
+  background-size:@logoWidth @logoHeight;
+  margin:@margin/2;
+  &.dark {
+    background-image:url('images/main-logo-dark.png');
+  }
+}
+
+.gene-logo {
+  display:block;
+  color:white;
+  font-family:@theme_font;
+  font-size:11px;
+  margin:@margin auto;
+  text-align:center;
+  line-height:@geneLogoHeight;
+  a {
+    width:@geneLogoWidth;
+    height:@geneLogoHeight;
+    text-indent:-9999px;
+    display:inline-block;
+    margin-left:5px;
+    background:url('images/gene-logo.png') center center no-repeat;
+    background-size:@geneLogoWidth @geneLogoHeight;
+  }
+  &.dark {
+    color:@textColor;
+    a {
+      background-image:url('images/gene-logo-dark.png');
+    }
+  }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+@media  only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (   min--moz-device-pixel-ratio: 1.5),
+only screen and (     -o-min-device-pixel-ratio: 3/2),
+only screen and (        min-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 192dpi) {
+  .bluefoot-logo {
+    background-image:url('images/main-logo@2x.png');
+    &.dark {
+      background-image:url('images/main-logo-dark@2x.png');
+    }
+  }
+  .gene-logo a {
+    background-image:url('images/gene-logo@2x.png');
+  }
+  .gene-logo.dark a {
+    background-image:url('images/gene-logo-dark@2x.png');
+  }
+}

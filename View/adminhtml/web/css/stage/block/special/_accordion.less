@@ -1,0 +1,41 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _accordion contains {less} for accordions
+ *
+ */
+
+.bluefoot-accordion {
+
+  .gene-bluefoot-accordion-item-heading {
+    cursor:pointer;
+    margin-bottom:0;
+    padding:15px;
+    box-sizing:border-box;
+    line-height:1.4em;
+    background:@light_grey;
+    &:after {
+      content:'+';
+      float:right;
+      font-size:1.4em;
+    }
+  }
+
+  .gene-bluefoot-accordion-item-content {
+    box-sizing:border-box;
+    padding:15px;
+    border-top:1px solid @border_color;
+  }
+}
+
+.gene-bluefoot-accordion-item {
+  border-bottom:1px solid @border_color;
+  &.active {
+    .gene-bluefoot-accordion-item-heading:after {
+      content:'-';
+    }
+  }
+}

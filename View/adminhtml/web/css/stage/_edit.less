@@ -1,0 +1,491 @@
+.gene-bluefoot-configure-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: left;
+
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+
+    -webkit-transition: 400ms ease-in-out;
+    -moz-transition: 400ms ease-in-out;
+    -o-transition: 400ms ease-in-out;
+    transition: 400ms ease-in-out;
+
+    box-sizing: border-box;
+
+    z-index: 210;
+
+    .gene-bluefoot-configure-sidebar-container {
+        background: @configureColor;
+        color: @configureTextColor;
+        //border-left: 4px solid darken(@configureColor, 10%);
+        //border-right: 4px solid darken(@configureColor, 10%);
+        width: @sidebarWidth;
+        max-width: 100%;
+        height: 100%;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        box-shadow: 0 0 25px rgba(0, 0, 0, .2)
+    }
+
+    &.active {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+
+    }
+    &.gene-bluefoot-inactive {
+        .gene-bluefoot-configure-sidebar-tabs {
+            opacity:0;
+        }
+    }
+
+    .gene-bluefoot-configure-sidebar-overlay {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: black;
+        opacity: 0;
+
+        -webkit-transition: 400ms ease-in-out;
+        -moz-transition: 400ms ease-in-out;
+        -o-transition: 400ms ease-in-out;
+        transition: 400ms ease-in-out;
+
+        z-index: 150;
+    }
+
+    &.gene-bluefoot-inactive {
+        .gene-bluefoot-configure-sidebar-overlay {
+            visibility: visible;
+            opacity: 0.3;
+            cursor: pointer;
+        }
+    }
+
+    form.gene-bluefoot-configure-form {
+        display: block;
+    }
+
+    .gene-bluefoot-configure-close {
+        float: right;
+        color: @configureTextColor;
+        position:absolute;
+        right:0;
+        top:0;
+        margin:0;
+        width:50px;
+        text-align:center;
+        color: white;
+
+        i {
+            float: none;
+            padding:0;
+            margin:0;
+        }
+    }
+
+    h2, h3 {
+        font-weight: 300;
+    }
+
+    h2 {
+        //background: darken(@configureColor, 10%);
+        box-sizing: border-box;
+        line-height: 60px;
+        padding: 0 @margin;
+        margin:0;
+        position:relative;
+        color: white;
+        background: #373737;
+
+        i {
+            line-height: 60px;
+            float: left;
+            margin-right: 8px;
+        }
+    }
+
+    .gene-bluefoot-configure-buttons {
+        text-align: right;
+        padding:0 @margin @margin;
+        box-sizing:border-box;
+        float:left;
+        width:100%;
+        .gene-bluefoot-configure-cancel {
+            margin-right:@margin/2;
+        }
+    }
+
+
+    .gene-bluefoot-input-field {
+        margin-bottom: 14px;
+
+        label {
+            float: left;
+            width: 100%;
+            font-size: 14px;
+            line-height: 22px;
+            color: @configureTextColor;
+
+            em {
+                color: red;
+                padding-left: 1px;
+            }
+        }
+
+        input, select {
+            background: white;
+            border: 1px solid @confirgureColorDark;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            margin: 4px 0;
+            font-size: 14px;
+            color: @panelColor;
+            font-family: @theme_font;
+        }
+
+        select {
+            height: 32px;
+            line-height: 32px;
+        }
+
+        textarea {
+            background: white;
+            border: 1px solid @confirgureColorDark;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            margin: 4px 0;
+            font-size: 14px;
+            font-family: @theme_font;
+            height: 80px;
+            padding: 8px;
+            box-sizing: border-box;
+            width: 100%!important;
+        }
+
+        input {
+            text-indent: 8px;
+        }
+
+        .gene-bluefoot-field-failed {
+            border: 1px solid #ff5b52;
+            background: #ffcecf;
+        }
+
+    }
+
+    .gene-bluefoot-child-blocks-field {
+        float: left;
+        width: 100%;
+
+        .gene-bluefoot-child-blocks, .gene-bluefoot-child-blocks-container {
+            float: left;
+            width: 100%;
+        }
+
+        .gene-bluefoot-child-blocks {
+            margin: 4px 0;
+        }
+
+        .gene-bluefoot-droparea {
+            display: block;
+            box-sizing: border-box;
+            border: 4px dashed lightgrey;
+            width: auto;
+            color: grey;
+            font-size: 18px;
+            line-height: 40px;
+            min-height: 40px;
+            text-align: center;
+            margin-bottom: 4px;
+
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+
+            i {
+                margin-right: 12px;
+            }
+        }
+
+        .gene-bluefoot-entity {
+            position: relative;
+            width: 100%;
+            display: block;
+            height: 20px;
+            color: @textColor;
+            margin-bottom: 4px;
+            font-size: 13px;
+            padding: 10px 0;
+            background:@confirgureColorDark;
+            z-index: 110;
+
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+
+            cursor: move;
+
+            span.gene-bluefoot-content-type-icon {
+                font-size: 20px;
+                //display: block;
+                float: left;
+                line-height: 20px;
+                width: 40px;
+                text-align: center;
+                margin-left: 6px;
+                position:relative;
+                z-index:2;
+                display:none;
+            }
+            span.gene-bluefoot-content-type-name {
+                display: block;
+                float: left;
+                line-height: 20px;
+                padding-left: @margin/2;
+                position:relative;
+                z-index:2;
+            }
+
+            &.ui-sortable-helper {
+                opacity: 1;
+                display: block;
+                width: 100px;
+                height: 100px;
+                background: black;
+                z-index: 120;
+            }
+
+
+            .gene-bluefoot-options {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                box-sizing:border-box;
+                padding-right: 10px;
+                z-index:1;
+
+                ul.gene-bluefoot-options-links {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    font-size: 0;
+                    float: right;
+                    line-height: 40px;
+                    height: 40px;
+
+                    li {
+                        display: inline-block;
+                        margin: 0;
+
+                        a {
+                            display: block;
+                            padding: 0 4px;
+                            font-size: 16px;
+                            color: @textColor;
+                            height: 40px;
+                            line-height: 40px;
+
+                            &:hover {
+                                color: lightgrey;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.gene-bluefoot-entity-preview-text {
+                height: 34px;
+
+                span.gene-bluefoot-content-type-icon {
+                    float: left;
+                    display: block;
+                    font-size: 22px;
+                    height: 34px;
+                    line-height: 33px;
+                    margin-left: 5px;
+                    margin-right: 3px;
+                }
+
+                span.gene-bluefoot-content-type-name, span.gene-bluefoot-content-type-preview-text {
+                    float: none;
+                    display: block;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+
+                span.gene-bluefoot-content-type-name {
+                    margin-top: 1px;
+                    height: 14px;
+                    line-height: 14px;
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+
+                span.gene-bluefoot-content-type-preview-text {
+                    height: 20px;
+                    line-height: 20px;
+                    font-size: 14px;
+                }
+
+                .gene-bluefoot-options {
+                    ul.gene-bluefoot-options-links {
+                        line-height: 54px;
+                        height: 54px;
+
+                        li {
+                            a {
+                                line-height: 54px;
+                                height: 54px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.gene-bluefoot-configure-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 200;
+
+    cursor: pointer;
+
+    background: black;
+    opacity: 0;
+
+    -webkit-transition: 400ms ease-in-out;
+    -moz-transition: 400ms ease-in-out;
+    -o-transition: 400ms ease-in-out;
+    transition: 400ms ease-in-out;
+
+    visibility: hidden;
+
+    &.active {
+        opacity: 0.6;
+
+        visibility: visible;
+    }
+}
+
+
+.gene-bluefoot-configure-group {
+    float:left;
+    width:100%;
+    h3 {
+        cursor:pointer;
+        color: @configureTextColor;
+        text-transform:uppercase;
+        padding:@margin/2;
+        border-bottom:1px solid @border_color;
+        margin:0;
+        .transition;
+        &:after {
+            content:'+';
+            float:right;
+            font-size:1.4em;
+        }
+        &:hover {
+            background:lighten(@border_color, 2%);
+        }
+    }
+
+    &.active {
+        h3 {
+            &:after {
+                content:'-';
+            }
+        }
+    }
+
+    .mceLayout {
+        background: white;
+    }
+
+    .mceIframeContainer {
+        iframe {
+            width: 100%!important;
+        }
+    }
+
+    .gene-bluefoot-configure-group-fields {
+        box-sizing:border-box;
+        padding:@margin @margin @margin/2;
+        float:left;
+        width:100%;
+    }
+}
+
+.gene-bluefoot-configure-sidebar-tabs {
+    position:absolute;
+    left:-@tabSize;
+    top: 60px;
+    width:@tabSize;
+    .transition;
+
+    a.gene-bluefoot-tab-error {
+        color: #e53c40;
+    }
+}
+
+.gene-bluefoot-configure-sidebar-tab {
+    float:left;
+    width:@tabSize;
+    font-size:13px;
+    //text-transform:uppercase;
+    text-align:center;
+    border-top:1px solid #aeaeae;
+    &:first-child {
+        border-top:none;
+    }
+    a {
+        text-decoration:none;
+        color:@textColor;
+        background:#c1c1c1;
+        display:block;
+        width:100%;
+        height:@tabSize - @margin;
+        line-height:@tabSize - @margin;
+        text-transform: uppercase;
+        font-size: 11px;
+        .transition;
+        &:hover {
+            background:@configureColor;
+        }
+    }
+    &.ui-state-active {
+
+        a {
+            background:@configureColor;
+        }
+    }
+}
+
+.gene-bluefoot-child-item-button {
+    background:@theme_color_1;
+    .transition;
+    &:hover {
+        background:@theme_color_2;
+    }
+}

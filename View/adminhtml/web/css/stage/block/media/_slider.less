@@ -1,0 +1,102 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _slider contains {less} for Sliders and slider items
+ *
+ */
+
+.gene-bluefoot-slider {
+  max-width:750px;
+  box-sizing:border-box;
+  padding:0;
+  width:100%;
+  margin:@margin auto 40px;
+  .slick-dots {
+    width:100%;
+    text-align:center;
+    position:absolute;
+    bottom:-30px;
+    li {
+      display:inline-block;
+      margin:0 3px;
+      button {
+        border-radius:50%;
+        text-indent:-9999px;
+        width:14px;
+        height:14px;
+        border:none;
+        background:@light_grey;
+        &:hover {
+          background:@theme_color_1;
+        }
+      }
+      &.slick-active {
+        button {
+          background:@theme_color_1;
+          top:50%;
+        }
+      }
+    }
+  }
+  .slick-arrow {
+    width:@commonHeight;
+    height:@commonHeight;
+    line-height:@commonHeight;
+    padding:0;
+    border:none;
+    background:@theme_color_1;
+    color:white;
+    position:absolute;
+    z-index:20;
+    top:calc(~'50% - 16px');
+    &:hover {
+      background:@theme_color_2;
+    }
+    &:before {
+      display:block;
+      line-height:@commonHeight;
+      font-family:@icon_font;
+    }
+    &:focus { outline:none; }
+  }
+  .slick-next {
+    right:0;
+    &:before {
+      content: '\f054';
+    }
+  }
+  .slick-prev {
+    left:0;
+    &:before {
+      content: '\f053';
+    }
+  }
+}
+
+.gene-bluefoot-slider-item img {
+  width:100%;
+}
+
+
+/* Advanced Slider */
+
+.bluefoot-advanced-slider-item {
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+.bluefoot-advanced-slider-content {
+  margin:@margin*2;
+  width:40%;
+  padding:@margin;
+  box-sizing:border-box;
+  display:inline-block;
+  background:rgba(0,0,0,0.5);
+  h3, p, li {
+    margin-bottom:@margin;
+    color:white;
+  }
+}

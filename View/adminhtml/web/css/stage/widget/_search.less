@@ -1,0 +1,35 @@
+.gene-bluefoot-search-field {
+  position: relative;
+  text-align: left;
+  
+  .ui-autocomplete-loading {
+
+  }
+
+  .ui-autocomplete {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+
+    li {
+      background: white;
+      border: 1px solid darken(@configureColor, 10%);
+      border-bottom: none;
+      margin: 0;
+      padding: 8px;
+      font-size: 14px;
+      color: @panelColor;
+      font-family:@theme_font;
+
+      &:last-child {
+        border-bottom: 1px solid darken(@configureColor, 10%);
+      }
+
+      &:hover, &.ui-state-focus {
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
