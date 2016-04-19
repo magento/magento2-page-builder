@@ -3,8 +3,8 @@
 </script>
 <script type="text/javascript">
     // Define a noConflict version of jQuery
-    define('bluefoot/cms-config', ['bluefoot/jquery'], function (jQuery) {
-        return jQuery.parseJSON('<?php echo $this->getConfig(); ?>');
+    define('bluefoot/cms-config', [], function () {
+        return JSON.parse('<?php echo $this->getConfig(); ?>');
     });
 </script>
 
@@ -13,127 +13,164 @@
  * Declare the stages mark up
  */
 ?>
-<script id="gene-cms-alert" type="x-tmpl-mustache">
-    <div class="gene-cms-modal-background {{class}}">
-        <div class="gene-cms-modal" data-model="true">
-            <div class="gene-cms-modal-title">{{{title}}} <a href="#" class="gene-cms-close"><i class="fa fa-times"></i></a></div>
-            <div class="gene-cms-modal-content">{{{message}}}</div>
+<script id="gene-bluefoot-alert" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-modal-background {{class}}">
+        <div class="gene-bluefoot-modal" data-model="true">
+            <div class="gene-bluefoot-modal-title">{{{title}}} <a href="#" class="gene-bluefoot-close"><i class="fa fa-times"></i></a></div>
+            <div class="gene-bluefoot-modal-content">{{{message}}}</div>
             {{#fields}}
-                <div class="gene-cms-modal-field">
+                <div class="gene-bluefoot-modal-field">
                     <label>{{{label}}}:</label>
-                    <div class="gene-cms-modal-input">
+                    <div class="gene-bluefoot-modal-input">
                         {{{input}}}
                     </div>
                 </div>
             {{/fields}}
-            <div class="gene-cms-modal-buttons">
+            <div class="gene-bluefoot-modal-buttons">
                 {{#buttons}}
-                <button type="button" class="gene-cms-modal-button {{class}}" data-button="{{code}}">{{label}}</button>
+                <button type="button" class="gene-bluefoot-modal-button {{class}}" data-button="{{code}}">{{label}}</button>
                 {{/buttons}}
             </div>
         </div>
     </div>
 </script>
+<script id="gene-bluefoot-template-selection-grid" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-modal-background {{class}}">
+        <div class="gene-bluefoot-modal gene-bluefoot-large-modal" data-model="true">
+            <div class="gene-bluefoot-modal-title">{{{title}}} <a href="#" class="gene-bluefoot-close"><i class="fa fa-times"></i></a></div>
+            <div class="gene-bluefoot-modal-content">
+                <div class="gene-bluefoot-modal-message">
+                    {{message}}
+                </div>
+                {{#templates}}
+                <div class="gene-bluefoot-template-preview">
+                    <a href="#" class="gene-bluefoot-template-pinned {{#pinned}}active{{/pinned}}" data-template-id="{{id}}" {{#pinned}}data-pinned{{/pinned}} title="Pin Template">
+                        <i class="fa fa-star"></i>
+                    </a>
+                    <div class="gene-bluefoot-template-preview-image" data-template-id="{{id}}">
+                        <img src="{{preview}}">
+                    </div>
+                    <h4>{{name}}</h4>
+                    <button type="button" name="add-template" data-template-id="{{id}}" class="gene-bluefoot-button gene-bluefoot-configure-save gene-bluefoot-button-skinny gene-bluefoot-button-green">Add</button>
+                    <button type="button" name="delete-template" data-template-id="{{id}}" class="gene-bluefoot-button gene-bluefoot-configure-cancel gene-bluefoot-button-skinny gene-bluefoot-button-red gene-bluefoot-close-configure">Delete</button>
+                </div>
+                {{/templates}}
+            </div>
 
-<script id="gene-cms-stage-template" type="x-tmpl-mustache">
-    <div class="gene-cms-stage gene-cms-stage-{{id}}">
-        <div class="gene-cms-stage-panel">
-            {{{panel}}}
-            <span class="gene-cms-stage-panel-control" title="<?php echo $this->__('Hide/Show Controls'); ?>"></span>
+            <div class="gene-bluefoot-modal-buttons">
+                {{#buttons}}
+                <button type="button" class="gene-bluefoot-modal-button {{class}}" data-button="{{code}}">{{label}}</button>
+                {{/buttons}}
+            </div>
         </div>
-        <div class="gene-cms-stage-content">
-            <div class="gene-cms-template"></div>
-            <div class="gene-cms-stage-content-inner">
+    </div>
+</script>
+<script id="gene-bluefoot-stage-template" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-stage gene-bluefoot-stage-{{id}}">
+        <div class="gene-bluefoot-stage-panel">
+            {{{panel}}}
+            <span class="gene-bluefoot-stage-full-screen" title="<?php echo __('Full Screen'); ?>"></span>
+            <span class="gene-bluefoot-stage-panel-control" title="<?php echo __('Hide/Show Controls'); ?>"></span>
+        </div>
+        <div class="gene-bluefoot-stage-content">
+            <div class="gene-bluefoot-template"></div>
+            <div class="gene-bluefoot-stage-content-inner">
 
             </div>
-            <button type="button" class="gene-cms-add-row"><i class="fa fa-plus"></i> <?php echo $this->__('Add Row'); ?></button>
+            <button type="button" class="gene-bluefoot-add-row"><i class="fa fa-plus"></i> <?php echo __('Add Row'); ?></button>
         </div>
     </div>
 </script>
 
-<script id="gene-cms-stage-template-controls" type="x-tmpl-mustache">
-    <select name="gene-cms-templates">
-        {{#templates}}
-        <option value="{{id}}">{{name}}</option>
-        {{/templates}}
-    </select>
-    <button type="button" name="load-template"><?php echo $this->__('Load Template'); ?></button>
-    <button type="button" name="save-template"><?php echo $this->__('Save as Template'); ?></button>
+<script id="gene-bluefoot-stage-template-controls" type="x-tmpl-mustache">
+    <button type="button" name="template-selection" class="gene-bluefoot-button gene-bluefoot-button-tiny"><?php echo __('Template Manager'); ?></button>
+    <button type="button" name="save-template" class="gene-bluefoot-button gene-bluefoot-button-tiny"><?php echo __('Save as Template'); ?></button>
 </script>
 
-<script id="gene-cms-stage-panel-template" type="x-tmpl-mustache">
-    <span class="bluefoot-logo"><?php echo $this->__('% CMS & PageBuilder', 'BlueFoot'); ?></span>
-    <div class="gene-cms-stage-panel-content-types">
-        <ul class="gene-cms-stage-panel-content-types-ul">
-            {{#content-type-groups}}
-            <li class="gene-cms-group {{code}}">
-                <a href="#" class="gene-cms-group-name">{{{icon}}} {{name}}</a>
-                <ul class="gene-cms-stage-panel-group-types gene-cms-stage-panel-group-types-{{code}}">
-                {{#types}}
-                    <li class="gene-cms-content-type gene-cms-content-type-{{code}}">
-                        <a data-type="{{code}}" href="#" class="gene-cms-draggable">
-                            <span class="gene-cms-content-type-icon">{{{icon}}}</span>
-                            <span class="gene-cms-content-type-name">{{name}}</span>
-                        </a>
-                    </li>
-                {{/types}}
-                </ul>
-            </li>
-            {{/content-type-groups}}
-        </ul>
-        <span class="gene-logo"><?php echo $this->__('Built by <a href="http://gene.co.uk" target="_blank" title="Gene Commerce">Gene</a>'); ?></span>
+<script id="gene-bluefoot-stage-panel-template" type="x-tmpl-mustache">
+    <span class="bluefoot-logo"><?php echo __('%s CMS & PageBuilder', 'BlueFoot'); ?></span>
+    <div class="gene-bluefoot-stage-panel-content-types">
+        <div class="gene-bluefoot-stage-panel-inner">
+            <ul class="gene-bluefoot-stage-panel-content-types-ul">
+                {{#content-type-groups}}
+                <li class="gene-bluefoot-group {{code}}">
+                    <a href="#" class="gene-bluefoot-group-name">{{{icon}}} {{name}}</a>
+                    <ul class="gene-bluefoot-stage-panel-group-types gene-bluefoot-stage-panel-group-types-{{code}}">
+                    {{#types}}
+                        <li class="gene-bluefoot-content-type gene-bluefoot-content-type-{{code}}">
+                            <a data-type="{{code}}" href="#" class="gene-bluefoot-draggable">
+                                <span class="gene-bluefoot-content-type-icon">{{{icon}}}</span>
+                                <span class="gene-bluefoot-content-type-name">{{name}}</span>
+                            </a>
+                        </li>
+                    {{/types}}
+                    </ul>
+                </li>
+                {{/content-type-groups}}
+            </ul>
+        </div>
+        <span class="gene-logo"><?php echo __('Built by <a href="http://gene.co.uk" target="_blank" title="Gene Commerce">Gene</a>'); ?></span>
     </div>
 </script>
 
-<script id="gene-cms-stage-configure-template" type="x-tmpl-mustache">
-    <div class="gene-cms-configure-sidebar">
-        <div class="gene-cms-configure-sidebar-overlay"></div>
-        <div class="gene-cms-configure-sidebar-container">
+<script id="gene-bluefoot-stage-configure-template" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-configure-sidebar">
+        <div class="gene-bluefoot-configure-sidebar-overlay"></div>
+        <div class="gene-bluefoot-configure-sidebar-container">
             <h2>
                 <span>{{{icon}}}</span> {{ name }}
-                <a href="#" class="gene-cms-configure-close gene-cms-close-configure"><i class="fa fa-times"></i></a>
+                <a href="#" class="gene-bluefoot-configure-close gene-bluefoot-close-configure"><i class="fa fa-times"></i></a>
             </h2>
-            <ul class="gene-cms-configure-sidebar-tabs">
+            <ul class="gene-bluefoot-configure-sidebar-tabs">
                 {{#groups}}
-                    <li class="gene-cms-configure-sidebar-tab">
-                        <a href="#gene-cms-configure-sidebar-tab-content-{{ id }}">
+                    <li class="gene-bluefoot-configure-sidebar-tab">
+                        <a href="#gene-bluefoot-configure-sidebar-tab-content-{{ id }}">
                             {{ name }}
                         </a>
                     </li>
                 {{/groups}}
             </ul>
-            <form action="" id="gene-cms-configure-form" class="gene-cms-configure-form">
+            <form action="" id="gene-bluefoot-configure-form" class="gene-bluefoot-configure-form">
                 {{#groups}}
-                    <div class="gene-cms-configure-group {{class}}" id="gene-cms-configure-sidebar-tab-content-{{ id }}">
+                    <div class="gene-bluefoot-configure-group {{class}}" id="gene-bluefoot-configure-sidebar-tab-content-{{ id }}">
 
-                        <ul class="gene-cms-configure-group-fields">
+                        <ul class="gene-bluefoot-configure-group-fields">
                             {{#fields}}
-                            <li class="gene-cms-configure-group-field gene-cms-{{code}}" data-field="{{code}}">
+                            <li class="gene-bluefoot-configure-group-field gene-bluefoot-{{code}}" data-field="{{code}}">
 
                             </li>
                             {{/fields}}
                         </ul>
                     </div>
                 {{/groups}}
-                <div class="gene-cms-configure-buttons">
-                    <button type="button" class="gene-cms-button gene-cms-configure-cancel gene-cms-button-skinny gene-cms-button-red gene-cms-close-configure">Cancel</button>
-                    <button type="submit" class="gene-cms-button gene-cms-configure-save gene-cms-button-skinny gene-cms-button-green">Save</button>
+                <div class="gene-bluefoot-configure-buttons">
+                    <button type="button" class="gene-bluefoot-button gene-bluefoot-configure-cancel gene-bluefoot-button-skinny gene-bluefoot-button-red gene-bluefoot-close-configure">Cancel</button>
+                    <button type="submit" class="gene-bluefoot-button gene-bluefoot-configure-save gene-bluefoot-button-skinny gene-bluefoot-button-green">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </script>
 
-<script id="gene-cms-row-template" type="x-tmpl-mustache">
-    <div class="gene-cms-row">
-        <div class="gene-cms-column-selection">
-            <ul class="gene-cms-columns">
+<script id="gene-bluefoot-row-template" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-row">
+        <div class="gene-bluefoot-column-selection">
+            <ul class="gene-bluefoot-columns">
             {{#columns}}
-                <li class="gene-cms-column-option gene-cms-column-{{number}}"></li>
+                <li class="gene-bluefoot-column-option" data-columns="{{columnCount}}">
+                    <div class="gene-bluefoot-column-preview">
+                        {{#previewColumns}}
+                        <div class="gene-bluefoot-column-preview-column" style="width: {{width}}%; margin-right: {{marginRight}}%; margin-left: {{marginLeft}}%;"></div>
+                        {{/previewColumns}}
+                    </div>
+                    <div class="gene-bluefoot-column-label">
+                        {{label}}
+                    </div>
+                </li>
             {{/columns}}
             </ul>
         </div>
-        <div class="gene-cms-row-content gene-cms-droppable">
+        <div class="gene-bluefoot-row-content gene-bluefoot-droppable">
             <div class="empty-text">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612 641" enable-background="new 0 0 612 641" xml:space="preserve">
                     <g>
@@ -182,19 +219,19 @@
                     </g>
                 </svg>
 
-                <h3><?php echo $this->__('Drag content types here, or add columns'); ?></h3>
+                <h3><?php echo __('Drag content types here, or add columns'); ?></h3>
             </div>
         </div>
     </div>
 </script>
 
-<script id="gene-cms-option-template" type="x-tmpl-mustache">
-    <div class="gene-cms-options">
-        <div class="gene-cms-options-wrapper">
-            <ul class="gene-cms-options-links">
+<script id="gene-bluefoot-option-template" type="x-tmpl-mustache">
+    <div class="gene-bluefoot-options">
+        <div class="gene-bluefoot-options-wrapper">
+            <ul class="gene-bluefoot-options-links">
                 {{#options}}
-                    <li class="gene-cms-options-link-{{code}} {{liClass}}" data-code="{{code}}">
-                        <a href="#" class="{{classes}}" style="{{{styles}}}" title="{{label}}">{{{icon}}}</a>
+                    <li class="gene-bluefoot-options-link-{{code}} {{liClass}}" data-code="{{code}}">
+                        <a href="#" class="{{classes}}" style="{{{styles}}}" data-toggle="tooltip" title="{{label}}">{{{icon}}}</a>
                     </li>
                 {{/options}}
             </ul>
@@ -202,26 +239,29 @@
     </div>
 </script>
 
-<script id="gene-cms-column-template" type="x-tmpl-mustache">
+<script id="gene-bluefoot-column-template" type="x-tmpl-mustache">
     {{#columns}}
-        <div class="gene-cms-column gene-cms-column-width-{{width}}{{class}} gene-cms-sortable" data-width="{{width}}" style="width: {{cssWidth}}%;">
-            <div class="gene-cms-column-content gene-cms-droppable"></div>
-            <div class="gene-cms-column-handle"></div>
-            <div class="gene-cms-column-resize"></div>
-            <div class="gene-cms-column-ghost"></div>
+        <div class="gene-bluefoot-column gene-bluefoot-column-width-{{width}}{{class}} gene-bluefoot-sortable" data-width="{{width}}" style="width: {{cssWidth}}%;">
+            <div class="gene-bluefoot-column-content gene-bluefoot-droppable"></div>
+            <div class="gene-bluefoot-column-handle"></div>
+            <div class="gene-bluefoot-column-resize"></div>
+            <div class="gene-bluefoot-column-ghost"></div>
         </div>
     {{/columns}}
 </script>
 
-<script id="gene-cms-entity" type="x-tmpl-mustache">
-    <div data-type="{{code}}" data-color="{{color}}" href="#" style="{{style}}" class="gene-cms-entity gene-cms-sortable">
-        <span class="gene-cms-content-type-icon">{{{icon}}}</span>
-        <span class="gene-cms-content-type-name">{{name}}</span>
+<script id="gene-bluefoot-entity" type="x-tmpl-mustache">
+    <div data-type="{{code}}" data-color="{{color}}" href="#" style="{{style}}" class="gene-bluefoot-entity gene-bluefoot-sortable{{#preview_text}} gene-bluefoot-entity-preview-text{{/preview_text}}">
+        <span class="gene-bluefoot-content-type-icon">{{{icon}}}</span>
+        <span class="gene-bluefoot-content-type-name">{{name}}</span>
+        {{#preview_text}}
+            <span class="gene-bluefoot-content-type-preview-text">{{preview_text}}</span>
+        {{/preview_text}}
     </div>
 </script>
 
-<script id="gene-cms-entity-preview" type="x-tmpl-mustache">
-    <div data-type="{{code}}" data-color="{{color}}" href="#" class="gene-cms-entity gene-cms-entity-preview gene-cms-sortable">
+<script id="gene-bluefoot-entity-preview" type="x-tmpl-mustache">
+    <div data-type="{{code}}" data-color="{{color}}" href="#" class="gene-bluefoot-entity gene-bluefoot-entity-preview gene-bluefoot-sortable">
         {{{preview}}}
     </div>
 </script>

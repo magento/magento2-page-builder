@@ -28,6 +28,47 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
+                            <xs:element name="jquery">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="plugin" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:complexType mixed="true">
+                                                <xs:sequence>
+                                                    <xs:element name="dep" minOccurs="0">
+                                                        <xs:complexType>
+                                                            <xs:simpleContent>
+                                                                <xs:extension base="xs:string">
+                                                                    <xs:attribute type="xs:string" name="name" use="optional"/>
+                                                                    <xs:attribute type="xs:string" name="alias" use="optional"/>
+                                                                </xs:extension>
+                                                            </xs:simpleContent>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:string" name="name" use="optional"/>
+                                                <xs:attribute type="xs:string" name="alias" use="optional"/>
+                                                <xs:attribute type="xs:string" name="path" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="async">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="plugin">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute type="xs:string" name="name"/>
+                                                        <xs:attribute type="xs:string" name="path"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -53,12 +94,12 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="templates">
-                                <xs:annotation>
-                                    <xs:documentation><![CDATA[<template name="core_spacer" file="pagebuilder/blocks/core/basic/spacer.phtml" /><template name="core_hr" file="pagebuilder/blocks/core/basic/hr.phtml" /><template name="core_html" file="pagebuilder/blocks/core/basic/html.phtml" /><template name="core_static_block" file="pagebuilder/blocks/core/basic/static-block.phtml" /><template name="core_image" file="pagebuilder/blocks/core/media/image.phtml" /><template name="core_driver" file="pagebuilder/blocks/core/media/driver.phtml" /><template name="core_slider" file="pagebuilder/blocks/core/media/slider.phtml" /><template name="core_slider_item" file="pagebuilder/blocks/core/media/slider-item.phtml" /><template name="core_product" file="pagebuilder/blocks/core/ecommerce/single.phtml" /><template name="core_product_list" file="pagebuilder/blocks/core/ecommerce/list.phtml" /><template name="core_accordion" file="pagebuilder/blocks/core/special/accordion.phtml" /><template name="core_accordion_item" file="pagebuilder/blocks/core/special/accordion-item.phtml" /><template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" /><template name="core_map" file="pagebuilder/blocks/core/special/map.phtml" /><template name="core_search" file="pagebuilder/blocks/core/special/search.phtml" />]]></xs:documentation>
-                                </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="template" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>&lt;template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" /></xs:documentation>
+                                            </xs:annotation>
                                             <xs:complexType>
                                                 <xs:simpleContent>
                                                     <xs:extension base="xs:string">
@@ -72,12 +113,12 @@
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="renderers">
-                                <xs:annotation>
-                                    <xs:documentation><![CDATA[<renderer name="core_static_block" class="gene_cms/entity_pagebuilder_block_staticblock" /><renderer name="core_image" class="gene_cms/entity_pagebuilder_block_image" /><renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" /><renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" /><renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" /><renderer name="core_map" class="gene_cms/entity_pagebuilder_block_map" />]]></xs:documentation>
-                                </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="renderer" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>&lt;renderer name="core_static_block" class="gene_cms/entity_pagebuilder_block_staticblock" />&lt;renderer name="core_image" class="gene_cms/entity_pagebuilder_block_image" />&lt;renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" />&lt;renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" />&lt;renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" /></xs:documentation>
+                                            </xs:annotation>
                                             <xs:complexType>
                                                 <xs:simpleContent>
                                                     <xs:extension base="xs:string">

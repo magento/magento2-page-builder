@@ -190,6 +190,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'group' => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
             'fields' => $fields,
             'fields_list' => array_keys($fields),
+            'visible' => (bool) $contentBlock->getShowInPageBuilder()
         ];
 
         // Do we have a preview template for this content block?

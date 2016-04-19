@@ -21,16 +21,16 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
         $html = $this->_getButtonHtml(
             [
                 'title' => '<i class="fa fa-rocket"></i> ' . $this->translate('Activate BlueFoot'),
-                'class' => 'gene-cms init-gene-cms',
-                'id' => 'gene-cms' . $this->getHtmlId()
+                'class' => 'gene-bluefoot init-gene-bluefoot',
+                'id' => 'gene-bluefoot' . $this->getHtmlId()
             ]
         );
         $html .= $this->_getButtonHtml(
             [
                 'title' => $this->translate('Disable BlueFoot'),
-                'class' => 'gene-cms disable-gene-cms',
+                'class' => 'gene-bluefoot disable-gene-bluefoot',
                 'style' => 'display: none;',
-                'id' => 'disable-gene-cms' . $this->getHtmlId()
+                'id' => 'disable-gene-bluefoot' . $this->getHtmlId()
             ]
         );
         $html .= parent::_getToggleButtonHtml($visible);
@@ -46,7 +46,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     {
         $html = parent::_getButtonsHtml();
         $html .= '<script type="text/javascript">buildBlueFoot();</script>';
-        $html .= '<div class="gene-cms-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
+        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
         return $html;
     }
 
@@ -57,7 +57,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
      */
     public function getStageHtmlId()
     {
-        return 'gene-cms-stage' . $this->getHtmlId();
+        return 'gene-bluefoot-stage' . $this->getHtmlId();
     }
 
     /**

@@ -54,22 +54,33 @@ class Init extends \Magento\Backend\Block\Template
         $config = new \Magento\Framework\DataObject();
         $config->addData([
             'encode_string' => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
-            'stage_template' => '#gene-cms-stage-template',
-            'template_template' => '#gene-cms-stage-template-controls',
-            'panel_template' => '#gene-cms-stage-panel-template',
-            'row_template' => '#gene-cms-row-template',
-            'column_template' => '#gene-cms-column-template',
-            'option_template' => '#gene-cms-option-template',
-            'entity_template' => '#gene-cms-entity',
-            'entity_preview_template' => '#gene-cms-entity-preview',
-            'configure_template' => '#gene-cms-stage-configure-template',
-            'alert_template' => '#gene-cms-alert',
+            'stage_template' => '#gene-bluefoot-stage-template',
+            'template_template' => '#gene-bluefoot-stage-template-controls',
+            'panel_template' => '#gene-bluefoot-stage-panel-template',
+            'row_template' => '#gene-bluefoot-row-template',
+            'column_template' => '#gene-bluefoot-column-template',
+            'option_template' => '#gene-bluefoot-option-template',
+            'entity_template' => '#gene-bluefoot-entity',
+            'entity_preview_template' => '#gene-bluefoot-entity-preview',
+            'configure_template' => '#gene-bluefoot-stage-configure-template',
+            'alert_template' => '#gene-bluefoot-alert',
             'form_key' => $this->formKey->getFormKey(),
-            'init_button_class' => '.init-gene-cms',
+            'init_button_class' => '.init-gene-bluefoot',
             'config_url' => $this->_urlBuilder->getUrl('bluefoot/stage/config'),
-            'data_update_url' => $this->_urlBuilder->getUrl('bluefoot/stage/dataUpdate'),
+            'data_update_url' => $this->_urlBuilder->getUrl('bluefoot/stage/update'),
             'template_save_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_save'),
+            'template_delete_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_delete'),
+            'template_pin_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_pin'),
             'columns' => 6,
+
+            /* Define the different column options to be given in the UI */
+            'column_options' => [
+                1 => 'One',
+                2 => 'Two',
+                3 => 'Three',
+                4 => 'Four',
+                6 => 'Six'
+            ],
 
             /* Allowed sizes have to be at 3 decimal places */
             'allowed_sizes' => [
@@ -82,6 +93,8 @@ class Init extends \Magento\Backend\Block\Template
                 '0.825' => '5/6',
                 '1.000' => '1'
             ],
+
+            /* Some sizes do not map correctly, so manually specify them */
             'actual_css_size' => [
                 '0.167' => '16.666666667'
             ]
@@ -96,15 +109,4 @@ class Init extends \Magento\Backend\Block\Template
         return $config->toJson();
     }
 
-    /**
-     * Fake Magento 1 translate function
-     *
-     * @param $text
-     *
-     * @return mixed
-     */
-    public function __($text)
-    {
-        return __($text);
-    }
 }
