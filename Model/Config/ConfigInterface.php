@@ -30,4 +30,6 @@ interface ConfigInterface
     public function getWidgets();
 
     public function getWidget($name);
+
+    public function getGlobalFields();
 }

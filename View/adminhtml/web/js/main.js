@@ -1,8 +1,5 @@
-require(['bluefoot/async!http://maps.google.com/maps/api/js?sensor=false'], function(){});
-
 // The app requires the core hook system to be running very early on
 require(['bluefoot/hook'], function (Hook) {
-
 
     // Declare our plugins system
     require(['bluefoot/plugins'], function (Plugins) {
@@ -11,7 +8,7 @@ require(['bluefoot/hook'], function (Hook) {
         Plugins.prepare(function () {
 
             // Initialize the basic config to load in plugins
-            require(['bluefoot/stage', 'bluefoot/stage/build', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/plugins', 'bluefoot/modal', 'jquery/slick'], function (StageClass, StageBuild, jQuery, InitConfig, Plugins) {
+            require(['bluefoot/stage', 'bluefoot/stage/build', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, StageBuild, jQuery, InitConfig) {
 
                 Plugins.load('onPageLoad', function () {
 

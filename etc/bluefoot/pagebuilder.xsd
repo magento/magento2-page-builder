@@ -187,6 +187,47 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="on_build">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="widgets">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="widget">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute type="xs:string" name="name"/>
+                                                        <xs:attribute type="xs:string" name="widget"/>
+                                                        <xs:attribute type="xs:string" name="method"/>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="global_fields">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="field" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="group"/>
+                                        <xs:element type="xs:string" name="label"/>
+                                        <xs:element type="xs:string" name="type"/>
+                                        <xs:element type="xs:string" name="widget"/>
+                                        <xs:element type="xs:string" name="code"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="code" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -27,20 +27,35 @@
             <plugin name="gene_widget_staticblock_search">
                 <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/staticblock" />
             </plugin>
+            <plugin name="gene_widget_video">
+                <file alias="bluefoot/widget/video" path="Gene_BlueFoot/js/widget/core/video" />
+            </plugin>
+            <plugin name="gene_metric">
+                <file alias="bluefoot/widget/metric" path="Gene_BlueFoot/js/widget/core/metric" />
+            </plugin>
+            <plugin name="gene_align_widget">
+                <file alias="bluefoot/widget/align" path="Gene_BlueFoot/js/widget/core/align" />
+            </plugin>
+            <plugin name="gene_app_entity_search">
+                <file alias="bluefoot/widget/search/app/entity" path="Gene_BlueFoot/js/widget/core/search/app/entity" />
+            </plugin>
+            <plugin name="gene_app_collection_search">
+                <file alias="bluefoot/widget/search/app/collection" path="Gene_BlueFoot/js/widget/core/search/app/collection" />
+            </plugin>
         </js>
 
         <jquery>
-            <plugin name="jquery_tag_it" alias="jquery/tag-it" path="resource/jquery/tag-it/tag-it.min">
+            <plugin name="jquery_tag_it" alias="jquery/tag-it" path="Gene_BlueFoot/js/resource/jquery/tag-it/tag-it.min">
                 <dep name="jquery_ui" alias="bluefoot/jquery/ui" />
             </plugin>
-            <plugin name="jquery_touch_punch" alias="jquery/ui-touch-punch" path="resource/jquery-ui/jquery.ui.touch-punch.min">
+            <plugin name="jquery_touch_punch" alias="jquery/ui-touch-punch" path="Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min">
                 <dep name="jquery_ui" alias="bluefoot/jquery/ui" />
             </plugin>
-            <plugin name="jquery_bluefoot_accordion" alias="jquery/bluefoot-accordion" path="resource/jquery-ui/jquery.ui.touch-punch.min" />
-            <plugin name="jquery_bluefoot_tabs" alias="jquery/bluefoot-tabs" path="resource/jquery/bluefoot-tabs/jquery.bluefoot.tabs.min" />
-            <plugin name="jquery_bluefoot_normalise_heights" alias="jquery/bluefoot-normalise-heights" path="resource/jquery/bluefoot-normalise-heights/jquery.bluefoot.normaliseHeights.min" />
-            <plugin name="jquery_slick" alias="jquery/slick" path="resource/jquery/slick/slick.min" />
-            <plugin name="highlight" alias="highlight" path="resource/highlight/highlight.pack" />
+            <plugin name="jquery_bluefoot_accordion" alias="jquery/bluefoot-accordion" path="Gene_BlueFoot/js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.min" />
+            <plugin name="jquery_bluefoot_tabs" alias="jquery/bluefoot-tabs" path="Gene_BlueFoot/js/resource/jquery/bluefoot-tabs/jquery.bluefoot.tabs.min" />
+            <plugin name="jquery_bluefoot_normalise_heights" alias="jquery/bluefoot-normalise-heights" path="Gene_BlueFoot/js/resource/jquery/bluefoot-normalise-heights/jquery.bluefoot.normaliseHeights.min" />
+            <plugin name="jquery_slick" alias="jquery/slick" path="Gene_BlueFoot/js/resource/jquery/slick/slick.min" />
+            <plugin name="highlight" alias="bluefoot/highlight" path="Gene_BlueFoot/js/resource/highlight/highlight.pack" />
         </jquery>
 
         <async>
@@ -155,4 +170,27 @@
             </fields>
         </structural>
     </structurals>
+
+    <on_build>
+        <widgets>
+            <widget name="gene_align_widget" widget="align" method="updateEntity" />
+        </widgets>
+    </on_build>
+
+    <global_fields>
+        <field code="align">
+            <group>Advanced</group>
+            <label><![CDATA[Align]]></label>
+            <type>widget</type>
+            <widget>align</widget>
+            <code>align</code>
+        </field>
+        <field code="metric">
+            <group>Advanced</group>
+            <label><![CDATA[Metrics]]></label>
+            <type>widget</type>
+            <widget>metric</widget>
+            <code>metric</code>
+        </field>
+    </global_fields>
 </config>

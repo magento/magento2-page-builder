@@ -117,7 +117,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             ],
             'contentTypes' => $this->getContentBlockData(),
             'structural' => $structural->getStructuralConfig(),
-            'templates' => $this->getTemplateData()
+            'templates' => $this->getTemplateData(),
+            'globalFields' => $this->getGlobalFields()
         ];
 
         return $config;
@@ -145,6 +146,16 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         return [];
+    }
+
+    /**
+     * Return any global fields
+     *
+     * @return mixed
+     */
+    public function getGlobalFields()
+    {
+        return $this->_configInterface->getGlobalFields();
     }
 
     /**

@@ -74,11 +74,11 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                 for (var pluginsKey in InitConfig.plugins) {
                     if (!InitConfig.plugins.hasOwnProperty(pluginsKey)) continue;
 
-                    var plugins = InitConfig.plugins[pluginsKey];
-                    for (var name in plugins) {
-                        if (!plugins.hasOwnProperty(name)) continue;
+                    var preparePlugins = InitConfig.plugins[pluginsKey];
+                    for (var name in preparePlugins) {
+                        if (!preparePlugins.hasOwnProperty(name)) continue;
 
-                        var plugin = plugins[name];
+                        var plugin = preparePlugins[name];
 
                         // Ignore any config parameters in the plugins section
                         if (name == 'config') {
@@ -86,7 +86,6 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                         }
                         if (typeof plugin.alias !== 'undefined' && typeof plugin.path !== 'undefined') {
                             configPaths[plugin.alias] = plugin.path;
-                            plugins[plugin.alias] = plugin;
                         }
                     }
                 }
@@ -96,16 +95,18 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                     Hook.trigger('gene-bluefoot-plugins-prepare-paths', {configPaths: configPaths});
 
                     require.config({
-                        paths: configPaths
-                    });
+                        map: {
+                            '*': configPaths
+                        }
+                    })
                 }
             }
 
             Hook.trigger('gene-bluefoot-plugins-prepare-after', {plugins: plugins});
 
             // Prepare jQuery
-            this.preparejQuery();
             this.prepareAsync();
+            this.preparejQuery();
 
             if (typeof callbackFn === 'function') {
                 return callbackFn();
@@ -115,7 +116,7 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
         /**
          * Prepare jQuery
          */
-        preparejQuery: function () {
+        preparejQuery: function (callbackFn) {
 
             // Work out the jQuery dependencies
             var deps = ['jquery', 'bluefoot/jquery/ui'];
@@ -128,7 +129,7 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                     if (jQueryPlugin.alias !== 'undefined') {
                         deps.push(jQueryPlugin.alias);
 
-                        var shimDeps = ['jquery'];
+                        var shimDeps = ['bluefoot/jquery'];
                         if (typeof jQueryPlugin.deps !== 'undefined') {
                             for (var jQueryDep in jQueryPlugin.deps) {
                                 if (!jQueryPlugin.deps.hasOwnProperty(jQueryDep)) continue;
@@ -149,11 +150,6 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                     shim: shim
                 });
             }
-
-            // Define a noConflict version of jQuery
-            define('bluefoot/jquery', deps, function (jQuery, jQueryUi) {
-                return jQuery.noConflict(true);
-            });
         },
 
         /**

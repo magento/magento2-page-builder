@@ -45,6 +45,47 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
         }
 
+        // Pull in all of the on_build widgets
+        $onBuild = $xpath->query('/config/on_build/widgets/*');
+        /** @var $node \DOMNode */
+        for ($i = 0; $i < $onBuild->length; $i++) {
+            $node = $onBuild->item($i);
+            if ($node->nodeName == 'widget') {
+                $output['plugins']['on_build'][$node->getAttribute('name')] = [
+                    'widget' => $node->getAttribute('name'),
+                    'method' => $node->getAttribute('method')
+                ];
+            }
+        }
+
+        // Pull in all of the jQuery plugins
+        $jQueryPluginList = $xpath->query('/config/plugins/jquery/*');
+        /** @var $node \DOMNode */
+        for ($i = 0; $i < $jQueryPluginList->length; $i++) {
+            $node = $jQueryPluginList->item($i);
+            $output['plugins']['jquery'][$node->getAttribute('name')] = [
+                'alias' => $node->getAttribute('alias'),
+                'path' => $node->getAttribute('path')
+            ];
+            if ($node->hasChildNodes()) {
+                foreach ($node->childNodes as $dep) {
+                    if ($dep->nodeName == 'dep') {
+                        $output['plugins']['jquery'][$node->getAttribute('name')]['deps'][$dep->getAttribute('name')] = $dep->getAttribute('alias');
+                    }
+                }
+            }
+        }
+
+        // Pull in all of the async plugins
+        $asyncPluginList = $xpath->query('/config/plugins/async/*');
+        /** @var $node \DOMNode */
+        for ($i = 0; $i < $asyncPluginList->length; $i++) {
+            $node = $asyncPluginList->item($i);
+            $output['plugins']['async'][$node->getAttribute('name')] = [
+                'path' => $node->getAttribute('path')
+            ];
+        }
+
         // Pull in all of the templates
         $templateList = $xpath->query('/config/content_blocks/templates/*');
         /** @var $node \DOMNode */
@@ -138,6 +179,25 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 }
                             }
                             $output['structurals'][$node->getAttribute('code')]['fields'] = $fieldsArray;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Pull in all of the global fields
+        $globalFields = $xpath->query('/config/global_fields/*');
+        for ($i = 0; $i < $globalFields->length; $i++) {
+            /* @var $node DOMElement */
+            $node = $globalFields->item($i);
+            if ($node->nodeName == 'field') {
+                $output['global_fields'][$node->getAttribute('code')] = [];
+
+                if ($node->hasChildNodes()) {
+                    $fieldsElements = $node->childNodes;
+                    foreach ($fieldsElements as $fieldAttr) {
+                        if ($fieldAttr instanceof \DOMElement) {
+                            $output['global_fields'][$node->getAttribute('code')][$fieldAttr->nodeName] = $fieldAttr->nodeValue;
                         }
                     }
                 }

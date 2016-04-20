@@ -32,33 +32,6 @@ var config = {
 
         /* Content Types */
         'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract',
-
-        'jquery/tag-it': 'Gene_BlueFoot/js/resource/jquery/tag-it/tag-it.min',
-        'jquery/ui-touch-punch': 'Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min',
-        'jquery/bluefoot-accordion': 'Gene_BlueFoot/js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.min',
-        'jquery/bluefoot-tabs': 'Gene_BlueFoot/js/resource/jquery/bluefoot-tabs/jquery.bluefoot.tabs.min',
-        'jquery/bluefoot-normalise-heights': 'Gene_BlueFoot/js/resource/jquery/bluefoot-normalise-heights/jquery.bluefoot.normaliseHeights.min',
-        'jquery/slick': 'Gene_BlueFoot/js/resource/jquery/slick/slick.min'
-    },
-    shim: {
-        'jquery/tag-it': {
-            deps: ['jquery', 'bluefoot/jquery/ui']
-        },
-        'jquery/ui-touch-punch': {
-            deps: ['jquery', 'bluefoot/jquery/ui']
-        },
-        'jquery/bluefoot-accordion': {
-            deps: ['jquery']
-        },
-        'jquery/bluefoot-tabs': {
-            deps: ['jquery']
-        },
-        'jquery/bluefoot-normalise-heights': {
-            deps: ['jquery']
-        },
-        'jquery/slick': {
-            deps: ['jquery']
-        }
     },
     map: {
         '*': {
