@@ -15,7 +15,6 @@ define([
 ], function (_, loader, resolver, adapter, Collection, utils, $, app) {
     'use strict';
 
-    console.log('test');
     /**
      * Format params
      *
