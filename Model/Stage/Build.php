@@ -42,6 +42,16 @@ class Build extends \Magento\Framework\Model\AbstractModel
     protected $_dataCollectionFactory;
 
     /**
+     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
+     */
+    protected $_contentBlockFactory;
+
+    /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\EntityFactory
+     */
+    protected $_entityFactory;
+
+    /**
      * Build constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -50,6 +60,8 @@ class Build extends \Magento\Framework\Model\AbstractModel
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
+     * @param \Magento\Framework\Data\CollectionFactory                    $dataCollectionFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -60,8 +72,10 @@ class Build extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
+        \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
+        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -71,7 +85,9 @@ class Build extends \Magento\Framework\Model\AbstractModel
         $this->_configInterface = $configInterface;
         $this->_layoutFactory = $layoutFactory;
         $this->_entityCollectionFactory = $entityCollectionFactory;
+        $this->_entityFactory = $entityFactory;
         $this->_dataCollectionFactory = $dataCollectionFactory;
+        $this->_contentBlockFactory = $contentBlockFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -164,6 +180,62 @@ class Build extends \Magento\Framework\Model\AbstractModel
             }
         }
         return $previewView;
+    }
+
+    /**
+     * Create a temporary entity, and use it to load the data models
+     *
+     * @param $contentType
+     * @param $data
+     * @param $fields
+     *
+     * @return bool
+     */
+    public function buildDataModelUpdate($contentType, $data, $fields)
+    {
+        $attributeSet = $this->_contentBlockFactory->create()->load($contentType, 'identifier');
+        if ($attributeSet) {
+            // Format the form data
+            $formData = $data;
+            $formData['attribute_set_id'] = $attributeSet->getId();
+
+            // Create our entity with the correct attribute set id
+            $entity = $this->_entityFactory->create();
+            $entity->setData($formData);
+
+            return $this->getDataModelValues($entity, $fields);
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the data model values
+     *
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity $entity
+     * @param                                           $fields
+     *
+     * @return array
+     */
+    public function getDataModelValues(\Gene\BlueFoot\Model\ResourceModel\Entity $entity, $fields)
+    {
+        $dataModelValues = array();
+
+        foreach ($fields as $field) {
+            $dataModelValues[$field] = $entity->getData($field);
+
+            // Determine whether or not we can loads this entities attribute
+            if ($attribute = $entity->getResource()->getAttribute($field)) {
+                // Does this particular attribute have a data model?
+                if ($dataModel = $attribute->getDataModel($entity)) {
+                    if (method_exists($dataModel, 'asJson')) {
+                        $dataModelValues[$field] = $dataModel->asJson();
+                    }
+                }
+            }
+        }
+
+        return $dataModelValues;
     }
 
 }

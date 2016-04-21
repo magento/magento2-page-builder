@@ -42,12 +42,12 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
         };
 
         // Firstly build up our groups
-        jQuery.each(config.contentTypeGroups, function (code, config) {
+        jQuery.each(config.contentTypeGroups, function (code, contentTypeGroupConfig) {
             panelConfig['content-type-groups'].push({
                 code: code,
-                sort: config.sort,
-                name: config.name,
-                icon: config.icon,
+                sort: contentTypeGroupConfig.sort,
+                name: contentTypeGroupConfig.name,
+                icon: contentTypeGroupConfig.icon,
                 types: []
             });
         });
@@ -57,18 +57,17 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
             return a.sort - b.sort  ||  a.name.localeCompare(b.name);
         });
 
-
         // Loop through content types
-        jQuery.each(config.contentTypes, function (code, config) {
+        jQuery.each(config.contentTypes, function (code, contentTypeConfig) {
 
             // Check has a group or default to general
-            if (typeof config.group === 'undefined') {
-                config.group = 'general';
+            if (typeof contentTypeConfig.group === 'undefined') {
+                contentTypeConfig.group = 'general';
             }
 
             // Grab the content type group
             var contentTypeGroupSearch = jQuery.grep(panelConfig['content-type-groups'], function (group) {
-                return group.code == config.group;
+                return group.code == contentTypeConfig.group;
             });
             var contentTypeGroup = contentTypeGroupSearch[0];
 
@@ -78,11 +77,11 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
             }
 
             // Add the code into the config
-            config.code = code;
+            contentTypeConfig.code = code;
 
             // Push into the content group
-            if (config.visible) {
-                contentTypeGroup.types.push(config);
+            if (contentTypeConfig.visible) {
+                contentTypeGroup.types.push(contentTypeConfig);
             }
         });
 

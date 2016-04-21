@@ -14,11 +14,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
     const BLUEFOOT_STRING = 'GENE_BLUEFOOT';
 
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    protected $_objectManager;
-
-    /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
     protected $_configInterface;
@@ -39,12 +34,20 @@ class Save extends \Magento\Framework\Model\AbstractModel
     protected $_request;
 
     /**
-     * Plugin constructor.
+     * @var \Magento\Framework\Json\Helper\Data
+     */
+    protected $_jsonHelper;
+
+    /**
+     * Save constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Framework\ObjectManagerInterface                    $objectManager
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
+     * @param \Gene\BlueFoot\Model\EntityFactory                           $entityFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
+     * @param \Magento\Framework\App\Request\Http                          $request
+     * @param \Magento\Framework\Json\Helper\Data                          $jsonHelper
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -52,20 +55,20 @@ class Save extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\EntityFactory $entityFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_objectManager = $objectManager;
         $this->_configInterface = $configInterface;
         $this->_entityFactory = $entityFactory;
         $this->_contentBlockFactory = $contentBlockFactory;
         $this->_request = $request;
+        $this->_jsonHelper = $jsonHelper;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -117,8 +120,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
      */
     public function decodeStructure($structure)
     {
-        return $this->_objectManager->get('Magento\Framework\Json\Helper\Data')
-            ->jsonDecode($structure);
+        return $this->_jsonHelper->jsonDecode($structure);
     }
 
     /**
@@ -209,7 +211,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
     public function encodeStructure($structure)
     {
         if(is_array($structure)) {
-            $json = $this->_objectManager->get('Magento\Framework\Json\Helper\Data')->jsonEncode($structure);
+            $json = $this->_jsonHelper->jsonEncode($structure);
         } else {
             $json = $structure;
         }

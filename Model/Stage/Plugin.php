@@ -12,11 +12,6 @@ namespace Gene\BlueFoot\Model\Stage;
 class Plugin extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    protected $_objectManager;
-
-    /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
     protected $_configInterface;
@@ -26,7 +21,6 @@ class Plugin extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Framework\ObjectManagerInterface                    $objectManager
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
@@ -35,13 +29,11 @@ class Plugin extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_objectManager = $objectManager;
         $this->_configInterface = $configInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

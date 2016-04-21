@@ -19,6 +19,11 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
     protected $_setFactory;
 
     /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory
+     */
+    protected $_contentBlockGroupCollection;
+
+    /**
      * Formset constructor.
      *
      * @param \Magento\Backend\Block\Template\Context            $context
@@ -34,10 +39,12 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
         \Magento\Framework\Data\FormFactory $formFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $setFactory,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
+        \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory $contentBlockGroupCollectionFactory,
         array $data = []
     ) {
         $this->_setFactory = $setFactory;
         $this->_configInterface = $configInterface;
+        $this->_contentBlockGroupCollection = $contentBlockGroupCollectionFactory;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -98,6 +105,20 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
+            'group_id',
+            'select',
+            [
+                'label' => __('Group'),
+                'note' => __('The group for this page builder block to be displayed under within the page builder'),
+                'name' => 'group_id',
+                'required' => true,
+                'class' => 'required-entry',
+                'value' => $data->getGroupId(),
+                'options' => $this->_contentBlockGroupCollection->create()->toOptionHash()
+            ]
+        );
+
+        $fieldset->addField(
             'icon_class',
             'text',
             [
@@ -107,19 +128,6 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
                 'required' => true,
                 'class' => 'required-entry validate-no-html-tags',
                 'value' => $data->getIconClass()
-            ]
-        );
-
-        $fieldset->addField(
-            'color',
-            'text',
-            [
-                'label' => __('Color'),
-                'note' => __('The hex color code for this content type, this is used to display the content within the view.'),
-                'name' => 'color',
-                'required' => true,
-                'class' => 'required-entry validate-no-html-tags',
-                'value' => $data->getColor()
             ]
         );
 

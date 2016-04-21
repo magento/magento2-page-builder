@@ -12,14 +12,19 @@ namespace Gene\BlueFoot\Model\Stage;
 class Config extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var \Magento\Framework\ObjectManagerInterface|null
+     * @var \Gene\BlueFoot\Model\Stage\Structural
      */
-    protected $_objectManager = null;
+    protected $_structural;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
      */
     protected $_contentBlockCollection;
+
+    /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory
+     */
+    protected $_contentBlockGroupCollection;
 
     /**
      * @var \Magento\Eav\Model\EntityFactory
@@ -59,23 +64,27 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * Config constructor.
      *
-     * @param \Magento\Framework\Model\Context                                            $context
-     * @param \Magento\Framework\Registry                                                 $registry
-     * @param \Magento\Framework\ObjectManagerInterface                                   $objectManager
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory
-     * @param \Magento\Eav\Model\EntityFactory                                            $eavEntityFactory
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory   $groupCollectionFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory              $attributeCollection
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                 $configInterface
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
-     * @param array                                                                       $data
+     * @param \Magento\Framework\Model\Context                                                  $context
+     * @param \Magento\Framework\Registry                                                       $registry
+     * @param \Gene\BlueFoot\Model\Stage\Structural                                             $structural
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory       $contentBlockCollectionFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory $contentBlockGroupCollectionFactory
+     * @param \Magento\Eav\Model\EntityFactory                                                  $eavEntityFactory
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory         $groupCollectionFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory                    $attributeCollection
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                       $configInterface
+     * @param \Magento\Framework\View\LayoutFactory                                             $layoutFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory               $templateCollectionFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                      $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                                $resourceCollection
+     * @param array                                                                             $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Gene\BlueFoot\Model\Stage\Structural $structural,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory,
+        \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory $contentBlockGroupCollectionFactory,
         \Magento\Eav\Model\EntityFactory $eavEntityFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory $attributeCollection,
@@ -86,8 +95,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_objectManager = $objectManager;
+        $this->_structural = $structural;
         $this->_contentBlockCollection = $contentBlockCollectionFactory;
+        $this->_contentBlockGroupCollection = $contentBlockGroupCollectionFactory;
         $this->_eavEntityFactory = $eavEntityFactory;
         $this->_groupCollection = $groupCollectionFactory;
         $this->_attributeCollection = $attributeCollection;
@@ -105,18 +115,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getConfig()
     {
-        /* @var $structural \Gene\BlueFoot\Model\Stage\Structural */
-        $structural = $this->_objectManager->get('Gene\BlueFoot\Model\Stage\Structural');
-
         $config = [
-            'contentTypeGroups' => [ /* @todo */
-                'general' => [
-                    'icon' => '<i class="fa fa-chevron-down"></i>',
-                    'name' => 'General'
-                ]
-            ],
+            'contentTypeGroups' => $this->_contentBlockGroupCollection->create()->toPageBuilderArray(),
             'contentTypes' => $this->getContentBlockData(),
-            'structural' => $structural->getStructuralConfig(),
+            'structural' => $this->_structural->getStructuralConfig(),
             'templates' => $this->getTemplateData(),
             'globalFields' => $this->getGlobalFields()
         ];
@@ -195,8 +197,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'code' => $contentBlock->getIdentifier(),
             'name' => $contentBlock->getName(),
             'icon' => '<i class="' . $contentBlock->getIconClass() . '"></i>',
-            'color' => $contentBlock->getColor(),
-            'color_theme' => $this->_getColorTheme($contentBlock->getColor()),
+            'color' => '#444',
+            'color_theme' => $this->_getColorTheme('#444'),
             'contentType' => '',
             'group' => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
             'fields' => $fields,

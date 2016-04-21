@@ -40,7 +40,7 @@ class SavePageBuilder implements ObserverInterface
         $controllerAction = $observer->getEvent()->getControllerAction();
 
         // Watch for any structures
-        if ($structures = $controllerAction->getRequest()->getParam('gene-cms')) {
+        if ($structures = $controllerAction->getRequest()->getParam('gene-bluefoot')) {
             $this->_saveFactory->create()->saveStructures($structures);
         }
     }
