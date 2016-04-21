@@ -72,7 +72,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
-        \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory,
+        \Gene\BlueFoot\Model\EntityFactory $entityFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
@@ -193,7 +193,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
      */
     public function buildDataModelUpdate($contentType, $data, $fields)
     {
-        $attributeSet = $this->_contentBlockFactory->create()->load($contentType, 'identifier');
+        $attributeSet = $this->_contentBlockFactory->create()->load($contentType, 'entity_type.identifier');
         if ($attributeSet) {
             // Format the form data
             $formData = $data;
@@ -212,12 +212,12 @@ class Build extends \Magento\Framework\Model\AbstractModel
     /**
      * Get the data model values
      *
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity $entity
-     * @param                                           $fields
+     * @param \Gene\BlueFoot\Model\Entity $entity
+     * @param                             $fields
      *
      * @return array
      */
-    public function getDataModelValues(\Gene\BlueFoot\Model\ResourceModel\Entity $entity, $fields)
+    public function getDataModelValues(\Gene\BlueFoot\Model\Entity $entity, $fields)
     {
         $dataModelValues = array();
 

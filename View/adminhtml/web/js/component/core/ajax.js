@@ -28,6 +28,7 @@ define(['bluefoot/jquery', 'bluefoot/cms-config'], function (jQuery, InitConfig)
      */
     Ajax.prototype.get = function (url, parameters, successCallback, doneCallback, failedCallback, dataType) {
         parameters = parameters || {};
+        parameters.form_key = InitConfig.form_key;
         dataType = dataType || 'json';
         jQuery.get(
             url,

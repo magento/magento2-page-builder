@@ -67,7 +67,7 @@ class Init extends \Magento\Backend\Block\Template
             'form_key' => $this->formKey->getFormKey(),
             'init_button_class' => '.init-gene-bluefoot',
             'config_url' => $this->_urlBuilder->getUrl('bluefoot/stage/config'),
-            'data_update_url' => $this->_urlBuilder->getUrl('bluefoot/stage/update'),
+            'data_update_url' => $this->_urlBuilder->getUrl('bluefoot/stage/preview'),
             'template_save_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_save'),
             'template_delete_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_delete'),
             'template_pin_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_pin'),

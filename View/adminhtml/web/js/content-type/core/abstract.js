@@ -410,7 +410,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/dragd
             return callbackFn(previewView);
         }
 
-        this.entity.addClass('gene-bluefoot-loading');
+        //this.entity.addClass('gene-bluefoot-loading');
 
         // Build up the data for our ajax request
         var request = {
@@ -421,7 +421,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/dragd
 
         // Make the ajax request to retrieve the data model data
         var Ajax = new AjaxClass();
-        Ajax.get(Config.getValue('data_update_url'), request, function (data) {
+        Ajax.post(Config.getValue('data_update_url'), request, function (data) {
             if (data.success && data.fields) {
                 var dataModelPreview = jQuery.extend(previewView, data.fields);
                 callbackFn(dataModelPreview);
