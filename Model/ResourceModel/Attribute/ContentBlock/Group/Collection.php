@@ -29,23 +29,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         return $this->_toOptionHash('group_id', 'name');
     }
 
-    /**
-     * Return the data in an array suitable for the page builder
-     *
-     * @return array
-     */
-    public function toPageBuilderArray()
-    {
-        $array = [];
-
-        foreach ($this->getItems() as $item) {
-            $array[$item->getId()] = [
-                'icon' => $item->getIcon(),
-                'name' => $item->getName(),
-                'sort' => $item->getSortOrder()
-            ];
-        }
-
-        return $array;
-    }
 }

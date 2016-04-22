@@ -2,5 +2,18 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Gene\BlueFoot\Block\Element\Editor" />
     <preference for="Gene\BlueFoot\Model\Config\ConfigInterface" type="Gene\BlueFoot\Model\Config" />
-    <preference for="Gene\BlueFoot\Model\Attribute\ContentBlock\GroupInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\Group" />
+
+    <preference for="Gene\BlueFoot\Api\Data\ContentBlockGroupInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\Group" />
+    <preference for="Gene\BlueFoot\Api\Data\ContentBlockGroupSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+    <preference for="Gene\BlueFoot\Api\Data\ContentBlockGroupInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\Group" />
+    <preference for="Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository" />
+
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Gene\BlueFoot\Api\Data\ContentBlockGroupInterface" xsi:type="string">Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

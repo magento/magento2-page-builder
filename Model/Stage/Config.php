@@ -2,6 +2,9 @@
 
 namespace Gene\BlueFoot\Model\Stage;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
+
 /**
  * Class Plugin
  *
@@ -22,9 +25,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected $_contentBlockCollection;
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory
+     * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
      */
-    protected $_contentBlockGroupCollection;
+    protected $_contentBlockGroupRepository;
 
     /**
      * @var \Magento\Eav\Model\EntityFactory
@@ -62,48 +65,56 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected $_templateCollection;
 
     /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $_searchCriteriaBuilder;
+
+    /**
      * Config constructor.
      *
-     * @param \Magento\Framework\Model\Context                                                  $context
-     * @param \Magento\Framework\Registry                                                       $registry
-     * @param \Gene\BlueFoot\Model\Stage\Structural                                             $structural
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory       $contentBlockCollectionFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory $contentBlockGroupCollectionFactory
-     * @param \Magento\Eav\Model\EntityFactory                                                  $eavEntityFactory
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory         $groupCollectionFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory                    $attributeCollection
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                       $configInterface
-     * @param \Magento\Framework\View\LayoutFactory                                             $layoutFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory               $templateCollectionFactory
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                      $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null                                $resourceCollection
-     * @param array                                                                             $data
+     * @param \Magento\Framework\Model\Context                                            $context
+     * @param \Magento\Framework\Registry                                                 $registry
+     * @param \Gene\BlueFoot\Model\Stage\Structural                                       $structural
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory
+     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface                     $contentBlockGroupRepository
+     * @param \Magento\Eav\Model\EntityFactory                                            $eavEntityFactory
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory   $groupCollectionFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory              $attributeCollection
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                 $configInterface
+     * @param \Magento\Framework\View\LayoutFactory                                       $layoutFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory         $templateCollectionFactory
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder                                $searchCriteriaBuilder
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
+     * @param array                                                                       $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Stage\Structural $structural,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFactory $contentBlockGroupCollectionFactory,
+        ContentBlockGroupRepositoryInterface $contentBlockGroupRepository,
         \Magento\Eav\Model\EntityFactory $eavEntityFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory $attributeCollection,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_structural = $structural;
         $this->_contentBlockCollection = $contentBlockCollectionFactory;
-        $this->_contentBlockGroupCollection = $contentBlockGroupCollectionFactory;
+        $this->_contentBlockGroupRepository = $contentBlockGroupRepository;
         $this->_eavEntityFactory = $eavEntityFactory;
         $this->_groupCollection = $groupCollectionFactory;
         $this->_attributeCollection = $attributeCollection;
         $this->_configInterface = $configInterface;
         $this->_layoutFactory = $layoutFactory;
         $this->_templateCollection = $templateCollectionFactory;
+        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -116,7 +127,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getConfig()
     {
         $config = [
-            'contentTypeGroups' => $this->_contentBlockGroupCollection->create()->toPageBuilderArray(),
+            'contentTypeGroups' => $this->getContentBlockGroups(),
             'contentTypes' => $this->getContentBlockData(),
             'structural' => $this->_structural->getStructuralConfig(),
             'templates' => $this->getTemplateData(),
@@ -124,6 +135,28 @@ class Config extends \Magento\Framework\Model\AbstractModel
         ];
 
         return $config;
+    }
+
+    /**
+     * Retrieve the content block groups
+     *
+     * @return array
+     */
+    public function getContentBlockGroups()
+    {
+        $groups = [];
+
+        /* @var $groupsSearchResults \Magento\Framework\Api\SearchResults */
+        $groupsSearchResults = $this->_contentBlockGroupRepository->getList($this->_searchCriteriaBuilder->create());
+        foreach ($groupsSearchResults->getItems() as $group) {
+            $groups[$group['id']] = [
+                'icon' => $group['icon'],
+                'name' => $group['name'],
+                'sort' => $group['sort_order']
+            ];
+        }
+
+        return $groups;
     }
 
     /**
