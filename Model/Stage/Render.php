@@ -14,11 +14,6 @@ class Render extends \Magento\Framework\Model\AbstractModel
     const DEFAULT_STRUCTURAL_RENDERER = 'Gene\BlueFoot\Block\Entity\PageBuilder\Structural\AbstractStructural';
 
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    protected $_objectManager;
-
-    /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
     protected $_configInterface;
@@ -31,7 +26,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Collection
      */
-    protected $loadedTypes;
+    protected $_loadedTypes;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
@@ -41,7 +36,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\Collection
      */
-    protected $loadedEntities;
+    protected $_loadedEntities;
 
     /**
      * @var \Magento\Framework\View\LayoutFactory
@@ -58,7 +53,6 @@ class Render extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Framework\ObjectManagerInterface                    $objectManager
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
@@ -67,7 +61,6 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\EntityFactory $entityFactory,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection,
@@ -78,7 +71,6 @@ class Render extends \Magento\Framework\Model\AbstractModel
         array $data = []
     ) {
         $this->_entity = $entityFactory;
-        $this->_objectManager = $objectManager;
         $this->_configInterface = $configInterface;
         $this->_contentBlockCollection = $contentBlockCollection;
         $this->_entityCollection = $entityCollectionFactory;
@@ -96,7 +88,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function getEntity($entityId)
     {
-        if($loaded = $this->loadedEntities->getItemByColumnValue('entity_id', $entityId)) {
+        if($loaded = $this->_loadedEntities->getItemByColumnValue('entity_id', $entityId)) {
             return $loaded;
         }
 
@@ -134,7 +126,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         if(!empty($pageBuilderSections)) {
 
             // Load an entire collection of content types
-            $this->loadedTypes = $this->_contentBlockCollection->create()
+            $this->_loadedTypes = $this->_contentBlockCollection->create()
                 ->addFieldToSelect('*');
 
             // Return the HTML built
@@ -182,13 +174,13 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function buildSectionHtml(array $json)
     {
         // Load all of the entities
-        $this->loadedEntities = $this->buildEntities($json);
+        $this->_loadedEntities = $this->buildEntities($json);
 
         // Start our string
         $sectionHtml = '';
 
         // Verify we have some entities
-        if(!empty($this->loadedEntities)) {
+        if(!empty($this->_loadedEntities)) {
             $this->buildElementHtmlFromArray($json, $sectionHtml);
         }
 

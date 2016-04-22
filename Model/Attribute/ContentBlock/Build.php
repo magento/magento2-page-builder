@@ -16,22 +16,22 @@ class Build
     /**
      * @var \Magento\Eav\Model\Entity\Attribute\SetFactory
      */
-    protected $attributeSetFactory;
+    protected $_attributeSetFactory;
 
     /**
      * @var string
      */
-    protected $name;
+    protected $_name;
 
     /**
      * @var int
      */
-    protected $entityTypeId;
+    protected $_entityTypeId;
 
     /**
      * @var int
      */
-    protected $skeletonId;
+    protected $_skeletonId;
 
     /**
      * @param \Magento\Eav\Model\Entity\Attribute\SetFactory $attributeSetFactory
@@ -39,7 +39,7 @@ class Build
     public function __construct(
         \Magento\Eav\Model\Entity\Attribute\SetFactory  $attributeSetFactory
     ) {
-        $this->attributeSetFactory = $attributeSetFactory;
+        $this->_attributeSetFactory = $attributeSetFactory;
     }
 
     /**
@@ -48,7 +48,7 @@ class Build
      */
     public function setEntityTypeId($entityTypeId)
     {
-        $this->entityTypeId = (int)$entityTypeId;
+        $this->_entityTypeId = (int)$entityTypeId;
         return $this;
     }
 
@@ -58,7 +58,7 @@ class Build
      */
     public function setSkeletonId($skeletonId)
     {
-        $this->skeletonId = (int)$skeletonId;
+        $this->_skeletonId = (int)$skeletonId;
         return $this;
     }
 
@@ -68,7 +68,7 @@ class Build
      */
     public function setName($setName)
     {
-        $this->name = $setName;
+        $this->_name = $setName;
         return $this;
     }
 
@@ -80,15 +80,15 @@ class Build
     {
         $this->validateParameters();
         /** @var \Magento\Eav\Model\Entity\Attribute\Set $attributeSet */
-        $attributeSet = $this->attributeSetFactory->create();
-        $attributeSet->setEntityTypeId($this->entityTypeId)->load($this->name, 'attribute_set_name');
+        $attributeSet = $this->_attributeSetFactory->create();
+        $attributeSet->setEntityTypeId($this->_entityTypeId)->load($this->_name, 'attribute_set_name');
         if ($attributeSet->getId()) {
             throw new AlreadyExistsException(__('Attribute Set already exists.'));
         }
 
-        $attributeSet->setAttributeSetName($this->name)->validate();
+        $attributeSet->setAttributeSetName($this->_name)->validate();
         $attributeSet->save();
-        $attributeSet->initFromSkeleton($this->skeletonId)->save();
+        $attributeSet->initFromSkeleton($this->_skeletonId)->save();
 
         return $attributeSet;
     }
@@ -99,11 +99,11 @@ class Build
      */
     protected function validateParameters()
     {
-        if (empty($this->name)) {
+        if (empty($this->_name)) {
             throw new \InvalidArgumentException();
-        } elseif (empty($this->skeletonId)) {
+        } elseif (empty($this->_skeletonId)) {
             throw new \InvalidArgumentException();
-        } elseif (empty($this->entityTypeId)) {
+        } elseif (empty($this->_entityTypeId)) {
             throw new \InvalidArgumentException();
         }
     }

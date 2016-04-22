@@ -9,6 +9,23 @@ namespace Gene\BlueFoot\Model\Attribute\Data;
  */
 interface WidgetInterface
 {
+    const ENTITY = 'entity';
+    const ATTRIBUTE = 'attribute';
+
+    /**
+     * Return the entity
+     *
+     * @return \Gene\BlueFoot\Model\Entity
+     */
+    public function getEntity();
+
+    /**
+     * Return the attribute
+     *
+     * @return \Gene\BlueFoot\Model\Attribute
+     */
+    public function getAttribute();
+
     /**
      * Return the data models data as JSON
      *

@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Gene\BlueFoot\Model\Attribute\ContentBlock;
 
 use Gene\BlueFoot\Api\Data;
@@ -19,45 +16,46 @@ use Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFac
 /**
  * Class GroupRepository
  *
- * @package Magento\Cms\Model
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @package Gene\BlueFoot\Model\Attribute\ContentBlock
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class GroupRepository implements ContentBlockGroupRepositoryInterface
 {
     /**
      * @var ResourceGroup
      */
-    protected $resource;
+    protected $_resource;
 
     /**
      * @var GroupFactory
      */
-    protected $groupFactory;
+    protected $_groupFactory;
 
     /**
      * @var GroupCollectionFactory
      */
-    protected $groupCollectionFactory;
+    protected $_groupCollectionFactory;
 
     /**
      * @var Data\ContentBlockGroupSearchResultsInterfaceFactory
      */
-    protected $searchResultsFactory;
+    protected $_searchResultsFactory;
 
     /**
      * @var DataObjectHelper
      */
-    protected $dataObjectHelper;
+    protected $_dataObjectHelper;
 
     /**
      * @var DataObjectProcessor
      */
-    protected $dataObjectProcessor;
+    protected $_dataObjectProcessor;
 
     /**
      * @var \Gene\BlueFoot\Api\Data\ContentBlockGroupInterfaceFactory
      */
-    protected $dataGroupFactory;
+    protected $_dataGroupFactory;
 
     /**
      * GroupRepository constructor.
@@ -79,13 +77,13 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor
     ) {
-        $this->resource = $resource;
-        $this->groupFactory = $groupFactory;
-        $this->groupCollectionFactory = $groupCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataGroupFactory = $dataGroupFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
+        $this->_resource = $resource;
+        $this->_groupFactory = $groupFactory;
+        $this->_groupCollectionFactory = $groupCollectionFactory;
+        $this->_searchResultsFactory = $searchResultsFactory;
+        $this->_dataObjectHelper = $dataObjectHelper;
+        $this->_dataGroupFactory = $dataGroupFactory;
+        $this->_dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
@@ -99,7 +97,7 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
     public function save(\Gene\BlueFoot\Api\Data\ContentBlockGroupInterface $group)
     {
         try {
-            $this->resource->save($group);
+            $this->_resource->save($group);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
                 'Could not save the group: %1',
@@ -119,7 +117,7 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
      */
     public function getById($groupId)
     {
-        $group = $this->groupFactory->create();
+        $group = $this->_groupFactory->create();
         $group->load($groupId);
         if (!$group->getId()) {
             throw new NoSuchEntityException(__('Group with id "%1" does not exist.', $groupId));
@@ -136,10 +134,10 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria)
     {
-        $searchResults = $this->searchResultsFactory->create();
+        $searchResults = $this->_searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
 
-        $collection = $this->groupCollectionFactory->create();
+        $collection = $this->_groupCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
                 $condition = $filter->getConditionType() ?: 'eq';
@@ -162,13 +160,13 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
         $groups = [];
         /** @var Group $groupModel */
         foreach ($collection as $groupModel) {
-            $groupData = $this->dataGroupFactory->create();
-            $this->dataObjectHelper->populateWithArray(
+            $groupData = $this->_dataGroupFactory->create();
+            $this->_dataObjectHelper->populateWithArray(
                 $groupData,
                 $groupModel->getData(),
                 'Gene\BlueFoot\Api\Data\ContentBlockGroupInterface'
             );
-            $groups[] = $this->dataObjectProcessor->buildOutputDataArray(
+            $groups[] = $this->_dataObjectProcessor->buildOutputDataArray(
                 $groupData,
                 'Gene\BlueFoot\Api\Data\ContentBlockGroupInterface'
             );
@@ -188,7 +186,7 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
     public function delete(\Gene\BlueFoot\Api\Data\ContentBlockGroupInterface $group)
     {
         try {
-            $this->resource->delete($group);
+            $this->_resource->delete($group);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
                 'Could not delete the group: %1',

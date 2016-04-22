@@ -12,11 +12,6 @@ namespace Gene\BlueFoot\Model\Stage;
 class Build extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var \Magento\Framework\ObjectManagerInterface|null
-     */
-    protected $_objectManager = null;
-
-    /**
      * @var array
      */
     protected $_attributeData;
@@ -56,7 +51,6 @@ class Build extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
-     * @param \Magento\Framework\ObjectManagerInterface                    $objectManager
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
@@ -69,7 +63,6 @@ class Build extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Gene\BlueFoot\Model\EntityFactory $entityFactory,
@@ -81,7 +74,6 @@ class Build extends \Magento\Framework\Model\AbstractModel
         array $data = []
     )
     {
-        $this->_objectManager = $objectManager;
         $this->_configInterface = $configInterface;
         $this->_layoutFactory = $layoutFactory;
         $this->_entityCollectionFactory = $entityCollectionFactory;

@@ -12,7 +12,17 @@ namespace Gene\BlueFoot\Model\Stage;
 class Structural extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * Plugin constructor.
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    protected $_objectManager;
+
+    /**
+     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
+     */
+    protected $_configInterface;
+
+    /**
+     * Structural constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
@@ -31,7 +41,7 @@ class Structural extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_objectManager = $objectManager;
+        $this->_objectManager = $objectManager; /* Used for dynamic module loading below */
         $this->_configInterface = $configInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

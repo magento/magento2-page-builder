@@ -25,7 +25,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             'plugins' => [],
             'templates' => [],
             'renderers' => [],
-            'widgets' => []
+            'widgets' => [],
+            'global_fields' => []
         ];
 
         // Pull in all of the JS plugins
