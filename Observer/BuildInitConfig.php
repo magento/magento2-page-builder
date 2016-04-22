@@ -61,6 +61,8 @@ class BuildInitConfig implements ObserverInterface
         $pluginData['gene_widget_search_category']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'category']);
         $pluginData['gene_widget_search_staticblock']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'staticblock']);
 
+        $pluginData['gene_widget_video']['config']['source_url'] = Mage::helper('adminhtml')->getUrl('bluefoot/stage/widget_video');
+
         $config->setData('plugins', $pluginData);
 
         return $this;

@@ -267,6 +267,12 @@ class Save extends \Magento\Framework\Model\AbstractModel
         // Place back in our square brackets
         $elementName = str_replace(array('[',']'), array('.',''), $elementName);
 
+        // Handle that the catalog prepends the fields with 'product'
+        // @todo investigate making this universal
+        if ($this->_request->getControllerModule() == 'Magento_Catalog' && $this->_request->getActionName() == 'save') {
+            $elementName = 'product.' . $elementName;
+        }
+
         // Use "borrowed" Laravel function
         $this->set($_POST, $elementName, $data);
 

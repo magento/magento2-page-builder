@@ -56,6 +56,7 @@ class Init extends \Magento\Backend\Block\Template
             'encode_string' => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
             'stage_template' => '#gene-bluefoot-stage-template',
             'template_template' => '#gene-bluefoot-stage-template-controls',
+            'template_selection_grid_template' => '#gene-bluefoot-template-selection-grid',
             'panel_template' => '#gene-bluefoot-stage-panel-template',
             'row_template' => '#gene-bluefoot-row-template',
             'column_template' => '#gene-bluefoot-column-template',

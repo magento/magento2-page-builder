@@ -167,10 +167,11 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
             }
         });
     };
+
     /**
      * Send ajax request to delete template from server then unset the config.
      *
-     * @param name
+     * @param templateId
      * @returns {boolean}
      * @private
      */
