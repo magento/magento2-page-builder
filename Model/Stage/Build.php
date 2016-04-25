@@ -53,6 +53,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
+     * @param \Gene\BlueFoot\Model\EntityFactory                           $entityFactory
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
      * @param \Magento\Framework\Data\CollectionFactory                    $dataCollectionFactory
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory

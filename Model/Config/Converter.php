@@ -97,6 +97,17 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     'name' => $node->getAttribute('name'),
                     'file' => $node->getAttribute('file')
                 ];
+
+                if ($node->hasChildNodes()) {
+                    /* @var $assets DOMNodeList */
+                    $assets = $node->getElementsByTagName('asset');
+                    if ($assets->length > 0) {
+                        for ($assetI = 0; $assetI < $assets->length; $assetI++) {
+                            $asset = $assets->item($assetI);
+                            $output['templates'][$node->getAttribute('name')]['assets'][$asset->getAttribute('name')] = $asset->getAttribute('src');
+                        }
+                    }
+                }
             }
         }
 

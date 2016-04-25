@@ -1,4 +1,5 @@
 <?php
+
 namespace Gene\BlueFoot\Block\Element;
 
 /**
