@@ -66,7 +66,7 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
             'text',
             [
                 'label' => __('Name'),
-                'note' => __('The name for your content block, this will be displayed in the page builder'),
+                'note' => __('The name for your page builder block, this will be displayed in the page builder'),
                 'name' => 'attribute_set_name',
                 'required' => true,
                 'class' => 'required-entry validate-no-html-tags',

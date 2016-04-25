@@ -55,7 +55,7 @@ class Add extends \Magento\Backend\Block\Template
      */
     protected function _getHeader()
     {
-        return __('Add New Content Block');
+        return __('Add New Page Builder Block');
     }
 
     /**

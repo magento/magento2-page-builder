@@ -48,7 +48,7 @@ class Main extends \Magento\Backend\Block\Template
     /**
      * @var \Magento\Catalog\Model\Entity\Product\Attribute\Group\AttributeMapperInterface
      */
-    protected $attributeMapper;
+    protected $_attributeMapper;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -75,7 +75,7 @@ class Main extends \Magento\Backend\Block\Template
         $this->_groupFactory = $groupFactory;
         $this->_collectionFactory = $collectionFactory;
         $this->_coreRegistry = $registry;
-        $this->attributeMapper = $attributeMapper;
+        $this->_attributeMapper = $attributeMapper;
         parent::__construct($context, $data);
     }
 
@@ -186,7 +186,7 @@ class Main extends \Magento\Backend\Block\Template
      */
     protected function _getHeader()
     {
-        return __("Edit Content Block '%1'", $this->_getAttributeSet()->getAttributeSetName());
+        return __("Edit Page Builder Block '%1'", $this->_getAttributeSet()->getAttributeSetName());
     }
 
     /**
@@ -240,7 +240,7 @@ class Main extends \Magento\Backend\Block\Template
             if ($nodeChildren->getSize() > 0) {
                 $item['children'] = [];
                 foreach ($nodeChildren->getItems() as $child) {
-                    $item['children'][] = $this->attributeMapper->map($child);
+                    $item['children'][] = $this->_attributeMapper->map($child);
                 }
             }
 

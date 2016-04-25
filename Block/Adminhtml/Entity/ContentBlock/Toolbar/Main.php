@@ -25,7 +25,7 @@ class Main extends \Magento\Backend\Block\Template
             'addButton',
             'Magento\Backend\Block\Widget\Button',
             [
-                'label' => __('Add Content Block'),
+                'label' => __('Add Page Builder Block'),
                 'onclick' => 'setLocation(\'' . $this->getUrl('bluefoot/*/add') . '\')',
                 'class' => 'add primary add-set'
             ]
@@ -46,7 +46,7 @@ class Main extends \Magento\Backend\Block\Template
      */
     protected function _getHeader()
     {
-        return __('Content Blocks');
+        return __('Page Builder Blocks');
     }
 
     /**

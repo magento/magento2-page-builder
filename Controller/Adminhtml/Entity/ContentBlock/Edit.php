@@ -48,12 +48,12 @@ class Edit extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Gene_BlueFoot::blocks');
-        $resultPage->getConfig()->getTitle()->prepend(__('Content Blocks'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Page Builder Blocks'));
         $resultPage->getConfig()->getTitle()->prepend(
-            $attributeSet->getId() ? $attributeSet->getAttributeSetName() : __('New Content Block')
+            $attributeSet->getId() ? $attributeSet->getAttributeSetName() : __('New Page Builder Block')
         );
         $resultPage->addBreadcrumb(__('BlueFoot'), __('BlueFoot'));
-        $resultPage->addBreadcrumb(__('Manage Content Blocks'), __('Manage Content Blocks'));
+        $resultPage->addBreadcrumb(__('Manage Page Builder Blocks'), __('Manage Page Builder Blocks'));
         return $resultPage;
     }
 }

@@ -40,7 +40,7 @@ class Add extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Gene_BlueFoot::blocks');
-        $resultPage->getConfig()->getTitle()->prepend(__('New Content Block'));
+        $resultPage->getConfig()->getTitle()->prepend(__('New Page Builder Block'));
         $resultPage->addContent(
             $resultPage->getLayout()->createBlock('Gene\BlueFoot\Block\Adminhtml\Entity\ContentBlock\Toolbar\Add')
         );
