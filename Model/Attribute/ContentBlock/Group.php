@@ -3,6 +3,7 @@
 namespace Gene\BlueFoot\Model\Attribute\ContentBlock;
 
 use Gene\BlueFoot\Api\Data\ContentBlockGroupInterface;
+use Magento\Framework\DataObject\IdentityInterface;
 
 /**
  * Class Group
@@ -11,14 +12,9 @@ use Gene\BlueFoot\Api\Data\ContentBlockGroupInterface;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Group extends \Magento\Framework\Model\AbstractModel implements ContentBlockGroupInterface, \Magento\Framework\DataObject\IdentityInterface
+class Group extends \Magento\Framework\Model\AbstractModel implements ContentBlockGroupInterface, IdentityInterface
 {
-    /**
-     * The cache tag to ensure this model gets cached effectively
-     */
-    const CACHE_TAG = 'gene_bluefoot_entity_type_group';
-
-    /**
+     /**
      * Define resource model
      */
     protected function _construct()

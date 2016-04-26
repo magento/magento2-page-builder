@@ -2,8 +2,12 @@
 
 namespace Gene\BlueFoot\Model\Stage;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Gene\BlueFoot\Api\EntityRepositoryInterface;
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+
 /**
- * Class Plugin
+ * Class Build
  *
  * @package Gene\BlueFoot\Model\Stage
  *
@@ -27,11 +31,6 @@ class Build extends \Magento\Framework\Model\AbstractModel
     protected $_layoutFactory;
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
-     */
-    protected $_entityCollectionFactory;
-
-    /**
      * @var \Magento\Framework\Data\CollectionFactory
      */
     protected $_dataCollectionFactory;
@@ -47,12 +46,26 @@ class Build extends \Magento\Framework\Model\AbstractModel
     protected $_entityFactory;
 
     /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $_searchCriteriaBuilder;
+
+    /**
+     * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
+     */
+    protected $_entityRepositoryInterface;
+
+    /**
+     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
+     */
+    protected $_contentBlockRepositoryInterface;
+
+    /**
      * Build constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
      * @param \Gene\BlueFoot\Model\EntityFactory                           $entityFactory
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
      * @param \Magento\Framework\Data\CollectionFactory                    $dataCollectionFactory
@@ -65,11 +78,13 @@ class Build extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
-        \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Gene\BlueFoot\Model\EntityFactory $entityFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        EntityRepositoryInterface $entityRepositoryInterface,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -77,10 +92,12 @@ class Build extends \Magento\Framework\Model\AbstractModel
     {
         $this->_configInterface = $configInterface;
         $this->_layoutFactory = $layoutFactory;
-        $this->_entityCollectionFactory = $entityCollectionFactory;
         $this->_entityFactory = $entityFactory;
         $this->_dataCollectionFactory = $dataCollectionFactory;
         $this->_contentBlockFactory = $contentBlockFactory;
+        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->_entityRepositoryInterface = $entityRepositoryInterface;
+        $this->_contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -99,15 +116,18 @@ class Build extends \Magento\Framework\Model\AbstractModel
         $entityIds = array_unique($entityIds);
 
         // Retrieve all the entities
-        $entities = $this->_entityCollectionFactory->create();
-        $entities->addAttributeToSelect('*')
-            ->addAttributeToFilter('entity_id', $entityIds);
+        $searchCriteria = $this->_searchCriteriaBuilder->addFilter('entity_id', $entityIds, 'in')->create();
 
+        /* @var $entities \Magento\Framework\Api\SearchResults */
+        $entities = $this->_entityRepositoryInterface->getList($searchCriteria);
+
+        // Create an empty collection to be populated by the search results
         $entityData = $this->_dataCollectionFactory->create();
 
-        if($entities->getSize()) {
+        if($entities->getTotalCount() > 0) {
             // Build up the entities
-            foreach ($entities as $entity) {
+            /* @var $entity \Gene\BlueFoot\Model\Entity */
+            foreach ($entities->getItems() as $entity) {
                 $obj = new \Magento\Framework\DataObject();
                 $obj->setData($this->cleanseData($entity->getData()));
                 $obj->setData('preview_view', $this->cleanseData($this->buildPreviewView($entity)));
@@ -115,7 +135,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
             }
         }
 
-        //Mage::dispatchEvent('gene_bluefoot_build_config_entities', array('entities' => $entityData));
+        $this->_eventManager->dispatch('gene_bluefoot_build_config_entities', ['entities' => $entityData]);
 
         // Convert $entityData to an array
         $entityArray = [];
@@ -186,7 +206,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
      */
     public function buildDataModelUpdate($contentType, $data, $fields)
     {
-        $attributeSet = $this->_contentBlockFactory->create()->load($contentType, 'entity_type.identifier');
+        $attributeSet = $this->_contentBlockRepositoryInterface->getByIdentifier($contentType);
         if ($attributeSet) {
             // Format the form data
             $formData = $data;

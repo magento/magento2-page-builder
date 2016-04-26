@@ -3,9 +3,9 @@
 namespace Gene\BlueFoot\Api\Data;
 
 /**
- * Interface GroupInterface
+ * Interface ContentBlockGroupInterface
  *
- * @package Gene\BlueFoot\Model\Attribute\ContentBlock
+ * @package Gene\BlueFoot\Api\Data
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
@@ -16,6 +16,7 @@ interface ContentBlockGroupInterface
     const NAME = 'name';
     const ICON = 'icon';
     const SORT_ORDER = 'sort_order';
+    const CACHE_TAG = 'gene_bluefoot_entity_type_group';
 
     /**
      * Get ID

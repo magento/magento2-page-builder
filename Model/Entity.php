@@ -2,6 +2,9 @@
 
 namespace Gene\BlueFoot\Model;
 
+use Gene\BlueFoot\Api\Data\EntityInterface;
+use Magento\Framework\DataObject\IdentityInterface;
+
 /**
  * Class Entity
  *
@@ -9,11 +12,9 @@ namespace Gene\BlueFoot\Model;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Entity extends \Magento\Framework\Model\AbstractModel
+class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInterface, IdentityInterface
 {
-    const ENTITY = 'gene_bluefoot_entity';
-
-    /**
+     /**
      * @var \Gene\BlueFoot\Model\Entity\FrontendFactory
      */
     protected $_frontend;
@@ -60,6 +61,16 @@ class Entity extends \Magento\Framework\Model\AbstractModel
     public function _construct()
     {
         $this->_init('Gene\BlueFoot\Model\ResourceModel\Entity');
+    }
+
+    /**
+     * Return the identities associated with the model
+     *
+     * @return array
+     */
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Gene\BlueFoot\Api;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
-
 /**
  * Interface GroupRepositoryInterface
  *
