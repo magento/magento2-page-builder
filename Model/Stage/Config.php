@@ -70,6 +70,11 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected $_searchCriteriaBuilder;
 
     /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
+     */
+    protected $_entity;
+
+    /**
      * Config constructor.
      *
      * @param \Magento\Framework\Model\Context                                            $context
@@ -84,6 +89,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\View\LayoutFactory                                       $layoutFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory         $templateCollectionFactory
      * @param \Magento\Framework\Api\SearchCriteriaBuilder                                $searchCriteriaBuilder
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                                   $entity
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
      * @param array                                                                       $data
@@ -101,6 +107,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -115,6 +122,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $this->_layoutFactory = $layoutFactory;
         $this->_templateCollection = $templateCollectionFactory;
         $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->_entity = $entity;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -203,6 +211,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
         // Retrieve content blocks
         $contentBlocks = $this->_contentBlockCollection->create();
         $contentBlocks->setEntityTypeFilter($this->_eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId());
+
+        // Don't load in the default attribute set
+        $contentBlocks->addFieldToFilter('main_table.attribute_set_id', array('neq' => $this->_entity->getEntityType()->getDefaultAttributeSetId()));
 
         $contentBlockData = [];
         /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock */
@@ -328,19 +339,22 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected function _getContentBlockFields(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $groupData)
     {
         $attributes = $contentBlock->getAllAttributes();
-
-        $fields = [];
-        /* @var $attribute \Gene\BlueFoot\Model\Attribute */
-        foreach ($attributes as $attribute) {
-            if ($attributeData = $this->_getAttributeData($attribute)) {
-                // Assign the data from the getAttributeData call
-                $fields[$attribute->getAttributeCode()] = $attributeData;
-                // Assign the group from the group data
-                $fields[$attribute->getAttributeCode()]['group'] = isset($groupData[$attribute->getId()]) ?  $groupData[$attribute->getId()] : 'General';
+        if ($attributes) {
+            $fields = [];
+            /* @var $attribute \Gene\BlueFoot\Model\Attribute */
+            foreach ($attributes as $attribute) {
+                if ($attributeData = $this->_getAttributeData($attribute)) {
+                    // Assign the data from the getAttributeData call
+                    $fields[$attribute->getAttributeCode()] = $attributeData;
+                    // Assign the group from the group data
+                    $fields[$attribute->getAttributeCode()]['group'] = isset($groupData[$attribute->getId()]) ?  $groupData[$attribute->getId()] : 'General';
+                }
             }
+
+            return $fields;
         }
 
-        return $fields;
+        return [];
     }
 
     /**
