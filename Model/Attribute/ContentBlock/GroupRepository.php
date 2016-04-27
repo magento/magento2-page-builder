@@ -126,6 +126,24 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
     }
 
     /**
+     * Load a group by it's code
+     *
+     * @param $groupCode
+     *
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getByCode($groupCode)
+    {
+        $group = $this->_groupFactory->create();
+        $group->load($groupCode, 'code');
+        if (!$group->getId()) {
+            throw new NoSuchEntityException(__('Group with code "%1" does not exist.', $groupCode));
+        }
+        return $group;
+    }
+
+    /**
      * Load group data from criteria
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria

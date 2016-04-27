@@ -1,0 +1,294 @@
+<?php
+
+namespace Gene\BlueFoot\Model\Installer\Install;
+
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
+use Gene\BlueFoot\Setup\EntitySetupFactory;
+
+/**
+ * Class ContentBlock
+ *
+ * @package Gene\BlueFoot\Model\Installer
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
+ */
+class ContentBlock extends AbstractInstall
+{
+    /**
+     * @var array
+     */
+    protected $_attributeData = [];
+
+    /**
+     * @var array
+     */
+    protected $_unresolvedAdditionalData = [];
+
+    /**
+     * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
+     */
+    protected $_contentBlockGroupRepository;
+
+    /**
+     * @var \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory
+     */
+    protected $_contentBlockGroupFactory;
+
+    /**
+     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
+     */
+    protected $_contentBlockFactory;
+
+    /**
+     * @var \Magento\Eav\Model\Entity\AttributeFactory
+     */
+    protected $_eavAttributeFactory;
+
+    /**
+     * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory
+     */
+    protected $_eavAttributeCollectionFactory;
+
+    /**
+     * @var \Magento\Eav\Model\Entity\Attribute\GroupFactory
+     */
+    protected $_eavAttributeGroupFactory;
+
+    /**
+     * Attribute constructor.
+     *
+     * @param \Magento\Framework\Model\Context                             $context
+     * @param \Magento\Framework\Registry                                  $registry
+     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
+     * @param array                                                        $data
+     */
+    public function __construct(
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        EntitySetupFactory $entitySetupFactory,
+        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
+        \Magento\Framework\Filesystem\Io\File $ioFile,
+        \Magento\Framework\Module\Dir\Reader $moduleReader,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
+        ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface,
+        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory,
+        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,
+        \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory,
+        \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = []
+    ) {
+        parent::__construct($context, $registry, $entitySetupFactory, $entity, $ioFile, $moduleReader, $contentBlockRepositoryInterface, $resource, $resourceCollection);
+
+        $this->_contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
+        $this->_contentBlockGroupFactory = $groupFactory;
+
+        $this->_contentBlockFactory = $contentBlockFactory;
+
+        $this->_eavAttributeFactory = $eavAttributeFactory;
+        $this->_eavAttributeCollectionFactory = $eavAttributeCollectionFactory;
+        $this->_eavAttributeGroupFactory = $eavAttributeGroupFactory;
+    }
+
+    /**
+     * Create a single content block
+     *
+     * @param            $contentBlockData
+     * @param bool|false $contentBlockIdentifier
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function createContentBlock($contentBlockData, $contentBlockIdentifier = false)
+    {
+        // Set the attribute code into the data if passed separately
+        if ($contentBlockIdentifier === false && isset($contentBlockData['identifier'])) {
+            $contentBlockIdentifier = $contentBlockData['identifier'];
+            unset($contentBlockData['identifier']);
+        }
+
+        // Ensure the data has an attribute code
+        if (!$contentBlockIdentifier || empty($contentBlockIdentifier)) {
+            throw new \Exception('No content block identifier defined');
+        }
+
+        // Add the new attribute providing it doesn't already exist
+        if (!$this->_contentBlockExists($contentBlockIdentifier)) {
+
+            if (!isset($contentBlockData['attribute_data'])) {
+                throw new \Exception('No attribute data present for content block ' . $contentBlockIdentifier);
+            }
+            $attributeData = $contentBlockData['attribute_data'];
+
+            $contentBlockDataObject = new \Magento\Framework\DataObject();
+            $contentBlockDataObject->addData($contentBlockData);
+
+            // Remove the unneeded extra data from the object
+            $contentBlockDataObject->unsetData('group')->unsetData('attribute_data');
+            $contentBlockDataObject->setData('attribute_set_name', $contentBlockDataObject->getData('name'));
+
+            $attributes = (isset($attributeData['attributes']) && is_array($attributeData['attributes'])) ? $attributeData['attributes'] : false;
+            if (!$attributes) {
+                throw new \Exception('No attributes are associated with ' . $contentBlockIdentifier);
+            }
+
+            $attributeGroups = (isset($attributeData['groups'])  && is_array($attributeData['attributes'])) ? $attributeData['groups'] : false;
+
+            // Determine if this content block has all the required attributes
+            $missingAttributes = [];
+            foreach ($attributes as $attributeCode) {
+                if (!$this->_attributeExists($attributeCode)) {
+                    $missingAttributes[] = $attributeCode;
+                }
+            }
+
+            // Content blocks require all attributes to be present on creation
+            if (count($missingAttributes) > 0) {
+                throw new \Exception(count($missingAttributes) . ' attribute dependencies are missing for content block ' . $contentBlockIdentifier . ': ' . implode( ', ', $missingAttributes));
+            }
+
+            /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock\Interceptor */
+            $contentBlock = $this->_contentBlockFactory->create();
+
+            // Pass the data from the installation json into the new content block model
+            $contentBlock->setData($contentBlockDataObject->getData());
+
+            // Find or create the group for this content block
+            $groupId = 0;
+            /* @var $group \Gene\BlueFoot\Model\Attribute\ContentBlock\Group */
+            if ($group = $this->_findOrCreateGroup($contentBlockData['group'])) {
+                $groupId = $group->getId();
+            }
+
+            // Set the group ID for display in the page builder
+            $contentBlock->setGroupId($groupId);
+
+            // Save before adding in the groups
+            $contentBlock->save();
+
+            // Build up the attributes and groups
+            $contentBlock->setGroups($this->_buildGroups($contentBlock, $attributeGroups));
+
+            $contentBlock->save();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Create multiple content blocks
+     *
+     * @param $contentBlocks
+     * @param $installData
+     *
+     * @return $this
+     */
+    public function createContentBlocks($contentBlocks, $installData)
+    {
+        if (is_array($installData) && !empty($installData)) {
+            $this->setInstallData($installData);
+        }
+
+        if (is_array($contentBlocks)) {
+            foreach ($contentBlocks as $contentBlock) {
+                if (isset($contentBlock['identifier'])) {
+                    $this->createContentBlock($contentBlock, $contentBlock['identifier']);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Find or create a group for the content block
+     *
+     * @param $groupCode
+     *
+     * @return bool
+     */
+    protected function _findOrCreateGroup($groupCode)
+    {
+        try {
+            if ($group = $this->_contentBlockGroupRepository->getByCode($groupCode)) {
+                return $group;
+            }
+        } catch (\Exception $e) {
+            // If the group isn't found, create the group below
+        }
+
+        $group = $this->_contentBlockGroupFactory->create();
+        $group->addData([
+            'code' => $groupCode,
+            'name' => ucwords($groupCode),
+            'sort_order' => 99,
+            'icon' => '<i class="fa fa-chevron-down"></i>'
+        ]);
+
+        if ($group->save()) {
+            return $group;
+        }
+
+        return false;
+    }
+
+    /**
+     * Build the groups for the content block
+     *
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
+     * @param                                             $attributeGroups
+     *
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _buildGroups(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $attributeGroups)
+    {
+        $newGroups = [];
+        foreach ($attributeGroups as $group) {
+
+            $groupAttributes = isset($group['attributes']) ? $group['attributes'] : [];
+            unset($group['attributes']);
+
+            // Create the group
+            $groupObject = $this->_eavAttributeGroupFactory->create();
+            $groupObject->setData($group);
+            $groupObject->setAttributeSetId($contentBlock->getAttributeSetId());
+
+            $attributeCodes = [];
+            foreach ($groupAttributes as $gAttribute) {
+                $attrCode = isset($gAttribute['attribute_code']) ? $gAttribute['attribute_code'] : false;
+                if ($attrCode) {
+                    $attributeCodes[] = $attrCode;
+                }
+            }
+
+            if (count($attributeCodes) > 0) {
+                $groupAttributesCollection = $this->_eavAttributeCollectionFactory->create()
+                    ->setCodeFilter($attributeCodes)
+                    ->setEntityTypeFilter($this->getEntityTypeId())
+                    ->load();
+
+                $modelAttributeArray = [];
+                foreach ($groupAttributesCollection as $gAttribute) {
+                    $newAttribute = $this->_eavAttributeFactory->create()
+                        ->setId($gAttribute->getId())
+                        ->setAttributeSetId($contentBlock->getAttributeSetId())
+                        ->setEntityTypeId($this->getEntityTypeId())
+                        ->setSortOrder($gAttribute->getSortOrder());
+
+                    $modelAttributeArray[] = $newAttribute;
+                }
+                $groupObject->setAttributes($modelAttributeArray);
+                $newGroups[] = $groupObject;
+            }
+        }
+
+        return $newGroups;
+    }
+
+}

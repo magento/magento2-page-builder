@@ -2,6 +2,7 @@
 
 namespace Gene\BlueFoot\Setup;
 
+use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -20,14 +21,29 @@ class InstallData implements InstallDataInterface
      *
      * @var EntitySetupFactory
      */
-    private $_entitySetupFactory;
+    protected $_entitySetupFactory;
 
     /**
      * Group interface
      *
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory
      */
-    private $_groupFactory;
+    protected $_groupFactory;
+
+    /**
+     * @var \Magento\Framework\Module\Dir\Reader
+     */
+    protected $_moduleReader;
+
+    /**
+     * @var \Magento\Framework\Filesystem\Io\File
+     */
+    protected $_ioFile;
+
+    /**
+     * @var \Gene\BlueFoot\Model\Installer\File
+     */
+    protected $_fileInstaller;
 
     /**
      * InstallData constructor.
@@ -37,11 +53,19 @@ class InstallData implements InstallDataInterface
      */
     public function __construct(
         EntitySetupFactory $entitySetupFactory,
-        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory
+        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory,
+        \Magento\Framework\Module\Dir\Reader $moduleReader,
+        \Magento\Framework\Filesystem\Io\File $ioFile,
+        \Gene\BlueFoot\Model\Installer\File $fileInstaller,
+        ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface
     )
     {
         $this->_entitySetupFactory = $entitySetupFactory;
         $this->_groupFactory = $groupFactory;
+        $this->_moduleReader = $moduleReader;
+        $this->_ioFile = $ioFile;
+        $this->_fileInstaller = $fileInstaller;
+        $this->_contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
     }
 
     /**
@@ -60,6 +84,9 @@ class InstallData implements InstallDataInterface
 
         // Create the default groups
         $this->_installGroups();
+
+        // Install the default content blocks
+        $this->_installDefaultContentBlocks();
 
         $setup->endSetup();
     }
@@ -95,7 +122,22 @@ class InstallData implements InstallDataInterface
             $group = $this->_groupFactory->create();
             $group->setData('code', $code);
             $group->addData($data);
-            $group->save();
+            $this->_contentBlockGroupRepository->save($group);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Install
+     *
+     * @return $this
+     */
+    protected function _installDefaultContentBlocks()
+    {
+        $file = $this->_moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
+        if ($this->_ioFile->fileExists($file)) {
+            $this->_fileInstaller->install($file);
         }
 
         return $this;

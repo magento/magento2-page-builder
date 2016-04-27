@@ -17,6 +17,11 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
     protected $_registryManager;
 
     /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
+     */
+    protected $_entityModel;
+
+    /**
      * Collection constructor.
      *
      * @param \Magento\Framework\Data\Collection\EntityFactory             $entityFactory
@@ -35,10 +40,12 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Eav\Model\EntityFactory $eavEntityFactory,
         \Magento\Framework\Registry $registryManager,
+        \Gene\BlueFoot\Model\ResourceModel\Entity $entityModel,
         \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {
         $this->_registryManager = $registryManager;
+        $this->_entityModel = $entityModel;
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $eavEntityFactory, $connection, $resource);
     }
 
@@ -50,7 +57,16 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
     protected function _initSelect()
     {
         parent::_initSelect();
+
+        // Only display content block entity types
         $this->setEntityTypeFilter($this->_registryManager->registry('entityType'));
+
+        // Exclude the default content block from the grid collection
+        $entityType = $this->_entityModel->getEntityType();
+        if ($entityType->getId() && ($defaultAttributeSetId = $entityType->getDefaultAttributeSetId())) {
+            $this->addFieldToFilter('main_table.attribute_set_id', array('neq' => $defaultAttributeSetId));
+        }
+
         return $this;
     }
 }

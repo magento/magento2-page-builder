@@ -14,7 +14,11 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * Class ContentBlockRepository
+ *
+ * @package Gene\BlueFoot\Model\Attribute
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class ContentBlockRepository implements ContentBlockRepositoryInterface
 {

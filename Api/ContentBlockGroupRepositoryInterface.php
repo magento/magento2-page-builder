@@ -30,6 +30,13 @@ interface ContentBlockGroupRepositoryInterface
     public function getById($groupId);
 
     /**
+     * @param $groupCode
+     *
+     * @return mixed
+     */
+    public function getByCode($groupCode);
+
+    /**
      * Get a list from a search criteria
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria

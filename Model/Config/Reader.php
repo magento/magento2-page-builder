@@ -7,7 +7,7 @@ namespace Gene\BlueFoot\Model\Config;
  *
  * @package Gene\BlueFoot\Model\Config
  *
- * @author Dave MAcaulay <dave@gene.co.uk>
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {

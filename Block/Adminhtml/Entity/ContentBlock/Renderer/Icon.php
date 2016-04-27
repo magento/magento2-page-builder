@@ -21,10 +21,6 @@ class Icon extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRe
     public function render(\Magento\Framework\DataObject $row)
     {
         $icon =  'fa fa-' . $row->getData($this->getColumn()->getIndex());
-        if(!$color = $row->getData('color')){
-            $color = '#333';
-        }
-
-        return '<i style="color:'.$color.'; font-size:24px;" class = "'.$icon.'">'.'</i>';
+        return '<i style="color:#444; font-size:24px;" class = "' . $icon . '">'.'</i>';
     }
 }
