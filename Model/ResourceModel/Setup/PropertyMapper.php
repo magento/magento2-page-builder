@@ -44,6 +44,7 @@ class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstr
             /* Additional BlueFoot eav attribute table */
             'content_scope' => $this->_getValue($input, 'content_scope'),
             'frontend_input_renderer' => $this->_getValue($input, 'frontend_input_renderer'),
+            'is_wysiwyg_enabled' => $this->_getValue($input, 'is_wysiwyg_enabled'),
             'widget' => $this->_getValue($input, 'widget'),
             'data_model' => $this->_getValue($input, 'data_model'),
             'template' => $this->_getValue($input, 'template'),
