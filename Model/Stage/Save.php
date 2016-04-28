@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Model\Stage;
 
+use Gene\BlueFoot\Api\EntityRepositoryInterface;
+
 /**
  * Class Save
  *
@@ -39,6 +41,21 @@ class Save extends \Magento\Framework\Model\AbstractModel
     protected $_jsonHelper;
 
     /**
+     * @var array|null
+     */
+    protected $_globalFields = null;
+
+    /**
+     * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
+     */
+    protected $_entityRepository;
+
+    /**
+     * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
+     */
+    protected $_entityCollection;
+
+    /**
      * Save constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -48,6 +65,8 @@ class Save extends \Magento\Framework\Model\AbstractModel
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
      * @param \Magento\Framework\App\Request\Http                          $request
      * @param \Magento\Framework\Json\Helper\Data                          $jsonHelper
+     * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                 $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -60,6 +79,8 @@ class Save extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
+        EntityRepositoryInterface $entityRepositoryInterface,
+        \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -69,6 +90,8 @@ class Save extends \Magento\Framework\Model\AbstractModel
         $this->_contentBlockFactory = $contentBlockFactory;
         $this->_request = $request;
         $this->_jsonHelper = $jsonHelper;
+        $this->_entityRepository = $entityRepositoryInterface;
+        $this->_entityCollection = $entityCollectionFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -124,21 +147,65 @@ class Save extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Return the global fields that aren't saved within an entity
+     *
+     * @return array|null
+     */
+    public function getGlobalFields()
+    {
+        if (is_null($this->_globalFields)) {
+            $this->_globalFields = [];
+            $config = $this->_configInterface->getGlobalFields();
+            foreach ($config as $field) {
+                $this->_globalFields[] = (string) $field['code'];
+            }
+        }
+        return $this->_globalFields;
+    }
+
+    /**
      * Create the entities and update the structure with pointers
      *
      * @param $elements
      */
     public function createStructure(&$elements)
     {
+        // Handle the extra element
+        $storeId = false;
+        $extra = array_filter($elements, function ($element) { return (isset($element['type']) && $element['type'] == 'extra'); });
+        if ($extra && !empty($extra)) {
+            unset($elements[key($extra)]);
+            $extraItem = current($extra);
+            $this->_handleExtra($extraItem);
+
+            if (isset($extraItem['storeId']) && !empty($extraItem['storeId'])) {
+                $storeId = $extraItem['storeId'];
+            }
+        }
+
         // Loop through the elements
         foreach($elements as &$element) {
 
             // If the element has a content type we need to create a new entity
             if(isset($element['contentType'])) {
-                $entity = $this->createEntityFromElement($element);
+                if ($fields = $this->getGlobalFields()) {
+                    $storeInJson = array();
+                    foreach ($fields as $field) {
+                        if (isset($element['formData'][$field])) {
+                            $storeInJson[$field] = $element['formData'][$field];
+                        }
+                    }
+                }
+
+                $entity = $this->createEntityFromElement($element, $storeId);
                 if($entity && $entity->getId()) {
                     $element['entityId'] = $entity->getId();
                     unset($element['formData']);
+
+                    if (isset($storeInJson)) {
+                        // Restore any fields that will be stored in the form data
+                        $element['formData'] = $storeInJson;
+                    }
                 }
 
 
@@ -159,6 +226,27 @@ class Save extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Handle any extra data
+     *
+     * @param $element
+     */
+    protected function _handleExtra($element)
+    {
+        if (isset($element['deleted']) && is_array($element['deleted']) && !empty($element['deleted'])) {
+            $entities = $this->_entityCollection->create()
+                ->addFieldToFilter('entity_id', array('in' => $element['deleted']));
+
+            if ($entities->getSize()) {
+                foreach ($entities as $entity) {
+                    $this->_entityRepository->delete($entity);
+                }
+            }
+        }
+
+        $this->_eventManager->dispatch('gene_bluefoot_handle_extra', ['element' => $element]);
+    }
+
+    /**
      * Create the entity from the element
      *
      * @param $element
@@ -166,7 +254,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
      * @return mixed
      * @throws \Exception
      */
-    public function createEntityFromElement($element)
+    public function createEntityFromElement($element, $storeId)
     {
         // We only create an entity if we have some data
         if(isset($element['formData']) && !empty($element['formData'])) {
@@ -189,6 +277,11 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 // Add it into the entity
                 if (!empty($formData)) {
                     $entity->setData($formData);
+                }
+
+                // Set the store ID of the entity
+                if ($storeId !== false) {
+                    $entity->setStoreId($storeId);
                 }
 
                 // Save the create!
