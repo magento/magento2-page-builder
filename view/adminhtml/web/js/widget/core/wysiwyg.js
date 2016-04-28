@@ -40,7 +40,7 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], functio
             mode: 'exact',
             elements: this.getId(),
             theme: 'advanced',
-            skin: 'bootstrap',
+            /*skin: 'bootstrap',*/
             plugins: plugins,
             theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect|,forecolor,backcolor,|,sub,sup,bullist,numlist,media,image',
             theme_advanced_buttons2: 'link,unlink,anchor,|,outdent,indent,blockquote,|, tablecontrols',
