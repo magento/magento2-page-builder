@@ -6,11 +6,11 @@
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Textarea Template
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\Default
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
  *
  */
 $_entity = $this->getEntity();
 ?>
-<div class="bluefoot-entity bluefoot-textarea <?php echo $_entity->getCssClasses(); ?>">
+<div class="bluefoot-entity bluefoot-textarea <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
     <?php echo $_entity->getTextarea(); ?>
 </div>

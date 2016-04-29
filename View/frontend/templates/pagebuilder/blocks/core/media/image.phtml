@@ -14,7 +14,7 @@ $_urlPrefix = $this->getUrl('pub/media/gene-cms');
 ?>
 <figure id="bluefoot-image-<?php echo $_entity->getId(); ?>" class="bluefoot-image <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
     <?php if ($_entity->getHasLightbox()): ?>
-        <a href="<?php echo $_entity->getImage(); ?>" class="bluefoot-lightbox" title="<?php echo $_entity->getTitleTag(); ?>">
+        <a href="<?php echo $_urlPrefix . $_entity->getImage(); ?>" class="bluefoot-lightbox" title="<?php echo $_entity->getTitleTag(); ?>">
     <?php endif; ?>
             <?php if ($_entity->getMobileImage()): ?>
                 <img src="<?php echo $_urlPrefix . $_entity->getImage(); ?>"  alt="<?php echo $_entity->getAltTag(); ?>" title="<?php echo $_entity->getTitleTag(); ?>" class="bluefoot-mobile-hidden"/>
@@ -33,7 +33,12 @@ $_urlPrefix = $this->getUrl('pub/media/gene-cms');
 </figure>
 
 <?php if ($_entity->getHasLightbox()): ?>
+
     <script type="text/javascript">
-        jQuery('#bluefoot-image-<?php echo $_entity->getId(); ?> .bluefoot-lightbox').fancybox();
+
+
+        requirejs(['jquery','fancybox'], function(jQuery){
+            jQuery('#bluefoot-image-<?php echo $_entity->getId(); ?> .bluefoot-lightbox').fancybox();
+        });
     </script>
 <?php endif; ?>

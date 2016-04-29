@@ -10,7 +10,8 @@
  *
  */
 $_entity = $this->getEntity();
+$_action = "location.href='" . $_entity->getLinkUrl() . "'";
 ?>
-<button type="button" onclick="location.href='<?php echo $_entity->getLinkUrl(); ?>'" class="bluefoot-button button <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+<button type="button" onclick="<?php echo $_action; ?>" class="bluefoot-button button <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
     <span><span><?php echo $_entity->getLinkText(); ?></span></span>
 </button>

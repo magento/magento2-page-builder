@@ -6,14 +6,15 @@
  * @author Chloe Langford <chloe@gene.co.uk>
  *
  * Map Block Template
- * @var $this Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Video
+ * @var $this @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\Video
  *
  */
 $_entity = $this->getEntity();
 $_video = $this->getVideoData();
 
 if($_video) : ?>
-    <div id="bluefoot-video-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-video  <?php echo $this->getCssAttributes(); ?>">
+    <?php var_dump($_video); ?>
+    <?php /*<div id="bluefoot-video-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-video  <?php echo $this->getCssAttributes(); ?>">
         <iframe src="<?php echo $this->getVideoData()->getUrl() ?>"<?php echo ($_entity->getVideoHeight()) ? ' height="' . $_entity->getVideoHeight() . '"': '' ; ?><?php echo ($_entity->getVideoWidth()) ? ' width="' . $_entity->getVideoWidth() . '"': '' ; ?>"></iframe>
-    </div>
+    </div> */ ?>
 <?php endif; ?>
