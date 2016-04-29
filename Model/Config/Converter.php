@@ -53,7 +53,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $node = $onBuild->item($i);
             if ($node->nodeName == 'widget') {
                 $output['plugins']['on_build'][$node->getAttribute('name')] = [
-                    'widget' => $node->getAttribute('name'),
+                    'widget' => $node->getAttribute('widget'),
                     'method' => $node->getAttribute('method')
                 ];
             }
