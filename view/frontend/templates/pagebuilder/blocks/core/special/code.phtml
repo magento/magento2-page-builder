@@ -15,9 +15,11 @@ $_entity = $this->getEntity();
     <pre><code class="lineNumbers"><?php echo $_entity->getHtml(); ?></code></pre>
 </div>
 <script type="text/javascript">
-    jQuery(function() {
-        jQuery('#bluefoot-code-<?php echo $_entity->getId(); ?> code').each(function(i, block) {
-            hljs.highlightBlock(block);
+    require(['jquery','highlight'], function(jQuery) {
+        jQuery(function() {
+            jQuery('#bluefoot-code-<?php echo $_entity->getId(); ?> code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
         });
     });
 </script>

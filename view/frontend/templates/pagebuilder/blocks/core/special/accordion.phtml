@@ -20,6 +20,8 @@ $_entity = $this->getEntity();
     </div>
 
     <script type="text/javascript">
-        jQuery('#bluefoot-accordion-<?php echo $_entity->getId(); ?>').bluefootAccordion();
+        require(['jquery','bluefoot/accordion'], function(jQuery) {
+            jQuery('#bluefoot-accordion-<?php echo $_entity->getId(); ?>').bluefootAccordion();
+        });
     </script>
 <?php endif; ?>
