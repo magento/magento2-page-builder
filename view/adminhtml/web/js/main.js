@@ -1,5 +1,7 @@
 define(['bluefoot/stage/build'], function (StageBuild) {
 
+    var _initialized = false;
+
     // The app requires the core hook system to be running very early on
     require(['bluefoot/hook'], function (Hook) {
 
@@ -13,6 +15,8 @@ define(['bluefoot/stage/build'], function (StageBuild) {
                 require(['bluefoot/stage', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, jQuery, InitConfig) {
 
                     Plugins.load('onPageLoad', function () {
+
+                        _initialized = true;
 
                         // Detect and load any saved page builder data
                         StageBuild.init();
@@ -41,6 +45,16 @@ define(['bluefoot/stage/build'], function (StageBuild) {
 
     });
 
-    // Return the stage build init function
-    return StageBuild.init;
+    /**
+     * Check to see if the system has been initialized yet every 100ms
+     */
+    var callbackFn = function () {
+        if (_initialized == true) {
+            StageBuild.init();
+        } else {
+            setTimeout(callbackFn, 100);
+        }
+    };
+
+    return callbackFn;
 });
