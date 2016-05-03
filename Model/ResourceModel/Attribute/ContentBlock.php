@@ -92,9 +92,10 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
         // Build up our data to be updated
         $updateData = [];
         $tableColumns = $this->getConnection()->describeTable($this->getTable('gene_bluefoot_entity_type'));
+        $objectData = $object->getData();
         foreach ($tableColumns as $key => $data) {
-            if ($value = $object->getData($key)) {
-                $updateData[$key] = $value;
+            if (array_key_exists($key, $objectData)) {
+                $updateData[$key] = $object->getData($key);
             }
         }
 
