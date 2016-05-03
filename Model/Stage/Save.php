@@ -362,7 +362,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
 
         // Handle that the catalog prepends the fields with 'product'
         // @todo investigate making this universal
-        if ($this->_request->getControllerModule() == 'Magento_Catalog' && $this->_request->getActionName() == 'save') {
+        if ($this->_request->getControllerModule() == 'Magento_Catalog' && $this->_request->getControllerName() == 'product' && $this->_request->getActionName() == 'save') {
             $elementName = 'product.' . $elementName;
         }
 
