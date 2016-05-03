@@ -32,7 +32,9 @@ $_entity = $this->getEntity();
     </div>
 
     <script type="text/javascript">
-        jQuery('#bluefoot-tabs-<?php echo $_entity->getId(); ?>').bluefootTabs();
-        jQuery('#bluefoot-tabs-<?php echo $_entity->getId(); ?>').bluefootAccordion();
+        require(['jquery','bluefoot/tabs', 'bluefoot/accordion'], function(jQuery){
+            jQuery('#bluefoot-tabs-<?php echo $_entity->getId(); ?>').bluefootTabs();
+            jQuery('#bluefoot-tabs-<?php echo $_entity->getId(); ?>').bluefootAccordion();
+        });
     </script>
 <?php endif; ?>

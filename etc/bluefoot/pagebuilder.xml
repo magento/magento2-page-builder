@@ -99,8 +99,8 @@
                 <!--<asset name="fancybox_js" src="Gene_BlueFoot::js/resource/jquery/fancybox/jquery.fancybox.pack.js" />-->
             </template>
             <template name="core_driver" file="pagebuilder/blocks/core/media/driver.phtml" />
+            <template name="core_video" file="pagebuilder/blocks/core/media/video.phtml" />
             <template name="core_slider" file="pagebuilder/blocks/core/media/slider.phtml" />
-            <template name="core_slider" file="pagebuilder/blocks/core/media/video.phtml" />
             <template name="core_slider_item" file="pagebuilder/blocks/core/media/slider-item.phtml">
                 <asset name="slick_css" src="Gene_BlueFoot::js/resource/jquery/slick/slick.css" />
                 <!--<asset name="slick_js" src="Gene_BlueFoot::js/resource/jquery/slick/slick.min.js" />-->
@@ -116,7 +116,7 @@
                 <!--<asset name="accordion_js" src="Gene_BlueFoot::js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.js" />-->
             </template>
             <template name="core_accordion_item" file="pagebuilder/blocks/core/special/accordion-item.phtml" />
-            <!--<template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" />-->
+            <template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" />
             <template name="core_map" file="pagebuilder/blocks/core/special/map.phtml" />
             <template name="core_search" file="pagebuilder/blocks/core/special/search.phtml" />
             <template name="core_tab" file="pagebuilder/blocks/core/special/tabs.phtml">
@@ -124,15 +124,18 @@
                 <asset name="accordion_js" src="Gene_BlueFoot::js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.js" />-->
             </template>
             <template name="core_tab_item" file="pagebuilder/blocks/core/special/tabs-item.phtml" />
+            <template name="core_code" file="pagebuilder/blocks/core/special/code.phtml">
+                <asset name="highlight_css" src="Gene_BlueFoot::js/resource/highlight/styles/monokai-sublime.css" />
+            </template>
         </templates>
         <renderers>
             <renderer name="core_default" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock" />
             <renderer name="core_heading" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Heading" />
-            <!--<renderer name="core_static_block" class="gene_cms/entity_pagebuilder_block_staticblock" />-->
+            <renderer name="core_static_block" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\StaticBlock" />
             <renderer name="core_video" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Video" />
-            <!--<renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" />-->
-            <!--<renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" />-->
-            <!--<renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" />-->
+            <renderer name="core_product" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Single" />
+            <renderer name="core_product_list" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\List" />
+            <renderer name="core_newsletter" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter" />
             <renderer name="core_map" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Map" />
         </renderers>
     </content_blocks>

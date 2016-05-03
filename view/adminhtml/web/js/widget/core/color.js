@@ -34,6 +34,7 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], functio
     InputField.prototype.onRenderField = function ($hook) {
 
         // Initialise JS Color <http://jscolor.com/>
+        alert('colour');
         if (typeof jscolor !== 'undefined') {
             jscolor.init();
         }
