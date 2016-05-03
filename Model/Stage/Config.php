@@ -182,6 +182,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 $templateData[] = array(
                     'id' => $template->getId(),
                     'name' => $template->getData('name'),
+                    'preview' => $template->getData('preview'),
                     'structure' => $template->getData('structure')
                 );
             }
