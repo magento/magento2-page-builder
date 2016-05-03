@@ -210,6 +210,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     {
         // Retrieve content blocks
         $contentBlocks = $this->_contentBlockCollection->create();
+        $contentBlocks->setOrder('entity_type.sort_order', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
         $contentBlocks->setEntityTypeFilter($this->_eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId());
 
         // Don't load in the default attribute set
