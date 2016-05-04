@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], function (jQuery, Hook, AbstractField) {
+define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'bluefoot/jquery/colorpicker'], function (jQuery, Hook, AbstractField) {
 
     /**
      * Extend our abstract class
@@ -33,11 +33,18 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], functio
      */
     InputField.prototype.onRenderField = function ($hook) {
 
-        // Initialise JS Color <http://jscolor.com/>
-        alert('colour');
-        if (typeof jscolor !== 'undefined') {
-            jscolor.init();
-        }
+        // Initialise jQuery Color Picker <http://www.eyecon.ro/colorpicker/>
+        jQuery('.colorpicker-field').each(function(){
+            var element = jQuery(this);
+            element.ColorPicker({
+                onSubmit: function(hsb, hex, rgb, el) {
+                    jQuery(el).ColorPickerHide();
+                },
+                onChange: function(hsb, hex, rgb, el) {
+                    element.val(hex).css('background-color', '#' + hex);
+                }
+            });
+        });
         $hook.done();
     };
 
@@ -49,8 +56,9 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], functio
     InputField.prototype.buildHtml = function () {
         var id = this.getId();
         this.element = jQuery('<div />').addClass('gene-bluefoot-input-field').append(
+            jQuery('<div />').html('<style>.colorpicker { z-index:999; }</style>'),
             jQuery('<label />').attr('for', id).html(this.getLabel()),
-            jQuery('<input />').attr('name', this.field.code).attr('type', this.getType()).attr('id', id).addClass('color {required:false}').val(this.value)
+            jQuery('<input />').attr('name', this.field.code).attr('type', this.getType()).attr('id', id).addClass('colorpicker-field').val(this.value).css('background-color', '#' + this.value)
         );
 
         if (typeof this.field.note !== 'undefined') {
