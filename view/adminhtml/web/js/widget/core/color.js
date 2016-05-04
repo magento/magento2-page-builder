@@ -56,7 +56,6 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'bluefoo
     InputField.prototype.buildHtml = function () {
         var id = this.getId();
         this.element = jQuery('<div />').addClass('gene-bluefoot-input-field').append(
-            jQuery('<div />').html('<style>.colorpicker { z-index:999; }</style>'),
             jQuery('<label />').attr('for', id).html(this.getLabel()),
             jQuery('<input />').attr('name', this.field.code).attr('type', this.getType()).attr('id', id).addClass('colorpicker-field').val(this.value).css('background-color', '#' + this.value)
         );
