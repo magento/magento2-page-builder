@@ -379,6 +379,16 @@ class Render extends \Magento\Framework\Model\AbstractModel
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         $entity = $this->getEntity($element['entityId']);
+        if(!$entity->getId()){
+            return false;
+        }
+
+        // Pass over any form data to the entity
+        if (isset($element['formData']) && !empty($element['formData'])) {
+            foreach ($element['formData'] as $key => $value) {
+                $entity->setData($key, $value);
+            }
+        }
 
         /* @var $frontend \Gene\BlueFoot\Model\Entity\Frontend */
         $frontend = $entity->getFrontend();
