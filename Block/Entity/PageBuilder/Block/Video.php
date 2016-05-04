@@ -33,12 +33,14 @@ class Video extends AbstractBlock
     }
 
 
+    /**
+     * @return bool
+     */
     public function getVideo()
     {
-
-        $dataModel = $this->getEntity()->_getResource()->getAttribute('video_url')->getDataModel($this->getEntity());
-        var_dump($this->getEntity()->getVideoUrl());
-        if ($dataModel instanceof Video && method_exists($dataModel, 'getVideo')) {
+        /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Video */
+        $dataModel = $this->getEntity()->getResource()->getAttribute('video_url')->getDataModel($this->getEntity());
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Video && method_exists($dataModel, 'getVideo')) {
             return $dataModel->getVideo();
         }
         return false;
@@ -50,11 +52,12 @@ class Video extends AbstractBlock
         $video = $this->getVideo();
         if ($video) {
 
+
             list($url) = explode(',', $video);
 
             return $this->_helper->previewAction($url);
 //            return new Varien_Object(array(
-//                'url' => Mage::helper('gene_bluefoot/video')->previewAction($url)
+//                'url' => $helper->previewAction($url)
 //            ));
         }
         return false;

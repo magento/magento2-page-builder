@@ -68,19 +68,6 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
         return null;
     }
 
-    /**
-     * @todo - FIX for magento 2
-     * Convert string to url/css class format
-     * @param bool|false $string
-     * @return bool
-     */
-    public function convertToCssClass($string = false)
-    {
-        if ($string) {
-            //return Mage::getModel('catalog/product_url')->formatUrlKey($string);
-        }
-        return false;
-    }
 
     /**
      * Does the entity have child entities for a specific field

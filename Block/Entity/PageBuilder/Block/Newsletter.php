@@ -1,15 +1,45 @@
 <?php
 /**
- * Class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Newsletter
+ * Class Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Newsletter extends Mage_Newsletter_Block_Subscribe
+namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
+
+class Newsletter extends \Magento\Newsletter\Block\Subscribe
 {
 
+    /**
+     * @var \Gene\BlueFoot\Model\Stage\Render
+     */
+    protected $_render;
 
     /**
-     * @return Gene_BlueFoot_Model_Entity|null
+     * @var \Magento\Framework\Data\CollectionFactory
+     */
+    protected $_dataCollectionFactory;
+
+    /**
+     * AbstractBlock constructor.
+     *
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Gene\BlueFoot\Model\Stage\Render                $render
+     * @param \Magento\Framework\Data\CollectionFactory        $dataCollectionFactory
+     * @param array                                            $data
+     */
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Gene\BlueFoot\Model\Stage\Render $render,
+        \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+        $this->_render = $render;
+        $this->_dataCollectionFactory = $dataCollectionFactory;
+    }
+
+    /**
+     * @return \Gene\BlueFoot\Model\Entity|null
      */
     public function getEntity()
     {
