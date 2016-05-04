@@ -47,18 +47,20 @@ class Video extends AbstractBlock
     }
 
 
+    /**
+     * Get the video data
+     * @return bool|string
+     */
     public function getVideoData()
     {
         $video = $this->getVideo();
         if ($video) {
 
-
             list($url) = explode(',', $video);
+            $obj = new \Magento\Framework\DataObject();
+            $obj->setUrl($this->_helper->previewAction($url));
+            return $obj;
 
-            return $this->_helper->previewAction($url);
-//            return new Varien_Object(array(
-//                'url' => $helper->previewAction($url)
-//            ));
         }
         return false;
     }
