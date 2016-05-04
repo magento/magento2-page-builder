@@ -36,7 +36,6 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection);
-
         $this->_productRepository = $productRepositoryInterface;
     }
 

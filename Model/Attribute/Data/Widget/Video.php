@@ -54,8 +54,7 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
         $url = $this->_helper->previewAction($this->getVideo());
 
         return array(
-            'url' => $url,
-            'test' => 'test'
+            'url' => $url
         );
     }
 

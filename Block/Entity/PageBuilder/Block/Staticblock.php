@@ -1,31 +1,48 @@
 <?php
+
+namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
+
 /**
- * Class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Staticblock
+ * Class StaticBlock
+ *
+ * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Staticblock extends Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Default
+class StaticBlock extends AbstractBlock
 {
 
+    /**
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    protected $_objectManager;
 
     /**
-     * @return Gene_BlueFoot_Model_Entity|null
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Gene\BlueFoot\Model\Stage\Render $render
+     * @param \Magento\Framework\Data\CollectionFactory $dataCollectionFactory
+     * @param array $data
      */
-    public function getEntity()
-    {
-        return $this->getData('entity');
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Gene\BlueFoot\Model\Stage\Render $render,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
+        array $data = []
+    ) {
+        parent::__construct($context, $render, $dataCollectionFactory, $data);
+        $this->_objectManager = $objectManager;
     }
 
 
     /**
-     * Get the block
-     * @return bool|Mage_Core_Model_Abstract
+     * @return bool
      */
     public function getBlock()
     {
-        /* @var $dataModel Gene_BlueFoot_Model_Attribute_Data_Widget_Map */
+        /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\StaticBlock */
         $dataModel = $this->getEntity()->getResource()->getAttribute('block_id')->getDataModel($this->getEntity());
-        if ($dataModel instanceof Gene_BlueFoot_Model_Attribute_Data_Widget_Staticblock && method_exists($dataModel, 'getBlock')) {
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\StaticBlock && method_exists($dataModel, 'getBlock')) {
             return $dataModel->getBlock();
         }
         return false;

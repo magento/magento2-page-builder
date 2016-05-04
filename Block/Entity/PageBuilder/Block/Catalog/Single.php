@@ -1,13 +1,44 @@
 <?php
+
+namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog;
+
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Model\Product;
+
 /**
- * Class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single
+ * Class Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Single
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single extends Mage_Catalog_Block_Product_Abstract
+class Single extends \Magento\Catalog\Block\Product\ListProduct
 {
+
+
     /**
-     * @return Gene_BlueFoot_Model_Entity|null
+     * @param \Magento\Catalog\Block\Product\Context $context
+     * @param \Magento\Framework\Data\Helper\PostHelper $postDataHelper
+     * @param \Magento\Catalog\Model\Layer\Resolver $layerResolver
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param \Magento\Framework\Url\Helper\Data $urlHelper
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Catalog\Block\Product\Context $context,
+        \Magento\Framework\Data\Helper\PostHelper $postDataHelper,
+        \Magento\Catalog\Model\Layer\Resolver $layerResolver,
+        CategoryRepositoryInterface $categoryRepository,
+        \Magento\Framework\Url\Helper\Data $urlHelper,
+        array $data = []
+    ) {
+        parent::__construct(
+            $context, $postDataHelper, $layerResolver, $categoryRepository, $urlHelper, $data
+        );
+    }
+
+
+
+    /**
+     * @return \Gene\BlueFoot\Model\Entity|null
      */
     public function getEntity()
     {
@@ -15,37 +46,84 @@ class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single extends Mage_C
     }
 
     /**
+     * Array of directions, used for the metrics
+     * @var array
+     */
+    protected $_order = array('top', 'right', 'bottom', 'left');
+
+    /**
      * Return the attribute text from the entity
      *
      * @param $key
      * @return null
      */
-    protected function getAttributeText($key)
+    public function getAttributeText($key)
     {
-        if($this->getEntity()
-            && $this->getEntity()->getId()
-            && $this->getEntity()->getResource()->getAttribute($key)
-            && $this->getEntity()->getResource()->getAttribute($key)->getFrontend()
-        ) {
+        if($this->getEntity() && $this->getEntity()->getId()) {
             return $this->getEntity()->getResource()->getAttribute($key)->getFrontend()->getValue($this->getEntity());
         }
         return null;
     }
 
+
     /**
-     * Get the product
-     * @return bool|Mage_Core_Model_Abstract
+     * Does the entity have child entities for a specific field
+     *
+     * @param $field
+     *
+     * @return bool
      */
-    public function getProduct()
+    public function hasChildEntities($field)
     {
-        /* @var $dataModel Gene_BlueFoot_Model_Attribute_Data_Widget_Product */
-        $dataModel = $this->getEntity()->getResource()->getAttribute('product_id')->getDataModel($this->getEntity());
-        if ($dataModel instanceof Gene_BlueFoot_Model_Attribute_Data_Widget_Product && method_exists($dataModel, 'getProduct')) {
-            return $dataModel->getProduct();
+        $structure = $this->getStructure();
+        return ($structure && is_array($structure) && isset($structure['children']) && isset($structure['children'][$field]));
+    }
+
+    /**
+     * Return child entities
+     *
+     * @param $field
+     *
+     * @return bool|\Magento\Framework\Data\Collection
+     * @throws \Exception
+     */
+    public function getChildEntities($field)
+    {
+        $structure = $this->getStructure();
+        if ($structure && is_array($structure) && isset($structure['children']) && isset($structure['children'][$field])) {
+            $children = $structure['children'][$field];
+            $childCollection = $this->_dataCollectionFactory->create();
+
+            // Iterate through the children and build up the blocks
+            foreach($children as $child) {
+                $block = $this->_render->buildEntityBlock($child);
+                if ($block) {
+                    $childCollection->addItem($block);
+                }
+            }
+
+            return $childCollection;
         }
+
         return false;
     }
 
+    /**
+     * Return the amount of child entities
+     *
+     * @param $field
+     *
+     * @return int|void
+     */
+    public function getChildEntitiesCount($field)
+    {
+        if ($this->hasChildEntities($field)) {
+            $structure = $this->getStructure();
+            return count($structure['children'][$field]);
+        }
+
+        return 0;
+    }
 
     /**
      * Function to return css classes as a well formatted string
@@ -89,6 +167,8 @@ class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single extends Mage_C
         return array_unique(array_filter($array));
     }
 
+
+
     /**
      * Function to build up the style attributes of a block
      * @return string
@@ -104,11 +184,6 @@ class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single extends Mage_C
         return '';
     }
 
-    /**
-     * Array of directions, used for the metrics
-     * @var array
-     */
-    protected $_order = array('top', 'right', 'bottom', 'left');
 
     /**
      * Function to return the metrics as a useful string
@@ -133,5 +208,20 @@ class Gene_BlueFoot_Block_Entity_Pagebuilder_Block_Catalog_Single extends Mage_C
             }
         }
         return $html;
+    }
+
+
+
+    /**
+     * @return bool
+     */
+    public function getProduct()
+    {
+        /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Product */
+        $dataModel = $this->getEntity()->getResource()->getAttribute('product_id')->getDataModel($this->getEntity());
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Product && method_exists($dataModel, 'getProduct')) {
+            return $dataModel->getProduct();
+        }
+        return false;
     }
 }

@@ -474,7 +474,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
     Stage.prototype.stageScrollEvents = function () {
         var panel = this.container.find('.gene-bluefoot-stage-panel'),
             containerOffset = this.container.offset(),
-            offset = 50,
+            offset = 90,
             panelPosition = panel.offset(),
             windowPosition = jQuery(window).scrollTop(),
             topPosition = windowPosition - panelPosition.top + offset,

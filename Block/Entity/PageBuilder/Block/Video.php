@@ -12,6 +12,9 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 class Video extends AbstractBlock
 {
 
+    /**
+     * @var \Gene\BlueFoot\Helper\Widget\Video
+     */
     protected $_helper;
 
     /**

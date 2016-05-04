@@ -10,11 +10,12 @@
  *
  */
 $_entity = $this->getEntity();
+$_block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($_entity->getBlockId())->toHtml();
 ?>
 <?php
 // Check if the block is active on the current store
-if (Mage::getModel('cms/block')->setStoreId(Mage::app()->getStore()->getId())->load($_entity->getBlockId())->getIsActive()): ?>
+if ($_block != ''): ?>
     <div class="bluefoot-static-block <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($_entity->getBlockId())->toHtml();?>
+        <?php echo $_block;?>
     </div>
 <?php endif; ?>
