@@ -1,40 +1,41 @@
-// The app requires the core hook system to be running very early on
-require(['bluefoot/hook'], function (Hook) {
+define(['bluefoot/stage/build'], function (StageBuild) {
 
-    // Declare our plugins system
-    require(['bluefoot/plugins'], function (Plugins) {
+    var _initialized = false;
 
-        // Prepare the plugin aspect of the system
-        Plugins.prepare(function () {
+    // The app requires the core hook system to be running very early on
+    require(['bluefoot/hook'], function (Hook) {
 
-            // Initialize the basic config to load in plugins
-            require(['bluefoot/stage', 'bluefoot/stage/build', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, StageBuild, jQuery, InitConfig) {
+        // Declare our plugins system
+        require(['bluefoot/plugins'], function (Plugins) {
 
-                Plugins.load('onPageLoad', function () {
+            // Prepare the plugin aspect of the system
+            Plugins.prepare(function () {
 
-                    // Detect and load any saved page builder data
-                    StageBuild.init();
+                // Initialize the basic config to load in plugins
+                require(['bluefoot/stage', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, jQuery, InitConfig) {
 
-                    // @todo find out a better way of calling this
-                    window.buildBlueFoot = function () {
-                        setTimeout(function () {
-                            StageBuild.init();
-                        }, 1000);
-                    };
+                    Plugins.load('onPageLoad', function () {
 
-                    // Remove any other click events
-                    jQuery(document).on('click', InitConfig.init_button_class, function (event) {
+                        _initialized = true;
 
-                        /**
-                         * Create a new instance of the stage
-                         *
-                         * Each Gene CMS instance is ran by a stage, this handles all operations of the "page builder" which
-                         * is refereed to in code as the stage
-                         */
-                        var Stage = new StageClass();
-                        Stage.init(jQuery(event.currentTarget));
+                        // Detect and load any saved page builder data
+                        StageBuild.init();
 
-                    }.bind(this));
+                        // Remove any other click events
+                        jQuery(document).on('click', InitConfig.init_button_class, function (event) {
+
+                            /**
+                             * Create a new instance of the stage
+                             *
+                             * Each Gene CMS instance is ran by a stage, this handles all operations of the "page builder" which
+                             * is refereed to in code as the stage
+                             */
+                            var Stage = new StageClass();
+                            Stage.init(jQuery(event.currentTarget));
+
+                        }.bind(this));
+
+                    });
 
                 });
 
@@ -44,4 +45,16 @@ require(['bluefoot/hook'], function (Hook) {
 
     });
 
+    /**
+     * Check to see if the system has been initialized yet every 100ms
+     */
+    var callbackFn = function () {
+        if (_initialized == true) {
+            StageBuild.init();
+        } else {
+            setTimeout(callbackFn, 100);
+        }
+    };
+
+    return callbackFn;
 });

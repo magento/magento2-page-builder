@@ -175,6 +175,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getTemplateData()
     {
         $templates = $this->_templateCollection->create();
+        $templates->setOrder('pinned', \Magento\Framework\Data\Collection::SORT_ORDER_DESC);
 
         if ($templates->getSize()) {
             $templateData = array();
@@ -182,7 +183,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 $templateData[] = array(
                     'id' => $template->getId(),
                     'name' => $template->getData('name'),
-                    'structure' => $template->getData('structure')
+                    'preview' => $template->getData('preview'),
+                    'structure' => $template->getData('structure'),
+                    'pinned' => (bool) $template->getData('pinned')
                 );
             }
             return $templateData;
@@ -210,6 +213,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     {
         // Retrieve content blocks
         $contentBlocks = $this->_contentBlockCollection->create();
+        $contentBlocks->setOrder('entity_type.sort_order', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
         $contentBlocks->setEntityTypeFilter($this->_eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId());
 
         // Don't load in the default attribute set

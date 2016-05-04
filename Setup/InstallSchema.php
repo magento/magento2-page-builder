@@ -791,6 +791,12 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => true],
             'A preview of the page builder structure'
         )->addColumn(
+            'pinned',
+            \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+            false,
+            ['nullable' => false, 'default' => false],
+            'Is the template pinned?'
+        )->addColumn(
             'created_at',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,

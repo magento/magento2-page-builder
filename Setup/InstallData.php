@@ -101,19 +101,23 @@ class InstallData implements InstallDataInterface
         $groups = [
             'general' => [
                 'icon' => '<i class="fa fa-chevron-down"></i>',
-                'name' => 'General'
+                'name' => 'General',
+                'sort_order' => 10
             ],
             'media' => [
                 'icon' => '<i class="fa fa-chevron-down"></i>',
-                'name' => 'Media'
+                'name' => 'Media',
+                'sort_order' => 20
             ],
             'commerce' => [
                 'icon' => '<i class="fa fa-chevron-down"></i>',
-                'name' => 'Commerce'
+                'name' => 'Commerce',
+                'sort_order' => 30
             ],
             'other' => [
                 'icon' => '<i class="fa fa-chevron-down"></i>',
-                'name' => 'Other'
+                'name' => 'Other',
+                'sort_order' => 40
             ]
         ];
 

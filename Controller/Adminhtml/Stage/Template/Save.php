@@ -53,7 +53,15 @@ class Save extends \Magento\Framework\App\Action\Action
             $template = $this->_template->create();
             $template->addData($postData);
             if ($template->save()) {
-                return $this->_resultJsonFactory->create()->setData(['success' => true]);
+                // Include the new template data in the response
+                $templateData[] = [
+                    'id' => $template->getId(),
+                    'name' => $template->getData('name'),
+                    'preview' => $template->getData('preview'),
+                    'structure' => $template->getData('structure'),
+                    'pinned' => (bool) $template->getData('pinned')
+                ];
+                return $this->_resultJsonFactory->create()->setData(['success' => true, 'template' => $templateData]);
             }
         }
 

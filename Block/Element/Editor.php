@@ -46,8 +46,12 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getButtonsHtml()
     {
         $html = parent::_getButtonsHtml();
-        $html .= '<script type="text/javascript">buildBlueFoot();</script>';
-        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
+        $html .= '<script type="text/javascript">
+            require(["Gene_BlueFoot/js/main"], function (buildFn) {
+                buildFn();
+            })
+        </script>';
+        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" data-bind="event: { click: buildBlueFoot }" style="display: none;"></div>';
         return $html;
     }
 
