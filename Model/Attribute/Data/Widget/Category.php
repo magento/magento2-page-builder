@@ -65,13 +65,15 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
      */
     public function getProductCollection()
     {
+        $pageSize = ($this->getEntity()->getProductCount()) ? $this->getEntity()->getProductCount() : 4 ;
         if ($this->getCategory()) {
-            return $this->getCategory()->getProductCollection()->addAttributeToSelect('*');
+            return $this->getCategory()
+                ->getProductCollection()
+                ->setPageSize($pageSize)
+                ->setCurPage(1)
+                ->addAttributeToSelect('*');
         }
         return false;
-        //$pageSize = ($this->getEntity()->getProductCount()) ? $this->getEntity()->getProductCount() : 4 ;
-        // $this->getEntity()->getHideOutOfStock()
-         //->getProductCollection()->addAttributeToSelect('*');
     }
 
 
@@ -80,19 +82,18 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
      *
      * @return array
      */
-    /*public function asJson()
+    public function asJson()
     {
         $return = array();
+        $collection = $this->getProductCollection();
+        $category = $this->getCategory();
 
         // Add category name if it's present
-        $categoryId = $this->getEntity()->getData($this->getAttribute()->getData('attribute_code'));
-        if( $categoryId ) {
-            $category = Mage::getModel('catalog/category')->load($categoryId);
+        if ($category) {
             $return['category'] = array("name" => $category->getName());
         }
 
         // Load products for the category
-        $collection = $this->getProductCollection();
         if(!$collection) {
             return $return;
         }
@@ -107,7 +108,7 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         }
 
         return $return;
-    }*/
+    }
 
     /**
      * Return the url of the product image
