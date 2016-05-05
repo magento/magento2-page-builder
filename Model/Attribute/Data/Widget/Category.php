@@ -102,12 +102,27 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
             $return['products'][] = array(
                 'name' => $product->getName(),
                 'sku' => $product->getSku(),
-                //'image' => $this->_getProductImage($product),
-                //'price' => Mage::helper('core')->currency($product->getFinalPrice(), true, false)
+                'image' => $this->_getProductImage($product),
+                'price' => $this->_getFormattedPrice($product->getFinalPrice())
             );
         }
 
         return $return;
+    }
+
+    /**
+     * Get formatted Price
+     * @param bool|false $price
+     * @return string
+     */
+    protected function _getFormattedPrice($price = false)
+    {
+        if ($price) {
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+            return $priceHelper->currency($price, true, false);
+        }
+        return '';
     }
 
     /**
@@ -116,17 +131,21 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
      * @param $product
      * @return string
      */
-    /*protected function _getProductImage($product)
+    protected function _getProductImage($product)
     {
 
         try{
-            $imgSrc = (string) Mage::helper('catalog/image')->init($product, 'small_image')->resize(200);
+            //$image = 'category_page_grid' or 'category_page_list';
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $imageHelper = $objectManager->create('Magento\Catalog\Helper\Image');
+
+            $imgSrc = $imageHelper->init($product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(200)->getUrl();
         }
         catch(Exception $e) {
-            $imgSrc = Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg',array('_area'=>'frontend'));
+            $imgSrc = ''; //Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg',array('_area'=>'frontend'));
         }
 
         return $imgSrc;
-    }*/
+    }
 
 }

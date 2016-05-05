@@ -70,9 +70,47 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         return array(
             'name' => $product->getName(),
             'sku' => $product->getSku(),
-            /*'image' => $this->_getProductImage(),
-            'price' => Mage::helper('core')->currency($product->getFinalPrice(), true, false)*/
+            'image' => $this->_getProductImage($product),
+            'price' => $this->_getFormattedPrice($product->getFinalPrice())
         );
+    }
+
+    /**
+     * Get formatted Price
+     * @param bool|false $price
+     * @return string
+     */
+    protected function _getFormattedPrice($price = false)
+    {
+        if ($price) {
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+            return $priceHelper->currency($price, true, false);
+        }
+        return '';
+    }
+
+    /**
+     * Return the url of the product image
+     *
+     * @param $product
+     * @return string
+     */
+    protected function _getProductImage($product)
+    {
+
+        try{
+            //$image = 'category_page_grid' or 'category_page_list';
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $imageHelper = $objectManager->create('Magento\Catalog\Helper\Image');
+
+            $imgSrc = $imageHelper->init($product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(200)->getUrl();
+        }
+        catch(Exception $e) {
+            $imgSrc = ''; //Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg',array('_area'=>'frontend'));
+        }
+
+        return $imgSrc;
     }
 
 }
