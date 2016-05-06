@@ -19,6 +19,7 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      */
     protected $_productRepository;
 
+
     /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
