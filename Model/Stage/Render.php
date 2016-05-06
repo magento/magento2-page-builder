@@ -11,7 +11,15 @@ namespace Gene\BlueFoot\Model\Stage;
  */
 class Render extends \Magento\Framework\Model\AbstractModel
 {
+    /**
+     * Default rendering class for structural elements
+     */
     const DEFAULT_STRUCTURAL_RENDERER = 'Gene\BlueFoot\Block\Entity\PageBuilder\Structural\AbstractStructural';
+
+    /**
+     * Form key marker used to replace and restore the correct form key
+     */
+    const FORM_KEY_MARKER = 'GENE_BLUEFOOT_REPLACED_FORM_KEY';
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
@@ -49,6 +57,11 @@ class Render extends \Magento\Framework\Model\AbstractModel
     protected $_entity;
 
     /**
+     * @var \Magento\Framework\Data\Form\FormKey
+     */
+    protected $_formKey;
+
+    /**
      * Plugin constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -66,6 +79,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
+        \Magento\Framework\Data\Form\FormKey $formKey,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -75,6 +89,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $this->_contentBlockCollection = $contentBlockCollection;
         $this->_entityCollection = $entityCollectionFactory;
         $this->_layoutFactory = $layoutFactory;
+        $this->_formKey = $formKey;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -130,7 +145,11 @@ class Render extends \Magento\Framework\Model\AbstractModel
                 ->addFieldToSelect('*');
 
             // Return the HTML built
-            return $this->renderSections($pageBuilderSections, $html);
+            $renderedHtml = $this->renderSections($pageBuilderSections, $html);
+
+            $renderedHtml = $this->_afterHtmlRender($renderedHtml);
+
+            return $renderedHtml;
         }
 
         return $html;
@@ -185,7 +204,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         }
 
         // Replace all form keys before this gets cached/returned
-        //$sectionHtml = str_replace(Mage::getSingleton('core/session')->getFormKey(), 'GENE_CMS_REPLACED_FORM_KEY', $sectionHtml);
+        $sectionHtml = str_replace($this->_formKey->getFormKey(), self::getFormKeyMarker(), $sectionHtml);
 
         return $sectionHtml;
     }
@@ -401,6 +420,47 @@ class Render extends \Magento\Framework\Model\AbstractModel
         }
 
         return false;
+    }
+
+    /**
+     * Return a form key marker
+     *
+     * @return string
+     */
+    public static function getFormKeyMarker()
+    {
+        $marker = self::FORM_KEY_MARKER;
+        $marker = '{{' . chr(1) . chr(2) . chr(3) . $marker . chr(3) . chr(2) . chr(1) . '}}';
+        return $marker;
+    }
+
+    /**
+     * Do any post processing to rendered html
+     *
+     * @param $html
+     * @return mixed
+     */
+    protected function _afterHtmlRender($html)
+    {
+        self::restoreFormKey($html, $this->_formKey->getFormKey());
+        return $html;
+    }
+
+    /**
+     * Replace form key placeholder with actual form keys
+     *
+     * @param $content
+     * @param $formKey
+     * @return bool
+     */
+    public static function restoreFormKey(&$content, $formKey)
+    {
+        if (!$content) {
+            return false;
+        }
+        $replacementCount = 0;
+        $content = str_replace(self::getFormKeyMarker(), $formKey, $content, $replacementCount);
+        return ($replacementCount > 0);
     }
 
 }

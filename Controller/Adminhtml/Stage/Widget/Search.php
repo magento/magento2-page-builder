@@ -210,5 +210,5 @@ class Search extends \Magento\Framework\App\Action\Action
 
         return $this->_resultJsonFactory->create()->setData($results);
     }
-    
+
 }
