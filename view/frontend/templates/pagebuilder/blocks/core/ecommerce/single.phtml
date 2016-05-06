@@ -14,6 +14,7 @@
 $_entity = $this->getEntity();
 $_product = $this->getProduct();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
+return '';
 ?>
 <?php if ($_product): ?>
     <?php
@@ -42,7 +43,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                 <li class="item product product-item">
                     <div class="product-item-info" data-container="product-grid">
                         <?php
-                        $productImage = ''; //$block->getImage($_product, $image);
+                        $productImage = $block->getImage($_product, $image);
                         if ($pos != null) {
                             $position = ' style="left:' . $productImage->getWidth() . 'px;'
                                 . 'top:' . $productImage->getHeight() . 'px;"';
@@ -50,7 +51,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         ?>
                         <?php // Product Image ?>
                         <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
-                            <?php // echo $productImage->toHtml(); ?>
+                            <?php echo $productImage->toHtml(); ?>
                         </a>
                         <div class="product details product-item-details">
                             <?php
