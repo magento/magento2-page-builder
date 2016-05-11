@@ -12,14 +12,9 @@ namespace Gene\BlueFoot\Block\Adminhtml\Stage;
 class Init extends \Magento\Backend\Block\Template
 {
     /**
-     * @var \Magento\Framework\Data\Form\FormKey
-     */
-    protected $formKey;
-
-    /**
      * @var \Gene\BlueFoot\Model\Stage\Plugin
      */
-    protected $plugin;
+    protected $_plugin;
 
     /**
      * @var \Magento\Framework\UrlInterface
@@ -36,12 +31,11 @@ class Init extends \Magento\Backend\Block\Template
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Plugin $plugin,
-        \Magento\Framework\UrlInterface $urlInterface,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->plugin = $plugin;
-        $this->_urlBuilder = $urlInterface;
+        $this->_plugin = $plugin;
+        $this->_urlBuilder = $context->getUrlBuilder();
     }
 
     /**
@@ -102,7 +96,7 @@ class Init extends \Magento\Backend\Block\Template
         ]);
 
         // Include our plugin information
-        $config->setData('plugins', $this->plugin->getJsPlugins());
+        $config->setData('plugins', $this->_plugin->getJsPlugins());
 
         // Fire event to allow extra data to be passed to the stage
         $this->_eventManager->dispatch('gene_bluefoot_stage_build_config', ['config' => $config]);
