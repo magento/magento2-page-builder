@@ -51,7 +51,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
                 buildFn();
             })
         </script>';
-        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" data-bind="event: { click: buildBlueFoot }" style="display: none;"></div>';
+        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
         return $html;
     }
 
