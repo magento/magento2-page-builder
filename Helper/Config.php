@@ -49,7 +49,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getUploadUrl($removeHttp = false)
     {
-        $uploadUrl = $this->_urlBuilder->getBaseUrl() . '/media/gene-cms';
+        $uploadUrl = $this->_urlBuilder->getBaseUrl() . '/pub/media/gene-cms';
         if($removeHttp) {
             $uploadUrl = str_replace('http:', '', $uploadUrl);
         }
