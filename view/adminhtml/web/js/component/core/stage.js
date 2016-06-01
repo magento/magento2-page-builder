@@ -418,7 +418,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         var stage = container.find('.gene-bluefoot-stage');
         if (this.stage.container.hasClass('full-screen')) {
             //container.css({height: ''});
+            jQuery('body').removeClass('bluefoot-locked');
             container.removeClass('full-screen');
+
             /*stage.animate(this.originalFullscreenCss, 500, function () {
                 stage.css({position: '', width: '', top: '', left: '', bottom: ''});
                 setTimeout(function () {
@@ -448,6 +450,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this);
                 Hook.trigger('gene-bluefoot-stage-updated', false, false, this);
             }.bind(this)); */
+            jQuery('body').addClass('bluefoot-locked');
             container.addClass('full-screen');
         }
     };
