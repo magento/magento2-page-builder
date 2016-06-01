@@ -77,17 +77,25 @@ button.gene-bluefoot {
 }
 
 .gene-bluefoot-modal-background {
-    z-index: 910;
+    z-index: 1110;
 
     .gene-bluefoot-modal {
-        z-index: 920;
+        z-index: 1120;
     }
 }
 .gene-bluefoot-stage-panel {
     .gene-bluefoot-content-type {
-        a:hover, a:focus {
-            color:white;
-            text-decoration:none;
+        a {
+            transition: .5s;
+            &:hover {
+                color: white;
+                background: darken(#7e7e7e, 5%);
+                text-decoration: none;
+            }
+            &:focus {
+                color: white;
+                text-decoration: none;
+            }
         }
     }
 }
