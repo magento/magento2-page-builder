@@ -1,3 +1,10 @@
+/**
+ * BlueFoot CMS {less}
+ * Magento 2 specific styles
+ **/
+
+@import '_var';
+
 .gene-bluefoot-stage-container {
     &.full-screen {
         .gene-bluefoot-stage {
@@ -239,9 +246,16 @@ a.gene-bluefoot-draggable:hover {
 
     border: 1px solid transparent;
 }
-.slick-arrow.slick-hidden {
-    display: none;
+.slick-arrow {
+    &:before {
+        display:none;
+    }
+    font-family:@icon_font;
+    &.slick-hidden {
+        display: none;
+    }
 }
+
 
 .admin__scope-old {
     .content-block-set {
