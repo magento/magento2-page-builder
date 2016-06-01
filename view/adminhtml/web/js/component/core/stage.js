@@ -417,8 +417,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         var container = this.stage.container;
         var stage = container.find('.gene-bluefoot-stage');
         if (this.stage.container.hasClass('full-screen')) {
-            container.css({height: ''});
-            stage.animate(this.originalFullscreenCss, 500, function () {
+            //container.css({height: ''});
+            container.removeClass('full-screen');
+            /*stage.animate(this.originalFullscreenCss, 500, function () {
                 stage.css({position: '', width: '', top: '', left: '', bottom: ''});
                 setTimeout(function () {
                     container.removeClass('full-screen no-transition');
@@ -426,9 +427,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 }, 50);
                 Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this);
                 Hook.trigger('gene-bluefoot-stage-updated', false, false, this);
-            }.bind(this));
+            }.bind(this)); */
         } else {
-            this.originalFullscreenCss = {
+            /*this.originalFullscreenCss = {
                 position: 'absolute',
                 top: stage.offset().top,
                 left: stage.offset().left,
@@ -446,7 +447,8 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 container.addClass('full-screen');
                 Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this);
                 Hook.trigger('gene-bluefoot-stage-updated', false, false, this);
-            }.bind(this));
+            }.bind(this)); */
+            container.addClass('full-screen');
         }
     };
 
