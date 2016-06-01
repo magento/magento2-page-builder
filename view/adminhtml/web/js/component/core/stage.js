@@ -415,41 +415,10 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
      */
     Stage.prototype.fullscreen = function () {
         var container = this.stage.container;
-        var stage = container.find('.gene-bluefoot-stage');
         if (this.stage.container.hasClass('full-screen')) {
-            //container.css({height: ''});
             jQuery('body').removeClass('bluefoot-locked');
             container.removeClass('full-screen');
-
-            /*stage.animate(this.originalFullscreenCss, 500, function () {
-                stage.css({position: '', width: '', top: '', left: '', bottom: ''});
-                setTimeout(function () {
-                    container.removeClass('full-screen no-transition');
-                    stage.removeClass('no-transition');
-                }, 50);
-                Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this);
-                Hook.trigger('gene-bluefoot-stage-updated', false, false, this);
-            }.bind(this)); */
         } else {
-            /*this.originalFullscreenCss = {
-                position: 'absolute',
-                top: stage.offset().top,
-                left: stage.offset().left,
-                width: stage.outerWidth()
-            };
-            container.addClass('no-transition').css({height: container.outerHeight()});
-            stage.addClass('no-transition');
-            stage.css(this.originalFullscreenCss);
-            stage.animate({
-                top: 0,
-                left: 0,
-                width: '100%',
-                bottom: 0
-            }, 500, function () {
-                container.addClass('full-screen');
-                Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this);
-                Hook.trigger('gene-bluefoot-stage-updated', false, false, this);
-            }.bind(this)); */
             jQuery('body').addClass('bluefoot-locked');
             container.addClass('full-screen');
         }
