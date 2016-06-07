@@ -288,6 +288,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
 
         this.save.enable();
         this.container.addClass('stage-init').show();
+        buttonsContainer.parents('.admin__field').addClass('gene-bluefoot-admin__field');
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOff();
             buttonsContainer.find('.plugin').hide();
