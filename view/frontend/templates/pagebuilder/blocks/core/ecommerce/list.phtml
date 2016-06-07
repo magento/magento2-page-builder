@@ -34,7 +34,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
      */
     $pos = $block->getPositioned();
     ?>
-    <div class="products wrapper bluefoot-product-list <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?> <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    <div id="bluefoot-product-list-<?php echo $this->getEntity()->getId(); ?>" class="products wrapper bluefoot-product-list <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?> <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
         <?php $iterator = 1; ?>
         <ol class="products list items product-items">
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
@@ -56,12 +56,14 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         <?php
                         $_productNameStripped = $block->stripTags($_product->getName(), null, true);
                         ?>
-                        <strong class="product name product-item-name">
-                            <a class="product-item-link"
-                               href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
-                                <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
-                            </a>
-                        </strong>
+                        <div class="bluefoot-full-width bluefoot-normalise-heights">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </strong>
+                        </div>
                         <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
                         <?php echo $block->getProductDetailsHtml($_product); ?>
@@ -138,4 +140,12 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
         }
         </script>
     <?php endif; ?>
+
+    <script type="text/javascript">
+        require(['jquery','jquery/bluefoot-normalise-heights'], function(jQuery) {
+            jQuery(function () {
+                jQuery('#bluefoot-product-list-<?php echo $this->getEntity()->getId(); ?>').bluefootNormaliseHeights();
+            });
+        });
+    </script>
 <?php endif; ?>
