@@ -9,7 +9,8 @@
  * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Column
  *
  */
+$this->setCssClasses('bluefoot-column-' . $this->getColumnsFromWidth());
 ?>
-<div class="bluefoot-column bluefoot-column-<?php echo $this->getColumnsFromWidth(); ?> <?php echo $this->getFormData('css_classes'); ?><?php echo ($this->getFormData('remove_padding')) ? ' bluefoot-no-padding' : '' ; ?>">
+<div class="bluefoot-column <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
     <?php echo $this->getRenderedChildHtml(); ?>
 </div>

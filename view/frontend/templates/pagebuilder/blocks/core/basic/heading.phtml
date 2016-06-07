@@ -12,4 +12,4 @@
 $_entity = $this->getEntity();
 $_headingType = strtolower($this->getAttributeText('heading_type'));
 ?>
-<<?php echo $_headingType; ?> class="bluefoot-entity <?php echo $_entity->getCssClasses(); ?>"><span><?php echo $this->escapeHtml($_entity->getTitle()); ?></span></<?php echo $_headingType; ?>>
+<<?php echo $_headingType; ?> class="bluefoot-entity <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>><span><?php echo $this->escapeHtml($_entity->getTitle()); ?></span></<?php echo $_headingType; ?>>
