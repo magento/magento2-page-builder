@@ -20,6 +20,9 @@ var config = {
     'shim': {
         'slick' : ['jquery'],
         'fancybox' : ['jquery'],
+        'bluefoot/tabs' : ['jquery'],
+        'bluefoot/accordion' : ['jquery'],
+        'bluefoot/normalise-heights' : ['jquery'],
         'highlight' : []
     }
 };
