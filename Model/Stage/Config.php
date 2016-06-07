@@ -470,7 +470,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         // If the attribute has a widget assigned to it ensure it renders on the front-end
-        if($widget = $attribute->getData('widget')) {
+        if ($widget = $attribute->getData('widget')) {
             $data['type'] = 'widget';
             $data['widget'] = $widget;
         }

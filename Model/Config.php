@@ -153,7 +153,12 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
      */
     public function getWidget($name)
     {
-        return $this->get('widgets/' . $name);
+        $widgets = $this->getWidgets();
+        if (isset($widgets[$name])) {
+            return $widgets[$name];
+        }
+
+        return null;
     }
 
     /**
