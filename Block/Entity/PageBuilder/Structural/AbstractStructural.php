@@ -135,7 +135,7 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         $style = '';
 
-        if ($image = $this->getUrl(GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image'))) {
+        if ($image = $this->getUrl(self::GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image'))) {
             $style .= 'background-image:url(' . $image . ');';
         }
         if ($color = $this->getFormData('background_color')) {
