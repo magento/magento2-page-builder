@@ -25,9 +25,9 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
     protected $_pricingHelper;
 
     /**
-     * @var \Magento\Framework\View\LayoutFactory
+     * @var \Magento\Catalog\Helper\ImageFactory
      */
-    protected $_layoutFactory;
+    protected $_imageHelperFactory;
 
     /**
      * Product constructor.
@@ -36,7 +36,7 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Magento\Catalog\Api\ProductRepositoryInterface              $productRepositoryInterface
      * @param \Magento\Framework\Pricing\Helper\DataFactory                $pricingHelper
-     * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
+     * @param \Magento\Catalog\Helper\ImageFactory                         $imageHelperFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -46,7 +46,6 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         \Magento\Framework\Registry $registry,
         ProductRepositoryInterface $productRepositoryInterface,
         \Magento\Framework\Pricing\Helper\DataFactory $pricingHelper,
-        \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
@@ -55,7 +54,6 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         parent::__construct($context, $registry, $resource, $resourceCollection);
         $this->_productRepository = $productRepositoryInterface;
         $this->_pricingHelper = $pricingHelper;
-        $this->_layoutFactory = $layoutFactory;
         $this->_imageHelperFactory = $imageHelperFactory;
     }
 

@@ -151,7 +151,8 @@ class Search extends \Magento\Framework\App\Action\Action
     protected function _searchCategory()
     {
         $categories = $this->_categoryCollectionFactory->create()
-            ->addFilter('name', '%' . $this->_getTerm() . '%', 'like');
+            ->addAttributeToSelect('*')
+            ->addAttributeToFilter('name', array('like' => '%' . $this->_getTerm() . '%'));
 
         return $this->_returnOptionArray($categories);
     }
@@ -190,9 +191,13 @@ class Search extends \Magento\Framework\App\Action\Action
     protected function _returnOptionArray($items, $label = 'name', $id = 'entity_id')
     {
         // If the items are a collection, retrieve the items within as an array
-        if ($items instanceof \Magento\Cms\Model\ResourceModel\AbstractCollection) {
+        if ($items instanceof \Magento\Framework\Data\Collection\AbstractDb && method_exists($items, 'toArray')) {
             $itemsArray = $items->toArray();
-            $items = $itemsArray['items'];
+            if (isset($itemsArray['items'])) {
+                $items = $itemsArray['items'];
+            } else {
+                $items = $itemsArray;
+            }
         }
 
         $results = [];
