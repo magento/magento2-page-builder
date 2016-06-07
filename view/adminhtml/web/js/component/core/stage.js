@@ -72,7 +72,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                     }
 
                     // Add class to parent div
-                    container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
+                    container.parents('.admin__field').addClass('gene-bluefoot-admin__field');
 
                     // Fire an event as early on as possible
                     Hook.trigger('gene-bluefoot-after-stage-init', {
@@ -288,6 +288,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
 
         this.save.enable();
         this.container.addClass('stage-init').show();
+        buttonsContainer.parents('.admin__field').addClass('gene-bluefoot-admin__field');
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOff();
             buttonsContainer.find('.plugin').hide();
@@ -309,7 +310,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         this.disabled = true;
         this.save.disable();
         this.container.removeClass('stage-init').hide();
-        this.container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
+        buttonsContainer.parents('.admin__field').removeClass('gene-bluefoot-admin__field');
         this.textarea.show();
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOn();
