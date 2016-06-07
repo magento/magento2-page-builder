@@ -134,10 +134,10 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         /*if ($image = Mage::helper('gene_bluefoot')->getImageUrl($this->getFormData('background_image'))) {
             $style .= 'background-image:url(' . $image . ');';
-        }
+        }*/
         if ($color = $this->getFormData('background_color')) {
             $style .= 'background-color:#' . $color . ';';
-        }*/
+        }
 
         return $style;
 
