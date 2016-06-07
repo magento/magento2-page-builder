@@ -15,18 +15,17 @@
 $_entity = $this->getEntity();
 $_productCollection = $this->getProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
-return '';
 ?>
 <?php if ($_productCollection->count()): ?>
     <?php
     if (strtolower($this->getAttributeText('product_display')) == 'grid') {
         $viewMode = 'grid';
-        $image = 'category_page_list';
+        $image = 'bluefoot_page_list';
         $showDescription = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     } else {
         $viewMode = 'list';
-        $image = 'category_page_list';
+        $image = 'bluefoot_page_list';
         $showDescription = true;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
     }
