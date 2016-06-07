@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/dragdrop', 'bluefoot/config', 'bluefoot/modal', 'bluefoot/edit', 'bluefoot/ajax', 'jquery/bluefoot-accordion', 'jquery/bluefoot-tabs', 'jquery/slick', 'highlight'], function (Hook, jQuery, Render, DragDropClass, Config, Modal, EditClass, AjaxClass) {
+define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/dragdrop', 'bluefoot/config', 'bluefoot/modal', 'bluefoot/edit', 'bluefoot/ajax', 'jquery/bluefoot-accordion', 'jquery/bluefoot-tabs', 'jquery/slick', 'highlight', 'jquery/bluefoot-normalise-heights'], function (Hook, jQuery, Render, DragDropClass, Config, Modal, EditClass, AjaxClass) {
 
     /**
      * The abstract content type class handles the basic operations of any content type. This includes building its
