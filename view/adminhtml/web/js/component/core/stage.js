@@ -59,8 +59,6 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 throw Error('Unable to load container: ' + container);
             }
 
-            // Add class to parent div
-            container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
 
             // Load any plugins that require to be available onPageLoad
             Plugins.load('onStageInit', function () {
@@ -72,6 +70,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                     if (this.build) {
                         this.build.rebuild();
                     }
+
+                    // Add class to parent div
+                    container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
 
                     // Fire an event as early on as possible
                     Hook.trigger('gene-bluefoot-after-stage-init', {
@@ -308,6 +309,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         this.disabled = true;
         this.save.disable();
         this.container.removeClass('stage-init').hide();
+        this.container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
         this.textarea.show();
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOn();
