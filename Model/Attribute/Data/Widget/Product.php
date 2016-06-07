@@ -19,25 +19,42 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      */
     protected $_productRepository;
 
+    /**
+     * @var \Magento\Framework\Pricing\Helper\DataFactory
+     */
+    protected $_pricingHelper;
 
     /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param ProductRepositoryInterface $productRepositoryInterface
+     * @var \Magento\Catalog\Helper\ImageFactory
+     */
+    protected $_imageHelperFactory;
+
+    /**
+     * Product constructor.
+     *
+     * @param \Magento\Framework\Model\Context                             $context
+     * @param \Magento\Framework\Registry                                  $registry
+     * @param \Magento\Catalog\Api\ProductRepositoryInterface              $productRepositoryInterface
+     * @param \Magento\Framework\Pricing\Helper\DataFactory                $pricingHelper
+     * @param \Magento\Catalog\Helper\ImageFactory                         $imageHelperFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
-     * @param array $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
+     * @param array                                                        $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         ProductRepositoryInterface $productRepositoryInterface,
+        \Magento\Framework\Pricing\Helper\DataFactory $pricingHelper,
+        \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection);
         $this->_productRepository = $productRepositoryInterface;
+        $this->_pricingHelper = $pricingHelper;
+        $this->_imageHelperFactory = $imageHelperFactory;
     }
 
     /**
@@ -48,7 +65,7 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
     public function getProduct()
     {
         try {
-            $product = $this->_productRepository->getById($this->getEntity()->getData($this->getAttribute()->getData('attribute_code')));
+            $product = $this->_productRepository->getById($this->getEntity()->getData($this->getAttribute()->getData('attribute_code')), false, 1);
             if ($product->getId()) {
                 return $product;
             }
@@ -78,15 +95,13 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
 
     /**
      * Get formatted Price
-     * @param bool|false $price
+     * @param bool|float|false $price
      * @return string
      */
     protected function _getFormattedPrice($price = false)
     {
-        if ($price) {
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
-            return $priceHelper->currency($price, true, false);
+        if ($price !== false) {
+            return $this->_pricingHelper->create()->currency($price, true, false);
         }
         return '';
     }
@@ -97,21 +112,13 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      * @param $product
      * @return string
      */
-    protected function _getProductImage($product)
+    protected function _getProductImage(\Magento\Catalog\Model\Product $product)
     {
-
-        try{
-            //$image = 'category_page_grid' or 'category_page_list';
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $imageHelper = $objectManager->create('Magento\Catalog\Helper\Image');
-
-            $imgSrc = $imageHelper->init($product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(200)->getUrl();
+        try {
+            return $this->_imageHelperFactory->create()->init($product, 'bluefoot_product_image_admin')->getUrl();
+        } catch (\Exception $e) {
+            return '';
         }
-        catch(Exception $e) {
-            $imgSrc = ''; //Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg',array('_area'=>'frontend'));
-        }
-
-        return $imgSrc;
     }
 
 }
