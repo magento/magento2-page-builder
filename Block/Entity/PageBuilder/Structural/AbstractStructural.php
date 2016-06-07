@@ -12,7 +12,7 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
 class AbstractStructural extends \Magento\Framework\View\Element\Template
 {
 
-    const GENE_BLUEFOOT_MEDIA_DIRECTORY = 'pub/media/gene-cms';
+    const GENE_BLUEFOOT_MEDIA_DIRECTORY = '/gene-cms';
 
     /**
      * Return the form data
@@ -135,7 +135,8 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         $style = '';
 
-        if ($image = $this->getUrl(self::GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image'))) {
+        if ($this->getFormData('background_image')) {
+            $image = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image');
             $style .= 'background-image:url(' . $image . ');';
         }
         if ($color = $this->getFormData('background_color')) {
