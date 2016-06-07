@@ -309,7 +309,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         this.disabled = true;
         this.save.disable();
         this.container.removeClass('stage-init').hide();
-        this.container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
+        buttonsContainer.parents('fieldset.admin__field').removeClass('gene-bluefoot-admin__field');
         this.textarea.show();
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOn();
