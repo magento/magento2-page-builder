@@ -59,6 +59,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 throw Error('Unable to load container: ' + container);
             }
 
+            // Add class to parent div
+            container.parents('fieldset.admin__field').addClass('gene-bluefoot-admin__field');
+
             // Load any plugins that require to be available onPageLoad
             Plugins.load('onStageInit', function () {
 
