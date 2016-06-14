@@ -188,4 +188,31 @@ class Attribute extends \Magento\Eav\Model\Attribute
         return $this->getData('is_filterable_in_grid')
         && in_array($this->getFrontendInput(), ['text', 'date', 'select', 'boolean']);
     }
+
+    /**
+     * Don't serialize the class variables
+     *
+     * @return array
+     */
+    public function __sleep()
+    {
+        // Don't store the entity type in the cache
+        unset($this->_data['entity_type']);
+
+        return array_diff(
+            parent::__sleep(),
+            ['_objectManager', 'indexerRegistry']
+        );
+    }
+
+    /**
+     * Restore the entity_type
+     */
+    public function __wakeup()
+    {
+        parent::__wakeup();
+
+        // Restore the entity type into the data
+        $this->_data['entity_type'] = $this->getEntityType();
+    }
 }
