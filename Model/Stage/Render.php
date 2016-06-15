@@ -345,6 +345,10 @@ class Render extends \Magento\Framework\Model\AbstractModel
             /* @var $block \Magento\Framework\View\Element\Template */
             $block = $this->_layoutFactory->create()->createBlock($renderer);
             if($block) {
+                // Add the formkey block
+                if (!$block->getLayout()->hasElement('formkey')) {
+                    $block->getLayout()->addBlock('Magento\Framework\View\Element\FormKey', 'formkey');
+                }
                 $block->setTemplate($elementTemplate);
                 if(isset($element['formData']) && !empty($element['formData'])) {
                     $block->setData('form_data', $element['formData']);
@@ -414,7 +418,12 @@ class Render extends \Magento\Framework\Model\AbstractModel
         /* @var $frontend \Gene\BlueFoot\Model\Entity\Frontend */
         $frontend = $entity->getFrontend();
 
+        /* @var $block \Magento\Framework\View\Element\Template */
         if($block = $frontend->getRenderBlock()) {
+            // Add the formkey block
+            if (!$block->getLayout()->hasElement('formkey')) {
+                $block->getLayout()->addBlock('Magento\Framework\View\Element\FormKey', 'formkey');
+            }
             $block->setTemplate($frontend->getViewTemplate());
             $block->setStructure($element);
 
