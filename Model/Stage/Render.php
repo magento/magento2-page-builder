@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Model\Stage;
 
+use Gene\BlueFoot\Api\EntityRepositoryInterface;
+
 /**
  * Class Render
  *
@@ -52,14 +54,14 @@ class Render extends \Magento\Framework\Model\AbstractModel
     protected $_layoutFactory;
 
     /**
-     * @var \Gene\BlueFoot\Model\EntityFactory
-     */
-    protected $_entity;
-
-    /**
      * @var \Magento\Framework\Data\Form\FormKey
      */
     protected $_formKey;
+
+    /**
+     * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
+     */
+    protected $_entityRepository;
 
     /**
      * Plugin constructor.
@@ -75,21 +77,21 @@ class Render extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
-        \Gene\BlueFoot\Model\EntityFactory $entityFactory,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Data\Form\FormKey $formKey,
+        EntityRepositoryInterface $entityRepositoryInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_entity = $entityFactory;
         $this->_configInterface = $configInterface;
         $this->_contentBlockCollection = $contentBlockCollection;
         $this->_entityCollection = $entityCollectionFactory;
         $this->_layoutFactory = $layoutFactory;
         $this->_formKey = $formKey;
+        $this->_entityRepository = $entityRepositoryInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -107,7 +109,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
             return $loaded;
         }
 
-        return $this->_entity->create()->load($entityId);
+        return $this->_entityRepository->getById($entityId);
     }
 
     /**

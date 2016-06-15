@@ -4,6 +4,7 @@ namespace Gene\BlueFoot\Model;
 
 use Gene\BlueFoot\Api\Data\EntityInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Entity
@@ -30,6 +31,11 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     protected $_contentBlock;
 
     /**
+     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
+     */
+    protected $_contentBlockRepository;
+
+    /**
      * Entity constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -44,6 +50,7 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Entity\FrontendFactory $frontend,
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -51,6 +58,7 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->_frontend = $frontend;
         $this->_contentBlock = $contentBlockFactory;
+        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
     }
 
     /**
@@ -99,9 +107,13 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     public function getContentBlock()
     {
         if ($attributeSetId = $this->getAttributeSetId()) {
-            $contentBlock = $this->_contentBlock->create()->load($attributeSetId);
-            if ($contentBlock->getId()) {
-                return $contentBlock;
+            try {
+                $contentBlock = $this->_contentBlockRepository->getById($attributeSetId);
+                if ($contentBlock->getId()) {
+                    return $contentBlock;
+                }
+            } catch (\Exception $e) {
+                return false;
             }
         }
 

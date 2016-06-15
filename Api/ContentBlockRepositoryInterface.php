@@ -30,6 +30,15 @@ interface ContentBlockRepositoryInterface
     public function getByIdentifier($contentBlockIdentifier);
 
     /**
+     * Get a content block by it's ID
+     *
+     * @param $contentBlockId
+     *
+     * @return mixed
+     */
+    public function getById($contentBlockId);
+
+    /**
      * Get a list from a search criteria
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria

@@ -173,7 +173,7 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
      * @return \Gene\BlueFoot\Model\Attribute\ContentBlock
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function get($contentBlockId)
+    public function getById($contentBlockId)
     {
         /** @var ContentBlock $contentBlock */
         $contentBlock = $this->_contentBlockFactory->create();
