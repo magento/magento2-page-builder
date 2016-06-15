@@ -113,11 +113,11 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/rend
                 });
 
                 // Ensure column heights with images
-                if (jElement.find('img')) {
-                    jElement.find('img').on('load', function (event) {
-                        this.equalColumnHeights($hook);
-                    }.bind(this));
-                }
+                //if (jElement.find('img')) {
+                //    jElement.find('img').on('load', function (event) {
+                //        this.equalColumnHeights($hook);
+                //    }.bind(this));
+                //}
             }
 
             // Ensure all columns on the same row have the same height
