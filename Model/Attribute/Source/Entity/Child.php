@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Model\Attribute\Source\Entity;
 
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+
 /**
  * Class Child
  *
@@ -24,6 +26,11 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     protected $_possibleEntities = null;
 
     /**
+     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
+     */
+    protected $_contentBlockRepository;
+
+    /**
      * Child constructor.
      *
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory          $contentBlockFactory
@@ -31,10 +38,12 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     public function __construct(
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory
+        \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface
     ) {
         $this->_contentBlock = $contentBlockFactory;
         $this->_entityCollection = $collectionFactory;
+        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
     }
 
     /**
@@ -102,9 +111,13 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
         $typeId = (isset($additionalData['entity_allowed_block_type']) ? $additionalData['entity_allowed_block_type'] : false);
 
         if ($typeId) {
-            $typeModel = $this->_contentBlock->create()->load($typeId);
-            if($typeModel->getId()){
-                return $typeModel;
+            try {
+                $typeModel = $this->_contentBlockRepository->getById($typeId);
+                if($typeModel->getId()){
+                    return $typeModel;
+                }
+            } catch (\NoSuchEntityException $e) {
+                return false;
             }
         }
 

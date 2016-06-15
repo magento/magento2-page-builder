@@ -3,6 +3,7 @@
 namespace Gene\BlueFoot\Model\Stage;
 
 use Gene\BlueFoot\Api\EntityRepositoryInterface;
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Save
@@ -24,11 +25,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
      * @var \Gene\BlueFoot\Model\EntityFactory
      */
     protected $_entityFactory;
-
-    /**
-     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
-     */
-    protected $_contentBlockFactory;
 
     /**
      * @var \Magento\Framework\App\Request\Http
@@ -56,6 +52,11 @@ class Save extends \Magento\Framework\Model\AbstractModel
     protected $_entityCollection;
 
     /**
+     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
+     */
+    protected $_contentBlockRepository;
+
+    /**
      * Save constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -76,10 +77,10 @@ class Save extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\EntityFactory $entityFactory,
-        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         EntityRepositoryInterface $entityRepositoryInterface,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
@@ -87,10 +88,10 @@ class Save extends \Magento\Framework\Model\AbstractModel
     ) {
         $this->_configInterface = $configInterface;
         $this->_entityFactory = $entityFactory;
-        $this->_contentBlockFactory = $contentBlockFactory;
         $this->_request = $request;
         $this->_jsonHelper = $jsonHelper;
         $this->_entityRepository = $entityRepositoryInterface;
+        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
         $this->_entityCollection = $entityCollectionFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
@@ -259,19 +260,23 @@ class Save extends \Magento\Framework\Model\AbstractModel
         // We only create an entity if we have some data
         if(isset($element['formData']) && !empty($element['formData'])) {
 
-            $contentBlock = $this->_contentBlockFactory->create()->load($element['contentType'], 'entity_type.identifier');
+            $contentBlock = $this->_contentBlockRepository->getByIdentifier($element['contentType']);
             if ($contentBlock) {
 
                 // Format the form data
                 $formData = $element['formData'];
                 $formData['attribute_set_id'] = $contentBlock->getId();
 
-                // Create our entity with the correct attribute set id
-                $entity = $this->_entityFactory->create();
-                if (isset($element['entityId'])) {
-                    $entity->load($element['entityId']);
-                } else if (isset($element['formData']['entityId'])) {
-                    $entity->load($element['formData']['entityId']);
+                // Load the entity based on it's ID
+                $entityId = (isset($element['entityId']) ? $element['entityId'] : (isset($element['formData']['entityId']) ? isset($element['formData']['entityId']) : false));
+                if ($entityId) {
+                    try {
+                        $entity = $this->_entityRepository->getById($entityId);
+                    } catch (\NoSuchEntityException $e) {
+                        $entity = $this->_entityFactory->create();
+                    }
+                } else {
+                    $entity = $this->_entityFactory->create();
                 }
 
                 // Add it into the entity
@@ -285,7 +290,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 }
 
                 // Save the create!
-                if ($entity->save()) {
+                if ($this->_entityRepository->save($entity)) {
                     return $entity;
                 }
             }
