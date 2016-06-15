@@ -41,7 +41,7 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
      */
     public function getCssAttributes()
     {
-        $html = 'bluefoot-entity';
+        $html = 'bluefoot-structural';
 
         // Add Align class
         $align = '';
