@@ -285,7 +285,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 }
 
                 // Save the create!
-                if ($entity->save()) {
+                if ($this->_entityRepository->save($entity)) {
                     return $entity;
                 }
             }
