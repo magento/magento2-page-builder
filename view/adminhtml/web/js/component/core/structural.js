@@ -43,6 +43,39 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/rend
 
         // An event called when the stage becomes visible
         Hook.attach('gene-bluefoot-stage-visible', this.hideDisabledControls.bind(this), this.stage);
+
+        // If the container is not currently visible, we need to watch until it comes into view
+        if (!this.stageIsVisible()) {
+            var visibleInterval;
+            visibleInterval = setInterval(function () {
+                if (this.stageIsVisible()) {
+                    Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this.stage);
+                    Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
+                    clearInterval(visibleInterval);
+                }
+            }.bind(this), 100);
+        }
+    };
+
+    /**
+     * Is the stage visible?
+     *
+     * @returns {boolean}
+     */
+    Structural.prototype.stageIsVisible = function () {
+        // Detect if the stage is inside of an accordion
+        if (this.containerInner.parents('.admin__collapsible-content').length > 0) {
+            var collapsible = this.containerInner.parents('.admin__collapsible-content');
+            if (parseInt(collapsible.css('maxHeight')) == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (this.containerInner.is(":visible")) {
+            return true;
+        }
+
+        return false;
     };
 
     /**
@@ -111,13 +144,6 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/rend
                     element: jElement,
                     height: jElement.outerHeight()
                 });
-
-                // Ensure column heights with images
-                //if (jElement.find('img')) {
-                //    jElement.find('img').on('load', function (event) {
-                //        this.equalColumnHeights($hook);
-                //    }.bind(this));
-                //}
             }
 
             // Ensure all columns on the same row have the same height
