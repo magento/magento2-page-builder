@@ -39,8 +39,8 @@ endif;
                     autoplaySpeed: <?php echo ($_entity->getAutoplayPlaySpeed()) ? $_entity->getAutoplayPlaySpeed() : '5000' ; ?>,
                     fade: <?php echo ($_entity->getFade()) ? 'true' : 'false' ; ?>,
                     prevArrow: '<button type="button" class="slick-prev button"><span><span>&lt;</span></span></button>',
-                    nextArrow: '<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>',
-                    <?php echo ($_entity->getSliderResponsiveSettings()) ? 'responsive:' . $_entity->getSliderResponsiveSettings()  : '' ; ?>
+                    nextArrow: '<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>'
+                    <?php echo ($_entity->getSliderAdditionalSettings()) ? ',' . $_entity->getSliderAdditionalSettings()  : '' ; ?>
                 });
             });
         });
