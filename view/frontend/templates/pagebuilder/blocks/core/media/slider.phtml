@@ -21,8 +21,8 @@ endif;
 
     <?php $_collection = $this->getChildEntities('slider_items'); ?>
     <div id="bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>" class="bluefoot-slider bluefoot-full-width <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php foreach ($_collection as $_block): ?>
-            <?php echo $_block->toHtml(); ?>
+        <?php $_i = 0; foreach ($_collection as $_block): $_i++; ?>
+            <?php echo $_block->setCount($_i)->toHtml(); ?>
         <?php endforeach; ?>
     </div>
 
