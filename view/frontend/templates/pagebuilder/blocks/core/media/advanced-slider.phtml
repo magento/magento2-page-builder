@@ -43,16 +43,11 @@ endif;
                     nextArrow: '<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>'
                     <?php echo ($_entity->getSliderAdditionalSettings()) ? ',' . $_entity->getSliderAdditionalSettings()  : '' ; ?>
                 });
-
-                jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(slick){
-                    console.log(slick);
-                    slick.addClass('slick-visible');
-                });
             });
 
-            jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(slick){
+            jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(event, slick){
                 console.log(slick);
-                slick.addClass('slick-visible');
+                jQuery(slick).addClass('slick-visible');
             });
         });
     </script>
