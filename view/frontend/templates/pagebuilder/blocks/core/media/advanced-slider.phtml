@@ -43,6 +43,10 @@ endif;
                     nextArrow: '<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>'
                     <?php echo ($_entity->getSliderAdditionalSettings()) ? ',' . $_entity->getSliderAdditionalSettings()  : '' ; ?>
                 });
+
+                jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(slick){
+                    slick.addClass('slick-visible');
+                });
             });
         });
     </script>
