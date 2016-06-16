@@ -45,6 +45,9 @@ endif;
                     <?php echo ($_entity->getSliderAdditionalSettings()) ? ',' . $_entity->getSliderAdditionalSettings()  : '' ; ?>
                 });
             });
+            jQuery('#bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(event, slick){
+                slick.$slider.addClass('slick-visible');
+            });
         });
     </script>
 
