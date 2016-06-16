@@ -13,16 +13,16 @@ $_entity = $this->getEntity();
 $_count = $this->getCount();
 $_urlPrefix = $this->getUrl('pub/media/gene-cms');
 $this->setStyles('background-image: url(' . $_urlPrefix . $_entity->getBackgroundImage() . ');');
-$_classes = '';
+$_classes = 'slide-' . $_count;
 // Hide all but the first slide
 if ($_count > 1):
-    $_classes .= 'hidden-on-load count-' . $_count;
+    $_classes .= ' hidden-on-load';
 
 endif;
 // If there is a link but no button make the whole slide link
 $_noButtonLink = '';
 if (!$_entity->getLinkText() && $_entity->getLinkUrl()):
-    $_classes .='bluefoot-slide-with-link';
+    $_classes .=' bluefoot-slide-with-link';
     $_noButtonLink = 'onclick="location.href=\'' . $_entity->getLinkUrl() . '\'"';
 endif;
 $_color = $_entity->getTextColor();
