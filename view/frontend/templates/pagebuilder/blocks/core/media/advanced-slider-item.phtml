@@ -10,8 +10,14 @@
  *
  */
 $_entity = $this->getEntity();
+$_count = $this->getCount();
 $_urlPrefix = $this->getUrl('pub/media/gene-cms');
 $this->setStyles('background-image: url(' . $_urlPrefix . $_entity->getBackgroundImage() . ');');
+// Hide all but the first slide
+if ($_count > 1):
+    $_styles = $this->getStyles();
+    $this->setStyles($_styles . 'display:none;');
+endif;
 // If there is a link but no button make the whole slide link
 $_noButtonLink = '';
 if (!$_entity->getLinkText() && $_entity->getLinkUrl()):

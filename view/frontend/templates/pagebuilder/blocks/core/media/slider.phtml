@@ -32,6 +32,7 @@ endif;
                 /* [Slick JS] */
                 jQuery('#bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>').slick({
                     infinite: <?php echo ($_entity->getIsInfinite()) ? 'true' : 'false' ; ?>,
+                    lazyLoad: 'ondemand',
                     dots: <?php echo ($_entity->getShowDots()) ? 'true' : 'false' ; ?>,
                     slidesToShow: <?php echo ($_entity->getSlidesToShow()) ? $_entity->getSlidesToShow() : 1 ; ?>,
                     slidesToScroll: <?php echo ($_entity->getSlidesToScroll()) ? $_entity->getSlidesToScroll() : 1 ; ?>,
