@@ -420,9 +420,18 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         if (this.stage.container.hasClass('full-screen')) {
             jQuery('body').removeClass('bluefoot-locked');
             container.removeClass('full-screen');
+
+            setTimeout(function () {
+                jQuery(window).scroll();
+            }.bind(this), 0);
         } else {
             jQuery('body').addClass('bluefoot-locked');
             container.addClass('full-screen');
+
+            setTimeout(function () {
+                // Trigger scroll to bring the panel to the correct place
+                this.stage.container.find('.gene-bluefoot-stage').scroll();
+            }.bind(this), 0);
         }
     };
 

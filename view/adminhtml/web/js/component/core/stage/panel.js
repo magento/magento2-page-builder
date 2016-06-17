@@ -171,27 +171,55 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
      */
     Panel.prototype.bindScrollEvent = function () {
         var panel = jQuery(this.stage.container).find('.gene-bluefoot-stage-panel'),
-            windowTimeout;
+            windowTimeout,
+            fullScreenTimeout;
 
         jQuery(window).scroll(function () {
-            clearTimeout(windowTimeout);
-            windowTimeout = setTimeout(function () {
-                var containerOffset = this.stage.container.offset(),
-                    offset = 90,
-                    windowPosition = jQuery(window).scrollTop(),
-                    topPosition = windowPosition - containerOffset.top + offset;
-
-                if (topPosition > 0) {
-                    if (topPosition < (this.stage.container.outerHeight() - panel.outerHeight())) {
-                        panel.css({'transform': 'translateY(' + topPosition + 'px)'});
-                    } else {
-                        panel.css({'transform': 'translateY(' + parseInt(this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight()) + 'px)'});
-                    }
-                } else {
-                    panel.css({'transform': 'translateY(0px)'});
-                }
-            }.bind(this), 100);
+            if (!this.stage.container.hasClass('full-screen')) {
+                return this.scrollPanelWithUser(panel, windowTimeout);
+            }
         }.bind(this));
+
+        this.stage.container.find('.gene-bluefoot-stage').scroll(function () {
+            if (this.stage.container.hasClass('full-screen')) {
+                return this.scrollPanelWithUser(panel, fullScreenTimeout);
+            }
+        }.bind(this));
+    };
+
+    /**
+     * Bind scroll event on window + stage scroll
+     *
+     * @param panel
+     * @param windowTimeout
+     * @private
+     */
+    Panel.prototype.scrollPanelWithUser = function (panel, windowTimeout) {
+        var windowPosition,
+            containerOffset,
+            offset;
+        clearTimeout(windowTimeout);
+        windowTimeout = setTimeout(function () {
+            if (this.stage.container.hasClass('full-screen')) {
+                windowPosition = this.stage.container.find('.gene-bluefoot-stage').scrollTop();
+                containerOffset = {top: 0};
+                offset = 0;
+            } else {
+                windowPosition = jQuery(window).scrollTop();
+                containerOffset = this.stage.container.offset();
+                offset = 90;
+            }
+            var topPosition = windowPosition - containerOffset.top + offset;
+            if (topPosition > 0) {
+                if (topPosition < (this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight())) {
+                    panel.css({'transform': 'translateY(' + topPosition + 'px)'});
+                } else {
+                    panel.css({'transform': 'translateY(' + parseInt(this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight()) + 'px)'});
+                }
+            } else {
+                panel.css({'transform': 'translateY(0px)'});
+            }
+        }.bind(this), 250);
     };
 
     return Panel;
