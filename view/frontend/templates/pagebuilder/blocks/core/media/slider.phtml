@@ -21,8 +21,8 @@ endif;
 
     <?php $_collection = $this->getChildEntities('slider_items'); ?>
     <div id="bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>" class="bluefoot-slider bluefoot-full-width <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php foreach ($_collection as $_block): ?>
-            <?php echo $_block->toHtml(); ?>
+        <?php $_i = 0; foreach ($_collection as $_block): $_i++; ?>
+            <?php echo $_block->setCount($_i)->toHtml(); ?>
         <?php endforeach; ?>
     </div>
 
@@ -32,6 +32,7 @@ endif;
                 /* [Slick JS] */
                 jQuery('#bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>').slick({
                     infinite: <?php echo ($_entity->getIsInfinite()) ? 'true' : 'false' ; ?>,
+                    lazyLoad: 'ondemand',
                     dots: <?php echo ($_entity->getShowDots()) ? 'true' : 'false' ; ?>,
                     slidesToShow: <?php echo ($_entity->getSlidesToShow()) ? $_entity->getSlidesToShow() : 1 ; ?>,
                     slidesToScroll: <?php echo ($_entity->getSlidesToScroll()) ? $_entity->getSlidesToScroll() : 1 ; ?>,
@@ -43,6 +44,9 @@ endif;
                     nextArrow:'<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>'
                     <?php echo ($_entity->getSliderAdditionalSettings()) ? ',' . $_entity->getSliderAdditionalSettings()  : '' ; ?>
                 });
+            });
+            jQuery('#bluefoot-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(event, slick){
+                slick.$slider.addClass('slick-visible');
             });
         });
     </script>
