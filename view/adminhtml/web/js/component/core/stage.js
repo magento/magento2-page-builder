@@ -59,7 +59,6 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
                 throw Error('Unable to load container: ' + container);
             }
 
-
             // Load any plugins that require to be available onPageLoad
             Plugins.load('onStageInit', function () {
 
@@ -179,9 +178,6 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
 
             // Handle the buttons
             this.handleButtons();
-
-            // Init panel functions
-            this.windowScroll();
 
             // Init the structural elements
             this.structural = new StructuralClass(this);
@@ -428,47 +424,6 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
             jQuery('body').addClass('bluefoot-locked');
             container.addClass('full-screen');
         }
-    };
-
-
-    /**
-     * Run events on window scroll
-     */
-    Stage.prototype.windowScroll = function () {
-
-        var scrollTimeout;
-        jQuery(window).scroll(function () {
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = null;
-            }
-            /* Run Scroll events */
-            scrollTimeout = setTimeout(this.stageScrollEvents(), 10000);
-        }.bind(this));
-    };
-
-    /**
-     * Stage Events on scroll
-     * This function updates the position ofd the left hand panel
-     */
-    Stage.prototype.stageScrollEvents = function () {
-        var panel = this.container.find('.gene-bluefoot-stage-panel'),
-            containerOffset = this.container.offset(),
-            offset = 90,
-            panelPosition = panel.offset(),
-            windowPosition = jQuery(window).scrollTop(),
-            topPosition = windowPosition - panelPosition.top + offset,
-            minHeight = (panelPosition.top + panel.height()),
-            maxHeight = (containerOffset.top + this.container.outerHeight()) - (jQuery('.gene-bluefoot-stage-panel-inner').outerHeight() + offset);
-
-
-        if (minHeight < windowPosition && windowPosition < maxHeight) {
-            // Update the top position + add the fixed class
-            panel.addClass('bluefoot-fixed').find('.gene-bluefoot-stage-panel-inner').css('top', topPosition).css('max-height', (jQuery(window).height() - offset));
-        } else if (minHeight > windowPosition) {
-            panel.removeClass('bluefoot-fixed');
-        }
-
     };
 
     /**

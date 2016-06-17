@@ -142,6 +142,8 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
                 }.bind(this));
 
                 jQuery(this.stage.container).find('.gene-bluefoot-stage-full-screen').on('click', this.stage.fullscreen.bind(this));
+
+                this.bindScrollEvent();
             }
 
             $hook.done();
@@ -162,6 +164,34 @@ define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot
         jQuery(element).off('click').on('click', function (event) {
             event.preventDefault();
         });
+    };
+
+    /**
+     * Bind scroll events for the panel
+     */
+    Panel.prototype.bindScrollEvent = function () {
+        var panel = jQuery(this.stage.container).find('.gene-bluefoot-stage-panel'),
+            windowTimeout;
+
+        jQuery(window).scroll(function () {
+            clearTimeout(windowTimeout);
+            windowTimeout = setTimeout(function () {
+                var containerOffset = this.stage.container.offset(),
+                    offset = 90,
+                    windowPosition = jQuery(window).scrollTop(),
+                    topPosition = windowPosition - containerOffset.top + offset;
+
+                if (topPosition > 0) {
+                    if (topPosition < (this.stage.container.outerHeight() - panel.outerHeight())) {
+                        panel.css({'transform': 'translateY(' + topPosition + 'px)'});
+                    } else {
+                        panel.css({'transform': 'translateY(' + parseInt(this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight()) + 'px)'});
+                    }
+                } else {
+                    panel.css({'transform': 'translateY(0px)'});
+                }
+            }.bind(this), 100);
+        }.bind(this));
     };
 
     return Panel;
