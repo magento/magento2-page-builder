@@ -14,6 +14,8 @@ $_styles = '';
 
 if ($_entity->getHrWidth()): $_styles .= 'width:' . $_entity->getHrWidth() . ';'; endif;
 if ($_entity->getHrHeight()): $_styles .= 'border-width:' . $_entity->getHrHeight() . ';'; endif;
-if ($_entity->getHrWidth()): $_styles .= 'border-color:#' . $_entity->getColor() . ';'; endif;
+if ($_entity->getColor()): $_styles .= 'border-color:#' . $_entity->getColor() . ';'; endif;
+
+$this->setStyles($_styles);
 ?>
-<hr class="bluefoot-hr <?php echo $this->getCssAttributes(); ?>"<?php echo ($_styles != '') ? ' style="' . $_styles . '"' : ''; ?>>
+<hr class="bluefoot-hr <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?> />
