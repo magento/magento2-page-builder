@@ -25,13 +25,15 @@ $_entity = $this->getEntity();
             <div class="form-subscribe-header">
                 <label for="bluefoot-newsletter-field-<?php echo $_entity->getId(); ?>"><?php echo $_entity->getLabel(); ?></label>
             </div>
-            <div class="input-box">
-                <input name="email" type="email" id="newsletter"
-                       placeholder="<?php echo $_entity->getPlaceholder() ?>"
-                       data-validate="{required:true, 'validate-email':true}"/>
-            </div>
-            <div class="actions">
-                <button type="submit" title="<?php echo $_entity->getButtonText() ?>" class="button"><span><span><?php echo $_entity->getButtonText() ?></span></span></button>
+            <div class="input-container">
+                <div class="input-box">
+                    <input name="email" type="email" id="newsletter"
+                           placeholder="<?php echo $_entity->getPlaceholder() ?>"
+                           data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+                <div class="actions">
+                    <button type="submit" title="<?php echo $_entity->getButtonText() ?>" class="button"><span><span><?php echo $_entity->getButtonText() ?></span></span></button>
+                </div>
             </div>
         </div>
     </form>
