@@ -84,19 +84,27 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/rend
      * @param $hook
      */
     Structural.prototype.restoreEmptyText = function ($hook) {
+
+        // Does the hook contain a rows object?
         var rows;
-        if (rows = this.getRows()) {
+        if (typeof $hook.params.rows === 'object') {
+            rows = $hook.params.rows;
+        } else {
+            rows = this.getRows();
+        }
+
+        if (rows) {
             for (var i = 0; i < rows.length; i++) {
                 var element = jQuery(rows[i]);
-                var entityLength = element.find('.gene-bluefoot-entity').length;
-                var columnLength = element.find('.gene-bluefoot-column').length;
-                if (entityLength > 0 || columnLength > 0) {
+                var entityLength = element.find('.gene-bluefoot-entity,.gene-bluefoot-column').length;
+                if (entityLength > 0) {
                     var visibleEntities = 0;
                     var childElements = element.find('.gene-bluefoot-entity,.gene-bluefoot-column,.gene-bluefoot-droparea');
                     for (var childI = 0; childI < childElements.length; childI++) {
                         var childElement = jQuery(childElements[childI]);
                         if (childElement.is(':visible') && childElement.css('position') != 'absolute') {
                             ++visibleEntities;
+                            break;
                         }
                     }
 
