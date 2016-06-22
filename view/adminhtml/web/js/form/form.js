@@ -194,6 +194,7 @@ define([
         initConfig: function () {
             this._super();
 
+            // Always include BlueFoot element if present
             this.selector = '[data-form-part=' + this.namespace + '],.gene-bluefoot-save';
 
             return this;

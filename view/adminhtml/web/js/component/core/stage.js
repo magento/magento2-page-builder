@@ -4,7 +4,20 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot/config', 'bluefoot/structural', 'bluefoot/modal', 'bluefoot/stage/panel', 'bluefoot/stage/save', 'bluefoot/stage/build', 'bluefoot/plugins', 'bluefoot/template'], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass) {
+define([
+    'bluefoot/hook',
+    'bluefoot/jquery',
+    'bluefoot/renderer',
+    'bluefoot/cms-config',
+    'bluefoot/config',
+    'bluefoot/structural',
+    'bluefoot/modal',
+    'bluefoot/stage/panel',
+    'bluefoot/stage/save',
+    'bluefoot/stage/build',
+    'bluefoot/plugins',
+    'bluefoot/template'
+], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass) {
 
     /**
      * The stage is the main hub for any 'page builder' element. It handles all interactions between the sub modules,
@@ -23,6 +36,8 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         this.config = false;
         this.disabled = false;
         this.originalFullscreenCss = {};
+
+        this.emptyFieldText = 'TEMPORARY_BLUEFOOT_STRING';
     }
 
     /**
@@ -173,7 +188,10 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
 
             // If the text area is currently empty, populate it to fool the validation
             if (this.originalContent == '') {
-                this.textarea.val('<!-- EMPTY CONTENT -->');
+                this.textarea.val(this.emptyFieldText);
+
+                // Ensure any attached events are processed
+                this.textarea.trigger('keyup').trigger('keydown').trigger('change');
             }
 
             // Handle the buttons
@@ -307,6 +325,9 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-c
         this.save.disable();
         this.container.removeClass('stage-init').hide();
         buttonsContainer.parents('.admin__field').removeClass('gene-bluefoot-admin__field');
+        if (this.textarea.val() == this.emptyFieldText) {
+            this.textarea.val('');
+        }
         this.textarea.show();
         if (typeof this.wysiwyg === 'object') {
             this.wysiwyg.turnOn();
