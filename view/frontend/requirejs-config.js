@@ -17,12 +17,24 @@ var config = {
         'bluefoot/accordion': 'js/resource/jquery/bluefoot-tabs/jquery.bluefoot.accordion.min',
         'bluefoot/normalise-heights': 'js/resource/jquery/bluefoot-normalise-heights/jquery.bluefoot.normaliseHeights.min'
     },
-    'shim': {
-        'slick' : ['jquery'],
-        'fancybox' : ['jquery'],
-        'bluefoot/tabs' : ['jquery'],
-        'bluefoot/accordion' : ['jquery'],
-        'bluefoot/normalise-heights' : ['jquery'],
-        'highlight' : []
+    shim: {
+        'slick': {
+            deps: ['jquery']
+        },
+        'fancybox': {
+            deps: ['jquery']
+        },
+        'bluefoot/tabs': {
+            deps: ['jquery']
+        },
+        'bluefoot/accordion': {
+            deps: ['jquery']
+        },
+        'bluefoot/normalise-heights': {
+            deps: ['jquery']
+        },
+        'highlight': {
+            deps: []
+        }
     }
 };
