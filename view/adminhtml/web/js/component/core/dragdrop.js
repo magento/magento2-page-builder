@@ -172,7 +172,7 @@ define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'jquery/ui-tou
      * @param ui
      */
     DragDrop.prototype.onSortChange = function (event, ui) {
-        Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
+        Hook.trigger('gene-bluefoot-stage-restore-empty-text', {rows: this._getEffectedRows(event, ui)}, false, this.stage);
     };
 
     /**
