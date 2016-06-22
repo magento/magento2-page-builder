@@ -152,7 +152,7 @@ define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'jquery/ui-tou
      * @param ui
      */
     DragDrop.prototype.onSort = function (event, ui) {
-        Hook.trigger('gene-bluefoot-stage-restore-empty-text', false, false, this.stage);
+        Hook.trigger('gene-bluefoot-stage-restore-empty-text', {rows: this._getEffectedRows(event, ui)}, false, this.stage);
         var placeholder = jQuery(ui.placeholder);
         if (jQuery(ui.item).is('a')) {
             placeholder.hide();
@@ -172,7 +172,7 @@ define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'jquery/ui-tou
      * @param ui
      */
     DragDrop.prototype.onSortChange = function (event, ui) {
-        Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
+        Hook.trigger('gene-bluefoot-stage-restore-empty-text', {rows: this._getEffectedRows(event, ui)}, false, this.stage);
     };
 
     /**
@@ -195,7 +195,6 @@ define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'jquery/ui-tou
      */
     DragDrop.prototype.onSortStop = function (event, ui) {
         Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
-        Hook.trigger('gene-bluefoot-stage-restore-empty-text', false, false, this.stage);
         if (!jQuery(ui.item).is('a')) {
             jQuery(ui.helper).remove();
         }
@@ -235,6 +234,28 @@ define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'jquery/ui-tou
                 itemClass.onSortComplete();
             }
         }
+    };
+
+    /**
+     * Get the effected rows
+     *
+     * @param event
+     * @param ui
+     * @returns {Array}
+     * @private
+     */
+    DragDrop.prototype._getEffectedRows = function (event, ui) {
+        // Determine which rows need to be updated
+        var newRow = ui.placeholder.parents('.gene-bluefoot-row'),
+            oldRow = ui.item.parents('.gene-bluefoot-row'),
+            rowsArray = [];
+
+        rowsArray[0] = oldRow;
+        if (newRow.attr('id') != oldRow.attr('id')) {
+            rowsArray[1] = newRow;
+        }
+
+        return rowsArray;
     };
 
     return DragDrop;
