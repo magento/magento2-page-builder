@@ -28,12 +28,14 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Cms\Model\BlockFactory $blockFactory,
+        \Gene\BlueFoot\Model\Stage\Render $render,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->_blockFactory = $blockFactory;
+        $this->_render = $render;
     }
 
     /**
@@ -57,10 +59,12 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
     {
         $block = $this->getBlock();
 
+        $content = $this->_render->renderPlaceholders($block->getContent());
+
         return array(
             'title' => $block->getTitle(),
             'identifier' => $block->getIdentifier(),
-            'content' => $block->getContent()
+            'content' => $content
         );
     }
 

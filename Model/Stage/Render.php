@@ -121,6 +121,61 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function render($html)
     {
+        $pageBuilderSections = $this->_matchPageBuilder($html);
+
+        // Verify we have sections to build
+        if(!empty($pageBuilderSections)) {
+
+            // Load an entire collection of content types
+            $this->_loadedTypes = $this->_contentBlockCollection->create()
+                ->addFieldToSelect('*');
+
+            // Return the HTML built
+            $renderedHtml = $this->renderSections($pageBuilderSections, $html);
+
+            $renderedHtml = $this->_afterHtmlRender($renderedHtml);
+
+            return $renderedHtml;
+        }
+
+        return $html;
+    }
+
+    /**
+     * Render place holders in the page of page builder content
+     *
+     * @param            $html
+     * @param bool|false $placeholderHtml
+     *
+     * @return mixed
+     */
+    public function renderPlaceholders($html, $placeholderHtml = false)
+    {
+        $pageBuilderSections = $this->_matchPageBuilder($html);
+
+        // Verify we have sections to build
+        if (!empty($pageBuilderSections)) {
+            if ($placeholderHtml === false) {
+                $placeholderHtml = '<div class="gene-bluefoot-content-placeholder">' . __('Page Builder Content') . '</div>';
+            }
+
+            foreach ($pageBuilderSections as $section) {
+                $html = str_replace($section['html'], $placeholderHtml, $html);
+            }
+        }
+
+        return $html;
+    }
+
+    /**
+     * Match page builder HTML content
+     *
+     * @param $html
+     *
+     * @return array
+     */
+    protected function _matchPageBuilder($html)
+    {
         preg_match_all('/<!--' . \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING . '="(.*?)"-->/', $html, $sections);
 
         // Convert the matches to an array which makes sense
@@ -139,22 +194,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
             }
         }
 
-        // Verify we have sections to build
-        if(!empty($pageBuilderSections)) {
-
-            // Load an entire collection of content types
-            $this->_loadedTypes = $this->_contentBlockCollection->create()
-                ->addFieldToSelect('*');
-
-            // Return the HTML built
-            $renderedHtml = $this->renderSections($pageBuilderSections, $html);
-
-            $renderedHtml = $this->_afterHtmlRender($renderedHtml);
-
-            return $renderedHtml;
-        }
-
-        return $html;
+        return $pageBuilderSections;
     }
 
     /**
