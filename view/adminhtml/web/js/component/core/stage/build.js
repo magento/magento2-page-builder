@@ -157,6 +157,7 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/hook'], function (jQ
         this.stage.container.addClass('loading').find('.gene-bluefoot-stage').css({opacity: 0});
 
         // Disable the Hook system during build
+        Hook.addWhitelist(['gene-bluefoot-after-stage-init']);
         Hook.disable();
 
         return this._rebuild(this._cleanupStructure(structure));

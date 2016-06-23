@@ -12,7 +12,19 @@ define([], function () {
      * @type {{}}
      */
     var hooks = {};
+
+    /**
+     * Is the Hook system disabled?
+     * @type {boolean}
+     */
     var disabled = false;
+
+    /**
+     * Whitelist hooks that will still run if the system is disabled
+     *
+     * @type {Array}
+     */
+    var whitelist = [];
 
     return {
 
@@ -46,7 +58,7 @@ define([], function () {
          */
         trigger: function (name, params, completeFn, context) {
             // The hook system can be disabled during building for optimisation purposes
-            if (disabled === true) {
+            if (disabled === true && (whitelist.length == 0 || whitelist.length > 0 && whitelist.indexOf(name) == -1)) {
                 if (typeof completeFn === 'function') {
                     return completeFn(params);
                 }
@@ -138,6 +150,19 @@ define([], function () {
          */
         disable: function () {
             disabled = true;
+        },
+
+        /**
+         * Add into the whitelist of events
+         *
+         * @param name
+         */
+        addWhitelist: function (name) {
+            if (typeof name === 'object' && name instanceof Array) {
+                whitelist = whitelist.concat(name);
+            } else {
+                whitelist.push(name);
+            }
         }
     }
 });
