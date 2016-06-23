@@ -155,6 +155,10 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/hook'], function (jQ
 
         structure = structure || this.previousStructure;
         this.stage.container.addClass('loading').find('.gene-bluefoot-stage').css({opacity: 0});
+
+        // Disable the Hook system during build
+        Hook.disable();
+
         return this._rebuild(this._cleanupStructure(structure));
     };
 
@@ -198,16 +202,21 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/hook'], function (jQ
                 if (typeof elementBuiltFn === 'function') {
                     elementBuiltFn();
                 } else {
+                    // Re-enable the hook system once the build is complete
+                    Hook.enable();
+
+                    // Run hooks to ensure the system is behaving correctly
+                    Hook.trigger('gene-bluefoot-build-complete', false, false, this.stage);
+                    Hook.trigger('gene-bluefoot-stage-visible', false, false, this.stage);
+                    Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this.stage);
+                    Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
+
                     // If the stage is hidden whilst the system is building content then don't fade the system in just yet
                     if (this.stage.container.find('.gene-bluefoot-stage').data('hidden') != true) {
                         this.stage.container.removeClass('loading').find('.gene-bluefoot-stage').animate({opacity: 1}, 250);
                     } else {
                         this.stage.container.removeClass('loading');
                     }
-
-                    Hook.trigger('gene-bluefoot-build-complete', false, false, this.stage);
-                    Hook.trigger('gene-bluefoot-stage-visible', false, false, this.stage);
-                    Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this.stage);
                 }
             }
         }.bind(this);

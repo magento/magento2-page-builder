@@ -12,6 +12,7 @@ define([], function () {
      * @type {{}}
      */
     var hooks = {};
+    var disabled = false;
 
     return {
 
@@ -44,6 +45,16 @@ define([], function () {
          * @param context
          */
         trigger: function (name, params, completeFn, context) {
+            // The hook system can be disabled during building for optimisation purposes
+            if (disabled === true) {
+                console.log('trigger disabled');
+                if (typeof completeFn === 'function') {
+                    return completeFn(params);
+                }
+                return true;
+            }
+            console.log('trigger not disabled');
+
             context = context || hooks;
             params = params || {};
             if (typeof context.hooks !== 'undefined' && typeof context.hooks[name] !== 'undefined') {
@@ -115,6 +126,20 @@ define([], function () {
                 var nextEvent = hooks.shift();
                 nextEvent.call(context, $hook);
             }
+        },
+
+        /**
+         * Enable the hook system
+         */
+        enable: function () {
+            disabled = false;
+        },
+
+        /**
+         * Disable the hook system
+         */
+        disable: function () {
+            disabled = true;
         }
     }
 });
