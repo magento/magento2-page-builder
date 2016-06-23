@@ -69,6 +69,11 @@ class Render extends \Magento\Framework\Model\AbstractModel
     protected $_eventManager;
 
     /**
+     * @var \Gene\BlueFoot\Model\Stage\RenderFactory
+     */
+    protected $_renderFactory;
+
+    /**
      * Plugin constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -87,6 +92,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\View\LayoutInterface $layoutInterface,
         \Magento\Framework\Data\Form\FormKey $formKey,
         EntityRepositoryInterface $entityRepositoryInterface,
+        \Gene\BlueFoot\Model\Stage\RenderFactory $renderFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -98,6 +104,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $this->_layoutInterface = $layoutInterface;
         $this->_formKey = $formKey;
         $this->_entityRepository = $entityRepositoryInterface;
+        $this->_renderFactory = $renderFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -433,7 +440,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
 
             // Build the block
             if($block = $this->buildEntityBlock($element)) {
-                $blockHtml = $block->toHtml();
+                $blockHtml = $this->_renderFactory->create()->render($block->toHtml());
 
                 return $blockHtml;
             }
