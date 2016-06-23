@@ -47,13 +47,11 @@ define([], function () {
         trigger: function (name, params, completeFn, context) {
             // The hook system can be disabled during building for optimisation purposes
             if (disabled === true) {
-                console.log('trigger disabled');
                 if (typeof completeFn === 'function') {
                     return completeFn(params);
                 }
                 return true;
             }
-            console.log('trigger not disabled');
 
             context = context || hooks;
             params = params || {};
