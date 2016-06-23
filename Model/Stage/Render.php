@@ -49,9 +49,9 @@ class Render extends \Magento\Framework\Model\AbstractModel
     protected $_loadedEntities;
 
     /**
-     * @var \Magento\Framework\View\LayoutFactory
+     * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $_layoutFactory;
+    protected $_layoutInterface;
 
     /**
      * @var \Magento\Framework\Data\Form\FormKey
@@ -62,6 +62,11 @@ class Render extends \Magento\Framework\Model\AbstractModel
      * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
      */
     protected $_entityRepository;
+
+    /**
+     * @var \Magento\Framework\Event\ManagerInterface
+     */
+    protected $_eventManager;
 
     /**
      * Plugin constructor.
@@ -79,17 +84,18 @@ class Render extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $entityCollectionFactory,
-        \Magento\Framework\View\LayoutFactory $layoutFactory,
+        \Magento\Framework\View\LayoutInterface $layoutInterface,
         \Magento\Framework\Data\Form\FormKey $formKey,
         EntityRepositoryInterface $entityRepositoryInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
+        $this->_eventManager = $context->getEventDispatcher();
         $this->_configInterface = $configInterface;
         $this->_contentBlockCollection = $contentBlockCollection;
         $this->_entityCollection = $entityCollectionFactory;
-        $this->_layoutFactory = $layoutFactory;
+        $this->_layoutInterface = $layoutInterface;
         $this->_formKey = $formKey;
         $this->_entityRepository = $entityRepositoryInterface;
 
@@ -207,6 +213,13 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function renderSections($sections, $html)
     {
+        // Dispatch event for the start of rendering the sections
+        $this->_eventManager->dispatch('gene_bluefoot_render_sections', [
+            'sections' => $sections,
+            'html' => $html,
+            'layout' => $this->_layoutInterface
+        ]);
+
         // Loop through each section and start building
         foreach ($sections as $section) {
 
@@ -383,12 +396,8 @@ class Render extends \Magento\Framework\Model\AbstractModel
             }
 
             /* @var $block \Magento\Framework\View\Element\Template */
-            $block = $this->_layoutFactory->create()->createBlock($renderer);
+            $block = $this->_layoutInterface->createBlock($renderer);
             if($block) {
-                // Add the formkey block
-                if (!$block->getLayout()->hasElement('formkey')) {
-                    $block->getLayout()->addBlock('Magento\Framework\View\Element\FormKey', 'formkey');
-                }
                 $block->setTemplate($elementTemplate);
                 if(isset($element['formData']) && !empty($element['formData'])) {
                     $block->setData('form_data', $element['formData']);
@@ -459,11 +468,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $frontend = $entity->getFrontend();
 
         /* @var $block \Magento\Framework\View\Element\Template */
-        if($block = $frontend->getRenderBlock()) {
-            // Add the formkey block
-            if (!$block->getLayout()->hasElement('formkey')) {
-                $block->getLayout()->addBlock('Magento\Framework\View\Element\FormKey', 'formkey');
-            }
+        if($block = $frontend->getRenderBlock($this->_layoutInterface)) {
             $block->setTemplate($frontend->getViewTemplate());
             $block->setStructure($element);
 

@@ -31,17 +31,11 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
     protected $_configInterface;
 
     /**
-     * @var \Magento\Framework\View\LayoutFactory
-     */
-    protected $_layoutFactory;
-
-    /**
      * Frontend constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
-     * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -50,13 +44,11 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
-        \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_configInterface = $configInterface;
-        $this->_layoutFactory = $layoutFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -64,9 +56,11 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
     /**
      * Return the rendering block for this entity
      *
+     * @param \Magento\Framework\View\Layout $layout
+     *
      * @return bool|\Magento\Framework\View\Element\BlockInterface
      */
-    public function getRenderBlock()
+    public function getRenderBlock(\Magento\Framework\View\Layout $layout)
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         if ($entity = $this->getEntity()) {
@@ -79,7 +73,7 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
                 }
             }
 
-            $block = $this->_layoutFactory->create()->createBlock($blockName);
+            $block = $layout->createBlock($blockName);
             if ($block && method_exists($block, 'toHtml')) {
                 $block->setEntity($entity);
                 return $block;
