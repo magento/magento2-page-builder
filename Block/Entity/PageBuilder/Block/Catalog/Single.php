@@ -12,7 +12,11 @@ use Magento\Catalog\Model\Product;
  */
 class Single extends \Magento\Catalog\Block\Product\ListProduct
 {
-
+    /**
+     * Array of directions, used for the metrics
+     * @var array
+     */
+    protected $_order = array('top', 'right', 'bottom', 'left');
 
     /**
      * @param \Magento\Catalog\Block\Product\Context $context
@@ -35,8 +39,6 @@ class Single extends \Magento\Catalog\Block\Product\ListProduct
         );
     }
 
-
-
     /**
      * @return \Gene\BlueFoot\Model\Entity|null
      */
@@ -44,12 +46,6 @@ class Single extends \Magento\Catalog\Block\Product\ListProduct
     {
         return $this->getData('entity');
     }
-
-    /**
-     * Array of directions, used for the metrics
-     * @var array
-     */
-    protected $_order = array('top', 'right', 'bottom', 'left');
 
     /**
      * Return the attribute text from the entity
@@ -64,7 +60,6 @@ class Single extends \Magento\Catalog\Block\Product\ListProduct
         }
         return null;
     }
-
 
     /**
      * Does the entity have child entities for a specific field
