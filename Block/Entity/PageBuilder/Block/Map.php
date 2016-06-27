@@ -11,16 +11,6 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
  */
 class Map extends AbstractBlock
 {
-
-    /**
-     * @return \Gene\BlueFoot\Model\Entity|null
-     */
-    public function getEntity()
-    {
-        return $this->getData('entity');
-    }
-
-
     /**
      * Get the map
      */
