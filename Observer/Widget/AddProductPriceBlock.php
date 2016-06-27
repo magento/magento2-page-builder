@@ -14,26 +14,19 @@ use Magento\Framework\Event\ObserverInterface;
 class AddProductPriceBlock implements ObserverInterface
 {
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var \Magento\Framework\Pricing\Render\Layout
      */
-    protected $_urlBuilder;
+    protected $_pricingRenderLayout;
 
     /**
-     * @var \Gene\BlueFoot\Helper\Config
-     */
-    protected $_configHelper;
-
-    /**
-     * BuildInitConfig constructor.
+     * AddProductPriceBlock constructor.
      *
-     * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param \Magento\Framework\Pricing\Render\Layout $pricingRenderLayout
      */
     public function __construct(
-        \Magento\Framework\UrlInterface $urlInterface,
-        \Gene\BlueFoot\Helper\Config $configHelper
+       \Magento\Framework\Pricing\Render\Layout $pricingRenderLayout
     ) {
-        $this->_urlBuilder = $urlInterface;
-        $this->_configHelper = $configHelper;
+        $this->_pricingRenderLayout = $pricingRenderLayout;
     }
 
     /**
@@ -49,10 +42,16 @@ class AddProductPriceBlock implements ObserverInterface
         $layout = $observer->getEvent()->getLayout();
 
         if (!$layout->hasElement('product.price.render.default')) {
-            /* @var $priceRenderer \Magento\Framework\Pricing\Render */
-            $priceRenderer = $layout->addBlock('\Magento\Framework\Pricing\Render', 'product.price.render.default');
-            $priceRenderer->setData('price_render_handle', 'catalog_product_prices');
-            $priceRenderer->setData('use_link_for_as_low_as', true);
+            /* @var $priceRender \Magento\Framework\Pricing\Render */
+            $priceRender = $layout->createBlock(
+                'Magento\Framework\Pricing\Render',
+                'product.price.render.default',
+                [
+                    'data' => [
+                        'price_render_handle' => 'catalog_product_prices',
+                    ],
+                ]
+            );
         }
 
         // Add in our form key block
