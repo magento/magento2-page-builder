@@ -42,8 +42,7 @@ class AddProductPriceBlock implements ObserverInterface
         $layout = $observer->getEvent()->getLayout();
 
         if (!$layout->hasElement('product.price.render.default')) {
-            /* @var $priceRender \Magento\Framework\Pricing\Render */
-            $priceRender = $layout->createBlock(
+            $layout->createBlock(
                 'Magento\Framework\Pricing\Render',
                 'product.price.render.default',
                 [
