@@ -14,13 +14,15 @@ $_map = $this->getMapData();
 
 // @todo - move this into a map block
 $_style = '';
-if ($_entity->getMapHeight()): $_style .= 'height:' . $_entity->getMapHeight(); endif;
-if ($_entity->getMapWidth()): $_style .= 'width:' . $_entity->getMapWidth(); endif;
-$this->setStyle($_style);
+if ($_entity->getMapHeight()): $_style .= 'height:' . $_entity->getMapHeight() . ';'; endif;
+if ($_entity->getMapWidth()): $_style .= 'width:' . $_entity->getMapWidth() . ';'; endif;
+$this->setStyles($_style);
 ?>
 <?php if ($_map): ?>
     <script type="text/javascript" src="//maps.google.com/maps/api/js"></script>
-    <div id="bluefoot-map-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-map <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+    <div class="bluefoot-map-container <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+        <div id="bluefoot-map-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-map">
+        </div>
     </div>
     <script type="text/javascript">
         // Lat long object
