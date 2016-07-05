@@ -17,6 +17,6 @@ if ($_entity->getVideoWidth()): $_styles .= 'width:' . $_entity->getVideoWidth()
 
 if($_video): ?>
     <div id="bluefoot-video-<?php echo $_entity->getEntityId(); ?>" class="bluefoot-video  <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <iframe src="<?php echo $_video->getUrl() ?>"<?php echo ($_entity->getVideoHeight()) ? ' height="' . $_entity->getVideoHeight() . '"': '' ; ?><?php echo ($_entity->getVideoWidth()) ? ' width="' . $_entity->getVideoWidth() . '"': '' ; ?> style="<?php echo $_styles; ?>"></iframe>
+        <iframe src="<?php echo $_video->getUrl() ?>"<?php echo ($_entity->getVideoHeight()) ? ' height="' . $_entity->getVideoHeight() . '"': '' ; ?><?php echo ($_entity->getVideoWidth()) ? ' width="' . $_entity->getVideoWidth() . '"': '' ; ?> style="<?php echo $_styles; ?>" frameborder="0"></iframe>
     </div>
 <?php endif; ?>
