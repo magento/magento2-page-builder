@@ -75,7 +75,7 @@ class Version extends \Magento\Framework\Model\AbstractModel
 
         // Setup the request to check the version from the BlueFoot site
         $request = $this->zendHttpClient->setUri('https://www.bluefootcms.com/version/index/magento2/');
-        $request->setParameterGet('version', 0.9);
+        $request->setParameterGet('version', (string) $this->moduleResource->getDbVersion('Gene_BlueFoot'));
 
         // Send domain to validate licence
         $request->setParameterGet('domain', $this->urlBuilder->getBaseUrl());
