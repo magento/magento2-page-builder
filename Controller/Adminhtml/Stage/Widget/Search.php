@@ -192,6 +192,11 @@ class Search extends \Magento\Framework\App\Action\Action
     {
         // If the items are a collection, retrieve the items within as an array
         if ($items instanceof \Magento\Framework\Data\Collection\AbstractDb && method_exists($items, 'toArray')) {
+            // If the items have not yet been loaded, load them in
+            if (!$items->isLoaded()) {
+                $items->load();
+            }
+
             $itemsArray = $items->toArray();
             if (isset($itemsArray['items'])) {
                 $items = $itemsArray['items'];
