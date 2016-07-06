@@ -510,7 +510,7 @@ class InstallSchema implements InstallSchemaInterface
             'data_model',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            [],
+            ['nullable' => true],
             'Data Model'
         )->addColumn(
             'template',

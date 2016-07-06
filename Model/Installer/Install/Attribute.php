@@ -25,6 +25,27 @@ class Attribute extends AbstractInstall
     protected $_entity;
 
     /**
+     * Provide attribute mapping from the data format in M1 to M2's new structure
+     *
+     * @var array
+     */
+    protected $fieldMapping = [
+        'global' => 'is_global',
+        'data_model' => 'data',
+        'backend_model' => 'backend',
+        'backend_type' => 'type',
+        'backend_table' => 'table',
+        'frontend_model' => 'frontend',
+        'frontend_input' => 'input',
+        'frontend_label' => 'label',
+        'source_model' => 'source',
+        'is_required' => 'required',
+        'is_user_defined' => 'user_defined',
+        'is_unique' => 'unique',
+        'is_global' => 'global'
+    ];
+
+    /**
      * Attribute constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -74,7 +95,8 @@ class Attribute extends AbstractInstall
         }
 
         // Add the new attribute providing it doesn't already exist
-        if (!$this->_attributeExists($attributeCode)) {
+        $attribute = $this->_attributeExists($attributeCode);
+        if (!$attribute) {
 
             // Force the eavSetup to not attempt to automatically create a group, as the .json file implements the
             // names differently there is no need to cache and restore this data. Eg. Magento expects backend, where as
@@ -105,6 +127,14 @@ class Attribute extends AbstractInstall
                     $attributeData['additional_data'] = \Zend_Json::encode($attributeData['additional_data']);
                 } else {
                     $attributeData['additional_data'] = '';
+                }
+            }
+
+            // Map over any field keys that have changed from M1
+            foreach ($attributeData as $key => $value) {
+                if (in_array($key, array_keys($this->fieldMapping))) {
+                    $attributeData[$this->fieldMapping[$key]] = $attributeData[$key];
+                    unset($attributeData[$key]);
                 }
             }
 
