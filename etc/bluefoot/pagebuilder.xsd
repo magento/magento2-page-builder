@@ -1,242 +1,192 @@
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="config">
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' elementFormDefault='qualified'>
+    <xs:element name='config'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref='plugins' minOccurs="0" />
+                <xs:element ref='widgets' minOccurs="0" />
+                <xs:element ref='content_blocks' minOccurs="0" />
+                <xs:element ref='structurals' minOccurs="0" />
+                <xs:element ref='on_build' minOccurs="0" />
+                <xs:element ref='global_fields' minOccurs="0" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='plugins'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref='js'/>
+                <xs:element ref='jquery'/>
+                <xs:element ref='async'/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='js'>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="plugins">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="js">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="plugin" maxOccurs="unbounded" minOccurs="0">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="file" maxOccurs="unbounded" minOccurs="0">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="xs:string">
-                                                                    <xs:attribute type="xs:string" name="alias" use="optional"/>
-                                                                    <xs:attribute type="xs:string" name="path" use="optional"/>
-                                                                </xs:extension>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                                <xs:attribute type="xs:string" name="name" use="optional"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="jquery">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="plugin" maxOccurs="unbounded" minOccurs="0">
-                                            <xs:complexType mixed="true">
-                                                <xs:sequence>
-                                                    <xs:element name="dep" minOccurs="0">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="xs:string">
-                                                                    <xs:attribute type="xs:string" name="name" use="optional"/>
-                                                                    <xs:attribute type="xs:string" name="alias" use="optional"/>
-                                                                </xs:extension>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                                <xs:attribute type="xs:string" name="name" use="optional"/>
-                                                <xs:attribute type="xs:string" name="alias" use="optional"/>
-                                                <xs:attribute type="xs:string" name="path" use="optional"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="async">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="plugin">
-                                            <xs:complexType>
-                                                <xs:simpleContent>
-                                                    <xs:extension base="xs:string">
-                                                        <xs:attribute type="xs:string" name="name"/>
-                                                        <xs:attribute type="xs:string" name="path"/>
-                                                    </xs:extension>
-                                                </xs:simpleContent>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="widgets">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="widget" maxOccurs="unbounded" minOccurs="0">
-                                <xs:complexType mixed="true">
-                                    <xs:sequence>
-                                        <xs:element type="xs:string" name="data_model" minOccurs="0"/>
-                                    </xs:sequence>
-                                    <xs:attribute type="xs:string" name="name" use="optional"/>
-                                    <xs:attribute type="xs:string" name="label" use="optional"/>
-                                    <xs:attribute type="xs:string" name="alias" use="optional"/>
-                                    <xs:attribute type="xs:string" name="inputType" use="optional"/>
-                                    <xs:attribute type="xs:string" name="group" use="optional"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="content_blocks">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="templates">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="template" maxOccurs="unbounded" minOccurs="0">
-                                            <xs:annotation>
-                                                <xs:documentation>&lt;template name="core_newsletter" file="pagebuilder/blocks/core/special/newsletter.phtml" /></xs:documentation>
-                                            </xs:annotation>
-                                            <xs:complexType mixed="true">
-                                                <xs:sequence>
-                                                    <xs:element name="asset" maxOccurs="unbounded" minOccurs="0">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="xs:string">
-                                                                    <xs:attribute type="xs:string" name="name" use="optional"/>
-                                                                    <xs:attribute type="xs:string" name="src" use="optional"/>
-                                                                </xs:extension>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                                <xs:attribute type="xs:string" name="name" use="optional"/>
-                                                <xs:attribute type="xs:string" name="file" use="optional"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="renderers">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="renderer" maxOccurs="unbounded" minOccurs="0">
-                                            <xs:annotation>
-                                                <xs:documentation>&lt;renderer name="core_static_block" class="gene_cms/entity_pagebuilder_block_staticblock" />&lt;renderer name="core_image" class="gene_cms/entity_pagebuilder_block_image" />&lt;renderer name="core_product" class="gene_cms/entity_pagebuilder_block_catalog_single" />&lt;renderer name="core_product_list" class="gene_cms/entity_pagebuilder_block_catalog_list" />&lt;renderer name="core_newsletter" class="gene_cms/entity_pagebuilder_block_newsletter" /></xs:documentation>
-                                            </xs:annotation>
-                                            <xs:complexType>
-                                                <xs:simpleContent>
-                                                    <xs:extension base="xs:string">
-                                                        <xs:attribute type="xs:string" name="name" use="optional"/>
-                                                        <xs:attribute type="xs:string" name="class" use="optional"/>
-                                                    </xs:extension>
-                                                </xs:simpleContent>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="structurals">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="structural" maxOccurs="unbounded" minOccurs="0">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="template">
-                                            <xs:complexType>
-                                                <xs:simpleContent>
-                                                    <xs:extension base="xs:string">
-                                                        <xs:attribute type="xs:string" name="file" use="optional"/>
-                                                    </xs:extension>
-                                                </xs:simpleContent>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="renderer">
-                                            <xs:complexType>
-                                                <xs:simpleContent>
-                                                    <xs:extension base="xs:string">
-                                                        <xs:attribute type="xs:string" name="class" use="optional"/>
-                                                    </xs:extension>
-                                                </xs:simpleContent>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="fields">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="field" maxOccurs="unbounded" minOccurs="0">
-                                                        <xs:complexType>
-                                                            <xs:sequence>
-                                                                <xs:element type="xs:string" name="group" minOccurs="0"/>
-                                                                <xs:element type="xs:string" name="label"/>
-                                                                <xs:element type="xs:string" name="type"/>
-                                                                <xs:element type="xs:string" name="widget" minOccurs="0"/>
-                                                                <xs:element type="xs:string" name="code"/>
-                                                                <xs:element type="xs:string" name="source_model" minOccurs="0"/>
-                                                            </xs:sequence>
-                                                            <xs:attribute type="xs:string" name="code" use="optional"/>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute type="xs:string" name="code" use="optional"/>
-                                    <xs:attribute type="xs:string" name="icon" use="optional"/>
-                                    <xs:attribute type="xs:string" name="name" use="optional"/>
-                                    <xs:attribute type="xs:string" name="color" use="optional"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="on_build">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="widgets">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="widget">
-                                            <xs:complexType>
-                                                <xs:simpleContent>
-                                                    <xs:extension base="xs:string">
-                                                        <xs:attribute type="xs:string" name="name"/>
-                                                        <xs:attribute type="xs:string" name="widget"/>
-                                                        <xs:attribute type="xs:string" name="method"/>
-                                                    </xs:extension>
-                                                </xs:simpleContent>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="global_fields">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="field" maxOccurs="unbounded" minOccurs="0">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element type="xs:string" name="group"/>
-                                        <xs:element type="xs:string" name="label"/>
-                                        <xs:element type="xs:string" name="type"/>
-                                        <xs:element type="xs:string" name="widget"/>
-                                        <xs:element type="xs:string" name="code"/>
-                                    </xs:sequence>
-                                    <xs:attribute type="xs:string" name="code" use="optional"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs='unbounded' ref='plugin'/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name='jquery'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='plugin'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='async'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref='plugin'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='content_blocks'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref='templates'/>
+                <xs:element ref='renderers'/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='templates'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='template'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='renderers'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='renderer'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='structurals'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='structural'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='structural'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref='template'/>
+                <xs:element ref='renderer'/>
+                <xs:element ref='fields'/>
+            </xs:all>
+            <xs:attribute name='code' use='required' type='xs:NCName'/>
+            <xs:attribute name='color' use='required'/>
+            <xs:attribute name='icon' use='required'/>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='fields'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='field'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='on_build'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref='widgets'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='global_fields'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='field'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='plugin'>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref='dep'/>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='file'/>
+            </xs:choice>
+            <xs:attribute name='alias'/>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+            <xs:attribute name='path'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='dep'>
+        <xs:complexType>
+            <xs:attribute name='alias' use='required'/>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='file'>
+        <xs:complexType>
+            <xs:attribute name='alias' use='required'/>
+            <xs:attribute name='path' use='required'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='widgets'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='widget'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='template'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' ref='asset'/>
+            </xs:sequence>
+            <xs:attribute name='file' use='required'/>
+            <xs:attribute name='name' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='asset'>
+        <xs:complexType>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+            <xs:attribute name='src' use='required'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='renderer'>
+        <xs:complexType>
+            <xs:attribute name='class' use='required'/>
+            <xs:attribute name='name' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='field'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element minOccurs='0' ref='group'/>
+                <xs:element ref='label'/>
+                <xs:element ref='type'/>
+                <xs:element minOccurs='0' ref='widget'/>
+                <xs:element ref='code'/>
+                <xs:element minOccurs='0' ref='source_model'/>
+            </xs:all>
+            <xs:attribute name='code' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='group' type='xs:NCName'/>
+    <xs:element name='label' type='xs:string'/>
+    <xs:element name='type' type='xs:NCName'/>
+    <xs:element name='code' type='xs:NCName'/>
+    <xs:element name='source_model' type='xs:string'/>
+    <xs:element name='widget'>
+        <xs:complexType mixed='true'>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs='unbounded' ref='data_model'/>
+            </xs:sequence>
+            <xs:attribute name='alias'/>
+            <xs:attribute name='group'/>
+            <xs:attribute name='inputType' type='xs:NCName'/>
+            <xs:attribute name='label'/>
+            <xs:attribute name='method' type='xs:NCName'/>
+            <xs:attribute name='name' type='xs:NCName'/>
+            <xs:attribute name='widget' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='data_model' type='xs:string'/>
 </xs:schema>
