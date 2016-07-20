@@ -16,7 +16,18 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      *
      * @var array
      */
-    protected $_idAttributes = []; //['/config/option' => 'name', '/config/option/inputType' => 'name'];
+    protected $_idAttributes = [
+        '/config/plugins/js/plugin' => 'name',
+        '/config/plugins/jquery/plugin' => 'name',
+        '/config/plugins/async/plugin' => 'name',
+        '/config/widgets/widget' => 'name',
+        '/config/content_blocks/templates/template' => 'name',
+        '/config/content_blocks/renderers/renderer' => 'name',
+        '/config/structurals/structural' => 'code',
+        '/config/structurals/structural/fields/field' => 'code',
+        '/config/on_build/widgets/widget' => 'name',
+        '/config/global_fields/field' => 'code'
+    ];
 
     /**
      * Reader constructor.
