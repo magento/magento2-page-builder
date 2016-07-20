@@ -24,9 +24,10 @@ class RenderPageBuilder implements ObserverInterface
     protected $_stageRender;
 
     /**
-     * BuildInitConfig constructor.
+     * RenderPageBuilder constructor.
      *
-     * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param \Magento\Framework\UrlInterface   $urlInterface
+     * @param \Gene\BlueFoot\Model\Stage\Render $stageRender
      */
     public function __construct(
         \Magento\Framework\UrlInterface $urlInterface,

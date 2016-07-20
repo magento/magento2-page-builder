@@ -32,11 +32,11 @@ class Map extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements
         $map = $this->getMap();
         list($long, $lat, $zoom) = explode(',', $map);
 
-        return array(
+        return [
             'long' => $long,
             'lat' => $lat,
             'zoom' => (int) $zoom
-        );
+        ];
     }
 
 }

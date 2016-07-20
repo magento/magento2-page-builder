@@ -27,6 +27,7 @@ class BuildInitConfig implements ObserverInterface
      * BuildInitConfig constructor.
      *
      * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param \Gene\BlueFoot\Helper\Config    $configHelper
      */
     public function __construct(
         \Magento\Framework\UrlInterface $urlInterface,

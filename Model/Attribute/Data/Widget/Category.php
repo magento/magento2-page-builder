@@ -65,7 +65,6 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         $this->_imageHelperFactory = $imageHelperFactory;
     }
 
-
     /**
      * Load a category based
      * @return $this|bool
@@ -80,7 +79,9 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
     }
 
     /**
-     * @return bool|\Magento\Catalog\Model\CategoryFactory
+     * Retrieve the product collection
+     *
+     * @return bool
      */
     public function getProductCollection()
     {
@@ -95,7 +96,6 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         return false;
     }
 
-
     /**
      * Return an array of basic product data used by the page builder
      *
@@ -103,13 +103,13 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
      */
     public function asJson()
     {
-        $return = array();
+        $return = [];
         $collection = $this->getProductCollection();
         $category = $this->getCategory();
 
         // Add category name if it's present
         if ($category) {
-            $return['category'] = array("name" => $category->getName());
+            $return['category'] = ['name' => $category->getName()];
         }
 
         // Load products for the category
@@ -118,12 +118,12 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         }
 
         foreach($collection as $product) {
-            $return['products'][] = array(
+            $return['products'][] = [
                 'name' => $product->getName(),
                 'sku' => $product->getSku(),
                 'image' => $this->_getProductImage($product),
                 'price' => $this->_getFormattedPrice($product->getFinalPrice())
-            );
+            ];
         }
 
         return $return;

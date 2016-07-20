@@ -45,28 +45,30 @@ class Attribute extends \Magento\Eav\Model\Attribute
     protected $indexerRegistry;
 
     /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory $customAttributeFactory
-     * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\Eav\Model\Entity\TypeFactory $eavTypeFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Eav\Model\ResourceModel\Helper $resourceHelper
-     * @param \Magento\Framework\Validator\UniversalFactory $universalFactory
-     * @param \Magento\Eav\Api\Data\AttributeOptionInterfaceFactory $optionDataFactory
-     * @param \Magento\Framework\Reflection\DataObjectProcessor $dataObjectProcessor
-     * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
-     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate
-     * @param \Magento\Catalog\Model\Product\ReservedAttributeList $reservedAttributeList
-     * @param \Magento\Framework\Locale\ResolverInterface $localeResolver
-     * @param DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
-     * @param array $data
+     * Attribute constructor.
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @param \Magento\Framework\Model\Context                              $context
+     * @param \Magento\Framework\Registry                                   $registry
+     * @param \Magento\Framework\Api\ExtensionAttributesFactory             $extensionFactory
+     * @param \Magento\Framework\Api\AttributeValueFactory                  $customAttributeFactory
+     * @param \Magento\Eav\Model\Config                                     $eavConfig
+     * @param \Magento\Eav\Model\Entity\TypeFactory                         $eavTypeFactory
+     * @param \Magento\Store\Model\StoreManagerInterface                    $storeManager
+     * @param \Magento\Eav\Model\ResourceModel\Helper                       $resourceHelper
+     * @param \Magento\Framework\Validator\UniversalFactory                 $universalFactory
+     * @param \Magento\Eav\Api\Data\AttributeOptionInterfaceFactory         $optionDataFactory
+     * @param \Magento\Framework\Reflection\DataObjectProcessor             $dataObjectProcessor
+     * @param \Magento\Framework\Api\DataObjectHelper                       $dataObjectHelper
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface          $localeDate
+     * @param \Magento\Catalog\Model\Product\ReservedAttributeList          $reservedAttributeList
+     * @param \Magento\Framework\Locale\ResolverInterface                   $localeResolver
+     * @param \Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface $dateTimeFormatter
+     * @param \Magento\Framework\Indexer\IndexerRegistry                    $indexerRegistry
+     * @param \Magento\Framework\ObjectManagerInterface                     $objectManager
+     * @param \Gene\BlueFoot\Model\Entity\ReservedAttributeList             $entityReservedAttributeList
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null  $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null            $resourceCollection
+     * @param array                                                         $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,

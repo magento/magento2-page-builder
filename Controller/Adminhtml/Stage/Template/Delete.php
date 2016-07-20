@@ -22,7 +22,7 @@ class Delete extends \Magento\Framework\App\Action\Action
     protected $_template;
 
     /**
-     * Save constructor.
+     * Delete constructor.
      *
      * @param \Magento\Framework\App\Action\Context            $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
