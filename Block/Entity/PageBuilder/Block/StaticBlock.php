@@ -34,9 +34,10 @@ class StaticBlock extends AbstractBlock
         $this->_objectManager = $objectManager;
     }
 
-
     /**
-     * @return bool
+     * Retrieve the static block from the data model
+     *
+     * @return bool|mixed
      */
     public function getBlock()
     {

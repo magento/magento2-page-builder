@@ -5,7 +5,7 @@ namespace Gene\BlueFoot\Observer\Widget;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Class SavePageBuilder
+ * Class AddProductPriceBlock
  *
  * @package Gene\BlueFoot\Observer
  *

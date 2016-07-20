@@ -17,6 +17,7 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      * @var string
      */
     protected $_schema = null;
+
     /**
      * Path to corresponding XSD file with validation rules for separate config * files
      *

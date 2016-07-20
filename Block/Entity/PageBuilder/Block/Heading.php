@@ -3,7 +3,7 @@
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 
 /**
- * Class Base
+ * Class Heading
  *
  * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
  *

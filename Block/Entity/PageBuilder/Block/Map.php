@@ -12,7 +12,9 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 class Map extends AbstractBlock
 {
     /**
-     * Get the map
+     * Retrieve the map from the data model
+     *
+     * @return bool|mixed
      */
     public function getMap()
     {
@@ -26,6 +28,7 @@ class Map extends AbstractBlock
 
     /**
      * Function to get map data as an object
+     *
      * @return bool|\Magento\Framework\DataObject
      */
     public function getMapData()

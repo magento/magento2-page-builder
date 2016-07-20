@@ -13,7 +13,6 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
     \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface
 {
 
-
     /**
      * StaticBlock constructor.
      *
@@ -49,7 +48,6 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
         return $block->load($this->getEntity()->getData($this->getAttribute()->getData('attribute_code')));
     }
 
-
     /**
      * Return an array of basic block data used by the page builder
      *
@@ -61,11 +59,11 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
 
         $content = $this->_render->renderPlaceholders($block->getContent());
 
-        return array(
+        return [
             'title' => $block->getTitle(),
             'identifier' => $block->getIdentifier(),
             'content' => $content
-        );
+        ];
     }
 
 }

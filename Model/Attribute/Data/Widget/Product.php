@@ -85,16 +85,17 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
     {
         $product = $this->getProduct();
 
-        return array(
+        return [
             'name' => $product->getName(),
             'sku' => $product->getSku(),
             'image' => $this->_getProductImage($product),
             'price' => $this->_getFormattedPrice($product->getFinalPrice())
-        );
+        ];
     }
 
     /**
-     * Get formatted Price
+     * Get formatted price
+     *
      * @param bool|float|false $price
      * @return string
      */

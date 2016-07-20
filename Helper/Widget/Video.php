@@ -7,7 +7,7 @@ namespace Gene\BlueFoot\Helper\Widget;
  *
  * @package Gene\BlueFoot\Helper\Widget
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author Chloe Langford <chloe@gene.co.uk>
  */
 class Video extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -20,6 +20,7 @@ class Video extends \Magento\Framework\App\Helper\AbstractHelper
     public function previewAction($url)
     {
         // Detect if url is youtube or Vimeo and return correct url
+        // @todo build in better video detection
         if (preg_match('#^(?:https?://|//)?(?:www\.|m\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))([\w-]{11})(?![\w-])#', $url, $id)) {
             if (count($id)) {
                 return 'https://www.youtube.com/embed/' . $id[1];

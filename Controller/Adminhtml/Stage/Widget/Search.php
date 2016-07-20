@@ -4,7 +4,6 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Widget;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Catalog\Api\ProductRepositoryInterface as ProductRepository;
-use Magento\Cms\Api\BlockRepositoryInterface as BlockRepository;
 
 /**
  * Class Search
@@ -51,11 +50,17 @@ class Search extends \Magento\Framework\App\Action\Action
     protected $_filterBuilder;
 
     /**
-     * Upload constructor.
+     * Search constructor.
      *
-     * @param \Magento\Framework\App\Action\Context            $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Gene\BlueFoot\Helper\Config                     $configHelper
+     * @param \Magento\Framework\App\Action\Context                           $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory                $resultJsonFactory
+     * @param \Gene\BlueFoot\Helper\Config                                    $configHelper
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder                    $searchCriteriaBuilder
+     * @param \Magento\Catalog\Api\ProductRepositoryInterface                 $productRepository
+     * @param \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
+     * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory        $blockCollectionFactory
+     * @param \Magento\Framework\Api\FilterBuilder                            $filterBuilder
+     * @param \Magento\Framework\Api\Search\FilterGroupBuilder                $filterGroupBuilder
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
