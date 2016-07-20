@@ -41,6 +41,8 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
 
     /**
      * Include our assets in the head
+     *
+     * @return $this
      */
     protected function _construct()
     {

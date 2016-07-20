@@ -122,8 +122,6 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
             $this->messageManager->addError($e->getMessage());
             $hasError = true;
         } catch (\Exception $e) {
-            echo $e->getMessage();
-            exit;
             $this->messageManager->addException($e, __('Something went wrong while saving the content block.'));
             $hasError = true;
         }

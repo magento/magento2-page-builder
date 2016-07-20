@@ -33,12 +33,11 @@ class CheckLatestVersion implements ObserverInterface
      * Save the page builder data
      *
      * @param \Magento\Framework\Event\Observer $observer
+     *
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /* @var $controllerAction \Magento\Cms\Controller\Adminhtml\Page\Index\Interceptor */
-        $controllerAction = $observer->getEvent()->getControllerAction();
-
-        $this->versionFactory->create()->checkVersion();
+        return $this->versionFactory->create()->checkVersion();
     }
 }

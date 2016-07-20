@@ -35,9 +35,10 @@ class Video extends AbstractBlock
         $this->_helper = $helper;
     }
 
-
     /**
-     * @return bool
+     * Return the video
+     *
+     * @return bool|mixed
      */
     public function getVideo()
     {
@@ -48,7 +49,6 @@ class Video extends AbstractBlock
         }
         return false;
     }
-
 
     /**
      * Get the video data

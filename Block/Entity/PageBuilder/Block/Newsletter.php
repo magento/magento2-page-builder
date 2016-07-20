@@ -1,11 +1,12 @@
 <?php
+
+namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
+
 /**
  * Class Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
-
 class Newsletter extends \Magento\Newsletter\Block\Subscribe
 {
 
@@ -39,13 +40,14 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
     }
 
     /**
-     * @return \Gene\BlueFoot\Model\Entity|null
+     * Redeclared abstract function due to extension
+     *
+     * @return mixed
      */
     public function getEntity()
     {
         return $this->getData('entity');
     }
-
 
     /**
      * Function to return css classes as a well formatted string
@@ -74,9 +76,9 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
         return $html;
     }
 
-
     /**
      * Convert classes to an array with only unique values
+     *
      * @param bool|false $string
      * @return array
      */
@@ -91,6 +93,7 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
 
     /**
      * Function to build up the style attributes of a block
+     *
      * @return string
      */
     public function getStyleAttributes()
@@ -106,13 +109,14 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
 
     /**
      * Array of directions, used for the metrics
+     *
      * @var array
      */
     protected $_order = array('top', 'right', 'bottom', 'left');
 
-
     /**
      * Function to return the metrics as a useful string
+     *
      * @return string
      */
     public function parseMetrics()
