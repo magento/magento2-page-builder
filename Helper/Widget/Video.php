@@ -13,8 +13,9 @@ class Video extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * Return the upload directory
-     *
-     * @return string
+     * 
+     * @param $url
+     * @return bool|string
      */
     public function previewAction($url)
     {

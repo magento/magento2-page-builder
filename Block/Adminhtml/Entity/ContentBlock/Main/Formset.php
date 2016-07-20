@@ -24,6 +24,11 @@ class Formset extends \Magento\Backend\Block\Widget\Form\Generic
     protected $_contentBlockGroupCollection;
 
     /**
+     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
+     */
+    protected $_configInterface;
+    
+    /**
      * Formset constructor.
      *
      * @param \Magento\Backend\Block\Template\Context            $context
