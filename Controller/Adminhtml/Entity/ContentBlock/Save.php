@@ -75,7 +75,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
         $filterManager = $this->_objectManager->get('Magento\Framework\Filter\FilterManager');
 
         // A list of extra allowed fields
-        $allowedFields = ['identifier', 'show_in_page_builder', 'icon_class', 'color', 'item_view_template', 'renderer'];
+        $allowedFields = ['identifier', 'show_in_page_builder', 'group_id', 'icon_class', 'color', 'item_view_template', 'renderer'];
 
         try {
             if ($isNewSet) {
