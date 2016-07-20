@@ -1,6 +1,6 @@
 /**
  * - Color.js
- * Abstract Field class for our fields
+ * Color picker field
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
