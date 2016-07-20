@@ -43,7 +43,6 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
         return $this->getEntity()->getData($this->getAttribute()->getData('attribute_code'));
     }
 
-
     /**
      * Return an array of basic product data used by the page builder
      *
@@ -53,9 +52,9 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
     {
         $url = $this->_helper->previewAction($this->getVideo());
 
-        return array(
+        return [
             'url' => $url
-        );
+        ];
     }
 
 }

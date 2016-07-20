@@ -60,6 +60,11 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected $_entity;
 
     /**
+     * @var array
+     */
+    protected $_modelFields;
+
+    /**
      * Attribute constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context

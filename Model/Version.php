@@ -32,6 +32,11 @@ class Version extends \Magento\Framework\Model\AbstractModel
     protected $moduleResource;
 
     /**
+     * @var \Magento\AdminNotification\Model\InboxFactory
+     */
+    protected $inboxFactory;
+
+    /**
      * Version constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context

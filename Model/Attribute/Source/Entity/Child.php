@@ -23,6 +23,9 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     protected $_entityCollection;
 
+    /**
+     * @var null|array
+     */
     protected $_possibleEntities = null;
 
     /**
