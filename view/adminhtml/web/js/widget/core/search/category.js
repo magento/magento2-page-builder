@@ -16,6 +16,7 @@ define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/
     function InputField(field, value, edit) {
         AbstractField.call(this, field, value, edit);
     }
+
     InputField.prototype = Object.create(AbstractField.prototype);
     var $super = AbstractField.prototype;
 
@@ -31,28 +32,32 @@ define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/
      * @param $hook
      */
     InputField.prototype.afterRenderField = function ($hook) {
-        this.element.find('input').first().autocomplete({
-            source: Config.getPluginConfig('gene_widget_search_category','source_url'),
-            appendTo: "#" + this.getId() + "_wrapper",
-            minLength: 2,
-            select: function(event, ui) {
-                jQuery( "#" + this.getId()).val(ui.item.id).data("category-name", ui.item.value);
-                jQuery( "#" + this.getId()).val(ui.item.id).data("category-name", ui.item.value);
-            }.bind(this),
-            search: function(event, ui) {
-                jQuery( "#" + this.getId()).parent().addClass("searching");
-                jQuery("#" + this.getId() + "_autocomplete").removeClass("gene-bluefoot-field-failed");
-            }.bind(this),
-            open: function(event, ui) {
-                jQuery( "#" + this.getId()).parent().removeClass("searching");
+        if (this.element.find('input').length > 0) {
+            this.element.find('input').first().autocomplete({
+                source: Config.getPluginConfig('gene_widget_search_category', 'source_url'),
+                appendTo: "#" + this.getId() + "_wrapper",
+                minLength: 2,
+                select: function (event, ui) {
+                    jQuery("#" + this.getId()).val(ui.item.id).data("category-name", ui.item.value);
+                    jQuery("#" + this.getId()).val(ui.item.id).data("category-name", ui.item.value);
+                }.bind(this),
+                search: function (event, ui) {
+                    jQuery("#" + this.getId()).parent().addClass("searching");
+                    jQuery("#" + this.getId() + "_autocomplete").removeClass("gene-bluefoot-field-failed");
+                }.bind(this),
+                open: function (event, ui) {
+                    jQuery("#" + this.getId()).parent().removeClass("searching");
 
-                var menu = jQuery( "#" + this.getId() + "_wrapper").find(".ui-autocomplete");
-                if(menu.find(".ui-menu-item").length == 0) {
-                    menu.hide();
-                    jQuery("#" + this.getId() + "_autocomplete").addClass("gene-bluefoot-field-failed");
-                }
-            }.bind(this)
-        });
+                    var menu = jQuery("#" + this.getId() + "_wrapper").find(".ui-autocomplete");
+                    if (menu.find(".ui-menu-item").length == 0) {
+                        menu.hide();
+                        jQuery("#" + this.getId() + "_autocomplete").addClass("gene-bluefoot-field-failed");
+                    }
+                }.bind(this)
+            });
+        } else {
+            console.warn('Unable to locate input element within category search widget');
+        }
 
         $hook.done();
     };
@@ -68,12 +73,13 @@ define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/
             placeholder = '';
 
         // Get the category name for the placeholder text
-        if( this.entity.data.hasOwnProperty("preview_view")
-            && typeof this.entity.data["preview_view"][ this.field.code ] !== 'undefined'
-            && typeof this.entity.data["preview_view"][ this.field.code ]["category"]["name"] !== 'undefined'
-            && this.entity.data["preview_view"][ this.field.code ]["category"]["name"])
+        if (this.entity.data.hasOwnProperty("preview_view")
+            && typeof this.entity.data["preview_view"][this.field.code] !== 'undefined'
+            && typeof this.entity.data["preview_view"][this.field.code]["category"] !== 'undefined'
+            && typeof this.entity.data["preview_view"][this.field.code]["category"]["name"] !== 'undefined'
+            && this.entity.data["preview_view"][this.field.code]["category"]["name"])
         {
-            placeholder = this.entity.data["preview_view"][ this.field.code ]["category"]["name"];
+            placeholder = this.entity.data["preview_view"][this.field.code]["category"]["name"];
         }
 
         // Build elements

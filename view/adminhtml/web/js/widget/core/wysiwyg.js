@@ -1,6 +1,6 @@
 /**
  * - Wysiwyg.js
- * Abstract Field class for our fields
+ * Render WYSIWYG in edit panel
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */

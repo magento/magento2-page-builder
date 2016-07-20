@@ -31,28 +31,32 @@ define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/
      * @param $hook
      */
     InputField.prototype.afterRenderField = function ($hook) {
-        this.element.find('input').first().autocomplete({
-            source: Config.getPluginConfig('gene_widget_search_staticblock','source_url'),
-            appendTo: "#" + this.getId() + "_wrapper",
-            minLength: 2,
-            select: function(event, ui) {
-                jQuery( "#" + this.getId()).val(ui.item.id).data("staticblock-name", ui.item.value);
-                jQuery( "#" + this.getId()).val(ui.item.id).data("staticblock-name", ui.item.value);
-            }.bind(this),
-            search: function(event, ui) {
-                jQuery( "#" + this.getId()).parent().addClass("searching");
-                jQuery("#" + this.getId() + "_autocomplete").removeClass("gene-bluefoot-field-failed");
-            }.bind(this),
-            open: function(event, ui) {
-                jQuery( "#" + this.getId()).parent().removeClass("searching");
+        if (this.element.find('input').length > 0) {
+            this.element.find('input').first().autocomplete({
+                source: Config.getPluginConfig('gene_widget_search_staticblock', 'source_url'),
+                appendTo: "#" + this.getId() + "_wrapper",
+                minLength: 2,
+                select: function (event, ui) {
+                    jQuery("#" + this.getId()).val(ui.item.id).data("staticblock-name", ui.item.value);
+                    jQuery("#" + this.getId()).val(ui.item.id).data("staticblock-name", ui.item.value);
+                }.bind(this),
+                search: function (event, ui) {
+                    jQuery("#" + this.getId()).parent().addClass("searching");
+                    jQuery("#" + this.getId() + "_autocomplete").removeClass("gene-bluefoot-field-failed");
+                }.bind(this),
+                open: function (event, ui) {
+                    jQuery("#" + this.getId()).parent().removeClass("searching");
 
-                var menu = jQuery( "#" + this.getId() + "_wrapper").find(".ui-autocomplete");
-                if(menu.find(".ui-menu-item").length == 0) {
-                    menu.hide();
-                    jQuery("#" + this.getId() + "_autocomplete").addClass("gene-bluefoot-field-failed");
-                }
-            }.bind(this)
-        });
+                    var menu = jQuery("#" + this.getId() + "_wrapper").find(".ui-autocomplete");
+                    if (menu.find(".ui-menu-item").length == 0) {
+                        menu.hide();
+                        jQuery("#" + this.getId() + "_autocomplete").addClass("gene-bluefoot-field-failed");
+                    }
+                }.bind(this)
+            });
+        } else {
+            console.warn('Unable to locate input element within static block search widget');
+        }
 
         $hook.done();
     };
