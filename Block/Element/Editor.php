@@ -46,12 +46,6 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getButtonsHtml()
     {
         $html = parent::_getButtonsHtml();
-        // @todo move this into KnockoutJS binding
-        $html .= '<script type="text/javascript">
-            require(["Gene_BlueFoot/js/main"], function (buildFn) {
-                buildFn();
-            })
-        </script>';
         $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
         return $html;
     }

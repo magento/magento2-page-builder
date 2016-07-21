@@ -16,8 +16,9 @@ define([
     'bluefoot/stage/save',
     'bluefoot/stage/build',
     'bluefoot/plugins',
-    'bluefoot/template'
-], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass) {
+    'bluefoot/template',
+    'ko'
+], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass, ko) {
 
     /**
      * The stage is the main hub for any 'page builder' element. It handles all interactions between the sub modules,
@@ -52,6 +53,7 @@ define([
 
         // Add a loading class to the button
         jQuery(button).addClass('loading stage-init');
+        this.namespace = jQuery(button).data('namespace');
         if (jQuery(button).data('stage')) {
             var stage = jQuery(button).data('stage');
             jQuery(button).removeClass('loading');
