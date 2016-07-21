@@ -28,6 +28,11 @@ define(['bluefoot/hook', 'bluefoot/jquery'], function (Hook, jQuery) {
     Save.prototype.initInput = function () {
         var inputName = this.stage.textarea.attr('name');
         this.input = jQuery('<input />').attr('type', 'hidden').attr('name', 'gene-bluefoot[' + inputName + ']').addClass('gene-bluefoot-save');
+        if (this.stage.namespace) {
+            this.input.attr('data-form-part', this.stage.namespace);
+        } else {
+            this.input.attr('data-form-part', '');
+        }
         this.input.insertBefore(this.stage.container);
     };
 

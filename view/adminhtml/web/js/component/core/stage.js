@@ -52,6 +52,7 @@ define([
 
         // Add a loading class to the button
         jQuery(button).addClass('loading stage-init');
+        this.namespace = jQuery(button).data('namespace');
         if (jQuery(button).data('stage')) {
             var stage = jQuery(button).data('stage');
             jQuery(button).removeClass('loading');
