@@ -16,9 +16,8 @@ define([
     'bluefoot/stage/save',
     'bluefoot/stage/build',
     'bluefoot/plugins',
-    'bluefoot/template',
-    'ko'
-], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass, ko) {
+    'bluefoot/template'
+], function (Hook, jQuery, Render, InitConfig, Config, StructuralClass, Modal, PanelClass, SaveClass, StageBuild, Plugins, TemplateClass) {
 
     /**
      * The stage is the main hub for any 'page builder' element. It handles all interactions between the sub modules,
