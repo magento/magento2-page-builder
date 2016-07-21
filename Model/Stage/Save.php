@@ -371,15 +371,11 @@ class Save extends \Magento\Framework\Model\AbstractModel
             $elementName = 'product.' . $elementName;
         }
 
-        $postData = $this->_request->getPost();
-
         // Use "borrowed" Laravel function
-        $this->set($postData, $elementName, $data);
-
-        $this->_request->getPost();
+        $this->set($_POST, $elementName, $data);
 
         // Set the $_POST back into the request object
-        $this->_request->setPostValue($postData);
+        $this->_request->setPostValue($_POST);
     }
 
 }
