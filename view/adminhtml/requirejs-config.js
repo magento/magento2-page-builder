@@ -31,7 +31,7 @@ var config = {
         'bluefoot/field/abstract': 'Gene_BlueFoot/js/component/core/edit/fields/abstract',
 
         /* Content Types */
-        'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract',
+        'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract'
     },
     map: {
         '*': {
