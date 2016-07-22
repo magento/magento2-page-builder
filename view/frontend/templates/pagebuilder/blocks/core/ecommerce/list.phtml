@@ -16,7 +16,7 @@ $_entity = $this->getEntity();
 $_productCollection = $this->getProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
-<?php if ($_productCollection->count()): ?>
+<?php if ($_productCollection !== false && $_productCollection->count()): ?>
     <?php
     //if (strtolower($this->getAttributeText('product_display')) == 'grid') {
         $viewMode = 'grid';
