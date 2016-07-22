@@ -277,7 +277,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 try {
                     /* @var $block \Magento\Framework\View\Element\Template */
                     $block = $this->_layoutFactory->create()->createBlock('Magento\Backend\Block\Template');
-                    $block->setTemplate('Gene_BlueFoot::' . $templatePath['file']);
+                    $block->setTemplate($templatePath['file']);
                     if ($block) {
                         return $block->toHtml();
                     }
