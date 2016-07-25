@@ -1,0 +1,29 @@
+<!-- Fire Bluefoot init function on render -->
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                        "bluefoot": {
+                            "component": "Gene_BlueFoot/js/main"
+                        }
+                    }
+                }
+            }
+    }
+</script>
+<div data-bind="scope: 'bluefoot'"><div data-bind="template: {afterRender: init}"></div></div>
+
+<div html="content"
+     css="$data.additionalClasses"
+     visible="visible">
+</div>
+
+<div data-role="spinner"
+     class="admin__data-grid-loading-mask"
+     visible="loading"
+     if="showSpinner">
+    <div class="spinner">
+        <span repeat="8"/>
+    </div>
+</div>

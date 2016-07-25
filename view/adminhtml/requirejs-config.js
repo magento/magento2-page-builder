@@ -31,10 +31,7 @@ var config = {
         'bluefoot/field/abstract': 'Gene_BlueFoot/js/component/core/edit/fields/abstract',
 
         /* Content Types */
-        'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract',
-
-        /* We have to override the Magento UI form.js to include our fields in the submit request */
-        'Magento_Ui/js/form/form': 'Gene_BlueFoot/js/form/form'
+        'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract'
     },
     map: {
         '*': {

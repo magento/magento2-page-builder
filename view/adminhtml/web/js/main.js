@@ -1,60 +1,58 @@
-define(['bluefoot/stage/build'], function (StageBuild) {
+define([
+    'uiComponent',
+    'bluefoot/stage/build'
+], function (Component, StageBuild) {
 
-    var _initialized = false;
+    return Component.extend({
+        initialize: function () {
+            this._super();
+            this._initialized = false;
+        },
+        init: function () {
+            var self = this;
+            // The app requires the core hook system to be running very early on
+            require(['bluefoot/hook'], function (Hook) {
 
-    // The app requires the core hook system to be running very early on
-    require(['bluefoot/hook'], function (Hook) {
+                // Declare our plugins system
+                require(['bluefoot/plugins'], function (Plugins) {
 
-        // Declare our plugins system
-        require(['bluefoot/plugins'], function (Plugins) {
+                    // Prepare the plugin aspect of the system
+                    Plugins.prepare(function () {
 
-            // Prepare the plugin aspect of the system
-            Plugins.prepare(function () {
+                        // Initialize the basic config to load in plugins
+                        require(['bluefoot/stage', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, jQuery, InitConfig) {
 
-                // Initialize the basic config to load in plugins
-                require(['bluefoot/stage', 'bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/modal'], function (StageClass, jQuery, InitConfig) {
+                            Plugins.load('onPageLoad', function () {
 
-                    Plugins.load('onPageLoad', function () {
+                                self._initialized = true;
 
-                        _initialized = true;
+                                // Detect and load any saved page builder data
+                                StageBuild.init();
 
-                        // Detect and load any saved page builder data
-                        StageBuild.init();
+                                // Remove any other click events
+                                jQuery(document).off('click', InitConfig.init_button_class);
+                                jQuery(document).on('click', InitConfig.init_button_class, function (event) {
 
-                        // Remove any other click events
-                        jQuery(document).on('click', InitConfig.init_button_class, function (event) {
+                                    /**
+                                     * Create a new instance of the stage
+                                     *
+                                     * Each Gene CMS instance is ran by a stage, this handles all operations of the "page builder" which
+                                     * is refereed to in code as the stage
+                                     */
+                                    var Stage = new StageClass();
+                                    Stage.init(jQuery(event.currentTarget));
 
-                            /**
-                             * Create a new instance of the stage
-                             *
-                             * Each Gene CMS instance is ran by a stage, this handles all operations of the "page builder" which
-                             * is refereed to in code as the stage
-                             */
-                            var Stage = new StageClass();
-                            Stage.init(jQuery(event.currentTarget));
+                                }.bind(this));
 
-                        }.bind(this));
+                            });
+
+                        });
 
                     });
 
                 });
 
             });
-
-        });
-
-    });
-
-    /**
-     * Check to see if the system has been initialized yet every 100ms
-     */
-    var callbackFn = function () {
-        if (_initialized == true) {
-            StageBuild.init();
-        } else {
-            setTimeout(callbackFn, 100);
         }
-    };
-
-    return callbackFn;
+    });
 });

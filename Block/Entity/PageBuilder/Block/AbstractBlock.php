@@ -62,7 +62,7 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
      */
     public function getAttributeText($key)
     {
-        if($this->getEntity() && $this->getEntity()->getId()) {
+        if($this->getEntity() && $this->getEntity()->getId() && $this->getEntity()->getResource()->getAttribute($key)) {
             return $this->getEntity()->getResource()->getAttribute($key)->getFrontend()->getValue($this->getEntity());
         }
         return null;
