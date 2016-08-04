@@ -43,7 +43,7 @@ define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], functio
             /*skin: 'bootstrap',*/
             plugins: plugins,
             theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect|,forecolor,backcolor,|,sub,sup,bullist,numlist,media,image',
-            theme_advanced_buttons2: 'link,unlink,anchor,|,outdent,indent,blockquote,|, tablecontrols',
+            theme_advanced_buttons2: 'link,unlink,anchor,|,outdent,indent,blockquote,|, tablecontrols,|, code',
             theme_advanced_toolbar_location: 'top',
             theme_advanced_toolbar_align: 'left',
             theme_advanced_statusbar_location: 'bottom',
