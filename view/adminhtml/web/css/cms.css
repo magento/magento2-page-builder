@@ -1,0 +1,2806 @@
+/* {less} Variables */
+/* BlueFoot CMS {less} variables */
+/* Colors */
+/* Fonts */
+/* Layout Variables */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _common contains core classes used throughout the BlueFoot admin
+ *
+ */
+.transition {
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.bluefoot-logo {
+  width: 150px;
+  height: 40px;
+  text-indent: -9999px;
+  display: block;
+  background: url('images/main-logo.png') center center no-repeat;
+  background-size: 150px 40px;
+  margin: 10px;
+}
+.bluefoot-logo.dark {
+  background-image: url('images/main-logo-dark.png');
+}
+.gene-logo,
+.admin__scope-old .gene-logo {
+  display: block;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  margin: 20px auto;
+  text-align: center;
+  line-height: 30px;
+}
+.gene-logo a,
+.admin__scope-old .gene-logo a {
+  width: 67px;
+  height: 30px;
+  text-indent: -9999px;
+  display: inline-block;
+  margin-left: 5px;
+  background: url('images/gene-logo.png') center center no-repeat;
+  background-size: 67px 30px;
+}
+.gene-logo.dark,
+.admin__scope-old .gene-logo.dark {
+  color: #545454;
+}
+.gene-logo.dark a,
+.admin__scope-old .gene-logo.dark a {
+  background-image: url('images/gene-logo-dark.png');
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+/* close commented backslash hack */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi) {
+  .bluefoot-logo {
+    background-image: url('images/main-logo@2x.png');
+  }
+  .bluefoot-logo.dark {
+    background-image: url('images/main-logo-dark@2x.png');
+  }
+  .gene-logo a {
+    background-image: url('images/gene-logo@2x.png');
+  }
+  .gene-logo.dark a {
+    background-image: url('images/gene-logo-dark@2x.png');
+  }
+}
+.bluefoot-admin .entry-edit-head {
+  padding: 6px 10px;
+  background: #444;
+}
+#gene_cms_block_grid_table i.fa {
+  color: #444!important;
+}
+body.bluefoot-locked {
+  overflow: hidden;
+}
+/* Import Button {less} */
+button.gene-bluefoot.init-gene-bluefoot,
+button.gene-bluefoot.disable-gene-bluefoot {
+  background: #779ecb;
+  border: 1px solid #5284bd;
+  color: white;
+}
+button.gene-bluefoot.init-gene-bluefoot svg,
+button.gene-bluefoot.disable-gene-bluefoot svg {
+  height: 12px;
+  float: left;
+  margin-right: 4px;
+  margin-top: 2px;
+}
+button.gene-bluefoot.init-gene-bluefoot svg *,
+button.gene-bluefoot.disable-gene-bluefoot svg * {
+  fill: white;
+}
+button.gene-bluefoot.init-gene-bluefoot:hover,
+button.gene-bluefoot.disable-gene-bluefoot:hover {
+  background: #9cb8d9;
+}
+/* Import Sidebar {less} */
+.gene-bluefoot-sidebar-container .gene-bluefoot-sidebar {
+  width: 100%;
+}
+.gene-bluefoot-sidebar-container .gene-bluefoot-sidebar .gene-bluefoot-sidebar-panel {
+  background: #2b2625;
+  width: 100%;
+  float: left;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-sidebar-container .gene-logo {
+  margin-top: 0;
+}
+/* Import Stage {less} */
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.gene-bluefoot-stage-container .fa {
+  font-size: 13px;
+  line-height: 1em;
+}
+.no-transition {
+  transition: none!important;
+  -webkit-transition: none!important;
+  -moz-transition: none!important;
+  -o-transition: none!important;
+}
+button.gene-bluefoot-button {
+  border: 0;
+  padding: 10px 24px;
+  font-weight: normal;
+  font-size: 14px;
+  background: #779ecb;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+button.gene-bluefoot-button i {
+  margin-right: 4px;
+}
+button.gene-bluefoot-button:hover {
+  background: #3d6a9f;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-skinny {
+  padding: 8px 12px;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-red {
+  background: #df504d;
+  color: white;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-red:hover {
+  background: #d32a26;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-green {
+  background: #B3CC57;
+  color: white;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-green:hover {
+  background: #9db838;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-full-width {
+  width: 100%;
+}
+button.gene-bluefoot-button.gene-bluefoot-button-tiny {
+  font-size: 12px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 12px;
+}
+.gene-bluefoot-loading {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  display: block;
+}
+.gene-bluefoot-stage-container {
+  z-index: 100;
+  -webkit-transition: 1000ms ease-in-out;
+  -moz-transition: 1000ms ease-in-out;
+  -o-transition: 1000ms ease-in-out;
+  transition: 1000ms ease-in-out;
+  background: url('images/loading.gif') center 50px no-repeat #fafafa;
+  overflow: hidden;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage {
+  opacity: 0;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-stage-container.full-screen .gene-bluefoot-stage {
+  background: #fafafa;
+  z-index: 150;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 200px;
+}
+.gene-bluefoot-stage-container.full-screen .gene-bluefoot-stage .gene-bluefoot-stage-content {
+  box-sizing: border-box;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+.gene-bluefoot-stage-container.active .gene-bluefoot-stage {
+  opacity: 1;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage {
+  position: relative;
+  width: 100%;
+  display: block;
+  vertical-align: top;
+  color: #717171;
+  min-height: 800px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  /* @todo this is ugly, Hob can you improve please */
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage.active {
+  transform: translateX(-230px);
+  width: calc(100% + 260px - 30px);
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage.active .gene-bluefoot-stage-panel-control {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: #2b2625;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage.active .gene-bluefoot-stage-panel-control:before {
+  opacity: 1;
+  visibility: visible;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage.active .gene-bluefoot-stage-panel-control:after {
+  float: right;
+  margin: 14px 5px 0 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel {
+  background: #2b2625;
+  vertical-align: top;
+  width: 260px;
+  float: left;
+  margin-bottom: 50px;
+  z-index: 11;
+  position: relative;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel > img {
+  width: 100px;
+  padding: 10px 12px;
+  color: white;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel > p {
+  padding: 0 10px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul li.gene-bluefoot-group {
+  margin: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul li.gene-bluefoot-group > a {
+  font-size: 16px;
+  display: block;
+  text-decoration: none;
+  background: #5e5e5e;
+  color: white;
+  padding: 8px 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul li.gene-bluefoot-group > a i {
+  float: right;
+  margin-right: 4px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul li.gene-bluefoot-group ul.gene-bluefoot-stage-panel-group-types {
+  list-style: none;
+  padding: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel ul.gene-bluefoot-stage-panel-content-types-ul li.gene-bluefoot-group ul.gene-bluefoot-stage-panel-group-types li {
+  display: inline-block;
+  margin: 0;
+  width: 100%;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel-control {
+  position: absolute;
+  top: 14px;
+  right: 5px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 100!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel-control:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #2b2625;
+  z-index: 1;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  visibility: hidden;
+  opacity: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel-control:after {
+  position: relative;
+  z-index: 2;
+  content: '\f0c9';
+  display: block;
+  font-family: FontAwesome;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-full-screen {
+  position: absolute;
+  top: 14px;
+  right: 26px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 100!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-full-screen:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #2b2625;
+  z-index: 1;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  visibility: hidden;
+  opacity: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-full-screen:after {
+  position: relative;
+  z-index: 2;
+  content: '\f065';
+  display: block;
+  font-family: FontAwesome;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content {
+  background: #fafafa;
+  min-height: 500px;
+  width: calc(100% - 260px);
+  float: left;
+  padding-bottom: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-template {
+  text-align: right;
+  padding-bottom: 8px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-template select {
+  width: 200px;
+  height: 22px;
+  box-sizing: border-box;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner {
+  padding: 0 0 0 10px;
+  position: relative;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-content-placeholder {
+  background: #2b2625 url('images/charlie.png') center 12px no-repeat;
+  background-size: 40px 40px;
+  color: white;
+  text-align: center;
+  padding: 62px 0 14px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-droparea {
+  display: block;
+  box-sizing: border-box;
+  border: 1px dashed #244f72;
+  color: grey;
+  width: 100%;
+  font-size: 18px;
+  line-height: 47px;
+  min-height: 55px;
+  text-align: center;
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-droparea i {
+  margin-right: 12px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-droparea.gene-bluefoot-droparea-hidden {
+  display: none!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity {
+  width: 100%;
+  display: block;
+  min-height: 50px;
+  color: #545454;
+  margin-bottom: 4px;
+  font-size: 14px;
+  padding: 10px;
+  z-index: 110;
+  border: 1px solid #5284bd;
+  cursor: move;
+  box-sizing: border-box;
+  position: relative;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity:not(:hover) {
+  border-color: transparent!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity:hover {
+  border-style: dashed;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity span.gene-bluefoot-content-type-icon {
+  font-size: 24px;
+  display: inline-block;
+  line-height: 35px;
+  width: 40px;
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity span.gene-bluefoot-content-type-icon .fa {
+  display: block;
+  line-height: inherit;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity span.gene-bluefoot-content-type-name {
+  display: inline-block;
+  line-height: 35px;
+  padding-left: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity.ui-sortable-helper {
+  opacity: 0.9!important;
+  display: block;
+  width: 100px;
+  height: 100px;
+  background: white;
+  z-index: 120;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-entity.ui-sortable-helper .gene-bluefoot-options {
+  display: none!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background: #779ecb;
+  height: 32px;
+  padding-right: 8px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  float: right;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options ul.gene-bluefoot-options-links li {
+  display: inline-block;
+  margin: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  display: block;
+  padding: 0 4px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
+  color: white;
+  background: grey;
+  text-decoration: none;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options ul.gene-bluefoot-options-links li a i {
+  display: block;
+  line-height: 32px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: lightgrey;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row {
+  border: 2px solid #779ecb;
+  background: white;
+  box-sizing: border-box;
+  padding: 4px 0 0 28px;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+  -webkit-transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+  -moz-transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row.moving-behind {
+  opacity: 0.5;
+  z-index: 119;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row.moving-infront {
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  z-index: 120;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row.no-transition {
+  transition: opacity 0.3s, box-shadow 0.3s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-options {
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  width: auto;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  background: #779ecb;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: #3d6a9f;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row > .gene-bluefoot-options {
+  right: auto;
+  bottom: -2px;
+  width: 30px;
+  height: auto;
+  padding-right: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row > .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  text-align: center;
+  width: 100%;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row > .gene-bluefoot-options ul.gene-bluefoot-options-links li {
+  display: block;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row > .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  background: #779ecb;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  height: 26px;
+  line-height: 26px;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row > .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: #3d6a9f;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
+  font-size: 0;
+  min-height: 150px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column {
+  margin: 0 0 4px 0;
+  padding: 0;
+  display: inline-block;
+  border: 2px solid #5284bd;
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  vertical-align: top;
+  background: white;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+  -webkit-transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+  -moz-transition: transform 0.5s, opacity 0.3s, box-shadow 0.3s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column.moving-behind {
+  opacity: 0.5;
+  z-index: 119;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column.moving-infront {
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  z-index: 120;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column.no-transition {
+  transition: opacity 0.3s, box-shadow 0.3s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column > .gene-bluefoot-options {
+  background: #5284bd;
+  left: -2px;
+  top: -2px;
+  right: -2px;
+  padding-right: 6px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column > .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column > .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  width: auto;
+  padding: 0 4px;
+  background: #5284bd;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column > .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: #2f527a;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  cursor: ew-resize;
+  z-index: 130;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-resize {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  color: #2f527a;
+  z-index: 151;
+  background: rgba(82, 132, 189, 0.3);
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-resize:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-ghost {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px dashed #2f527a;
+  box-sizing: border-box;
+  z-index: 120;
+  transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-ghost.active {
+  opacity: 1;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-row-content .gene-bluefoot-column .gene-bluefoot-column-content.gene-bluefoot-droppable {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 32px 4px 0 4px;
+  min-height: 150px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity {
+  border-radius: 5px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity:hover .gene-bluefoot-options .gene-bluefoot-options-wrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity.gene-bluefoot-preview {
+  border-color: grey!important;
+  border-style: dashed!important;
+  border-width: 2px!important;
+  opacity: 0.7;
+  width: 100%!important;
+  box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  -webkit-box-shadow: none!important;
+  height: auto;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity.gene-bluefoot-preview span.gene-bluefoot-content-type-icon {
+  background: none!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity.gene-bluefoot-preview.active {
+  opacity: 1!important;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options {
+  position: absolute;
+  padding: 0;
+  line-height: 32px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  z-index: 150;
+  background: none;
+  height: 32px;
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options .gene-bluefoot-options-wrapper {
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  transform: translateY(-16px);
+  border-radius: 0 0 5px 5px;
+  background: #779ecb;
+  display: inline-block;
+  margin: 0 auto;
+  width: auto;
+  opacity: 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  text-align: center;
+  padding: 0 6px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li {
+  float: left;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  background: none;
+  height: 32px;
+  line-height: 32px;
+  margin: 0;
+  font-size: 18px;
+  width: auto;
+  padding: 0 6px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: white;
+  opacity: 0.7;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-entity.active .gene-bluefoot-options {
+  opacity: 1;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection {
+  position: absolute;
+  left: 26px;
+  top: -2px;
+  font-size: 0;
+  line-height: 0;
+  width: 200px;
+  z-index: 150;
+  opacity: 0;
+  visibility: hidden;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection.active {
+  opacity: 1;
+  visibility: visible;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul {
+  padding: 0;
+  margin: 0;
+  border: 2px solid #779ecb;
+  border-top: 0;
+  border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul li {
+  width: 100%;
+  background: white;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  border-top: 2px solid #779ecb;
+  line-height: 35px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul li .gene-bluefoot-column-preview {
+  float: left;
+  width: 115px;
+  height: 24px;
+  margin: 5px;
+  background: #779ecb;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 5px;
+  text-align: center;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul li .gene-bluefoot-column-preview .gene-bluefoot-column-preview-column {
+  background: white;
+  height: 10px;
+  border-radius: 3px;
+  float: left;
+  margin-top: 2px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul li .gene-bluefoot-column-label {
+  font-size: 13px;
+  padding-left: 6px;
+  float: left;
+  width: 60px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .gene-bluefoot-column-selection ul li:hover {
+  background: #d3e0ee;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .empty-text {
+  text-align: center;
+  padding: 27px 0 30px 0;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .empty-text > h3 {
+  font-size: 18px;
+  color: #5284bd;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .empty-text > svg {
+  width: 50px;
+  display: block;
+  margin: 0 auto 8px auto;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content .gene-bluefoot-stage-content-inner .gene-bluefoot-row .empty-text > svg * {
+  fill: #5284bd;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content button.gene-bluefoot-add-row {
+  border: 0;
+  padding: 10px 24px;
+  font-weight: normal;
+  font-size: 14px;
+  background: #779ecb;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content button.gene-bluefoot-add-row i {
+  margin-right: 4px;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-content button.gene-bluefoot-add-row:hover {
+  background: #3d6a9f;
+}
+.gene-bluefoot-modal-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 250;
+  background: rgba(0, 0, 0, 0.4);
+  font-family: 'Open Sans', sans-serif;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal {
+  background: white;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -220px;
+  width: 440px;
+  font-size: 14px;
+  z-index: 251;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  color: white;
+  -webkit-border-radius: 10px;
+  -webkit-border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius: 10px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-radius: 10px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-title {
+  padding: 12px 18px;
+  background: #2b2625;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-title .gene-bluefoot-close {
+  float: right;
+  color: white;
+  text-decoration: none;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-content {
+  padding: 14px 18px;
+  line-height: 22px;
+  color: #2b2625;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-field {
+  font-family: 'Open Sans', sans-serif;
+  color: #2b2625;
+  padding: 0 18px 6px 18px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-field label {
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-field input {
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-buttons {
+  padding: 12px 18px 18px 18px;
+  text-align: right;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-buttons button {
+  background: #2b2625;
+  color: white;
+  border: none;
+  font-weight: normal;
+  font-family: 'Open Sans', sans-serif;
+  padding: 0 24px;
+  line-height: 32px;
+  font-size: 14px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal .gene-bluefoot-modal-buttons button:hover {
+  background: grey;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal {
+  width: 900px;
+  max-width: 100%;
+  margin-left: -450px;
+  height: 70%;
+  max-height: 500px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content {
+  overflow-x: scroll;
+  position: absolute;
+  left: 0;
+  top: 42px;
+  bottom: 0;
+  right: 0;
+  padding: 20px 8px 20px 8px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-modal-message {
+  padding: 0 20px 0 20px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview {
+  float: left;
+  width: 22%;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 3px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview:hover {
+  background: #cfcfcf;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview:hover .gene-bluefoot-button {
+  height: 1.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  opacity: 1;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview:hover .gene-bluefoot-template-preview-image img {
+  position: absolute;
+  left: 0;
+  top: auto;
+  right: 0;
+  bottom: 0;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-template-pinned {
+  font-size: 20px;
+  color: #6c6c6c;
+  transition: all 0.1s;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-template-pinned.active {
+  color: #ea7601;
+  transition: all 0.1s;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-template-preview-image {
+  background: white;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-template-preview-image img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-button {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  opacity: 0;
+  height: 0;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview h4 {
+  margin-top: 10px;
+}
+.gene-bluefoot-modal-background .gene-bluefoot-modal.gene-bluefoot-large-modal .gene-bluefoot-modal-content .gene-bluefoot-template-preview .gene-bluefoot-close-configure {
+  float: right;
+}
+/* Ensure the draggable style is global */
+a.gene-bluefoot-draggable,
+.admin__scope-old a.gene-bluefoot-draggable {
+  background: #7e7e7e;
+  border-bottom: 1px solid #6c6c6c;
+  display: block;
+  font-size: 14px;
+  text-align: left;
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  line-height: 24px;
+}
+a.gene-bluefoot-draggable span.gene-bluefoot-content-type-icon,
+.admin__scope-old a.gene-bluefoot-draggable span.gene-bluefoot-content-type-icon {
+  margin-right: 8px;
+  font-size: 13px;
+  display: inline-block;
+  background: none;
+  text-align: center;
+  width: 24px;
+}
+a.gene-bluefoot-draggable span.gene-bluefoot-content-type-icon i,
+.admin__scope-old a.gene-bluefoot-draggable span.gene-bluefoot-content-type-icon i {
+  color: white;
+}
+a.gene-bluefoot-draggable span.gene-bluefoot-content-type-name,
+.admin__scope-old a.gene-bluefoot-draggable span.gene-bluefoot-content-type-name {
+  display: inline-block;
+}
+a.gene-bluefoot-draggable.ui-draggable-dragging,
+.admin__scope-old a.gene-bluefoot-draggable.ui-draggable-dragging {
+  z-index: 100;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _panel contains {less} for the left panel
+ *
+ */
+#bluefoot-panel {
+  position: fixed;
+  left: 0;
+  top: 20%;
+  background: #2b2625;
+  width: 70px;
+  display: block;
+  z-index: 600;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 14px 0;
+  transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+}
+#bluefoot-panel.visible {
+  transform: translateX(8.8rem);
+  -moz-transform: translateX(8.8rem);
+  -webkit-transform: translateX(8.8rem);
+}
+#bluefoot-panel #bluefoot-emblem {
+  background: url('images/emblem.png') center center no-repeat;
+  background-size: 48px 48px;
+  width: 100%;
+  height: 48px;
+  margin-bottom: 12px;
+  display: block;
+}
+#bluefoot-panel #bluefoot-panel-groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#bluefoot-panel #bluefoot-panel-groups li {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+#bluefoot-panel #bluefoot-panel-groups li .group-icon {
+  display: block;
+  width: 100%;
+  color: #6d6361;
+  font-size: 30px;
+  line-height: 55px;
+  text-align: center;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: #534d49;
+  color: #f8f3eb;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  min-width: 200px;
+  padding: 18px 10px;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child h4 {
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child ul.bluefoot-panel-groups-blocks {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0 0;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child ul.bluefoot-panel-groups-blocks li {
+  display: block;
+  width: 100%;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child ul.bluefoot-panel-groups-blocks li a {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  line-height: 40px;
+  color: #f8f3eb;
+  text-decoration: none;
+  padding: 0 18px;
+  cursor: pointer;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child ul.bluefoot-panel-groups-blocks li a i {
+  margin-right: 6px;
+}
+#bluefoot-panel #bluefoot-panel-groups li .bluefoot-panel-groups-child ul.bluefoot-panel-groups-blocks li a:hover {
+  background: #2b2625;
+}
+#bluefoot-panel #bluefoot-panel-groups li:hover {
+  background: #534d49;
+}
+#bluefoot-panel #bluefoot-panel-groups li:hover .group-icon {
+  cursor: pointer;
+  color: #f8f3eb;
+}
+#bluefoot-panel #bluefoot-panel-groups li:hover .bluefoot-panel-groups-child {
+  display: block;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel .gene-bluefoot-stage-panel-inner {
+  background: #2b2625;
+  width: 260px;
+  display: block;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel.bluefoot-fixed {
+  position: relative;
+}
+.gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel.bluefoot-fixed .gene-bluefoot-stage-panel-inner {
+  position: absolute;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _content-types includes generic {less} for Page Builder blocks
+ *
+ */
+.gene-bluefoot-row {
+  text-align: left;
+}
+.bluefoot-entity-align-left {
+  text-align: left;
+}
+.bluefoot-entity-align-center {
+  text-align: center;
+}
+.bluefoot-entity-align-right {
+  text-align: right;
+}
+.gene-bluefoot-configure-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: left;
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -webkit-transition: 400ms ease-in-out;
+  -moz-transition: 400ms ease-in-out;
+  -o-transition: 400ms ease-in-out;
+  transition: 400ms ease-in-out;
+  box-sizing: border-box;
+  z-index: 210;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-sidebar-container {
+  background: #F9F9F9;
+  color: #1d1a19;
+  width: 650px;
+  max-width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+}
+.gene-bluefoot-configure-sidebar.active {
+  transform: translateX(0);
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+}
+.gene-bluefoot-configure-sidebar.gene-bluefoot-inactive .gene-bluefoot-configure-sidebar-tabs {
+  opacity: 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-sidebar-overlay {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: black;
+  opacity: 0;
+  -webkit-transition: 400ms ease-in-out;
+  -moz-transition: 400ms ease-in-out;
+  -o-transition: 400ms ease-in-out;
+  transition: 400ms ease-in-out;
+  z-index: 150;
+}
+.gene-bluefoot-configure-sidebar.gene-bluefoot-inactive .gene-bluefoot-configure-sidebar-overlay {
+  visibility: visible;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.gene-bluefoot-configure-sidebar form.gene-bluefoot-configure-form {
+  display: block;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-close {
+  float: right;
+  color: #1d1a19;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+  width: 50px;
+  text-align: center;
+  color: white;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-close i {
+  float: none;
+  padding: 0;
+  margin: 0;
+}
+.gene-bluefoot-configure-sidebar h2,
+.gene-bluefoot-configure-sidebar h3 {
+  font-weight: 300;
+}
+.gene-bluefoot-configure-sidebar h2 {
+  box-sizing: border-box;
+  line-height: 60px;
+  padding: 0 20px;
+  margin: 0;
+  position: relative;
+  color: white;
+  background: #373737;
+}
+.gene-bluefoot-configure-sidebar h2 i {
+  line-height: 60px;
+  float: left;
+  margin-right: 8px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-buttons {
+  text-align: right;
+  padding: 0 20px 20px;
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-configure-buttons .gene-bluefoot-configure-cancel {
+  margin-right: 10px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field {
+  margin-bottom: 14px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field label {
+  width: 100%;
+  font-size: 14px;
+  line-height: 22px;
+  color: #1d1a19;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field label em {
+  color: red;
+  padding-left: 1px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field input,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field select {
+  background: white;
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  margin: 4px 0;
+  font-size: 14px;
+  color: #2b2625;
+  font-family: 'Open Sans', sans-serif;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field select {
+  height: 32px;
+  line-height: 32px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field textarea {
+  background: white;
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  margin: 4px 0;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  height: 80px;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 100%!important;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field input {
+  text-indent: 8px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-field-failed {
+  border: 1px solid #ff5b52;
+  background: #ffcecf;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field {
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-child-blocks,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-child-blocks-container {
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-child-blocks {
+  margin: 4px 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-droparea {
+  display: block;
+  box-sizing: border-box;
+  border: 4px dashed lightgrey;
+  width: auto;
+  color: grey;
+  font-size: 18px;
+  line-height: 40px;
+  min-height: 40px;
+  text-align: center;
+  margin-bottom: 4px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-droparea i {
+  margin-right: 12px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity {
+  position: relative;
+  width: 100%;
+  display: block;
+  height: 20px;
+  color: #545454;
+  margin-bottom: 4px;
+  font-size: 13px;
+  padding: 10px 0;
+  background: #DCDCDC;
+  z-index: 110;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  cursor: move;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity span.gene-bluefoot-content-type-icon {
+  font-size: 20px;
+  float: left;
+  line-height: 20px;
+  width: 40px;
+  text-align: center;
+  margin-left: 6px;
+  position: relative;
+  z-index: 2;
+  display: none;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity span.gene-bluefoot-content-type-name {
+  display: block;
+  float: left;
+  line-height: 20px;
+  padding-left: 10px;
+  position: relative;
+  z-index: 2;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.ui-sortable-helper {
+  opacity: 1;
+  display: block;
+  width: 100px;
+  height: 100px;
+  background: black;
+  z-index: 120;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity .gene-bluefoot-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 10px;
+  z-index: 1;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  float: right;
+  line-height: 40px;
+  height: 40px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li {
+  display: inline-block;
+  margin: 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  display: block;
+  padding: 0 4px;
+  font-size: 16px;
+  color: #545454;
+  height: 40px;
+  line-height: 40px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity .gene-bluefoot-options ul.gene-bluefoot-options-links li a:hover {
+  color: lightgrey;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text {
+  height: 34px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text span.gene-bluefoot-content-type-icon {
+  float: left;
+  display: block;
+  font-size: 22px;
+  height: 34px;
+  line-height: 33px;
+  margin-left: 5px;
+  margin-right: 3px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text span.gene-bluefoot-content-type-name,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text span.gene-bluefoot-content-type-preview-text {
+  float: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text span.gene-bluefoot-content-type-name {
+  margin-top: 1px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text span.gene-bluefoot-content-type-preview-text {
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text .gene-bluefoot-options ul.gene-bluefoot-options-links {
+  line-height: 54px;
+  height: 54px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-child-blocks-field .gene-bluefoot-entity.gene-bluefoot-entity-preview-text .gene-bluefoot-options ul.gene-bluefoot-options-links li a {
+  line-height: 54px;
+  height: 54px;
+}
+.gene-bluefoot-configure-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  cursor: pointer;
+  background: black;
+  opacity: 0;
+  -webkit-transition: 400ms ease-in-out;
+  -moz-transition: 400ms ease-in-out;
+  -o-transition: 400ms ease-in-out;
+  transition: 400ms ease-in-out;
+  visibility: hidden;
+}
+.gene-bluefoot-configure-overlay.active {
+  opacity: 0.6;
+  visibility: visible;
+}
+.gene-bluefoot-configure-group {
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-group h3 {
+  cursor: pointer;
+  color: #1d1a19;
+  text-transform: uppercase;
+  padding: 10px;
+  border-bottom: 1px solid #d0d0d0;
+  margin: 0;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-configure-group h3:after {
+  content: '+';
+  float: right;
+  font-size: 1.4em;
+}
+.gene-bluefoot-configure-group h3:hover {
+  background: #d5d5d5;
+}
+.gene-bluefoot-configure-group.active h3:after {
+  content: '-';
+}
+.gene-bluefoot-configure-group .mceLayout {
+  background: white;
+}
+.gene-bluefoot-configure-group .mceIframeContainer iframe {
+  width: 100%!important;
+}
+.gene-bluefoot-configure-group .gene-bluefoot-configure-group-fields {
+  box-sizing: border-box;
+  padding: 20px 20px 10px;
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-sidebar-tabs {
+  position: absolute;
+  left: -80px;
+  top: 60px;
+  width: 80px;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-configure-sidebar-tabs a.gene-bluefoot-tab-error {
+  color: #e53c40;
+}
+.gene-bluefoot-configure-sidebar-tab {
+  float: left;
+  width: 80px;
+  font-size: 13px;
+  text-align: center;
+  border-top: 1px solid #aeaeae;
+}
+.gene-bluefoot-configure-sidebar-tab:first-child {
+  border-top: none;
+}
+.gene-bluefoot-configure-sidebar-tab a {
+  text-decoration: none;
+  color: #545454;
+  background: #c1c1c1;
+  display: block;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  text-transform: uppercase;
+  font-size: 11px;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-configure-sidebar-tab a:hover {
+  background: #F9F9F9;
+}
+.gene-bluefoot-configure-sidebar-tab.ui-state-active a {
+  background: #F9F9F9;
+}
+.gene-bluefoot-child-item-button {
+  background: #779ecb;
+  transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+}
+.gene-bluefoot-child-item-button:hover {
+  background: #5284bd;
+}
+.gene-bluefoot-input-field {
+  position: relative;
+}
+.colorpicker {
+  z-index: 1050;
+}
+/* Import Widget {less} */
+/* Widget {less} Imports */
+.gene-bluefoot-upload-field {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 6px 0 18px 0;
+  border: 2px dashed #706360;
+  text-align: center;
+  padding: 20px 0;
+  color: #1d1a19;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  cursor: pointer;
+  -webkit-transition: 200ms ease-in-out;
+  -moz-transition: 200ms ease-in-out;
+  -o-transition: 200ms ease-in-out;
+  transition: 200ms ease-in-out;
+}
+.gene-bluefoot-upload-field i {
+  font-size: 28px;
+  margin-bottom: 4px;
+  -webkit-transition: 200ms ease-in-out;
+  -moz-transition: 200ms ease-in-out;
+  -o-transition: 200ms ease-in-out;
+  transition: 200ms ease-in-out;
+  opacity: 0.8;
+}
+.gene-bluefoot-upload-field h4 {
+  font-weight: normal;
+  color: #1d1a19;
+  margin: 0;
+  padding: 0;
+}
+.gene-bluefoot-upload-field.dz-drag-hover {
+  background: #ffffff;
+}
+.gene-bluefoot-upload-field:hover i {
+  transform: scale(1.2);
+  opacity: 1;
+}
+.gene-bluefoot-upload-previous img {
+  max-width: 100%;
+  max-height: 175px;
+  width: auto;
+  height: auto;
+}
+.gene-bluefoot-upload-previous button {
+  display: block;
+}
+/* Tag it {less} - http://aehlke.github.io/tag-it/ */
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit {
+  background: white;
+  border-color: #d0d0d0;
+  border-radius: 3px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit .tagit-choice {
+  margin-right: 5px;
+  border-color: #5284bd;
+  background: #779ecb;
+  color: white;
+  border-radius: 3px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit .tagit-choice .tagit-label,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit .tagit-choice .tagit-close .text-icon {
+  color: white;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit .tagit-new {
+  margin: 0;
+  padding: 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field ul.tagit .tagit-new input {
+  border: none;
+  margin: 0;
+}
+.gene-bluefoot-search-field {
+  position: relative;
+  text-align: left;
+}
+.gene-bluefoot-search-field .ui-autocomplete {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}
+.gene-bluefoot-search-field .ui-autocomplete li {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+  margin: 0;
+  padding: 8px;
+  font-size: 14px;
+  color: #2b2625;
+  font-family: 'Open Sans', sans-serif;
+}
+.gene-bluefoot-search-field .ui-autocomplete li:last-child {
+  border-bottom: 1px solid #e0e0e0;
+}
+.gene-bluefoot-search-field .ui-autocomplete li:hover,
+.gene-bluefoot-search-field .ui-autocomplete li.ui-state-focus {
+  font-weight: bold;
+  cursor: pointer;
+}
+/* Map {less} */
+.gene-bluefoot-input-map {
+  width: 100%;
+  height: 350px;
+  display: block;
+  margin: 10px 0 0;
+}
+.gene-bluefoot-input-map-input {
+  display: none;
+}
+.gene-bluefoot-input-note {
+  margin-top: 10px;
+}
+.gene-bluefoot-video-iframe {
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-video-iframe .gene-bluefoot-video-container {
+  float: left;
+  width: 100%;
+  display: block;
+  margin: 10px 0;
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.gene-bluefoot-video-iframe .gene-bluefoot-video-container iframe {
+  width: 100%;
+  height: 350px;
+  box-sizing: border-box;
+  border: 0;
+}
+.gene-bluefoot-video-iframe span {
+  float: left;
+  width: 100%;
+  margin: 10px 0;
+  border: 0;
+  padding: 10px 24px;
+  font-weight: normal;
+  font-size: 14px;
+  color: white;
+  box-sizing: border-box;
+  background: #779ecb;
+}
+.gene-bluefoot-video-iframe span .fa {
+  margin-right: 10px;
+}
+.gene-bluefoot-input-loading-indicator {
+  position: relative;
+}
+.gene-bluefoot-input-loading-indicator .fa-spinner,
+.gene-bluefoot-input-loading-indicator .fa-check {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  right: 10px;
+  top: 38px;
+}
+.gene-bluefoot-input-loading-indicator.searching .fa-spinner {
+  visibility: visible;
+  opacity: 1;
+}
+.gene-bluefoot-input-loading-indicator.success .fa-check {
+  visibility: visible;
+  opacity: 1;
+  color: #779ecb;
+}
+.gene-bluefoot-video-container {
+  width: 100%;
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.gene-bluefoot-video-container iframe {
+  float: left;
+  width: 100%;
+  height: 350px;
+  box-sizing: border-box;
+  border: 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border: 1px dashed grey;
+  box-sizing: border-box;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields > .gene-bluefoot-metric-fields {
+  left: 60px;
+  top: 60px;
+  bottom: 60px;
+  right: 60px;
+  box-sizing: border-box;
+  width: 488px;
+  height: 130px;
+  border-color: lightgrey;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields .gene-bluefoot-metric-label {
+  position: absolute;
+  top: 4px;
+  left: 12px;
+  height: 32px;
+  line-height: 32px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields input {
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  text-align: center;
+  text-indent: 0;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields input.gene-bluefoot-metric-top {
+  top: 4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields input.gene-bluefoot-metric-right {
+  top: 50%;
+  margin-top: -16px;
+  bottom: 0;
+  right: 4px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields input.gene-bluefoot-metric-left {
+  top: 50%;
+  margin-top: -16px;
+  bottom: 0;
+  left: 4px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-metric .gene-bluefoot-metric-fields input.gene-bluefoot-metric-bottom {
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.gene-bluefoot-metric-fields {
+  float: left;
+  width: 100%;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-ignore-metric-input-field label,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-ignore-metric-input-field input,
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-ignore-metric-input-field input:focus {
+  width: auto;
+  float: left;
+  margin: 0;
+  line-height: 32px;
+}
+.gene-bluefoot-configure-sidebar .gene-bluefoot-input-field .gene-bluefoot-ignore-metric-input-field input {
+  margin-right: 10px;
+}
+/* Align {less} */
+.gene-bluefoot-align-field {
+  display: inline-block;
+  margin-right: 20px;
+  border: 1px solid #d0d0d0;
+  width: 150px;
+  text-align: center;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+.gene-bluefoot-align-field.active,
+.gene-bluefoot-align-field:hover {
+  background: white;
+}
+.gene-bluefoot-align-field label {
+  padding: 20px;
+  box-sizing: border-box;
+  display: block;
+  cursor: pointer;
+}
+.gene-bluefoot-align-field label i,
+.gene-bluefoot-align-field label span {
+  display: block;
+}
+.gene-bluefoot-align-field label i {
+  font-size: 26px;
+  color: #616161;
+  margin-bottom: 5px;
+}
+.gene-bluefoot-align-field input {
+  display: none;
+}
+/* Import Block {less} */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all block  {less} files
+ *
+ */
+/*-- Basic --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all block  {less} files
+ *
+ */
+/*-- Basic --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _html contains {less} for HTML
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _heading includes styling for heading block
+ *
+ */
+.gene-bluefoot-heading h2,
+.gene-bluefoot-heading h3,
+.gene-bluefoot-heading h4,
+.gene-bluefoot-heading h5 {
+  margin: 0;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _textarea contains {less} for Textarea
+ *
+ */
+.gene-bluefoot-entity .gene-bluefoot-textarea ol {
+  list-style: decimal;
+  padding-left: 20px;
+}
+.gene-bluefoot-entity .gene-bluefoot-textarea ol li {
+  margin: 0 0 20px 0;
+}
+.gene-bluefoot-entity .gene-bluefoot-textarea p {
+  margin-bottom: 20px;
+}
+.gene-bluefoot-entity .gene-bluefoot-textarea ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+.gene-bluefoot-entity .gene-bluefoot-textarea ul li {
+  margin: 0 0 20px 0;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _spacer contains {less} for spacers
+ *
+ */
+.gene-bluefoot-block-spacer {
+  height: 20px;
+  background: #f5f5f5;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _table includes styling for table block (tables are part of the textarea block)
+ *
+ */
+.gene-bluefoot-textarea td.mceIframeContainer table {
+  width: 100%;
+  margin: 20px 0;
+}
+.gene-bluefoot-textarea td.mceIframeContainer table th,
+.gene-bluefoot-textarea td.mceIframeContainer table thead td {
+  background: #f5f5f5;
+  font-weight: bold;
+}
+.gene-bluefoot-textarea td.mceIframeContainer table td {
+  border-bottom: 1px solid #d0d0d0;
+}
+.gene-bluefoot-textarea td.mceIframeContainer table td,
+.gene-bluefoot-textarea td.mceIframeContainer table th {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4em;
+}
+.gene-bluefoot-textarea td.mceIframeContainer table td strong,
+.gene-bluefoot-textarea td.mceIframeContainer table th strong {
+  font-weight: 600;
+}
+/*-- Structural --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all block  {less} files
+ *
+ */
+/*-- Basic --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _hr contains {less} for horizontal rules
+ *
+ */
+.gene-bluefoot-block-anchor {
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  background: #f5f5f5;
+  display: block;
+}
+.gene-bluefoot-block-anchor i {
+  font-size: 24px;
+  display: block;
+}
+.gene-bluefoot-block-anchor span {
+  display: block;
+  margin-top: 10px;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _hr contains {less} for horizontal rules
+ *
+ */
+.gene-bluefoot-block-hr {
+  margin: 20px auto;
+  max-width: 100%;
+  width: 100%;
+  border-color: #d0d0d0;
+  border-width: 1px;
+  border: none;
+  border-top: solid;
+}
+/*-- Media --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all block  {less} files
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _image contains {less} for images
+ *
+ */
+.gene-bluefoot-image img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _driver contains {less} for drivers
+ *
+ */
+.gene-bluefoot-driver {
+  position: relative;
+}
+.gene-bluefoot-driver img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.gene-bluefoot-driver-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 0 10px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.8em;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _slider contains {less} for Sliders and slider items
+ *
+ */
+.gene-bluefoot-slider {
+  max-width: 750px;
+  box-sizing: border-box;
+  padding: 0;
+  width: 100%;
+  margin: 20px auto 40px;
+}
+.gene-bluefoot-slider .slick-dots {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: -30px;
+}
+.gene-bluefoot-slider .slick-dots li {
+  display: inline-block;
+  margin: 0 3px;
+}
+.gene-bluefoot-slider .slick-dots li button {
+  border-radius: 50%;
+  text-indent: -9999px;
+  width: 14px;
+  height: 14px;
+  border: none;
+  padding: 0;
+  background: #f5f5f5;
+}
+.gene-bluefoot-slider .slick-dots li button:hover {
+  background: #779ecb;
+}
+.gene-bluefoot-slider .slick-dots li.slick-active button {
+  background: #779ecb;
+  top: 50%;
+}
+.gene-bluefoot-slider .slick-arrow {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  border: none;
+  background: #779ecb;
+  color: white;
+  position: absolute;
+  z-index: 20;
+  top: calc(50% - 16px);
+}
+.gene-bluefoot-slider .slick-arrow:hover {
+  background: #5284bd;
+}
+.gene-bluefoot-slider .slick-arrow:before {
+  display: block;
+  line-height: 32px;
+  font-family: FontAwesome;
+}
+.gene-bluefoot-slider .slick-arrow:focus {
+  outline: none;
+}
+.gene-bluefoot-slider .slick-next {
+  right: 0;
+}
+.gene-bluefoot-slider .slick-next:before {
+  content: '\f054';
+}
+.gene-bluefoot-slider .slick-prev {
+  left: 0;
+}
+.gene-bluefoot-slider .slick-prev:before {
+  content: '\f053';
+}
+.gene-bluefoot-slider-item img {
+  width: 100%;
+}
+/* Advanced Slider */
+.bluefoot-advanced-slider-item {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.bluefoot-advanced-slider-content {
+  margin: 40px;
+  width: 40%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.5);
+}
+.bluefoot-advanced-slider-content h3,
+.bluefoot-advanced-slider-content p,
+.bluefoot-advanced-slider-content li {
+  margin-bottom: 20px;
+  color: white;
+}
+/*-- Commerce --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all block  {less} files
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _accordion contains {less} for products and product lists
+ *
+ */
+.gene-bluefoot-product {
+  text-align: center;
+}
+.gene-bluefoot-product .gene-bluefoot-product-name {
+  margin: 0;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.gene-bluefoot-product .gene-bluefoot-product-sku {
+  font-size: 12px;
+}
+.gene-bluefoot-product .gene-bluefoot-product-image {
+  display: block;
+  margin: 0 auto 10px;
+  border: 1px solid #d0d0d0;
+  width: 200px;
+  max-width: 100%;
+}
+.gene-bluefoot-product .gene-bluefoot-product-price {
+  font-weight: 600;
+  font-size: 18px;
+}
+.gene-bluefoot-product-list {
+  width: 100%;
+  display: block;
+  font-size: 0;
+}
+.gene-bluefoot-product-list .gene-bluefoot-product {
+  width: 200px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: inline-block;
+  max-width: 50%;
+}
+.gene-bluefoot-product-list .gene-bluefoot-product-content,
+.gene-bluefoot-product-list .gene-bluefoot-product-img {
+  width: 100%;
+  float: left;
+}
+/*-- Special --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _import imports all app block {less} files
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _single contains {less} for App Single
+ *
+ */
+.bluefoot-app-entity .bluefoot-app-entity-image {
+  float: left;
+  width: 25%;
+  max-width: 150px;
+  margin-right: 3%;
+  box-sizing: border-box;
+}
+.bluefoot-app-entity .bluefoot-app-entity-content {
+  float: left;
+  width: 72%;
+  min-width: 300px;
+  margin: 10px 0 0;
+}
+.bluefoot-app-entity .bluefoot-app-entity-content .date {
+  font-size: 12px;
+  font-style: italic;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _list contains {less} for an App Entity List
+ *
+ */
+.gene-bluefoot-app-entity-list .bluefoot-app-entity {
+  width: 33%;
+  box-sizing: border-box;
+  padding: 10px;
+  float: left;
+  min-width: 200px;
+  max-width: 50%;
+}
+.gene-bluefoot-app-entity-list .bluefoot-app-entity .bluefoot-app-entity-image {
+  width: 90%;
+  margin: 0 auto 20px;
+}
+.gene-bluefoot-app-entity-list .bluefoot-app-entity .bluefoot-app-entity-content {
+  width: 100%;
+  min-width: 100%;
+}
+/*-- Special --*/
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _search imports all block  {less} files
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _accordion contains {less} for accordions
+ *
+ */
+.bluefoot-accordion .gene-bluefoot-accordion-item-heading {
+  cursor: pointer;
+  margin-bottom: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  line-height: 1.4em;
+  background: #f5f5f5;
+}
+.bluefoot-accordion .gene-bluefoot-accordion-item-heading:after {
+  content: '+';
+  float: right;
+  font-size: 1.4em;
+}
+.bluefoot-accordion .gene-bluefoot-accordion-item-content {
+  box-sizing: border-box;
+  padding: 15px;
+  border-top: 1px solid #d0d0d0;
+}
+.gene-bluefoot-accordion-item {
+  border-bottom: 1px solid #d0d0d0;
+}
+.gene-bluefoot-accordion-item.active .gene-bluefoot-accordion-item-heading:after {
+  content: '-';
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _tabs contains {less} for Tabs
+ *
+ */
+.gene-bluefoot-tabs {
+  margin-top: 20px;
+}
+.gene-bluefoot-tabs-navigation {
+  width: 100%;
+  font-size: 0;
+}
+.gene-bluefoot-navigation-tab {
+  border: 1px solid #d0d0d0;
+  border-right: 0;
+  border-bottom: 0;
+  background: #f5f5f5;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  font-size: 14px;
+}
+.gene-bluefoot-navigation-tab:last-child {
+  border-right: 1px solid #d0d0d0;
+}
+.gene-bluefoot-navigation-tab:after {
+  content: '';
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  border-bottom: 1px solid white;
+  position: absolute;
+  display: none;
+}
+.gene-bluefoot-navigation-tab.active,
+.gene-bluefoot-navigation-tab:hover {
+  background: white;
+}
+.gene-bluefoot-navigation-tab.active:after {
+  display: block;
+}
+.gene-bluefoot-tabs-content {
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #d0d0d0;
+  width: 100%;
+}
+.bluefoot-tab-content {
+  display: none;
+}
+.bluefoot-tab-content.active {
+  display: block;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _accordion contains {less} for accordions
+ */
+.gene-bluefoot-map-block {
+  width: 100%;
+  height: 300px;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _newsletter contains {less} for newsletter blocks
+ *
+ */
+.gene-bluefoot-newsletter-block {
+  background: #f5f5f5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.gene-bluefoot-newsletter-block-label {
+  display: block;
+  margin: 0 0 10px;
+}
+.gene-bluefoot-newsletter-block-input {
+  display: block;
+  margin: 0 0 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 10px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  line-height: 32px;
+  background: white;
+  box-sizing: border-box;
+}
+.gene-bluefoot-block-button {
+  background: #779ecb;
+  border: none;
+  border-radius: 3px;
+  line-height: 32px;
+  height: 32px;
+  padding: 0 10px;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+}
+.gene-bluefoot-block-button:hover {
+  background: #5284bd;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _search contains {less} for search blocks
+ *
+ */
+.gene-bluefoot-search-block {
+  background: #f5f5f5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.gene-bluefoot-search-block .gene-bluefoot-block-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 1px solid #779ecb;
+  border-radius: 0 2px 2px 0;
+}
+.gene-bluefoot-search-block-input {
+  display: block;
+  margin: 0;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  line-height: 32px;
+  background: white;
+  box-sizing: border-box;
+  position: relative;
+}
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _code contains {less} for code
+ * Powered by Highlight js https://highlightjs.org/ and the github theme
+ *
+ */
+.gene-bluefoot-code {
+  text-align: left!important;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 13px;
+  tab-size: 8;
+  line-height: 1.4em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.gene-bluefoot-code code {
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+/* Import App {less} */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _include contains {less} for the app
+ *
+ */
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _wizard contains {less} for the app wizard
+ *
+ */
+.bluefoot-wizard-tabs li span {
+  cursor: initial;
+}
+.bluefoot-wizard-tabs li span img {
+  float: right;
+}
+#bluefoot_taxonomy_edit_form .entry-edit-head button {
+  float: right;
+}
+#bluefoot_taxonomy_edit_form .form-list td.label {
+  width: 150px;
+}
+#bluefoot_taxonomy_edit_form .form-list td.label label {
+  font-weight: bold;
+  font-size: 13px;
+  width: 125px;
+}
+.bluefoot-installer-attribute-code {
+  padding: 0 20px;
+}
+.bluefoot-installer-attribute-code-title h3 {
+  padding-left: 20px;
+}
+#bluefoot_cms_installer_grid_table .row-table-section.mouseover,
+#bluefoot_cms_installer_grid_table .even.row-table-section.mouseover {
+  background: #fcf5dd;
+}
+#step-info-inner {
+  margin: 0 0 20px 0;
+  padding: 8px 15px;
+  background: #444;
+  color: white;
+  border-radius: 3px;
+}
+#step-info-inner .app-step-user-icon {
+  float: left;
+  line-height: 38px;
+  margin-right: 14px;
+}
+#step-info-inner .app-step-user-icon i {
+  font-size: 24px;
+  color: #dedede;
+}
+#step-info-inner .app-step-user-info {
+  background-color: inherit;
+  border: none;
+  color: white;
+  font-size: 12px;
+  line-height: 22px;
+  padding: 5px 0 5px 0;
+}
+#app-wizard .user-info {
+  font-size: 14px;
+  line-height: 18px;
+}
+#app-wizard-new-content-type {
+  background: #fafafa;
+  border: 1px solid #d6d6d6;
+  padding: 15px 0;
+}
+#app-step-additional {
+  background: #fff9e9;
+  border: 2px solid #d6d6d6;
+  padding: 20px;
+}
+#app-wizard-step .heading-col {
+  float: left;
+  width: 200px;
+}
+#app-wizard-step .info-col {
+  float: left;
+  padding: 0 30px 0 0;
+}
+#app-wizard-step .info-col .sub-item {
+  border-right: 1px solid #d6d6d6;
+  float: left;
+  margin: 0px 10px 10px 0;
+  min-width: 200px;
+  padding: 10px 10px 10px 0;
+}
+#app-wizard-step .info-col .sub-item.last {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+#app-wizard-step .gene-bluefoot-inner-info {
+  padding: 0 0 5px 0;
+}
+#content-type-container {
+  background: #fff9e9;
+  border: 2px solid #d6d6d6;
+  padding: 20px;
+}
+.steps-header h3 {
+  float: left;
+  line-height: 56px;
+  margin: 0;
+}
+.bluefoot-steps-progress {
+  width: 100%;
+  border-radius: 3px;
+  background: url('../bluefoot/images/main-logo@2x.png') no-repeat 14px center #444;
+  background-size: auto 60%;
+  text-align: right;
+}
+.bluefoot-steps-progress h3 {
+  color: white;
+  font-weight: normal;
+  margin-left: 160px;
+}
+.bluefoot-steps-progress ul {
+  list-style: none;
+  color: white;
+  padding: 18px 6px 18px 6px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.bluefoot-steps-progress ul li {
+  display: inline-block;
+  padding: 0 20px;
+}
+.bluefoot-steps-progress ul li.step-active {
+  font-weight: bold;
+}
+.bluefoot-steps-progress ul li.step-inactive {
+  font-weight: normal;
+  cursor: pointer;
+  color: grey;
+}
+.bluefoot-steps-progress ul li .step-number {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 10px;
+  background: #5e5e5e;
+  margin-right: 6px;
+}

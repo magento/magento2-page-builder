@@ -1,3 +1,21 @@
-<div id="bluefoot-panel">
+<div id="bluefoot-panel" data-bind="css: {visible: visible}">
+    <div id="bluefoot-emblem"></div>
+    <ul id="bluefoot-panel-groups" data-bind="foreach: groups">
+        <li data-bind="attr: {id: 'group-' + code() }">
+            <a href="#" class="group-icon" data-bind="html: icon">
 
+            </a>
+            <div class="bluefoot-panel-groups-child">
+                <h4 data-bind="text: name"></h4>
+                <ul class="bluefoot-panel-groups-blocks" data-bind="foreach: blocks">
+                    <li data-bind="attr: {id: 'block-' + code() }">
+                        <a href="#" class="bluefoot-panel-block">
+                            <span class="block-icon" data-bind="html: icon"></span>
+                            <span data-bind="text: name"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
 </div>

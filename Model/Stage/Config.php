@@ -158,6 +158,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $groupsSearchResults = $this->_contentBlockGroupRepository->getList($this->_searchCriteriaBuilder->create());
         foreach ($groupsSearchResults->getItems() as $group) {
             $groups[$group['id']] = [
+                'code' => $group['code'],
                 'icon' => $group['icon'],
                 'name' => $group['name'],
                 'sort' => $group['sort_order']

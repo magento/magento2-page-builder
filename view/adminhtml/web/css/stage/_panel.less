@@ -8,6 +8,130 @@
  *
  */
 
+#bluefoot-panel {
+    position: fixed;
+    left: 0;
+    top: 20%;
+    background: @panelColor;
+    width: 70px;
+    display: block;
+    z-index: 600;
+
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    padding: 14px 0;
+
+    transition: 0.5s;
+    -moz-transition: 0.5s;
+    -webkit-transition: 0.5s;
+
+    &.visible {
+        transform: translateX(8.800000000000001rem);
+        -moz-transform: translateX(8.800000000000001rem);
+        -webkit-transform: translateX(8.800000000000001rem);
+    }
+
+    #bluefoot-emblem {
+        background: url('images/emblem.png') center center no-repeat;
+        background-size: 48px 48px;
+        width: 100%;
+        height: 48px;
+        margin-bottom: 12px;
+        display:block;
+    }
+
+    #bluefoot-panel-groups {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: block;
+            width: 100%;
+            position: relative;
+
+            .group-icon {
+                display: block;
+                width: 100%;
+                color: @iconColor;
+                font-size: 30px;
+                line-height: 55px;
+                text-align: center;
+            }
+
+            .bluefoot-panel-groups-child {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: 0;
+                background: @iconColorBackgroundHover;
+                color: @iconColorHover;
+
+                -webkit-border-top-right-radius: 5px;
+                -webkit-border-bottom-right-radius: 5px;
+                -moz-border-radius-topright: 5px;
+                -moz-border-radius-bottomright: 5px;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+
+                min-width: 200px;
+                padding: 18px 10px;
+
+                h4 {
+                    margin-bottom: 8px;
+                    margin-left: 8px;
+                }
+
+                ul.bluefoot-panel-groups-blocks {
+                    list-style: none;
+                    margin: 0;
+                    padding: 4px 0 0 0;
+
+                    li {
+                        display: block;
+                        width: 100%;
+
+                        a {
+                            display: block;
+                            width: 100%;
+                            border-radius: 5px;
+                            line-height: 40px;
+                            color: @iconColorHover;
+                            text-decoration: none;
+                            padding: 0 18px;
+                            cursor: pointer;
+
+                            i {
+                                margin-right: 6px;
+                            }
+
+                            &:hover {
+                                background: @panelColor;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                background: @iconColorBackgroundHover;
+                .group-icon {
+                    cursor: pointer;
+                    color: @iconColorHover;
+                }
+                .bluefoot-panel-groups-child {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
 .gene-bluefoot-stage-container .gene-bluefoot-stage .gene-bluefoot-stage-panel {
   .gene-bluefoot-stage-panel-inner {
     background: @panelColor;

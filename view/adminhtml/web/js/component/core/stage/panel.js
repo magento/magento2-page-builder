@@ -11,33 +11,30 @@ define([
      *
      * @param block
      */
-    var blockModel = function (block) {
-        this.identifier = ko.observable(block.identifier);
+    var Block = function (block) {
+        this.code = ko.observable(block.code);
         this.name = ko.observable(block.name);
-        this.icon_class = ko.observable(block.icon_class);
-        this.icon = ko.computed(function () {
-            return '<i class="fa ' + this.icon_class() + '"></i>';
-        }.bind(this));
-        this.show_in_page_builder = ko.observable(block.show_in_page_builder);
-        this.sort_order = ko.observable(block.sort_order);
+        this.icon = ko.observable(block.icon);
     };
 
     /**
      * Group model to handle groups in the left panel
      *
+     * @param id
      * @param group
      */
-    var groupModel = function (group) {
+    var Group = function (id, group) {
+        this.id = ko.observable(id);
         this.code = ko.observable(group.code);
         this.name = ko.observable(group.name);
-        this.icon = ko.observable(group.icon);
-        this.sort_order = ko.observable(group.sort_order);
+        this.icon = ko.observable(group.icon); // @todo this is inconsistent, as blocks just store an icon class
+        this.sort = ko.observable(group.sort);
         this.blocks = ko.observableArray([]);
 
         // Ability to add a block into a group model
         this.addBlock = function (block) {
-            this.blocks.push(new blockModel(block));
-        }.bind(this)
+            this.blocks.push(new Block(block));
+        }.bind(this);
     };
 
     return Component.extend({
@@ -68,18 +65,45 @@ define([
          * Bind a click event to the body listening for clicks on init buttons
          */
         bind: function () {
-            jQuery('body').on('click', Config.getInitConfig('init_button_class'), this.buildPanel.bind(this));
+            jQuery(document).on('click', Config.getInitConfig('init_button_class'), this.buildPanel.bind(this));
         },
 
-        buildPanel: function () {
+        buildPanel: function (event) {
             if (!this.built) {
-                console.log('init config');
-                // Build the config via an Ajax request
-                Config.initConfig(function (config) {
-                    console.log(Config.getConfig());
-                    console.log('build time baby');
-                }, false, Config.getStoreId());
+                this.populatePanel();
             }
+        },
+
+        populatePanel: function () {
+            // Initialize the full configuration
+            Config.initConfig(function (config) {
+                // Verify the configuration contains the required information
+                if (typeof config.contentTypeGroups !== 'undefined' &&
+                    typeof config.contentTypes !== 'undefined')
+                {
+                    // Populate the groups array with our groups
+                    var groups = {};
+                    jQuery.each(config.contentTypeGroups, function (id, group) {
+                        groups[id] = new Group(id, group);
+                        this.groups.push(groups[id]);
+                    }.bind(this));
+
+                    // Add blocks into the groups
+                    jQuery.each(config.contentTypes, function (id, block) {
+                        if (typeof groups[block.group] !== 'undefined') {
+                            groups[block.group].addBlock(block);
+                        }
+                    }.bind(this));
+
+                    // Clean up
+                    groups = {};
+
+                    // Display the panel
+                    this.visible(true);
+                } else {
+                    console.warn('Configuration is not properly initialized, please check the Ajax response.');
+                }
+            }.bind(this), false, Config.getStoreId());
         }
     });
 });
