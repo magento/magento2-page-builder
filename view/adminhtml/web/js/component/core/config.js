@@ -4,10 +4,19 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQuery, Config, AjaxClass) {
+define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
+
+    /**
+     * The initial config before the Ajax request
+     *
+     * @type {{}}
+     * @private
+     */
+    var _initConfig = {};
 
     /**
      * Cache the config within this module
+     *
      * @type {boolean}
      * @private
      */
@@ -15,24 +24,44 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQ
 
     /**
      * Store all the fields in a cache so we don't have to re-generate them
+     *
      * @type {boolean}
      * @private
      */
     var _allFields = false;
 
-    // Verify the config URL is set
-    if (!Config.config_url) {
-        throw new Error('bluefoot/cms-config must contain config_url');
-    }
-
     return {
+
         /**
-         * Retrieve the configuration
+         * Set the initial config
+         *
+         * @param config
+         */
+        setInitConfig: function(config) {
+            _initConfig = config;
+        },
+
+        /**
+         * Return the initial config
+         *
+         * @returns {{}}
+         */
+        getInitConfig: function (key) {
+            if (key) {
+                if (typeof _initConfig[key] !== 'undefined') {
+                    return _initConfig[key];
+                }
+                return null;
+            }
+            return _initConfig;
+        },
+
+        /**
+         * Retrieve the full configuration
          *
          * @param callback
          * @param entityIds
          * @param storeId
-         * @returns {boolean}
          */
         initConfig: function (callback, entityIds, storeId) {
             var params = {
@@ -42,18 +71,19 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQ
                 params.entityIds = entityIds;
             }
 
-            var Ajax = new AjaxClass();
-            Ajax.post(Config.config_url, params, function (data) {
+            // Include the Ajax Class
+            var Ajax = new AjaxClass(this.getInitConfig('formkey'));
+            Ajax.post(this.getInitConfig('config_url'), params, function (data) {
                 if (typeof _config.entities === 'object') {
                     _config.entities = jQuery.extend(_config.entities, data.entities);
                 } else {
                     // Merge the two configuration objects
-                    _config = jQuery.extend(Config, data);
+                    _config = jQuery.extend(this.getInitConfig(), data);
                 }
                 if (typeof callback === 'function') {
                     callback(_config);
                 }
-            }, false, function () {
+            }.bind(this), false, function () {
                 return require('bluefoot/modal').alert('An issue has occurred whilst attempting to load the Blue Foot configuration, please contact your development team.');
             });
         },
@@ -91,8 +121,8 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQ
             if (typeof _config[key] !== 'undefined') {
                 return _config[key];
             }
-            if (typeof Config[key] !== 'undefined') {
-                return Config[key];
+            if (typeof this.getInitConfig()[key] !== 'undefined') {
+                return this.getInitConfig()[key];
             }
             return null;
         },
@@ -210,7 +240,7 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQ
          * @returns {*}
          */
         getFormKey: function () {
-            return Config.form_key;
+            return this.getInitConfig().form_key;
         },
 
         /**
@@ -218,6 +248,16 @@ define(['bluefoot/jquery', 'bluefoot/cms-config', 'bluefoot/ajax'], function (jQ
          */
         resetConfig: function () {
             _config = {};
+        },
+
+        /**
+         * Retrieve the store ID
+         * @returns {*}
+         */
+        getStoreId: function () {
+            if (jQuery('#store_switcher').length > 0) {
+                return jQuery('#store_switcher').val();
+            }
         }
     };
 });

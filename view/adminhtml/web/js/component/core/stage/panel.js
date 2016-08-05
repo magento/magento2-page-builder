@@ -1,226 +1,85 @@
-/**
- * - Panel.js
- * Handles all interactions with the panel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define(['bluefoot/jquery', 'bluefoot/renderer', 'bluefoot/cms-config', 'bluefoot/hook', 'bluefoot/dragdrop', 'jquery/bluefoot-accordion'], function (jQuery, Render, InitConfig, Hook, DragDropClass) {
+define([
+    'uiComponent',
+    'ko',
+    'jquery',
+    'bluefoot/config',
+    'bluefoot/modal'
+], function(Component, ko, jQuery, Config, Modal) {
 
     /**
-     * Our Panel class
+     * The block model sits within a group
      *
-     * @constructor
+     * @param block
      */
-    function Panel(stage, config) {
-        this.stage = stage;
-        this.panelHtml = false;
-
-        // Init the panel
-        this.initPanel(config);
-        this.bindPanelEvents();
-    }
-
-    /**
-     * Init the panel
-     *
-     * @param config
-     */
-    Panel.prototype.initPanel = function (config) {
-        this.panelHtml = Render.renderFromConfig('panel_template', this.getPanelConfig(config));
-    };
-
-    /**
-     * Return the panel configuration
-     *
-     * @param config
-     * @returns {{content-type-groups: Array}}
-     */
-    Panel.prototype.getPanelConfig = function (config) {
-
-        var panelConfig = {
-            'content-type-groups': []
-        };
-
-        // Firstly build up our groups
-        jQuery.each(config.contentTypeGroups, function (code, contentTypeGroupConfig) {
-            panelConfig['content-type-groups'].push({
-                code: code,
-                sort: contentTypeGroupConfig.sort,
-                name: contentTypeGroupConfig.name,
-                icon: contentTypeGroupConfig.icon,
-                types: []
-            });
-        });
-
-        // Sort the groups by sort, then by name
-        panelConfig['content-type-groups']  = panelConfig['content-type-groups'].sort(function(a, b) {
-            return a.sort - b.sort  ||  a.name.localeCompare(b.name);
-        });
-
-        // Loop through content types
-        jQuery.each(config.contentTypes, function (code, contentTypeConfig) {
-
-            // Check has a group or default to general
-            if (typeof contentTypeConfig.group === 'undefined') {
-                contentTypeConfig.group = 'general';
-            }
-
-            // Grab the content type group
-            var contentTypeGroupSearch = jQuery.grep(panelConfig['content-type-groups'], function (group) {
-                return group.code == contentTypeConfig.group;
-            });
-            var contentTypeGroup = contentTypeGroupSearch[0];
-
-            // Check group exists
-            if (!contentTypeGroup) {
-                return false;
-            }
-
-            // Add the code into the config
-            contentTypeConfig.code = code;
-
-            // Push into the content group
-            if (contentTypeConfig.visible) {
-                contentTypeGroup.types.push(contentTypeConfig);
-            }
-        });
-
-        // Hide any empty groups from the panel
-        var enabledGroups = [];
-        jQuery.each(panelConfig['content-type-groups'], function (index, group) {
-            if (group.types.length > 0) {
-                enabledGroups.push(group);
-            }
-        });
-        panelConfig['content-type-groups'] = enabledGroups;
-
-        Hook.trigger('gene-bluefoot-panel-get-config', {panelConfig: panelConfig}, false, this.stage);
-
-        return panelConfig;
-    };
-
-    /**
-     * Bind the panels events
-     */
-    Panel.prototype.bindPanelEvents = function () {
-        Hook.attach('gene-bluefoot-after-stage-init', function ($hook) {
-            // Only run for the current stage
-            if ($hook.params.id == this.stage.id) {
-                this.contentTypesElements = this.stage.container.find('ul.gene-bluefoot-stage-panel-group-types li.gene-bluefoot-content-type a');
-                jQuery.each(this.contentTypesElements, function (index, contentType) {
-                    this.initContentType(contentType);
-                }.bind(this));
-
-                // Init Gene Accordions
-                jQuery(this.stage.container).find('.gene-bluefoot-stage-panel-content-types-ul').bluefootAccordion({
-                    links: '.gene-bluefoot-group-name',
-                    inner: '.gene-bluefoot-stage-panel-group-types',
-                    outer: '.gene-bluefoot-group'
-                });
-                // Hide accordion items
-                jQuery(this.stage.container).find('.gene-bluefoot-stage-panel-group-types').hide();
-
-                // Show first + add class active
-                jQuery(this.stage.container).find('.gene-bluefoot-stage-panel-group-types').first().show();
-                jQuery(this.stage.container).find('.gene-bluefoot-group').first().addClass('active');
-
-                //Panel hide show button
-                jQuery(this.stage.container).find('.gene-bluefoot-stage-panel-control').on('click', function () {
-                    if (jQuery(this.stage.container).find('.gene-bluefoot-stage').hasClass('active')) {
-                        jQuery(this.stage.container).find('.gene-bluefoot-stage').removeClass('active');
-                    } else {
-                        jQuery(this.stage.container).find('.gene-bluefoot-stage').addClass('active');
-                    }
-                    jQuery(this.stage.container).find('.gene-bluefoot-stage').on(
-                        'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd',
-                        function () {
-                            Hook.trigger('gene-bluefoot-stage-ui-updated', false, false, this.stage);
-                            Hook.trigger('gene-bluefoot-stage-updated', false, false, this.stage);
-                        }.bind(this)
-                    );
-                    return false;
-                }.bind(this));
-
-                jQuery(this.stage.container).find('.gene-bluefoot-stage-full-screen').on('click', this.stage.fullscreen.bind(this));
-
-                this.bindScrollEvent();
-            }
-
-            $hook.done();
-        }.bind(this), this.stage);
-    };
-
-    /**
-     * Init each individual content type
-     *
-     * @param element
-     */
-    Panel.prototype.initContentType = function (element) {
-        // Init the drag and drop functionality of the content type
-        var dragDrop = new DragDropClass(this.stage);
-        dragDrop.initDrag(element);
-
-        // Disable clicking on content types
-        jQuery(element).off('click').on('click', function (event) {
-            event.preventDefault();
-        });
-    };
-
-    /**
-     * Bind scroll events for the panel
-     */
-    Panel.prototype.bindScrollEvent = function () {
-        var panel = jQuery(this.stage.container).find('.gene-bluefoot-stage-panel'),
-            windowTimeout,
-            fullScreenTimeout;
-
-        jQuery(window).scroll(function () {
-            if (!this.stage.container.hasClass('full-screen')) {
-                return this.scrollPanelWithUser(panel, windowTimeout);
-            }
+    var blockModel = function (block) {
+        this.identifier = ko.observable(block.identifier);
+        this.name = ko.observable(block.name);
+        this.icon_class = ko.observable(block.icon_class);
+        this.icon = ko.computed(function () {
+            return '<i class="fa ' + this.icon_class() + '"></i>';
         }.bind(this));
-
-        this.stage.container.find('.gene-bluefoot-stage').scroll(function () {
-            if (this.stage.container.hasClass('full-screen')) {
-                return this.scrollPanelWithUser(panel, fullScreenTimeout);
-            }
-        }.bind(this));
+        this.show_in_page_builder = ko.observable(block.show_in_page_builder);
+        this.sort_order = ko.observable(block.sort_order);
     };
 
     /**
-     * Bind scroll event on window + stage scroll
+     * Group model to handle groups in the left panel
      *
-     * @param panel
-     * @param windowTimeout
-     * @private
+     * @param group
      */
-    Panel.prototype.scrollPanelWithUser = function (panel, windowTimeout) {
-        var windowPosition,
-            containerOffset,
-            offset;
-        clearTimeout(windowTimeout);
-        windowTimeout = setTimeout(function () {
-            if (this.stage.container.hasClass('full-screen')) {
-                windowPosition = this.stage.container.find('.gene-bluefoot-stage').scrollTop();
-                containerOffset = {top: 0};
-                offset = 0;
-            } else {
-                windowPosition = jQuery(window).scrollTop();
-                containerOffset = this.stage.container.offset();
-                offset = 90;
-            }
-            var topPosition = windowPosition - containerOffset.top + offset;
-            if (topPosition > 0) {
-                if (topPosition < (this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight())) {
-                    panel.css({'transform': 'translateY(' + topPosition + 'px)'});
-                } else {
-                    panel.css({'transform': 'translateY(' + parseInt(this.stage.container.find('.gene-bluefoot-stage-content').outerHeight() - panel.outerHeight()) + 'px)'});
-                }
-            } else {
-                panel.css({'transform': 'translateY(0px)'});
-            }
-        }.bind(this), 250);
+    var groupModel = function (group) {
+        this.code = ko.observable(group.code);
+        this.name = ko.observable(group.name);
+        this.icon = ko.observable(group.icon);
+        this.sort_order = ko.observable(group.sort_order);
+        this.blocks = ko.observableArray([]);
+
+        // Ability to add a block into a group model
+        this.addBlock = function (block) {
+            this.blocks.push(new blockModel(block));
+        }.bind(this)
     };
 
-    return Panel;
+    return Component.extend({
+
+        /**
+         * Initialize the panel component
+         *
+         * @param config
+         */
+        initialize: function (config) {
+            this._super();
+
+            // Store the init config in the main model
+            Config.setInitConfig(config);
+
+            // Once the panel is built, we don't need to build it again
+            this.built = false;
+
+            // Observable information for the panel to be built at a later date
+            this.visible = ko.observable(false);
+            this.groups = ko.observableArray([]);
+
+            // Add bindings to the document
+            this.bind();
+        },
+
+        /**
+         * Bind a click event to the body listening for clicks on init buttons
+         */
+        bind: function () {
+            jQuery('body').on('click', Config.getInitConfig('init_button_class'), this.buildPanel.bind(this));
+        },
+
+        buildPanel: function () {
+            if (!this.built) {
+                console.log('init config');
+                // Build the config via an Ajax request
+                Config.initConfig(function (config) {
+                    console.log(Config.getConfig());
+                    console.log('build time baby');
+                }, false, Config.getStoreId());
+            }
+        }
+    });
 });

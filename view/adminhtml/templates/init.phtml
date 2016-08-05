@@ -3,22 +3,19 @@
         "*": {
             "Magento_Ui/js/core/app": {
                 "components": {
-                        "bluefoot": {
-                            "component": "Gene_BlueFoot/js/main"
+                        "bluefoot-panel": {
+                            "component": "Gene_BlueFoot/js/component/core/stage/panel",
+                            "template": "Gene_BlueFoot/component/core/stage/panel.html",
+                            "config": <?php echo $this->getConfig(); ?>
                         }
                     }
                 }
             }
     }
 </script>
-<!-- Init BlueFoot for any on page WYSIWYG editors (those not using UI components) -->
-<div data-bind="scope: 'bluefoot'"><div data-bind="template: {afterRender: init}"></div></div>
-<script type="text/javascript">
-    // Define a noConflict version of jQuery
-    define('bluefoot/cms-config', [], function () {
-        return JSON.parse('<?php echo $this->getConfig(); ?>');
-    });
-</script>
+<div data-bind="scope: 'bluefoot-panel'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
 
 <?php
 /**

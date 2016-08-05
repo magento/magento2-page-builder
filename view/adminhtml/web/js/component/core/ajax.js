@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/cms-config'], function (jQuery, InitConfig) {
+define(['bluefoot/jquery', 'bluefoot/config'], function (jQuery, Config) {
 
     /**
      * Define wrapping methods for the Ajax functions of your choice, this is in place if the system, or another developer
@@ -12,9 +12,21 @@ define(['bluefoot/jquery', 'bluefoot/cms-config'], function (jQuery, InitConfig)
      *
      * @constructor
      */
-    function Ajax() {
-
+    function Ajax(formkey) {
+        this.formkey = formkey;
     }
+
+    /**
+     * Return the form key
+     *
+     * @returns {*}
+     */
+    Ajax.prototype.getFormKey = function () {
+        if (typeof Config !== 'undefined') {
+            return Config.getInitConfig('form_key');
+        }
+        return this.formkey;
+    };
 
     /**
      * Perform a GET request to the server
@@ -28,7 +40,7 @@ define(['bluefoot/jquery', 'bluefoot/cms-config'], function (jQuery, InitConfig)
      */
     Ajax.prototype.get = function (url, parameters, successCallback, doneCallback, failedCallback, dataType) {
         parameters = parameters || {};
-        parameters.form_key = InitConfig.form_key;
+        parameters.form_key = this.getFormKey();
         dataType = dataType || 'json';
         jQuery.get(
             url,
@@ -64,7 +76,7 @@ define(['bluefoot/jquery', 'bluefoot/cms-config'], function (jQuery, InitConfig)
      */
     Ajax.prototype.post = function (url, parameters, successCallback, doneCallback, failedCallback, dataType) {
         parameters = parameters || {};
-        parameters.form_key = InitConfig.form_key;
+        parameters.form_key = this.getFormKey();
         dataType = dataType || 'json';
         jQuery.post(
             url,
