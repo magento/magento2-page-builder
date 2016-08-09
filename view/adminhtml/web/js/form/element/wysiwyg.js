@@ -7,28 +7,70 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
     'ko',
+    'uiRegistry',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, ko) {
+], function (Wysiwyg, $, ko, registry) {
     'use strict';
 
+    /**
+     * Extend the original WYSIWYG with added BlueFoot functionality
+     */
     return Wysiwyg.extend({
+        bluefoot: {
+            stageTemplate: 'Gene_BlueFoot/component/core/stage.html',
+            stage: {},
+            content: ko.observableArray([]),
+
+            /**
+             * Retrieve the panel from the registry
+             *
+             * @returns {*}
+             */
+            getBlueFootPanel: function () {
+                return registry.get('bluefoot-panel');
+            },
+
+            /**
+             * Bind a click event to the BlueFoot init button
+             *
+             * @param node
+             */
+            bindBlueFootButton: function (node) {
+                $(node).prevAll('.buttons-set').find('.init-gene-bluefoot').on('click', this.buildBlueFoot.bind(this));
+            },
+
+            /**
+             * Handle a click event requesting that we build BlueFoot
+             *
+             * @param event
+             */
+            buildBlueFoot: function (event) {
+                event.stopPropagation();
+                var panel;
+                if (panel = this.getBlueFootPanel()) {
+                    panel.buildPanel();
+                } else {
+                    console.warn('Unable to locate the BlueFoot panel for initialization.');
+                }
+            },
+
+            addRow: function () {
+                console.log('addRow');
+            }
+        },
+
         /**
          *
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
-            // Store the namespace on the button
-            var namespace;
-            if (typeof this.ns !== 'undefined' && this.ns) {
-                namespace = this.ns;
-            } else if (typeof this.namespace !== 'undefined' && this.namespace) {
-                namespace = this.namespace;
-            }
-
-            $(node).prevAll('.buttons-set').find('.init-gene-bluefoot').attr('data-namespace', namespace);
             $(node).bindings({
                 value: this.value
             });
+
+            // Bind our event to the WYSIWYG editor
+            this.bluefoot.bindBlueFootButton(node);
         }
+
     });
 });

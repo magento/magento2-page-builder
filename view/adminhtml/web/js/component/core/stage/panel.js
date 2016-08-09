@@ -1,10 +1,16 @@
+/**
+ * - Panel.js
+ * Handles all interactions with the panel
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
+ */
 define([
     'uiComponent',
     'ko',
     'jquery',
     'bluefoot/config',
-    'bluefoot/modal'
-], function(Component, ko, jQuery, Config, Modal) {
+    'bluefoot/modal',
+], function(Component, ko, jQuery, Config) {
 
     /**
      * The block model sits within a group
@@ -27,7 +33,7 @@ define([
         this.id = ko.observable(id);
         this.code = ko.observable(group.code);
         this.name = ko.observable(group.name);
-        this.icon = ko.observable(group.icon); // @todo this is inconsistent, as blocks just store an icon class
+        this.icon = ko.observable(group.icon);
         this.sort = ko.observable(group.sort);
         this.blocks = ko.observableArray([]);
 
@@ -37,6 +43,9 @@ define([
         }.bind(this);
     };
 
+    /**
+     * Extend the component for BlueFoot panel specific functionality
+     */
     return Component.extend({
 
         /**
@@ -56,27 +65,27 @@ define([
             // Observable information for the panel to be built at a later date
             this.visible = ko.observable(false);
             this.groups = ko.observableArray([]);
-
-            // Add bindings to the document
-            this.bind();
         },
 
         /**
-         * Bind a click event to the body listening for clicks on init buttons
+         * Build the panel, check to see if panel is built first
          */
-        bind: function () {
-            jQuery(document).on('click', Config.getInitConfig('init_button_class'), this.buildPanel.bind(this));
-        },
-
-        buildPanel: function (event) {
+        buildPanel: function () {
+            // Do we need to rebuild the panel?
             if (!this.built) {
                 this.populatePanel();
+                this.built = true;
             }
         },
 
+        /**
+         * Populate the panel
+         */
         populatePanel: function () {
+
             // Initialize the full configuration
             Config.initConfig(function (config) {
+
                 // Verify the configuration contains the required information
                 if (typeof config.contentTypeGroups !== 'undefined' &&
                     typeof config.contentTypes !== 'undefined')
@@ -103,6 +112,7 @@ define([
                 } else {
                     console.warn('Configuration is not properly initialized, please check the Ajax response.');
                 }
+
             }.bind(this), false, Config.getStoreId());
         }
     });

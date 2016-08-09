@@ -15,10 +15,12 @@ var config = {
         'bluefoot/hook': 'Gene_BlueFoot/js/component/core/hook',
         'bluefoot/modal': 'Gene_BlueFoot/js/component/core/modal',
         'bluefoot/plugins': 'Gene_BlueFoot/js/component/core/plugins',
+
         'bluefoot/stage': 'Gene_BlueFoot/js/component/core/stage',
         'bluefoot/stage/build': 'Gene_BlueFoot/js/component/core/stage/build',
         'bluefoot/stage/panel': 'Gene_BlueFoot/js/component/core/stage/panel',
         'bluefoot/stage/save': 'Gene_BlueFoot/js/component/core/stage/save',
+
         'bluefoot/structural': 'Gene_BlueFoot/js/component/core/structural',
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 
