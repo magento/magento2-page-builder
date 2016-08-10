@@ -8,9 +8,10 @@ define([
     'Magento_Ui/js/lib/view/utils/async',
     'ko',
     'uiRegistry',
+    'jquery',
     'bluefoot/stage',
-    'Magento_Variable/variables',
-], function (Wysiwyg, $, ko, registry, Stage) {
+    'Magento_Variable/variables'
+], function (Wysiwyg, $, ko, registry, jQuery, Stage) {
     'use strict';
 
     /**
@@ -18,9 +19,11 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            stageActive: false,
             stage: {},
             stageContent: [],
             links: {
+                stageActive: false,
                 stage: {},
                 stageContent: []
             }
@@ -32,7 +35,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('value stageContent');
+                .observe('value stageActive stageContent');
 
             return this;
         },
@@ -43,8 +46,7 @@ define([
          */
         setElementNode: function (node) {
             $(node).bindings({
-                value: this.value,
-                stageContent: this.stageContent
+                value: this.value
             });
 
             this.bindBlueFootButton(node);
@@ -80,6 +82,10 @@ define([
                 panel.buildPanel();
 
                 this.stage = new Stage(this, this.stageContent);
+
+                // Hide the WYSIWYG and display the stage
+                jQuery(event.currentTarget).parents('[data-namespace]').hide();
+                this.stageActive(true);
             } else {
                 console.warn('Unable to locate the BlueFoot panel for initialization.');
             }
@@ -92,7 +98,7 @@ define([
          */
         getStageTemplate: function () {
             return 'Gene_BlueFoot/component/core/stage.html';
-        },
+        }
 
     });
 });

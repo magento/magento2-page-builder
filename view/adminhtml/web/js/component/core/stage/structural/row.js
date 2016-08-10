@@ -6,8 +6,9 @@
  */
 define([
     'bluefoot/stage/structural/abstract',
-    'bluefoot/stage/structural/column'
-], function (Abstract, Column) {
+    'bluefoot/stage/structural/column',
+    'mage/translate'
+], function (Abstract, Column, $t) {
 
     /**
      * @constructor
@@ -17,6 +18,14 @@ define([
     }
     Row.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
+
+    /**
+     * Build up the options available on a row
+     */
+    Row.prototype.buildOptions = function () {
+        // Add column option
+        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this));
+    };
 
     /**
      * Override template to row template

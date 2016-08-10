@@ -5,8 +5,9 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'bluefoot/stage/structural/abstract'
-], function (Abstract) {
+    'bluefoot/stage/structural/abstract',
+    'mage/translate'
+], function (Abstract, $t) {
 
     /**
      * @constructor
@@ -16,6 +17,17 @@ define([
     }
     Column.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
+
+    /**
+     * Build up the options available on a row
+     */
+    Column.prototype.buildOptions = function () {
+        // Add column option
+        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this));
+
+        // Build any abstract options, element specific options come first
+        $super.buildOptions();
+    };
 
     /**
      * Override template to row template
