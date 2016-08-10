@@ -25,8 +25,8 @@ define([
         // Add column option
         this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this));
 
-        // Build any abstract options, element specific options come first
-        $super.buildOptions();
+        // Run the parent
+        $super.buildOptions.apply(this, arguments);
     };
 
     /**

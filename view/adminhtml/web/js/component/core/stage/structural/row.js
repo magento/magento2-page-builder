@@ -25,6 +25,9 @@ define([
     Row.prototype.buildOptions = function () {
         // Add column option
         this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this));
+
+        // Run the parent
+        $super.buildOptions.apply(this, arguments);
     };
 
     /**

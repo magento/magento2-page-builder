@@ -56,7 +56,7 @@ define([
      * Remove the current element
      */
     Abstract.prototype.remove = function () {
-        console.log('Remove');
+        delete this;
     };
 
     return Abstract;
