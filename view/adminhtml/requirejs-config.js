@@ -23,6 +23,7 @@ var config = {
 
         'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/core/stage/structural/abstract',
         'bluefoot/stage/structural/row': 'Gene_BlueFoot/js/component/core/stage/structural/row',
+        'bluefoot/stage/structural/column': 'Gene_BlueFoot/js/component/core/stage/structural/column',
 
         'bluefoot/structural': 'Gene_BlueFoot/js/component/core/structural',
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',

@@ -5,27 +5,26 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'underscore',
-    'uiClass'
-], function (_, Class) {
+    'ko',
+], function (ko) {
 
-    var Abstract = _.extend({
-        defaults: {
-            options: [],
-            data: {},
-            children: [],
-        },
+    /**
+     *
+     * @constructor
+     */
+    function Abstract() {
+        this.options = [];
+        this.data = {};
+        this.children = ko.observableArray([]);
+    }
 
-        /**
-         * Return the template for the element
-         *
-         * @returns {string}
-         */
-        getTemplate: function () {
-            return 'Gene_BlueFoot/component/core/stage/structural/abstract.html'
-        }
+    Abstract.prototype.getTemplate = function () {
+        return 'Gene_BlueFoot/component/core/stage/structural/abstract.html'
+    };
 
-    });
+    Abstract.prototype.getChildTemplate = function () {
+        return 'Gene_BlueFoot/component/core/stage/structural/children.html'
+    };
 
-    return Class.extend(Abstract);
+    return Abstract;
 });
