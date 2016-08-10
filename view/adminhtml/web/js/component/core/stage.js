@@ -6,11 +6,8 @@
  */
 define([
     'ko',
-    'bluefoot/hook',
-    'bluefoot/config',
-    'bluefoot/modal',
-    'uiClass'
-], function (ko, Hook, Config, Modal, UiClass) {
+    'bluefoot/stage/structural/row'
+], function (ko, Row) {
 
     /**
      * Stage Class
@@ -27,9 +24,7 @@ define([
      * Add a row to the content
      */
     Stage.prototype.addRow = function () {
-        console.log(this);
-        this.stageContent.push({name: 'FROM STAGE'});
-        console.log(this.stageContent());
+        this.stageContent.push(new Row());
     };
 
     return Stage;

@@ -2,7 +2,9 @@
     <h1>BlueFoot UI</h1>
     <div class="bluefoot-canvas">
         <!-- ko foreach: stageContent -->
-            <h1 data-bind="text: $data.name"></h1>
+            <!-- ko if: getTemplate() -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
         <!-- /ko -->
     </div>
     <a href="#" click="stage.addRow">Add Row</a>

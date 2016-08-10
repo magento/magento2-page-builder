@@ -21,6 +21,9 @@ var config = {
         'bluefoot/stage/panel': 'Gene_BlueFoot/js/component/core/stage/panel',
         'bluefoot/stage/save': 'Gene_BlueFoot/js/component/core/stage/save',
 
+        'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/core/stage/structural/abstract',
+        'bluefoot/stage/structural/row': 'Gene_BlueFoot/js/component/core/stage/structural/row',
+
         'bluefoot/structural': 'Gene_BlueFoot/js/component/core/structural',
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 
