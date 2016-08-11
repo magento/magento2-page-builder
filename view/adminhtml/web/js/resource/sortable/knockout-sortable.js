@@ -130,7 +130,8 @@
         init: function (element, extendedConfig) {
             return jQuery(element)
                 .addClass('gene-bluefoot-sortable')
-                .sortable(this._getConfig(extendedConfig));
+                .sortable(this._getConfig(extendedConfig))
+                .on('sortupdate', this.onSortUpdate.bind(this));
         },
 
         /**
@@ -153,6 +154,11 @@
 
             return config;
         },
+
+        onSortUpdate: function (event, ui) {
+            console.log(event);
+            console.log(ui);
+        }
     };
 
     // Create a new sortable Knockout binding

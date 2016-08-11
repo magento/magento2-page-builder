@@ -18,6 +18,7 @@ define([
      * @constructor
      */
     function Abstract(parent, stage) {
+        this.id = this.guid();
         this.options = new Options();
         this.data = ko.observableArray([]);
         this.children = ko.observableArray([]);
@@ -28,6 +29,21 @@ define([
         // Build the options on initialization
         this.buildOptions();
     }
+
+    /**
+     * Generate a GUID
+     *
+     * @returns {string}
+     */
+    Abstract.prototype.guid = function () {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
 
     /**
      * Build up any options the structural block has
@@ -65,7 +81,7 @@ define([
      */
     Abstract.prototype.removeChild = function (child) {
         this.children(ko.utils.arrayFilter(this.children(), function(filterChild) {
-            return child != filterChild;
+            return child.id != filterChild.id;
         }));
     };
 
