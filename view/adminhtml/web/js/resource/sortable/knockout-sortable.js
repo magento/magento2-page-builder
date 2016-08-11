@@ -21,7 +21,7 @@
             revertDuration: 0,
             helper: 'clone',
             zIndex: 500,
-            connectToSortable: '.gene-bluefoot-sortable',
+            connectToSortable: '.gene-bluefoot-sortable'
         },
 
         /**
