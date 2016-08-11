@@ -7,6 +7,8 @@ var config = {
         'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
         'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
 
+        'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
+
         /* Core Component Aliases */
         'bluefoot/ajax': 'Gene_BlueFoot/js/component/core/ajax',
         'bluefoot/dragdrop': 'Gene_BlueFoot/js/component/core/dragdrop',
@@ -47,7 +49,12 @@ var config = {
             'bluefoot/jquery/ui': 'jquery/ui',
 
             /* Map the abstract widget to the input type widget */
-            'bluefoot/widget/abstract': 'bluefoot/field/abstract'
+            'bluefoot/widget/abstract': 'bluefoot/field/abstract',
+        }
+    },
+    shim: {
+        'bluefoot/ko-sortable': {
+            deps: ['jquery', 'jquery/ui']
         }
     }
 };

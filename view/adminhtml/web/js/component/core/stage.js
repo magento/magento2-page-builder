@@ -24,7 +24,7 @@ define([
      * Add a row to the content
      */
     Stage.prototype.addRow = function () {
-        this.stageContent.push(new Row());
+        this.stageContent.push(new Row(this));
     };
 
     return Stage;

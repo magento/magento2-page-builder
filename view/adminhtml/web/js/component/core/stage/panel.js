@@ -10,6 +10,7 @@ define([
     'jquery',
     'bluefoot/config',
     'bluefoot/modal',
+    'bluefoot/ko-sortable'
 ], function(Component, ko, jQuery, Config) {
 
     /**
@@ -91,20 +92,23 @@ define([
                     typeof config.contentTypes !== 'undefined')
                 {
                     // Populate the groups array with our groups
-                    var groups = {};
+                    var groupsLookup = {};
+                    var groups = [];
                     jQuery.each(config.contentTypeGroups, function (id, group) {
-                        groups[id] = new Group(id, group);
-                        this.groups.push(groups[id]);
+                        groupsLookup[id] = new Group(id, group);
+                        groups.push(groupsLookup[id]);
                     }.bind(this));
 
                     // Add blocks into the groups
                     jQuery.each(config.contentTypes, function (id, block) {
-                        if (typeof groups[block.group] !== 'undefined') {
-                            groups[block.group].addBlock(block);
+                        if (typeof groupsLookup[block.group] !== 'undefined') {
+                            groupsLookup[block.group].addBlock(block);
                         }
                     }.bind(this));
 
-                    // Clean up
+                    // Update groups all at once
+                    this.groups(groups);
+                    groupsLookup = {};
                     groups = {};
 
                     // Display the panel

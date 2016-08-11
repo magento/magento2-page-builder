@@ -14,10 +14,11 @@ define([
      *
      * @constructor
      */
-    function Abstract() {
+    function Abstract(stage) {
         this.options = new Options();
         this.data = ko.observableArray([]);
         this.children = ko.observableArray([]);
+        this.stage = stage;
 
         // Build the options on initialization
         this.buildOptions();
@@ -29,7 +30,6 @@ define([
      * @returns {boolean}
      */
     Abstract.prototype.buildOptions = function () {
-        console.log(this);
         // Add removal option that is available to all structural blocks
         this.options.addOption('remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this));
     };

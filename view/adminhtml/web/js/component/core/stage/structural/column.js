@@ -42,7 +42,7 @@ define([
      * Implement function to add columns to this element
      */
     Column.prototype.addColumn = function () {
-        this.children.push(new Column());
+        this.children.push(new Column(this.stage));
     };
 
     return Column;
