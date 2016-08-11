@@ -1,8 +1,8 @@
-<div class="gene-bluefoot-options" data-bind="with: options">
+<div class="gene-bluefoot-options">
     <div class="gene-bluefoot-options-wrapper">
-        <ul class="gene-bluefoot-options-links" data-bind="foreach: options">
+        <ul class="gene-bluefoot-options-links" data-bind="foreach: options.options">
             <li class="gene-bluefoot-options-link">
-                <a href="#" data-bind="attr: {title: title}, html: icon, click: callback"></a>
+                <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { callback($data, $parent); }, css: additionalClasses"></a>
             </li>
         </ul>
     </div>

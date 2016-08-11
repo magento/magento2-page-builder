@@ -21,10 +21,23 @@ define([
     }
 
     /**
-     * Add a row to the content
+     * Remove a child from the stageContent array
+     *
+     * @param child
      */
-    Stage.prototype.addRow = function () {
-        this.stageContent.push(new Row(this));
+    Stage.prototype.removeChild = function (child) {
+        this.stageContent(ko.utils.arrayFilter(this.stageContent(), function(filterChild) {
+            return child != filterChild;
+        }));
+    };
+
+    /**
+     * Add a row to the content
+     *
+     * @param self
+     */
+    Stage.prototype.addRow = function (self) {
+        this.stageContent.push(new Row(self, self));
     };
 
     return Stage;

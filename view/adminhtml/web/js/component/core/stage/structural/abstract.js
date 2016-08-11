@@ -11,13 +11,18 @@ define([
 ], function (ko, Options, $t) {
 
     /**
+     * Abstract structural block
      *
+     * @param parent
+     * @param stage
      * @constructor
      */
-    function Abstract(stage) {
+    function Abstract(parent, stage) {
         this.options = new Options();
         this.data = ko.observableArray([]);
         this.children = ko.observableArray([]);
+
+        this.parent = parent;
         this.stage = stage;
 
         // Build the options on initialization
@@ -30,8 +35,9 @@ define([
      * @returns {boolean}
      */
     Abstract.prototype.buildOptions = function () {
-        // Add removal option that is available to all structural blocks
-        this.options.addOption('remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this));
+        // Add removal & move option that is available to all structural blocks
+        this.options.addOption('move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
+        this.options.addOption('remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
     };
 
     /**
@@ -53,10 +59,26 @@ define([
     };
 
     /**
-     * Remove the current element
+     * Remove a child from the children array
+     *
+     * @param child
      */
-    Abstract.prototype.remove = function () {
-        delete this;
+    Abstract.prototype.removeChild = function (child) {
+        this.children(ko.utils.arrayFilter(this.children(), function(filterChild) {
+            return child != filterChild;
+        }));
+    };
+
+    /**
+     * Remove the current element
+     *
+     * @param $data
+     * @param structural
+     * @param parent
+     */
+    Abstract.prototype.remove = function ($data, structural) {
+        // Call the parent to remove the child element
+        structural.parent.removeChild(this);
     };
 
     return Abstract;

@@ -13,8 +13,8 @@ define([
     /**
      * @constructor
      */
-    function Row() {
-        Abstract.call(this);
+    function Row(parent, stage) {
+        Abstract.call(this, parent, stage);
     }
     Row.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
@@ -23,11 +23,11 @@ define([
      * Build up the options available on a row
      */
     Row.prototype.buildOptions = function () {
-        // Add column option
-        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this));
-
         // Run the parent
         $super.buildOptions.apply(this, arguments);
+
+        // Add column option
+        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this), ['add-column'], 50);
     };
 
     /**
@@ -43,7 +43,7 @@ define([
      * Implement function to add columns to this element
      */
     Row.prototype.addColumn = function () {
-        this.children.push(new Column(this.stage));
+        this.children.push(new Column(this, this.stage));
     };
 
     return Row;
