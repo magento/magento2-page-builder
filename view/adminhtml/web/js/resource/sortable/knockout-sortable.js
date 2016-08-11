@@ -12,7 +12,7 @@
         // No module loader (plain <script> tag) - put directly in global namespace
         factory(window.ko, window.jQuery);
     }
-})(function(ko, $) {
+})(function(ko, jQuery) {
 
     var Draggable = {
         defaults: {
@@ -20,7 +20,8 @@
             revert: true,
             revertDuration: 0,
             helper: 'clone',
-            zIndex: 500
+            zIndex: 500,
+            connectToSortable: '.gene-bluefoot-sortable',
         },
 
         /**
@@ -108,6 +109,67 @@
         init: function(element, valueAccessor, allBindingsAccessor, data, context) {
             // Initialize draggable on all children of the element
             Draggable.init(jQuery(element).children(), valueAccessor);
+        }
+
+    };
+
+    var Sortable = {
+        defaults: {
+            tolerance: 'pointer',
+            connectWith: '.gene-bluefoot-sortable',
+            helper: 'clone'
+        },
+
+        /**
+         * Init draggable on the elements
+         *
+         * @param element
+         * @param extendedConfig
+         * @returns {*}
+         */
+        init: function (element, extendedConfig) {
+            return jQuery(element)
+                .addClass('gene-bluefoot-sortable')
+                .sortable(this._getConfig(extendedConfig));
+        },
+
+        /**
+         * Return the draggable config
+         *
+         * @param extendedConfig
+         * @returns {Draggable.defaults|{scroll, revert, revertDuration, helper, zIndex}}
+         * @private
+         */
+        _getConfig: function (extendedConfig) {
+            var config = this.defaults;
+
+            // Extend the config with any custom configuration
+            if (extendedConfig) {
+                if (typeof extendedConfig === 'function') {
+                    extendedConfig = extendedConfig();
+                }
+                config = ko.utils.extend(config, extendedConfig);
+            }
+
+            return config;
+        },
+    };
+
+    // Create a new sortable Knockout binding
+    ko.bindingHandlers.sortable = {
+
+        /**
+         * Init the draggable binding on an element
+         *
+         * @param element
+         * @param valueAccessor
+         * @param allBindingsAccessor
+         * @param data
+         * @param context
+         */
+        init: function(element, valueAccessor, allBindingsAccessor, data, context) {
+            // Initialize draggable on all children of the element
+            Sortable.init(jQuery(element), valueAccessor);
         }
 
     };

@@ -1,10 +1,8 @@
 <div class="bluefoot-stage">
-    <div class="bluefoot-canvas">
-        <!-- ko foreach: stageContent -->
-            <!-- ko if: getTemplate() -->
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            <!-- /ko -->
+    <div class="bluefoot-canvas" data-bind="foreach: stageContent, sortable: { handle: '.move-structural', items: '.bluefoot-structure' }">
+        <!-- ko if: getTemplate() -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
         <!-- /ko -->
     </div>
-    <a href="#" click="function () { return stage.addRow($data.stage); }">Add Row</a>
+    <a href="#" data-bind="click: function () { return stage.addRow($data.stage); }">Add Row</a>
 </div>
