@@ -120,7 +120,8 @@
         defaults: {
             tolerance: 'pointer',
             connectWith: '.gene-bluefoot-sortable',
-            helper: 'clone'
+            helper: 'clone',
+            appendTo: document.body
         },
 
         /**
