@@ -1,18 +1,18 @@
 <?php
-namespace Gene\BlueFoot\Ui\DataProvider\ContentBlock;
+namespace Gene\BlueFoot\Ui\DataProvider\Attribute;
 
-use \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory;
+use \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory;
 
 /**
- * Class ContentBlockDataProvider
+ * Class AttributeDataProvider
  * @package Gene\BlueFoot\Ui\DataProvider\ContentBlock
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
-class ContentBlockDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+class AttributeDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\Collection
+     * @var \Magento\Cms\Model\ResourceModel\Page\Collection
      */
     protected $collection;
 
@@ -21,7 +21,7 @@ class ContentBlockDataProvider extends \Magento\Ui\DataProvider\AbstractDataProv
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory $collectionFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $collectionFactory
      * @param array $meta
      * @param array $data
      */
