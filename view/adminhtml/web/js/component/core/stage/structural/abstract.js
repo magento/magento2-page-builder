@@ -38,8 +38,8 @@ define([
      */
     Abstract.prototype.buildOptions = function () {
         // Add removal & move option that is available to all structural blocks
-        this.options.addOption('move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
-        this.options.addOption('remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
+        this.options.addOption(this, 'move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
+        this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
     };
 
     /**

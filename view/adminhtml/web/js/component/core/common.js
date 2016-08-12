@@ -7,8 +7,9 @@
 define(['ko'], function (ko) {
 
    return {
+
        /**
-        * Generate a GUID
+        * Generate a GUID? or just a unique ID
         *
         * @returns {string}
         */
@@ -18,8 +19,7 @@ define(['ko'], function (ko) {
                    .toString(16)
                    .substring(1);
            }
-           return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-               s4() + '-' + s4() + s4() + s4();
+           return s4() + s4() + s4();
        },
 
        /**

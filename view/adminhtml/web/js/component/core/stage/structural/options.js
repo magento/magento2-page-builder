@@ -6,8 +6,9 @@
  */
 define([
     'underscore',
-    'ko'
-], function (_, ko) {
+    'ko',
+    'bluefoot/stage/structural/options/option'
+], function (_, ko, Option) {
 
     /**
      *
@@ -38,14 +39,16 @@ define([
     /**
      * Add an option
      *
+     * @param parent
      * @param code
      * @param icon
      * @param title
      * @param callbackFn
      * @param additionalClasses
      * @param sort
+     * @param optionInstance
      */
-    Options.prototype.addOption = function (code, icon, title, callbackFn, additionalClasses, sort) {
+    Options.prototype.addOption = function (parent, code, icon, title, callbackFn, additionalClasses, sort, optionInstance) {
 
         // If the callbackFn isn't defined return false
         if (!callbackFn || callbackFn && typeof callbackFn !== 'function') {
@@ -57,23 +60,16 @@ define([
             additionalClasses = additionalClasses.join(' ');
         }
 
-        this.options.push({
-            code: code,
-            icon: icon,
-            title: title,
+        // If the option requires a custom option class, check the instance and use that
+        var optionClass = Option;
+        if (optionInstance && typeof optionInstance === 'function') {
+            optionClass = optionInstance
+        }
 
-            /**
-             * callbackFn($data, structure) receives 2 arguments
-             *
-             * $data - The data in the options
-             * structure - The current structure block that the event was fired from
-             */
-            callback: callbackFn,
+        // Create a new option instance and add it into the observable array
+        this.options.push(new optionClass(parent, code, icon, title, callbackFn, additionalClasses, sort));
 
-            additionalClasses: additionalClasses,
-            sort: sort
-        });
-
+        // Sort the options to ensure they're in the correct order
         this.sort();
     };
 

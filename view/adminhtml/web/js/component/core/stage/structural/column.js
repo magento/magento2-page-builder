@@ -6,8 +6,9 @@
  */
 define([
     'bluefoot/stage/structural/abstract',
-    'mage/translate'
-], function (Abstract, $t) {
+    'mage/translate',
+    'bluefoot/stage/structural/options/column'
+], function (Abstract, $t, ColumnOption) {
 
     /**
      * Column structural block
@@ -30,7 +31,7 @@ define([
         $super.buildOptions.apply(this, arguments);
 
         // Add column option
-        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this), ['add-column'], 50);
+        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this), ['add-column'], 50, ColumnOption);
     };
 
     /**

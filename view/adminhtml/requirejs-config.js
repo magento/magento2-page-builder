@@ -30,6 +30,9 @@ var config = {
         'bluefoot/stage/structural/column': 'Gene_BlueFoot/js/component/core/stage/structural/column',
         'bluefoot/stage/structural/options': 'Gene_BlueFoot/js/component/core/stage/structural/options',
 
+        'bluefoot/stage/structural/options/option': 'Gene_BlueFoot/js/component/core/stage/structural/options/option',
+        'bluefoot/stage/structural/options/column': 'Gene_BlueFoot/js/component/core/stage/structural/options/column',
+
         'bluefoot/structural': 'Gene_BlueFoot/js/component/core/structural',
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 
