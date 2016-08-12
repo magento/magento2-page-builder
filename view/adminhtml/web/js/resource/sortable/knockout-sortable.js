@@ -230,6 +230,10 @@
 
                     // Determine if the element has moved within the same parent, or if it's been moved into another
                     if (self.originalParent.id == structure.parent.id) {
+                        // The element hasn't moved
+                        if (self.originalIndex == newIndex) {
+                            return false;
+                        }
                         // Move the array item to that new index
                         Common.moveArrayItem(childrenArray, self.originalIndex, newIndex);
                     } else {
@@ -257,18 +261,6 @@
                 self.originalParent = false;
                 self.originalIndex = false;
 
-            }
-        },
-
-        /**
-         * On sort stop remove any left over items
-         *
-         * @param event
-         * @param ui
-         */
-        onSortStop: function (event, ui) {
-            if (ui.item) {
-                ui.item.remove();
             }
         }
     };

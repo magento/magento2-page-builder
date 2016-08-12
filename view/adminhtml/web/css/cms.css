@@ -141,7 +141,8 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 }
 /* Import Stage {less} */
 .bluefoot-structure {
-  border: 3px #243743 dashed;
+  border: 3px solid transparent;
+  box-sizing: border-box;
   padding: 10px;
   margin: 10px 0;
   background: white;
@@ -176,18 +177,26 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure ul.gene-bluefoot-options-links li a:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+.bluefoot-structure:hover {
+  border: 3px #243743 dashed;
+  box-sizing: border-box;
+}
+.bluefoot-structure:hover.bluefoot-row {
+  border-color: #3370b5;
+}
+.bluefoot-structure:hover.bluefoot-column {
+  border-color: #28b78c;
+}
 .bluefoot-structure:hover ul.gene-bluefoot-options-links {
   display: inline-block;
 }
 .bluefoot-structure.bluefoot-row {
-  border-color: #3370b5;
   margin-bottom: 20px;
 }
 .bluefoot-structure.bluefoot-row ul.gene-bluefoot-options-links {
   background: #3370b5;
 }
 .bluefoot-structure.bluefoot-column {
-  border-color: #28b78c;
   margin: 10px 0 20px 0;
 }
 .bluefoot-structure.bluefoot-column ul.gene-bluefoot-options-links {

@@ -1,5 +1,6 @@
 .bluefoot-structure {
-    border: 3px #243743 dashed;
+    border: 3px solid transparent;
+    box-sizing: border-box;
     padding: 10px;
     margin: 10px 0;
     background: white;
@@ -42,13 +43,22 @@
     }
 
     &:hover {
+        border: 3px #243743 dashed;
+        box-sizing: border-box;
+
+        &.bluefoot-row {
+            border-color: #3370b5;
+        }
+        &.bluefoot-column {
+            border-color: #28b78c;
+        }
+
         ul.gene-bluefoot-options-links {
             display: inline-block;
         }
     }
 
     &.bluefoot-row {
-        border-color: #3370b5;
         margin-bottom: 20px;
 
         ul.gene-bluefoot-options-links {
@@ -56,7 +66,6 @@
         }
     }
     &.bluefoot-column {
-        border-color: #28b78c;
         margin: 10px 0 20px 0;
 
         ul.gene-bluefoot-options-links {

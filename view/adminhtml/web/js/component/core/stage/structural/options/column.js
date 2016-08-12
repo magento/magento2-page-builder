@@ -32,6 +32,13 @@ define([
     var $super = Option.prototype;
 
     /**
+     * Add a column into the parent
+     */
+    ColumnOption.prototype.addColumn = function () {
+        return this.parent.addColumn();
+    }
+
+    /**
      * On mouse over display the column UI
      */
     ColumnOption.prototype.onMouseOver = function () {
