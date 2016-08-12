@@ -14,7 +14,8 @@ define([
      *
      * @constructor
      */
-    function Stage(parent, stageContent) {
+    function Stage(parent, stageId, stageContent) {
+        this.id = stageId;
         this.parent = parent;
         this.stageContent = stageContent;
         this.active = true;
@@ -29,6 +30,16 @@ define([
         this.stageContent(ko.utils.arrayFilter(this.stageContent(), function(filterChild) {
             return child.id != filterChild.id;
         }));
+        this.refreshChildren();
+    };
+
+    /**
+     * Refresh children within stage
+     */
+    Stage.prototype.refreshChildren = function () {
+        var data = this.stageContent().slice(0);
+        this.stageContent([]);
+        this.stageContent(data);
     };
 
     /**

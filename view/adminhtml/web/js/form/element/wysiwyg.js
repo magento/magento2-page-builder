@@ -10,8 +10,9 @@ define([
     'uiRegistry',
     'jquery',
     'bluefoot/stage',
-    'Magento_Variable/variables'
-], function (Wysiwyg, $, ko, registry, jQuery, Stage) {
+    'bluefoot/common',
+    'Magento_Variable/variables',
+], function (Wysiwyg, $, ko, registry, jQuery, Stage, Common) {
     'use strict';
 
     /**
@@ -21,10 +22,12 @@ define([
         defaults: {
             stageActive: false,
             stage: {},
+            stageId: Common.guid(),
             stageContent: [],
             links: {
                 stageActive: false,
                 stage: {},
+                stageId: false,
                 stageContent: []
             }
         },
@@ -81,7 +84,7 @@ define([
             if (panel = this.getBlueFootPanel()) {
                 panel.buildPanel();
 
-                this.stage = new Stage(this, this.stageContent);
+                this.stage = new Stage(this, this.stageId, this.stageContent);
 
                 // Hide the WYSIWYG and display the stage
                 jQuery(event.currentTarget).parents('[data-namespace]').hide();

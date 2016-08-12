@@ -1,5 +1,3 @@
-<div class="element-children" data-bind="foreach: children, sortable: { handle: '.move-structural', items: '.bluefoot-structure', connectWith: '.element-children' }">
-    <!-- ko if: getTemplate() -->
-        <!-- ko template: getTemplate() --><!-- /ko -->
-    <!-- /ko -->
+<div class="element-children" data-bind="foreach: children, sortable: { handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }">
+    <div class="bluefoot-structure-wrapper" data-bind="template: getTemplate(), attr: {id: id}"></div>
 </div>

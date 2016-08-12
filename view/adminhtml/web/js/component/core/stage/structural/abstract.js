@@ -6,9 +6,10 @@
  */
 define([
     'ko',
+    'bluefoot/common',
     'bluefoot/stage/structural/options',
     'mage/translate'
-], function (ko, Options, $t) {
+], function (ko, Common, Options, $t) {
 
     /**
      * Abstract structural block
@@ -18,7 +19,7 @@ define([
      * @constructor
      */
     function Abstract(parent, stage) {
-        this.id = this.guid();
+        this.id = Common.guid();
         this.options = new Options();
         this.data = ko.observableArray([]);
         this.children = ko.observableArray([]);
@@ -29,21 +30,6 @@ define([
         // Build the options on initialization
         this.buildOptions();
     }
-
-    /**
-     * Generate a GUID
-     *
-     * @returns {string}
-     */
-    Abstract.prototype.guid = function () {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
-    };
 
     /**
      * Build up any options the structural block has
@@ -83,6 +69,7 @@ define([
         this.children(ko.utils.arrayFilter(this.children(), function(filterChild) {
             return child.id != filterChild.id;
         }));
+        this.refreshChildren();
     };
 
     /**
@@ -95,6 +82,15 @@ define([
     Abstract.prototype.remove = function ($data, structural) {
         // Call the parent to remove the child element
         structural.parent.removeChild(this);
+    };
+
+    /**
+     * Refresh children within stage
+     */
+    Abstract.prototype.refreshChildren = function () {
+        var data = this.children().slice(0);
+        this.children([]);
+        this.children(data);
     };
 
     return Abstract;

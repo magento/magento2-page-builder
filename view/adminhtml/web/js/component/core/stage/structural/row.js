@@ -11,6 +11,10 @@ define([
 ], function (Abstract, Column, $t) {
 
     /**
+     * Row structural block
+     *
+     * @param parent
+     * @param stage
      * @constructor
      */
     function Row(parent, stage) {

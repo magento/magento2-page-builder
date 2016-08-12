@@ -7,9 +7,11 @@ var config = {
         'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
         'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
 
+        /* Include our Knockout Sortable wrapper */
         'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
 
         /* Core Component Aliases */
+        'bluefoot/common': 'Gene_BlueFoot/js/component/core/common',
         'bluefoot/ajax': 'Gene_BlueFoot/js/component/core/ajax',
         'bluefoot/dragdrop': 'Gene_BlueFoot/js/component/core/dragdrop',
         'bluefoot/config': 'Gene_BlueFoot/js/component/core/config',

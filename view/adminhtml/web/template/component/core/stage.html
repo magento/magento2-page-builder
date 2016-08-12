@@ -1,8 +1,6 @@
-<div class="bluefoot-stage">
-    <div class="bluefoot-canvas" data-bind="foreach: stageContent, sortable: { handle: '.move-structural', items: '.bluefoot-row', connectWith: '.bluefoot-canvas' }">
-        <!-- ko if: getTemplate() -->
-            <!-- ko template: getTemplate() --><!-- /ko -->
-        <!-- /ko -->
+<div class="bluefoot-stage" data-bind="attr: {id: stageId}">
+    <div class="bluefoot-canvas" data-bind="foreach: stageContent, sortable: { handle: '.move-structural', items: '.bluefoot-row-wrapper', connectWith: '.bluefoot-canvas' }">
+        <div class="bluefoot-row-wrapper" data-bind="template: getTemplate(), attr: {id: id}"></div>
     </div>
     <a href="#" data-bind="click: function () { return stage.addRow($data.stage); }">Add Row</a>
 </div>
