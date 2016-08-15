@@ -1,3 +1,26 @@
+.bluefoot-add-row-wrapper {
+    float: left;
+    width: 100%;
+    text-align: center;
+
+    .bluefoot-add-row {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        color: white;
+        font-size: 26px;
+        background: @panelColor;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        color: @iconColor;
+
+        &:hover {
+            color: @iconColorHover;
+        }
+    }
+}
 .bluefoot-structure {
     border: 3px solid transparent;
     box-sizing: border-box;
@@ -10,33 +33,37 @@
         min-height: 100px;
     }
 
-    ul.gene-bluefoot-options-links {
-        display: none;
-        list-style: none;
-        margin: 0;
-        padding: 0 8px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        box-sizing: border-box;
-
+    .gene-bluefoot-options {
         position: absolute;
-        left: 44%; // @todo actually centre
+        left: 0;
+        right: 0;
         top: -15px;
+        text-align: center;
 
-        font-size: 0;
+        ul.gene-bluefoot-options-links {
+            display: none;
+            list-style: none;
+            margin: 0;
+            padding: 0 8px;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            box-sizing: border-box;
 
-        li {
-            float: left;
+            font-size: 0;
 
-            a {
-                display: block;
-                color: white;
-                font-size: 16px;
-                padding: 4px 7px;
+            li {
+                float: left;
 
-                &:hover {
-                    background: rgba(0,0,0,0.2);
+                a {
+                    display: block;
+                    color: white;
+                    font-size: 16px;
+                    padding: 4px 7px;
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.2);
+                    }
                 }
             }
         }
@@ -53,8 +80,10 @@
             border-color: #28b78c;
         }
 
-        ul.gene-bluefoot-options-links {
-            display: inline-block;
+        .gene-bluefoot-options {
+            ul.gene-bluefoot-options-links {
+                display: inline-block;
+            }
         }
     }
 

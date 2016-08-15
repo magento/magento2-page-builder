@@ -2,5 +2,7 @@
     <div class="bluefoot-canvas" data-bind="foreach: stageContent, sortable: { handle: '.move-structural', items: '.bluefoot-row-wrapper', connectWith: '.bluefoot-canvas' }">
         <div class="bluefoot-row-wrapper" data-bind="template: getTemplate(), attr: {id: id}"></div>
     </div>
-    <a href="#" data-bind="click: function () { return stage.addRow($data.stage); }">Add Row</a>
+    <div class="bluefoot-add-row-wrapper">
+        <a href="#" class="bluefoot-add-row" title="Add Row" data-bind="click: function () { return stage.addRow($data.stage); }"><i class="fa fa-plus"></i></a>
+    </div>
 </div>

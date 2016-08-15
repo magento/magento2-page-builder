@@ -24,6 +24,9 @@ define([
         this.data = ko.observableArray([]);
         this.children = ko.observableArray([]);
 
+        this.originalParent = false;
+        this.originalIndex = false;
+
         this.parent = parent;
         this.stage = stage;
 
@@ -91,6 +94,92 @@ define([
         var data = this.children().slice(0);
         this.children([]);
         this.children(data);
+    };
+
+    /**
+     * Event called when sorting starts on this element
+     *
+     * @param sortableThis
+     * @param event
+     * @param ui
+     * @param sortableInstance
+     */
+    Abstract.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+        this.originalParent = this.parent;
+        this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+    };
+
+    /**
+     * Function called on sort updating
+     *
+     * @param sortableThis
+     * @param event
+     * @param ui
+     * @param sortableInstance
+     * @returns {boolean}
+     */
+    Abstract.prototype.onSortUpdate = function (sortableThis, event, ui, sortableInstance) {
+        var item = ui.item,
+            parentEl = ui.item.parent()[0],
+            newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]),
+            parent,
+            childrenArray;
+
+        // Only run the event once
+        if (item && (sortableThis === parentEl)) {
+
+            // Rows are a parent of the stage which stores it's data slightly differently
+            if (item.hasClass('bluefoot-row-wrapper')) {
+                var parentUiClass = ko.dataFor(item.parents('.bluefoot-canvas')[0]);
+                parent = parentUiClass.stage;
+                childrenArray = parentUiClass.stageContent;
+            } else {
+                parent = ko.dataFor(item.parents('.bluefoot-structure')[0]);
+                childrenArray = parent.children;
+            }
+
+            // Verify we have a parent element
+            if (parent) {
+                // Update the elements parent
+                this.parent = parent;
+
+                // Cancel original sortable event, allowing KO to handle DOM manipulation
+                jQuery(sortableThis).sortable('cancel');
+
+                // Determine if the element has moved within the same parent, or if it's been moved into another
+                if (this.originalParent.id == this.parent.id) {
+                    // The element hasn't moved
+                    if (this.originalIndex == newIndex) {
+                        return false;
+                    }
+                    // Move the array item to that new index
+                    Common.moveArrayItem(childrenArray, this.originalIndex, newIndex);
+                } else {
+                    // Remove the item from the original parent
+                    this.originalParent.removeChild(this);
+                    this.originalParent.refreshChildren();
+
+                    // Move the item into a different array, removing the original instance
+                    Common.moveArrayItemIntoArray(this, childrenArray, newIndex);
+                }
+
+                // Force refresh the children to update the UI
+                parent.refreshChildren();
+
+                // Remove the item from the UI
+                item.remove();
+            }
+
+            // If using deferred updates plugin, force updates
+            if (ko.processAllDeferredBindingUpdates) {
+                ko.processAllDeferredBindingUpdates();
+            }
+
+            // Reset and tidy up
+            this.originalParent = false;
+            this.originalIndex = false;
+
+        }
     };
 
     return Abstract;

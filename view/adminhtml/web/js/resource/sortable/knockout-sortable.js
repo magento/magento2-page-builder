@@ -115,8 +115,6 @@
     };
 
     var Sortable = {
-        originalParent: false,
-        originalIndex: false,
         defaults: {
             tolerance: 'pointer',
             connectWith: '.gene-bluefoot-sortable',
@@ -143,10 +141,6 @@
                 .on('sortupdate', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortUpdate.apply(this, arguments);
-                })
-                .on('sortstop', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortStop.apply(this, arguments);
                 });
         },
 
@@ -181,14 +175,9 @@
          * @param self
          */
         onSortStart: function (event, ui, self) {
-            var structure = ko.dataFor(ui.item[0]);
-            if (structure) {
-                self.originalParent = structure.parent;
-                self.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
-                console.log(self.originalIndex);
-            } else {
-                self.originalParent = false;
-                self.originalIndex = false;
+            var koElement = ko.dataFor(ui.item[0]);
+            if (typeof koElement.onSortStart === 'function') {
+                return koElement.onSortStart(this, event, ui, self);
             }
         },
 
@@ -201,67 +190,9 @@
          * @returns {boolean}
          */
         onSortUpdate: function (event, ui, self) {
-            var item = ui.item,
-                parentEl = ui.item.parent()[0],
-                structure = ko.dataFor(ui.item[0]),
-                newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]),
-                parent,
-                childrenArray;
-
-            // Only run the event once
-            if (item && (this === parentEl)) {
-
-                // Rows are a parent of the stage which stores it's data slightly differently
-                if (item.hasClass('bluefoot-row-wrapper')) {
-                    var parentUiClass = ko.dataFor(item.parents('.bluefoot-canvas')[0]);
-                    parent = parentUiClass.stage;
-                    childrenArray = parentUiClass.stageContent;
-                } else {
-                    parent = ko.dataFor(item.parents('.bluefoot-structure')[0]);
-                    childrenArray = parent.children;
-                }
-
-                // Verify we have a parent element
-                if (parent) {
-                    // Update the elements parent
-                    structure.parent = parent;
-
-                    // Cancel original sortable event, allowing KO to handle DOM manipulation
-                    jQuery(this).sortable('cancel');
-
-                    // Determine if the element has moved within the same parent, or if it's been moved into another
-                    if (self.originalParent.id == structure.parent.id) {
-                        // The element hasn't moved
-                        if (self.originalIndex == newIndex) {
-                            return false;
-                        }
-                        // Move the array item to that new index
-                        Common.moveArrayItem(childrenArray, self.originalIndex, newIndex);
-                    } else {
-                        // Remove the item from the original parent
-                        self.originalParent.removeChild(structure);
-                        self.originalParent.refreshChildren();
-
-                        // Move the item into a different array, removing the original instance
-                        Common.moveArrayItemIntoArray(structure, childrenArray, newIndex);
-                    }
-
-                    // Force refresh the children to update the UI
-                    parent.refreshChildren();
-
-                    // Remove the item from the UI
-                    item.remove();
-                }
-
-                // If using deferred updates plugin, force updates
-                if (ko.processAllDeferredBindingUpdates) {
-                    ko.processAllDeferredBindingUpdates();
-                }
-
-                // Reset and tidy up
-                self.originalParent = false;
-                self.originalIndex = false;
-
+            var koElement = ko.dataFor(ui.item[0]);
+            if (typeof koElement.onSortUpdate === 'function') {
+                return koElement.onSortUpdate(this, event, ui, self);
             }
         }
     };
