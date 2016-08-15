@@ -19,9 +19,6 @@ class Index extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
     public function execute()
     {
         $resultPage = $this->createActionPage();
-        $resultPage->addContent(
-            $resultPage->getLayout()->createBlock('Gene\BlueFoot\Block\Adminhtml\Entity\Attribute')
-        );
         return $resultPage;
     }
 }
