@@ -27,7 +27,7 @@ define([
         this.newColumnOptions = {
             sizes: ko.observableArray([]),
             visible: ko.observable(false),
-            classes: ko.observable('')
+            side: ko.observable('right')
         };
     }
     Column.prototype = Object.create(Abstract.prototype);
@@ -90,7 +90,7 @@ define([
 
         this.newColumnOptions.visible(true);
         this.newColumnOptions.sizes(sizes);
-        this.newColumnOptions.classes(side == 'right' ? 'right' : '');
+        this.newColumnOptions.side(side == 'right' ? 'right' : 'left');
     };
 
     /**
@@ -102,6 +102,7 @@ define([
         // at this point 'parent' refers to the current column,
         // so we need to go up another layer to get the row/column's parent so that the column is inserted within
         // the current column
+        var originalParent = parent;
         parent = parent.parent;
 
         if (data.index > -1) {
@@ -110,7 +111,7 @@ define([
             column.changeWidth();
         }
 
-        parent.newColumnOptions.visible(false);
+        originalParent.newColumnOptions.visible(false);
     };
 
     return Column;
