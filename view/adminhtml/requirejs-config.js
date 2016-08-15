@@ -22,7 +22,11 @@ var config = {
 
         'bluefoot/stage': 'Gene_BlueFoot/js/component/core/stage',
         'bluefoot/stage/build': 'Gene_BlueFoot/js/component/core/stage/build',
+
         'bluefoot/stage/panel': 'Gene_BlueFoot/js/component/core/stage/panel',
+        'bluefoot/stage/panel/group': 'Gene_BlueFoot/js/component/core/stage/panel/group',
+        'bluefoot/stage/panel/group/block': 'Gene_BlueFoot/js/component/core/stage/panel/group/block',
+
         'bluefoot/stage/save': 'Gene_BlueFoot/js/component/core/stage/save',
 
         'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/core/stage/structural/abstract',

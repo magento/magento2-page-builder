@@ -9,40 +9,10 @@ define([
     'ko',
     'jquery',
     'bluefoot/config',
+    'bluefoot/stage/panel/group',
     'bluefoot/modal',
     'bluefoot/ko-sortable'
-], function(Component, ko, jQuery, Config) {
-
-    /**
-     * The block model sits within a group
-     *
-     * @param block
-     */
-    var Block = function (block) {
-        this.code = ko.observable(block.code);
-        this.name = ko.observable(block.name);
-        this.icon = ko.observable(block.icon);
-    };
-
-    /**
-     * Group model to handle groups in the left panel
-     *
-     * @param id
-     * @param group
-     */
-    var Group = function (id, group) {
-        this.id = ko.observable(id);
-        this.code = ko.observable(group.code);
-        this.name = ko.observable(group.name);
-        this.icon = ko.observable(group.icon);
-        this.sort = ko.observable(group.sort);
-        this.blocks = ko.observableArray([]);
-
-        // Ability to add a block into a group model
-        this.addBlock = function (block) {
-            this.blocks.push(new Block(block));
-        }.bind(this);
-    };
+], function(Component, ko, jQuery, Config, Group) {
 
     /**
      * Extend the component for BlueFoot panel specific functionality
