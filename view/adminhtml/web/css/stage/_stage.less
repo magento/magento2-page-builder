@@ -8,16 +8,15 @@
         width: 50px;
         height: 50px;
         line-height: 50px;
-        color: white;
         font-size: 26px;
-        background: @panelColor;
+        background: @rowColor;
         border-radius: 5px;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
-        color: @iconColor;
+        color: white;
 
         &:hover {
-            color: @iconColorHover;
+            background: darken(@rowColor, 15%);
         }
     }
 }
@@ -78,10 +77,10 @@
         box-sizing: border-box;
 
         &.bluefoot-row {
-            border-color: #3370b5;
+            border-color: @rowColor;
         }
         &.bluefoot-column {
-            border-color: #28b78c;
+            border-color: @columnColor;
         }
 
         .gene-bluefoot-options {
@@ -97,7 +96,7 @@
         margin-bottom: 20px;
 
         ul.gene-bluefoot-options-links {
-            background: #3370b5;
+            background: @rowColor;
         }
     }
     &.bluefoot-column {
@@ -106,7 +105,7 @@
         margin: 10px 0 20px 0;
 
         ul.gene-bluefoot-options-links {
-            background: #28b78c;
+            background: @columnColor;
         }
     }
 }
