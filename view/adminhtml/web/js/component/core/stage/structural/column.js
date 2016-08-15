@@ -5,10 +5,11 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'ko',
     'bluefoot/stage/structural/abstract',
     'mage/translate',
     'bluefoot/stage/structural/options/column'
-], function (Abstract, $t, ColumnOption) {
+], function (ko, Abstract, $t, ColumnOption) {
 
     /**
      * Column structural block
@@ -19,9 +20,19 @@ define([
      */
     function Column(parent, stage) {
         Abstract.call(this, parent, stage);
+
+        this.wrapperStyle = ko.observable({width: '50%'});
+        this.width = ko.observable(false);
     }
     Column.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
+
+    /**
+     * Change the width of the column
+     */
+    Column.prototype.changeWidth = function () {
+        this.updateWrapperStyle('width', '25%');
+    };
 
     /**
      * Build up the options available on a row

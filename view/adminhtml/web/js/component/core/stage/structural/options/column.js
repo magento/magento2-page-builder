@@ -36,7 +36,7 @@ define([
      */
     ColumnOption.prototype.addColumn = function () {
         return this.parent.addColumn();
-    }
+    };
 
     /**
      * On mouse over display the column UI

@@ -6,10 +6,11 @@
  */
 define([
     'ko',
+    'underscore',
     'bluefoot/common',
     'bluefoot/stage/structural/options',
     'mage/translate'
-], function (ko, Common, Options, $t) {
+], function (ko, _, Common, Options, $t) {
 
     /**
      * Abstract structural block
@@ -29,6 +30,8 @@ define([
 
         this.parent = parent;
         this.stage = stage;
+
+        this.wrapperStyle = ko.observable({});
 
         // Build the options on initialization
         this.buildOptions();
@@ -94,6 +97,24 @@ define([
         var data = this.children().slice(0);
         this.children([]);
         this.children(data);
+    };
+
+    /**
+     * Update the wrapper style
+     *
+     * @param key
+     * @param value
+     */
+    Abstract.prototype.updateWrapperStyle = function (key, value) {
+        var newStyles = {};
+        if (typeof key === 'object' && !value) {
+            newStyles = key;
+        } else {
+            newStyles[key] = value;
+        }
+        var style = _.extend(this.wrapperStyle(), newStyles);
+        console.log(style);
+        this.wrapperStyle(style);
     };
 
     /**
