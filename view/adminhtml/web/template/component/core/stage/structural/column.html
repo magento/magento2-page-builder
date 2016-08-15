@@ -1,4 +1,11 @@
 <div class="bluefoot-structure bluefoot-column">
+    <a href="#" class="bluefoot-column-add" data-bind="click: function () { showColumnBuilder('left') }">&plus;</a>
+    <a href="#" class="bluefoot-column-add bluefoot-column-add-right" data-bind="click: function () { showColumnBuilder('right') }">&plus;</a>
+
+    <ul class="bluefoot-column-inline-add" data-bind="foreach: newColumnOptions.sizes, visible: newColumnOptions.visible, additionalClasses: newColumnOptions.classes">
+        <li data-bind="text: label, click: function() { $parent.insertColumnAtIndex($parent, $data); }"></li>
+    </ul>
+
     <div data-bind="text: id"></div>
     <a href="#" data-bind="click: changeWidth">Change Width</a>
     <!-- ko template: options.getTemplate() --><!-- /ko -->

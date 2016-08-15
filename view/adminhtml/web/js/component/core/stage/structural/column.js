@@ -8,8 +8,9 @@ define([
     'ko',
     'bluefoot/stage/structural/abstract',
     'mage/translate',
-    'bluefoot/stage/structural/options/column'
-], function (ko, Abstract, $t, ColumnOption) {
+    'bluefoot/stage/structural/options/column',
+    'bluefoot/config'
+], function (ko, Abstract, $t, ColumnOption, InitConfig) {
 
     /**
      * Column structural block
@@ -23,6 +24,11 @@ define([
 
         this.wrapperStyle = ko.observable({width: '100%'});
         this.width = ko.observable(false);
+        this.newColumnOptions = {
+            sizes: ko.observableArray([]),
+            visible: ko.observable(false),
+            classes: ko.observable('')
+        };
     }
     Column.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
@@ -59,6 +65,52 @@ define([
      */
     Column.prototype.addColumn = function () {
         this.children.push(new Column(this, this.stage));
+    };
+
+    /**
+     * Function to add an new column on the left or right-hand side of an existing column
+     * @param side
+     */
+    Column.prototype.showColumnBuilder = function (side) {
+        var index = ko.utils.arrayIndexOf(this.parent.children(), this);
+        if (side == 'right') {
+            ++index;
+        }
+
+        var columnOptions = InitConfig.getInitConfig("column_options"),
+            sizes = [];
+
+        for(var size in columnOptions) {
+            sizes.push({
+                label: columnOptions[size],
+                size: size,
+                index: index
+            });
+        }
+
+        this.newColumnOptions.visible(true);
+        this.newColumnOptions.sizes(sizes);
+        this.newColumnOptions.classes(side == 'right' ? 'right' : '');
+    };
+
+    /**
+     * Insert a column at the designated index within it's parent
+     * @param parent
+     * @param data
+     */
+    Column.prototype.insertColumnAtIndex = function(parent, data) {
+        // at this point 'parent' refers to the current column,
+        // so we need to go up another layer to get the row/column's parent so that the column is inserted within
+        // the current column
+        parent = parent.parent;
+
+        if (data.index > -1) {
+            var column = new Column(parent, parent.stage);
+            parent.children.splice(data.index, 0, column);
+            column.changeWidth();
+        }
+
+        parent.newColumnOptions.visible(false);
     };
 
     return Column;

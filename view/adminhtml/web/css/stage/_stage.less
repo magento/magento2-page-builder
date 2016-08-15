@@ -1,3 +1,7 @@
+.bluefoot-canvas {
+    margin-left: 60px; // temp
+}
+
 .bluefoot-add-row-wrapper {
     float: left;
     width: 100%;
@@ -49,9 +53,7 @@
             list-style: none;
             margin: 0;
             padding: 0 8px;
-            border-radius: 3px;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
+            .border-radius(3px);
             box-sizing: border-box;
 
             font-size: 0;
@@ -107,6 +109,32 @@
 
         ul.gene-bluefoot-options-links {
             background: #28b78c;
+        }
+
+        .bluefoot-column-add {
+            .border-radius;
+            position: absolute;
+            left: 0;
+            display: block;
+            padding: 0 8px;
+            background: @columnColor;
+            color: #fff;
+            top: 45%;
+        }
+        .bluefoot-column-add-right {
+            left: auto;
+            right: 0;
+        }
+
+        .bluefoot-column-inline-add {
+            list-style: none;
+            margin: 0;
+            width: 150px;
+            background: @columnColor;
+            color: white;
+            .border-radius;
+            position: absolute;
+            top: 20%;
         }
     }
 }
