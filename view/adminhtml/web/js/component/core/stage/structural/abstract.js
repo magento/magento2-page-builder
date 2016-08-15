@@ -61,7 +61,7 @@ define([
      * Return the template for the child elements
      *
      * @returns {string}
-     */n
+     */
     Abstract.prototype.getChildTemplate = function () {
         return 'Gene_BlueFoot/component/core/stage/structural/children.html'
     };
