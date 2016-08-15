@@ -21,7 +21,7 @@ define([
     function Column(parent, stage) {
         Abstract.call(this, parent, stage);
 
-        this.wrapperStyle = ko.observable({width: '50%'});
+        this.wrapperStyle = ko.observable({width: '100%'});
         this.width = ko.observable(false);
     }
     Column.prototype = Object.create(Abstract.prototype);
@@ -31,7 +31,7 @@ define([
      * Change the width of the column
      */
     Column.prototype.changeWidth = function () {
-        this.updateWrapperStyle('width', '25%');
+        this.updateWrapperStyle('width', '50%');
     };
 
     /**
