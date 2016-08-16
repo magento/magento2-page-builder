@@ -131,7 +131,8 @@
                         return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
                     }
 
-                    return false;
+                    var placeholder = jQuery(clone).clone();
+                    return placeholder.css({height: clone.height(), visibility: 'hidden'}).show();
                 },
                 update: function (clone, ui) {
                     return;
@@ -230,6 +231,7 @@
         onSortReceive: function (event, ui, self) {
             // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
             if (ui.item.hasClass('bluefoot-draggable-block')) {
+                console.log('sort recieve');
                 var koElement = ko.dataFor(ui.item[0]);
                 if (koElement && typeof koElement.onSortReceive === 'function') {
                     return koElement.onSortReceive(this, event, ui, self);
@@ -248,6 +250,7 @@
         onSortUpdate: function (event, ui, self) {
             // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
             if (ui.item.hasClass('bluefoot-draggable-block')) {
+                console.log('blocked');
                 // Meaning it's not been "sorted"
                 return false;
             }
