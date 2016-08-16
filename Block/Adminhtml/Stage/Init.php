@@ -70,11 +70,11 @@ class Init extends \Magento\Backend\Block\Template
 
             /* Define the different column options to be given in the UI */
             'column_options' => [
-                1 => 'One',
-                2 => 'Two',
-                3 => 'Three',
-                4 => 'Four',
-                6 => 'Six'
+                1 => '100%',
+                2 => '50%',
+                3 => '33%',
+                4 => '25%',
+                6 => '16%'
             ],
 
             /* Allowed sizes have to be at 3 decimal places */

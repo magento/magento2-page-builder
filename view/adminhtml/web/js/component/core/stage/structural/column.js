@@ -23,7 +23,7 @@ define([
         Abstract.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.width = ko.observable(false);
+        this.widthClasses = ko.observable('bluefoot-structure-wrapper-width-1');
         this.newColumnOptions = {
             sizes: ko.observableArray([]),
             visible: ko.observable(false),
@@ -36,8 +36,8 @@ define([
     /**
      * Change the width of the column
      */
-    Column.prototype.changeWidth = function () {
-        this.updateWrapperStyle('width', '50%');
+    Column.prototype.changeWidth = function (size) {
+        this.widthClasses("bluefoot-structure-wrapper-width-" + size);
     };
 
     /**
@@ -108,7 +108,7 @@ define([
         if (data.index > -1) {
             var column = new Column(parent, parent.stage);
             parent.children.splice(data.index, 0, column);
-            column.changeWidth();
+            column.changeWidth(data.size);
         }
 
         originalParent.newColumnOptions.visible(false);
