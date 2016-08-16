@@ -26,8 +26,17 @@
 }
 .bluefoot-row-wrapper, .bluefoot-structure-wrapper {
     float: left;
+}
+.bluefoot-row-wrapper {
     width: 100%;
 }
+/* @todo make this dynamic with a mixin perhaps */
+.bluefoot-structure-wrapper-width-1 { width: 100%; }
+.bluefoot-structure-wrapper-width-2 { width: 50%; }
+.bluefoot-structure-wrapper-width-3 { width: 33.3%; }
+.bluefoot-structure-wrapper-width-4 { width: 25%; }
+.bluefoot-structure-wrapper-width-6 { width: 16.666666667%; }
+
 .bluefoot-structure {
     border: 3px solid transparent;
     box-sizing: border-box;
@@ -83,6 +92,10 @@
         }
         &.bluefoot-column {
             border-color: @columnColor;
+
+            .bluefoot-column-add {
+                display: block;
+            }
         }
 
         .gene-bluefoot-options {
@@ -105,24 +118,28 @@
         float: left;
         width: 100%;
         margin: 10px 0 20px 0;
-
         ul.gene-bluefoot-options-links {
             background: @columnColor;
         }
 
         .bluefoot-column-add {
-            .border-radius;
+            display: none;
             position: absolute;
-            left: 0;
-            display: block;
+            left: -27px;
+            top: 45%;
             padding: 0 8px;
             background: @columnColor;
             color: #fff;
-            top: 45%;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
         }
         .bluefoot-column-add-right {
             left: auto;
-            right: 0;
+            right: -27px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
         }
 
         .bluefoot-column-inline-add {
@@ -134,10 +151,14 @@
             .border-radius;
             position: absolute;
             top: 20%;
+            left: -27px;
+            text-align: center;
+            padding: 4px 6px;
+            cursor: pointer;
 
             &.right {
                 left: auto;
-                right: 20px;
+                right: -27px;
             }
         }
     }

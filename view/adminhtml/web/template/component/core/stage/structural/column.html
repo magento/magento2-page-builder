@@ -1,13 +1,13 @@
 <div class="bluefoot-structure bluefoot-column">
-    <a href="#" class="bluefoot-column-add" data-bind="click: function () { showColumnBuilder('left') }"><i class="fa plus"></i></a>
+    <a href="#" class="bluefoot-column-add" data-bind="click: function () { showColumnBuilder('left') }"><i class="fa fa-plus"></i></a>
     <a href="#" class="bluefoot-column-add bluefoot-column-add-right" data-bind="click: function () { showColumnBuilder('right') }"><i class="fa fa-plus"></i></a>
 
-    <ul class="bluefoot-column-inline-add" data-bind="foreach: newColumnOptions.sizes, visible: newColumnOptions.visible, css: newColumnOptions.side">
-        <li data-bind="text: label, click: function() { $parent.insertColumnAtIndex($parent, $data); }"></li>
+    <ul class="bluefoot-column-inline-add" data-bind="foreach: newColumnOptions.sizes, visible: newColumnOptions.visible, css: newColumnOptions.side, event: {mouseout: function() { newColumnOptions.visible(false); }, mouseover: function() { newColumnOptions.visible(true); }}">
+        <li data-bind="text: label, click: function() { $parent.insertColumnAtIndex($parent, $data); }, event: {mouseover: function() { $parent.newColumnOptions.visible(true); }}"></li>
     </ul>
 
     <div data-bind="text: id"></div>
-    <a href="#" data-bind="click: changeWidth">Change Width</a>
+    <a href="#" data-bind="click: function() { changeWidth(4); }">Change Width</a>
     <!-- ko template: options.getTemplate() --><!-- /ko -->
     <!-- ko template: getChildTemplate() --><!-- /ko -->
 </div>
