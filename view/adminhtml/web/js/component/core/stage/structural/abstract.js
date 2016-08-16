@@ -71,9 +71,15 @@ define([
      * Add a child to the current element
      *
      * @param child
+     * @param index
      */
-    AbstractStructural.prototype.addChild = function (child) {
-        this.children.push(child);
+    AbstractStructural.prototype.addChild = function (child, index) {
+        if (index !== undefined) {
+            // Use the common function to add the item in the correct place within the array
+            Common.moveArrayItemIntoArray(child, this.children, index);
+        } else {
+            this.children.push(child);
+        }
     };
 
     /**
