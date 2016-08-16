@@ -2,7 +2,7 @@
 * BlueFoot
  *
  * Version 1.0
- * @author Hob Adams <hob@gene.co.uk>
+ * @author Dave Macaulay <davegene.co.uk>
  *
  * _panel contains {less} for the left panel
  *
@@ -118,7 +118,7 @@
                 }
             }
 
-            &:hover {
+            &.active {
                 background: @iconColorBackgroundHover;
                 .group-icon {
                     cursor: pointer;
@@ -126,6 +126,12 @@
                 }
                 .bluefoot-panel-groups-child {
                     display: block;
+                }
+            }
+
+            &.hidden {
+                .bluefoot-panel-groups-child {
+                    display: none!important;
                 }
             }
         }

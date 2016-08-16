@@ -23,6 +23,12 @@ define([
         this.icon = ko.observable(group.icon);
         this.sort = ko.observable(group.sort);
         this.blocks = ko.observableArray([]);
+
+        // Active is used with mouse over events
+        this.active = ko.observable(false);
+
+        // Hidden is forced when an interaction is happening that requires the group to be hidden
+        this.hidden = ko.observable(false);
     }
 
     /**
@@ -31,7 +37,21 @@ define([
      * @param block
      */
     Group.prototype.addBlock = function (block) {
-        this.blocks.push(new Block(block));
+        this.blocks.push(new Block(block, this));
+    };
+
+    /**
+     * On mouse over, make the group active
+     */
+    Group.prototype.onMouseOver = function () {
+        this.active(true);
+    };
+
+    /**
+     * On mouse out remove the active state of the group
+     */
+    Group.prototype.onMouseOut = function () {
+        this.active(false);
     };
 
     return Group;

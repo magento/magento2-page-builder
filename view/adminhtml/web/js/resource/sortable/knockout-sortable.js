@@ -33,11 +33,16 @@
          * @returns {*}
          */
         init: function (elements, extendedConfig) {
+            var self = this;
             return jQuery(elements)
                 .draggable(this._getConfig(extendedConfig))
-                .on('drop', function (event, ui) {
+                .on('dragstart', function (event, ui) {
                     [].push.call(arguments, self);
-                    return self.onDrop.apply(this, arguments);
+                    return self.onDragStart.apply(this, arguments);
+                })
+                .on('dragstop', function (event, ui) {
+                    [].push.call(arguments, self);
+                    return self.onDragStop.apply(this, arguments);
                 });
         },
 
@@ -63,16 +68,33 @@
         },
 
         /**
-         * On drop
+         * Attach an event when a user starts dragging elements
          *
          * @param event
          * @param ui
          * @param self
-         * @returns {boolean}
+         * @returns {*}
          */
-        onDrop: function (event, ui, self) {
-            console.log(arguments);
-            return true;
+        onDragStart: function (event, ui, self) {
+            var koElement = ko.dataFor(jQuery(event.target)[0]);
+            if (koElement && typeof koElement.onDragStart === 'function') {
+                return koElement.onDragStart(this, event, ui, self);
+            }
+        },
+
+        /**
+         * Attach an event when a user stops dragging elements
+         *
+         * @param event
+         * @param ui
+         * @param self
+         * @returns {*}
+         */
+        onDragStop: function (event, ui, self) {
+            var koElement = ko.dataFor(jQuery(event.target)[0]);
+            if (koElement && typeof koElement.onDragStop === 'function') {
+                return koElement.onDragStop(this, event, ui, self);
+            }
         }
 
     };
