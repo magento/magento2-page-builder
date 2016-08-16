@@ -10,7 +10,7 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/options/column',
     'bluefoot/config'
-], function (ko, Abstract, $t, ColumnOption, InitConfig) {
+], function (ko, AbstractStructural, $t, ColumnOption, InitConfig) {
 
     /**
      * Column structural block
@@ -20,7 +20,7 @@ define([
      * @constructor
      */
     function Column(parent, stage) {
-        Abstract.call(this, parent, stage);
+        AbstractStructural.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
         this.widthClasses = ko.observable('bluefoot-structure-wrapper-width-1');
@@ -30,8 +30,8 @@ define([
             side: ko.observable('right')
         };
     }
-    Column.prototype = Object.create(Abstract.prototype);
-    var $super = Abstract.prototype;
+    Column.prototype = Object.create(AbstractStructural.prototype);
+    var $super = AbstractStructural.prototype;
 
     /**
      * Change the width of the column

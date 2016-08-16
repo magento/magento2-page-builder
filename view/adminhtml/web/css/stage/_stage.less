@@ -49,14 +49,14 @@
         min-height: 100px;
     }
 
-    .gene-bluefoot-options {
+    .bluefoot-options {
         position: absolute;
         left: 0;
         right: 0;
         top: -15px;
         text-align: center;
 
-        ul.gene-bluefoot-options-links {
+        ul.bluefoot-options-links {
             display: none;
             list-style: none;
             margin: 0;
@@ -98,11 +98,20 @@
             }
         }
 
-        .gene-bluefoot-options {
-            ul.gene-bluefoot-options-links {
+        .bluefoot-options {
+            ul.bluefoot-options-links {
                 display: inline-block;
             }
         }
+    }
+
+    .bluefoot-id {
+        position: absolute;
+        bottom: -3px;
+        right: -3px;
+        color: white;
+        font-size: 11px;
+        padding: 2px 6px;
     }
 
     &.bluefoot-row {
@@ -110,7 +119,10 @@
         width: 100%;
         margin-bottom: 20px;
 
-        ul.gene-bluefoot-options-links {
+        ul.bluefoot-options-links {
+            background: @rowColor;
+        }
+        .bluefoot-id {
             background: @rowColor;
         }
     }
@@ -118,7 +130,10 @@
         float: left;
         width: 100%;
         margin: 10px 0 20px 0;
-        ul.gene-bluefoot-options-links {
+        ul.bluefoot-options-links {
+            background: @columnColor;
+        }
+        .bluefoot-id {
             background: @columnColor;
         }
 

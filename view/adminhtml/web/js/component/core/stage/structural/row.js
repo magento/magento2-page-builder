@@ -9,7 +9,7 @@ define([
     'bluefoot/stage/structural/column',
     'mage/translate',
     'bluefoot/stage/structural/options/column'
-], function (Abstract, Column, $t, ColumnOption) {
+], function (AbstractStructural, Column, $t, ColumnOption) {
 
     /**
      * Row structural block
@@ -19,10 +19,10 @@ define([
      * @constructor
      */
     function Row(parent, stage) {
-        Abstract.call(this, parent, stage);
+        AbstractStructural.call(this, parent, stage);
     }
-    Row.prototype = Object.create(Abstract.prototype);
-    var $super = Abstract.prototype;
+    Row.prototype = Object.create(AbstractStructural.prototype);
+    var $super = AbstractStructural.prototype;
 
     /**
      * Build up the options available on a row
