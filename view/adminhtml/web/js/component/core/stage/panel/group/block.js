@@ -92,6 +92,9 @@ define([
                 require([this.getBlockInstance()], function (BlockInstance) {
                     parent.addChild(new BlockInstance(parent, parent.stage, this.config), index);
                     parent.refreshChildren();
+
+                    // Refresh sortable to ensure any new elements are recognised
+                    jQuery(sortableThis).sortable('refresh');
                 }.bind(this));
             }
         }

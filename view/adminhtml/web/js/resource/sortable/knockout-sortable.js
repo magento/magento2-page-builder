@@ -23,7 +23,8 @@
             zIndex: 500,
             connectToSortable: '.gene-bluefoot-sortable',
             appendTo: document.body,
-            helper: 'clone'
+            helper: 'clone',
+            refreshPositions: true
         },
 
         /**
@@ -122,7 +123,7 @@
     var Sortable = {
         draggedItem: false,
         defaults: {
-            tolerance: 'pointer',
+            tolerance: 'intersect',
             connectWith: '.gene-bluefoot-sortable',
             helper: 'clone',
             appendTo: document.body,
@@ -240,6 +241,9 @@
                     return koElement.onSortReceive(this, event, ui, self);
                 }
             }
+
+            // Refresh sortable to ensure any new elements are recognised
+            jQuery(this).sortable('refresh');
         },
 
         /**
@@ -261,6 +265,9 @@
             if (koElement && typeof koElement.onSortUpdate === 'function') {
                 return koElement.onSortUpdate(this, event, ui, self);
             }
+
+            // Refresh sortable to ensure any new elements are recognised
+            jQuery(this).sortable('refresh');
         }
     };
 
