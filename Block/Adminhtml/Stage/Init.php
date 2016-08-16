@@ -69,30 +69,17 @@ class Init extends \Magento\Backend\Block\Template
             'columns' => 6,
 
             /* Define the different column options to be given in the UI */
-            'column_options' => [
-                1 => '100%',
-                2 => '50%',
-                3 => '33%',
-                4 => '25%',
-                6 => '16%'
-            ],
+            'column_definitions' => [
+                ['label' => 'One Whole', 'breakpoint' => '1', 'className' => 'bluefoot-structure-wrapper-width-whole', 'displayed' => true],
+                ['label' => 'One Half', 'breakpoint' => '0.500', 'className' => 'bluefoot-structure-wrapper-width-half', 'displayed' => true],
+                ['label' => 'One Third', 'breakpoint' => '0.333', 'className' => 'bluefoot-structure-wrapper-width-third', 'displayed' => true],
+                ['label' => 'One Quarter', 'breakpoint' => '0.250', 'className' => 'bluefoot-structure-wrapper-width-quarter', 'displayed' => true],
+                ['label' => 'One Sixth', 'breakpoint' => '0.167', 'className' => 'bluefoot-structure-wrapper-width-sixth', 'displayed' => true],
 
-            /* Allowed sizes have to be at 3 decimal places */
-            'allowed_sizes' => [
-                '0.167' => '1/6',
-                '0.250' => '1/4',
-                '0.333' => '1/3',
-                '0.500' => '1/2',
-                '0.666' => '2/3',
-                '0.750' => '3/4',
-                '0.825' => '5/6',
-                '1.000' => '1'
+                ['label' => 'Two Thirds', 'breakpoint' => '0.666', 'className' => 'bluefoot-structure-wrapper-width-two-thirds', 'displayed' => false],
+                ['label' => 'Three Quarters', 'breakpoint' => '0.750', 'className' => 'bluefoot-structure-wrapper-width-three-quarters', 'displayed' => false],
+                ['label' => 'Five Sixths', 'breakpoint' => '0.750', 'className' => 'bluefoot-structure-wrapper-width-five-sixths', 'displayed' => false],
             ],
-
-            /* Some sizes do not map correctly, so manually specify them */
-            'actual_css_size' => [
-                '0.167' => '16.666666667'
-            ]
         ]);
 
         // Include our plugin information

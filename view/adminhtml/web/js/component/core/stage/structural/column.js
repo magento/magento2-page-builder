@@ -10,7 +10,7 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/options/column',
     'bluefoot/config'
-], function (ko, Abstract, $t, ColumnOption, InitConfig) {
+], function (ko, Abstract, $t, ColumnOption, Config) {
 
     /**
      * Column structural block
@@ -23,7 +23,7 @@ define([
         Abstract.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.widthClasses = ko.observable('bluefoot-structure-wrapper-width-1');
+        this.widthClasses = ko.observable( Config.getInitConfig("column_definitions")[0]['className'] );
         this.newColumnOptions = {
             sizes: ko.observableArray([]),
             visible: ko.observable(false),
@@ -32,13 +32,6 @@ define([
     }
     Column.prototype = Object.create(Abstract.prototype);
     var $super = Abstract.prototype;
-
-    /**
-     * Change the width of the column
-     */
-    Column.prototype.changeWidth = function (size) {
-        this.widthClasses("bluefoot-structure-wrapper-width-" + size);
-    };
 
     /**
      * Build up the options available on a row
@@ -77,15 +70,19 @@ define([
             ++index;
         }
 
-        var columnOptions = InitConfig.getInitConfig("column_options"),
-            sizes = [];
+        var columnOptions = Config.getInitConfig("column_definitions"),
+            sizes = [],
+            size = null;
 
-        for(var size in columnOptions) {
-            sizes.push({
-                label: columnOptions[size],
-                size: size,
-                index: index
-            });
+        for(var i=0; i < columnOptions.length; i++) {
+            size = columnOptions[i];
+            if( size.displayed === true ) {
+                sizes.push({
+                    label: size.label,
+                    className: size.className,
+                    index: index
+                });
+            }
         }
 
         this.newColumnOptions.visible(true);
@@ -108,7 +105,7 @@ define([
         if (data.index > -1) {
             var column = new Column(parent, parent.stage);
             parent.children.splice(data.index, 0, column);
-            column.changeWidth(data.size);
+            column.widthClasses(data.className);
         }
 
         originalParent.newColumnOptions.visible(false);

@@ -8,7 +8,8 @@ define([
     'bluefoot/stage/structural/abstract',
     'bluefoot/stage/structural/column',
     'mage/translate',
-    'bluefoot/stage/structural/options/column'
+    'bluefoot/stage/structural/options/column',
+    'bluefoot/ko-resizable'
 ], function (Abstract, Column, $t, ColumnOption) {
 
     /**
