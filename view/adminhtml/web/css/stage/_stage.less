@@ -116,9 +116,46 @@
         float: left;
         width: 100%;
         margin-bottom: 20px;
+        position: relative;
 
-        ul.bluefoot-options-links {
-            background: @rowColor;
+        > .bluefoot-options {
+            z-index: 100;
+            position: absolute;
+            left: -15px;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 29px;
+            text-align: center;
+
+            ul.bluefoot-options-links {
+                background: @rowColor;
+                //display: none;
+                list-style: none;
+                margin: 0;
+                padding: 6px 0;
+                .border-radius(3px);
+                box-sizing: border-box;
+
+                font-size: 0;
+                text-align: center;
+
+                li {
+                    float: left;
+
+                    a {
+                        display: block;
+                        width: 29px;
+                        color: white;
+                        font-size: 16px;
+                        padding: 4px 0;
+
+                        &:hover {
+                            background: rgba(0, 0, 0, 0.2);
+                        }
+                    }
+                }
+            }
         }
         .bluefoot-id {
             background: @rowColor;
