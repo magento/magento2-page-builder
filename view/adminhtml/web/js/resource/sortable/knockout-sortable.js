@@ -20,9 +20,10 @@
             scroll: true,
             revert: true,
             revertDuration: 0,
-            helper: 'clone',
             zIndex: 500,
-            connectToSortable: '.gene-bluefoot-sortable'
+            connectToSortable: '.gene-bluefoot-sortable',
+            appendTo: document.body,
+            helper: 'clone'
         },
 
         /**
@@ -123,7 +124,19 @@
             tolerance: 'pointer',
             connectWith: '.gene-bluefoot-sortable',
             helper: 'clone',
-            appendTo: document.body
+            appendTo: document.body,
+            placeholder: {
+                element: function (clone, ui) {
+                    if (clone.hasClass('bluefoot-draggable-block')) {
+                        return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
+                    }
+
+                    return false;
+                },
+                update: function (clone, ui) {
+                    return;
+                }
+            },
         },
 
         /**

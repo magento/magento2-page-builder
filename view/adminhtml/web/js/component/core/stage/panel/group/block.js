@@ -34,6 +34,11 @@ define([
      * @param draggableInstance
      */
     Block.prototype.onDragStart = function (draggableThis, event, ui, draggableInstance) {
+        // Transfer over the width and height to the helper
+        var original = jQuery(event.target);
+        ui.helper.css({width: original.width(), height: original.height()});
+
+        // Hide the groups overlay
         this.group.hidden(true);
     };
 

@@ -1,13 +1,13 @@
 <div id="bluefoot-panel" data-bind="css: {visible: visible}">
     <div id="bluefoot-emblem"></div>
     <ul id="bluefoot-panel-groups" data-bind="foreach: groups">
-        <li data-bind="attr: {id: 'group-' + code() }, event: { mouseover: onMouseOver, mouseout: onMouseOut }">
+        <li data-bind="attr: {id: 'group-' + code() }, event: { mouseover: onMouseOver, mouseout: onMouseOut }, css: { active: active }">
             <a href="#" class="group-icon" data-bind="html: icon"></a>
-            <div class="bluefoot-panel-groups-child" data-bind="css: { active: active, hidden: hidden }">
+            <div class="bluefoot-panel-groups-child" data-bind="css: { hidden: hidden }">
                 <h4 data-bind="text: name"></h4>
                 <ul class="bluefoot-panel-groups-blocks" data-bind="foreach: blocks, draggable">
                     <li data-bind="attr: {id: 'block-' + code() }" class="bluefoot-draggable-block">
-                        <a href="#" class="bluefoot-panel-block">
+                        <a href="javascript:void(0);" class="bluefoot-panel-block">
                             <span class="block-icon" data-bind="html: icon"></span>
                             <span data-bind="text: name"></span>
                         </a>
