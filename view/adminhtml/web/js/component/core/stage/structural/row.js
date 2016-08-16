@@ -48,7 +48,7 @@ define([
      * Implement function to add columns to this element
      */
     Row.prototype.addColumn = function () {
-        this.children.push(new Column(this, this.stage));
+        this.addChild(new Column(this, this.stage));
     };
 
     return Row;

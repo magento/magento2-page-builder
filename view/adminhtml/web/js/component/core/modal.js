@@ -6,7 +6,7 @@
  *
  * @todo bring in line with Deflate's alerts system
  */
-define(['bluefoot/hook', 'bluefoot/renderer', 'bluefoot/jquery', 'bluefoot/config'], function (Hook, Render, jQuery, Config) {
+define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config'], function (Hook, jQuery, Config) {
 
     return {
         /**

@@ -26,6 +26,15 @@ define([
     }
 
     /**
+     * Return the block instances to be created when an element is dragged onto the stage
+     *
+     * @returns {string}
+     */
+    Block.prototype.getBlockInstance = function () {
+        return 'bluefoot/block/abstract';
+    };
+
+    /**
      * On drag start hide the popped out panel
      *
      * @param draggableThis
@@ -66,9 +75,23 @@ define([
     Block.prototype.onSortReceive = function (sortableThis, event, ui, sortableInstance) {
         // This event can fire multiple times, only capture the output once
         if (jQuery(event.target)[0] == sortableThis) {
+            // Ensure the group is inactive
             this.group.active(false);
+
+            // Remove the dragged item
+            if (sortableInstance.draggedItem) {
+                // 0s timeout to wait for DOM to update
+                setTimeout(function () {
+                    sortableInstance.draggedItem.remove();
+                }, 0);
+            }
+
+            // Determine the parent, and add the new block instance as a child
             var parent = ko.dataFor(jQuery(event.target)[0]);
-            console.log(parent);
+            require([this.getBlockInstance()], function (BlockInstance) {
+                parent.addChild(new BlockInstance(parent, parent.stage, this.config));
+                parent.refreshChildren();
+            }.bind(this));
         }
     };
 

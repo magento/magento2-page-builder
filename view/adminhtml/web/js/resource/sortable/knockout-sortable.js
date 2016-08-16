@@ -120,6 +120,7 @@
     };
 
     var Sortable = {
+        draggedItem: false,
         defaults: {
             tolerance: 'pointer',
             connectWith: '.gene-bluefoot-sortable',
@@ -167,6 +168,9 @@
                 .on('sortupdate', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortUpdate.apply(this, arguments);
+                })
+                .on('sortbeforestop', function (event, ui) {
+                    self.draggedItem = ui.item;
                 });
         },
 
@@ -231,7 +235,6 @@
         onSortReceive: function (event, ui, self) {
             // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
             if (ui.item.hasClass('bluefoot-draggable-block')) {
-                console.log('sort recieve');
                 var koElement = ko.dataFor(ui.item[0]);
                 if (koElement && typeof koElement.onSortReceive === 'function') {
                     return koElement.onSortReceive(this, event, ui, self);
@@ -250,7 +253,6 @@
         onSortUpdate: function (event, ui, self) {
             // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
             if (ui.item.hasClass('bluefoot-draggable-block')) {
-                console.log('blocked');
                 // Meaning it's not been "sorted"
                 return false;
             }

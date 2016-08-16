@@ -32,6 +32,7 @@ define([
         this.stage = stage;
 
         this.wrapperStyle = ko.observable({});
+        this.widthClasses = false;
 
         // Build the options on initialization
         this.buildOptions();
@@ -64,6 +65,15 @@ define([
      */
     AbstractStructural.prototype.getChildTemplate = function () {
         return 'Gene_BlueFoot/component/core/stage/structural/children.html'
+    };
+
+    /**
+     * Add a child to the current element
+     *
+     * @param child
+     */
+    AbstractStructural.prototype.addChild = function (child) {
+        this.children.push(child);
     };
 
     /**
