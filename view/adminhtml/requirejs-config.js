@@ -3,7 +3,6 @@ var config = {
         'bluefoot/async': 'Gene_BlueFoot/js/resource/requirejs/async',
 
         /* Extra Resources Needed */
-        'bluefoot/mustache': 'Gene_BlueFoot/js/resource/mustache.min',
         'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
         'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
 
@@ -14,11 +13,12 @@ var config = {
         /* Core Component Aliases */
         'bluefoot/common': 'Gene_BlueFoot/js/component/core/common',
         'bluefoot/ajax': 'Gene_BlueFoot/js/component/core/ajax',
-        'bluefoot/dragdrop': 'Gene_BlueFoot/js/component/core/dragdrop',
         'bluefoot/config': 'Gene_BlueFoot/js/component/core/config',
-        'bluefoot/renderer': 'Gene_BlueFoot/js/component/core/renderer',
+
         'bluefoot/hook': 'Gene_BlueFoot/js/component/core/hook',
+
         'bluefoot/modal': 'Gene_BlueFoot/js/component/core/modal',
+
         'bluefoot/plugins': 'Gene_BlueFoot/js/component/core/plugins',
 
         'bluefoot/stage': 'Gene_BlueFoot/js/component/core/stage',
@@ -38,7 +38,8 @@ var config = {
         'bluefoot/stage/structural/options/option': 'Gene_BlueFoot/js/component/core/stage/structural/options/option',
         'bluefoot/stage/structural/options/column': 'Gene_BlueFoot/js/component/core/stage/structural/options/column',
 
-        'bluefoot/structural': 'Gene_BlueFoot/js/component/core/structural',
+        'bluefoot/block/abstract': 'Gene_BlueFoot/js/component/core/block/abstract',
+
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 
         /* Edit Panel */

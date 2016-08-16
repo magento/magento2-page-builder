@@ -20,7 +20,7 @@ define([
      * @constructor
      */
     function Column(parent, stage) {
-        Abstract.call(this, parent, stage);
+        AbstractStructural.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
         this.widthClasses = ko.observable( Config.getInitConfig("column_definitions")[0]['className'] );
@@ -30,8 +30,8 @@ define([
             side: ko.observable('right')
         };
     }
-    Column.prototype = Object.create(Abstract.prototype);
-    var $super = Abstract.prototype;
+    Column.prototype = Object.create(AbstractStructural.prototype);
+    var $super = AbstractStructural.prototype;
 
     /**
      * Build up the options available on a row
@@ -57,7 +57,7 @@ define([
      * Implement function to add columns to this element
      */
     Column.prototype.addColumn = function () {
-        this.children.push(new Column(this, this.stage));
+        this.addChild(new Column(this, this.stage));
     };
 
     /**

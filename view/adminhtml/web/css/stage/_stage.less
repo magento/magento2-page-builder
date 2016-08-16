@@ -26,8 +26,6 @@
 }
 .bluefoot-row-wrapper, .bluefoot-structure-wrapper {
     float: left;
-}
-.bluefoot-row-wrapper {
     width: 100%;
 }
 .bluefoot-structure-wrapper {
@@ -66,14 +64,14 @@
         min-height: 100px;
     }
 
-    .gene-bluefoot-options {
+    .bluefoot-options {
         position: absolute;
         left: 0;
         right: 0;
         top: -15px;
         text-align: center;
 
-        ul.gene-bluefoot-options-links {
+        ul.bluefoot-options-links {
             display: none;
             list-style: none;
             margin: 0;
@@ -115,19 +113,68 @@
             }
         }
 
-        .gene-bluefoot-options {
-            ul.gene-bluefoot-options-links {
+        .bluefoot-options {
+            ul.bluefoot-options-links {
                 display: inline-block;
             }
         }
+    }
+
+    .bluefoot-id {
+        position: absolute;
+        bottom: -3px;
+        right: -3px;
+        color: white;
+        font-size: 11px;
+        padding: 2px 6px;
     }
 
     &.bluefoot-row {
         float: left;
         width: 100%;
         margin-bottom: 20px;
+        position: relative;
 
-        ul.gene-bluefoot-options-links {
+        > .bluefoot-options {
+            z-index: 100;
+            position: absolute;
+            left: -15px;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 29px;
+            text-align: center;
+
+            ul.bluefoot-options-links {
+                background: @rowColor;
+                //display: none;
+                list-style: none;
+                margin: 0;
+                padding: 6px 0;
+                .border-radius(3px);
+                box-sizing: border-box;
+
+                font-size: 0;
+                text-align: center;
+
+                li {
+                    float: left;
+
+                    a {
+                        display: block;
+                        width: 29px;
+                        color: white;
+                        font-size: 16px;
+                        padding: 4px 0;
+
+                        &:hover {
+                            background: rgba(0, 0, 0, 0.2);
+                        }
+                    }
+                }
+            }
+        }
+        .bluefoot-id {
             background: @rowColor;
         }
     }
@@ -136,7 +183,10 @@
         float: left;
         width: 100%;
         margin: 10px 0 20px 0;
-        ul.gene-bluefoot-options-links {
+        ul.bluefoot-options-links {
+            background: @columnColor;
+        }
+        .bluefoot-id {
             background: @columnColor;
         }
 
@@ -187,6 +237,27 @@
                 left: auto;
                 right: -27px;
             }
+        }
+    }
+    &.bluefoot-entity {
+        background: @entityColor;
+        border: none;
+        color: white;
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+
+        * {
+            color: white;
+        }
+
+        ul.bluefoot-options-links {
+            background: @entityColor;
+        }
+        .bluefoot-id {
+            background: @entityColor;
+            bottom: 0;
+            right: 0;
         }
     }
 }

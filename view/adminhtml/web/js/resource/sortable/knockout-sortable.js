@@ -20,9 +20,10 @@
             scroll: true,
             revert: true,
             revertDuration: 0,
-            helper: 'clone',
             zIndex: 500,
-            connectToSortable: '.gene-bluefoot-sortable'
+            connectToSortable: '.gene-bluefoot-sortable',
+            appendTo: document.body,
+            helper: 'clone'
         },
 
         /**
@@ -33,11 +34,16 @@
          * @returns {*}
          */
         init: function (elements, extendedConfig) {
+            var self = this;
             return jQuery(elements)
                 .draggable(this._getConfig(extendedConfig))
-                .on('drop', function (event, ui) {
+                .on('dragstart', function (event, ui) {
                     [].push.call(arguments, self);
-                    return self.onDrop.apply(this, arguments);
+                    return self.onDragStart.apply(this, arguments);
+                })
+                .on('dragstop', function (event, ui) {
+                    [].push.call(arguments, self);
+                    return self.onDragStop.apply(this, arguments);
                 });
         },
 
@@ -63,16 +69,33 @@
         },
 
         /**
-         * On drop
+         * Attach an event when a user starts dragging elements
          *
          * @param event
          * @param ui
          * @param self
-         * @returns {boolean}
+         * @returns {*}
          */
-        onDrop: function (event, ui, self) {
-            console.log(arguments);
-            return true;
+        onDragStart: function (event, ui, self) {
+            var koElement = ko.dataFor(jQuery(event.target)[0]);
+            if (koElement && typeof koElement.onDragStart === 'function') {
+                return koElement.onDragStart(this, event, ui, self);
+            }
+        },
+
+        /**
+         * Attach an event when a user stops dragging elements
+         *
+         * @param event
+         * @param ui
+         * @param self
+         * @returns {*}
+         */
+        onDragStop: function (event, ui, self) {
+            var koElement = ko.dataFor(jQuery(event.target)[0]);
+            if (koElement && typeof koElement.onDragStop === 'function') {
+                return koElement.onDragStop(this, event, ui, self);
+            }
         }
 
     };
@@ -97,11 +120,25 @@
     };
 
     var Sortable = {
+        draggedItem: false,
         defaults: {
             tolerance: 'pointer',
             connectWith: '.gene-bluefoot-sortable',
             helper: 'clone',
-            appendTo: document.body
+            appendTo: document.body,
+            placeholder: {
+                element: function (clone, ui) {
+                    if (clone.hasClass('bluefoot-draggable-block')) {
+                        return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
+                    }
+
+                    var placeholder = jQuery(clone).clone();
+                    return placeholder.css({height: clone.height(), visibility: 'hidden'}).show();
+                },
+                update: function (clone, ui) {
+                    return;
+                }
+            },
         },
 
         /**
@@ -131,6 +168,9 @@
                 .on('sortupdate', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortUpdate.apply(this, arguments);
+                })
+                .on('sortbeforestop', function (event, ui) {
+                    self.draggedItem = ui.item;
                 });
         },
 

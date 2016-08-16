@@ -19,7 +19,7 @@ define([
      * @param stage
      * @constructor
      */
-    function Abstract(parent, stage) {
+    function AbstractStructural(parent, stage) {
         this.id = Common.guid();
         this.options = new Options();
         this.data = ko.observableArray([]);
@@ -32,6 +32,7 @@ define([
         this.stage = stage;
 
         this.wrapperStyle = ko.observable({});
+        this.widthClasses = false;
 
         // Build the options on initialization
         this.buildOptions();
@@ -42,7 +43,7 @@ define([
      *
      * @returns {boolean}
      */
-    Abstract.prototype.buildOptions = function () {
+    AbstractStructural.prototype.buildOptions = function () {
         // Add removal & move option that is available to all structural blocks
         this.options.addOption(this, 'move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
         this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
@@ -53,7 +54,7 @@ define([
      *
      * @returns {string}
      */
-    Abstract.prototype.getTemplate = function () {
+    AbstractStructural.prototype.getTemplate = function () {
         return 'Gene_BlueFoot/component/core/stage/structural/abstract.html'
     };
 
@@ -62,8 +63,17 @@ define([
      *
      * @returns {string}
      */
-    Abstract.prototype.getChildTemplate = function () {
+    AbstractStructural.prototype.getChildTemplate = function () {
         return 'Gene_BlueFoot/component/core/stage/structural/children.html'
+    };
+
+    /**
+     * Add a child to the current element
+     *
+     * @param child
+     */
+    AbstractStructural.prototype.addChild = function (child) {
+        this.children.push(child);
     };
 
     /**
@@ -71,7 +81,7 @@ define([
      *
      * @param child
      */
-    Abstract.prototype.removeChild = function (child) {
+    AbstractStructural.prototype.removeChild = function (child) {
         this.children(ko.utils.arrayFilter(this.children(), function(filterChild) {
             return child.id != filterChild.id;
         }));
@@ -84,7 +94,7 @@ define([
      * @param $data
      * @param structural
      */
-    Abstract.prototype.remove = function ($data, structural) {
+    AbstractStructural.prototype.remove = function ($data, structural) {
         // Call the parent to remove the child element
         structural.parent.removeChild(this);
     };
@@ -92,7 +102,7 @@ define([
     /**
      * Refresh children within stage
      */
-    Abstract.prototype.refreshChildren = function () {
+    AbstractStructural.prototype.refreshChildren = function () {
         var data = this.children().slice(0);
         this.children([]);
         this.children(data);
@@ -104,7 +114,7 @@ define([
      * @param key
      * @param value
      */
-    Abstract.prototype.updateWrapperStyle = function (key, value) {
+    AbstractStructural.prototype.updateWrapperStyle = function (key, value) {
         var newStyles = {};
         if (typeof key === 'object' && !value) {
             newStyles = key;
@@ -123,7 +133,7 @@ define([
      * @param ui
      * @param sortableInstance
      */
-    Abstract.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+    AbstractStructural.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
         this.originalParent = this.parent;
         this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
     };
@@ -137,7 +147,7 @@ define([
      * @param sortableInstance
      * @returns {boolean}
      */
-    Abstract.prototype.onSortUpdate = function (sortableThis, event, ui, sortableInstance) {
+    AbstractStructural.prototype.onSortUpdate = function (sortableThis, event, ui, sortableInstance) {
         var item = ui.item,
             parentEl = ui.item.parent()[0],
             newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]),
@@ -201,5 +211,5 @@ define([
         }
     };
 
-    return Abstract;
+    return AbstractStructural;
 });

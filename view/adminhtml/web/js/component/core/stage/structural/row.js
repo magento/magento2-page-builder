@@ -10,7 +10,7 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/options/column',
     'bluefoot/ko-resizable'
-], function (Abstract, Column, $t, ColumnOption) {
+], function (AbstractStructural, Column, $t, ColumnOption) {
 
     /**
      * Row structural block
@@ -20,10 +20,10 @@ define([
      * @constructor
      */
     function Row(parent, stage) {
-        Abstract.call(this, parent, stage);
+        AbstractStructural.call(this, parent, stage);
     }
-    Row.prototype = Object.create(Abstract.prototype);
-    var $super = Abstract.prototype;
+    Row.prototype = Object.create(AbstractStructural.prototype);
+    var $super = AbstractStructural.prototype;
 
     /**
      * Build up the options available on a row
@@ -49,7 +49,7 @@ define([
      * Implement function to add columns to this element
      */
     Row.prototype.addColumn = function () {
-        this.children.push(new Column(this, this.stage));
+        this.addChild(new Column(this, this.stage));
     };
 
     return Row;
