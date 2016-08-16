@@ -23,8 +23,7 @@
             zIndex: 500,
             connectToSortable: '.gene-bluefoot-sortable',
             appendTo: document.body,
-            helper: 'clone',
-            refreshPositions: true
+            helper: 'clone'
         },
 
         /**
