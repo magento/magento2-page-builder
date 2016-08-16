@@ -83,7 +83,6 @@ define([
      *
      * @param $data
      * @param structural
-     * @param parent
      */
     Abstract.prototype.remove = function ($data, structural) {
         // Call the parent to remove the child element

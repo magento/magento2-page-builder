@@ -1,6 +1,6 @@
 /**
- * - Options/Column.js
- * Handles the column logic
+ * - Options.js
+ * A single option for a structural block or entity
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
