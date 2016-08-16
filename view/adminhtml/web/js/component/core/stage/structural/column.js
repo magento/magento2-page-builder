@@ -10,7 +10,7 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/options/column',
     'bluefoot/config'
-], function (ko, Abstract, $t, ColumnOption, Config) {
+], function (ko, AbstractStructural, $t, ColumnOption, Config) {
 
     /**
      * Column structural block
