@@ -168,21 +168,42 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   float: left;
   width: 100%;
 }
-/* @todo make this dynamic with a mixin perhaps */
-.bluefoot-structure-wrapper-width-1 {
+.bluefoot-structure-wrapper {
+  position: relative;
+}
+.bluefoot-structure-wrapper .bluefoot-resize-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  border: 5px solid red;
+  margin: 10px 0 20px;
+}
+.bluefoot-structure-wrapper-width-whole {
   width: 100%;
 }
-.bluefoot-structure-wrapper-width-2 {
+.bluefoot-structure-wrapper-width-half {
   width: 50%;
 }
-.bluefoot-structure-wrapper-width-3 {
+.bluefoot-structure-wrapper-width-third {
   width: 33.3%;
 }
-.bluefoot-structure-wrapper-width-4 {
+.bluefoot-structure-wrapper-width-quarter {
   width: 25%;
 }
-.bluefoot-structure-wrapper-width-6 {
+.bluefoot-structure-wrapper-width-sixth {
   width: 16.666666667%;
+}
+.bluefoot-structure-wrapper-width-two-thirds {
+  width: 66.6%;
+}
+.bluefoot-structure-wrapper-width-three-quarters {
+  width: 75%;
+}
+.bluefoot-structure-wrapper-width-five-sixths {
+  width: 83.333333335%;
 }
 .bluefoot-structure {
   border: 3px solid transparent;
@@ -312,6 +333,14 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 }
 .bluefoot-structure.bluefoot-column .bluefoot-id {
   background: #28b78c;
+}
+.bluefoot-structure.bluefoot-column .bluefoot-column-resize-handle {
+  width: 15px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -3px;
+  cursor: col-resize;
 }
 .bluefoot-structure.bluefoot-column .bluefoot-column-add {
   display: none;
