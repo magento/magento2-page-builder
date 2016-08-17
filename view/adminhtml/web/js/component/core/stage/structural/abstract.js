@@ -9,8 +9,9 @@ define([
     'underscore',
     'bluefoot/common',
     'bluefoot/stage/structural/options',
-    'mage/translate'
-], function (ko, _, Common, Options, $t) {
+    'mage/translate',
+    'bluefoot/stage/structural/column/builder'
+], function (ko, _, Common, Options, $t, ColumnBuilder) {
 
     /**
      * Abstract structural block
@@ -33,6 +34,8 @@ define([
 
         this.wrapperStyle = ko.observable({});
         this.widthClasses = false;
+
+        this.columnBuilder = new ColumnBuilder();
 
         // Build the options on initialization
         this.buildOptions();

@@ -33,7 +33,7 @@ define([
         $super.buildOptions.apply(this, arguments);
 
         // Add column option
-        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.addColumn.bind(this), ['add-column'], 50, ColumnOption);
+        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
     };
 
     /**
@@ -48,8 +48,13 @@ define([
     /**
      * Implement function to add columns to this element
      */
-    Row.prototype.addColumn = function () {
-        this.addChild(new Column(this, this.stage));
+    Row.prototype.addColumn = function (data) {
+        var column = new Column(this, this.stage);
+        this.addChild(column);
+
+        if( data ) {
+            column.widthClasses(data.className);
+        }
     };
 
     return Row;
