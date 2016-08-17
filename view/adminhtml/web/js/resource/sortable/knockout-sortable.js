@@ -152,6 +152,7 @@
         init: function (element, extendedConfig) {
             var self = this,
                 config = this._getConfig(extendedConfig);
+
             return jQuery(element)
                 .addClass(config.sortableClass)
                 .sortable(config)

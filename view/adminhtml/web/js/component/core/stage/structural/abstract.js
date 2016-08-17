@@ -178,9 +178,6 @@ define([
                 // Update the elements parent
                 this.parent = parent;
 
-                // Cancel original sortable event, allowing KO to handle DOM manipulation
-                jQuery(sortableThis).sortable('cancel');
-
                 // Determine if the element has moved within the same parent, or if it's been moved into another
                 if (this.originalParent.id == this.parent.id) {
                     // The element hasn't moved
@@ -198,11 +195,11 @@ define([
                     Common.moveArrayItemIntoArray(this, childrenArray, newIndex);
                 }
 
-                // Force refresh the children to update the UI
-                parent.refreshChildren();
-
                 // Remove the item from the UI
                 item.remove();
+
+                // Force refresh the children to update the UI
+                parent.refreshChildren();
             }
 
             // If using deferred updates plugin, force updates
