@@ -21,7 +21,7 @@
             revert: true,
             revertDuration: 0,
             zIndex: 500,
-            connectToSortable: '.gene-bluefoot-sortable',
+            connectToSortable: '.bluefoot-sortable',
             appendTo: document.body,
             helper: 'clone'
         },
@@ -122,8 +122,8 @@
     var Sortable = {
         draggedItem: false,
         defaults: {
-            tolerance: 'pointer',
-            connectWith: '.gene-bluefoot-sortable',
+            tolerance: 'intersect',
+            connectWith: '.bluefoot-sortable',
             helper: 'clone',
             appendTo: document.body,
             placeholder: {
@@ -139,6 +139,7 @@
                     return;
                 }
             },
+            sortableClass: 'bluefoot-sortable'
         },
 
         /**
@@ -149,10 +150,11 @@
          * @returns {*}
          */
         init: function (element, extendedConfig) {
-            var self = this;
+            var self = this,
+                config = this._getConfig(extendedConfig);
             return jQuery(element)
-                .addClass('gene-bluefoot-sortable')
-                .sortable(this._getConfig(extendedConfig))
+                .addClass(config.sortableClass)
+                .sortable(config)
                 .on('sortstart', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortStart.apply(this, arguments);
@@ -240,6 +242,9 @@
                     return koElement.onSortReceive(this, event, ui, self);
                 }
             }
+
+            // Refresh sortable to ensure any new elements are recognised
+            jQuery(this).sortable('refresh');
         },
 
         /**
@@ -261,6 +266,9 @@
             if (koElement && typeof koElement.onSortUpdate === 'function') {
                 return koElement.onSortUpdate(this, event, ui, self);
             }
+
+            // Refresh sortable to ensure any new elements are recognised
+            jQuery(this).sortable('refresh');
         }
     };
 

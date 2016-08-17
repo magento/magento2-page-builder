@@ -6,8 +6,9 @@
  */
 define([
     'ko',
-    'bluefoot/stage/structural/row'
-], function (ko, Row) {
+    'bluefoot/stage/structural/row',
+    'bluefoot/common'
+], function (ko, Row, Common) {
 
     /**
      * Stage Class
@@ -43,12 +44,27 @@ define([
     };
 
     /**
+     * Add a child to the current element
+     *
+     * @param child
+     * @param index
+     */
+    Stage.prototype.addChild = function (child, index) {
+        if (index !== undefined) {
+            // Use the common function to add the item in the correct place within the array
+            Common.moveArrayItemIntoArray(child, this.stageContent, index);
+        } else {
+            this.stageContent.push(child);
+        }
+    };
+
+    /**
      * Add a row to the content
      *
      * @param self
      */
     Stage.prototype.addRow = function (self) {
-        this.stageContent.push(new Row(self, self));
+        this.addChild(new Row(self, self));
     };
 
     return Stage;

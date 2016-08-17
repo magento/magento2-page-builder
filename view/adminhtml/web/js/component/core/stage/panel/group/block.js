@@ -80,18 +80,23 @@ define([
 
             // Remove the dragged item
             if (sortableInstance.draggedItem) {
+                var index = sortableInstance.draggedItem.index();
+
                 // 0s timeout to wait for DOM to update
                 setTimeout(function () {
                     sortableInstance.draggedItem.remove();
                 }, 0);
-            }
 
-            // Determine the parent, and add the new block instance as a child
-            var parent = ko.dataFor(jQuery(event.target)[0]);
-            require([this.getBlockInstance()], function (BlockInstance) {
-                parent.addChild(new BlockInstance(parent, parent.stage, this.config));
-                parent.refreshChildren();
-            }.bind(this));
+                // Determine the parent, and add the new block instance as a child
+                var parent = ko.dataFor(jQuery(event.target)[0]);
+                require([this.getBlockInstance()], function (BlockInstance) {
+                    parent.addChild(new BlockInstance(parent, parent.stage, this.config), index);
+                    parent.refreshChildren();
+
+                    // Refresh sortable to ensure any new elements are recognised
+                    jQuery(sortableThis).sortable('refresh');
+                }.bind(this));
+            }
         }
     };
 

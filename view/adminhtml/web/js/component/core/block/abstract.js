@@ -6,9 +6,12 @@
  */
 define([
     'ko',
+    'jquery',
     'bluefoot/stage/structural/abstract',
+    'bluefoot/stage/edit',
+    'Magento_Ui/js/modal/modal',
     'mage/translate'
-], function (ko, AbstractStructural, $t) {
+], function (ko, $, AbstractStructural, Edit, modal, $t) {
 
     /**
      * Class for entity blocks being included on the page
@@ -25,6 +28,48 @@ define([
     }
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
     var $super = AbstractStructural.prototype;
+
+    /**
+     * Build up the options available on a row
+     */
+    AbstractBlock.prototype.buildOptions = function () {
+        // Run the parent
+        $super.buildOptions.apply(this, arguments);
+
+        // Add column option
+        this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
+    };
+
+    /**
+     * Edit a block
+     */
+    AbstractBlock.prototype.edit = function () {
+
+        var options = {
+            type: 'slide',
+            modalClass: 'bluefoot-edit form-inline',
+            title: this.config.icon + $.mage.__('Edit ' + this.config.name),
+            responsive: true,
+            innerScroll: true,
+            buttons: [{
+                text: $.mage.__('Cancel'),
+                class: '',
+                click: function () {
+                    this.closeModal();
+                }
+            },{
+                text: $.mage.__('Save ' + this.config.name),
+                class: 'action-primary',
+                click: function () {
+                    console.log('save');
+                }
+            }]
+        };
+
+        var popup = modal(options);
+        popup.openModal();
+
+    };
 
     /**
      * Return the template for the element

@@ -43,8 +43,8 @@ var config = {
 
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 
-        /* Edit Panel */
-        'bluefoot/edit': 'Gene_BlueFoot/js/component/core/edit',
+        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/core/stage/edit',
+
         'bluefoot/field/text': 'Gene_BlueFoot/js/component/core/edit/fields/text',
         'bluefoot/field/select': 'Gene_BlueFoot/js/component/core/edit/fields/select',
         'bluefoot/field/textarea': 'Gene_BlueFoot/js/component/core/edit/fields/textarea',
