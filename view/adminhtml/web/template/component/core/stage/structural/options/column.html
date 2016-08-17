@@ -1,4 +1,2 @@
-<a href="javascript:void(0);" data-bind="attr: {title: title}, html: icon, css: additionalClasses, event: { mouseover: onMouseOver, mouseout: onMouseOut }"></a>
-<div class="bluefoot-column-ui" data-bind="visible: active, event: { mouseover: onMouseOver, mouseout: onMouseOut }">
-    <a href="#" data-bind="click: addColumn">Add Column</a>
-</div>
+<a href="#" data-bind="attr: {title: title}, html: icon, click: function () { callback($data, $parent); }, css: additionalClasses"></a>
+<!-- ko template: $parent.columnBuilder.getTemplate() --><!-- /ko -->

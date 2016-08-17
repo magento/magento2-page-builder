@@ -223,26 +223,6 @@
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
         }
-
-        .bluefoot-column-inline-add {
-            list-style: none;
-            margin: 0;
-            width: 150px;
-            background: @columnColor;
-            color: white;
-            .border-radius;
-            position: absolute;
-            top: 20%;
-            left: -27px;
-            text-align: center;
-            padding: 4px 6px;
-            cursor: pointer;
-
-            &.right {
-                left: auto;
-                right: -27px;
-            }
-        }
     }
     &.bluefoot-entity {
         background: @entityColor;
@@ -274,4 +254,44 @@
             right: 0;
         }
     }
+}
+
+.bluefoot-column-inline-add {
+    list-style: none;
+    margin: 0;
+    width: 150px;
+    background: @columnColor;
+    color: white;
+    .border-radius;
+    position: absolute;
+    top: 20%;
+    left: -27px;
+    z-index: 10;
+    text-align: center;
+    cursor: pointer;
+
+    &.right {
+        left: auto;
+        right: -27px;
+    }
+    &.top {
+        position: inherit;
+        width: 80px;
+    }
+
+    li {
+        font-size: 12px;
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        padding: 4px 6px;
+    }
+}
+// @todo - nicer selector
+.bluefoot-row > .bluefoot-options > .bluefoot-options-wrapper > .bluefoot-options-links > .bluefoot-options-link > .bluefoot-column-inline-add {
+    background: @rowColor;
+    position: absolute;
+    left: 93%;
+    top: -10%;
+    width: 120px;
 }
