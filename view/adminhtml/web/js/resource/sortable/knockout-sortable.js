@@ -21,7 +21,7 @@
             revert: true,
             revertDuration: 0,
             zIndex: 500,
-            connectToSortable: '.gene-bluefoot-sortable',
+            connectToSortable: '.bluefoot-sortable',
             appendTo: document.body,
             helper: 'clone'
         },
@@ -123,7 +123,7 @@
         draggedItem: false,
         defaults: {
             tolerance: 'intersect',
-            connectWith: '.gene-bluefoot-sortable',
+            connectWith: '.bluefoot-sortable',
             helper: 'clone',
             appendTo: document.body,
             placeholder: {
@@ -139,6 +139,7 @@
                     return;
                 }
             },
+            sortableClass: 'bluefoot-sortable'
         },
 
         /**
@@ -149,10 +150,11 @@
          * @returns {*}
          */
         init: function (element, extendedConfig) {
-            var self = this;
+            var self = this,
+                config = this._getConfig(extendedConfig);
             return jQuery(element)
-                .addClass('gene-bluefoot-sortable')
-                .sortable(this._getConfig(extendedConfig))
+                .addClass(config.sortableClass)
+                .sortable(config)
                 .on('sortstart', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortStart.apply(this, arguments);
