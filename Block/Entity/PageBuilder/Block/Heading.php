@@ -7,7 +7,7 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
  *
  * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Heading extends AbstractBlock
 {

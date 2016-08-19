@@ -18,9 +18,12 @@ class Category extends AbstractCatalogBlock
     {
         /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Category */
         $dataModel = $this->getEntity()->getResource()->getAttribute('category_id')->getDataModel($this->getEntity());
-        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Category && method_exists($dataModel, 'getProductCollection')) {
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Category &&
+            method_exists($dataModel, 'getProductCollection')
+        ) {
             return $dataModel->getProductCollection();
         }
+
         return false;
     }
 }

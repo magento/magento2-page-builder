@@ -7,7 +7,7 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
  *
  * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
  *
- * @author Hob Adams <hob@gene.co.uk>
+ * @author  Hob Adams <hob@gene.co.uk>
  */
 class Map extends AbstractBlock
 {
@@ -20,9 +20,12 @@ class Map extends AbstractBlock
     {
         /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Map */
         $dataModel = $this->getEntity()->getResource()->getAttribute('map')->getDataModel($this->getEntity());
-        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Map && method_exists($dataModel, 'getMap')) {
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Map &&
+            method_exists($dataModel, 'getMap')
+        ) {
             return $dataModel->getMap();
         }
+
         return false;
     }
 
@@ -40,10 +43,11 @@ class Map extends AbstractBlock
 
             return new \Magento\Framework\DataObject(array(
                 'long' => $long,
-                'lat' => $lat,
-                'zoom' => (int) $zoom
+                'lat'  => $lat,
+                'zoom' => (int)$zoom
             ));
         }
+
         return false;
     }
 }

@@ -152,7 +152,8 @@ class Main extends AbstractMain
 
         $blockTypesCollection = $this->_contentBlockCollection->create();
         $blockTypes = [];
-        foreach ($blockTypesCollection as $blockType){
+        foreach ($blockTypesCollection as $blockType) {
+
             $blockTypes[] = [
                 'label' => $blockType->getName() . ' ['.$blockType->getIdentifier().']',
                 'value' => $blockType->getId()

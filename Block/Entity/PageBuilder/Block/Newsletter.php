@@ -9,35 +9,12 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
  */
 class Newsletter extends \Magento\Newsletter\Block\Subscribe
 {
-
     /**
-     * @var \Gene\BlueFoot\Model\Stage\Render
-     */
-    protected $_render;
-
-    /**
-     * @var \Magento\Framework\Data\CollectionFactory
-     */
-    protected $_dataCollectionFactory;
-
-    /**
-     * AbstractBlock constructor.
+     * Array of directions, used for the metrics
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Render                $render
-     * @param \Magento\Framework\Data\CollectionFactory        $dataCollectionFactory
-     * @param array                                            $data
+     * @var array
      */
-    public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Gene\BlueFoot\Model\Stage\Render $render,
-        \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-        $this->_render = $render;
-        $this->_dataCollectionFactory = $dataCollectionFactory;
-    }
+    protected $order = array('top', 'right', 'bottom', 'left');
 
     /**
      * Redeclared abstract function due to extension
@@ -51,6 +28,7 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
 
     /**
      * Function to return css classes as a well formatted string
+     *
      * @return string
      */
     public function getCssAttributes()
@@ -67,12 +45,12 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
         $classes = $this->parseCss($this->getCssClasses() . ' ' . $align . ' ' . $this->getEntity()->getCssClasses());
 
         if (!empty($classes)) {
-
             // Loop through all the classes
-            foreach($classes as $class) {
+            foreach ($classes as $class) {
                 $html .= ' ' . $class;
             }
         }
+
         return $html;
     }
 
@@ -80,14 +58,16 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
      * Convert classes to an array with only unique values
      *
      * @param bool|false $string
+     *
      * @return array
      */
     public function parseCss($string = false)
     {
         $array = array();
-        if($string) {
+        if ($string) {
             $array = explode(' ', trim($string));
         }
+
         return array_unique(array_filter($array));
     }
 
@@ -102,17 +82,12 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
             $html = ' style="';
             $html .= $this->getStyles() . $this->parseMetrics();
             $html .= '"';
+
             return $html;
         }
+
         return '';
     }
-
-    /**
-     * Array of directions, used for the metrics
-     *
-     * @var array
-     */
-    protected $_order = array('top', 'right', 'bottom', 'left');
 
     /**
      * Function to return the metrics as a useful string
@@ -122,21 +97,24 @@ class Newsletter extends \Magento\Newsletter\Block\Subscribe
     public function parseMetrics()
     {
         $html = '';
-        if($this->getEntity() && $this->getEntity()->getMetric()) {
+        if ($this->getEntity() && $this->getEntity()->getMetric()) {
+            $json = json_decode($this->getEntity()->getMetric(), true);
+            if ($json) {
+                foreach ($json as $key => $string) {
+                    $values = explode(' ', $string);
 
-            foreach(json_decode($this->getEntity()->getMetric(), true) as $key => $string) {
-
-                $values = explode(' ', $string);
-
-                // Loop through all metrics and add any with values
-                $i = 0; foreach ($values as $value) {
-                    if ($value != '-') {
-                        $html .= $key . '-' . $this->_order[$i] . ':' . $value . ';';
+                    // Loop through all metrics and add any with values
+                    $i = 0;
+                    foreach ($values as $value) {
+                        if ($value != '-') {
+                            $html .= $key . '-' . $this->order[$i] . ':' . $value . ';';
+                        }
+                        $i++;
                     }
-                    $i++;
                 }
             }
         }
+
         return $html;
     }
 }

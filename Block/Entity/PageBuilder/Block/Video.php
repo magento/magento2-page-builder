@@ -7,22 +7,21 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
  *
  * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
  *
- * @author Hob Adams <hob@gene.co.uk>
+ * @author  Hob Adams <hob@gene.co.uk>
  */
 class Video extends AbstractBlock
 {
-
     /**
      * @var \Gene\BlueFoot\Helper\Widget\Video
      */
-    protected $_helper;
+    protected $helper;
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Render $render
-     * @param \Magento\Framework\Data\CollectionFactory $dataCollectionFactory
-     * @param \Gene\BlueFoot\Helper\Widget\Video $helper
-     * @param array $data
+     * @param \Gene\BlueFoot\Model\Stage\Render                $render
+     * @param \Magento\Framework\Data\CollectionFactory        $dataCollectionFactory
+     * @param \Gene\BlueFoot\Helper\Widget\Video               $helper
+     * @param array                                            $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -32,7 +31,7 @@ class Video extends AbstractBlock
         array $data = []
     ) {
         parent::__construct($context, $render, $dataCollectionFactory, $data);
-        $this->_helper = $helper;
+        $this->helper = $helper;
     }
 
     /**
@@ -44,27 +43,31 @@ class Video extends AbstractBlock
     {
         /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Video */
         $dataModel = $this->getEntity()->getResource()->getAttribute('video_url')->getDataModel($this->getEntity());
-        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Video && method_exists($dataModel, 'getVideo')) {
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Video &&
+            method_exists($dataModel, 'getVideo')
+        ) {
             return $dataModel->getVideo();
         }
+
         return false;
     }
 
     /**
      * Get the video data
+     *
      * @return bool|string
      */
     public function getVideoData()
     {
         $video = $this->getVideo();
         if ($video) {
-
             list($url) = explode(',', $video);
             $obj = new \Magento\Framework\DataObject();
-            $obj->setUrl($this->_helper->previewAction($url));
-            return $obj;
+            $obj->setUrl($this->helper->previewAction($url));
 
+            return $obj;
         }
+
         return false;
     }
 

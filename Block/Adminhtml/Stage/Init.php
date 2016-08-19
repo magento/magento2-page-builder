@@ -7,19 +7,19 @@ namespace Gene\BlueFoot\Block\Adminhtml\Stage;
  *
  * @package Gene\BlueFoot\Block\Adminhtml\Stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Init extends \Magento\Backend\Block\Template
 {
     /**
      * @var \Gene\BlueFoot\Model\Stage\Plugin
      */
-    protected $_plugin;
+    protected $plugin;
 
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected $_urlBuilder;
+    protected $urlBuilder;
 
     /**
      * Init constructor.
@@ -32,10 +32,11 @@ class Init extends \Magento\Backend\Block\Template
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Plugin $plugin,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct($context, $data);
-        $this->_plugin = $plugin;
-        $this->_urlBuilder = $context->getUrlBuilder();
+        $this->plugin = $plugin;
+        $this->urlBuilder = $context->getUrlBuilder();
     }
 
     /**
@@ -47,29 +48,29 @@ class Init extends \Magento\Backend\Block\Template
     {
         $config = new \Magento\Framework\DataObject();
         $config->addData([
-            'encode_string' => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
-            'stage_template' => '#gene-bluefoot-stage-template',
-            'template_template' => '#gene-bluefoot-stage-template-controls',
+            'encode_string'                    => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
+            'stage_template'                   => '#gene-bluefoot-stage-template',
+            'template_template'                => '#gene-bluefoot-stage-template-controls',
             'template_selection_grid_template' => '#gene-bluefoot-template-selection-grid',
-            'panel_template' => '#gene-bluefoot-stage-panel-template',
-            'row_template' => '#gene-bluefoot-row-template',
-            'column_template' => '#gene-bluefoot-column-template',
-            'option_template' => '#gene-bluefoot-option-template',
-            'entity_template' => '#gene-bluefoot-entity',
-            'entity_preview_template' => '#gene-bluefoot-entity-preview',
-            'configure_template' => '#gene-bluefoot-stage-configure-template',
-            'alert_template' => '#gene-bluefoot-alert',
-            'form_key' => $this->formKey->getFormKey(),
-            'init_button_class' => '.init-gene-bluefoot',
-            'config_url' => $this->_urlBuilder->getUrl('bluefoot/stage/config'),
-            'data_update_url' => $this->_urlBuilder->getUrl('bluefoot/stage/preview'),
-            'template_save_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_save'),
-            'template_delete_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_delete'),
-            'template_pin_url' => $this->_urlBuilder->getUrl('bluefoot/stage/template_pin'),
-            'columns' => 6,
+            'panel_template'                   => '#gene-bluefoot-stage-panel-template',
+            'row_template'                     => '#gene-bluefoot-row-template',
+            'column_template'                  => '#gene-bluefoot-column-template',
+            'option_template'                  => '#gene-bluefoot-option-template',
+            'entity_template'                  => '#gene-bluefoot-entity',
+            'entity_preview_template'          => '#gene-bluefoot-entity-preview',
+            'configure_template'               => '#gene-bluefoot-stage-configure-template',
+            'alert_template'                   => '#gene-bluefoot-alert',
+            'form_key'                         => $this->formKey->getFormKey(),
+            'init_button_class'                => '.init-gene-bluefoot',
+            'config_url'                       => $this->urlBuilder->getUrl('bluefoot/stage/config'),
+            'data_update_url'                  => $this->urlBuilder->getUrl('bluefoot/stage/preview'),
+            'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
+            'template_delete_url'              => $this->urlBuilder->getUrl('bluefoot/stage/template_delete'),
+            'template_pin_url'                 => $this->urlBuilder->getUrl('bluefoot/stage/template_pin'),
+            'columns'                          => 6,
 
             /* Define the different column options to be given in the UI */
-            'column_definitions' => [
+            'column_definitions'               => [
                 ['label' => 'One Whole', 'breakpoint' => '1', 'className' => 'bluefoot-structure-wrapper-width-whole', 'displayed' => true],
                 ['label' => 'One Half', 'breakpoint' => '0.500', 'className' => 'bluefoot-structure-wrapper-width-half', 'displayed' => true],
                 ['label' => 'One Third', 'breakpoint' => '0.333', 'className' => 'bluefoot-structure-wrapper-width-third', 'displayed' => true],
@@ -83,12 +84,11 @@ class Init extends \Magento\Backend\Block\Template
         ]);
 
         // Include our plugin information
-        $config->setData('plugins', $this->_plugin->getJsPlugins());
+        $config->setData('plugins', $this->plugin->getJsPlugins());
 
         // Fire event to allow extra data to be passed to the stage
         $this->_eventManager->dispatch('gene_bluefoot_stage_build_config', ['config' => $config]);
 
         return $config->toJson();
     }
-
 }

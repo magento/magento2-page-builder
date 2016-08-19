@@ -69,5 +69,4 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     {
         return true;
     }
-
 }
