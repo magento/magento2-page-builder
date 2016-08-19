@@ -1,4 +1,4 @@
-(function(factory) {
+(function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
         define(["knockout", "jquery", "bluefoot/common", 'bluefoot/config'], factory);
@@ -14,7 +14,7 @@
         // No module loader (plain <script> tag) - put directly in global namespace
         factory(window.ko, window.jQuery, window.Common, window.Config);
     }
-})(function(ko, jQuery, Common, Config) {
+})(function (ko, jQuery, Common, Config) {
 
     var allowedSizes = Config.getInitConfig('column_definitions');
 
@@ -29,29 +29,29 @@
             this.extendedConfig = extendedConfig;
 
             jQuery(element)
-                .on('mousemove', function(event) {
-                    if( !context.currentColumn ) {
+                .on('mousemove', function (event) {
+                    if (!context.currentColumn) {
                         return;
                     }
 
-                    var element = jQuery( "#" + context.currentColumn.id ),
+                    var element = jQuery("#" + context.currentColumn.id),
                         ghostWidth = context.startingWidth + (event.clientX - context.startingX),
                         ghost = element.find(".bluefoot-resize-ghost");
 
                     // Stop the ghost width exceeding that of the container
-                    if( ghostWidth >= element.parent().outerWidth() ) {
+                    if (ghostWidth >= element.parent().outerWidth()) {
                         ghostWidth = element.parent().outerWidth();
                     }
 
                     ghost.width(ghostWidth);
 
-                    jQuery.each(allowedSizes, function(index, size){
+                    jQuery.each(allowedSizes, function (index, size) {
                         var percentage = parseFloat(size.breakpoint).toFixed(3),
                             breakpoint = Math.floor(element.parent().outerWidth() * percentage);
 
                         // Stop the loop once we hit a valid breakpoint
-                        if( ghostWidth >= (breakpoint-10) && ghostWidth <= (breakpoint+10) ) {
-                            context.currentColumn.widthClasses( size.className );
+                        if (ghostWidth >= (breakpoint - 10) && ghostWidth <= (breakpoint + 10)) {
+                            context.currentColumn.widthClasses(size.className);
                             return false;
                         }
                     });
@@ -83,7 +83,7 @@
          * @param data
          * @param context
          */
-        init: function(element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
             Resizable.init(element, valueAccessor());
         }
 
