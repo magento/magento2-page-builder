@@ -8,6 +8,7 @@ use Magento\Framework\UrlInterface;
 
 /**
  * Class Actions
+ *
  * @package Gene\BlueFoot\Ui\Component\Listing\Column\ContentBlock
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
@@ -20,6 +21,7 @@ class Actions extends \Magento\Ui\Component\Listing\Columns\Column
 
     /**
      * Actions constructor.
+     *
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
      * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
      * @param \Magento\Framework\UrlInterface $urlBuilder
@@ -39,6 +41,7 @@ class Actions extends \Magento\Ui\Component\Listing\Columns\Column
 
     /**
      * Prepare Data Source
+     *
      * @param array $dataSource
      * @return array
      */

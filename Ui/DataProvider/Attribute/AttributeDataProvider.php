@@ -1,11 +1,14 @@
 <?php
+
 namespace Gene\BlueFoot\Ui\DataProvider\Attribute;
 
 use \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory;
 
 /**
  * Class AttributeDataProvider
+ *
  * @package Gene\BlueFoot\Ui\DataProvider\ContentBlock
+ *
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class AttributeDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
@@ -33,7 +36,13 @@ class AttributeDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvide
         $meta = [],
         $data = []
     ) {
-        parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
+        parent::__construct(
+            $name,
+            $primaryFieldName,
+            $requestFieldName,
+            $meta,
+            $data
+        );
         $this->collection = $collectionFactory->create();
     }
 }

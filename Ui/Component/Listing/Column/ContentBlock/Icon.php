@@ -1,15 +1,19 @@
 <?php
+
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\ContentBlock;
 
 /**
  * Class Icon
+ *
  * @package Gene\BlueFoot\Ui\Component\Listing\Column\ContentBlock
+ *
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class Icon extends \Magento\Ui\Component\Listing\Columns\Column
 {
     /**
      * Convert icon value into HTML markup
+     *
      * @param array $dataSource
      * @return array
      */
@@ -26,6 +30,12 @@ class Icon extends \Magento\Ui\Component\Listing\Columns\Column
         return $dataSource;
     }
 
+    /**
+     * Retrieve markup for icon
+     *
+     * @param $value
+     * @return string
+     */
     protected function getMarkup($value)
     {
         return '<i style="color:#444; font-size:24px;" class="' . $value . '"></i>';
