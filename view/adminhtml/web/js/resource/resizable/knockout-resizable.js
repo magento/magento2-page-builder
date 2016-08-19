@@ -38,16 +38,21 @@
                         ghostWidth = context.startingWidth + (event.clientX - context.startingX),
                         ghost = element.find(".bluefoot-resize-ghost");
 
+                    // Stop the ghost width exceeding that of the container
+                    if( ghostWidth >= element.parent().outerWidth() ) {
+                        ghostWidth = element.parent().outerWidth();
+                    }
+
                     ghost.width(ghostWidth);
 
                     jQuery.each(allowedSizes, function(index, size){
                         var percentage = parseFloat(size.breakpoint).toFixed(3),
                             breakpoint = Math.floor(element.parent().outerWidth() * percentage);
 
+                        // Stop the loop once we hit a valid breakpoint
                         if( ghostWidth >= (breakpoint-10) && ghostWidth <= (breakpoint+10) ) {
                             context.currentColumn.widthClasses( size.className );
-                            //element.width(breakpoint);
-                            return false; // stop the loop
+                            return false;
                         }
                     });
                 })
