@@ -24,12 +24,12 @@ class Video extends \Magento\Backend\App\Action
     /**
      * Video constructor.
      *
-     * @param \Magento\Framework\App\Action\Context            $context
+     * @param \Magento\Backend\App\Action\Context              $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Gene\BlueFoot\Helper\Widget\Video               $videoHelper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Gene\BlueFoot\Helper\Widget\Video $videoHelper
     ) {

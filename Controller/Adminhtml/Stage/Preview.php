@@ -24,12 +24,12 @@ class Preview extends \Magento\Backend\App\Action
     /**
      * Config constructor.
      *
-     * @param \Magento\Framework\App\Action\Context            $context
+     * @param \Magento\Backend\App\Action\Context              $context
      * @param \Gene\BlueFoot\Model\Stage\Build                 $build
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Gene\BlueFoot\Model\Stage\Build $build,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
     ) {

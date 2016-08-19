@@ -52,7 +52,7 @@ class Search extends \Magento\Backend\App\Action
     /**
      * Search constructor.
      *
-     * @param \Magento\Framework\App\Action\Context                           $context
+     * @param \Magento\Backend\App\Action\Context                             $context
      * @param \Magento\Framework\Controller\Result\JsonFactory                $resultJsonFactory
      * @param \Gene\BlueFoot\Helper\Config                                    $configHelper
      * @param \Magento\Framework\Api\SearchCriteriaBuilder                    $searchCriteriaBuilder
@@ -63,7 +63,7 @@ class Search extends \Magento\Backend\App\Action
      * @param \Magento\Framework\Api\Search\FilterGroupBuilder                $filterGroupBuilder
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Gene\BlueFoot\Helper\Config $configHelper,
         SearchCriteriaBuilder $searchCriteriaBuilder,

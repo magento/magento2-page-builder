@@ -24,12 +24,12 @@ class Delete extends \Magento\Backend\App\Action
     /**
      * Delete constructor.
      *
-     * @param \Magento\Framework\App\Action\Context            $context
+     * @param \Magento\Backend\App\Action\Context              $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Gene\BlueFoot\Model\Stage\TemplateFactory       $templateFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Gene\BlueFoot\Model\Stage\TemplateFactory $templateFactory
     ) {
