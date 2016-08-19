@@ -48,7 +48,7 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_configInterface = $configInterface;
+        $this->configInterface = $configInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -64,11 +64,11 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         if ($entity = $this->getEntity()) {
-            $blockName = $this->_defaultRenderer;
+            $blockName = $this->defaultRenderer;
 
             // Can we load the content block, and does the content block have a renderer?
             if (($contentBlock = $entity->getContentBlock()) && $renderer = $contentBlock->getRenderer()) {
-                if ($blockClass = $this->_configInterface->getRendererClass($renderer)) {
+                if ($blockClass = $this->configInterface->getRendererClass($renderer)) {
                     $blockName = $blockClass;
                 }
             }

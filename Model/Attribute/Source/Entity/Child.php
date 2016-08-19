@@ -43,6 +43,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      *
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory          $contentBlockFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface          $contentBlockRepositoryInterface
      */
     public function __construct(
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,

@@ -250,8 +250,9 @@ class Save extends \Magento\Framework\Model\AbstractModel
      *
      * @param $element
      *
+     * @param $storeId
+     *
      * @return mixed
-     * @throws \Exception
      */
     public function createEntityFromElement($element, $storeId)
     {

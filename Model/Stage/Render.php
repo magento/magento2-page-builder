@@ -76,12 +76,18 @@ class Render extends \Magento\Framework\Model\AbstractModel
     /**
      * Plugin constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Model\Context                                            $context
+     * @param \Magento\Framework\Registry                                                 $registry
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                 $configInterface
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory                 $entityCollectionFactory
+     * @param \Magento\Framework\View\LayoutInterface                                     $layoutInterface
+     * @param \Magento\Framework\Data\Form\FormKey                                        $formKey
+     * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                                $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Model\Stage\RenderFactory                                    $renderFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
+     * @param array                                                                       $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,

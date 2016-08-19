@@ -12,8 +12,12 @@ namespace Gene\BlueFoot\Model\ResourceModel;
 class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 {
     /**
-     * @param \Magento\Eav\Model\Entity\Context $context
-     * @param array $data
+     * Entity constructor.
+     *
+     * @param \Magento\Eav\Model\Entity\Context                                          $context
+     * @param \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot          $entitySnapshot
+     * @param \Magento\Framework\Model\ResourceModel\Db\VersionControl\RelationComposite $entityRelationComposite
+     * @param array                                                                      $data
      */
     public function __construct(
         \Magento\Eav\Model\Entity\Context $context,

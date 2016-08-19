@@ -6,7 +6,6 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Gene\BlueFoot\Api\Data\ContentBlockInterface;
 use Magento\Eav\Model\Config as EavConfig;
 use Gene\BlueFoot\Model\Attribute\ContentBlock as ContentBlock;
-use Gene\BlueFoot\Model\Attribute\ContentBlockFactory as ContentBlockFactory;
 use Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock as ContentBlockResource;
 use Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
@@ -89,7 +88,7 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     public function save(ContentBlockInterface $contentBlock)
     {
         try {
-            $this->_contentBlockResource->save($contentBlock);
+            $this->contentBlockResource->save($contentBlock);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__('There was an error saving attribute set.'));
         }

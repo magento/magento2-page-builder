@@ -19,6 +19,7 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Magento\Cms\Model\BlockFactory                              $blockFactory
+     * @param \Gene\BlueFoot\Model\Stage\Render                            $render
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data

@@ -58,12 +58,22 @@ class ContentBlock extends AbstractInstall
     /**
      * Attribute constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Model\Context                                    $context
+     * @param \Magento\Framework\Registry                                         $registry
+     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                             $entitySetupFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                           $entity
+     * @param \Magento\Framework\Filesystem\Io\File                               $ioFile
+     * @param \Magento\Framework\Module\Dir\Reader                                $moduleReader
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface                  $contentBlockRepositoryInterface
+     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface             $contentBlockGroupRepositoryInterface
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory            $groupFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory                  $contentBlockFactory
+     * @param \Magento\Eav\Model\Entity\AttributeFactory                          $eavAttributeFactory
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory
+     * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory                    $eavAttributeGroupFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null        $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                  $resourceCollection
+     * @param array                                                               $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -141,12 +151,15 @@ class ContentBlock extends AbstractInstall
             $contentBlockDataObject->unsetData('group')->unsetData('attribute_data');
             $contentBlockDataObject->setData('attribute_set_name', $contentBlockDataObject->getData('name'));
 
-            $attributes = (isset($attributeData['attributes']) && is_array($attributeData['attributes'])) ? $attributeData['attributes'] : false;
+            /* @var $attributes array|bool */
+            $attributes = (isset($attributeData['attributes']) &&
+                is_array($attributeData['attributes'])) ? $attributeData['attributes'] : false;
             if (!$attributes) {
                 throw new \Exception('No attributes are associated with ' . $contentBlockIdentifier);
             }
 
-            $attributeGroups = (isset($attributeData['groups']) && is_array($attributeData['attributes'])) ? $attributeData['groups'] : false;
+            $attributeGroups = (isset($attributeData['groups']) &&
+                is_array($attributeData['attributes'])) ? $attributeData['groups'] : false;
 
             // Determine if this content block has all the required attributes
             $missingAttributes = [];

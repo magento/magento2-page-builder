@@ -3,7 +3,6 @@
 namespace Gene\BlueFoot\Model;
 
 use Magento\Framework\Api\AttributeValueFactory;
-use Magento\Catalog\Api\Data\EavAttributeInterface;
 use Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface;
 
 /**

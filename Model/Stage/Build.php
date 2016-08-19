@@ -70,6 +70,9 @@ class Build extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
      * @param \Magento\Framework\Data\CollectionFactory                    $dataCollectionFactory
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder                 $searchCriteriaBuilder
+     * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                 $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -134,7 +137,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
             }
         }
 
-        $this->eventManager->dispatch('gene_bluefoot_build_config_entities', ['entities' => $entityData]);
+        $this->_eventManager->dispatch('gene_bluefoot_build_config_entities', ['entities' => $entityData]);
 
         // Convert $entityData to an array
         $entityArray = [];

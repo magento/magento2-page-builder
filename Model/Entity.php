@@ -41,6 +41,8 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Entity\FrontendFactory                  $frontend
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data

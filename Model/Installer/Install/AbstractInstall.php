@@ -70,6 +70,10 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
+     * @param \Magento\Framework\Filesystem\Io\File                        $ioFile
+     * @param \Magento\Framework\Module\Dir\Reader                         $moduleReader
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data

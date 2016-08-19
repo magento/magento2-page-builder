@@ -51,6 +51,10 @@ class Attribute extends AbstractInstall
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
+     * @param \Magento\Framework\Filesystem\Io\File                        $ioFile
+     * @param \Magento\Framework\Module\Dir\Reader                         $moduleReader
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -105,7 +109,7 @@ class Attribute extends AbstractInstall
         }
 
         // Add the new attribute providing it doesn't already exist
-        $attribute = $this->_attributeExists($attributeCode);
+        $attribute = $this->attributeExists($attributeCode);
         if (!$attribute) {
             // Force the eavSetup to not attempt to automatically create a group, as the .json file implements the
             // names differently there is no need to cache and restore this data. Eg. Magento expects backend, where as
@@ -114,7 +118,7 @@ class Attribute extends AbstractInstall
             $attributeData['group'] = '';
 
             // Map any Magento 1 classes over to their Magento 2 counterparts
-            $this->_mapClasses($attributeData);
+            $this->mapClasses($attributeData);
 
             // The label may be given to us as an array
             if (is_array($attributeData['frontend_label']) && !empty($attributeData['frontend_label'])) {
