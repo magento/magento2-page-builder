@@ -44,6 +44,11 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
     protected $groupCollectionFactory;
 
     /**
+     * @var \Magento\Framework\Cache\FrontendInterface
+     */
+    protected $attributeLabelCache;
+
+    /**
      * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
@@ -64,7 +69,8 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
         \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype\ValidatorFactory $validatorFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory,
         \Magento\Framework\Filter\FilterManager $filterManager,
-        \Magento\Catalog\Helper\Product $productHelper
+        \Magento\Catalog\Helper\Product $productHelper,
+        \Magento\Framework\Cache\FrontendInterface $attributeLabelCache
     ) {
         parent::__construct($context, $coreRegistry, $resultPageFactory);
         $this->buildFactory = $buildFactory;
@@ -73,6 +79,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
         $this->attributeFactory = $attributeFactory;
         $this->validatorFactory = $validatorFactory;
         $this->groupCollectionFactory = $groupCollectionFactory;
+        $this->attributeLabelCache = $attributeLabelCache;
     }
 
     /**
@@ -250,7 +257,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                     __('You have saved the BlueFoot content attribute.')
                 );
 
-                $this->_attributeLabelCache->clean();
+                $this->attributeLabelCache->clean();
                 $this->_session->setAttributeData(false);
                 if ($this->getRequest()->getParam('popup')) {
                     $requestParams = [
