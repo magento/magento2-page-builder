@@ -35,14 +35,17 @@ class Index extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
      */
     public function execute()
     {
-        $this->_setTypeId();
+        $this->setTypeId();
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Gene_BlueFoot::blocks');
         $resultPage->getConfig()->getTitle()->prepend(__('Page Builder Blocks'));
         $resultPage->addBreadcrumb(__('BlueFoot'), __('BlueFoot'));
-        $resultPage->addBreadcrumb(__('Manage Page Builder Blocks'), __('Page Builder Blocks'));
+        $resultPage->addBreadcrumb(
+            __('Manage Page Builder Blocks'),
+            __('Page Builder Blocks')
+        );
         return $resultPage;
     }
 }

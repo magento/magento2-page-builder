@@ -16,15 +16,19 @@ abstract class ContentBlock extends \Magento\Backend\App\Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected $coreRegistry;
 
     /**
+     * ContentBlock constructor.
+     *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      */
-    public function __construct(\Magento\Backend\App\Action\Context $context, \Magento\Framework\Registry $coreRegistry)
-    {
-        $this->_coreRegistry = $coreRegistry;
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Registry $coreRegistry
+    ) {
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 
@@ -33,11 +37,12 @@ abstract class ContentBlock extends \Magento\Backend\App\Action
      *
      * @return void
      */
-    protected function _setTypeId()
+    protected function setTypeId()
     {
-        $this->_coreRegistry->register(
+        $this->coreRegistry->register(
             'entityType',
-            $this->_objectManager->create('Gene\BlueFoot\Model\Entity')->getResource()->getTypeId()
+            $this->_objectManager->create('Gene\BlueFoot\Model\Entity')
+                ->getResource()->getTypeId()
         );
     }
 

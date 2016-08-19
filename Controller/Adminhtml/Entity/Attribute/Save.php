@@ -44,21 +44,19 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
     protected $groupCollectionFactory;
 
     /**
+     * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Cache\FrontendInterface $attributeLabelCache
      * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\BuildFactory $buildFactory
      * @param \Gene\BlueFoot\Model\AttributeFactory $attributeFactory
      * @param \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype\ValidatorFactory $validatorFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory
      * @param \Magento\Framework\Filter\FilterManager $filterManager
      * @param \Magento\Catalog\Helper\Product $productHelper
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Cache\FrontendInterface $attributeLabelCache,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlock\BuildFactory $buildFactory,
@@ -68,7 +66,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
         \Magento\Framework\Filter\FilterManager $filterManager,
         \Magento\Catalog\Helper\Product $productHelper
     ) {
-        parent::__construct($context, $attributeLabelCache, $coreRegistry, $resultPageFactory);
+        parent::__construct($context, $coreRegistry, $resultPageFactory);
         $this->buildFactory = $buildFactory;
         $this->filterManager = $filterManager;
         $this->productHelper = $productHelper;
@@ -96,20 +94,29 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                 $name = trim($name);
 
                 try {
-                    /** @var $attributeSet \Magento\Eav\Model\Entity\Attribute\Set */
+                    /* @var $attributeSet \Magento\Eav\Model\Entity\Attribute\Set */
                     $attributeSet = $this->buildFactory->create()
-                        ->setEntityTypeId($this->_entityTypeId)
+                        ->setEntityTypeId($this->entityTypeId)
                         ->setSkeletonId($setId)
                         ->setName($name)
                         ->getAttributeSet();
                 } catch (AlreadyExistsException $alreadyExists) {
-                    $this->messageManager->addError(__('An attribute set named \'%1\' already exists.', $name));
+                    $this->messageManager->addErrorMessage(
+                        __("An attribute set named '%1' already exists.", $name)
+                    );
                     $this->messageManager->setAttributeData($data);
-                    return $resultRedirect->setPath('bluefoot/*/edit', ['_current' => true]);
+
+                    return $resultRedirect->setPath(
+                        'bluefoot/*/edit',
+                        ['_current' => true]
+                    );
                 } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                    $this->messageManager->addError($e->getMessage());
+                    $this->messageManager->addErrorMessage($e->getMessage());
                 } catch (\Exception $e) {
-                    $this->messageManager->addException($e, __('Something went wrong while saving the attribute.'));
+                    $this->messageManager->addExceptionaddExceptionMessage(
+                        $e,
+                        __('Something went wrong while saving the attribute.')
+                    );
                 }
             }
 
@@ -122,42 +129,61 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
             $attributeCode = $this->getRequest()->getParam('attribute_code');
             $frontendLabel = $this->getRequest()->getParam('frontend_label');
             $attributeCode = $attributeCode ?: $this->generateCode($frontendLabel[0]);
+
             if (strlen($this->getRequest()->getParam('attribute_code')) > 0) {
-                $validatorAttrCode = new \Zend_Validate_Regex(['pattern' => '/^[a-z][a-z_0-9]{0,30}$/']);
+                $validatorAttrCode = new \Zend_Validate_Regex(
+                    ['pattern' => '/^[a-z][a-z_0-9]{0,30}$/']
+                );
+
                 if (!$validatorAttrCode->isValid($attributeCode)) {
-                    $this->messageManager->addError(
+                    $this->messageManager->addErrorMessage(
                         __(
                             'Attribute code "%1" is invalid. Please use only letters (a-z), ' .
                             'numbers (0-9) or underscore(_) in this field, first character should be a letter.',
                             $attributeCode
                         )
                     );
-                    return $resultRedirect->setPath('bluefoot/*/edit', ['attribute_id' => $attributeId, '_current' => true]);
+
+                    return $resultRedirect->setPath(
+                        'bluefoot/*/edit',
+                        ['attribute_id' => $attributeId, '_current' => true]
+                    );
                 }
             }
             $data['attribute_code'] = $attributeCode;
 
             //validate frontend_input
             if (isset($data['frontend_input'])) {
-                /** @var $inputType \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype\Validator */
+                /* @var $inputType \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype\Validator */
                 $inputType = $this->validatorFactory->create();
                 if (!$inputType->isValid($data['frontend_input'])) {
                     foreach ($inputType->getMessages() as $message) {
-                        $this->messageManager->addError($message);
+                        $this->messageManager->addErrorMessage($message);
                     }
-                    return $resultRedirect->setPath('bluefoot/*/edit', ['attribute_id' => $attributeId, '_current' => true]);
+
+                    return $resultRedirect->setPath(
+                        'bluefoot/*/edit',
+                        ['attribute_id' => $attributeId, '_current' => true]
+                    );
                 }
             }
 
             if ($attributeId) {
-                $model->load($attributeId);
+                $model->getResource()->load($model, $attributeId);
+
                 if (!$model->getId()) {
-                    $this->messageManager->addError(__('This attribute no longer exists.'));
+                    $this->messageManager->addErrorMessage(
+                        __('This attribute no longer exists.')
+                    );
+
                     return $resultRedirect->setPath('bluefoot/*/');
                 }
                 // entity type check
-                if ($model->getEntityTypeId() != $this->_entityTypeId) {
-                    $this->messageManager->addError(__('We can\'t update the attribute.'));
+                if ($model->getEntityTypeId() != $this->entityTypeId) {
+                    $this->messageManager->addErrorMessage(
+                        __("We can't update the attribute.")
+                    );
+
                     $this->_session->setAttributeData($data);
                     return $resultRedirect->setPath('bluefoot/*/');
                 }
@@ -166,9 +192,6 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                 $data['is_user_defined'] = $model->getIsUserDefined();
                 $data['frontend_input'] = $model->getFrontendInput();
             } else {
-                /**
-                 * @todo add to helper and specify all relations for properties
-                 */
                 $data['source_model'] = $this->productHelper->getAttributeSourceModelByInputType(
                     $data['frontend_input']
                 );
@@ -177,7 +200,11 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                 );
             }
 
-            $data += ['is_filterable' => 0, 'is_filterable_in_search' => 0, 'apply_to' => []];
+            $data += [
+                'is_filterable' => 0,
+                'is_filterable_in_search' => 0,
+                'apply_to' => []
+            ];
 
             if (is_null($model->getIsUserDefined()) || $model->getIsUserDefined() != 0) {
                 $data['backend_type'] = $model->getBackendTypeByInput($data['frontend_input']);
@@ -196,7 +223,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
             $model->addData($data);
 
             if (!$attributeId) {
-                $model->setEntityTypeId($this->_entityTypeId);
+                $model->setEntityTypeId($this->entityTypeId);
                 $model->setIsUserDefined(1);
             }
 
@@ -218,8 +245,10 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
             }
 
             try {
-                $model->save();
-                $this->messageManager->addSuccess(__('You have saved the BlueFoot content attribute.'));
+                $model->getResource()->save($model);
+                $this->messageManager->addSuccessMessage(
+                    __('You have saved the BlueFoot content attribute.')
+                );
 
                 $this->_attributeLabelCache->clean();
                 $this->_session->setAttributeData(false);
@@ -239,9 +268,10 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                 } else {
                     $resultRedirect->setPath('bluefoot/*/');
                 }
+
                 return $resultRedirect;
             } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
                 $this->_session->setAttributeData($data);
                 return $resultRedirect->setPath('bluefoot/*/edit', ['attribute_id' => $attributeId, '_current' => true]);
             }

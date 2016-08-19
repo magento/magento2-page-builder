@@ -17,6 +17,7 @@ class Add extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
     protected $resultPageFactory;
 
     /**
+     * Add constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
@@ -35,14 +36,16 @@ class Add extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
      */
     public function execute()
     {
-        $this->_setTypeId();
+        $this->setTypeId();
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Gene_BlueFoot::blocks');
         $resultPage->getConfig()->getTitle()->prepend(__('New Page Builder Block'));
         $resultPage->addContent(
-            $resultPage->getLayout()->createBlock('Gene\BlueFoot\Block\Adminhtml\Entity\ContentBlock\Toolbar\Add')
+            $resultPage->getLayout()->createBlock(
+                'Gene\BlueFoot\Block\Adminhtml\Entity\ContentBlock\Toolbar\Add'
+            )
         );
         return $resultPage;
     }

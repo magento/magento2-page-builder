@@ -17,20 +17,19 @@ class NewAction extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
     protected $resultForwardFactory;
 
     /**
+     * NewAction constructor.
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Cache\FrontendInterface $attributeLabelCache
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Cache\FrontendInterface $attributeLabelCache,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
-        parent::__construct($context, $attributeLabelCache, $coreRegistry, $resultPageFactory);
+        parent::__construct($context, $coreRegistry, $resultPageFactory);
         $this->resultForwardFactory = $resultForwardFactory;
     }
 

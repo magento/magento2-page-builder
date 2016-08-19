@@ -33,13 +33,12 @@ class Validate extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Cache\FrontendInterface $attributeLabelCache,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory
     ) {
-        parent::__construct($context, $attributeLabelCache, $coreRegistry, $resultPageFactory);
+        parent::__construct($context, $coreRegistry, $resultPageFactory);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->layoutFactory = $layoutFactory;
     }
@@ -59,7 +58,7 @@ class Validate extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
         $attribute = $this->_objectManager->create(
             'Gene\BlueFoot\Model\Attribute'
         )->loadByCode(
-            $this->_entityTypeId,
+            $this->entityTypeId,
             $attributeCode
         );
 
@@ -70,24 +69,43 @@ class Validate extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                 );
             } else {
                 $response->setMessage(
-                    __('An attribute with the same code (%1) already exists.', $attributeCode)
+                    __(
+                        'An attribute with the same code (%1) already exists.',
+                        $attributeCode
+                    )
                 );
             }
             $response->setError(true);
         }
         if ($this->getRequest()->has('new_attribute_set_name')) {
             $setName = $this->getRequest()->getParam('new_attribute_set_name');
-            /** @var $attributeSet \Magento\Eav\Model\Entity\Attribute\Set */
-            $attributeSet = $this->_objectManager->create('Gene\BlueFoot\Model\Attribute\ContentBlock');
-            $attributeSet->setEntityTypeId($this->_entityTypeId)->load($setName, 'attribute_set_name');
+
+            /* @var $attributeSet \Magento\Eav\Model\Entity\Attribute\Set */
+            $attributeSet = $this->_objectManager->create(
+                'Gene\BlueFoot\Model\Attribute\ContentBlock'
+            );
+
+            $attributeSet->setEntityTypeId($this->entityTypeId);
+            $attributeSet->getResource()->load(
+                $attributeSet,
+                $setName,
+                'attribute_set_name'
+            );
+
             if ($attributeSet->getId()) {
-                $setName = $this->_objectManager->get('Magento\Framework\Escaper')->escapeHtml($setName);
-                $this->messageManager->addError(__('An attribute set named \'%1\' already exists.', $setName));
+                $setName = $this->_objectManager->get('Magento\Framework\Escaper')
+                    ->escapeHtml($setName);
+
+                $this->messageManager->addErrorMessage(
+                    __('An attribute set named \'%1\' already exists.', $setName)
+                );
 
                 $layout = $this->layoutFactory->create();
                 $layout->initMessages();
                 $response->setError(true);
-                $response->setHtmlMessage($layout->getMessagesBlock()->getGroupedHtml());
+                $response->setHtmlMessage(
+                    $layout->getMessagesBlock()->getGroupedHtml()
+                );
             }
         }
         return $this->resultJsonFactory->create()->setJsonData($response->toJson());

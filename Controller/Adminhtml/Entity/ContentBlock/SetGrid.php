@@ -17,6 +17,7 @@ class SetGrid extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
     protected $resultLayoutFactory;
 
     /**
+     * SetGrid constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
@@ -35,7 +36,7 @@ class SetGrid extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
      */
     public function execute()
     {
-        $this->_setTypeId();
+        $this->setTypeId();
         return $this->resultLayoutFactory->create();
     }
 }

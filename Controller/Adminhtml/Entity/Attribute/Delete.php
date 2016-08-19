@@ -23,24 +23,34 @@ class Delete extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
 
             // entity type check
             $model->load($id);
-            if ($model->getEntityTypeId() != $this->_entityTypeId) {
-                $this->messageManager->addError(__('We can\'t delete the attribute.'));
+            if ($model->getEntityTypeId() != $this->entityTypeId) {
+                $this->messageManager->addErrorMessage(
+                    __("We can't delete the attribute.")
+                );
+
                 return $resultRedirect->setPath('bluefoot/*/');
             }
 
             try {
                 $model->delete();
-                $this->messageManager->addSuccess(__('You deleted the content attribute.'));
+                $this->messageManager->addSuccessMessage(
+                    __('You deleted the content attribute.')
+                );
+
                 return $resultRedirect->setPath('bluefoot/*/');
             } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
                 return $resultRedirect->setPath(
                     'catalog/*/edit',
                     ['attribute_id' => $this->getRequest()->getParam('attribute_id')]
                 );
             }
         }
-        $this->messageManager->addError(__('We can\'t find an attribute to delete.'));
+
+        $this->messageManager->addErrorMessage(
+            __("We can't find an attribute to delete.")
+        );
+
         return $resultRedirect->setPath('bluefoot/*/');
     }
 }

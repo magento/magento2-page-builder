@@ -2,9 +2,6 @@
 
 namespace Gene\BlueFoot\Controller\Adminhtml\Entity;
 
-use Magento\Framework\Controller\Result;
-use Magento\Framework\View\Result\PageFactory;
-
 /**
  * Class Attribute
  *
@@ -15,21 +12,14 @@ use Magento\Framework\View\Result\PageFactory;
 abstract class Attribute extends \Magento\Backend\App\Action
 {
     /**
-     * @var \Magento\Framework\Cache\FrontendInterface
-     */
-    protected $_attributeLabelCache;
-
-    /**
      * @var string
      */
-    protected $_entityTypeId;
+    protected $entityTypeId;
 
     /**
-     * Core registry
-     *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry = null;
+    protected $coreRegistry;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -37,34 +27,31 @@ abstract class Attribute extends \Magento\Backend\App\Action
     protected $resultPageFactory;
 
     /**
-     * Constructor
+     * Attribute constructor.
      *
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Cache\FrontendInterface $attributeLabelCache
-     * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Cache\FrontendInterface $attributeLabelCache,
         \Magento\Framework\Registry $coreRegistry,
-        PageFactory $resultPageFactory
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
-        $this->_coreRegistry = $coreRegistry;
-        $this->_attributeLabelCache = $attributeLabelCache;
-        $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context);
+
+        $this->coreRegistry = $coreRegistry;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
-     * Dispatch request
+     * Dispatch request.
      *
      * @param \Magento\Framework\App\RequestInterface $request
      * @return \Magento\Framework\App\ResponseInterface
      */
     public function dispatch(\Magento\Framework\App\RequestInterface $request)
     {
-        $this->_entityTypeId = $this->_objectManager->create(
+        $this->entityTypeId = $this->_objectManager->create(
             'Magento\Eav\Model\Entity'
         )->setType(
             \Gene\BlueFoot\Model\Entity::ENTITY
@@ -73,19 +60,28 @@ abstract class Attribute extends \Magento\Backend\App\Action
     }
 
     /**
-     * @param \Magento\Framework\Phrase|null $title
+     * @param null $title
      * @return \Magento\Backend\Model\View\Result\Page
      */
     protected function createActionPage($title = null)
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->addBreadcrumb(__('BlueFoot'), __('BlueFoot'))
-            ->addBreadcrumb(__('Manage Content Attributes'), __('Manage Content Attributes'))
+        $resultPage
+            ->addBreadcrumb(
+                __('BlueFoot'),
+                __('BlueFoot')
+            )
+            ->addBreadcrumb(
+                __('Manage Content Attributes'),
+                __('Manage Content Attributes')
+            )
             ->setActiveMenu('Gene_BlueFoot::attributes');
+
         if (!empty($title)) {
             $resultPage->addBreadcrumb($title, $title);
         }
+
         $resultPage->getConfig()->getTitle()->prepend(__('Content Attributes'));
         return $resultPage;
     }
@@ -102,15 +98,21 @@ abstract class Attribute extends \Magento\Backend\App\Action
             preg_replace(
                 '/[^a-z_0-9]/',
                 '_',
-                $this->_objectManager->create('Magento\Catalog\Model\Product\Url')->formatUrlKey($label)
+                $this->_objectManager->create('Magento\Catalog\Model\Product\Url')
+                    ->formatUrlKey($label)
             ),
             0,
             30
         );
-        $validatorAttrCode = new \Zend_Validate_Regex(['pattern' => '/^[a-z][a-z_0-9]{0,29}[a-z0-9]$/']);
+
+        $validatorAttrCode = new \Zend_Validate_Regex(
+            ['pattern' => '/^[a-z][a-z_0-9]{0,29}[a-z0-9]$/']
+        );
+
         if (!$validatorAttrCode->isValid($code)) {
             $code = 'attr_' . ($code ?: substr(md5(time()), 0, 8));
         }
+
         return $code;
     }
 

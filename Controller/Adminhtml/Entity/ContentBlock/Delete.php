@@ -39,12 +39,19 @@ class Delete extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
         $resultRedirect = $this->resultRedirectFactory->create();
         try {
             $this->attributeSetRepository->deleteById($setId);
-            $this->messageManager->addSuccess(__('The page builder block has been removed.'));
+            $this->messageManager->addSuccessMessage(
+                __('The page builder block has been removed.')
+            );
             $resultRedirect->setPath('bluefoot/*/');
         } catch (\Exception $e) {
-            $this->messageManager->addError(__('We can\'t delete this page builder block right now.'));
-            $resultRedirect->setUrl($this->_redirect->getRedirectUrl($this->getUrl('*')));
+            $this->messageManager->addErrorMessage(
+                __('We can\'t delete this page builder block right now.')
+            );
+            $resultRedirect->setUrl(
+                $this->_redirect->getRedirectUrl($this->getUrl('*'))
+            );
         }
+
         return $resultRedirect;
     }
 }

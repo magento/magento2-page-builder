@@ -22,6 +22,7 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
     protected $resultJsonFactory;
 
     /**
+     * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
@@ -43,12 +44,12 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
      *
      * @return int
      */
-    protected function _getEntityTypeId()
+    protected function getEntityTypeId()
     {
-        if ($this->_coreRegistry->registry('entityType') === null) {
-            $this->_setTypeId();
+        if ($this->coreRegistry->registry('entityType') === null) {
+            $this->setTypeId();
         }
-        return $this->_coreRegistry->registry('entityType');
+        return $this->coreRegistry->registry('entityType');
     }
 
     /**
@@ -62,73 +63,100 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
      */
     public function execute()
     {
-        $entityTypeId = $this->_getEntityTypeId();
+        $entityTypeId = $this->getEntityTypeId();
         $hasError = false;
         $attributeSetId = $this->getRequest()->getParam('id', false);
         $isNewSet = $this->getRequest()->getParam('gotoEdit', false) == '1';
 
         /* @var $model \Magento\Eav\Model\Entity\Attribute\Set */
-        $model = $this->_objectManager->create('Gene\BlueFoot\Model\Attribute\ContentBlock')
-            ->setEntityTypeId($entityTypeId);
+        $model = $this->_objectManager->create(
+            'Gene\BlueFoot\Model\Attribute\ContentBlock'
+        )->setEntityTypeId($entityTypeId);
 
-        /** @var $filterManager \Magento\Framework\Filter\FilterManager */
-        $filterManager = $this->_objectManager->get('Magento\Framework\Filter\FilterManager');
+        /* @var $filterManager \Magento\Framework\Filter\FilterManager */
+        $filterManager = $this->_objectManager->get(
+            'Magento\Framework\Filter\FilterManager'
+        );
 
         // A list of extra allowed fields
-        $allowedFields = ['identifier', 'show_in_page_builder', 'group_id', 'icon_class', 'color', 'item_view_template', 'renderer'];
+        $allowedFields = [
+            'identifier',
+            'show_in_page_builder',
+            'group_id',
+            'icon_class',
+            'color',
+            'item_view_template',
+            'renderer'
+        ];
 
         try {
             if ($isNewSet) {
                 //filter html tags
-                $name = $filterManager->stripTags($this->getRequest()->getParam('attribute_set_name'));
+                $name = $filterManager->stripTags(
+                    $this->getRequest()->getParam('attribute_set_name')
+                );
                 $model->setAttributeSetName(trim($name));
 
                 // Assign all data to a variable for later user
                 $data = $this->getRequest()->getParams();
             } else {
                 if ($attributeSetId) {
-                    $model->load($attributeSetId);
+                    $model->getResource()->load($model, $attributeSetId);
                 }
+
                 if (!$model->getId()) {
                     throw new \Magento\Framework\Exception\LocalizedException(
                         __('This content block no longer exists.')
                     );
                 }
-                $data = $this->_objectManager->get('Magento\Framework\Json\Helper\Data')
-                    ->jsonDecode($this->getRequest()->getPost('data'));
+
+                $data = $this->_objectManager->get(
+                    'Magento\Framework\Json\Helper\Data'
+                )->jsonDecode($this->getRequest()->getPost('data'));
 
                 //filter html tags
-                $data['attribute_set_name'] = $filterManager->stripTags($data['attribute_set_name']);
+                $data['attribute_set_name'] = $filterManager->stripTags(
+                    $data['attribute_set_name']
+                );
 
                 $model->organizeData($data);
             }
 
             // Copy over any extra fields
-            foreach ($allowedFields as $allowedField)
-            {
+            foreach ($allowedFields as $allowedField) {
                 // Strip tags, replace missing values with null
-                $value = (isset($data[$allowedField]) ? $filterManager->stripTags($data[$allowedField]) : null);
+                $value = (isset($data[$allowedField])
+                    ? $filterManager->stripTags($data[$allowedField])
+                    : null);
                 $model->setData($allowedField, $value);
             }
 
             $model->validate();
             if ($isNewSet) {
-                $model->save();
-                $model->initFromSkeleton($this->getRequest()->getParam('skeleton_set'));
+                $model->getResource()->save($model);
+                $model->initFromSkeleton(
+                    $this->getRequest()->getParam('skeleton_set')
+                );
             }
-            $model->save();
-            $this->messageManager->addSuccess(__('You saved the content block.'));
+            $model->getResource()->save($model);
+
+            $this->messageManager->addSuccessMessage(
+                __('You saved the content block.')
+            );
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->messageManager->addError($e->getMessage());
+            $this->messageManager->addErrorMessage($e->getMessage());
             $hasError = true;
         } catch (\Exception $e) {
-            $this->messageManager->addException($e, __('Something went wrong while saving the content block.'));
+            $this->messageManager->addExceptionMessage(
+                $e,
+                __('Something went wrong while saving the content block.')
+            );
             $hasError = true;
         }
 
         if ($isNewSet) {
             if ($this->getRequest()->getPost('return_session_messages_only')) {
-                /** @var $block \Magento\Framework\View\Element\Messages */
+                /* @var $block \Magento\Framework\View\Element\Messages */
                 $block = $this->layoutFactory->create()->getMessagesBlock();
                 $block->setMessages($this->messageManager->getMessages(true));
                 $body = [
@@ -142,7 +170,10 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\ContentBlock
                 if ($hasError) {
                     $resultRedirect->setPath('bluefoot/*/add');
                 } else {
-                    $resultRedirect->setPath('bluefoot/*/edit', ['id' => $model->getId()]);
+                    $resultRedirect->setPath(
+                        'bluefoot/*/edit',
+                        ['id' => $model->getId()]
+                    );
                 }
                 return $resultRedirect;
             }
