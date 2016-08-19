@@ -27,6 +27,7 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
      * @param \Magento\Backend\Block\Context              $context
      * @param \Magento\Framework\View\Page\Config         $pageConfig
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param array                                       $data
      */
     public function __construct(
         \Magento\Backend\Block\Context $context,
@@ -64,5 +65,4 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
 
         return $this;
     }
-
 }

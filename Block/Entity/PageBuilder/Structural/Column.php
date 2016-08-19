@@ -16,7 +16,7 @@ class Column extends AbstractStructural
      *
      * @return mixed|null
      */
-    protected function _getWidth()
+    protected function getWidth()
     {
         return $this->getFormData('width');
     }
@@ -30,7 +30,6 @@ class Column extends AbstractStructural
     public function getColumnsFromWidth($total = 12)
     {
         // Work out the columns based on the total number of columns
-        return round($this->_getWidth()*$total);
+        return round($this->getWidth() * $total);
     }
-
 }

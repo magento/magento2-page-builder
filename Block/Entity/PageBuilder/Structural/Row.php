@@ -15,7 +15,7 @@ class Row extends AbstractStructural
      * Base path of templates
      * @var string
      */
-    protected $_path = 'Gene_BlueFoot::pagebuilder/structural/core/row/';
+    protected $path = 'Gene_BlueFoot::pagebuilder/structural/core/row/';
 
     /**
      * Render block HTML
@@ -25,7 +25,7 @@ class Row extends AbstractStructural
     protected function _toHtml()
     {
         if (($template = $this->getFormData('template')) && $template != 'default.phtml') {
-            $this->setTemplate($this->_path . $template);
+            $this->setTemplate($this->path . $template);
         }
 
         return parent::_toHtml();

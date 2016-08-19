@@ -11,6 +11,12 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
  */
 class AbstractStructural extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * Array of directions, used for the metrics
+     *
+     * @var array
+     */
+    protected $order = array('top', 'right', 'bottom', 'left');
 
     const GENE_BLUEFOOT_MEDIA_DIRECTORY = '/gene-cms';
 
@@ -54,7 +60,6 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
         $classes = $this->parseCss($this->getCssClasses() . ' ' . $align . ' ' . $this->getFormData('css_classes'));
 
         if (!empty($classes)) {
-
             // Loop through all the classes
             foreach ($classes as $class) {
                 $html .= ' ' . $class;
@@ -63,7 +68,6 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         return $html;
     }
-
 
     /**
      * Convert classes to an array with only unique values
@@ -81,7 +85,6 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         return array_unique(array_filter($array));
     }
-
 
     /**
      * Function to build up the style attributes of a block
@@ -102,14 +105,6 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * Array of directions, used for the metrics
-     *
-     * @var array
-     */
-    protected $_order = array('top', 'right', 'bottom', 'left');
-
-
-    /**
      * Function to return the metrics as a useful string
      *
      * @return string
@@ -117,26 +112,26 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
     public function parseMetrics()
     {
         $html = '';
-        if ($this->getFormData('metric')) {
+        if ($this->getEntity() && $this->getEntity()->getMetric()) {
+            $json = json_decode($this->getEntity()->getMetric(), true);
+            if ($json) {
+                foreach ($json as $key => $string) {
+                    $values = explode(' ', $string);
 
-            foreach (json_decode($this->getFormData('metric'), true) as $key => $string) {
-
-                $values = explode(' ', $string);
-
-                // Loop through all metrics and add any with values
-                $i = 0;
-                foreach ($values as $value) {
-                    if ($value != '-') {
-                        $html .= $key . '-' . $this->_order[$i] . ':' . $value . ';';
+                    // Loop through all metrics and add any with values
+                    $i = 0;
+                    foreach ($values as $value) {
+                        if ($value != '-') {
+                            $html .= $key . '-' . $this->order[$i] . ':' . $value . ';';
+                        }
+                        $i++;
                     }
-                    $i++;
                 }
             }
         }
 
         return $html;
     }
-
 
     /**
      * Set the style if a background color or image has been set
@@ -145,11 +140,11 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
      */
     public function getBackgroundStyles()
     {
-
         $style = '';
 
         if ($this->getFormData('background_image')) {
-            $image = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image');
+            $image = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .
+                self::GENE_BLUEFOOT_MEDIA_DIRECTORY . $this->getFormData('background_image');
             $style .= 'background-image:url(' . $image . ');';
         }
         if ($color = $this->getFormData('background_color')) {
@@ -157,7 +152,5 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
         }
 
         return $style;
-
     }
-
 }
