@@ -18,7 +18,7 @@ class Icon extends \Magento\Ui\Component\Listing\Columns\Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item[$this->getData('name')])) {
-                    $item[$this->getData('name')] = $this->getMarkup( $item[$this->getData('name')] );
+                    $item[$this->getData('name')] = $this->getMarkup($item[$this->getData('name')]);
                 }
             }
         }

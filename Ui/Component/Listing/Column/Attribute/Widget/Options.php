@@ -35,7 +35,7 @@ class Options implements OptionSourceInterface
         $options = $this->widgetFactory->create()->toOptionArray();
 
         foreach ($options as $topLevel) {
-            if ( is_array($topLevel['value']) ) {
+            if (is_array($topLevel['value'])) {
                 $optionData = array_merge($optionData, $topLevel['value']);
             }
         }

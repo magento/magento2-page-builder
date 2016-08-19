@@ -32,8 +32,7 @@ class Init extends \Magento\Backend\Block\Template
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Plugin $plugin,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->plugin = $plugin;
         $this->urlBuilder = $context->getUrlBuilder();

@@ -90,5 +90,7 @@ class Video extends AbstractBlock
         if (!empty($style)) {
             return implode(';', $styles);
         }
+
+        return null;
     }
 }
