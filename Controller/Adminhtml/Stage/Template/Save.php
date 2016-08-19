@@ -14,12 +14,12 @@ class Save extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\TemplateFactory
      */
-    protected $_template;
+    protected $template;
 
     /**
      * Save constructor.
@@ -35,8 +35,8 @@ class Save extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_template = $templateFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->template = $templateFactory;
     }
 
     /**
@@ -50,7 +50,7 @@ class Save extends \Magento\Backend\App\Action
             $postData = $this->getRequest()->getParams();
             $postData['has_data'] = ($this->getRequest()->getParam('has_data') == 'true' ? 1 : 0);
 
-            $template = $this->_template->create();
+            $template = $this->template->create();
             $template->addData($postData);
             if ($template->save()) {
                 // Include the new template data in the response
@@ -61,11 +61,11 @@ class Save extends \Magento\Backend\App\Action
                     'structure' => $template->getData('structure'),
                     'pinned' => (bool) $template->getData('pinned')
                 ];
-                return $this->_resultJsonFactory->create()->setData(['success' => true, 'template' => $templateData]);
+                return $this->resultJsonFactory->create()->setData(['success' => true, 'template' => $templateData]);
             }
         }
 
-        return $this->_resultJsonFactory->create()->setData(['success' => false]);
+        return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
 
 }

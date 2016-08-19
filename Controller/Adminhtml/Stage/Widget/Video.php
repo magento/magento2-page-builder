@@ -14,12 +14,12 @@ class Video extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Helper\Widget\Video
      */
-    protected $_videoHelper;
+    protected $videoHelper;
 
     /**
      * Video constructor.
@@ -35,8 +35,8 @@ class Video extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_videoHelper = $videoHelper;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->videoHelper = $videoHelper;
     }
 
     /**
@@ -47,13 +47,13 @@ class Video extends \Magento\Backend\App\Action
     public function execute()
     {
         if ($url = $this->getRequest()->getParam('url')) {
-            return $this->_resultJsonFactory->create()->setData([
+            return $this->resultJsonFactory->create()->setData([
                 'success' => true,
-                'key' => $this->_videoHelper->previewAction($url)
+                'key' => $this->videoHelper->previewAction($url)
             ]);
         }
 
-        return $this->_resultJsonFactory->create()->setData(['success' => false]);
+        return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
 
 }

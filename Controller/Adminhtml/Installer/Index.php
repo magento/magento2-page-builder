@@ -14,17 +14,17 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Module\Dir\Reader
      */
-    protected $_moduleReader;
+    protected $moduleReader;
 
     /**
      * @var \Magento\Framework\Filesystem\Io\File
      */
-    protected $_ioFile;
+    protected $ioFile;
 
     /**
      * @var \Gene\BlueFoot\Model\Installer\File
      */
-    protected $_fileInstaller;
+    protected $fileInstaller;
 
     /**
      * Index constructor.
@@ -40,9 +40,9 @@ class Index extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_moduleReader = $moduleReader;
-        $this->_ioFile = $ioFile;
-        $this->_fileInstaller = $fileInstaller;
+        $this->moduleReader = $moduleReader;
+        $this->ioFile = $ioFile;
+        $this->fileInstaller = $fileInstaller;
     }
 
     /**
@@ -52,9 +52,13 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $file = $this->_moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
-        if ($this->_ioFile->fileExists($file)) {
-            $this->_fileInstaller->install($file);
+        $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR .
+            'Setup' . DIRECTORY_SEPARATOR .
+            'data' . DIRECTORY_SEPARATOR .
+            'pagebuilder_blocks_core.json';
+
+        if ($this->ioFile->fileExists($file)) {
+            $this->fileInstaller->install($file);
         }
     }
 }
