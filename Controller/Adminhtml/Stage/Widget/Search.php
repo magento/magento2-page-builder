@@ -17,37 +17,37 @@ class Search extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Helper\Config
      */
-    protected $_configHelper;
+    protected $configHelper;
 
     /**
      * @var \Magento\Framework\Api\SearchCriteriaBuilder
      */
-    protected $_searchCriteriaBuilder;
+    protected $searchCriteriaBuilder;
 
     /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
-    protected $_productRepository;
+    protected $productRepository;
 
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory
      */
-    protected $_categoryCollectionFactory;
+    protected $categoryCollectionFactory;
 
     /**
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
      */
-    protected $_blockCollectionFactory;
+    protected $blockCollectionFactory;
 
     /**
      * @var \Magento\Framework\Api\FilterBuilder
      */
-    protected $_filterBuilder;
+    protected $filterBuilder;
 
     /**
      * Search constructor.
@@ -72,18 +72,17 @@ class Search extends \Magento\Backend\App\Action
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\Api\Search\FilterGroupBuilder $filterGroupBuilder
-    )
-    {
+    ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_configHelper = $configHelper;
-        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_productRepository = $productRepository;
-        $this->_categoryCollectionFactory = $categoryCollectionFactory;
-        $this->_blockCollectionFactory = $blockCollectionFactory;
-        $this->_filterBuilder = $filterBuilder;
-        $this->_filterGroupBuilder = $filterGroupBuilder;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->configHelper = $configHelper;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->productRepository = $productRepository;
+        $this->categoryCollectionFactory = $categoryCollectionFactory;
+        $this->blockCollectionFactory = $blockCollectionFactory;
+        $this->filterBuilder = $filterBuilder;
+        $this->filterGroupBuilder = $filterGroupBuilder;
     }
 
     /**
@@ -96,21 +95,24 @@ class Search extends \Magento\Backend\App\Action
         if ($context = $this->getRequest()->getParam('context')) {
             switch ($context) {
                 case 'product':
-                    return $this->_searchProduct();
+                    return $this->searchProduct();
                 break;
                 case 'category':
-                    return $this->_searchCategory();
+                    return $this->searchCategory();
                 break;
                 case 'staticblock':
-                    return $this->_searchStaticBlock();
+                    return $this->searchStaticBlock();
                 break;
                 default:
-                    return $this->_resultJsonFactory->create()->setData(['success' => false, 'message' => __('Unable to search on that type')]);
+                    return $this->resultJsonFactory->create()->setData([
+                        'success' => false,
+                        'message' => __('Unable to search on that type')
+                    ]);
                 break;
             }
         }
 
-        return $this->_resultJsonFactory->create()->setData(['success' => false]);
+        return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
 
     /**
@@ -118,7 +120,7 @@ class Search extends \Magento\Backend\App\Action
      *
      * @return mixed
      */
-    protected function _getTerm()
+    protected function getTerm()
     {
         return $this->getRequest()->getParam('term');
     }
@@ -128,24 +130,39 @@ class Search extends \Magento\Backend\App\Action
      *
      * @return array
      */
-    protected function _searchProduct()
+    protected function searchProduct()
     {
         // Create a filter group, this applies as an OR
         $filterGroups = [];
-        $filterGroups[] = $this->_filterGroupBuilder
-            ->addFilter($this->_filterBuilder->setField('sku')->setConditionType('like')->setValue('%' . $this->_getTerm() . '%')->create())
-            ->addFilter($this->_filterBuilder->setField('name')->setConditionType('like')->setValue('%' . $this->_getTerm() . '%')->create())
+        $filterGroups[] = $this->filterGroupBuilder
+            ->addFilter(
+                $this->filterBuilder
+                    ->setField('sku')
+                    ->setConditionType('like')
+                    ->setValue('%' . $this->getTerm() . '%')
+                    ->create()
+            )
+            ->addFilter(
+                $this->filterBuilder
+                    ->setField('name')
+                    ->setConditionType('like')
+                    ->setValue('%' . $this->getTerm() . '%')
+                    ->create()
+            )
             ->create();
 
         // Build up our search criteria from the groups above
-        $searchCriteria = $this->_searchCriteriaBuilder->setFilterGroups($filterGroups);
+        $searchCriteria = $this->searchCriteriaBuilder->setFilterGroups($filterGroups);
         $searchCriteria->addFilter('status', 1, 'eq');
-        $searchCriteria->addFilter('visibility', [\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH, \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG], 'in');
+        $searchCriteria->addFilter('visibility', [
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH,
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG
+        ], 'in');
 
         // Retrieve the products
-        $products = $this->_productRepository->getList($searchCriteria->create());
+        $products = $this->productRepository->getList($searchCriteria->create());
 
-        return $this->_returnOptionArray($products->getItems());
+        return $this->returnOptionArray($products->getItems());
     }
 
     /**
@@ -153,13 +170,13 @@ class Search extends \Magento\Backend\App\Action
      *
      * @return array
      */
-    protected function _searchCategory()
+    protected function searchCategory()
     {
-        $categories = $this->_categoryCollectionFactory->create()
+        $categories = $this->categoryCollectionFactory->create()
             ->addAttributeToSelect('*')
-            ->addAttributeToFilter('name', array('like' => '%' . $this->_getTerm() . '%'));
+            ->addAttributeToFilter('name', array('like' => '%' . $this->getTerm() . '%'));
 
-        return $this->_returnOptionArray($categories);
+        return $this->returnOptionArray($categories);
     }
 
     /**
@@ -167,21 +184,21 @@ class Search extends \Magento\Backend\App\Action
      *
      * @return array
      */
-    protected function _searchStaticBlock()
+    protected function searchStaticBlock()
     {
-        $blocks = $this->_blockCollectionFactory->create()
+        $blocks = $this->blockCollectionFactory->create()
             ->addFieldToSelect('block_id', 'entity_id')
             ->addFieldToSelect('title', 'name')
             ->addFieldToFilter(
                 array('title', 'identifier'),
                 array(
-                    array('like' => '%' . $this->_getTerm() . '%'),
-                    array('like' => '%' . $this->_getTerm() . '%'),
+                    array('like' => '%' . $this->getTerm() . '%'),
+                    array('like' => '%' . $this->getTerm() . '%'),
                 )
             )
             ->addFieldToFilter('is_active', array('eq' => 1));
 
-        return $this->_returnOptionArray($blocks);
+        return $this->returnOptionArray($blocks);
     }
 
     /**
@@ -193,7 +210,7 @@ class Search extends \Magento\Backend\App\Action
      *
      * @return $this
      */
-    protected function _returnOptionArray($items, $label = 'name', $id = 'entity_id')
+    protected function returnOptionArray($items, $label = 'name', $id = 'entity_id')
     {
         // If the items are a collection, retrieve the items within as an array
         if ($items instanceof \Magento\Framework\Data\Collection\AbstractDb && method_exists($items, 'toArray')) {
@@ -212,10 +229,9 @@ class Search extends \Magento\Backend\App\Action
 
         $results = [];
         if (is_array($items)) {
-
             // If there are no results, return no results
             if (count($items) == 0) {
-                return $this->_resultJsonFactory->create()->setData(['results' => 0]);
+                return $this->resultJsonFactory->create()->setData(['results' => 0]);
             }
 
             foreach ($items as $item) {
@@ -223,7 +239,6 @@ class Search extends \Magento\Backend\App\Action
             }
         }
 
-        return $this->_resultJsonFactory->create()->setData($results);
+        return $this->resultJsonFactory->create()->setData($results);
     }
-
 }

@@ -14,12 +14,12 @@ class Update extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\Build
      */
-    protected $_build;
+    protected $build;
 
     /**
      * Config constructor.
@@ -35,8 +35,8 @@ class Update extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_build = $build;
-        $this->_resultJsonFactory = $resultJsonFactory;
+        $this->build = $build;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     /**
@@ -48,18 +48,18 @@ class Update extends \Magento\Backend\App\Action
     {
         if ($this->getRequest()->getParam('code')
             && $this->getRequest()->getParam('data')
-            && $this->getRequest()->getParam('fields')) {
-
+            && $this->getRequest()->getParam('fields')
+        ) {
             // Build the data model update
-            $dataModelUpdates = $this->_build->buildDataModelUpdate(
+            $dataModelUpdates = $this->build->buildDataModelUpdate(
                 $this->getRequest()->getParam('code'),
                 $this->getRequest()->getParam('data'),
                 $this->getRequest()->getParam('fields')
             );
 
-            return $this->_resultJsonFactory->create()->setData(array('success' => true, 'fields' => $dataModelUpdates));
+            return $this->resultJsonFactory->create()->setData(array('success' => true, 'fields' => $dataModelUpdates));
         }
 
-        return $this->_resultJsonFactory->create()->setData(array('success' => false));
+        return $this->resultJsonFactory->create()->setData(array('success' => false));
     }
 }

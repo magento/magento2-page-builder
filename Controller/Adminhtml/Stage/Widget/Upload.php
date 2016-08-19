@@ -14,12 +14,12 @@ class Upload extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Helper\Config
      */
-    protected $_configHelper;
+    protected $configHelper;
 
     /**
      * Upload constructor.
@@ -35,8 +35,8 @@ class Upload extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_configHelper = $configHelper;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->configHelper = $configHelper;
     }
 
     /**
@@ -57,16 +57,16 @@ class Upload extends \Magento\Backend\App\Action
         // Error handling at it's best
         try {
             // Attempt to save the file
-            if ($uploaded = $fileUploader->save($this->_configHelper->getUploadDir())) {
-
+            if ($uploaded = $fileUploader->save($this->configHelper->getUploadDir())) {
                 // Return a success callback once the file has been uploaded
-                return $this->_resultJsonFactory->create()->setData(['success' => true, 'file' => $uploaded['file']]);
-
+                return $this->resultJsonFactory->create()->setData(['success' => true, 'file' => $uploaded['file']]);
             } else {
                 throw new \Exception('An unknown error has occurred');
             }
         } catch (\Exception $e) {
-            return $this->_resultJsonFactory->create()->setData(['error' => 'Unable to upload file: ' . $e->getMessage()]);
+            return $this->resultJsonFactory->create()->setData([
+                'error' => 'Unable to upload file: ' . $e->getMessage()
+            ]);
         }
     }
 

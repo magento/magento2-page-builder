@@ -14,12 +14,12 @@ class Pin extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\TemplateFactory
      */
-    protected $_template;
+    protected $template;
 
     /**
      * Pin constructor.
@@ -35,8 +35,8 @@ class Pin extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_template = $templateFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->template = $templateFactory;
     }
 
     /**
@@ -48,20 +48,27 @@ class Pin extends \Magento\Backend\App\Action
     {
         if ($id = $this->getRequest()->getParam('id')) {
             $pinned = filter_var($this->getRequest()->getParam('pinned'), FILTER_VALIDATE_BOOLEAN);
-            $template = $this->_template->create()->load($id);
+            $template = $this->template->create()->load($id);
             if ($template) {
                 try {
                     $template->setData('pinned', $pinned);
                     if ($template->save()) {
-                        return $this->_resultJsonFactory->create()->setData(['success' => true, 'id' => $id, 'pinned' => $pinned]);
+                        return $this->resultJsonFactory->create()->setData([
+                            'success' => true,
+                            'id' => $id,
+                            'pinned' => $pinned
+                        ]);
                     }
                 } catch (\Exception $e) {
-                    return $this->_resultJsonFactory->create()->setData(['success' => false, 'exception' => $e->getMessage()]);
+                    return $this->resultJsonFactory->create()->setData([
+                        'success' => false,
+                        'exception' => $e->getMessage()
+                    ]);
                 }
             }
         }
 
-        return $this->_resultJsonFactory->create()->setData(['success' => false]);
+        return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
 
 }

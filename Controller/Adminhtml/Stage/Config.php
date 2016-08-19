@@ -14,17 +14,17 @@ class Config extends \Magento\Backend\App\Action
     /**
      * @var \Gene\BlueFoot\Model\Stage\Config
      */
-    protected $_config;
+    protected $config;
 
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\Build
      */
-    protected $_build;
+    protected $build;
 
     /**
      * Config constructor.
@@ -40,9 +40,9 @@ class Config extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_config = $config;
-        $this->_build = $build;
-        $this->_resultJsonFactory = $resultJsonFactory;
+        $this->config = $config;
+        $this->build = $build;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     /**
@@ -52,15 +52,15 @@ class Config extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $config = $this->_config->getConfig();
+        $config = $this->config->getConfig();
 
         // Does the system have any entity ID's?
         if (($entityIds = $this->getRequest()->getParam('entityIds')) && $entityIds != 'false') {
             $config = array_merge($config, array(
-                'entities' => $this->_build->getEntityConfig($entityIds)
+                'entities' => $this->build->getEntityConfig($entityIds)
             ));
         }
 
-        return $this->_resultJsonFactory->create()->setData($config);
+        return $this->resultJsonFactory->create()->setData($config);
     }
 }

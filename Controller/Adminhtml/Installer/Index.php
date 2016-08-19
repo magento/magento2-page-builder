@@ -33,7 +33,7 @@ class Index extends \Magento\Backend\App\Action
      * @param \Magento\Framework\Module\Dir\Reader  $moduleReader
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Module\Dir\Reader $moduleReader,
         \Magento\Framework\Filesystem\Io\File $ioFile,
         \Gene\BlueFoot\Model\Installer\File $fileInstaller
@@ -53,9 +53,10 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') .
-            DIRECTORY_SEPARATOR . 'Setup' .
-            DIRECTORY_SEPARATOR . 'data' .
-            DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
+            DIRECTORY_SEPARATOR .
+            'Setup' . DIRECTORY_SEPARATOR .
+            'data' . DIRECTORY_SEPARATOR .
+            'pagebuilder_blocks_core.json';
 
         if ($this->ioFile->fileExists($file)) {
             $this->fileInstaller->install($file);

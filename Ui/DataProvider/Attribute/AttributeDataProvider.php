@@ -36,5 +36,4 @@ class AttributeDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvide
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->collection = $collectionFactory->create();
     }
-
 }

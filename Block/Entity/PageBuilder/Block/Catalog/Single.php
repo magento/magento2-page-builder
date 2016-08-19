@@ -18,9 +18,12 @@ class Single extends AbstractCatalogBlock
     {
         /* @var $dataModel \Gene\BlueFoot\Model\Attribute\Data\Widget\Product */
         $dataModel = $this->getEntity()->getResource()->getAttribute('product_id')->getDataModel($this->getEntity());
-        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Product && method_exists($dataModel, 'getProduct')) {
+        if ($dataModel instanceof \Gene\BlueFoot\Model\Attribute\Data\Widget\Product &&
+            method_exists($dataModel, 'getProduct')
+        ) {
             return $dataModel->getProduct();
         }
+
         return false;
     }
 }

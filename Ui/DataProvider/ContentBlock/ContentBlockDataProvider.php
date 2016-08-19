@@ -36,5 +36,4 @@ class ContentBlockDataProvider extends \Magento\Ui\DataProvider\AbstractDataProv
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->collection = $collectionFactory->create();
     }
-
 }

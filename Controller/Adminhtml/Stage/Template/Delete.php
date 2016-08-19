@@ -14,12 +14,12 @@ class Delete extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultJsonFactory;
+    protected $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\TemplateFactory
      */
-    protected $_template;
+    protected $template;
 
     /**
      * Delete constructor.
@@ -35,8 +35,8 @@ class Delete extends \Magento\Backend\App\Action
     ) {
         parent::__construct($context);
 
-        $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_template = $templateFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->template = $templateFactory;
     }
 
     /**
@@ -47,18 +47,21 @@ class Delete extends \Magento\Backend\App\Action
     public function execute()
     {
         if ($id = $this->getRequest()->getParam('id')) {
-            $template = $this->_template->create()->load($id);
+            $template = $this->template->create()->load($id);
             if ($template) {
                 try {
                     $template->delete();
-                    return $this->_resultJsonFactory->create()->setData(['success' => true]);
+                    return $this->resultJsonFactory->create()->setData(['success' => true]);
                 } catch (\Exception $e) {
-                    return $this->_resultJsonFactory->create()->setData(['success' => false, 'exception' => $e->getMessage()]);
+                    return $this->resultJsonFactory->create()->setData([
+                        'success' => false,
+                        'exception' => $e->getMessage()
+                    ]);
                 }
             }
         }
 
-        return $this->_resultJsonFactory->create()->setData(['success' => false]);
+        return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
 
 }

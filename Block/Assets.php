@@ -14,12 +14,12 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
     /**
      * @var \Magento\Framework\View\Page\Config
      */
-    protected $_pageConfig;
+    protected $pageConfig;
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Assets constructor.
@@ -27,6 +27,7 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
      * @param \Magento\Backend\Block\Context              $context
      * @param \Magento\Framework\View\Page\Config         $pageConfig
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param array                                       $data
      */
     public function __construct(
         \Magento\Backend\Block\Context $context,
@@ -34,8 +35,8 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         array $data = []
     ) {
-        $this->_pageConfig = $pageConfig;
-        $this->_configInterface = $configInterface;
+        $this->pageConfig = $pageConfig;
+        $this->configInterface = $configInterface;
         parent::__construct($context, $data);
     }
 
@@ -46,7 +47,7 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
      */
     protected function _construct()
     {
-        $templates = $this->_configInterface->getTemplates();
+        $templates = $this->configInterface->getTemplates();
         $assets = [];
         foreach ($templates as $template) {
             if (isset($template['assets'])) {
@@ -58,11 +59,10 @@ class Assets extends \Magento\Backend\Block\AbstractBlock
         if (!empty($assets)) {
             $assets = array_unique($assets);
             foreach ($assets as $asset) {
-                $this->_pageConfig->addPageAsset($asset);
+                $this->pageConfig->addPageAsset($asset);
             }
         }
 
         return $this;
     }
-
 }
