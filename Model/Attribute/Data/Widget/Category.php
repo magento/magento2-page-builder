@@ -11,13 +11,14 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface
+class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements
+    \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface
 {
 
     /**
      * @var ProductRepositoryInterface
      */
-    protected $_productRepository;
+    protected $productRepository;
 
     /**
      * @var \Magento\Catalog\Model\CategoryFactory
@@ -27,12 +28,12 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
     /**
      * @var \Magento\Framework\Pricing\Helper\DataFactory
      */
-    protected $_pricingHelper;
+    protected $pricingHelper;
 
     /**
      * @var \Magento\Catalog\Helper\ImageFactory
      */
-    protected $_imageHelperFactory;
+    protected $imageHelperFactory;
 
     /**
      * Category constructor.
@@ -59,20 +60,22 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection);
-        $this->_productRepository = $productRepositoryInterface;
-        $this->_categoryFactory = $categoryFactory;
-        $this->_pricingHelper = $pricingHelper;
-        $this->_imageHelperFactory = $imageHelperFactory;
+        $this->productRepository = $productRepositoryInterface;
+        $this->categoryFactory = $categoryFactory;
+        $this->pricingHelper = $pricingHelper;
+        $this->imageHelperFactory = $imageHelperFactory;
     }
 
     /**
-     * Load a category based
-     * @return $this|bool
+     * Load a category based on the data set in the field
+     *
+     * @return bool|\Magento\Catalog\Model\Category
      */
     public function getCategory()
     {
         if ($categoryId = $this->getEntity()->getData($this->getAttribute()->getData('attribute_code'))) {
-            $category = $this->_categoryFactory->create()->load($categoryId);
+            /* @var $category \Magento\Catalog\Model\Category */
+            $category = $this->categoryFactory->create()->load($categoryId);
             return $category;
         }
         return false;
@@ -81,7 +84,7 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
     /**
      * Retrieve the product collection
      *
-     * @return bool
+     * @return bool|\Magento\Framework\Data\Collection\AbstractDb
      */
     public function getProductCollection()
     {
@@ -93,6 +96,7 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
                 ->setCurPage(1)
                 ->addAttributeToSelect('*');
         }
+
         return false;
     }
 
@@ -113,16 +117,16 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
         }
 
         // Load products for the category
-        if(!$collection) {
+        if (!$collection) {
             return $return;
         }
 
-        foreach($collection as $product) {
+        foreach ($collection as $product) {
             $return['products'][] = [
                 'name' => $product->getName(),
                 'sku' => $product->getSku(),
-                'image' => $this->_getProductImage($product),
-                'price' => $this->_getFormattedPrice($product->getFinalPrice())
+                'image' => $this->getProductImage($product),
+                'price' => $this->getFormattedPrice($product->getFinalPrice())
             ];
         }
 
@@ -131,13 +135,14 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
 
     /**
      * Get formatted Price
+     *
      * @param bool|float|false $price
      * @return string
      */
-    protected function _getFormattedPrice($price = false)
+    protected function getFormattedPrice($price = false)
     {
         if ($price !== false) {
-            return $this->_pricingHelper->create()->currency($price, true, false);
+            return $this->pricingHelper->create()->currency($price, true, false);
         }
         return '';
     }
@@ -148,10 +153,10 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
      * @param $product
      * @return string
      */
-    protected function _getProductImage(\Magento\Catalog\Model\Product $product)
+    protected function getProductImage(\Magento\Catalog\Model\Product $product)
     {
         try {
-            return $this->_imageHelperFactory->create()->init($product, 'bluefoot_product_image_admin')->getUrl();
+            return $this->imageHelperFactory->create()->init($product, 'bluefoot_product_image_admin')->getUrl();
         } catch (\Exception $e) {
             return '';
         }

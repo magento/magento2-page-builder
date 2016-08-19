@@ -14,17 +14,17 @@ class Install extends \Magento\Framework\Model\AbstractModel
     /**
      * @var null|array
      */
-    protected $_installData = null;
+    protected $installData = null;
 
     /**
      * @var \Gene\BlueFoot\Model\Installer\Install\Attribute
      */
-    protected $_attributeInstall;
+    protected $attributeInstall;
 
     /**
      * @var \Gene\BlueFoot\Model\Installer\Install\ContentBlock
      */
-    protected $_contentBlockInstall;
+    protected $contentBlockInstall;
 
     /**
      * @param \Magento\Framework\Model\Context $context
@@ -44,8 +44,8 @@ class Install extends \Magento\Framework\Model\AbstractModel
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
-        $this->_attributeInstall = $attribute;
-        $this->_contentBlockInstall = $contentBlock;
+        $this->attributeInstall = $attribute;
+        $this->contentBlockInstall = $contentBlock;
     }
 
     /**
@@ -62,20 +62,20 @@ class Install extends \Magento\Framework\Model\AbstractModel
             throw new \Exception('Data must be a valid array');
         }
 
-        $this->_installData = $data;
+        $this->installData = $data;
 
         // Install the attributes first
-        if ($this->_hasAttributes()) {
-            $this->_attributeInstall->createAttributes($this->_getAttributes(), $data);
+        if ($this->hasAttributes()) {
+            $this->attributeInstall->createAttributes($this->getAttributes(), $data);
         }
 
         // Then any content blocks
-        if ($this->_hasContentBlocks()) {
-            $this->_contentBlockInstall->createContentBlocks($this->_getContentBlocks(), $data);
+        if ($this->hasContentBlocks()) {
+            $this->contentBlockInstall->createContentBlocks($this->getContentBlocks(), $data);
         }
 
         // Resolve any unmapped additional data
-        $this->_attributeInstall->resolveAdditionalData();
+        $this->attributeInstall->resolveAdditionalData();
 
         return true;
     }
@@ -85,9 +85,9 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _hasAttributes()
+    protected function hasAttributes()
     {
-        return array_key_exists('attributes', $this->_installData);
+        return array_key_exists('attributes', $this->installData);
     }
 
     /**
@@ -95,9 +95,9 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @return mixed
      */
-    protected function _getAttributes()
+    protected function getAttributes()
     {
-        return $this->_installData['attributes'];
+        return $this->installData['attributes'];
     }
 
     /**
@@ -105,9 +105,9 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _hasContentBlocks()
+    protected function hasContentBlocks()
     {
-        return array_key_exists('content_blocks', $this->_installData);
+        return array_key_exists('content_blocks', $this->installData);
     }
 
     /**
@@ -115,9 +115,8 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @return mixed
      */
-    protected function _getContentBlocks()
+    protected function getContentBlocks()
     {
-        return $this->_installData['content_blocks'];
+        return $this->installData['content_blocks'];
     }
-
 }

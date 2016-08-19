@@ -16,7 +16,7 @@ class SavePageBuilder implements ObserverInterface
     /**
      * @var \Gene\BlueFoot\Model\Stage\SaveFactory
      */
-    protected $_saveFactory;
+    protected $saveFactory;
 
     /**
      * SavePageBuilder constructor.
@@ -26,7 +26,7 @@ class SavePageBuilder implements ObserverInterface
     public function __construct(
         \Gene\BlueFoot\Model\Stage\SaveFactory $saveFactory
     ) {
-        $this->_saveFactory = $saveFactory;
+        $this->saveFactory = $saveFactory;
     }
 
     /**
@@ -41,7 +41,7 @@ class SavePageBuilder implements ObserverInterface
 
         // Watch for any structures
         if ($structures = $controllerAction->getRequest()->getParam('gene-bluefoot')) {
-            $this->_saveFactory->create()->saveStructures($structures);
+            $this->saveFactory->create()->saveStructures($structures);
         }
     }
 }

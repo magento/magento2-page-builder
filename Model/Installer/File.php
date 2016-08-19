@@ -7,26 +7,26 @@ namespace Gene\BlueFoot\Model\Installer;
  *
  * @package Gene\BlueFoot\Model\Installer
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class File extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * @var \Magento\Framework\Filesystem\Io\File
      */
-    protected $_ioFile;
+    protected $ioFile;
 
     /**
      * @var \Gene\BlueFoot\Model\Installer\Install
      */
-    protected $_install;
+    protected $install;
 
     /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Model\Context                        $context
+     * @param \Magento\Framework\Registry                             $registry
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
-     * @param array $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb           $resourceCollection
+     * @param array                                                   $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -39,8 +39,8 @@ class File extends \Magento\Framework\Model\AbstractModel
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
-        $this->_ioFile = $ioFile;
-        $this->_install = $install;
+        $this->ioFile = $ioFile;
+        $this->install = $install;
     }
 
     /**
@@ -54,12 +54,12 @@ class File extends \Magento\Framework\Model\AbstractModel
      */
     public function install($filePath)
     {
-        if ($this->_ioFile->fileExists($filePath)) {
-            $fileContents = $this->_ioFile->read($filePath);
+        if ($this->ioFile->fileExists($filePath)) {
+            $fileContents = $this->ioFile->read($filePath);
             if (strlen($fileContents) > 0) {
                 $installData = \Zend_Json::decode($fileContents);
                 if (is_array($installData)) {
-                    return $this->_install->install($installData);
+                    return $this->install->install($installData);
                 }
 
                 throw new \Exception('Unable to correctly parse file ' . $filePath);

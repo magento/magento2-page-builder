@@ -67,5 +67,4 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
     {
         return \Gene\BlueFoot\Model\Entity::ENTITY;
     }
-
 }

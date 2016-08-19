@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Widget;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Video extends \Magento\Framework\App\Action\Action
+class Video extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory

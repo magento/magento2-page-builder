@@ -16,12 +16,12 @@ class RenderPageBuilder implements ObserverInterface
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected $_urlBuilder;
+    protected $urlBuilder;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\Render
      */
-    protected $_stageRender;
+    protected $stageRender;
 
     /**
      * RenderPageBuilder constructor.
@@ -33,8 +33,8 @@ class RenderPageBuilder implements ObserverInterface
         \Magento\Framework\UrlInterface $urlInterface,
         \Gene\BlueFoot\Model\Stage\Render $stageRender
     ) {
-        $this->_urlBuilder = $urlInterface;
-        $this->_stageRender = $stageRender;
+        $this->urlBuilder = $urlInterface;
+        $this->stageRender = $stageRender;
     }
 
     /**
@@ -53,15 +53,13 @@ class RenderPageBuilder implements ObserverInterface
 
         // Check we have some HTML's
         if (!empty($html)) {
-
             // Do a very quick strpos to see if the html contains page builder mark up
             if (strpos($html, \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING) !== false) {
-
                 // Render the page
-                $renderedPage = $this->_stageRender->render($html);
+                $renderedPage = $this->stageRender->render($html);
 
                 // Set the body
-                if($renderedPage) {
+                if ($renderedPage) {
                     $response->setBody($renderedPage);
                 }
             }

@@ -12,7 +12,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface as ProductRepository;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Search extends \Magento\Framework\App\Action\Action
+class Search extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory

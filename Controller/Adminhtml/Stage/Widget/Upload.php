@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Widget;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Upload extends \Magento\Framework\App\Action\Action
+class Upload extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory

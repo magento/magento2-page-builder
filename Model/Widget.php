@@ -19,7 +19,7 @@ class Widget extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Widget constructor.
@@ -41,7 +41,7 @@ class Widget extends \Magento\Framework\Model\AbstractModel
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
-        $this->_configInterface = $configInterface;
+        $this->configInterface = $configInterface;
     }
 
     /**
@@ -51,7 +51,7 @@ class Widget extends \Magento\Framework\Model\AbstractModel
      */
     public function toOptionArray()
     {
-        $widgets = $this->_configInterface->getWidgets();
+        $widgets = $this->configInterface->getWidgets();
 
         $groups = [];
         foreach ($widgets as $widget) {

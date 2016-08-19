@@ -104,7 +104,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
      */
     protected function _saveInputType(AbstractModel $object)
     {
-        switch($object->getFrontendInput()) {
+        switch ($object->getFrontendInput()) {
             case 'child_entity':
                 $object->setBackendType('text');
                 $object->setBackendModel('Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend');
@@ -113,5 +113,4 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 
         return $this;
     }
-
 }

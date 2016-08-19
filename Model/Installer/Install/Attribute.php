@@ -10,19 +10,19 @@ use Gene\BlueFoot\Setup\EntitySetupFactory;
  *
  * @package Gene\BlueFoot\Model\Installer
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Attribute extends AbstractInstall
 {
     /**
      * @var array
      */
-    protected $_unresolvedAdditionalData = [];
+    protected $unresolvedAdditionalData = [];
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $_entity;
+    protected $entity;
 
     /**
      * Provide attribute mapping from the data format in M1 to M2's new structure
@@ -30,19 +30,19 @@ class Attribute extends AbstractInstall
      * @var array
      */
     protected $fieldMapping = [
-        'global' => 'is_global',
-        'data_model' => 'data',
-        'backend_model' => 'backend',
-        'backend_type' => 'type',
-        'backend_table' => 'table',
-        'frontend_model' => 'frontend',
-        'frontend_input' => 'input',
-        'frontend_label' => 'label',
-        'source_model' => 'source',
-        'is_required' => 'required',
+        'global'          => 'is_global',
+        'data_model'      => 'data',
+        'backend_model'   => 'backend',
+        'backend_type'    => 'type',
+        'backend_table'   => 'table',
+        'frontend_model'  => 'frontend',
+        'frontend_input'  => 'input',
+        'frontend_label'  => 'label',
+        'source_model'    => 'source',
+        'is_required'     => 'required',
         'is_user_defined' => 'user_defined',
-        'is_unique' => 'unique',
-        'is_global' => 'global'
+        'is_unique'       => 'unique',
+        'is_global'       => 'global'
     ];
 
     /**
@@ -67,9 +67,19 @@ class Attribute extends AbstractInstall
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $entitySetupFactory, $entity, $ioFile, $moduleReader, $contentBlockRepositoryInterface, $resource, $resourceCollection);
+        parent::__construct(
+            $context,
+            $registry,
+            $entitySetupFactory,
+            $entity,
+            $ioFile,
+            $moduleReader,
+            $contentBlockRepositoryInterface,
+            $resource,
+            $resourceCollection
+        );
 
-        $this->_entity = $entity;
+        $this->entity = $entity;
     }
 
     /**
@@ -97,7 +107,6 @@ class Attribute extends AbstractInstall
         // Add the new attribute providing it doesn't already exist
         $attribute = $this->_attributeExists($attributeCode);
         if (!$attribute) {
-
             // Force the eavSetup to not attempt to automatically create a group, as the .json file implements the
             // names differently there is no need to cache and restore this data. Eg. Magento expects backend, where as
             // we define backend_model as backend_model
@@ -115,9 +124,10 @@ class Attribute extends AbstractInstall
             // If the attribute has an entity_allowed_block_type, we need to update the additional_data if the
             // content block will exist once the installation is finished
             if (isset($attributeData['entity_allowed_block_type']) && $attributeData['entity_allowed_block_type']) {
-                if ($this->_contentBlockWillExist($attributeData['entity_allowed_block_type'])) {
-                    $attributeData['additional_data']['entity_allowed_block_type'] = $attributeData['entity_allowed_block_type'];
-                    $this->_unresolvedAdditionalData[] = $attributeCode;
+                if ($this->contentBlockWillExist($attributeData['entity_allowed_block_type'])) {
+                    $attributeData['additional_data']['entity_allowed_block_type']
+                        = $attributeData['entity_allowed_block_type'];
+                    $this->unresolvedAdditionalData[] = $attributeCode;
                 }
             }
 
@@ -139,7 +149,7 @@ class Attribute extends AbstractInstall
             }
 
             // Add the attribute into Magento
-            $this->_eavSetup->addAttribute($this->getEntityTypeId(), $attributeCode, $attributeData);
+            $this->eavSetup->addAttribute($this->getEntityTypeId(), $attributeCode, $attributeData);
         }
 
         return $this;
@@ -179,14 +189,16 @@ class Attribute extends AbstractInstall
      */
     public function resolveAdditionalData()
     {
-        if (!empty($this->_unresolvedAdditionalData)) {
-            foreach ($this->_unresolvedAdditionalData as $attributeCode) {
-                $attribute = $this->_entity->getAttribute($attributeCode);
+        if (!empty($this->unresolvedAdditionalData)) {
+            foreach ($this->unresolvedAdditionalData as $attributeCode) {
+                $attribute = $this->entity->getAttribute($attributeCode);
                 if ($attribute->getId()) {
                     $additionalData = \Zend_Json::decode($attribute->getAdditionalData());
                     if (isset($additionalData['entity_allowed_block_type'])) {
                         try {
-                            $contentBlock = $this->_contentBlockRepository->getByIdentifier($additionalData['entity_allowed_block_type']);
+                            $contentBlock = $this->contentBlockRepository->getByIdentifier(
+                                $additionalData['entity_allowed_block_type']
+                            );
                             if ($contentBlock->getId()) {
                                 $additionalData['entity_allowed_block_type'] = $contentBlock->getId();
                             }
@@ -195,15 +207,19 @@ class Attribute extends AbstractInstall
                         }
 
                         // Update the attribute
-                        $this->_eavSetup->updateAttribute($this->getEntityTypeId(), $attribute->getId(), 'additional_data', \Zend_Json::encode($additionalData));
+                        $this->eavSetup->updateAttribute(
+                            $this->getEntityTypeId(),
+                            $attribute->getId(),
+                            'additional_data',
+                            \Zend_Json::encode($additionalData)
+                        );
                     }
                 }
             }
 
-            $this->_unresolvedAdditionalData = [];
+            $this->unresolvedAdditionalData = [];
         }
 
         return $this;
     }
-
 }

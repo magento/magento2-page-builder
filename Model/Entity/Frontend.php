@@ -16,19 +16,19 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_defaultRenderer = 'Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock';
+    protected $defaultRenderer = 'Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock';
 
     /**
      * The default template for any block without a template
      *
      * @var string
      */
-    protected $_defaultTemplate = 'Gene_BlueFoot::pagebuilder/blocks/core/basic/blank.phtml';
+    protected $defaultTemplate = 'Gene_BlueFoot::pagebuilder/blocks/core/basic/blank.phtml';
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Frontend constructor.
@@ -92,11 +92,13 @@ class Frontend extends \Magento\Framework\Model\AbstractModel
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         if ($entity = $this->getEntity()) {
-            $viewTemplate = $this->_defaultTemplate;
+            $viewTemplate = $this->defaultTemplate;
 
             // Can we load the content block, and does the content block have a renderer?
-            if (($contentBlock = $entity->getContentBlock()) && $itemViewTemplate = $contentBlock->getItemViewTemplate()) {
-                if ($templateFile = $this->_configInterface->getTemplateFile($itemViewTemplate)) {
+            if (($contentBlock = $entity->getContentBlock()) &&
+                $itemViewTemplate = $contentBlock->getItemViewTemplate()
+            ) {
+                if ($templateFile = $this->configInterface->getTemplateFile($itemViewTemplate)) {
                     $viewTemplate = $templateFile;
                 }
             }

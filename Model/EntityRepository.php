@@ -25,37 +25,37 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @var ResourceEntity
      */
-    protected $_resource;
+    protected $resource;
 
     /**
      * @var \Gene\BlueFoot\Model\EntityFactory
      */
-    protected $_entityFactory;
+    protected $entityFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
      */
-    protected $_entityCollectionFactory;
+    protected $entityCollectionFactory;
 
     /**
      * @var Data\ContentBlockGroupSearchResultsInterfaceFactory
      */
-    protected $_searchResultsFactory;
+    protected $searchResultsFactory;
 
     /**
      * @var DataObjectHelper
      */
-    protected $_dataObjectHelper;
+    protected $dataObjectHelper;
 
     /**
      * @var DataObjectProcessor
      */
-    protected $_dataObjectProcessor;
+    protected $dataObjectProcessor;
 
     /**
      * @var \Gene\BlueFoot\Api\Data\EntityInterfaceFactory
      */
-    protected $_dataEntityFactory;
+    protected $dataEntityFactory;
 
     /**
      * EntityRepository constructor.
@@ -77,13 +77,13 @@ class EntityRepository implements EntityRepositoryInterface
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor
     ) {
-        $this->_resource = $resource;
-        $this->_entityFactory = $entityFactory;
-        $this->_entityCollectionFactory = $entityCollectionFactory;
-        $this->_searchResultsFactory = $searchResultsFactory;
-        $this->_dataObjectHelper = $dataObjectHelper;
-        $this->_dataEntityFactory = $dataEntityFactory;
-        $this->_dataObjectProcessor = $dataObjectProcessor;
+        $this->resource = $resource;
+        $this->entityFactory = $entityFactory;
+        $this->entityCollectionFactory = $entityCollectionFactory;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->dataEntityFactory = $dataEntityFactory;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
@@ -97,7 +97,7 @@ class EntityRepository implements EntityRepositoryInterface
     public function save(\Gene\BlueFoot\Api\Data\EntityInterface $entity)
     {
         try {
-            $this->_resource->save($entity);
+            $this->resource->save($entity);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
                 'Could not save the entity: %1',
@@ -117,7 +117,7 @@ class EntityRepository implements EntityRepositoryInterface
      */
     public function getById($entityId)
     {
-        $entity = $this->_entityFactory->create();
+        $entity = $this->entityFactory->create();
         $entity->load($entityId);
         if (!$entity->getId()) {
             throw new NoSuchEntityException(__('Entity with id "%1" does not exist.', $entityId));
@@ -134,10 +134,10 @@ class EntityRepository implements EntityRepositoryInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria)
     {
-        $searchResults = $this->_searchResultsFactory->create();
+        $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
 
-        $collection = $this->_entityCollectionFactory->create();
+        $collection = $this->entityCollectionFactory->create();
         $collection->addFieldToSelect('*');
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
@@ -159,7 +159,7 @@ class EntityRepository implements EntityRepositoryInterface
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
 
-        $searchResult = $this->_searchResultsFactory->create();
+        $searchResult = $this->searchResultsFactory->create();
         $searchResult->setSearchCriteria($criteria);
         $searchResult->setItems($collection->getItems());
         $searchResult->setTotalCount($collection->getSize());
@@ -177,7 +177,7 @@ class EntityRepository implements EntityRepositoryInterface
     public function delete(\Gene\BlueFoot\Api\Data\EntityInterface $entity)
     {
         try {
-            $this->_resource->delete($entity);
+            $this->resource->delete($entity);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
                 'Could not delete the entity: %1',

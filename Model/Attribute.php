@@ -37,7 +37,7 @@ class Attribute extends \Magento\Eav\Model\Attribute
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager;
+    protected $objectManager;
 
     /**
      * @var \Magento\Framework\Indexer\IndexerRegistry
@@ -117,7 +117,7 @@ class Attribute extends \Magento\Eav\Model\Attribute
             $data
         );
         $this->reservedAttributeList = $entityReservedAttributeList;
-        $this->_objectManager = $objectManager;
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -142,7 +142,7 @@ class Attribute extends \Magento\Eav\Model\Attribute
         $model = $this->getData('data_model');
         if ($model) {
             try {
-                $modelInstance = $this->_objectManager->get($model);
+                $modelInstance = $this->objectManager->get($model);
                 if ($modelInstance) {
                     $modelInstance->setEntity($entity);
                     $modelInstance->setAttribute($this);

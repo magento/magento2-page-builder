@@ -29,7 +29,7 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_helper = $helper;
+        $this->helper = $helper;
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
 
@@ -50,7 +50,7 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
      */
     public function asJson()
     {
-        $url = $this->_helper->previewAction($this->getVideo());
+        $url = $this->helper->previewAction($this->getVideo());
 
         return [
             'url' => $url

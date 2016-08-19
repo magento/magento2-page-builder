@@ -10,59 +10,59 @@ use Gene\BlueFoot\Setup\EntitySetupFactory;
  *
  * @package Gene\BlueFoot\Model\Installer
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * @var \Gene\BlueFoot\Setup\EntitySetupFactory
      */
-    protected $_entitySetupFactory;
+    protected $entitySetupFactory;
 
     /**
      * @var bool
      */
-    protected $_eavSetup = false;
+    protected $eavSetup = false;
 
     /**
      * @var \Magento\Eav\Model\Entity\Type
      */
-    protected $_entityType;
+    protected $entityType;
 
     /**
      * @var \Magento\Framework\Filesystem\Io\File
      */
-    protected $_ioFile;
+    protected $ioFile;
 
     /**
      * @var \Magento\Framework\Module\Dir\Reader
      */
-    protected $_moduleReader;
+    protected $moduleReader;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    protected $_contentBlockRepository;
+    protected $contentBlockRepository;
 
     /**
      * @var array
      */
-    protected $_classMapping = [];
+    protected $classMapping = [];
 
     /**
      * @var null|array
      */
-    protected $_installData = null;
+    protected $installData = null;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $_entity;
+    protected $entity;
 
     /**
      * @var array
      */
-    protected $_modelFields;
+    protected $modelFields;
 
     /**
      * Attribute constructor.
@@ -88,18 +88,18 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
-        $this->_entitySetupFactory = $entitySetupFactory;
-        $this->_ioFile = $ioFile;
-        $this->_moduleReader = $moduleReader;
-        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
+        $this->entitySetupFactory = $entitySetupFactory;
+        $this->ioFile = $ioFile;
+        $this->moduleReader = $moduleReader;
+        $this->contentBlockRepository = $contentBlockRepositoryInterface;
 
-        $this->_eavSetup = $this->_entitySetupFactory->create();
-        $this->_entity = $entity;
+        $this->eavSetup = $this->entitySetupFactory->create();
+        $this->entity = $entity;
 
         // Declare the model fields that require to be mapped
-        $this->_modelFields = ['backend_model', 'frontend_model', 'source_model', 'data_model'];
+        $this->modelFields = ['backend_model', 'frontend_model', 'source_model', 'data_model'];
 
-        $this->_loadClassMapping();
+        $this->loadClassMapping();
     }
 
     /**
@@ -109,7 +109,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      */
     public function setInstallData($data)
     {
-        $this->_installData = $data;
+        $this->installData = $data;
     }
 
     /**
@@ -119,7 +119,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      */
     public function getEntityTypeId()
     {
-        return $this->_entity->getEntityType()->getEntityTypeId();
+        return $this->entity->getEntityType()->getEntityTypeId();
     }
 
     /**
@@ -129,9 +129,9 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @return mixed
      */
-    protected function _attributeExists($attributeCode)
+    protected function attributeExists($attributeCode)
     {
-        return $this->_eavSetup->getAttribute($this->getEntityTypeId(), $attributeCode, 'attribute_code');
+        return $this->eavSetup->getAttribute($this->getEntityTypeId(), $attributeCode, 'attribute_code');
     }
 
     /**
@@ -141,16 +141,16 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _attributeWillExist($attributeCode)
+    protected function attributeWillExist($attributeCode)
     {
         // Check to see if the attribute already exists?
-        if ($this->_attributeExists($attributeCode)) {
+        if ($this->attributeExists($attributeCode)) {
             return true;
         }
 
         // Check to see if the attribute will exist after the installation is finished
-        if (isset($this->_installData) && isset($this->_installData['attributes'])) {
-            if ($this->_findEntityByKey($this->_installData['attributes'], 'attribute_code', $attributeCode)) {
+        if (isset($this->installData) && isset($this->installData['attributes'])) {
+            if ($this->findEntityByKey($this->installData['attributes'], 'attribute_code', $attributeCode)) {
                 return true;
             }
         }
@@ -165,10 +165,10 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _contentBlockExists($identifier)
+    protected function contentBlockExists($identifier)
     {
         try {
-            $contentBlock = $this->_contentBlockRepository->getByIdentifier($identifier);
+            $contentBlock = $this->contentBlockRepository->getByIdentifier($identifier);
             if ($contentBlock->getId()) {
                 return true;
             }
@@ -186,14 +186,14 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _contentBlockWillExist($identifier)
+    protected function contentBlockWillExist($identifier)
     {
-        if ($this->_contentBlockExists($identifier)) {
+        if ($this->contentBlockExists($identifier)) {
             return true;
         }
 
-        if (isset($this->_installData) && isset($this->_installData['content_blocks'])) {
-            if ($this->_findEntityByKey($this->_installData['content_blocks'], 'identifier', $identifier)) {
+        if (isset($this->installData) && isset($this->installData['content_blocks'])) {
+            if ($this->findEntityByKey($this->installData['content_blocks'], 'identifier', $identifier)) {
                 return true;
             }
         }
@@ -210,7 +210,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _findEntityByKey($data, $key, $value)
+    protected function findEntityByKey($data, $key, $value)
     {
         // Check if the attribute data has been set
         if (empty($data)) {
@@ -232,29 +232,31 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @throws \Exception
      * @throws \Zend_Json_Exception
      */
-    protected function _loadClassMapping()
+    protected function loadClassMapping()
     {
         // Declare the directory to the class mapping directory
-        $directory = $this->_moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'class_mapping';
-        $this->_ioFile->setAllowCreateFolders(false);
+        $directory = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') .
+            DIRECTORY_SEPARATOR . 'Setup' .
+            DIRECTORY_SEPARATOR . 'data' .
+            DIRECTORY_SEPARATOR . 'class_mapping';
+
+        $this->ioFile->setAllowCreateFolders(false);
 
         // Open the directory and list all files
-        $this->_ioFile->open(['path' => $directory]);
-        $mappingFiles = $this->_ioFile->ls();
+        $this->ioFile->open(['path' => $directory]);
+        $mappingFiles = $this->ioFile->ls();
 
         // If class mapping files are present combine them
         if (is_array($mappingFiles) && !empty($mappingFiles)) {
             foreach ($mappingFiles as $mappingFile) {
-
                 // Only load in json files
                 if (isset($mappingFile['filetype']) && $mappingFile['filetype'] == 'json') {
-                    $fileContents = $this->_ioFile->read($mappingFile['text']);
+                    $fileContents = $this->ioFile->read($mappingFile['text']);
                     if ($fileContents) {
                         $fileJson = \Zend_Json::decode($fileContents);
                         if (is_array($fileJson)) {
-
                             // Combine the mappings into one beautiful string
-                            $this->_classMapping = array_merge($this->_classMapping, $fileJson);
+                            $this->classMapping = array_merge($this->classMapping, $fileJson);
                         }
                     }
                 }
@@ -269,15 +271,14 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @param $data
      */
-    protected function _mapClasses(&$data)
+    protected function mapClasses(&$data)
     {
-        foreach ($this->_modelFields as $field) {
-            if (isset($data[$field]) && isset($this->_classMapping[$data[$field]])) {
-                $data[$field] = $this->_classMapping[$data[$field]];
+        foreach ($this->modelFields as $field) {
+            if (isset($data[$field]) && isset($this->classMapping[$data[$field]])) {
+                $data[$field] = $this->classMapping[$data[$field]];
             }
         }
 
         return $data;
     }
-
 }

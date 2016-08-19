@@ -33,8 +33,8 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-        $this->_blockFactory = $blockFactory;
-        $this->_render = $render;
+        $this->blockFactory = $blockFactory;
+        $this->render = $render;
     }
 
     /**
@@ -44,7 +44,7 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
      */
     public function getBlock()
     {
-        $block = $this->_blockFactory->create();
+        $block = $this->blockFactory->create();
         return $block->load($this->getEntity()->getData($this->getAttribute()->getData('attribute_code')));
     }
 
@@ -57,7 +57,7 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
     {
         $block = $this->getBlock();
 
-        $content = $this->_render->renderPlaceholders($block->getContent());
+        $content = $this->render->renderPlaceholders($block->getContent());
 
         return [
             'title' => $block->getTitle(),

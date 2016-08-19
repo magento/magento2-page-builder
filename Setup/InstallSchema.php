@@ -11,13 +11,17 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  *
  * @package Gene\BlueFoot\Setup
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class InstallSchema implements InstallSchemaInterface
 {
     /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * Install tables
+     *
+     * @param \Magento\Framework\Setup\SchemaSetupInterface   $setup
+     * @param \Magento\Framework\Setup\ModuleContextInterface $context
+     *
+     * @throws \Zend_Db_Exception
      */
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
@@ -39,7 +43,7 @@ class InstallSchema implements InstallSchemaInterface
             'entity_type_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
             null,
-            ['unsigned'  => true, 'nullable'  => false, 'default'   => '0'],
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Entity Type Id'
         )->addIndex(
             $installer->getIdxName('gene_bluefoot_entity', ['entity_type_id']),
@@ -48,7 +52,7 @@ class InstallSchema implements InstallSchemaInterface
             'attribute_set_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
             5,
-            ['unsigned'  => true, 'nullable'  => false, 'default'   => '0'],
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Set Id'
         )->addForeignKey(
             $installer->getFkName('gene_bluefoot_entity', 'attribute_set_id', 'eav_attribute_set', 'attribute_set_id'),
@@ -60,7 +64,7 @@ class InstallSchema implements InstallSchemaInterface
             'identifier',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             100,
-            ['nullable'  => true, 'default' => null],
+            ['nullable' => true, 'default' => null],
             'Content Identifier'
         )->addIndex(
             $installer->getIdxName(
@@ -550,7 +554,7 @@ class InstallSchema implements InstallSchemaInterface
             'group_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary'  => true],
+            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
             'Rewrite Id'
         )->addColumn(
             'code',
@@ -588,7 +592,7 @@ class InstallSchema implements InstallSchemaInterface
             'type_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity'  => true,'nullable'  => false, 'primary'   => true],
+            ['identity' => true, 'nullable' => false, 'primary' => true],
             'Entity Type Id'
         )->addColumn(
             'identifier',
@@ -608,7 +612,7 @@ class InstallSchema implements InstallSchemaInterface
             'attribute_set_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
             5,
-            ['unsigned'  => true, 'nullable'  => false, 'default'   => '0'],
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Attribute Set Id'
         )->addIndex(
             $installer->getIdxName(
@@ -646,25 +650,25 @@ class InstallSchema implements InstallSchemaInterface
             'content_type',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             30,
-            ['nullable'  => false],
+            ['nullable' => false],
             'Content Type'
         )->addColumn(
             'description',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             '64k',
-            ['nullable'  => true],
+            ['nullable' => true],
             'Type Description'
         )->addColumn(
             'url_key_prefix',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             80,
-            ['nullable'  => true],
+            ['nullable' => true],
             'URL Key Prefix'
         )->addColumn(
             'preview_field',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable'  => true],
+            ['nullable' => true],
             'The field to be shown as a preview if no preview template is defined'
         )->addColumn(
             'renderer',
@@ -688,31 +692,31 @@ class InstallSchema implements InstallSchemaInterface
             'list_item_template',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable'  => true],
+            ['nullable' => true],
             'List Item Template'
         )->addColumn(
             'item_layout_update_xml',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
-            ['nullable'  => true],
+            ['nullable' => true],
             'Item Layout Update XML'
         )->addColumn(
             'list_layout_update_xml',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
-            ['nullable'  => true],
+            ['nullable' => true],
             'List Layout Update XML'
         )->addColumn(
             'singular_name',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable'  => true],
+            ['nullable' => true],
             'Singular Name'
         )->addColumn(
             'plural_name',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable'  => true],
+            ['nullable' => true],
             'Plural Name'
         )->addColumn(
             'include_in_sitemap',
@@ -730,13 +734,13 @@ class InstallSchema implements InstallSchemaInterface
             'icon_class',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             50,
-            ['nullable'  => true],
+            ['nullable' => true],
             'Icon Class'
         )->addColumn(
             'color',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             11,
-            ['nullable'  => true],
+            ['nullable' => true],
             'Color'
         )->addColumn(
             'show_in_page_builder',
@@ -764,13 +768,13 @@ class InstallSchema implements InstallSchemaInterface
             'template_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity'  => true, 'unsigned' => true, 'nullable'  => false, 'primary'   => true],
+            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
             'Template ID'
         )->addColumn(
             'name',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable'  => false],
+            ['nullable' => false],
             'Name of template'
         )->addColumn(
             'structure',
@@ -800,18 +804,17 @@ class InstallSchema implements InstallSchemaInterface
             'created_at',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,
-            ['nullable'  => false],
+            ['nullable' => false],
             'Created At'
         )->addColumn(
             'updated_at',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,
-            ['nullable'  => false],
+            ['nullable' => false],
             'Updated At'
         );
         $installer->getConnection()->createTable($table);
 
         $installer->endSetup();
-
     }
 }

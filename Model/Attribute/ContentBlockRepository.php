@@ -25,32 +25,32 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock
      */
-    private $_contentBlockResource;
+    private $contentBlockResource;
 
     /**
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
      */
-    private $_contentBlockFactory;
+    private $contentBlockFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
      */
-    private $_collectionFactory;
+    private $collectionFactory;
 
     /**
      * @var EavConfig
      */
-    private $_eavConfig;
+    private $eavConfig;
 
     /**
      * @var \Magento\Eav\Api\Data\AttributeSetSearchResultsInterfaceFactory
      */
-    private $_searchResultsFactory;
+    private $searchResultsFactory;
 
     /**
      * @var \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface
      */
-    protected $_joinProcessor;
+    protected $joinProcessor;
 
     /**
      * ContentBlockRepository constructor.
@@ -70,12 +70,12 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
         \Magento\Eav\Api\Data\AttributeSetSearchResultsInterfaceFactory $searchResultFactory,
         \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $joinProcessor
     ) {
-        $this->_contentBlockResource = $contentBlockResource;
-        $this->_contentBlockFactory = $contentBlockFactory;
-        $this->_collectionFactory = $collectionFactory;
-        $this->_eavConfig = $eavConfig;
-        $this->_searchResultsFactory = $searchResultFactory;
-        $this->_joinProcessor = $joinProcessor;
+        $this->contentBlockResource = $contentBlockResource;
+        $this->contentBlockFactory = $contentBlockFactory;
+        $this->collectionFactory = $collectionFactory;
+        $this->eavConfig = $eavConfig;
+        $this->searchResultsFactory = $searchResultFactory;
+        $this->joinProcessor = $joinProcessor;
     }
 
     /**
@@ -107,20 +107,20 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
     {
         /** @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\Collection $collection */
-        $collection = $this->_collectionFactory->create();
-        $this->_joinProcessor->process($collection);
+        $collection = $this->collectionFactory->create();
+        $this->joinProcessor->process($collection);
 
         /** The only possible/meaningful search criteria for attribute set is entity type code */
         $entityTypeCode = $this->getEntityTypeCode($searchCriteria);
 
         if ($entityTypeCode !== null) {
-            $collection->setEntityTypeFilter($this->_eavConfig->getEntityType($entityTypeCode)->getId());
+            $collection->setEntityTypeFilter($this->eavConfig->getEntityType($entityTypeCode)->getId());
         }
 
         $collection->setCurPage($searchCriteria->getCurrentPage());
         $collection->setPageSize($searchCriteria->getPageSize());
 
-        $searchResults = $this->_searchResultsFactory->create();
+        $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
@@ -138,8 +138,8 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     public function getByIdentifier($contentBlockIdentifier)
     {
         /** @var ContentBlock $contentBlock */
-        $contentBlock = $this->_contentBlockFactory->create();
-        $this->_contentBlockResource->load($contentBlock, $contentBlockIdentifier, 'entity_type.identifier');
+        $contentBlock = $this->contentBlockFactory->create();
+        $this->contentBlockResource->load($contentBlock, $contentBlockIdentifier, 'entity_type.identifier');
 
         if (!$contentBlock->getId()) {
             throw NoSuchEntityException::singleField('identifier', $contentBlockIdentifier);
@@ -176,8 +176,8 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     public function getById($contentBlockId)
     {
         /** @var ContentBlock $contentBlock */
-        $contentBlock = $this->_contentBlockFactory->create();
-        $this->_contentBlockResource->load($contentBlock, $contentBlockId);
+        $contentBlock = $this->contentBlockFactory->create();
+        $this->contentBlockResource->load($contentBlock, $contentBlockId);
 
         if (!$contentBlock->getId()) {
             throw NoSuchEntityException::singleField('id', $contentBlockId);
@@ -196,7 +196,7 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
     public function delete(ContentBlockInterface $contentBlock)
     {
         try {
-            $this->_contentBlockResource->delete($contentBlock);
+            $this->contentBlockResource->delete($contentBlock);
         } catch (\Magento\Framework\Exception\StateException $exception) {
             throw new CouldNotDeleteException(__('Default content block can not be deleted'));
         } catch (\Exception $exception) {

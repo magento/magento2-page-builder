@@ -14,7 +14,7 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;
  *
  * @package Gene\BlueFoot\Setup
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class EntitySetup extends EavSetup
 {
@@ -63,7 +63,7 @@ class EntitySetup extends EavSetup
                 'additional_attribute_table'  => 'gene_bluefoot_eav_attribute',
                 'entity_attribute_collection' => 'Gene\BlueFoot\Model\ResourceModel\Attribute\Collection',
                 'attributes'                  => [
-                    'title' => [
+                    'title'                => [
                         'type'         => 'varchar',
                         'label'        => 'Title',
                         'input'        => 'text',
@@ -74,7 +74,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'General'
                     ],
-                    'identifier' => [
+                    'identifier'           => [
                         'type'       => 'static',
                         'label'      => 'Identifier',
                         'input'      => 'text',
@@ -84,7 +84,7 @@ class EntitySetup extends EavSetup
                         'note'       => '',
                         'visible'    => 2,
                     ],
-                    'is_active' => [
+                    'is_active'            => [
                         'type'         => 'int',
                         'label'        => 'Is Active',
                         'input'        => 'select',
@@ -94,7 +94,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'General'
                     ],
-                    'main_content' => [
+                    'main_content'         => [
                         'type'            => 'text',
                         'label'           => 'Main Content',
                         'input'           => 'textarea',
@@ -105,7 +105,7 @@ class EntitySetup extends EavSetup
                         'user_defined'    => 1,
                         'group'           => 'General'
                     ],
-                    'meta_title' => [
+                    'meta_title'           => [
                         'type'         => 'varchar',
                         'label'        => 'Page Title',
                         'input'        => 'text',
@@ -115,7 +115,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'Meta'
                     ],
-                    'meta_keywords' => [
+                    'meta_keywords'        => [
                         'type'         => 'text',
                         'label'        => 'Meta Keywords',
                         'input'        => 'textarea',
@@ -125,7 +125,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'Meta'
                     ],
-                    'meta_description' => [
+                    'meta_description'     => [
                         'type'         => 'text',
                         'label'        => 'Meta Description',
                         'input'        => 'textarea',
@@ -135,7 +135,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'Meta'
                     ],
-                    'custom_template' => [
+                    'custom_template'      => [
                         'type'         => 'varchar',
                         'label'        => 'Custom Template',
                         'input'        => 'text',
@@ -145,7 +145,7 @@ class EntitySetup extends EavSetup
                         'user_defined' => 1,
                         'group'        => 'Custom Design'
                     ],
-                    'custom_design' => [
+                    'custom_design'        => [
                         'type'       => 'varchar',
                         'label'      => 'Custom Design',
                         'input'      => 'select',
@@ -203,5 +203,4 @@ class EntitySetup extends EavSetup
     {
         return $this->eavConfig;
     }
-
 }

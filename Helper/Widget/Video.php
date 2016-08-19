@@ -13,7 +13,7 @@ class Video extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * Return the upload directory
-     * 
+     *
      * @param $url
      * @return bool|string
      */
@@ -25,7 +25,7 @@ class Video extends \Magento\Framework\App\Helper\AbstractHelper
             if (count($id)) {
                 return 'https://www.youtube.com/embed/' . $id[1];
             }
-        } else if (preg_match("/https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/", $url, $id)) {
+        } elseif (preg_match("/https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/", $url, $id)) {
             if (count($id)) {
                 return 'https://player.vimeo.com/video/' . $id[3] . '?title=0&byline=0&portrait=0';
             }

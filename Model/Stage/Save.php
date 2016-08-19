@@ -19,42 +19,42 @@ class Save extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * @var \Gene\BlueFoot\Model\EntityFactory
      */
-    protected $_entityFactory;
+    protected $entityFactory;
 
     /**
      * @var \Magento\Framework\App\Request\Http
      */
-    protected $_request;
+    protected $request;
 
     /**
      * @var \Magento\Framework\Json\Helper\Data
      */
-    protected $_jsonHelper;
+    protected $jsonHelper;
 
     /**
      * @var array|null
      */
-    protected $_globalFields = null;
+    protected $globalFields = null;
 
     /**
      * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
      */
-    protected $_entityRepository;
+    protected $entityRepository;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
      */
-    protected $_entityCollection;
+    protected $entityCollection;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    protected $_contentBlockRepository;
+    protected $contentBlockRepository;
 
     /**
      * Save constructor.
@@ -63,10 +63,10 @@ class Save extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
      * @param \Gene\BlueFoot\Model\EntityFactory                           $entityFactory
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
      * @param \Magento\Framework\App\Request\Http                          $request
      * @param \Magento\Framework\Json\Helper\Data                          $jsonHelper
      * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                 $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory  $entityCollectionFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
@@ -86,13 +86,13 @@ class Save extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_configInterface = $configInterface;
-        $this->_entityFactory = $entityFactory;
-        $this->_request = $request;
-        $this->_jsonHelper = $jsonHelper;
-        $this->_entityRepository = $entityRepositoryInterface;
-        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
-        $this->_entityCollection = $entityCollectionFactory;
+        $this->configInterface = $configInterface;
+        $this->entityFactory = $entityFactory;
+        $this->request = $request;
+        $this->jsonHelper = $jsonHelper;
+        $this->entityRepository = $entityRepositoryInterface;
+        $this->contentBlockRepository = $contentBlockRepositoryInterface;
+        $this->entityCollection = $entityCollectionFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -105,17 +105,14 @@ class Save extends \Magento\Framework\Model\AbstractModel
     public function saveStructures($structures)
     {
         // Loop through each form
-        foreach($structures as $elementName => $content) {
-
+        foreach ($structures as $elementName => $content) {
             // We don't want nasty errors happening here
             try {
-
                 // Try and parse the page structure
                 $pageStructure = $this->decodeStructure($content);
 
                 // Only attempt if the json decode was a success
                 if ($pageStructure) {
-
                     // Create the correct structure
                     $this->createStructure($pageStructure);
 
@@ -144,7 +141,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
      */
     public function decodeStructure($structure)
     {
-        return $this->_jsonHelper->jsonDecode($structure);
+        return $this->jsonHelper->jsonDecode($structure);
     }
 
     /**
@@ -154,14 +151,14 @@ class Save extends \Magento\Framework\Model\AbstractModel
      */
     public function getGlobalFields()
     {
-        if (is_null($this->_globalFields)) {
-            $this->_globalFields = [];
-            $config = $this->_configInterface->getGlobalFields();
+        if ($this->globalFields === null) {
+            $this->globalFields = [];
+            $config = $this->configInterface->getGlobalFields();
             foreach ($config as $field) {
-                $this->_globalFields[] = (string) $field['code'];
+                $this->globalFields[] = (string) $field['code'];
             }
         }
-        return $this->_globalFields;
+        return $this->globalFields;
     }
 
     /**
@@ -173,11 +170,13 @@ class Save extends \Magento\Framework\Model\AbstractModel
     {
         // Handle the extra element
         $storeId = false;
-        $extra = array_filter($elements, function ($element) { return (isset($element['type']) && $element['type'] == 'extra'); });
+        $extra = array_filter($elements, function ($element) {
+            return (isset($element['type']) && $element['type'] == 'extra');
+        });
         if ($extra && !empty($extra)) {
             unset($elements[key($extra)]);
             $extraItem = current($extra);
-            $this->_handleExtra($extraItem);
+            $this->handleExtra($extraItem);
 
             if (isset($extraItem['storeId']) && !empty($extraItem['storeId'])) {
                 $storeId = $extraItem['storeId'];
@@ -185,10 +184,9 @@ class Save extends \Magento\Framework\Model\AbstractModel
         }
 
         // Loop through the elements
-        foreach($elements as &$element) {
-
+        foreach ($elements as &$element) {
             // If the element has a content type we need to create a new entity
-            if(isset($element['contentType'])) {
+            if (isset($element['contentType'])) {
                 if ($fields = $this->getGlobalFields()) {
                     $storeInJson = array();
                     foreach ($fields as $field) {
@@ -199,7 +197,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 }
 
                 $entity = $this->createEntityFromElement($element, $storeId);
-                if($entity && $entity->getId()) {
+                if ($entity && $entity->getId()) {
                     $element['entityId'] = $entity->getId();
                     unset($element['formData']);
 
@@ -211,15 +209,15 @@ class Save extends \Magento\Framework\Model\AbstractModel
 
 
                 // If it has any children we need to run this method again
-                if(isset($element['children']) && is_array($element['children'])) {
-                    foreach($element['children'] as $name => &$children) {
+                if (isset($element['children']) && is_array($element['children'])) {
+                    foreach ($element['children'] as $name => &$children) {
                         $this->createStructure($element['children'][$name]);
                     }
                 }
 
             } else {
                 // If it has any children we need to run this method again
-                if(isset($element['children']) && is_array($element['children'])) {
+                if (isset($element['children']) && is_array($element['children'])) {
                     $this->createStructure($element['children']);
                 }
             }
@@ -231,15 +229,15 @@ class Save extends \Magento\Framework\Model\AbstractModel
      *
      * @param $element
      */
-    protected function _handleExtra($element)
+    protected function handleExtra($element)
     {
         if (isset($element['deleted']) && is_array($element['deleted']) && !empty($element['deleted'])) {
-            $entities = $this->_entityCollection->create()
+            $entities = $this->entityCollection->create()
                 ->addFieldToFilter('entity_id', array('in' => $element['deleted']));
 
             if ($entities->getSize()) {
                 foreach ($entities as $entity) {
-                    $this->_entityRepository->delete($entity);
+                    $this->entityRepository->delete($entity);
                 }
             }
         }
@@ -258,25 +256,29 @@ class Save extends \Magento\Framework\Model\AbstractModel
     public function createEntityFromElement($element, $storeId)
     {
         // We only create an entity if we have some data
-        if(isset($element['formData']) && !empty($element['formData'])) {
-
-            $contentBlock = $this->_contentBlockRepository->getByIdentifier($element['contentType']);
+        if (isset($element['formData']) && !empty($element['formData'])) {
+            $contentBlock = $this->contentBlockRepository->getByIdentifier($element['contentType']);
             if ($contentBlock) {
-
                 // Format the form data
                 $formData = $element['formData'];
                 $formData['attribute_set_id'] = $contentBlock->getId();
 
                 // Load the entity based on it's ID
-                $entityId = (isset($element['entityId']) ? $element['entityId'] : (isset($element['formData']['entityId']) ? isset($element['formData']['entityId']) : false));
+                $entityId = false;
+                if (isset($element['entityId'])) {
+                    $entityId = $element['entityId'];
+                } elseif (isset($element['formData']['entityId'])) {
+                    $entityId = $element['formData']['entityId'];
+                }
+
                 if ($entityId) {
                     try {
-                        $entity = $this->_entityRepository->getById($entityId);
+                        $entity = $this->entityRepository->getById($entityId);
                     } catch (\NoSuchEntityException $e) {
-                        $entity = $this->_entityFactory->create();
+                        $entity = $this->entityFactory->create();
                     }
                 } else {
-                    $entity = $this->_entityFactory->create();
+                    $entity = $this->entityFactory->create();
                 }
 
                 // Add it into the entity
@@ -290,7 +292,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 }
 
                 // Save the create!
-                if ($this->_entityRepository->save($entity)) {
+                if ($this->entityRepository->save($entity)) {
                     return $entity;
                 }
             }
@@ -308,8 +310,8 @@ class Save extends \Magento\Framework\Model\AbstractModel
      */
     public function encodeStructure($structure)
     {
-        if(is_array($structure)) {
-            $json = $this->_jsonHelper->jsonEncode($structure);
+        if (is_array($structure)) {
+            $json = $this->jsonHelper->jsonEncode($structure);
         } else {
             $json = $structure;
         }
@@ -330,19 +332,19 @@ class Save extends \Magento\Framework\Model\AbstractModel
      */
     public function set(&$array, $key, $value)
     {
-        if (is_null($key)) return $array = $value;
+        if ($key === null) {
+            return $array = $value;
+        }
 
         $keys = explode('.', $key);
 
-        while (count($keys) > 1)
-        {
+        while (count($keys) > 1) {
             $key = array_shift($keys);
 
             // If the key doesn't exist at this depth, we will just create an empty array
             // to hold the next value, allowing us to create the arrays to hold final
             // values at the correct depth. Then we'll keep digging into the array.
-            if ( ! isset($array[$key]) || ! is_array($array[$key]))
-            {
+            if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = array();
             }
 
@@ -367,7 +369,10 @@ class Save extends \Magento\Framework\Model\AbstractModel
 
         // Handle that the catalog prepends the fields with 'product'
         // @todo investigate making this universal
-        if ($this->_request->getControllerModule() == 'Magento_Catalog' && $this->_request->getControllerName() == 'product' && $this->_request->getActionName() == 'save') {
+        if ($this->request->getControllerModule() == 'Magento_Catalog' &&
+            $this->request->getControllerName() == 'product' &&
+            $this->request->getActionName() == 'save'
+        ) {
             $elementName = 'product.' . $elementName;
         }
 
@@ -375,7 +380,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
         $this->set($_POST, $elementName, $data);
 
         // Set the $_POST back into the request object
-        $this->_request->setPostValue($_POST);
+        $this->request->setPostValue($_POST);
     }
 
 }

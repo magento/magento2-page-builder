@@ -17,62 +17,62 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\Stage\Structural
      */
-    protected $_structural;
+    protected $structural;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
      */
-    protected $_contentBlockCollection;
+    protected $contentBlockCollection;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
      */
-    protected $_contentBlockGroupRepository;
+    protected $contentBlockGroupRepository;
 
     /**
      * @var \Magento\Eav\Model\EntityFactory
      */
-    protected $_eavEntityFactory;
+    protected $eavEntityFactory;
 
     /**
      * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory
      */
-    protected $_groupCollection;
+    protected $groupCollection;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory
      */
-    protected $_attributeCollection;
+    protected $attributeCollection;
 
     /**
      * @var array
      */
-    protected $_attributeData;
+    protected $attributeData;
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * @var \Magento\Framework\View\LayoutFactory
      */
-    protected $_layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory
      */
-    protected $_templateCollection;
+    protected $templateCollection;
 
     /**
      * @var \Magento\Framework\Api\SearchCriteriaBuilder
      */
-    protected $_searchCriteriaBuilder;
+    protected $searchCriteriaBuilder;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $_entity;
+    protected $entity;
 
     /**
      * Config constructor.
@@ -112,17 +112,17 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_structural = $structural;
-        $this->_contentBlockCollection = $contentBlockCollectionFactory;
-        $this->_contentBlockGroupRepository = $contentBlockGroupRepository;
-        $this->_eavEntityFactory = $eavEntityFactory;
-        $this->_groupCollection = $groupCollectionFactory;
-        $this->_attributeCollection = $attributeCollection;
-        $this->_configInterface = $configInterface;
-        $this->_layoutFactory = $layoutFactory;
-        $this->_templateCollection = $templateCollectionFactory;
-        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_entity = $entity;
+        $this->structural = $structural;
+        $this->contentBlockCollection = $contentBlockCollectionFactory;
+        $this->contentBlockGroupRepository = $contentBlockGroupRepository;
+        $this->eavEntityFactory = $eavEntityFactory;
+        $this->groupCollection = $groupCollectionFactory;
+        $this->attributeCollection = $attributeCollection;
+        $this->configInterface = $configInterface;
+        $this->layoutFactory = $layoutFactory;
+        $this->templateCollection = $templateCollectionFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->entity = $entity;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -137,7 +137,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $config = [
             'contentTypeGroups' => $this->getContentBlockGroups(),
             'contentTypes' => $this->getContentBlockData(),
-            'structural' => $this->_structural->getStructuralConfig(),
+            'structural' => $this->structural->getStructuralConfig(),
             'templates' => $this->getTemplateData(),
             'globalFields' => $this->getGlobalFields()
         ];
@@ -155,7 +155,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $groups = [];
 
         /* @var $groupsSearchResults \Magento\Framework\Api\SearchResults */
-        $groupsSearchResults = $this->_contentBlockGroupRepository->getList($this->_searchCriteriaBuilder->create());
+        $groupsSearchResults = $this->contentBlockGroupRepository->getList($this->searchCriteriaBuilder->create());
         foreach ($groupsSearchResults->getItems() as $group) {
             $groups[$group['id']] = [
                 'code' => $group['code'],
@@ -175,7 +175,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getTemplateData()
     {
-        $templates = $this->_templateCollection->create();
+        $templates = $this->templateCollection->create();
         $templates->setOrder('pinned', \Magento\Framework\Data\Collection::SORT_ORDER_DESC);
 
         if ($templates->getSize()) {
@@ -202,7 +202,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getGlobalFields()
     {
-        return $this->_configInterface->getGlobalFields();
+        return $this->configInterface->getGlobalFields();
     }
 
     /**
@@ -213,17 +213,21 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getContentBlockData()
     {
         // Retrieve content blocks
-        $contentBlocks = $this->_contentBlockCollection->create();
+        $contentBlocks = $this->contentBlockCollection->create();
         $contentBlocks->setOrder('entity_type.sort_order', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
-        $contentBlocks->setEntityTypeFilter($this->_eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId());
+        $contentBlocks->setEntityTypeFilter(
+            $this->eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
+        );
 
         // Don't load in the default attribute set
-        $contentBlocks->addFieldToFilter('main_table.attribute_set_id', array('neq' => $this->_entity->getEntityType()->getDefaultAttributeSetId()));
+        $contentBlocks->addFieldToFilter('main_table.attribute_set_id', array(
+            'neq' => $this->entity->getEntityType()->getDefaultAttributeSetId()
+        ));
 
         $contentBlockData = [];
         /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock */
         foreach ($contentBlocks as $contentBlock) {
-            $contentBlockData[$contentBlock->getIdentifier()] = $this->_flattenContentBlockData($contentBlock);
+            $contentBlockData[$contentBlock->getIdentifier()] = $this->flattenContentBlockData($contentBlock);
         }
 
         return $contentBlockData;
@@ -236,18 +240,18 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function _flattenContentBlockData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    protected function flattenContentBlockData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
     {
-        $this->_buildAllAttributeData();
+        $this->buildAllAttributeData();
 
-        $fields = $this->_getContentBlockFields($contentBlock, $this->_getAttributeGroupData($contentBlock));
+        $fields = $this->getContentBlockFields($contentBlock, $this->getAttributeGroupData($contentBlock));
 
         $contentBlockData = [
             'code' => $contentBlock->getIdentifier(),
             'name' => $contentBlock->getName(),
             'icon' => '<i class="' . $contentBlock->getIconClass() . '"></i>',
             'color' => '#444',
-            'color_theme' => $this->_getColorTheme('#444'),
+            'color_theme' => $this->getColorTheme('#444'),
             'contentType' => '',
             'group' => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
             'fields' => $fields,
@@ -256,7 +260,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         ];
 
         // Do we have a preview template for this content block?
-        if ($previewTemplate = $this->_getPreviewTemplate($contentBlock)) {
+        if ($previewTemplate = $this->getPreviewTemplate($contentBlock)) {
             $contentBlockData['preview_template'] = $previewTemplate;
         }
 
@@ -270,14 +274,14 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return bool
      */
-    protected function _getPreviewTemplate(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    protected function getPreviewTemplate(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
     {
         if ($template = $contentBlock->getItemViewTemplate()) {
-            $templatePath = $this->_configInterface->getTemplate($template);
+            $templatePath = $this->configInterface->getTemplate($template);
             if ($templatePath && isset($templatePath['file'])) {
                 try {
                     /* @var $block \Magento\Framework\View\Element\Template */
-                    $block = $this->_layoutFactory->create()->createBlock('Magento\Backend\Block\Template');
+                    $block = $this->layoutFactory->create()->createBlock('Magento\Backend\Block\Template');
                     $block->setTemplate($templatePath['file']);
                     if ($block) {
                         return $block->toHtml();
@@ -294,13 +298,13 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * Build all attribute data at once for efficiency
      */
-    protected function _buildAllAttributeData()
+    protected function buildAllAttributeData()
     {
-        $attributes = $this->_attributeCollection->create();
+        $attributes = $this->attributeCollection->create();
         if ($attributes->getSize()) {
             /* @var $attribute \Gene\BlueFoot\Model\Attribute */
             foreach ($attributes as $attribute) {
-                $this->_attributeData[$attribute->getAttributeCode()] = $this->_flattenAttributeData($attribute);
+                $this->attributeData[$attribute->getAttributeCode()] = $this->flattenAttributeData($attribute);
             }
         }
     }
@@ -312,15 +316,15 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function _getAttributeGroupData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    protected function getAttributeGroupData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
     {
-        $groups = $this->_groupCollection->create();
+        $groups = $this->groupCollection->create();
         $groups->setAttributeSetFilter($contentBlock->getId());
 
         $groupData = [];
         /* @var $group \Magento\Eav\Model\Entity\Attribute\Group */
         foreach ($groups as $group) {
-            $attributeCollection = $this->_attributeCollection->create();
+            $attributeCollection = $this->attributeCollection->create();
             $attributeCollection
                 ->setAttributeGroupFilter($group->getId())
                 ->setAttributeSetFilter($contentBlock->getId());
@@ -341,18 +345,19 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function _getContentBlockFields(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $groupData)
+    protected function getContentBlockFields(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $groupData)
     {
         $attributes = $contentBlock->getAllAttributes();
         if ($attributes) {
             $fields = [];
             /* @var $attribute \Gene\BlueFoot\Model\Attribute */
             foreach ($attributes as $attribute) {
-                if ($attributeData = $this->_getAttributeData($attribute)) {
+                if ($attributeData = $this->getAttributeData($attribute)) {
                     // Assign the data from the getAttributeData call
                     $fields[$attribute->getAttributeCode()] = $attributeData;
                     // Assign the group from the group data
-                    $fields[$attribute->getAttributeCode()]['group'] = isset($groupData[$attribute->getId()]) ?  $groupData[$attribute->getId()] : 'General';
+                    $fields[$attribute->getAttributeCode()]['group'] =
+                        isset($groupData[$attribute->getId()]) ?  $groupData[$attribute->getId()] : 'General';
                 }
             }
 
@@ -369,10 +374,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function _getAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
+    protected function getAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
     {
-        if (isset($this->_attributeData[$attribute->getAttributeCode()])) {
-            return $this->_attributeData[$attribute->getAttributeCode()];
+        if (isset($this->attributeData[$attribute->getAttributeCode()])) {
+            return $this->attributeData[$attribute->getAttributeCode()];
         }
 
         return [];
@@ -386,10 +391,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _flattenAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
+    protected function flattenAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
     {
         $options = [];
-        if($attribute->usesSource()){
+        if ($attribute->usesSource()) {
             $options = $attribute->getSource()->getAllOptions();
         }
 
@@ -425,11 +430,11 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         $childType = false;
-        if($type == 'child_entity'){
-            if($sourceModel = $attribute->getSource()){
-                if(method_exists($sourceModel, 'getAllowedContentBlock')){
+        if ($type == 'child_entity') {
+            if ($sourceModel = $attribute->getSource()) {
+                if (method_exists($sourceModel, 'getAllowedContentBlock')) {
                     $childTypeModel = $sourceModel->getAllowedContentBlock();
-                    if($childTypeModel){
+                    if ($childTypeModel) {
                         $childType = $childTypeModel->getIdentifier();
                     }
                 }
@@ -437,7 +442,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         // Handle different types
-        switch($type) {
+        switch ($type) {
             case 'boolean':
                 $data['type'] = 'select';
                 $data['options'] = [
@@ -450,7 +455,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 $data['multiple'] = true;
                 break;
             case 'textarea':
-                if($attribute->getIsWysiwygEnabled()) {
+                if ($attribute->getIsWysiwygEnabled()) {
                     $data['type'] = 'widget';
                     $data['widget'] = 'wysiwyg';
                 }
@@ -486,12 +491,12 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return string
      */
-    protected function _getColorTheme($hex)
+    protected function getColorTheme($hex)
     {
         $hex = str_replace('#', '', $hex);
-        $r = hexdec(substr($hex,0,2));
-        $g = hexdec(substr($hex,2,2));
-        $b = hexdec(substr($hex,4,2));
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
 
         $contrast = sqrt(
             $r * $r * .241 +
@@ -499,7 +504,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $b * $b * .068
         );
 
-        if($contrast > 190){
+        if ($contrast > 190) {
             return 'dark';
         } else {
             return 'light';

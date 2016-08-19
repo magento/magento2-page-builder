@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Preview extends \Magento\Framework\App\Action\Action
+class Preview extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
