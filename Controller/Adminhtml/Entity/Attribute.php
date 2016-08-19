@@ -80,21 +80,11 @@ abstract class Attribute extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        if ($this->getRequest()->getParam('popup')) {
-            if ($this->getRequest()->getParam('product_tab') == 'variations') {
-                $resultPage->addHandle(['popup', 'catalog_product_attribute_edit_product_tab_variations_popup']);
-            } else {
-                $resultPage->addHandle(['popup', 'catalog_product_attribute_edit_popup']);
-            }
-            $pageConfig = $resultPage->getConfig();
-            $pageConfig->addBodyClass('attribute-popup');
-        } else {
-            $resultPage->addBreadcrumb(__('BlueFoot'), __('BlueFoot'))
-                ->addBreadcrumb(__('Manage Content Attributes'), __('Manage Content Attributes'))
-                ->setActiveMenu('Gene_BlueFoot::attributes');
-            if (!empty($title)) {
-                $resultPage->addBreadcrumb($title, $title);
-            }
+        $resultPage->addBreadcrumb(__('BlueFoot'), __('BlueFoot'))
+            ->addBreadcrumb(__('Manage Content Attributes'), __('Manage Content Attributes'))
+            ->setActiveMenu('Gene_BlueFoot::attributes');
+        if (!empty($title)) {
+            $resultPage->addBreadcrumb($title, $title);
         }
         $resultPage->getConfig()->getTitle()->prepend(__('Content Attributes'));
         return $resultPage;

@@ -16,12 +16,12 @@ class BuildInitConfig implements ObserverInterface
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected $_urlBuilder;
+    protected $urlBuilder;
 
     /**
      * @var \Gene\BlueFoot\Helper\Config
      */
-    protected $_configHelper;
+    protected $configHelper;
 
     /**
      * BuildInitConfig constructor.
@@ -33,8 +33,8 @@ class BuildInitConfig implements ObserverInterface
         \Magento\Framework\UrlInterface $urlInterface,
         \Gene\BlueFoot\Helper\Config $configHelper
     ) {
-        $this->_urlBuilder = $urlInterface;
-        $this->_configHelper = $configHelper;
+        $this->urlBuilder = $urlInterface;
+        $this->configHelper = $configHelper;
     }
 
     /**
@@ -51,18 +51,23 @@ class BuildInitConfig implements ObserverInterface
         $pluginData = $config->getData('plugins');
 
         // Send the upload path URL
-        $pluginData['gene_widget_upload']['config']['upload_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_upload');
+        $pluginData['gene_widget_upload']['config']['upload_url']
+            = $this->urlBuilder->getUrl('bluefoot/stage/widget_upload');
 
         // Send the media upload URL for displaying images
-        $uploadUrl = $this->_configHelper->getUploadUrl(true);
+        $uploadUrl = $this->configHelper->getUploadUrl(true);
         $pluginData['gene_widget_upload']['config']['media_url'] = $uploadUrl;
 
         // Search URLs
-        $pluginData['gene_widget_search_product']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'product']);
-        $pluginData['gene_widget_search_category']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'category']);
-        $pluginData['gene_widget_search_staticblock']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'staticblock']);
+        $pluginData['gene_widget_search_product']['config']['source_url']
+            = $this->urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'product']);
+        $pluginData['gene_widget_search_category']['config']['source_url']
+            = $this->urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'category']);
+        $pluginData['gene_widget_search_staticblock']['config']['source_url']
+            = $this->urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'staticblock']);
 
-        $pluginData['gene_widget_video']['config']['source_url'] = $this->_urlBuilder->getUrl('bluefoot/stage/widget_video');
+        $pluginData['gene_widget_video']['config']['source_url']
+            = $this->urlBuilder->getUrl('bluefoot/stage/widget_video');
 
         $config->setData('plugins', $pluginData);
 

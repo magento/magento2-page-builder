@@ -44,6 +44,7 @@ class Version extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\HTTP\ZendClient                           $zendHttpClient
      * @param \Magento\Framework\UrlInterface                              $urlBuilder
      * @param \Magento\Framework\Module\ResourceInterface                  $moduleResource
+     * @param \Magento\AdminNotification\Model\InboxFactory                $inboxFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -112,6 +113,8 @@ class Version extends \Magento\Framework\Model\AbstractModel
         }
 
         $this->setLastUpdate();
+
+        return $this;
     }
 
     /**

@@ -14,14 +14,14 @@ class ReservedAttributeList
     /**
      * @var string[]
      */
-    protected $_reservedAttributes;
+    protected $reservedAttributes;
 
     /**
      * ReservedAttributeList constructor.
      */
     public function __construct()
     {
-        $this->_reservedAttributes = [];
+        $this->reservedAttributes = [];
     }
 
     /**
@@ -32,6 +32,6 @@ class ReservedAttributeList
      */
     public function isReservedAttribute($attribute)
     {
-        return in_array($attribute->getAttributeCode(), $this->_reservedAttributes);
+        return in_array($attribute->getAttributeCode(), $this->reservedAttributes);
     }
 }

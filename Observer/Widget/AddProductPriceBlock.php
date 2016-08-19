@@ -14,22 +14,6 @@ use Magento\Framework\Event\ObserverInterface;
 class AddProductPriceBlock implements ObserverInterface
 {
     /**
-     * @var \Magento\Framework\Pricing\Render\Layout
-     */
-    protected $_pricingRenderLayout;
-
-    /**
-     * AddProductPriceBlock constructor.
-     *
-     * @param \Magento\Framework\Pricing\Render\Layout $pricingRenderLayout
-     */
-    public function __construct(
-       \Magento\Framework\Pricing\Render\Layout $pricingRenderLayout
-    ) {
-        $this->_pricingRenderLayout = $pricingRenderLayout;
-    }
-
-    /**
      * Add in extra blocks during rendering
      *
      * @param \Magento\Framework\Event\Observer $observer

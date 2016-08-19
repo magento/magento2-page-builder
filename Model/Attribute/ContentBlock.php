@@ -16,7 +16,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\EntityFactory
      */
-    protected $_entityFactory;
+    protected $entityFactory;
 
     /**
      * ContentBlock constructor.
@@ -62,7 +62,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
             $data
         );
 
-        $this->_entityFactory = $entityFactory;
+        $this->entityFactory = $entityFactory;
     }
 
     /**
@@ -84,7 +84,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
     public function getAllAttributes()
     {
         if ($this->getId()) {
-            $entityResource = $this->_entityFactory->create();
+            $entityResource = $this->entityFactory->create();
             return $entityResource->loadAllAttributes()
                 ->getSortedAttributes($this->getId());
         }

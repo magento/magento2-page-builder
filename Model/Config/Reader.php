@@ -59,6 +59,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
             $fileName,
             $idAttributes,
             $domDocumentClass,
-            $defaultScope);
+            $defaultScope
+        );
     }
 }

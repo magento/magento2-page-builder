@@ -14,7 +14,7 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $_entity;
+    protected $entity;
 
     /**
      * ContentBlock constructor.
@@ -22,6 +22,7 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * @param \Magento\Framework\Model\ResourceModel\Db\Context              $context
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Config                                      $eavConfig
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                      $entity
      * @param null                                                           $connectionName
      */
     public function __construct(
@@ -33,7 +34,7 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
     ) {
         parent::__construct($context, $attrGroupFactory, $eavConfig, $connectionName);
 
-        $this->_entity = $entity;
+        $this->entity = $entity;
     }
 
     /**
@@ -74,7 +75,7 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
-        if (!$object->getEntityTypeId() && ($entityType = $this->_entity->getEntityType())) {
+        if (!$object->getEntityTypeId() && ($entityType = $this->entity->getEntityType())) {
             $object->setEntityTypeId($entityType->getEntityTypeId());
         }
 

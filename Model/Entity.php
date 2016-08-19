@@ -18,22 +18,22 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
      /**
      * @var \Gene\BlueFoot\Model\Entity\FrontendFactory
      */
-    protected $_frontend;
+    protected $frontend;
 
     /**
      * @var \Gene\BlueFoot\Model\Entity\Frontend
      */
-    protected $_frontendInstance = null;
+    protected $frontendInstance = null;
 
     /**
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
      */
-    protected $_contentBlock;
+    protected $contentBlock;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    protected $_contentBlockRepository;
+    protected $contentBlockRepository;
 
     /**
      * Entity constructor.
@@ -41,6 +41,8 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Model\Entity\FrontendFactory                  $frontend
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -56,9 +58,9 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-        $this->_frontend = $frontend;
-        $this->_contentBlock = $contentBlockFactory;
-        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
+        $this->frontend = $frontend;
+        $this->contentBlock = $contentBlockFactory;
+        $this->contentBlockRepository = $contentBlockRepositoryInterface;
     }
 
     /**
@@ -89,11 +91,11 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     public function getFrontend()
     {
         if ($this->getId()) {
-            if (is_null($this->_frontendInstance)) {
-                $this->_frontendInstance = $this->_frontend->create();
-                $this->_frontendInstance->setEntity($this);
+            if ($this->frontendInstance === null) {
+                $this->frontendInstance = $this->frontend->create();
+                $this->frontendInstance->setEntity($this);
             }
-            return $this->_frontendInstance;
+            return $this->frontendInstance;
         }
 
         return null;
@@ -108,7 +110,7 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     {
         if ($attributeSetId = $this->getAttributeSetId()) {
             try {
-                $contentBlock = $this->_contentBlockRepository->getById($attributeSetId);
+                $contentBlock = $this->contentBlockRepository->getById($attributeSetId);
                 if ($contentBlock->getId()) {
                     return $contentBlock;
                 }

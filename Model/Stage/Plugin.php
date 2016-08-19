@@ -14,7 +14,7 @@ class Plugin extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Plugin constructor.
@@ -34,7 +34,7 @@ class Plugin extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_configInterface = $configInterface;
+        $this->configInterface = $configInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -46,6 +46,6 @@ class Plugin extends \Magento\Framework\Model\AbstractModel
      */
     public function getJsPlugins()
     {
-        return $this->_configInterface->getJsPluginConfig();
+        return $this->configInterface->getJsPluginConfig();
     }
 }

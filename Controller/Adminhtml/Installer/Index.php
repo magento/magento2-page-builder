@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Installer;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Module\Dir\Reader

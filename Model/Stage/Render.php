@@ -26,62 +26,68 @@ class Render extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
      */
-    protected $_contentBlockCollection;
+    protected $contentBlockCollection;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Collection
      */
-    protected $_loadedTypes;
+    protected $loadedTypes;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
      */
-    protected $_entityCollection;
+    protected $entityCollection;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\Collection
      */
-    protected $_loadedEntities;
+    protected $loadedEntities;
 
     /**
      * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $_layoutInterface;
+    protected $layoutInterface;
 
     /**
      * @var \Magento\Framework\Data\Form\FormKey
      */
-    protected $_formKey;
+    protected $formKey;
 
     /**
      * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
      */
-    protected $_entityRepository;
+    protected $entityRepository;
 
     /**
      * @var \Magento\Framework\Event\ManagerInterface
      */
-    protected $_eventManager;
+    protected $eventManager;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\RenderFactory
      */
-    protected $_renderFactory;
+    protected $renderFactory;
 
     /**
      * Plugin constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                  $configInterface
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Model\Context                                            $context
+     * @param \Magento\Framework\Registry                                                 $registry
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                 $configInterface
+     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollection
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory                 $entityCollectionFactory
+     * @param \Magento\Framework\View\LayoutInterface                                     $layoutInterface
+     * @param \Magento\Framework\Data\Form\FormKey                                        $formKey
+     * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                                $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Model\Stage\RenderFactory                                    $renderFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
+     * @param array                                                                       $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -97,14 +103,14 @@ class Render extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->_eventManager = $context->getEventDispatcher();
-        $this->_configInterface = $configInterface;
-        $this->_contentBlockCollection = $contentBlockCollection;
-        $this->_entityCollection = $entityCollectionFactory;
-        $this->_layoutInterface = $layoutInterface;
-        $this->_formKey = $formKey;
-        $this->_entityRepository = $entityRepositoryInterface;
-        $this->_renderFactory = $renderFactory;
+        $this->eventManager = $context->getEventDispatcher();
+        $this->configInterface = $configInterface;
+        $this->contentBlockCollection = $contentBlockCollection;
+        $this->entityCollection = $entityCollectionFactory;
+        $this->layoutInterface = $layoutInterface;
+        $this->formKey = $formKey;
+        $this->entityRepository = $entityRepositoryInterface;
+        $this->renderFactory = $renderFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -118,11 +124,11 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function getEntity($entityId)
     {
-        if($loaded = $this->_loadedEntities->getItemByColumnValue('entity_id', $entityId)) {
+        if ($loaded = $this->loadedEntities->getItemByColumnValue('entity_id', $entityId)) {
             return $loaded;
         }
 
-        return $this->_entityRepository->getById($entityId);
+        return $this->entityRepository->getById($entityId);
     }
 
     /**
@@ -134,19 +140,18 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function render($html)
     {
-        $pageBuilderSections = $this->_matchPageBuilder($html);
+        $pageBuilderSections = $this->matchPageBuilder($html);
 
         // Verify we have sections to build
-        if(!empty($pageBuilderSections)) {
-
+        if (!empty($pageBuilderSections)) {
             // Load an entire collection of content types
-            $this->_loadedTypes = $this->_contentBlockCollection->create()
+            $this->loadedTypes = $this->contentBlockCollection->create()
                 ->addFieldToSelect('*');
 
             // Return the HTML built
             $renderedHtml = $this->renderSections($pageBuilderSections, $html);
 
-            $renderedHtml = $this->_afterHtmlRender($renderedHtml);
+            $renderedHtml = $this->afterHtmlRender($renderedHtml);
 
             return $renderedHtml;
         }
@@ -164,12 +169,13 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function renderPlaceholders($html, $placeholderHtml = false)
     {
-        $pageBuilderSections = $this->_matchPageBuilder($html);
+        $pageBuilderSections = $this->matchPageBuilder($html);
 
         // Verify we have sections to build
         if (!empty($pageBuilderSections)) {
             if ($placeholderHtml === false) {
-                $placeholderHtml = '<div class="gene-bluefoot-content-placeholder">' . __('Page Builder Content') . '</div>';
+                $placeholderHtml =
+                    '<div class="gene-bluefoot-content-placeholder">' . __('Page Builder Content') . '</div>';
             }
 
             foreach ($pageBuilderSections as $section) {
@@ -187,22 +193,21 @@ class Render extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function _matchPageBuilder($html)
+    protected function matchPageBuilder($html)
     {
         preg_match_all('/<!--' . \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING . '="(.*?)"-->/', $html, $sections);
 
         // Convert the matches to an array which makes sense
         $pageBuilderSections = array();
-        foreach($sections[0] as $key => $sectionHtml) {
+        foreach ($sections[0] as $key => $sectionHtml) {
             $pageBuilderSections[$key]['html'] = $sectionHtml;
         }
-        foreach($sections[1] as $key => $json) {
-
+        foreach ($sections[1] as $key => $json) {
             // Attempt to decode the json
             try {
                 $pageBuilderSections[$key]['json'] = json_decode($json, true);
                 $pageBuilderSections[$key]['cacheTag'] = md5($json);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 unset($pageBuilderSections[$key]);
             }
         }
@@ -221,15 +226,14 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function renderSections($sections, $html)
     {
         // Dispatch event for the start of rendering the sections
-        $this->_eventManager->dispatch('gene_bluefoot_render_sections', [
+        $this->eventManager->dispatch('gene_bluefoot_render_sections', [
             'sections' => $sections,
             'html' => $html,
-            'layout' => $this->_layoutInterface
+            'layout' => $this->layoutInterface
         ]);
 
         // Loop through each section and start building
         foreach ($sections as $section) {
-
             // Build the section html
             $sectionHtml = $this->buildSectionHtml($section['json']);
 
@@ -255,18 +259,18 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function buildSectionHtml(array $json)
     {
         // Load all of the entities
-        $this->_loadedEntities = $this->buildEntities($json);
+        $this->loadedEntities = $this->buildEntities($json);
 
         // Start our string
         $sectionHtml = '';
 
         // Verify we have some entities
-        if(!empty($this->_loadedEntities)) {
+        if (!empty($this->loadedEntities)) {
             $this->buildElementHtmlFromArray($json, $sectionHtml);
         }
 
         // Replace all form keys before this gets cached/returned
-        $sectionHtml = str_replace($this->_formKey->getFormKey(), self::getFormKeyMarker(), $sectionHtml);
+        $sectionHtml = str_replace($this->formKey->getFormKey(), self::getFormKeyMarker(), $sectionHtml);
 
         return $sectionHtml;
     }
@@ -282,7 +286,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function buildEntities($config)
     {
         // If the configuration is a string convert it
-        if(is_string($config)) {
+        if (is_string($config)) {
             $config = json_decode($config, true);
         }
 
@@ -303,19 +307,19 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function getEntityIds($config, &$entityIds)
     {
-        foreach($config as $element) {
-            if(isset($element['entityId'])) {
+        foreach ($config as $element) {
+            if (isset($element['entityId'])) {
                 $entityIds[] = $element['entityId'];
 
                 // Retrieve the entities ID's for any children items
-                if(isset($element['children']) && is_array($element['children'])) {
-                    foreach($element['children'] as $name => $children) {
+                if (isset($element['children']) && is_array($element['children'])) {
+                    foreach ($element['children'] as $name => $children) {
                         $this->getEntityIds($children, $entityIds);
                     }
                 }
             } else {
                 // Retrieve the entities ID's for any children items
-                if(isset($element['children']) && is_array($element['children'])) {
+                if (isset($element['children']) && is_array($element['children'])) {
                     $this->getEntityIds($element['children'], $entityIds);
                 }
             }
@@ -338,7 +342,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $entityIds = array_unique($entityIds);
 
         // Retrieve all the entities
-        $entities = $this->_entityCollection->create()
+        $entities = $this->entityCollection->create()
             ->addAttributeToSelect('*')
             ->addAttributeToFilter('entity_id', $entityIds);
 
@@ -354,7 +358,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function buildElementHtmlFromArray(array $json, &$html)
     {
         // Loop through each element
-        foreach($json as $index => $element) {
+        foreach ($json as $index => $element) {
             $html .= $this->buildElementHtml($element);
         }
     }
@@ -369,9 +373,9 @@ class Render extends \Magento\Framework\Model\AbstractModel
     public function buildElementHtml($element)
     {
         // Detect the type
-        if(isset($element['type'])) {
+        if (isset($element['type'])) {
             return $this->buildStructuralHtml($element);
-        } else if(isset($element['contentType'])) {
+        } elseif (isset($element['contentType'])) {
             return $this->buildEntityHtml($element);
         }
 
@@ -387,26 +391,25 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function buildStructuralHtml($element)
     {
-        $elementConfig = $this->_configInterface->getStructural($element['type']);
-        if($elementConfig) {
-
+        $elementConfig = $this->configInterface->getStructural($element['type']);
+        if ($elementConfig) {
             $elementTemplate = isset($elementConfig['template']) ? $elementConfig['template'] : '';
             // If the structural type doesn't have a template we cannot render it
-            if(!isset($elementConfig['template']) || isset($elementConfig['template']) && empty($elementTemplate)) {
+            if (!isset($elementConfig['template']) || isset($elementConfig['template']) && empty($elementTemplate)) {
                 return '<!-- STRUCTURAL ELEMENT HAS NO TEMPLATE: '.$element['type'].' -->';
             }
 
             // Determine the renderer we're going to use
             $renderer = self::DEFAULT_STRUCTURAL_RENDERER;
-            if(isset($elementConfig['renderer']) && !empty($elementConfig['renderer'])) {
+            if (isset($elementConfig['renderer']) && !empty($elementConfig['renderer'])) {
                 $renderer = $elementConfig['renderer'];
             }
 
             /* @var $block \Magento\Framework\View\Element\Template */
-            $block = $this->_layoutInterface->createBlock($renderer);
-            if($block) {
+            $block = $this->layoutInterface->createBlock($renderer);
+            if ($block) {
                 $block->setTemplate($elementTemplate);
-                if(isset($element['formData']) && !empty($element['formData'])) {
+                if (isset($element['formData']) && !empty($element['formData'])) {
                     $block->setData('form_data', $element['formData']);
                 }
             } else {
@@ -414,7 +417,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
             }
 
             // Build the child HTML
-            if(isset($element['children'])) {
+            if (isset($element['children'])) {
                 $childHtml = '';
                 $this->buildElementHtmlFromArray($element['children'], $childHtml);
                 $block->setData('rendered_child_html', $childHtml);
@@ -436,11 +439,10 @@ class Render extends \Magento\Framework\Model\AbstractModel
      */
     public function buildEntityHtml($element)
     {
-        if(isset($element['entityId'])) {
-
+        if (isset($element['entityId'])) {
             // Build the block
-            if($block = $this->buildEntityBlock($element)) {
-                $blockHtml = $this->_renderFactory->create()->render($block->toHtml());
+            if ($block = $this->buildEntityBlock($element)) {
+                $blockHtml = $this->renderFactory->create()->render($block->toHtml());
 
                 return $blockHtml;
             }
@@ -460,7 +462,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         $entity = $this->getEntity($element['entityId']);
-        if(!$entity->getId()){
+        if (!$entity->getId()) {
             return false;
         }
 
@@ -475,7 +477,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $frontend = $entity->getFrontend();
 
         /* @var $block \Magento\Framework\View\Element\Template */
-        if($block = $frontend->getRenderBlock($this->_layoutInterface)) {
+        if ($block = $frontend->getRenderBlock($this->layoutInterface)) {
             $block->setTemplate($frontend->getViewTemplate());
             $block->setStructure($element);
 
@@ -503,9 +505,9 @@ class Render extends \Magento\Framework\Model\AbstractModel
      * @param $html
      * @return mixed
      */
-    protected function _afterHtmlRender($html)
+    protected function afterHtmlRender($html)
     {
-        self::restoreFormKey($html, $this->_formKey->getFormKey());
+        self::restoreFormKey($html, $this->formKey->getFormKey());
         return $html;
     }
 

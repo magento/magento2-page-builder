@@ -18,47 +18,47 @@ class Build extends \Magento\Framework\Model\AbstractModel
     /**
      * @var array
      */
-    protected $_attributeData;
+    protected $attributeData;
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * @var \Magento\Framework\View\LayoutFactory
      */
-    protected $_layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Magento\Framework\Data\CollectionFactory
      */
-    protected $_dataCollectionFactory;
+    protected $dataCollectionFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
      */
-    protected $_contentBlockFactory;
+    protected $contentBlockFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\EntityFactory
      */
-    protected $_entityFactory;
+    protected $entityFactory;
 
     /**
      * @var \Magento\Framework\Api\SearchCriteriaBuilder
      */
-    protected $_searchCriteriaBuilder;
+    protected $searchCriteriaBuilder;
 
     /**
      * @var \Gene\BlueFoot\Api\EntityRepositoryInterface
      */
-    protected $_entityRepositoryInterface;
+    protected $entityRepositoryInterface;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    protected $_contentBlockRepositoryInterface;
+    protected $contentBlockRepositoryInterface;
 
     /**
      * Build constructor.
@@ -70,6 +70,9 @@ class Build extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\View\LayoutFactory                        $layoutFactory
      * @param \Magento\Framework\Data\CollectionFactory                    $dataCollectionFactory
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder                 $searchCriteriaBuilder
+     * @param \Gene\BlueFoot\Api\EntityRepositoryInterface                 $entityRepositoryInterface
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -88,16 +91,15 @@ class Build extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
-        $this->_configInterface = $configInterface;
-        $this->_layoutFactory = $layoutFactory;
-        $this->_entityFactory = $entityFactory;
-        $this->_dataCollectionFactory = $dataCollectionFactory;
-        $this->_contentBlockFactory = $contentBlockFactory;
-        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_entityRepositoryInterface = $entityRepositoryInterface;
-        $this->_contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
+    ) {
+        $this->configInterface = $configInterface;
+        $this->layoutFactory = $layoutFactory;
+        $this->entityFactory = $entityFactory;
+        $this->dataCollectionFactory = $dataCollectionFactory;
+        $this->contentBlockFactory = $contentBlockFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->entityRepositoryInterface = $entityRepositoryInterface;
+        $this->contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -116,15 +118,15 @@ class Build extends \Magento\Framework\Model\AbstractModel
         $entityIds = array_unique($entityIds);
 
         // Retrieve all the entities
-        $searchCriteria = $this->_searchCriteriaBuilder->addFilter('entity_id', $entityIds, 'in')->create();
+        $searchCriteria = $this->searchCriteriaBuilder->addFilter('entity_id', $entityIds, 'in')->create();
 
         /* @var $entities \Magento\Framework\Api\SearchResults */
-        $entities = $this->_entityRepositoryInterface->getList($searchCriteria);
+        $entities = $this->entityRepositoryInterface->getList($searchCriteria);
 
         // Create an empty collection to be populated by the search results
-        $entityData = $this->_dataCollectionFactory->create();
+        $entityData = $this->dataCollectionFactory->create();
 
-        if($entities->getTotalCount() > 0) {
+        if ($entities->getTotalCount() > 0) {
             // Build up the entities
             /* @var $entity \Gene\BlueFoot\Model\Entity */
             foreach ($entities->getItems() as $entity) {
@@ -139,7 +141,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
 
         // Convert $entityData to an array
         $entityArray = [];
-        foreach($entityData as $entity) {
+        foreach ($entityData as $entity) {
             $entityArray[$entity->getEntityId()] = $entity->getData();
         }
 
@@ -159,7 +161,7 @@ class Build extends \Magento\Framework\Model\AbstractModel
         $removeField = ['entity_type_id', 'identifier', 'created_at', 'updated_at', 'is_active', 'attribute_set_id'];
 
         // Loop through and remove the fields
-        foreach($removeField as $key) {
+        foreach ($removeField as $key) {
             unset($fields[$key]);
         }
 
@@ -206,14 +208,14 @@ class Build extends \Magento\Framework\Model\AbstractModel
      */
     public function buildDataModelUpdate($contentType, $data, $fields)
     {
-        $attributeSet = $this->_contentBlockRepositoryInterface->getByIdentifier($contentType);
+        $attributeSet = $this->contentBlockRepositoryInterface->getByIdentifier($contentType);
         if ($attributeSet) {
             // Format the form data
             $formData = $data;
             $formData['attribute_set_id'] = $attributeSet->getId();
 
             // Create our entity with the correct attribute set id
-            $entity = $this->_entityFactory->create();
+            $entity = $this->entityFactory->create();
             $entity->setData($formData);
 
             return $this->getDataModelValues($entity, $fields);

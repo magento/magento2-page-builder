@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Config extends \Magento\Framework\App\Action\Action
+class Config extends \Magento\Backend\App\Action
 {
     /**
      * @var \Gene\BlueFoot\Model\Stage\Config

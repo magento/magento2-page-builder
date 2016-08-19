@@ -30,6 +30,7 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
      * @param \Magento\Framework\Event\ManagerInterface                    $eventManager
      * @param \Magento\Eav\Model\EntityFactory                             $eavEntityFactory
      * @param \Magento\Framework\Registry                                  $registryManager
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entityModel
      * @param \Magento\Framework\DB\Adapter\AdapterInterface|null          $connection
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null    $resource
      */

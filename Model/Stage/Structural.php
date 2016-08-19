@@ -7,19 +7,19 @@ namespace Gene\BlueFoot\Model\Stage;
  *
  * @package Gene\BlueFoot\Model\Stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Structural extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager;
+    protected $objectManager;
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Structural constructor.
@@ -40,9 +40,10 @@ class Structural extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    ) {
-        $this->_objectManager = $objectManager; /* Used for dynamic module loading below */
-        $this->_configInterface = $configInterface;
+    )
+    {
+        $this->objectManager = $objectManager; /* Used for dynamic module loading below */
+        $this->configInterface = $configInterface;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -54,23 +55,23 @@ class Structural extends \Magento\Framework\Model\AbstractModel
      */
     public function getStructuralConfig()
     {
-        $config = $this->_configInterface->getStructurals();
+        $config = $this->configInterface->getStructurals();
 
-        foreach($config as &$structural) {
+        foreach ($config as &$structural) {
             // The page builder doesn't care about these values
             unset($structural['renderer'], $structural['template']);
-            if(isset($structural['name'])) {
+            if (isset($structural['name'])) {
                 $structural['name'] = __($structural['name']);
             }
-            foreach($structural['fields'] as &$field) {
-                if(isset($field['label'])) {
+            foreach ($structural['fields'] as &$field) {
+                if (isset($field['label'])) {
                     $field['label'] = __($field['label']);
                 }
-                if(isset($field['source_model'])) {
+                if (isset($field['source_model'])) {
                     $sourceModel = $field['source_model'];
                     try {
-                        $model = $this->_objectManager->get($sourceModel);
-                        if(method_exists($model, 'toOptionArray')) {
+                        $model = $this->objectManager->get($sourceModel);
+                        if (method_exists($model, 'toOptionArray')) {
                             $field['options'] = $model->toOptionArray();
                         }
                     } catch (\Exception $e) {

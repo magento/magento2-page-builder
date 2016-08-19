@@ -21,29 +21,29 @@ class InstallData implements InstallDataInterface
      *
      * @var EntitySetupFactory
      */
-    protected $_entitySetupFactory;
+    protected $entitySetupFactory;
 
     /**
      * Group interface
      *
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory
      */
-    protected $_groupFactory;
+    protected $groupFactory;
 
     /**
      * @var \Magento\Framework\Module\Dir\Reader
      */
-    protected $_moduleReader;
+    protected $moduleReader;
 
     /**
      * @var \Magento\Framework\Filesystem\Io\File
      */
-    protected $_ioFile;
+    protected $ioFile;
 
     /**
      * @var \Gene\BlueFoot\Model\Installer\File
      */
-    protected $_fileInstaller;
+    protected $fileInstaller;
 
     /**
      * InstallData constructor.
@@ -58,24 +58,25 @@ class InstallData implements InstallDataInterface
         \Magento\Framework\Filesystem\Io\File $ioFile,
         \Gene\BlueFoot\Model\Installer\File $fileInstaller,
         ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface
-    )
-    {
-        $this->_entitySetupFactory = $entitySetupFactory;
-        $this->_groupFactory = $groupFactory;
-        $this->_moduleReader = $moduleReader;
-        $this->_ioFile = $ioFile;
-        $this->_fileInstaller = $fileInstaller;
-        $this->_contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
+    ) {
+        $this->entitySetupFactory = $entitySetupFactory;
+        $this->groupFactory = $groupFactory;
+        $this->moduleReader = $moduleReader;
+        $this->ioFile = $ioFile;
+        $this->fileInstaller = $fileInstaller;
+        $this->contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
     }
 
     /**
-     * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * Install groups and entities
+     *
+     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
+     * @param \Magento\Framework\Setup\ModuleContextInterface   $context
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         /** @var \Gene\BlueFoot\Setup\EntitySetup $entitySetup */
-        $entitySetup = $this->_entitySetupFactory->create(['setup' => $setup]);
+        $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         $setup->startSetup();
 
@@ -83,10 +84,10 @@ class InstallData implements InstallDataInterface
         $entitySetup->installEntities();
 
         // Create the default groups
-        $this->_installGroups();
+        $this->installGroups();
 
         // Install the default content blocks
-        $this->_installDefaultContentBlocks();
+        $this->installDefaultContentBlocks();
 
         $setup->endSetup();
     }
@@ -96,7 +97,7 @@ class InstallData implements InstallDataInterface
      *
      * @return $this
      */
-    protected function _installGroups()
+    protected function installGroups()
     {
         $groups = [
             'general' => [
@@ -123,10 +124,10 @@ class InstallData implements InstallDataInterface
 
         // Iterate through creating the base groups
         foreach ($groups as $code => $data) {
-            $group = $this->_groupFactory->create();
+            $group = $this->groupFactory->create();
             $group->setData('code', $code);
             $group->addData($data);
-            $this->_contentBlockGroupRepository->save($group);
+            $this->contentBlockGroupRepository->save($group);
         }
 
         return $this;
@@ -137,11 +138,11 @@ class InstallData implements InstallDataInterface
      *
      * @return $this
      */
-    protected function _installDefaultContentBlocks()
+    protected function installDefaultContentBlocks()
     {
-        $file = $this->_moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
-        if ($this->_ioFile->fileExists($file)) {
-            $this->_fileInstaller->install($file);
+        $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
+        if ($this->ioFile->fileExists($file)) {
+            $this->fileInstaller->install($file);
         }
 
         return $this;

@@ -9,44 +9,50 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
  *
  * @package Gene\BlueFoot\Model\Attribute\Source\Entity
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
     /**
      * @var \Gene\BlueFoot\Model\ContentBlockFactory
      */
-    protected $_contentBlock;
+    protected $contentBlock;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
      */
-    protected $_entityCollection;
+    protected $entityCollection;
 
     /**
      * @var null|array
      */
-    protected $_possibleEntities = null;
+    protected $possibleEntities = null;
 
     /**
      * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    protected $_contentBlockRepository;
+    protected $contentBlockRepository;
+
+    /**
+     * @var null|array
+     */
+    protected $options = null;
 
     /**
      * Child constructor.
      *
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory          $contentBlockFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface          $contentBlockRepositoryInterface
      */
     public function __construct(
         \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory,
         ContentBlockRepositoryInterface $contentBlockRepositoryInterface
     ) {
-        $this->_contentBlock = $contentBlockFactory;
-        $this->_entityCollection = $collectionFactory;
-        $this->_contentBlockRepository = $contentBlockRepositoryInterface;
+        $this->contentBlock = $contentBlockFactory;
+        $this->entityCollection = $collectionFactory;
+        $this->contentBlockRepository = $contentBlockRepositoryInterface;
     }
 
     /**
@@ -56,22 +62,23 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     public function getAllOptions()
     {
-        if (is_null($this->_options)) {
+        if ($this->options === null) {
             $entities = $this->getPossibleEntities();
             $entityValues = array();
 
-            if($entities) {
+            if ($entities) {
                 /* @var $entity \Gene\BlueFoot\Model\Entity */
                 foreach ($entities as $entity) {
-                    $label = ($entity->getTitle() ? $entity->getTitle() : '{no title}') . ' [ID: ' . $entity->getId() . ']';
+                    $label = ($entity->getTitle() ?
+                            $entity->getTitle() : '{no title}') . ' [ID: ' . $entity->getId() . ']';
                     $entityValues[] = array('label' => $label, 'value' => $entity->getId());
                 }
             }
 
-            $this->_options = $entityValues;
+            $this->options = $entityValues;
         }
 
-        return $this->_options;
+        return $this->options;
     }
 
     /**
@@ -79,15 +86,17 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     public function getOptionArray()
     {
-        $_options = array();
+        $options = array();
         foreach ($this->getAllOptions() as $option) {
-            $_options[$option['value']] = $option['label'];
+            $options[$option['value']] = $option['label'];
         }
-        return $_options;
+
+        return $options;
     }
 
     /**
      * @param int|string $value
+     *
      * @return bool
      */
     public function getOptionText($value)
@@ -98,6 +107,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
                 return $option['label'];
             }
         }
+
         return false;
     }
 
@@ -111,12 +121,14 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
         $attribute = $this->getAttribute();
         $additionalData = $attribute->getAdditional();
 
-        $typeId = (isset($additionalData['entity_allowed_block_type']) ? $additionalData['entity_allowed_block_type'] : false);
+        $typeId = (isset($additionalData['entity_allowed_block_type']) ?
+            $additionalData['entity_allowed_block_type'] :
+            false);
 
         if ($typeId) {
             try {
-                $typeModel = $this->_contentBlockRepository->getById($typeId);
-                if($typeModel->getId()){
+                $typeModel = $this->contentBlockRepository->getById($typeId);
+                if ($typeModel->getId()) {
                     return $typeModel;
                 }
             } catch (\NoSuchEntityException $e) {
@@ -135,19 +147,19 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     public function getPossibleEntities()
     {
-        if(is_null($this->_possibleEntities)) {
+        if ($this->possibleEntities === null) {
             $contentBlock = $this->getAllowedContentBlock();
             if ($contentBlock && $contentBlock->getId()) {
-                $entities = $this->_entityCollection->create();
+                $entities = $this->entityCollection->create();
                 $entities->addAttributeToSelect('title', 'left');
                 $entities->addFieldToFilter('attribute_set_id', array('eq' => $contentBlock->getId()));
 
-                $this->_possibleEntities = $entities;
+                $this->possibleEntities = $entities;
             } else {
-                $this->_possibleEntities = [];
+                $this->possibleEntities = [];
             }
         }
 
-        return $this->_possibleEntities;
+        return $this->possibleEntities;
     }
 }

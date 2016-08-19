@@ -12,8 +12,8 @@ define(['bluefoot/jquery', 'bluefoot/config'], function (jQuery, Config) {
      *
      * @constructor
      */
-    function Ajax(formkey) {
-        this.formkey = formkey;
+    function Ajax() {
+
     }
 
     /**
@@ -22,10 +22,7 @@ define(['bluefoot/jquery', 'bluefoot/config'], function (jQuery, Config) {
      * @returns {*}
      */
     Ajax.prototype.getFormKey = function () {
-        if (typeof Config !== 'undefined') {
-            return Config.getInitConfig('form_key');
-        }
-        return this.formkey;
+        return window.FORM_KEY;
     };
 
     /**

@@ -16,14 +16,14 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      *
      * @var string
      */
-    protected $_schema = null;
+    protected $schema = null;
 
     /**
      * Path to corresponding XSD file with validation rules for separate config * files
      *
      * @var string
      */
-    protected $_perFileSchema = null;
+    protected $perFileSchema = null;
 
     /**
      * @param \Magento\Framework\Module\Dir\Reader $moduleReader
@@ -31,8 +31,8 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
     public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
     {
         $etcDir = $moduleReader->getModuleDir('etc', 'Gene_BlueFoot');
-        $this->_schema = $etcDir . '/bluefoot/pagebuilder.xsd';
-        $this->_perFileSchema = $etcDir . '/bluefoot/pagebuilder.xsd';
+        $this->schema = $etcDir . '/bluefoot/pagebuilder.xsd';
+        $this->perFileSchema = $etcDir . '/bluefoot/pagebuilder.xsd';
     }
 
     /**
@@ -42,7 +42,7 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      */
     public function getSchema()
     {
-        return $this->_schema;
+        return $this->schema;
     }
 
     /**
@@ -52,6 +52,6 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      */
     public function getPerFileSchema()
     {
-        return $this->_perFileSchema;
+        return $this->perFileSchema;
     }
 }

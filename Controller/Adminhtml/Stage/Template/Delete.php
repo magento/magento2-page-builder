@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Template;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Delete extends \Magento\Framework\App\Action\Action
+class Delete extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory

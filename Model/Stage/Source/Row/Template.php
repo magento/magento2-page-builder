@@ -7,7 +7,7 @@ namespace Gene\BlueFoot\Model\Stage\Source\Row;
  *
  * @package Gene\BlueFoot\Model\Stage\Source\Row
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Template extends \Magento\Framework\Model\AbstractModel
 {

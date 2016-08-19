@@ -17,12 +17,15 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\C
     protected $_eavEntityFactory;
 
     /**
-     * @param \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory
-     * @param \Psr\Log\LoggerInterface $logger
+     * Collection constructor.
+     *
+     * @param \Magento\Framework\Data\Collection\EntityFactoryInterface    $entityFactory
+     * @param \Psr\Log\LoggerInterface                                     $logger
      * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface $connection
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
+     * @param \Magento\Framework\Event\ManagerInterface                    $eventManager
+     * @param \Magento\Eav\Model\EntityFactory                             $eavEntityFactory
+     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null          $connection
+     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null    $resource
      */
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,

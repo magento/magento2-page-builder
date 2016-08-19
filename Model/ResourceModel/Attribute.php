@@ -19,13 +19,13 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
     protected $_configInterface;
 
     /**
-     * Class constructor
+     * Attribute constructor.
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType
-     * @param string $connectionName
-     * @codeCoverageIgnore
+     * @param \Magento\Store\Model\StoreManagerInterface        $storeManager
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Type      $eavEntityType
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface       $configInterface
+     * @param null                                              $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
@@ -104,7 +104,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
      */
     protected function _saveInputType(AbstractModel $object)
     {
-        switch($object->getFrontendInput()) {
+        switch ($object->getFrontendInput()) {
             case 'child_entity':
                 $object->setBackendType('text');
                 $object->setBackendModel('Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend');
@@ -113,5 +113,4 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 
         return $this;
     }
-
 }

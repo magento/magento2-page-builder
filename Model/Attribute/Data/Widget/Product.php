@@ -11,23 +11,24 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface
+class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements
+    \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface
 {
 
     /**
      * @var ProductRepositoryInterface
      */
-    protected $_productRepository;
+    protected $productRepository;
 
     /**
      * @var \Magento\Framework\Pricing\Helper\DataFactory
      */
-    protected $_pricingHelper;
+    protected $pricingHelper;
 
     /**
      * @var \Magento\Catalog\Helper\ImageFactory
      */
-    protected $_imageHelperFactory;
+    protected $imageHelperFactory;
 
     /**
      * Product constructor.
@@ -52,9 +53,9 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection);
-        $this->_productRepository = $productRepositoryInterface;
-        $this->_pricingHelper = $pricingHelper;
-        $this->_imageHelperFactory = $imageHelperFactory;
+        $this->productRepository = $productRepositoryInterface;
+        $this->pricingHelper = $pricingHelper;
+        $this->imageHelperFactory = $imageHelperFactory;
     }
 
     /**
@@ -65,7 +66,11 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
     public function getProduct()
     {
         try {
-            $product = $this->_productRepository->getById($this->getEntity()->getData($this->getAttribute()->getData('attribute_code')), false, 1);
+            $product = $this->productRepository->getById(
+                $this->getEntity()->getData($this->getAttribute()->getData('attribute_code')),
+                false,
+                1
+            );
             if ($product->getId()) {
                 return $product;
             }
@@ -88,8 +93,8 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
         return [
             'name' => $product->getName(),
             'sku' => $product->getSku(),
-            'image' => $this->_getProductImage($product),
-            'price' => $this->_getFormattedPrice($product->getFinalPrice())
+            'image' => $this->getProductImage($product),
+            'price' => $this->getFormattedPrice($product->getFinalPrice())
         ];
     }
 
@@ -99,10 +104,10 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      * @param bool|float|false $price
      * @return string
      */
-    protected function _getFormattedPrice($price = false)
+    protected function getFormattedPrice($price = false)
     {
         if ($price !== false) {
-            return $this->_pricingHelper->create()->currency($price, true, false);
+            return $this->pricingHelper->create()->currency($price, true, false);
         }
         return '';
     }
@@ -113,10 +118,10 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
      * @param $product
      * @return string
      */
-    protected function _getProductImage(\Magento\Catalog\Model\Product $product)
+    protected function getProductImage(\Magento\Catalog\Model\Product $product)
     {
         try {
-            return $this->_imageHelperFactory->create()->init($product, 'bluefoot_product_image_admin')->getUrl();
+            return $this->imageHelperFactory->create()->init($product, 'bluefoot_product_image_admin')->getUrl();
         } catch (\Exception $e) {
             return '';
         }
