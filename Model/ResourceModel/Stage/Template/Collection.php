@@ -13,6 +13,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 {
     /**
      * @var string
+     *
+     * @codingStandardsIgnoreStart
      */
     protected $_idFieldName = 'template_id';
 
@@ -25,5 +27,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
         $this->_init('Gene\BlueFoot\Model\Stage\Template', 'Gene\BlueFoot\Model\ResourceModel\Stage\Template');
     }
-
 }

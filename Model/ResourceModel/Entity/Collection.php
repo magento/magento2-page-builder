@@ -19,29 +19,29 @@ class Collection extends \Magento\Eav\Model\Entity\Collection\VersionControl\Abs
     /**
      * @var \Magento\Framework\DataObject\Copy\Config
      */
-    protected $_fieldsetConfig;
+    protected $fieldsetConfig;
 
     /**
      * @var string
      */
-    protected $_modelName;
+    protected $modelName;
 
     /**
-     * @param \Magento\Framework\Data\Collection\EntityFactory $entityFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\Framework\App\ResourceConnection $resource
-     * @param \Magento\Eav\Model\EntityFactory $eavEntityFactory
-     * @param \Magento\Eav\Model\ResourceModel\Helper $resourceHelper
-     * @param \Magento\Framework\Validator\UniversalFactory $universalFactory
-     * @param \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot $entitySnapshot
-     * @param \Magento\Framework\DataObject\Copy\Config $fieldsetConfig
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface $connection
-     * @param string $modelName
+     * Collection constructor.
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @param \Magento\Framework\Data\Collection\EntityFactory                  $entityFactory
+     * @param \Psr\Log\LoggerInterface                                          $logger
+     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface      $fetchStrategy
+     * @param \Magento\Framework\Event\ManagerInterface                         $eventManager
+     * @param \Magento\Eav\Model\Config                                         $eavConfig
+     * @param \Magento\Framework\App\ResourceConnection                         $resource
+     * @param \Magento\Eav\Model\EntityFactory                                  $eavEntityFactory
+     * @param \Magento\Eav\Model\ResourceModel\Helper                           $resourceHelper
+     * @param \Magento\Framework\Validator\UniversalFactory                     $universalFactory
+     * @param \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot $entitySnapshot
+     * @param \Magento\Framework\DataObject\Copy\Config                         $fieldsetConfig
+     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null               $connection
+     * @param string                                                            $modelName
      */
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactory $entityFactory,
@@ -58,8 +58,8 @@ class Collection extends \Magento\Eav\Model\Entity\Collection\VersionControl\Abs
         \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         $modelName = self::ENTITY_MODEL_NAME
     ) {
-        $this->_fieldsetConfig = $fieldsetConfig;
-        $this->_modelName = $modelName;
+        $this->fieldsetConfig = $fieldsetConfig;
+        $this->modelName = $modelName;
         parent::__construct(
             $entityFactory,
             $logger,
@@ -84,5 +84,4 @@ class Collection extends \Magento\Eav\Model\Entity\Collection\VersionControl\Abs
     {
         $this->_init('Gene\BlueFoot\Model\Entity', 'Gene\BlueFoot\Model\ResourceModel\Entity');
     }
-
 }

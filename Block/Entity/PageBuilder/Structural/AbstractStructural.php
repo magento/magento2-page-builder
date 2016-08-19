@@ -52,8 +52,8 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         // Add Align class
         $align = '';
-        if ($align = $this->getFormData('align')) {
-            $align = 'bluefoot-align-' . $align;
+        if ($this->getFormData('align')) {
+            $align = 'bluefoot-align-' . $this->getFormData('align');
         }
 
         // Build and array of classes from the entity, the block and the alignment
@@ -68,6 +68,7 @@ class AbstractStructural extends \Magento\Framework\View\Element\Template
 
         return $html;
     }
+
 
     /**
      * Convert classes to an array with only unique values

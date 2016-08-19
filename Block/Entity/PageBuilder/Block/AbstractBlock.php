@@ -41,8 +41,7 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
         \Gene\BlueFoot\Model\Stage\Render $render,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->render = $render;
         $this->dataCollectionFactory = $dataCollectionFactory;
@@ -156,8 +155,8 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
 
         // Add Align class
         $align = '';
-        if ($align = $this->getEntity()->getAlign()) {
-            $align = 'bluefoot-align-' . $align;
+        if ($this->getEntity()->getAlign()) {
+            $align = 'bluefoot-align-' . $this->getEntity()->getAlign();
         }
 
         // Build and array of classes from the entity, the block and the alignment

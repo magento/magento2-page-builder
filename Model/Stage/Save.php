@@ -128,7 +128,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 exit;
                 // Handle error
             }
-
         }
     }
 
@@ -214,7 +213,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
                         $this->createStructure($element['children'][$name]);
                     }
                 }
-
             } else {
                 // If it has any children we need to run this method again
                 if (isset($element['children']) && is_array($element['children'])) {
@@ -383,5 +381,4 @@ class Save extends \Magento\Framework\Model\AbstractModel
         // Set the $_POST back into the request object
         $this->request->setPostValue($_POST);
     }
-
 }

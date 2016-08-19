@@ -252,5 +252,4 @@ class Build extends \Magento\Framework\Model\AbstractModel
 
         return $dataModelValues;
     }
-
 }

@@ -71,7 +71,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             if ($node->hasChildNodes()) {
                 foreach ($node->childNodes as $dep) {
                     if ($dep->nodeName == 'dep') {
-                        $output['plugins']['jquery'][$node->getAttribute('name')]['deps'][$dep->getAttribute('name')] = $dep->getAttribute('alias');
+                        $output['plugins']['jquery'][$node->getAttribute('name')]['deps'][$dep->getAttribute('name')]
+                            = $dep->getAttribute('alias');
                     }
                 }
             }
@@ -104,7 +105,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     if ($assets->length > 0) {
                         for ($assetI = 0; $assetI < $assets->length; $assetI++) {
                             $asset = $assets->item($assetI);
-                            $output['templates'][$node->getAttribute('name')]['assets'][$asset->getAttribute('name')] = $asset->getAttribute('src');
+                            $output['templates'][$node->getAttribute('name')]['assets'][$asset->getAttribute('name')]
+                                = $asset->getAttribute('src');
                         }
                     }
                 }
@@ -185,7 +187,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 if ($field->hasChildNodes()) {
                                     foreach ($field->childNodes as $fieldAttr) {
                                         if ($fieldAttr instanceof \DOMElement) {
-                                            $fieldsArray[$field->getAttribute('code')][$fieldAttr->nodeName] = $fieldAttr->nodeValue;
+                                            $fieldsArray[$field->getAttribute('code')][$fieldAttr->nodeName]
+                                                = $fieldAttr->nodeValue;
                                         }
                                     }
                                 }
@@ -209,7 +212,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     $fieldsElements = $node->childNodes;
                     foreach ($fieldsElements as $fieldAttr) {
                         if ($fieldAttr instanceof \DOMElement) {
-                            $output['global_fields'][$node->getAttribute('code')][$fieldAttr->nodeName] = $fieldAttr->nodeValue;
+                            $output['global_fields'][$node->getAttribute('code')][$fieldAttr->nodeName]
+                                = $fieldAttr->nodeValue;
                         }
                     }
                 }

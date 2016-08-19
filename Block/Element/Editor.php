@@ -46,7 +46,8 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getButtonsHtml()
     {
         $html = parent::_getButtonsHtml();
-        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" style="display: none;"></div>';
+        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" ' .
+            'style="display: none;"></div>';
         return $html;
     }
 

@@ -264,7 +264,10 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
                     }
                     $resultRedirect->setPath('bluefoot/product/addAttribute', $requestParams);
                 } elseif ($redirectBack) {
-                    $resultRedirect->setPath('bluefoot/*/edit', ['attribute_id' => $model->getId(), '_current' => true]);
+                    $resultRedirect->setPath('bluefoot/*/edit', [
+                        'attribute_id' => $model->getId(),
+                        '_current' => true
+                    ]);
                 } else {
                     $resultRedirect->setPath('bluefoot/*/');
                 }
@@ -273,7 +276,10 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
                 $this->_session->setAttributeData($data);
-                return $resultRedirect->setPath('bluefoot/*/edit', ['attribute_id' => $attributeId, '_current' => true]);
+                return $resultRedirect->setPath('bluefoot/*/edit', [
+                    'attribute_id' => $attributeId,
+                    '_current' => true
+                ]);
             }
         }
         return $resultRedirect->setPath('bluefoot/*/');

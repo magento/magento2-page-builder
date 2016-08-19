@@ -40,8 +40,7 @@ class Structural extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         $this->objectManager = $objectManager; /* Used for dynamic module loading below */
         $this->configInterface = $configInterface;
 

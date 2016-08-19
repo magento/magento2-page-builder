@@ -16,7 +16,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $_configInterface;
+    protected $configInterface;
 
     /**
      * Attribute constructor.
@@ -35,7 +35,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
         $connectionName = null
     ) {
         parent::__construct($context, $storeManager, $eavEntityType, $connectionName);
-        $this->_configInterface = $configInterface;
+        $this->configInterface = $configInterface;
     }
 
     /**
@@ -65,14 +65,14 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
     protected function _saveWidget(AbstractModel $object)
     {
         if ($widget = $object->getWidget()) {
-            if ($widgetInstance = $this->_configInterface->getWidget($widget)) {
+            if ($widgetInstance = $this->configInterface->getWidget($widget)) {
                 $object->setDataModel((isset($widgetInstance['data_model']) ? $widgetInstance['data_model'] : ''));
                 $object->setFrontendInput($widgetInstance['input_type']);
                 $object->setWidget($widgetInstance['alias']);
             } else {
                 throw new \Exception('Unable to load widget for ' . $widget);
             }
-        } else if ($object->getOrigData('widget')) {
+        } elseif ($object->getOrigData('widget')) {
             $object->setDataModel('');
         }
 
@@ -88,7 +88,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
      */
     protected function _saveAdditional(AbstractModel $object)
     {
-        if($object->getData('additional')){
+        if ($object->getData('additional')) {
             $object->setAdditionalData(json_encode($object->getData('additional')));
         }
 

@@ -22,14 +22,13 @@ class Validate extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
     protected $layoutFactory;
 
     /**
-     * Constructor
+     * Validate constructor.
      *
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Cache\FrontendInterface $attributeLabelCache
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Backend\App\Action\Context              $context
+     * @param \Magento\Framework\Registry                      $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory       $resultPageFactory
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Framework\View\LayoutFactory $layoutFactory
+     * @param \Magento\Framework\View\LayoutFactory            $layoutFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,

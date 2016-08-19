@@ -126,5 +126,4 @@ class Product extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget impleme
             return '';
         }
     }
-
 }

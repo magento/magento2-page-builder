@@ -140,12 +140,15 @@ class InstallData implements InstallDataInterface
      */
     protected function installDefaultContentBlocks()
     {
-        $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'pagebuilder_blocks_core.json';
+        $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR .
+            'Setup' . DIRECTORY_SEPARATOR .
+            'data' . DIRECTORY_SEPARATOR .
+            'pagebuilder_blocks_core.json';
+
         if ($this->ioFile->fileExists($file)) {
             $this->fileInstaller->install($file);
         }
 
         return $this;
     }
-
 }

@@ -165,8 +165,8 @@ class AbstractCatalogBlock extends \Magento\Catalog\Block\Product\ListProduct
 
         // Add Align class
         $align = '';
-        if ($align = $this->getEntity()->getAlign()) {
-            $align = 'bluefoot-align-' . $align;
+        if ($this->getEntity()->getAlign()) {
+            $align = 'bluefoot-align-' . $this->getEntity()->getAlign();
         }
 
         // Build and array of classes from the entity, the block and the alignment

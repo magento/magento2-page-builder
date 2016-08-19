@@ -14,12 +14,12 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $_registryManager;
+    protected $registryManager;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $_entityModel;
+    protected $entityModel;
 
     /**
      * Collection constructor.
@@ -45,9 +45,17 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
         \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {
-        $this->_registryManager = $registryManager;
-        $this->_entityModel = $entityModel;
-        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $eavEntityFactory, $connection, $resource);
+        $this->registryManager = $registryManager;
+        $this->entityModel = $entityModel;
+        parent::__construct(
+            $entityFactory,
+            $logger,
+            $fetchStrategy,
+            $eventManager,
+            $eavEntityFactory,
+            $connection,
+            $resource
+        );
     }
 
     /**
@@ -60,10 +68,10 @@ class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlo
         parent::_initSelect();
 
         // Only display content block entity types
-        $this->setEntityTypeFilter($this->_registryManager->registry('entityType'));
+        $this->setEntityTypeFilter($this->registryManager->registry('entityType'));
 
         // Exclude the default content block from the grid collection
-        $entityType = $this->_entityModel->getEntityType();
+        $entityType = $this->entityModel->getEntityType();
         if ($entityType->getId() && ($defaultAttributeSetId = $entityType->getDefaultAttributeSetId())) {
             $this->addFieldToFilter('main_table.attribute_set_id', array('neq' => $defaultAttributeSetId));
         }

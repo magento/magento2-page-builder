@@ -70,5 +70,4 @@ class Pin extends \Magento\Backend\App\Action
 
         return $this->resultJsonFactory->create()->setData(['success' => false]);
     }
-
 }

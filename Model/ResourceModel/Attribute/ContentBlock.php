@@ -113,5 +113,4 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 
         return parent::_afterSave($object);
     }
-
 }

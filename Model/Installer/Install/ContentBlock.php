@@ -171,7 +171,8 @@ class ContentBlock extends AbstractInstall
 
             // Content blocks require all attributes to be present on creation
             if (count($missingAttributes) > 0) {
-                throw new \Exception(count($missingAttributes) . ' attribute dependencies are missing for content block ' . $contentBlockIdentifier . ': ' . implode(', ', $missingAttributes));
+                throw new \Exception(count($missingAttributes) . ' attribute dependencies are missing for content ' .
+                    'block ' . $contentBlockIdentifier . ': ' . implode(', ', $missingAttributes));
             }
 
             /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock\Interceptor */

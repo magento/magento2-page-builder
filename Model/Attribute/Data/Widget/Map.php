@@ -38,5 +38,4 @@ class Map extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements
             'zoom' => (int) $zoom
         ];
     }
-
 }

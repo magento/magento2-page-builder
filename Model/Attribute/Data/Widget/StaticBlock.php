@@ -66,5 +66,4 @@ class StaticBlock extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget imp
             'content' => $content
         ];
     }
-
 }

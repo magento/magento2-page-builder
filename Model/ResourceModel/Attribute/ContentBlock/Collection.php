@@ -14,7 +14,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\C
     /**
      * @var \Magento\Eav\Model\EntityFactory
      */
-    protected $_eavEntityFactory;
+    protected $eavEntityFactory;
 
     /**
      * Collection constructor.
@@ -37,10 +37,12 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\C
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
-        $this->_eavEntityFactory = $eavEntityFactory;
+        $this->eavEntityFactory = $eavEntityFactory;
 
         // Set the entity type filter to only show content blocks
-        $this->setEntityTypeFilter($eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId());
+        $this->setEntityTypeFilter(
+            $eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
+        );
     }
 
     /**
@@ -51,7 +53,10 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\C
      */
     protected function _construct()
     {
-        $this->_init('Gene\BlueFoot\Model\Attribute\ContentBlock', 'Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock');
+        $this->_init(
+            'Gene\BlueFoot\Model\Attribute\ContentBlock',
+            'Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock'
+        );
     }
 
     /**

@@ -472,7 +472,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 $data['widget'] = 'child_block';
                 $data['child_block_type'] = $childType;
                 break;
-
         }
 
         // If the attribute has a widget assigned to it ensure it renders on the front-end

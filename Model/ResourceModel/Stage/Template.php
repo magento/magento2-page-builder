@@ -15,6 +15,8 @@ class Template extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * Initialize resource model
      *
      * @return void
+     *
+     * @codingStandardsIgnoreStart
      */
     protected function _construct()
     {

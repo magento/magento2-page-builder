@@ -16,7 +16,10 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Gene\BlueFoot\Model\Attribute\ContentBlock\Group','Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group');
+        $this->_init(
+            'Gene\BlueFoot\Model\Attribute\ContentBlock\Group',
+            'Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group'
+        );
     }
 
     /**
@@ -28,5 +31,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
         return $this->_toOptionHash('group_id', 'name');
     }
-
 }

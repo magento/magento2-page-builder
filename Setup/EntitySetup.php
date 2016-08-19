@@ -40,8 +40,7 @@ class EntitySetup extends EavSetup
         CacheInterface $cache,
         CollectionFactory $attrGroupCollectionFactory,
         Config $eavConfig
-    )
-    {
+    ) {
         $this->eavConfig = $eavConfig;
         parent::__construct($setup, $context, $cache, $attrGroupCollectionFactory);
     }

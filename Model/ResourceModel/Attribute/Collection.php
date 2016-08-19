@@ -23,7 +23,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
      *
      * @var \Magento\Eav\Model\EntityFactory
      */
-    protected $_eavEntityFactory;
+    protected $eavEntityFactory;
 
     /**
      * @param \Magento\Framework\Data\Collection\EntityFactory $entityFactory
@@ -45,7 +45,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
         \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {
-        $this->_eavEntityFactory = $eavEntityFactory;
+        $this->eavEntityFactory = $eavEntityFactory;
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $eavConfig, $connection, $resource);
     }
 
@@ -67,7 +67,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
      */
     protected function _getEntityTypeCode()
     {
-        return $this->_entityTypeCode;
+        return $this->entityTypeCode;
     }
 
     /**
@@ -95,7 +95,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
             ['main_table' => $this->getResource()->getMainTable()]
         )->where(
             'main_table.entity_type_id=?',
-            $this->_eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
+            $this->eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
         )->join(
             ['additional_table' => $this->getTable('gene_bluefoot_eav_attribute')],
             'additional_table.attribute_id = main_table.attribute_id'

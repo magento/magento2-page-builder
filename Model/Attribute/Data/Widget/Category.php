@@ -161,5 +161,4 @@ class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implem
             return '';
         }
     }
-
 }

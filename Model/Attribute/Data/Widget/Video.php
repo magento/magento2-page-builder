@@ -56,5 +56,4 @@ class Video extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implement
             'url' => $url
         ];
     }
-
 }

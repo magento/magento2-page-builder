@@ -18,7 +18,6 @@ class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstr
      * @param int   $entityTypeId
      *
      * @return array
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function map(array $input, $entityTypeId)
     {

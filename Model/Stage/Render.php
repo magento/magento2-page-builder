@@ -527,5 +527,4 @@ class Render extends \Magento\Framework\Model\AbstractModel
         $content = str_replace(self::getFormKeyMarker(), $formKey, $content, $replacementCount);
         return ($replacementCount > 0);
     }
-
 }

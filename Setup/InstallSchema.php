@@ -623,7 +623,12 @@ class InstallSchema implements InstallSchemaInterface
             ['attribute_set_id'],
             ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
         )->addForeignKey(
-            $installer->getFkName('gene_bluefoot_entity_type', 'attribute_set_id', 'eav_attribute_set', 'attribute_set_id'),
+            $installer->getFkName(
+                'gene_bluefoot_entity_type',
+                'attribute_set_id',
+                'eav_attribute_set',
+                'attribute_set_id'
+            ),
             'attribute_set_id',
             $installer->getTable('eav_attribute_set'),
             'attribute_set_id',
@@ -635,7 +640,12 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => false, 'unsigned' => true],
             'Group ID'
         )->addForeignKey(
-            $installer->getFkName('gene_bluefoot_entity_type', 'group_id', 'gene_bluefoot_entity_type_group', 'group_id'),
+            $installer->getFkName(
+                'gene_bluefoot_entity_type',
+                'group_id',
+                'gene_bluefoot_entity_type_group',
+                'group_id'
+            ),
             'group_id',
             $installer->getTable('gene_bluefoot_entity_type_group'),
             'group_id',
