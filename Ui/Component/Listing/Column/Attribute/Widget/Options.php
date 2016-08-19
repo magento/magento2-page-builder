@@ -1,10 +1,12 @@
 <?php
+
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Widget;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
 /**
  * Class Options
+ *
  * @package Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Widget
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */

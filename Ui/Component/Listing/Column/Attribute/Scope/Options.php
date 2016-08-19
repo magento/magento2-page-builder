@@ -1,4 +1,5 @@
 <?php
+
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Scope;
 
 use Magento\Framework\Data\OptionSourceInterface;

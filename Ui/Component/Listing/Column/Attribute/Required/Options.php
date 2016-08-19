@@ -1,4 +1,5 @@
 <?php
+
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Required;
 
 use Magento\Framework\Data\OptionSourceInterface;
