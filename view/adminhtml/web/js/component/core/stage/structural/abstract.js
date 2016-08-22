@@ -10,8 +10,9 @@ define([
     'bluefoot/common',
     'bluefoot/stage/structural/options',
     'mage/translate',
-    'bluefoot/stage/structural/column/builder'
-], function (ko, _, Common, Options, $t, ColumnBuilder) {
+    'bluefoot/stage/structural/column/builder',
+    'Magento_Ui/js/modal/confirm'
+], function (ko, _, Common, Options, $t, ColumnBuilder, confirmation) {
 
     /**
      * Abstract structural block
@@ -104,8 +105,16 @@ define([
      * @param structural
      */
     AbstractStructural.prototype.remove = function ($data, structural) {
-        // Call the parent to remove the child element
-        structural.parent.removeChild(this);
+        confirmation({
+            title: 'Confirm Item Removal',
+            content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
+            actions: {
+                confirm: function(){
+                    // Call the parent to remove the child element
+                    structural.parent.removeChild(this);
+                }.bind(this)
+            }
+        });
     };
 
     /**
