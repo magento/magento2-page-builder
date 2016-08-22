@@ -102,6 +102,9 @@ define([
                 // Mark the stage as active bringing it into display
                 this.stageActive(true);
 
+                // Update the panel instance to realise our new stage instance
+                panel.updateStages();
+
             } else {
                 console.warn('Unable to locate the BlueFoot panel for initialization.');
             }

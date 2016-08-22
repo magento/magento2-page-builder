@@ -121,7 +121,7 @@ define([
                         that.stages.each(function () {
                             if (that._elementInViewport(jQuery(this))) {
                                 stageInView = true;
-                                return false;
+                                return true;
                             }
                         });
 
