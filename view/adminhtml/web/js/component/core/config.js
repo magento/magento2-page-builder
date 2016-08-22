@@ -37,7 +37,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          *
          * @param config
          */
-        setInitConfig: function(config) {
+        setInitConfig: function (config) {
             _initConfig = config;
         },
 
@@ -133,11 +133,10 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @param valueKey
          * @param value
          */
-        deleteValue: function (key,valueKey,value) {
+        deleteValue: function (key, valueKey, value) {
             var arr = [];
-            _config[key].forEach(function(item){
-                if (item[valueKey] != value)
-                {
+            _config[key].forEach(function (item) {
+                if (item[valueKey] != value) {
                     arr.push(item);
                 }
             });
@@ -148,8 +147,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @param key
          * @param values (array)
          */
-        mergeValues: function (key,values)
-        {
+        mergeValues: function (key, values) {
             _config[key] = _config[key].concat(values);
         },
         /**
@@ -159,12 +157,10 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @param newValueKey
          * @param newValue
          */
-        updateTemplateValue: function (matchKey,matchValue,newValueKey,newValue)
-        {
+        updateTemplateValue: function (matchKey, matchValue, newValueKey, newValue) {
             var arr = [];
-            _config['templates'].forEach(function(item){
-                if (item[matchKey] === matchValue)
-                {
+            _config['templates'].forEach(function (item) {
+                if (item[matchKey] === matchValue) {
                     item[newValueKey] = newValue;
                 }
                 arr.push(item);

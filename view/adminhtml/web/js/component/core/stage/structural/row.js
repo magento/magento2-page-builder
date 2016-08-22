@@ -22,6 +22,7 @@ define([
     function Row(parent, stage) {
         AbstractStructural.call(this, parent, stage);
     }
+
     Row.prototype = Object.create(AbstractStructural.prototype);
     var $super = AbstractStructural.prototype;
 
@@ -52,7 +53,7 @@ define([
         var column = new Column(this, this.stage);
         this.addChild(column);
 
-        if( data ) {
+        if (data) {
             column.widthClasses(data.className);
         }
     };

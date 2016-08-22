@@ -24,8 +24,9 @@ define([
         AbstractStructural.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.widthClasses = ko.observable( Config.getInitConfig("column_definitions")[0]['className'] );
+        this.widthClasses = ko.observable(Config.getInitConfig("column_definitions")[0]['className']);
     }
+
     Column.prototype = Object.create(AbstractStructural.prototype);
     var $super = AbstractStructural.prototype;
 
@@ -61,11 +62,11 @@ define([
     /**
      * Insert a column at the designated index within it's parent
      */
-    Column.prototype.insertColumnAtIndex = function(direction, item, data) {
+    Column.prototype.insertColumnAtIndex = function (direction, item, data) {
         var index = ko.utils.arrayIndexOf(item.parent.children(), item),
             column = new Column(item.parent, item.parent.stage);
 
-        if( direction == 'right' ) {
+        if (direction == 'right') {
             ++index;
         }
 

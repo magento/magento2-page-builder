@@ -9,7 +9,7 @@ define([
     'ko',
     'jquery',
     'Magento_Ui/js/modal/modal'
-], function(Component, ko, jQuery, Modal) {
+], function (Component, ko, jQuery, Modal) {
 
     /**
      * Extend the component for BlueFoot panel specific functionality

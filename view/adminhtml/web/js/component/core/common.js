@@ -6,78 +6,79 @@
  */
 define(['ko'], function (ko) {
 
-   return {
+    return {
 
-       /**
-        * Generate a GUID? or just a unique ID
-        *
-        * @returns {string}
-        */
-       guid: function () {
-           function s4() {
-               return Math.floor((1 + Math.random()) * 0x10000)
-                   .toString(16)
-                   .substring(1);
-           }
-           return s4() + s4() + s4();
-       },
+        /**
+         * Generate a GUID? or just a unique ID
+         *
+         * @returns {string}
+         */
+        guid: function () {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
 
-       /**
-        * Move an array item within an array based on indexes
-        *
-        * @param array
-        * @param fromIndex
-        * @param toIndex
-        */
-       moveArrayItem: function (array, fromIndex, toIndex) {
-           // If the array is a KnockoutJS function, retrieve the underlying array
-           if (typeof array === 'function') {
-               var arrayFn = array;
-               array = ko.utils.unwrapObservable(array);
+            return s4() + s4() + s4();
+        },
 
-               if (typeof arrayFn.valueWillMutate === 'function') {
-                   arrayFn.valueWillMutate()
-               }
-           }
+        /**
+         * Move an array item within an array based on indexes
+         *
+         * @param array
+         * @param fromIndex
+         * @param toIndex
+         */
+        moveArrayItem: function (array, fromIndex, toIndex) {
+            // If the array is a KnockoutJS function, retrieve the underlying array
+            if (typeof array === 'function') {
+                var arrayFn = array;
+                array = ko.utils.unwrapObservable(array);
 
-           var element = array[fromIndex];
-           array.splice(fromIndex, 1);
-           array.splice(toIndex, 0, element);
+                if (typeof arrayFn.valueWillMutate === 'function') {
+                    arrayFn.valueWillMutate()
+                }
+            }
 
-           if (typeof arrayFn === 'function') {
-               arrayFn(array);
-           }
+            var element = array[fromIndex];
+            array.splice(fromIndex, 1);
+            array.splice(toIndex, 0, element);
 
-           return array;
-       },
+            if (typeof arrayFn === 'function') {
+                arrayFn(array);
+            }
 
-       /**
-        * Move an item into a different array
-        *
-        * @param item
-        * @param array
-        * @param toIndex
-        * @returns {*}
-        */
-       moveArrayItemIntoArray: function (item, array, toIndex) {
+            return array;
+        },
 
-           // If the array is a KnockoutJS function, retrieve the underlying array
-           if (typeof array === 'function') {
-               var arrayFn = array;
-               array = ko.utils.unwrapObservable(array);
+        /**
+         * Move an item into a different array
+         *
+         * @param item
+         * @param array
+         * @param toIndex
+         * @returns {*}
+         */
+        moveArrayItemIntoArray: function (item, array, toIndex) {
 
-               if (typeof arrayFn.valueWillMutate === 'function') {
-                   arrayFn.valueWillMutate()
-               }
-           }
+            // If the array is a KnockoutJS function, retrieve the underlying array
+            if (typeof array === 'function') {
+                var arrayFn = array;
+                array = ko.utils.unwrapObservable(array);
 
-           array.splice(toIndex, 0, item);
+                if (typeof arrayFn.valueWillMutate === 'function') {
+                    arrayFn.valueWillMutate()
+                }
+            }
 
-           if (typeof arrayFn === 'function') {
-               arrayFn(array);
-           }
+            array.splice(toIndex, 0, item);
 
-           return array;
-       }
-   }
+            if (typeof arrayFn === 'function') {
+                arrayFn(array);
+            }
+
+            return array;
+        }
+    }
 });

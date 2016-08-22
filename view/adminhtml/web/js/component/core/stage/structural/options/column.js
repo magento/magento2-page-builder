@@ -28,6 +28,7 @@ define([
         this.template = 'Gene_BlueFoot/component/core/stage/structural/options/column.html';
         this.active = ko.observable(false);
     }
+
     ColumnOption.prototype = Object.create(Option.prototype);
     var $super = Option.prototype;
 

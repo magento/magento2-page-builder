@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/renderer', 'bluefoot/stage/save', 'bluefoot/ajax', 'bluefoot/stage/build','bluefoot/html2canvas'], function (Hook, jQuery, Config, Render, SaveClass, AjaxClass, StageBuild, Html2Canvas) {
+define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/renderer', 'bluefoot/stage/save', 'bluefoot/ajax', 'bluefoot/stage/build', 'bluefoot/html2canvas'], function (Hook, jQuery, Config, Render, SaveClass, AjaxClass, StageBuild, Html2Canvas) {
 
     /**
      * This handles any structural elements, this includes rows and columns.
@@ -117,17 +117,17 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
 
         html2canvas(dom, {
             useCORS: true,
-            onrendered: function(canvas) {
+            onrendered: function (canvas) {
 
                 //Shrink the canvas a bit to save space.
                 var scaleCan = document.createElement('canvas');
                 var w = canvas.width,
                     h = canvas.height;
-                scaleCan.width = w/2.5;
-                scaleCan.height = h/2.5;
+                scaleCan.width = w / 2.5;
+                scaleCan.height = h / 2.5;
 
                 var ctx = scaleCan.getContext('2d');
-                ctx.drawImage(canvas, 0, 0, canvas.width/2.5, canvas.height/2.5);
+                ctx.drawImage(canvas, 0, 0, canvas.width / 2.5, canvas.height / 2.5);
                 templatePreview = scaleCan.toDataURL();
 
                 var Ajax = new AjaxClass();
@@ -139,7 +139,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
                 }, function (data) {
                     if (data.success) {
                         //Add our new saved template to our list of templates.
-                        Config.mergeValues('templates',data.template);
+                        Config.mergeValues('templates', data.template);
                         require('bluefoot/modal').alert('Your template has been saved under ' + name);
                     }
                 });
@@ -152,7 +152,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
      * @param pinnedVal
      * @returns {boolean}
      */
-    Template.prototype.pinTemplate = function (templateId,pinnedVal) {
+    Template.prototype.pinTemplate = function (templateId, pinnedVal) {
         if (!templateId || templateId && templateId == '') {
             return false;
         }
@@ -163,7 +163,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
         }, function (data) {
             if (data.success) {
                 //Update our config
-                Config.updateTemplateValue('id',data.id,'pinned',data.pinned);
+                Config.updateTemplateValue('id', data.id, 'pinned', data.pinned);
             }
         });
     };
@@ -184,7 +184,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
             id: templateId
         }, function (data) {
             if (data.success) {
-                Config.deleteValue('templates','id',templateId);
+                Config.deleteValue('templates', 'id', templateId);
                 this.showTemplateSelection();
                 require('bluefoot/modal').alert('Template has been deleted');
             }
@@ -247,8 +247,7 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
      *
      * @param templateId
      */
-    Template.prototype.deleteTemplate= function (templateId)
-    {
+    Template.prototype.deleteTemplate = function (templateId) {
         require('bluefoot/modal').confirm('Are you sure you want to delete this template?', false, function () {
             this._deleteTemplate(templateId);
         }.bind(this));
@@ -258,15 +257,20 @@ define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config', 'bluefoot/rendere
      * Show the template selection modal
      * @returns {*}
      */
-    Template.prototype.showTemplateSelection = function ()
-    {
+    Template.prototype.showTemplateSelection = function () {
         var callbacks =
         {
-            load: function (templateId){this.loadTemplate(templateId);}.bind(this),
-            delete: function (templateId) {this.deleteTemplate(templateId);}.bind(this),
-            pin: function (templateId,pinned) {this.pinTemplate(templateId,pinned);}.bind(this)
+            load: function (templateId) {
+                this.loadTemplate(templateId);
+            }.bind(this),
+            delete: function (templateId) {
+                this.deleteTemplate(templateId);
+            }.bind(this),
+            pin: function (templateId, pinned) {
+                this.pinTemplate(templateId, pinned);
+            }.bind(this)
         };
-        require('bluefoot/modal').templateSelectionGrid(Config.getValue('templates'),callbacks);
+        require('bluefoot/modal').templateSelectionGrid(Config.getValue('templates'), callbacks);
     };
     /**
      * Load a template into the page

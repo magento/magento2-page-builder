@@ -28,7 +28,7 @@ define([
      * @param child
      */
     Stage.prototype.removeChild = function (child) {
-        this.stageContent(ko.utils.arrayFilter(this.stageContent(), function(filterChild) {
+        this.stageContent(ko.utils.arrayFilter(this.stageContent(), function (filterChild) {
             return child.id != filterChild.id;
         }));
         this.refreshChildren();

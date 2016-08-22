@@ -26,6 +26,7 @@ define([
 
         this.config = config;
     }
+
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
     var $super = AbstractStructural.prototype;
 
@@ -57,7 +58,7 @@ define([
                 click: function () {
                     this.closeModal();
                 }
-            },{
+            }, {
                 text: $.mage.__('Save ' + this.config.name),
                 class: 'action-primary',
                 click: function () {

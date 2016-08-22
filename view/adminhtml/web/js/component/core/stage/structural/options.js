@@ -52,7 +52,9 @@ define([
 
         // If the callbackFn isn't defined return false
         if (!callbackFn || callbackFn && typeof callbackFn !== 'function') {
-            callbackFn = function () { return false; };
+            callbackFn = function () {
+                return false;
+            };
         }
 
         // If the additional classes is an array, convert it into a string

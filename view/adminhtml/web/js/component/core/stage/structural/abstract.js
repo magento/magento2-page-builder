@@ -91,7 +91,7 @@ define([
      * @param child
      */
     AbstractStructural.prototype.removeChild = function (child) {
-        this.children(ko.utils.arrayFilter(this.children(), function(filterChild) {
+        this.children(ko.utils.arrayFilter(this.children(), function (filterChild) {
             return child.id != filterChild.id;
         }));
         this.refreshChildren();

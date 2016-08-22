@@ -15,10 +15,10 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
 
     // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
     if (!Object.keys) {
-        Object.keys = (function() {
+        Object.keys = (function () {
             'use strict';
             var hasOwnProperty = Object.prototype.hasOwnProperty,
-                hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+                hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
                 dontEnums = [
                     'toString',
                     'toLocaleString',
@@ -30,7 +30,7 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
                 ],
                 dontEnumsLength = dontEnums.length;
 
-            return function(obj) {
+            return function (obj) {
                 if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
                     throw new TypeError('Object.keys called on non-object');
                 }
@@ -176,8 +176,8 @@ define(['bluefoot/hook', 'bluefoot/cms-config'], function (Hook, InitConfig) {
          * @private
          */
         _isObjectEmpty: function (object) {
-            for(var prop in object) {
-                if(object.hasOwnProperty(prop))
+            for (var prop in object) {
+                if (object.hasOwnProperty(prop))
                     return false;
             }
 

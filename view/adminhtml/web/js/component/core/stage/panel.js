@@ -12,7 +12,7 @@ define([
     'bluefoot/stage/panel/group',
     'bluefoot/modal',
     'bluefoot/ko-sortable'
-], function(Component, ko, jQuery, Config, Group) {
+], function (Component, ko, jQuery, Config, Group) {
 
     /**
      * Extend the component for BlueFoot panel specific functionality
@@ -59,8 +59,7 @@ define([
 
                 // Verify the configuration contains the required information
                 if (typeof config.contentTypeGroups !== 'undefined' &&
-                    typeof config.contentTypes !== 'undefined')
-                {
+                    typeof config.contentTypes !== 'undefined') {
                     // Populate the groups array with our groups
                     var groupsLookup = {};
                     var groups = [];
