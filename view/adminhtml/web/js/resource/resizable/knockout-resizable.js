@@ -16,7 +16,22 @@
     }
 })(function (ko, jQuery, Common, Config) {
 
-    var allowedSizes = Config.getInitConfig('column_definitions');
+    var allowedSizes = Config.getInitConfig('column_definitions'),
+        largestColumn = {breakpoint: 0},
+        smallestColumn = {breakpoint: 1};
+
+    // Determine the largest and smallest columns
+    for (var i = 0; i < allowedSizes.length; i++) {
+        if (allowedSizes[i].breakpoint > largestColumn.breakpoint) {
+            largestColumn = allowedSizes[i];
+        }
+        if (allowedSizes[i].breakpoint < smallestColumn.breakpoint) {
+            smallestColumn = allowedSizes[i];
+        }
+    }
+
+    var largestPercentage = parseFloat(largestColumn.breakpoint).toFixed(3),
+        smallestPercentage = parseFloat(smallestColumn.breakpoint).toFixed(3);
 
     var Resizable = {
         extendedConfig: {},
@@ -36,11 +51,16 @@
 
                     var element = jQuery("#" + context.currentColumn.id),
                         ghostWidth = context.startingWidth + (event.clientX - context.startingX),
-                        ghost = element.find(".bluefoot-resize-ghost");
+                        ghost = element.find(".bluefoot-resize-ghost"),
+                        biggestWidth = Math.floor(element.parent().outerWidth() * largestPercentage) - 6,
+                        smallestWidth = Math.floor(element.parent().outerWidth() * smallestPercentage) - 6;
 
                     // Stop the ghost width exceeding that of the container
-                    if (ghostWidth >= element.parent().outerWidth()) {
-                        ghostWidth = element.parent().outerWidth();
+                    if (ghostWidth >= biggestWidth) {
+                        ghostWidth = biggestWidth;
+                    }
+                    if (ghostWidth <= smallestWidth) {
+                        ghostWidth = smallestWidth;
                     }
 
                     ghost.width(ghostWidth);
@@ -50,7 +70,7 @@
                             breakpoint = Math.floor(element.parent().outerWidth() * percentage);
 
                         // Stop the loop once we hit a valid breakpoint
-                        if (ghostWidth >= (breakpoint - 10) && ghostWidth <= (breakpoint + 10)) {
+                        if (ghostWidth >= (breakpoint - 15) && ghostWidth <= (breakpoint + 15)) {
                             context.currentColumn.widthClasses(size.className);
                             return false;
                         }
@@ -60,7 +80,7 @@
                     context.currentColumn = ko.dataFor(this);
                     context.startingWidth = jQuery(this.parentNode).outerWidth();
                     context.startingX = event.clientX;
-                    jQuery(this.parentNode.parentNode).append('<div class="bluefoot-resize-ghost"></div>');
+                    jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
                     return true;
                 })
                 .on('mouseup', function (event, ui) {
