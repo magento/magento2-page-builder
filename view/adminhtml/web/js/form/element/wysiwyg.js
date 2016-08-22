@@ -40,7 +40,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('value stageActive stageContent showBorders');
+                .observe('value stageId stageActive stageContent showBorders');
 
             return this;
         },
@@ -86,10 +86,18 @@ define([
             if (panel = this.getBlueFootPanel()) {
                 panel.buildPanel();
 
+                // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
                 this.stage = new Stage(this, this.stageId, this.stageContent);
+
+                // Add an initial row to the stage
+                this.stage.addRow();
 
                 // Hide the WYSIWYG and display the stage
                 jQuery(event.currentTarget).parents('[data-namespace]').hide();
+                if (jQuery(event.currentTarget).parents('.admin__control-grouped').length > 0) {
+                    // Add bluefoot active class to transform the field area full width
+                    jQuery(event.currentTarget).parents('.admin__control-grouped').addClass('bluefoot-active');
+                }
 
                 // Mark the stage as active bringing it into display
                 this.stageActive(true);

@@ -83,7 +83,7 @@
                     context.startingX = event.clientX;
                     jQuery(this.parentNode.parentNode).addClass('bluefoot-resizing');
                     jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
-                    jQuery(this.parentNode.parentNode).find('.element-children').append(jQuery('<div />').addClass('bluefoot-resize-size'));
+                    jQuery(this.parentNode.parentNode).find('.element-children').first().append(jQuery('<div />').addClass('bluefoot-resize-size'));
 
                     // If the mouse leaves the window kill the bluefoot resizing functionality
                     jQuery('body').mouseleave(function () {

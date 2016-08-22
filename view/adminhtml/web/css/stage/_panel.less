@@ -56,36 +56,52 @@
     }
 }
 
-#bluefoot-panel {
+#bluefoot-panel-wrapper {
     position: fixed;
     left: 0;
     top: 50%;
-    background: @panelColor;
+
     width: 70px;
     display: block;
     z-index: 600;
-
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    -moz-border-radius-topright: 5px;
-    -moz-border-radius-bottomright: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    padding: 14px 0;
 
     transition: 0.5s;
     -moz-transition: 0.5s;
     -webkit-transition: 0.5s;
 
-    transform: translate(0rem, -50%);
-    -moz-transform: translate(0rem, -50%);
-    -webkit-transform: translate(0rem, -50%);
+    transform: translateX(0rem);
+    -moz-transform: translateX(0rem);
+    -webkit-transform: translateX(0rem);
 
     &.visible {
-        transform: translate(8.800000000000001rem, -50%);
-        -moz-transform: translate(8.800000000000001rem, -50%);
-        -webkit-transform: translate(8.800000000000001rem, -50%);
+        transform: translateX(8.800000000000001rem);
+        -moz-transform: translateX(8.800000000000001rem);
+        -webkit-transform: translateX(8.800000000000001rem);
+    }
+
+    #bluefoot-panel {
+        background: @panelColor;
+
+        -webkit-border-top-right-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        -moz-border-radius-bottomright: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+
+        padding: 14px 0;
+
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+
+        /* Rules below not implemented in browsers yet */
+        -o-user-select: none;
+        user-select: none;
+
+        transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
     }
 
     #bluefoot-emblem {

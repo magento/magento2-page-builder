@@ -36,6 +36,9 @@ define([
             // Observable information for the panel to be built at a later date
             this.visible = ko.observable(false);
             this.groups = ko.observableArray([]);
+
+            // Record the stages DOM elements on the page
+            this.stages = false;
         },
 
         /**
@@ -45,7 +48,9 @@ define([
             // Do we need to rebuild the panel?
             if (!this.built) {
                 this.populatePanel();
-                this.built = true;
+                this.bindEvents();
+            } else {
+                this.updateStages();
             }
         },
 
@@ -82,11 +87,70 @@ define([
 
                     // Display the panel
                     this.visible(true);
+
+                    this.built = true;
+                    this.updateStages();
                 } else {
                     console.warn('Configuration is not properly initialized, please check the Ajax response.');
                 }
 
             }.bind(this), false, Config.getStoreId());
+        },
+
+        /**
+         * Update the stages cache with any new stages
+         */
+        updateStages: function () {
+            this.stages = jQuery('body').find('[data-role="bluefoot-stage"]');
+        },
+
+        /**
+         * Bind events for the panel
+         */
+        bindEvents: function () {
+            var that = this,
+                stageInView = false,
+                timeout;
+
+            // Attach a scroll event to the window to monitor stages coming in and out of view
+            jQuery(window).scroll(function () {
+                if (that.built && that.stages.length > 0) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        stageInView = false;
+                        that.stages.each(function () {
+                            if (that._elementInViewport(jQuery(this))) {
+                                stageInView = true;
+                                return false;
+                            }
+                        });
+
+                        that.visible(stageInView);
+                    }, 100);
+                }
+            });
+        },
+
+        /**
+         * Determine if an element is within the view port
+         *
+         * @param el
+         * @returns {boolean}
+         * @private
+         */
+        _elementInViewport: function (el) {
+            if (typeof jQuery === "function" && el instanceof jQuery) {
+                el = el[0];
+            }
+
+            var rect = el.getBoundingClientRect();
+
+            return (
+                (rect.top + rect.height) >= 0 &&
+                rect.left >= 0 &&
+                (rect.bottom - rect.height) <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
         }
     });
 });
