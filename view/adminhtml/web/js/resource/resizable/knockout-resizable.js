@@ -84,6 +84,15 @@
                     jQuery(this.parentNode.parentNode).addClass('bluefoot-resizing');
                     jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
                     jQuery(this.parentNode.parentNode).find('.element-children').append(jQuery('<div />').addClass('bluefoot-resize-size'));
+
+                    // If the mouse leaves the window kill the bluefoot resizing functionality
+                    jQuery('body').mouseleave(function () {
+                        context.currentColumn = null;
+                        jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
+                        jQuery('.bluefoot-resize-ghost').fadeOut(200);
+                        jQuery('.bluefoot-resize-size').fadeOut(200);
+                    });
+
                     return true;
                 })
                 .on('mouseup', function (event, ui) {
