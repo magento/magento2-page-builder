@@ -152,6 +152,7 @@ define([
      * @param sortableInstance
      */
     AbstractStructural.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+        ui.item.show();
         this.originalParent = this.parent;
         this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
         if (this.stage) {
@@ -231,8 +232,12 @@ define([
                 // Remove the item from the UI
                 item.remove();
 
-                // Force refresh the children to update the UI
+                // Always ensure the DOM is updated before refreshing the children
                 parent.refreshChildren();
+                setTimeout(function () {
+                    // Force refresh the children to update the UI
+                    parent.refreshChildren();
+                }, 10);
             }
 
             // If using deferred updates plugin, force updates

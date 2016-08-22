@@ -3,13 +3,21 @@
         float: left;
         width: 100%;
         padding-left: 3rem;
-        margin: 2rem 0 0 0;
+        margin: 3rem 0 0 0;
     }
 }
 
-.bluefoot-canvas {
+.bluefoot-stage {
     margin-left: 60px; // temp
+
+    padding: 0 10px 60px 10px; // 60px to include the add row button
+    background: #f3f3f3;
+    min-height: 200px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
+
 
 .bluefoot-add-row-wrapper {
     float: left;
@@ -87,9 +95,8 @@
 .bluefoot-structure {
     border: 3px solid transparent;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 0 10px;
     margin: 10px 0;
-    background: white;
     position: relative;
     z-index: 10;
 
@@ -156,6 +163,13 @@
 
             .bluefoot-column-add {
                 display: block;
+            }
+        }
+
+        &.bluefoot-entity {
+            > *:not(.bluefoot-options) {
+                -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
+                filter: blur(5px);
             }
         }
 
@@ -292,14 +306,57 @@
             color: white;
         }
 
-        ul.bluefoot-options-links {
-            background: @entityColor;
+        .bluefoot-options {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            ul.bluefoot-options-links {
+                background: @entityColor;
+            }
         }
         .bluefoot-id {
             background: @entityColor;
             bottom: 0;
             right: 0;
         }
+    }
+}
+
+.bluefoot-entity-helper {
+    background: @entityColor;
+    border: none;
+    color: white;
+    width: 200px!important;
+    height: 20px;
+    text-align: center;
+
+    h3 {
+        color: white;
+    }
+}
+
+.bluefoot-placeholder-sortable {
+    height: 16px;
+    background: @entityColor;
+    width: 100%;
+    margin: 10px 0;
+    display: inline-block;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+    &.bluefoot-structure-wrapper {
+        position: relative;
+        box-sizing: border-box;
+        &-width-whole { width: 100%; }
+        &-width-half { width: 50%; }
+        &-width-third { width: 33.3%; }
+        &-width-quarter { width: 25%; }
+        &-width-sixth { width: 16.666666667%; }
+        &-width-two-thirds { width: 66.6%; }
+        &-width-three-quarters { width: 75%; }
+        &-width-five-sixths { width: 83.333333335%; }
     }
 }
 

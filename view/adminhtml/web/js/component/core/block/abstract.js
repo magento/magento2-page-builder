@@ -81,5 +81,22 @@ define([
         return 'Gene_BlueFoot/component/core/block/abstract.html'
     };
 
+    /**
+     * Event called when sorting starts on this element
+     *
+     * @param sortableThis
+     * @param event
+     * @param ui
+     * @param sortableInstance
+     */
+    AbstractBlock.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+        // Copy over the column class for the width
+        ui.helper.html(jQuery('<h3 />').text(this.config.name));
+        ui.helper.css({width: '', height: ''});
+
+        // Run the parent
+        return $super.onSortStart.apply(this, arguments);
+    };
+
     return AbstractBlock;
 });

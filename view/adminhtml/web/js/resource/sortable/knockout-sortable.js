@@ -124,16 +124,21 @@
         defaults: {
             tolerance: 'intersect',
             connectWith: '.bluefoot-sortable',
-            helper: 'clone',
+            helper: function (event, element) {
+                if (element.children().first().hasClass('bluefoot-entity')) {
+                    return jQuery('<div />').addClass('bluefoot-entity-helper'); // Temporary need to retrieve the icon and label
+                } else {
+                    return jQuery('<div />');
+                }
+            },
             appendTo: document.body,
             placeholder: {
-                element: function (clone, ui) {
+                element: function (clone) {
                     if (clone.hasClass('bluefoot-draggable-block')) {
                         return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
                     }
 
-                    var placeholder = jQuery(clone).clone();
-                    return placeholder.css({height: clone.height(), visibility: 'hidden'}).show();
+                    return jQuery('<div />').addClass('bluefoot-placeholder-sortable');
                 },
                 update: function (clone, ui) {
                     return;

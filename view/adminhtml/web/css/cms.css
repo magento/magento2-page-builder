@@ -144,10 +144,16 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   float: left;
   width: 100%;
   padding-left: 3rem;
-  margin: 2rem 0 0 0;
+  margin: 3rem 0 0 0;
 }
-.bluefoot-canvas {
+.bluefoot-stage {
   margin-left: 60px;
+  padding: 0 10px 60px 10px;
+  background: #f3f3f3;
+  min-height: 200px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 .bluefoot-add-row-wrapper {
   float: left;
@@ -234,9 +240,8 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure {
   border: 3px solid transparent;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 0 10px;
   margin: 10px 0;
-  background: white;
   position: relative;
   z-index: 10;
   -webkit-user-select: none;
@@ -302,6 +307,11 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 }
 .bluefoot-structure:hover.bluefoot-column .bluefoot-column-add {
   display: block;
+}
+.bluefoot-structure:hover.bluefoot-entity > *:not(.bluefoot-options) {
+  -webkit-filter: blur(5px);
+  /* Chrome, Safari, Opera */
+  filter: blur(5px);
 }
 .bluefoot-structure:hover > .bluefoot-options ul.bluefoot-options-links {
   display: inline-block;
@@ -424,13 +434,67 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure.bluefoot-entity * {
   color: white;
 }
-.bluefoot-structure.bluefoot-entity ul.bluefoot-options-links {
+.bluefoot-structure.bluefoot-entity .bluefoot-options {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bluefoot-structure.bluefoot-entity .bluefoot-options ul.bluefoot-options-links {
   background: #243743;
 }
 .bluefoot-structure.bluefoot-entity .bluefoot-id {
   background: #243743;
   bottom: 0;
   right: 0;
+}
+.bluefoot-entity-helper {
+  background: #243743;
+  border: none;
+  color: white;
+  width: 200px!important;
+  height: 20px;
+  text-align: center;
+}
+.bluefoot-entity-helper h3 {
+  color: white;
+}
+.bluefoot-placeholder-sortable {
+  height: 16px;
+  background: #243743;
+  width: 100%;
+  margin: 10px 0;
+  display: inline-block;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper {
+  position: relative;
+  box-sizing: border-box;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-whole {
+  width: 100%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-half {
+  width: 50%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-third {
+  width: 33.3%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-quarter {
+  width: 25%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-sixth {
+  width: 16.666666667%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-two-thirds {
+  width: 66.6%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-three-quarters {
+  width: 75%;
+}
+.bluefoot-placeholder-sortable.bluefoot-structure-wrapper-width-five-sixths {
+  width: 83.333333335%;
 }
 .bluefoot-stage.bluefoot-show-borders .bluefoot-canvas .bluefoot-structure {
   border: 3px #243743 dashed;

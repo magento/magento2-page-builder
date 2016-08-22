@@ -74,5 +74,21 @@ define([
         column.widthClasses(data.className);
     };
 
+    /**
+     * Event called when sorting starts on this element
+     *
+     * @param sortableThis
+     * @param event
+     * @param ui
+     * @param sortableInstance
+     */
+    Column.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+        // Copy over the column class for the width
+        ui.placeholder.addClass(this.widthClasses());
+
+        // Run the parent
+        return $super.onSortStart.apply(this, arguments);
+    };
+
     return Column;
 });
