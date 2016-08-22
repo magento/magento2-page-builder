@@ -3,20 +3,21 @@
  * BlueFoot
  *
  * Version 1.0
+ *
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Buttons Template
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
  *
  */
-$_entity = $this->getEntity();
+$_entity = $block->getEntity();
 ?>
 
-<?php if ($this->hasChildEntities('button_items')): ?>
+<?php if ($block->hasChildEntities('button_items')) : ?>
 
-    <?php $_collection = $this->getChildEntities('button_items'); ?>
-    <div class="bluefoot-buttons <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php foreach ($_collection as $_block): ?>
+    <?php $_collection = $block->getChildEntities('button_items'); ?>
+    <div class="bluefoot-buttons <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+        <?php foreach ($_collection as $_block) : ?>
             <?php echo $_block->toHtml(); ?>
         <?php endforeach; ?>
     </div>

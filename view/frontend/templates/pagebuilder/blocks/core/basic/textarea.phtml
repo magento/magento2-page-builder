@@ -3,14 +3,16 @@
  * BlueFoot
  *
  * Version 1.0
+ *
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Textarea Template
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
  *
  */
-$_entity = $this->getEntity();
+$_entity = $block->getEntity();
 ?>
-<div class="bluefoot-entity bluefoot-textarea <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+<div
+    class="bluefoot-entity bluefoot-textarea <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
     <?php echo $_entity->getTextarea(); ?>
 </div>

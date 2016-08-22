@@ -3,33 +3,39 @@
  * BlueFoot
  *
  * Version 1.0
+ *
  * @author Conor Farrell <conor@gene.co.uk>
  *
  * Carousel Template - this carousel uses the jQuery plugin Slick <http://kenwheeler.github.io/slick/>
  * Thanks to Ken Wheeler for allowing us to distribute his plugin with the Gene CMS
  *
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
  */
-$_entity = $this->getEntity();
+$_entity = $block->getEntity();
 
-if ($_entity->getShowDots()):
-    $this->setCssClasses('bluefoot-slider-with-dots');
+if ($_entity->getShowDots()) :
+    $block->setCssClasses('bluefoot-slider-with-dots');
 endif;
 ?>
-<?php if ($this->hasChildEntities('advanced_slider_items')): ?>
+<?php if ($block->hasChildEntities('advanced_slider_items')) : ?>
 
-    <?php $_collection = $this->getChildEntities('advanced_slider_items'); ?>
-    <div id="bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>" class="bluefoot-advanced-slider bluefoot-slider <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php $_i = 0; foreach ($_collection as $_block): $_i++; ?>
+    <?php $_collection = $block->getChildEntities('advanced_slider_items'); ?>
+    <div id="bluefoot-advanced-slider-<?php echo $block->getEntity()->getId(); ?>"
+         class="bluefoot-advanced-slider bluefoot-slider <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+        <?php $_i = 0;
+        foreach ($_collection as $_block) :
+            $_i++; ?>
             <?php echo $_block->setCount($_i)->toHtml(); ?>
-        <?php endforeach; ?>
+        <?php
+        endforeach;
+        ?>
     </div>
 
     <script type="text/javascript">
-        require(['jquery','slick'], function(jQuery) {
+        require(['jquery', 'slick'], function (jQuery) {
             jQuery(function () {
                 /* [Slick JS] */
-                jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').slick({
+                jQuery('#bluefoot-advanced-slider-<?php echo $block->getEntity()->getId(); ?>').slick({
                     infinite: <?php echo ($_entity->getIsInfinite()) ? 'true' : 'false' ; ?>,
                     lazyLoad: 'ondemand',
                     dots: <?php echo ($_entity->getShowDots()) ? 'true' : 'false' ; ?>,
@@ -45,7 +51,7 @@ endif;
                 });
             });
 
-            jQuery('#bluefoot-advanced-slider-<?php echo $this->getEntity()->getId(); ?>').on('init', function(event, slick){
+            jQuery('#bluefoot-advanced-slider-<?php echo $block->getEntity()->getId(); ?>').on('init', function (event, slick) {
                 slick.$slider.addClass('slick-visible');
             });
         });

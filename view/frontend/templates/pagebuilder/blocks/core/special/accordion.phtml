@@ -3,24 +3,26 @@
  * BlueFoot
  *
  * Version 1.0
+ *
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Accordion Block Template
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
  *
  */
-$_entity = $this->getEntity();
+$_entity = $block->getEntity();
 ?>
-<?php if ($this->hasChildEntities('accordion_items')): ?>
-    <?php $_collection = $this->getChildEntities('accordion_items'); ?>
-    <div id="bluefoot-accordion-<?php echo $_entity->getId(); ?>" class="bluefoot-accordion bluefoot-full-width <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
-        <?php foreach ($_collection as $_block): ?>
+<?php if ($block->hasChildEntities('accordion_items')) : ?>
+    <?php $_collection = $block->getChildEntities('accordion_items'); ?>
+    <div id="bluefoot-accordion-<?php echo $_entity->getId(); ?>"
+         class="bluefoot-accordion bluefoot-full-width <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+        <?php foreach ($_collection as $_block) : ?>
             <?php echo $_block->toHtml(); ?>
         <?php endforeach; ?>
     </div>
 
     <script type="text/javascript">
-        require(['jquery','bluefoot/accordion'], function(jQuery) {
+        require(['jquery', 'bluefoot/accordion'], function (jQuery) {
             jQuery('#bluefoot-accordion-<?php echo $_entity->getId(); ?>').bluefootAccordion();
         });
     </script>

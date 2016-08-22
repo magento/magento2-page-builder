@@ -3,19 +3,20 @@
  * BlueFoot
  *
  * Version 1.0
+ *
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Row default Template
- * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row
  *
  */
-if ($this->getBackgroundStyles()):
-    $this->setCssClasses('with-media-background');
+if ($block->getBackgroundStyles()) :
+    $block->setCssClasses('with-media-background');
 endif;
 ?>
 
-<div class="bluefoot-row <?php echo $this->getCssAttributes(); ?>"<?php echo $this->getStyleAttributes(); ?>>
+<div class="bluefoot-row <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
     <div class="bluefoot-wrapper">
-        <?php echo $this->getRenderedChildHtml(); ?>
+        <?php echo $block->getRenderedChildHtml(); ?>
     </div>
 </div>
