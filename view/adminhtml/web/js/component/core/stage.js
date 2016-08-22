@@ -20,6 +20,7 @@ define([
         this.parent = parent;
         this.stageContent = stageContent;
         this.active = true;
+        this.showBorders = parent.showBorders;
     }
 
     /**

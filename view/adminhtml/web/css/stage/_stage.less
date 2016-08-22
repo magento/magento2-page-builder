@@ -39,9 +39,30 @@
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 10;
+        z-index: 20;
         border: 3px dashed darken(@columnColor, 20%);
         margin: 10px 0 20px;
+    }
+    .bluefoot-resize-size {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 19;
+        background: darken(@columnColor, 20%);
+        opacity: 0.25;
+        text-align: center;
+        color: white;
+        font-size: 20px;
+        padding-top: 40px;
+        font-weight: 300;
+    }
+
+    &.bluefoot-resizing {
+        .bluefoot-options {
+            display: none;
+        }
     }
 
     &-width-whole { width: 100%; }
@@ -61,6 +82,15 @@
     margin: 10px 0;
     background: white;
     position: relative;
+    z-index: 10;
+
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
 
     .element-children {
         min-height: 100px;
@@ -107,6 +137,7 @@
     &:hover {
         border: 3px #243743 dashed;
         box-sizing: border-box;
+        z-index: 15;
 
         &.bluefoot-row {
             border-color: @rowColor;
@@ -119,7 +150,7 @@
             }
         }
 
-        .bluefoot-options {
+        >.bluefoot-options {
             ul.bluefoot-options-links {
                 display: inline-block;
             }
@@ -217,6 +248,10 @@
             border-top-left-radius: 3px;
             border-bottom-left-radius: 3px;
             font-size: 12px;
+
+            &:hover {
+                background: darken(@columnColor, 10%);
+            }
         }
         .bluefoot-column-add-right {
             left: auto;
@@ -259,10 +294,28 @@
     }
 }
 
+.bluefoot-stage {
+    &.bluefoot-show-borders {
+        .bluefoot-canvas {
+            .bluefoot-structure {
+                border: 3px #243743 dashed;
+                box-sizing: border-box;
+
+                &.bluefoot-row {
+                    border-color: @rowColor;
+                }
+                &.bluefoot-column {
+                    border-color: @columnColor;
+                }
+            }
+        }
+    }
+}
+
 .bluefoot-column-inline-add {
     list-style: none;
     margin: 0;
-    width: 150px;
+    width: 140px;
     background: @columnColor;
     color: white;
     .border-radius;
@@ -270,7 +323,7 @@
     top: 20%;
     left: -27px;
     z-index: 10;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
 
     &.right {
@@ -283,18 +336,48 @@
     }
 
     li {
-        font-size: 12px;
         display: block;
         width: 100%;
         cursor: pointer;
-        padding: 4px 6px;
+
+        a {
+            width: 100%;
+            font-size: 14px;
+            display: block;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
     }
 }
-// @todo - nicer selector
+.bluefoot-column > .bluefoot-options > .bluefoot-options-wrapper > .bluefoot-options-links > .bluefoot-options-link > .bluefoot-column-inline-add {
+    li {
+        a {
+            width: 100%;
+            font-size: 14px;
+            display: block;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
+    }
+}
 .bluefoot-row > .bluefoot-options > .bluefoot-options-wrapper > .bluefoot-options-links > .bluefoot-options-link > .bluefoot-column-inline-add {
     background: @rowColor;
     position: absolute;
     left: 93%;
-    top: -10%;
-    width: 120px;
+    top: 0;
+    width: 140px;
+
+    li {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+
+        a {
+            width: 100%;
+            font-size: 14px;
+            display: block;
+            padding: 6px 10px;
+            text-decoration: none;
+        }
+    }
 }

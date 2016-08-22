@@ -145,6 +145,19 @@ define([
     AbstractStructural.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
         this.originalParent = this.parent;
         this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+        this.stage.showBorders(true);
+    };
+
+    /**
+     * Event called when sorting stops on this element
+     *
+     * @param sortableThis
+     * @param event
+     * @param ui
+     * @param sortableInstance
+     */
+    AbstractStructural.prototype.onSortStop = function (sortableThis, event, ui, sortableInstance) {
+        this.stage.showBorders(false);
     };
 
     /**
@@ -162,6 +175,8 @@ define([
             newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]),
             parent,
             childrenArray;
+
+        this.stage.showBorders(false);
 
         // Only run the event once
         if (item && (sortableThis === parentEl)) {

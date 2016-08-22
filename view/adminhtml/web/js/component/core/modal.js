@@ -3,8 +3,6 @@
  * Handles showing modal windows
  *
  * @author Dave Macaulay <dave@gene.co.uk>
- *
- * @todo bring in line with Deflate's alerts system
  */
 define(['bluefoot/hook', 'bluefoot/jquery', 'bluefoot/config'], function (Hook, jQuery, Config) {
 

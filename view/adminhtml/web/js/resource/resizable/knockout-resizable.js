@@ -71,6 +71,7 @@
 
                         // Stop the loop once we hit a valid breakpoint
                         if (ghostWidth >= (breakpoint - 15) && ghostWidth <= (breakpoint + 15)) {
+                            element.find('.bluefoot-resize-size').text(size.label);
                             context.currentColumn.widthClasses(size.className);
                             return false;
                         }
@@ -80,12 +81,16 @@
                     context.currentColumn = ko.dataFor(this);
                     context.startingWidth = jQuery(this.parentNode).outerWidth();
                     context.startingX = event.clientX;
+                    jQuery(this.parentNode.parentNode).addClass('bluefoot-resizing');
                     jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
+                    jQuery(this.parentNode.parentNode).find('.element-children').append(jQuery('<div />').addClass('bluefoot-resize-size'));
                     return true;
                 })
                 .on('mouseup', function (event, ui) {
                     context.currentColumn = null;
-                    jQuery(".bluefoot-resize-ghost").remove();
+                    jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
+                    jQuery('.bluefoot-resize-ghost').fadeOut(200);
+                    jQuery('.bluefoot-resize-size').fadeOut(200);
                     return true;
                 });
         }

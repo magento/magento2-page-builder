@@ -11,7 +11,7 @@ define([
     'jquery',
     'bluefoot/stage',
     'bluefoot/common',
-    'Magento_Variable/variables',
+    'Magento_Variable/variables'
 ], function (Wysiwyg, $, ko, registry, jQuery, Stage, Common) {
     'use strict';
 
@@ -24,11 +24,13 @@ define([
             stage: {},
             stageId: Common.guid(),
             stageContent: [],
+            showBorders: false,
             links: {
                 stageActive: false,
                 stage: {},
                 stageId: false,
-                stageContent: []
+                stageContent: [],
+                showBorders: false
             }
         },
 
@@ -38,7 +40,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('value stageActive stageContent');
+                .observe('value stageActive stageContent showBorders');
 
             return this;
         },
@@ -88,7 +90,10 @@ define([
 
                 // Hide the WYSIWYG and display the stage
                 jQuery(event.currentTarget).parents('[data-namespace]').hide();
+
+                // Mark the stage as active bringing it into display
                 this.stageActive(true);
+
             } else {
                 console.warn('Unable to locate the BlueFoot panel for initialization.');
             }

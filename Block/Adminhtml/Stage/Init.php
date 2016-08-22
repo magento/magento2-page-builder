@@ -70,16 +70,57 @@ class Init extends \Magento\Backend\Block\Template
 
             /* Define the different column options to be given in the UI */
             'column_definitions'               => [
-                ['label' => 'One Whole', 'breakpoint' => '1', 'className' => 'bluefoot-structure-wrapper-width-whole', 'displayed' => true],
-                ['label' => 'One Half', 'breakpoint' => '0.500', 'className' => 'bluefoot-structure-wrapper-width-half', 'displayed' => true],
-                ['label' => 'One Third', 'breakpoint' => '0.333', 'className' => 'bluefoot-structure-wrapper-width-third', 'displayed' => true],
-                ['label' => 'One Quarter', 'breakpoint' => '0.250', 'className' => 'bluefoot-structure-wrapper-width-quarter', 'displayed' => true],
-                ['label' => 'One Sixth', 'breakpoint' => '0.167', 'className' => 'bluefoot-structure-wrapper-width-sixth', 'displayed' => true],
+                [
+                    'label' => '1 (100%)',
+                    'breakpoint' => '1',
+                    'className' => 'bluefoot-structure-wrapper-width-whole',
+                    'displayed' => true
+                ],
+                [
+                    'label' => '1/2 (50%)',
+                    'breakpoint' => '0.500',
+                    'className' => 'bluefoot-structure-wrapper-width-half',
+                    'displayed' => true
+                ],
+                [
+                    'label' => '1/3 (33%)',
+                    'breakpoint' => '0.333',
+                    'className' => 'bluefoot-structure-wrapper-width-third',
+                    'displayed' => true
+                ],
+                [
+                    'label' => '1/4 (25%)',
+                    'breakpoint' => '0.250',
+                    'className' => 'bluefoot-structure-wrapper-width-quarter',
+                    'displayed' => true
+                ],
+                [
+                    'label' => '1/6 (16.7%)',
+                    'breakpoint' => '0.167',
+                    'className' => 'bluefoot-structure-wrapper-width-sixth',
+                    'displayed' => true
+                ],
 
-                ['label' => 'Two Thirds', 'breakpoint' => '0.666', 'className' => 'bluefoot-structure-wrapper-width-two-thirds', 'displayed' => false],
-                ['label' => 'Three Quarters', 'breakpoint' => '0.750', 'className' => 'bluefoot-structure-wrapper-width-three-quarters', 'displayed' => false],
-                ['label' => 'Five Sixths', 'breakpoint' => '0.750', 'className' => 'bluefoot-structure-wrapper-width-five-sixths', 'displayed' => false],
-            ],
+                /* Hidden columns, but required for other sizes */
+                [
+                    'label' => '2/3 (66%)',
+                    'breakpoint' => '0.666',
+                    'className' => 'bluefoot-structure-wrapper-width-two-thirds',
+                    'displayed' => false
+                ],
+                [
+                    'label' => '3/4 (75%)',
+                    'breakpoint' => '0.750',
+                    'className' => 'bluefoot-structure-wrapper-width-three-quarters',
+                    'displayed' => false
+                ],
+                [
+                    'label' => '5/6 (83.5%)',
+                    'breakpoint' => '0.835',
+                    'className' => 'bluefoot-structure-wrapper-width-five-sixths',
+                    'displayed' => false
+                ]
+            ]
         ]);
 
         // Include our plugin information
