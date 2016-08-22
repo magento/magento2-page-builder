@@ -146,9 +146,9 @@ define([
             var rect = el.getBoundingClientRect();
 
             return (
-                (rect.top + rect.height) >= 0 &&
+                (rect.top + rect.height - 150) >= 0 &&
                 rect.left >= 0 &&
-                (rect.bottom - rect.height) <= (window.innerHeight || document.documentElement.clientHeight) &&
+                (rect.bottom - rect.height + 150) <= (window.innerHeight || document.documentElement.clientHeight) &&
                 rect.right <= (window.innerWidth || document.documentElement.clientWidth)
             );
         }
