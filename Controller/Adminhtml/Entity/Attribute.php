@@ -29,7 +29,8 @@ abstract class Attribute extends \Magento\Backend\App\Action
     /**
      * Attribute constructor.
      *
-     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Backend\App\Action\Context        $context
+     * @param \Magento\Framework\Registry                $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(

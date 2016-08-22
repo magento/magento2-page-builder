@@ -122,7 +122,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
                     // Change the element name
                     $this->updatePost($elementName, $jsonData);
                 }
-
             } catch (\Exception $e) {
                 echo $e->getMessage();
                 exit;
@@ -205,7 +204,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
                         $element['formData'] = $storeInJson;
                     }
                 }
-
 
                 // If it has any children we need to run this method again
                 if (isset($element['children']) && is_array($element['children'])) {

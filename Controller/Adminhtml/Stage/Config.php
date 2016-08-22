@@ -29,8 +29,10 @@ class Config extends \Magento\Backend\App\Action
     /**
      * Config constructor.
      *
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Config     $config
+     * @param \Magento\Backend\App\Action\Context              $context
+     * @param \Gene\BlueFoot\Model\Stage\Config                $config
+     * @param \Gene\BlueFoot\Model\Stage\Build                 $build
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,

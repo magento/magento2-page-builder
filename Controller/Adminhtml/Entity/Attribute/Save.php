@@ -50,15 +50,17 @@ class Save extends \Gene\BlueFoot\Controller\Adminhtml\Entity\Attribute
 
     /**
      * Save constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\BuildFactory $buildFactory
-     * @param \Gene\BlueFoot\Model\AttributeFactory $attributeFactory
+     *
+     * @param \Magento\Backend\App\Action\Context                                          $context
+     * @param \Magento\Framework\Registry                                                  $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory                                   $resultPageFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\BuildFactory                     $buildFactory
+     * @param \Gene\BlueFoot\Model\AttributeFactory                                        $attributeFactory
      * @param \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype\ValidatorFactory $validatorFactory
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory
-     * @param \Magento\Framework\Filter\FilterManager $filterManager
-     * @param \Magento\Catalog\Helper\Product $productHelper
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory    $groupCollectionFactory
+     * @param \Magento\Framework\Filter\FilterManager                                      $filterManager
+     * @param \Magento\Catalog\Helper\Product                                              $productHelper
+     * @param \Magento\Framework\Cache\FrontendInterface                                   $attributeLabelCache
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,

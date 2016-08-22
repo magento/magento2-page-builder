@@ -50,6 +50,10 @@ class InstallData implements InstallDataInterface
      *
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                  $entitySetupFactory
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory
+     * @param \Magento\Framework\Module\Dir\Reader                     $moduleReader
+     * @param \Magento\Framework\Filesystem\Io\File                    $ioFile
+     * @param \Gene\BlueFoot\Model\Installer\File                      $fileInstaller
+     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface  $contentBlockGroupRepositoryInterface
      */
     public function __construct(
         EntitySetupFactory $entitySetupFactory,

@@ -29,8 +29,10 @@ class Index extends \Magento\Backend\App\Action
     /**
      * Index constructor.
      *
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Backend\App\Action\Context   $context
      * @param \Magento\Framework\Module\Dir\Reader  $moduleReader
+     * @param \Magento\Framework\Filesystem\Io\File $ioFile
+     * @param \Gene\BlueFoot\Model\Installer\File   $fileInstaller
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
