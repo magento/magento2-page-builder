@@ -153,6 +153,9 @@ define([
      */
     AbstractStructural.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
         ui.item.show();
+        ui.item.addClass('bluefoot-sorting-original');
+        ui.helper.css({width: '', height: ''});
+
         this.originalParent = this.parent;
         this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
         if (this.stage) {
@@ -169,6 +172,7 @@ define([
      * @param sortableInstance
      */
     AbstractStructural.prototype.onSortStop = function (sortableThis, event, ui, sortableInstance) {
+        ui.item.removeClass('bluefoot-sorting-original');
         if (this.stage) {
             this.stage.showBorders(false);
         }
@@ -193,6 +197,8 @@ define([
         if (this.stage) {
             this.stage.showBorders(false);
         }
+
+        ui.item.removeClass('bluefoot-sorting-original');
 
         // Only run the event once
         if (item && (sortableThis === parentEl)) {

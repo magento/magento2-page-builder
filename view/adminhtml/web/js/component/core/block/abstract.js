@@ -92,7 +92,6 @@ define([
     AbstractBlock.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
         // Copy over the column class for the width
         ui.helper.html(jQuery('<h3 />').text(this.config.name));
-        ui.helper.css({width: '', height: ''});
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);

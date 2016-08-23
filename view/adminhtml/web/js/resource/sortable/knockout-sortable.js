@@ -121,14 +121,20 @@
 
     var Sortable = {
         draggedItem: false,
+        ranOnSort: false,
         defaults: {
-            tolerance: 'intersect',
+            tolerance: 'pointer',
+            cursorAt: {
+                top: 0,
+                left: 0
+            },
+            cursor: 'move',
             connectWith: '.bluefoot-sortable',
             helper: function (event, element) {
                 if (element.children().first().hasClass('bluefoot-entity')) {
-                    return jQuery('<div />').addClass('bluefoot-entity-helper'); // Temporary need to retrieve the icon and label
+                    return jQuery('<div />').addClass('bluefoot-entity-helper');
                 } else {
-                    return jQuery('<div />');
+                    return jQuery('<div />').addClass('bluefoot-structure-helper');
                 }
             },
             appendTo: document.body,
@@ -179,6 +185,10 @@
                 })
                 .on('sortbeforestop', function (event, ui) {
                     self.draggedItem = ui.item;
+                })
+                .on('sortchange', function (event, ui) {
+                    [].push.call(arguments, self);
+                    return self.onSortChange.apply(this, arguments);
                 });
         },
 
@@ -226,6 +236,7 @@
          * @returns {*}
          */
         onSortStop: function (event, ui, self) {
+            self.ranOnSort = false;
             var koElement = ko.dataFor(ui.item[0]);
             if (koElement && typeof koElement.onSortStop === 'function') {
                 return koElement.onSortStop(this, event, ui, self);
@@ -275,6 +286,24 @@
 
             // Refresh sortable to ensure any new elements are recognised
             jQuery(this).sortable('refresh');
+        },
+
+        /**
+         * Attach an event for when sorting stops
+         *
+         * @param event
+         * @param ui
+         * @param self
+         * @returns {*}
+         */
+        onSortChange: function (event, ui, self) {
+            if (!ui.item.hasClass('bluefoot-draggable-block')) {
+                if (ui.placeholder.prev().is(ui.item) || ui.placeholder.next().is(ui.item)) {
+                    ui.placeholder.hide();
+                } else {
+                    ui.placeholder.show();
+                }
+            }
         }
     };
 

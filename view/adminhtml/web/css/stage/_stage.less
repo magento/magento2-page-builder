@@ -48,7 +48,11 @@
 }
 .bluefoot-structure-wrapper {
     position: relative;
-    box-sizing: border-box;
+    box-sizing: content-box;
+
+    &.bluefoot-sorting-original {
+        opacity: 0.4;
+    }
 
     .bluefoot-resize-ghost {
         position: absolute;
@@ -326,13 +330,32 @@
     background: @entityColor;
     border: none;
     color: white;
-    width: 200px!important;
-    height: 20px;
+    width: 180px;
     text-align: center;
+    padding: 16px 0;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 
     h3 {
         color: white;
+        margin: 0;
+        padding: 0;
     }
+}
+
+.bluefoot-structure-helper {
+    background: @rowColor;
+    border: none;
+    color: white;
+    width: 180px;
+    text-align: center;
+    padding: 16px 0;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 .bluefoot-placeholder-sortable {
@@ -348,7 +371,7 @@
 
     &.bluefoot-structure-wrapper {
         position: relative;
-        box-sizing: border-box;
+        box-sizing: content-box;
         &-width-whole { width: 100%; }
         &-width-half { width: 50%; }
         &-width-third { width: 33.3%; }

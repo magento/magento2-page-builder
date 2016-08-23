@@ -89,8 +89,12 @@
                     jQuery('body').mouseleave(function () {
                         context.currentColumn = null;
                         jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
-                        jQuery('.bluefoot-resize-ghost').fadeOut(200);
-                        jQuery('.bluefoot-resize-size').fadeOut(200);
+                        jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {
+                            jQuery(this).remove();
+                        });
+                        jQuery('.bluefoot-resize-size').fadeOut(200, function () {
+                            jQuery(this).remove();
+                        });
                     });
 
                     return true;
@@ -98,8 +102,12 @@
                 .on('mouseup', function (event, ui) {
                     context.currentColumn = null;
                     jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
-                    jQuery('.bluefoot-resize-ghost').fadeOut(200);
-                    jQuery('.bluefoot-resize-size').fadeOut(200);
+                    jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {
+                        jQuery(this).remove();
+                    });
+                    jQuery('.bluefoot-resize-size').fadeOut(200, function () {
+                        jQuery(this).remove();
+                    });
                     return true;
                 });
         }
