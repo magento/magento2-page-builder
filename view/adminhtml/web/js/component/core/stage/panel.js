@@ -70,7 +70,7 @@ define([
 
                 // Add blocks into the groups
                 jQuery.each(Config.getInitConfig('contentTypes'), function (id, block) {
-                    if (typeof groupsLookup[block.group] !== 'undefined') {
+                    if (typeof groupsLookup[block.group] !== 'undefined' && block.visible === true) {
                         groupsLookup[block.group].addBlock(block);
                     }
                 }.bind(this));
