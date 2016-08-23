@@ -22,20 +22,28 @@ class Init extends \Magento\Backend\Block\Template
     protected $urlBuilder;
 
     /**
+     * @var \Gene\BlueFoot\Model\Stage\Config
+     */
+    protected $stageConfig;
+
+    /**
      * Init constructor.
      *
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Gene\BlueFoot\Model\Stage\Plugin       $plugin
+     * @param \Gene\BlueFoot\Model\Stage\Config       $stageConfig
      * @param array                                   $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Plugin $plugin,
+        \Gene\BlueFoot\Model\Stage\Config $stageConfig,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->plugin = $plugin;
         $this->urlBuilder = $context->getUrlBuilder();
+        $this->stageConfig = $stageConfig;
     }
 
     /**
@@ -125,6 +133,9 @@ class Init extends \Magento\Backend\Block\Template
 
         // Include our plugin information
         $config->setData('plugins', $this->plugin->getJsPlugins());
+
+        // Add in the panels configuration
+        $config->addData($this->stageConfig->getConfig());
 
         // Fire event to allow extra data to be passed to the stage
         $this->_eventManager->dispatch('gene_bluefoot_stage_build_config', ['config' => $config]);

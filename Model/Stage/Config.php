@@ -14,6 +14,8 @@ use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
  */
 class Config extends \Magento\Framework\Model\AbstractModel
 {
+    const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
+
     /**
      * @var \Gene\BlueFoot\Model\Stage\Structural
      */
@@ -112,6 +114,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
+        $this->cacheManager = $context->getCacheManager();
         $this->structural = $structural;
         $this->contentBlockCollection = $contentBlockCollectionFactory;
         $this->contentBlockGroupRepository = $contentBlockGroupRepository;
@@ -134,15 +137,28 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getConfig()
     {
-        $config = [
-            'contentTypeGroups' => $this->getContentBlockGroups(),
-            'contentTypes' => $this->getContentBlockData(),
-            'structural' => $this->structural->getStructuralConfig(),
-            'templates' => $this->getTemplateData(),
-            'globalFields' => $this->getGlobalFields()
-        ];
+        // Use the cache to load and save the data
+        if ($config = $this->cacheManager->load(self::BLUEFOOT_CONFIG_CACHE_KEY)) {
+            return json_decode($config, true);
+        } else {
+            $config = [
+                'contentTypeGroups' => $this->getContentBlockGroups(),
+                'contentTypes'      => $this->getContentBlockData(),
+                'structural'        => $this->structural->getStructuralConfig(),
+                'templates'         => $this->getTemplateData(),
+                'globalFields'      => $this->getGlobalFields()
+            ];
 
-        return $config;
+            // Store the configuration in the cache for 7 days
+            $this->cacheManager->save(
+                json_encode($config),
+                self::BLUEFOOT_CONFIG_CACHE_KEY,
+                [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
+                (60 * 60 * 24 * 7) // Store in cache for 7 days
+            );
+
+            return $config;
+        }
     }
 
     /**

@@ -58,43 +58,36 @@ define([
          * Populate the panel
          */
         populatePanel: function () {
+            // Verify the configuration contains the required information
+            if (Config.getInitConfig('contentTypeGroups') && Config.getInitConfig('contentTypes')) {
+                // Populate the groups array with our groups
+                var groupsLookup = {};
+                var groups = [];
+                jQuery.each(Config.getInitConfig('contentTypeGroups'), function (id, group) {
+                    groupsLookup[id] = new Group(id, group);
+                    groups.push(groupsLookup[id]);
+                }.bind(this));
 
-            // Initialize the full configuration
-            Config.initConfig(function (config) {
+                // Add blocks into the groups
+                jQuery.each(Config.getInitConfig('contentTypes'), function (id, block) {
+                    if (typeof groupsLookup[block.group] !== 'undefined') {
+                        groupsLookup[block.group].addBlock(block);
+                    }
+                }.bind(this));
 
-                // Verify the configuration contains the required information
-                if (typeof config.contentTypeGroups !== 'undefined' &&
-                    typeof config.contentTypes !== 'undefined') {
-                    // Populate the groups array with our groups
-                    var groupsLookup = {};
-                    var groups = [];
-                    jQuery.each(config.contentTypeGroups, function (id, group) {
-                        groupsLookup[id] = new Group(id, group);
-                        groups.push(groupsLookup[id]);
-                    }.bind(this));
+                // Update groups all at once
+                this.groups(groups);
+                groupsLookup = {};
+                groups = {};
 
-                    // Add blocks into the groups
-                    jQuery.each(config.contentTypes, function (id, block) {
-                        if (typeof groupsLookup[block.group] !== 'undefined') {
-                            groupsLookup[block.group].addBlock(block);
-                        }
-                    }.bind(this));
+                // Display the panel
+                this.visible(true);
 
-                    // Update groups all at once
-                    this.groups(groups);
-                    groupsLookup = {};
-                    groups = {};
-
-                    // Display the panel
-                    this.visible(true);
-
-                    this.built = true;
-                    this.updateStages();
-                } else {
-                    console.warn('Configuration is not properly initialized, please check the Ajax response.');
-                }
-
-            }.bind(this), false, Config.getStoreId());
+                this.built = true;
+                this.updateStages();
+            } else {
+                console.warn('Configuration is not properly initialized, please check the Ajax response.');
+            }
         },
 
         /**
