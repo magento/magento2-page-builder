@@ -298,7 +298,11 @@
          */
         onSortChange: function (event, ui, self) {
             if (!ui.item.hasClass('bluefoot-draggable-block')) {
-                if (ui.placeholder.prev().is(ui.item) || ui.placeholder.next().is(ui.item)) {
+                if (
+                    (ui.placeholder.prev().is(ui.item) || ui.placeholder.next().is(ui.item)) ||
+                    (ui.placeholder.prev().children().first().hasClass('bluefoot-column') &&
+                    ui.placeholder.next().children().first().hasClass('bluefoot-column'))
+                ) {
                     ui.placeholder.hide();
                 } else {
                     ui.placeholder.show();

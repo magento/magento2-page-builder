@@ -66,7 +66,10 @@ var config = {
     },
     shim: {
         'bluefoot/ko-sortable': {
-            deps: ['jquery', 'jquery/ui']
+            deps: ['jquery', 'jquery/ui', 'Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min']
+        },
+        'Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min': {
+            deps: ['jquery/ui']
         }
     }
 };
