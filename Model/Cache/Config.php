@@ -19,7 +19,7 @@ class Config extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     /**
      * Cache tag used to distinguish the cache type from all other cache
      */
-    const CACHE_TAG = 'BLUEFOOT_CONFIG_TAG';
+    const CACHE_TAG = 'BLUEFOOT_CONFIG';
 
     /**
      * @param \Magento\Framework\App\Cache\Type\FrontendPool $cacheFrontendPool

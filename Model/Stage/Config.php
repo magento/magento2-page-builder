@@ -92,6 +92,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory         $templateCollectionFactory
      * @param \Magento\Framework\Api\SearchCriteriaBuilder                                $searchCriteriaBuilder
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity                                   $entity
+     * @param \Magento\Framework\App\Cache\StateInterface                                 $cacheState
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
      * @param array                                                                       $data
@@ -110,11 +111,13 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
+        \Magento\Framework\App\Cache\StateInterface $cacheState,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->cacheManager = $context->getCacheManager();
+        $this->cacheState = $cacheState;
         $this->structural = $structural;
         $this->contentBlockCollection = $contentBlockCollectionFactory;
         $this->contentBlockGroupRepository = $contentBlockGroupRepository;
@@ -138,7 +141,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getConfig()
     {
         // Use the cache to load and save the data
-        if ($config = $this->cacheManager->load(self::BLUEFOOT_CONFIG_CACHE_KEY)) {
+        if ($this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER) &&
+            ($config = $this->cacheManager->load(self::BLUEFOOT_CONFIG_CACHE_KEY))
+        ) {
             return json_decode($config, true);
         } else {
             $config = [
