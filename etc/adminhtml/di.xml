@@ -5,4 +5,19 @@
             <argument name="attributeLabelCache" xsi:type="object">Magento\Framework\App\Cache\Type\Translate</argument>
         </arguments>
     </type>
+    <virtualType name="Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="eav" xsi:type="array">
+                    <item name="class" xsi:type="string">Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier\Eav</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Ui\DataProvider\Entity\Form\EntityDataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier\Pool</argument>
+        </arguments>
+    </type>
 </config>
