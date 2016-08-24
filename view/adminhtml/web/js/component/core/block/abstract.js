@@ -9,9 +9,9 @@ define([
     'jquery',
     'bluefoot/stage/structural/abstract',
     'bluefoot/stage/edit',
-    'Magento_Ui/js/modal/modal',
-    'mage/translate'
-], function (ko, $, AbstractStructural, Edit, modal, $t) {
+    'mage/translate',
+    'uiRegistry'
+], function (ko, $, AbstractStructural, Edit, $t, registry) {
 
     /**
      * Class for entity blocks being included on the page
@@ -45,31 +45,15 @@ define([
      * Edit a block
      */
     AbstractBlock.prototype.edit = function () {
+        var edit = registry.get('bluefoot_edit'),
+            form = registry.get('bluefoot_edit.bluefoot_edit_form');
 
-        var options = {
-            type: 'slide',
-            modalClass: 'bluefoot-edit form-inline',
-            title: this.config.icon + $.mage.__('Edit ' + this.config.name),
-            responsive: true,
-            innerScroll: true,
-            buttons: [{
-                text: $.mage.__('Cancel'),
-                class: '',
-                click: function () {
-                    this.closeModal();
-                }
-            }, {
-                text: $.mage.__('Save ' + this.config.name),
-                class: 'action-primary',
-                click: function () {
-                    console.log('save');
-                }
-            }]
-        };
+        edit.setTitle($.mage.__('Edit ' + this.config.name));
 
-        var popup = modal(options);
-        popup.openModal();
+        form.resetForm();
+        form.render();
 
+        return edit.openModal();
     };
 
     /**

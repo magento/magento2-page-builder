@@ -7,10 +7,6 @@
                             "component": "bluefoot/stage/panel",
                             "template": "Gene_BlueFoot/component/core/stage/panel.html",
                             "config": <?php echo $this->getConfig(); ?>
-                        },
-                        "bluefoot-edit": {
-                            "component": "bluefoot/stage/edit",
-                            "template": "Gene_BlueFoot/component/core/stage/edit.html"
                         }
                     }
                 }
@@ -21,6 +17,68 @@
 <div data-bind="scope: 'bluefoot-panel'">
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
-<div data-bind="scope: 'bluefoot-edit'">
+
+<script type="text/javascript">
+    var popup;
+    require(['Magento_Ui/js/modal/modal-component'], function (modal) {
+        var options = {
+            name: 'bluefoot_edit.bluefoot_edit',
+            type: 'slide',
+            modalClass: 'bluefoot-edit form-inline',
+            title: 'Modal',
+            responsive: true,
+            innerScroll: true,
+        };
+
+        popup = modal(options);
+    });
+</script>
+
+<div data-bind="scope: 'bluefoot_edit'">
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
+<script type="text/x-magento-init">
+{
+	"*": {
+		"Magento_Ui/js/core/app": {
+			"components": {
+				"bluefoot_edit": {
+					"type": "container",
+					"name": "bluefoot_edit",
+					"children": {
+						"bluefoot_edit_form": {
+							"type": "container",
+							"name": "bluefoot_edit_form",
+							"dataScope": "",
+							"config": {
+								"component": "Magento_Ui\/js\/form\/components\/insert-form",
+								"label": "",
+								"componentType": "container",
+								"update_url": "http:\/\/bluefoot.dev\/admin\/mui\/index\/render\/key\/3102dc6550a579f92db12e5a2a3fa51c17fe01ceb2948ce4de261a6754268f8a\/",
+								"render_url": "<?php echo $block->getUrl('mui/index/render_handle', ['handle' => 'catalog_category_create', 'store' => 1, 'buttons' => 1]); ?>",
+								"autoRender": false,
+								"ns": "new_category_form",
+								"externalProvider": "new_category_form.new_category_form_data_source",
+								"toolbarContainer": "${ $.parentName }",
+								"formSubmitType": "ajax"
+							}
+						}
+					},
+					"config": {
+						"component": "Magento_Ui\/js\/modal\/modal-component",
+						"options": {
+							"type": "slide",
+							"title": "Edit Something"
+						},
+						"isTemplate": false,
+						"componentType": "modal",
+						"imports": {
+							"state": "!index=create_category:responseStatus"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+</script>
