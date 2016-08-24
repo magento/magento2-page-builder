@@ -337,6 +337,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      */
     public function modifyData(array $data)
     {
+        return $data;
+
         if (!$this->locator->getProduct()->getId() && $this->dataPersistor->get('catalog_product')) {
             return $this->resolvePersistentData($data);
         }
