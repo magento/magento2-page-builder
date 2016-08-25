@@ -13,15 +13,11 @@
             <item name="namespace" xsi:type="string">contentblock_edit</item>
         </item>
         <item name="buttons" xsi:type="array">
-            <!--<item name="back" xsi:type="string">Magento\Catalog\Block\Adminhtml\Product\Edit\Button\Back</item>-->
-            <!--<item name="addAttribute" xsi:type="string">Magento\Catalog\Block\Adminhtml\Product\Edit\Button\AddAttribute</item>-->
+            <item name="close" xsi:type="string">Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button\Close</item>
             <item name="save" xsi:type="string">Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button\Save</item>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="childrenFromMeta" xsi:type="boolean">true</item>
-        <item name="config" xsi:type="array">
-            <item name="ajaxSaveType" xsi:type="string">simple</item>
-        </item>
     </argument>
     <dataSource name="contentblock_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
@@ -29,11 +25,6 @@
             <argument name="name" xsi:type="string">contentblock_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="catalog/category/save"/>
-                </item>
-            </argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

@@ -9,6 +9,10 @@ use Magento\Ui\Component\Control\Container;
 
 /**
  * Class Save
+ *
+ * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Save extends Generic
 {
@@ -25,10 +29,11 @@ class Save extends Generic
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.contentblock_edit',
+                                'targetName' => 'bluefoot_edit.bluefoot_edit_form',
                                 'actionName' => 'save',
                                 'params' => [
-                                    false
+                                    false,
+                                    true
                                 ]
                             ]
                         ]
@@ -48,20 +53,17 @@ class Save extends Generic
     protected function getOptions()
     {
         $options[] = [
-            'id_hard' => 'save',
             'label' => __('Save'),
             'data_attribute' => [
                 'mage-init' => [
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.contentblock_edit',
+                                'targetName' => 'bluefoot_edit.bluefoot_edit_form',
                                 'actionName' => 'save',
                                 'params' => [
-                                    true,
-                                    [
-                                        'back' => 'new'
-                                    ]
+                                    false,
+                                    false
                                 ]
                             ]
                         ]

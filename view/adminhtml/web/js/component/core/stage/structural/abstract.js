@@ -24,7 +24,7 @@ define([
     function AbstractStructural(parent, stage) {
         this.id = Common.guid();
         this.options = new Options();
-        this.data = ko.observableArray([]);
+        this.data = ko.observable({});
         this.children = ko.observableArray([]);
 
         this.originalParent = false;

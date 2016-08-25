@@ -37,6 +37,10 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
  */
 class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier
 {
+    const FORM_NAME = 'bluefoot_form';
+    const DATA_SOURCE_DEFAULT = 'entity';
+    const DATA_SCOPE = 'data.entity';
+
     const SORT_ORDER_MULTIPLIER = 10;
 
     /**
@@ -237,7 +241,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
                 $meta[$groupCode]['arguments']['data']['config']['label'] = __('%1', $group->getAttributeGroupName());
                 $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
-                $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE_PRODUCT;
+                $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
                 $meta[$groupCode]['arguments']['data']['config']['sortOrder'] =
                     $sortOrder * self::SORT_ORDER_MULTIPLIER;
             }
