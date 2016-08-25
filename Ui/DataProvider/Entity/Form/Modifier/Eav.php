@@ -28,6 +28,7 @@ use Magento\Ui\DataProvider\Mapper\MetaProperties as MetaPropertiesMapper;
 use Magento\Ui\Component\Form\Element\Wysiwyg as WysiwygElement;
 use Magento\Catalog\Model\Attribute\ScopeOverriddenValue;
 use Magento\Framework\Locale\CurrencyInterface;
+use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Eav
@@ -149,36 +150,33 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     private $bannedInputTypes = ['media_image'];
 
     /**
-     * @var array
+     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockRepository
      */
-    private $prevSetAttributes;
+    private $contentBlockRepository;
 
     /**
-     * @var CurrencyInterface
-     */
-    private $localeCurrency;
-
-    /**
-     * @param LocatorInterface $locator
-     * @param CatalogEavValidationRules $catalogEavValidationRules
-     * @param Config $eavConfig
-     * @param RequestInterface $request
-     * @param GroupCollectionFactory $groupCollectionFactory
-     * @param StoreManagerInterface $storeManager
-     * @param FormElementMapper $formElementMapper
-     * @param MetaPropertiesMapper $metaPropertiesMapper
-     * @param AttributeGroupRepositoryInterface $attributeGroupRepository
-     * @param AttributeRepositoryInterface $attributeRepository
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param SortOrderBuilder $sortOrderBuilder
-     * @param EavAttributeFactory $eavAttributeFactory
-     * @param Translit $translitFilter
-     * @param ArrayManager $arrayManager
-     * @param ScopeOverriddenValue $scopeOverriddenValue
-     * @param DataPersistorInterface $dataPersistor
-     * @param array $attributesToDisable
-     * @param array $attributesToEliminate
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * Eav constructor.
+     *
+     * @param \Magento\Catalog\Model\Locator\LocatorInterface                           $locator
+     * @param \Magento\Catalog\Ui\DataProvider\CatalogEavValidationRules                $catalogEavValidationRules
+     * @param \Magento\Eav\Model\Config                                                 $eavConfig
+     * @param \Magento\Framework\App\RequestInterface                                   $request
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory
+     * @param \Magento\Store\Model\StoreManagerInterface                                $storeManager
+     * @param \Magento\Ui\DataProvider\Mapper\FormElement                               $formElementMapper
+     * @param \Magento\Ui\DataProvider\Mapper\MetaProperties                            $metaPropertiesMapper
+     * @param \Gene\BlueFoot\Api\AttributeGroupRepositoryInterface                      $attributeGroupRepository
+     * @param \Gene\BlueFoot\Api\AttributeRepositoryInterface                           $attributeRepository
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder                              $searchCriteriaBuilder
+     * @param \Magento\Framework\Api\SortOrderBuilder                                   $sortOrderBuilder
+     * @param \Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory                 $eavAttributeFactory
+     * @param \Magento\Framework\Filter\Translit                                        $translitFilter
+     * @param \Magento\Framework\Stdlib\ArrayManager                                    $arrayManager
+     * @param \Magento\Catalog\Model\Attribute\ScopeOverriddenValue                     $scopeOverriddenValue
+     * @param \Magento\Framework\App\Request\DataPersistorInterface                     $dataPersistor
+     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface                        $contentBlockRepositoryInterface
+     * @param array                                                                     $attributesToDisable
+     * @param array                                                                     $attributesToEliminate
      */
     public function __construct(
         LocatorInterface $locator,
@@ -198,6 +196,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         ArrayManager $arrayManager,
         ScopeOverriddenValue $scopeOverriddenValue,
         DataPersistorInterface $dataPersistor,
+        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
         $attributesToDisable = [],
         $attributesToEliminate = []
     ) {
@@ -220,6 +219,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         $this->dataPersistor = $dataPersistor;
         $this->attributesToDisable = $attributesToDisable;
         $this->attributesToEliminate = $attributesToEliminate;
+        $this->contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
     }
 
     /**
@@ -361,50 +361,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     }
 
     /**
-     * Resolve data persistence
-     *
-     * @param array $data
-     * @return array
-     */
-    private function resolvePersistentData(array $data)
-    {
-        $persistentData = (array)$this->dataPersistor->get('catalog_product');
-        $this->dataPersistor->clear('catalog_product');
-        $productId = $this->locator->getProduct()->getId();
-
-        if (empty($data[$productId][self::DATA_SOURCE_DEFAULT])) {
-            $data[$productId][self::DATA_SOURCE_DEFAULT] = [];
-        }
-
-        $data[$productId] = array_replace_recursive(
-            $data[$productId][self::DATA_SOURCE_DEFAULT],
-            $persistentData
-        );
-
-        return $data;
-    }
-
-    /**
-     * Get product type
-     *
-     * @return null|string
-     */
-    private function getProductType()
-    {
-        return (string)$this->request->getParam('type', $this->locator->getProduct()->getTypeId());
-    }
-
-    /**
-     * Return prev set id
-     *
-     * @return int
-     */
-    private function getPreviousSetId()
-    {
-        return (int)$this->request->getParam('prev_set_id', 0);
-    }
-
-    /**
      * Retrieve groups
      *
      * @return AttributeGroupInterface[]
@@ -442,8 +398,13 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      */
     private function getAttributeSetId()
     {
-        return 115;
-        return $this->locator->getProduct()->getAttributeSetId();
+        // @todo don't reference request directly
+        $identifier = $this->request->getParam('identifier');
+        if ($contentBlock = $this->contentBlockRepositoryInterface->getByIdentifier($identifier)) {
+            return $contentBlock->getAttributeSetId();
+        }
+
+        return null;
     }
 
     /**
@@ -491,28 +452,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         }
 
         return $attributes;
-    }
-
-    /**
-     * Get attribute codes of prev set
-     *
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    private function getPreviousSetAttributes()
-    {
-        if ($this->prevSetAttributes === null) {
-            $searchCriteria = $this->searchCriteriaBuilder
-                ->addFilter('attribute_set_id', $this->getPreviousSetId())
-                ->create();
-            $attributes = $this->attributeRepository->getList($searchCriteria)->getItems();
-            $this->prevSetAttributes = [];
-            foreach ($attributes as $attribute) {
-                $this->prevSetAttributes[] = $attribute->getAttributeCode();
-            }
-        }
-
-        return $this->prevSetAttributes;
     }
 
     /**
@@ -635,17 +574,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      */
     public function setupAttributeData(BlueFootAttributeInterface $attribute)
     {
-        return null;
-        $product = $this->locator->getProduct();
-        $productId = $product->getId();
-        $prevSetId = $this->getPreviousSetId();
-        $notUsed = !$prevSetId
-            || ($prevSetId && !in_array($attribute->getAttributeCode(), $this->getPreviousSetAttributes()));
-
-        if ($productId && $notUsed) {
-            return $this->getValue($attribute);
-        }
-
         return null;
     }
 

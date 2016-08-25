@@ -48,6 +48,13 @@ define([
         var edit = registry.get('bluefoot_edit'),
             form = registry.get('bluefoot_edit.bluefoot_edit_form');
 
+        // Record the original URL
+        if (!form.renderSettings.originalUrl) {
+            form.renderSettings.originalUrl = form.renderSettings.url;
+        }
+        form.renderSettings.url = form.renderSettings.originalUrl.replace('CONTENT_BLOCK_IDENTIFIER', this.config.code);
+        form.destroyInserted();
+
         edit.setTitle($.mage.__('Edit ' + this.config.name));
 
         form.resetForm();
