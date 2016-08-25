@@ -20,7 +20,6 @@ class Close extends Generic
     {
         return [
             'label' => __('Close'),
-            'class' => 'close',
             'sort_order' => 10,
             'data_attribute' => [
                 'mage-init' => [
@@ -28,7 +27,7 @@ class Close extends Generic
                         'actions' => [
                             [
                                 'targetName' => 'bluefoot_edit.bluefoot_edit_form',
-                                'actionName' => 'close',
+                                'actionName' => 'closeModal',
                                 'params' => [
                                     false
                                 ]

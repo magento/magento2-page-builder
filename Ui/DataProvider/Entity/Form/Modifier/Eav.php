@@ -27,7 +27,6 @@ use Magento\Ui\DataProvider\Mapper\FormElement as FormElementMapper;
 use Magento\Ui\DataProvider\Mapper\MetaProperties as MetaPropertiesMapper;
 use Magento\Ui\Component\Form\Element\Wysiwyg as WysiwygElement;
 use Magento\Catalog\Model\Attribute\ScopeOverriddenValue;
-use Magento\Framework\Locale\CurrencyInterface;
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
@@ -94,7 +93,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     protected $searchCriteriaBuilder;
 
     /**
-     * @var ProductAttributeRepositoryInterface
+     * @var AttributeRepositoryInterface
      */
     protected $attributeRepository;
 
@@ -446,13 +445,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             ->addSortOrder($sortOrder)
             ->create();
         $groupAttributes = $this->attributeRepository->getList($searchCriteria)->getItems();
-        //$productType = $this->getProductType();
         foreach ($groupAttributes as $attribute) {
-            //$applyTo = $attribute->getApplyTo();
-            //$isRelated = !$applyTo || in_array($productType, $applyTo);
-            //if ($isRelated) {
-                $attributes[] = $attribute;
-            //}
+            $attributes[] = $attribute;
         }
 
         return $attributes;

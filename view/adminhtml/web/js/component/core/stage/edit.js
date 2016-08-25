@@ -40,6 +40,9 @@ define([
         var edit = registry.get('bluefoot_edit'),
             form = registry.get('bluefoot_edit.bluefoot_edit_form');
 
+        // Override the onRender functionality
+        this.handleOnRender(form);
+
         // Pass the save method over
         form.save = this.save.bind(this);
         form.close = function () {
@@ -69,6 +72,29 @@ define([
     };
 
     /**
+     * Intercept the onRender of the form to implement further logic
+     *
+     * @param form
+     */
+    Edit.prototype.handleOnRender = function (form) {
+        var _originalRender = form.onRender,
+            that = this;
+        form.onRender = function (data) {
+            _originalRender.call(form, data);
+
+            // The form.externalSource doesn't appear to be available on initial render, so start a loop
+            // waiting for its presence
+            var source,
+                interval = setInterval(function () {
+                if (source = form.externalSource()) {
+                    clearInterval(interval);
+                    source.set('data', that.parent.data());
+                }
+                }, 5);
+        };
+    };
+
+    /**
      * Save the edit contents
      *
      * @param redirect
@@ -77,6 +103,7 @@ define([
     Edit.prototype.save = function (redirect, closeModal) {
         var form = this.getForm();
         form.validate();
+
 
         if (!form.additionalInvalid && !form.source.get('params.invalid')) {
             var entityData = form.source.get('data.entity');
