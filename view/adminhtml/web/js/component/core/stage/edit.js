@@ -88,7 +88,7 @@ define([
                 interval = setInterval(function () {
                 if (source = form.externalSource()) {
                     clearInterval(interval);
-                    source.set('data', that.parent.data());
+                    source.set('data.entity', that.parent.data());
                 }
                 }, 5);
         };
@@ -104,16 +104,19 @@ define([
         var form = this.getForm();
         form.validate();
 
-
         if (!form.additionalInvalid && !form.source.get('params.invalid')) {
             var entityData = form.source.get('data.entity');
             this.parent.data(entityData);
             this.parent.data.valueHasMutated();
+
+            // Destroy the original instance of the source
+            form.source.destroy();
         }
 
         if (closeModal) {
             this.modal.closeModal();
         }
+
         return false;
     };
 
