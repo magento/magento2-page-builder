@@ -510,20 +510,34 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             ]);
         }
 
-        switch ($attribute->getFrontendInput()) {
-            case 'boolean':
-                $meta = $this->customizeCheckbox($attribute, $meta);
-                break;
-            case 'textarea':
-                $meta = $this->customizeWysiwyg($attribute, $meta);
-                break;
-            case 'price':
-                $meta = $this->customizePriceAttribute($attribute, $meta);
-                break;
-            case 'gallery':
-                // Gallery attribute is being handled by "Images And Videos" section
-                $meta = [];
-                break;
+        // Inject additional meta information for the field.
+        if ($attribute->getWidget()) {
+            $meta = $this->injectWidget($attribute, $meta);
+        } else {
+            // Generic magento fields
+            switch ($attribute->getFrontendInput()) {
+                // Core BlueFoot  child entities input
+                case 'child_entity':
+                    $meta = $this->customizeChildEntity($attribute, $meta);
+                    break;
+
+                case 'boolean':
+                    $meta = $this->customizeCheckbox($attribute, $meta);
+                    break;
+
+                case 'textarea':
+                    $meta = $this->customizeWysiwyg($attribute, $meta);
+                    break;
+
+                case 'price':
+                    $meta = $this->customizePriceAttribute($attribute, $meta);
+                    break;
+
+                case 'gallery':
+                    // Gallery attribute is being handled by "Images And Videos" section
+                    $meta = [];
+                    break;
+            }
         }
 
         return $meta;
@@ -573,6 +587,57 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     public function setupAttributeData(BlueFootAttributeInterface $attribute)
     {
         return null;
+    }
+
+    /**
+     * Search attribute meta data
+     * @param $attribute
+     * @param $meta
+     * @return array
+     */
+    /*public function customizeSearchAttribute($attribute, $meta)
+    {
+        $meta['arguments']['data']['config']['component'] = 'Magento_Catalog/js/custom-options-type';
+        $meta['arguments']['data']['config']['elementTmpl'] = 'ui/grid/filters/elements/ui-select';
+        $meta['arguments']['data']['config']['selectType'] = 'optgroup';
+        $meta['arguments']['data']['config']['disableLabel'] = true;
+        $meta['arguments']['data']['config']['multiple'] = false;
+        $meta['arguments']['data']['config']['filterOptions'] = true;
+
+        // @todo load data from model - ajax endpoint preferable
+        $meta['arguments']['data']['config']['options'] = [
+            ['label' => 'hey', 'value' => 'search']
+        ];
+
+        return $meta;
+    }*/
+
+    /**
+     * BlueFoot child entity input field
+     * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
+     * @param array $meta
+     * @return array
+     */
+    public function injectWidget(BlueFootAttributeInterface $attribute, array $meta)
+    {
+        $meta['arguments']['data']['config']['dataType'] = $attribute->getWidget();
+        $meta['arguments']['data']['config']['formElement'] = $attribute->getWidget();
+
+        return $meta;
+    }
+
+    /**
+     * BlueFoot child entity input field
+     * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
+     * @param array $meta
+     * @return array
+     */
+    public function customizeChildEntity(BlueFootAttributeInterface $attribute, array $meta)
+    {
+        $meta['arguments']['data']['config']['dataType'] = 'child_entity';
+        $meta['arguments']['data']['config']['formElement'] = 'child_entity';
+
+        return $meta;
     }
 
     /**
