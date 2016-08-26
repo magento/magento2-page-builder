@@ -8,11 +8,12 @@ define([
     'ko',
     'underscore',
     'bluefoot/common',
+    'bluefoot/stage/save',
     'bluefoot/stage/structural/options',
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
     'Magento_Ui/js/modal/confirm'
-], function (ko, _, Common, Options, $t, ColumnBuilder, confirmation) {
+], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation) {
 
     /**
      * Abstract structural block
@@ -22,16 +23,23 @@ define([
      * @constructor
      */
     function AbstractStructural(parent, stage) {
+        this.parent = parent;
+        this.stage = stage;
+
         this.id = Common.guid();
         this.options = new Options();
         this.data = ko.observable({});
+        this.data.subscribe(function () {
+            this.stage.save.update();
+        }.bind(this));
+
         this.children = ko.observableArray([]);
+        this.children.subscribe(function () {
+            this.stage.save.update();
+        }.bind(this));
 
         this.originalParent = false;
         this.originalIndex = false;
-
-        this.parent = parent;
-        this.stage = stage;
 
         this.wrapperStyle = ko.observable({});
         this.widthClasses = false;
@@ -255,6 +263,25 @@ define([
             this.originalParent = false;
             this.originalIndex = false;
 
+        }
+    };
+
+    /**
+     * To JSON
+     *
+     * @returns {{children: Array}}
+     */
+    AbstractStructural.prototype.toJSON = function () {
+        var children = [];
+        if (this.children()) {
+            _.forEach(this.children(), function (child) {
+                children.push(child.toJSON());
+            });
+        }
+
+        return {
+            children: children,
+            formData: this.data()
         }
     };
 

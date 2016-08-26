@@ -100,32 +100,63 @@ class Save extends \Magento\Framework\Model\AbstractModel
     /**
      * Save the structures from the page builder
      *
-     * @param $structures
+     * @param $params
      */
-    public function saveStructures($structures)
+    public function saveStructures($params)
     {
-        // Loop through each form
-        foreach ($structures as $elementName => $content) {
-            // We don't want nasty errors happening here
-            try {
-                // Try and parse the page structure
-                $pageStructure = $this->decodeStructure($content);
+        $instances = [];
+        $this->getInstances($params, $instances);
 
-                // Only attempt if the json decode was a success
-                if ($pageStructure) {
-                    // Create the correct structure
-                    $this->createStructure($pageStructure);
+        if (count($instances) > 0) {
+            // Loop through each form
+            foreach ($instances as $elementName => $content) {
+                // We don't want nasty errors happening here
+                try {
+                    // Try and parse the page structure
+                    $pageStructure = $this->decodeStructure($content);
 
-                    // Json encode it for storage
-                    $jsonData = $this->encodeStructure($pageStructure);
+                    // Only attempt if the json decode was a success
+                    if ($pageStructure) {
+                        // Create the correct structure
+                        $this->createStructure($pageStructure);
 
-                    // Change the element name
-                    $this->updatePost($elementName, $jsonData);
+                        // Json encode it for storage
+                        $jsonData = $this->encodeStructure($pageStructure);
+
+                        // Change the element name
+                        $this->updatePost($elementName, $jsonData);
+                    }
+                } catch (\Exception $e) {
+                    // Handle error
                 }
-            } catch (\Exception $e) {
-                echo $e->getMessage();
-                exit;
-                // Handle error
+            }
+        }
+    }
+
+    /**
+     * Retrieve instances from the array
+     *
+     * @param $array
+     * @param $instances
+     * @param $parentKeys
+     * @param $parentKey
+     *
+     * @return array
+     */
+    public function getInstances($array, &$instances, $parentKey = false, $parentKeys = array())
+    {
+        if ($parentKey) {
+            $parentKeys[] = $parentKey;
+        }
+        foreach ($array as $key => $value) {
+            if (is_string($value) && stripos($value, \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING) !== false) {
+                $instances[(!empty($parentKeys) ? implode('.', $parentKeys) . '.' : '') . $key] = str_replace(
+                    \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
+                    '',
+                    $value
+                );
+            } elseif (is_array($value)) {
+                $this->getInstances($value, $instances, $key, $parentKeys);
             }
         }
     }
@@ -363,15 +394,6 @@ class Save extends \Magento\Framework\Model\AbstractModel
     {
         // Place back in our square brackets
         $elementName = str_replace(array('[',']'), array('.',''), $elementName);
-
-        // Handle that the catalog prepends the fields with 'product'
-        // @todo investigate making this universal
-        if ($this->request->getControllerModule() == 'Magento_Catalog' &&
-            $this->request->getControllerName() == 'product' &&
-            $this->request->getActionName() == 'save'
-        ) {
-            $elementName = 'product.' . $elementName;
-        }
 
         // Use "borrowed" Laravel function
         $this->set($_POST, $elementName, $data);

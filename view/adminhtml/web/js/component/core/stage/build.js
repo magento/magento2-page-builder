@@ -161,6 +161,7 @@ define([
                 if (typeof elementBuiltFn === 'function') {
                     elementBuiltFn();
                 } else {
+                    this.stage.stageContent.valueHasMutated();
                     // Stage has been rebuilt
                 }
             }
@@ -185,27 +186,28 @@ define([
      */
     Build.prototype._rebuildIndividual = function (entity, parent, elementBuiltFn) {
         var newParent;
-        if (entity.contentType) {
+        if (entity && typeof entity.contentType !== 'undefined' && entity.contentType) {
             var blockConfig = Config.getContentTypeConfig(entity.contentType),
-                blockInstance = new Block(blockConfig, false);
+                blockInstance = new Block(blockConfig, false),
+                blockData;
+
+            if (typeof entity.formData === 'object' && !Array.isArray(entity.formData)) {
+                blockData = jQuery.extend(entity.formData, Config.getEntity(entity.entityId));
+            } else {
+                blockData = Config.getEntity(entity.entityId);
+            }
 
             // Insert a block via it's instance into the parent
-            blockInstance.insert(parent, 0, function (block) {
-                var entityData = Config.getEntity(entity.entityId);
-                if (entityData) {
-                    block.data(jQuery.extend(entity.formData, entityData));
-                } else {
-                    block.data(entity.formData);
-                }
-
+            blockInstance.insert(parent, 0, blockData, function (block) {
                 // @todo child entities
                 if (typeof elementBuiltFn === 'function') {
                     elementBuiltFn();
                 }
             });
-        } else if (entity.type) {
+        } else if (entity && typeof entity.type !== 'undefined' && entity.type) {
+            // @todo copy over structural data
             if (entity.type == 'row' && typeof parent.addRow === 'function') {
-                newParent = parent.addRow();
+                newParent = parent.addRow(this.stage);
             } else if (entity.type == 'column' && typeof parent.addColumn === 'function') {
                 newParent = parent.addColumn();
             }

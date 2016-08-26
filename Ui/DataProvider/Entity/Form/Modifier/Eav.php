@@ -338,30 +338,14 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     }
 
     /**
-     * {@inheritdoc}
+     * The data is currently populated by the JS framework dynamically
+     *
+     * @param array $data
+     *
+     * @return array
      */
     public function modifyData(array $data)
     {
-        return $data;
-
-        if (!$this->locator->getProduct()->getId() && $this->dataPersistor->get('catalog_product')) {
-            return $this->resolvePersistentData($data);
-        }
-
-        $productId = $this->locator->getProduct()->getId();
-
-        /** @var string $groupCode */
-        foreach (array_keys($this->getGroups()) as $groupCode) {
-            /** @var BlueFootAttributeInterface[] $attributes */
-            $attributes = !empty($this->getAttributes()[$groupCode]) ? $this->getAttributes()[$groupCode] : [];
-
-            foreach ($attributes as $attribute) {
-                if (null !== ($attributeValue = $this->setupAttributeData($attribute))) {
-                    $data[$productId][self::DATA_SOURCE_DEFAULT][$attribute->getAttributeCode()] = $attributeValue;
-                }
-            }
-        }
-
         return $data;
     }
 
@@ -513,7 +497,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         }
 
         // Inject additional meta information for the field.
-        if ($attribute->getWidget()) {
+        if ($attribute->getWidget() == 'search') {
             $meta = $this->injectWidget($attribute, $meta);
         } else {
             // Generic magento fields

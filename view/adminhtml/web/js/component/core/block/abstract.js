@@ -19,9 +19,10 @@ define([
      * @param parent
      * @param stage
      * @param config
+     * @param formData
      * @constructor
      */
-    function AbstractBlock(parent, stage, config) {
+    function AbstractBlock(parent, stage, config, formData) {
         AbstractStructural.call(this, parent, stage);
 
         this.config = config;
@@ -29,6 +30,11 @@ define([
         this.data.subscribe(function (update) {
             this.preview.update(update);
         }.bind(this));
+
+        // Update the abstract with some form data
+        if (formData) {
+            this.data(formData);
+        }
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
@@ -80,6 +86,17 @@ define([
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);
+    };
+
+    /**
+     * To JSON
+     *
+     * @returns {{children, formData}|{children: Array}}
+     */
+    AbstractBlock.prototype.toJSON = function () {
+        var json = $super.toJSON.apply(this, arguments);
+        json.contentType = this.config.code;
+        return json;
     };
 
     return AbstractBlock;
