@@ -65,7 +65,10 @@ define([
      * @param self
      */
     Stage.prototype.addRow = function (self) {
-        this.addChild(new Row(self, self));
+        var row = new Row(self, self);
+        this.addChild(row);
+
+        return row;
     };
 
     return Stage;

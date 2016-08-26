@@ -56,6 +56,8 @@ define([
         if (data) {
             column.widthClasses(data.className);
         }
+
+        return column;
     };
 
     return Row;

@@ -57,6 +57,7 @@ define([
         var column = new Column(this, this.stage);
         this.addChild(column);
         column.widthClasses(data.className);
+        return column;
     };
 
     /**
