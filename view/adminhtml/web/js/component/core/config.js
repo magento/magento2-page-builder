@@ -195,7 +195,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             }
 
             _allFields = {};
-            jQuery.each(_config.contentTypes, function (index, element) {
+            jQuery.each(_initConfig.contentTypes, function (index, element) {
                 if (typeof element.fields === 'object') {
                     jQuery.extend(_allFields, element.fields);
                 }

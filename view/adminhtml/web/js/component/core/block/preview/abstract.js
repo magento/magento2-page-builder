@@ -6,8 +6,10 @@
  */
 define([
     'ko',
-    'underscore'
-], function (ko, _) {
+    'underscore',
+    'jquery',
+    'bluefoot/config'
+], function (ko, _, $, Config) {
 
     /**
      * PreviewAbstract block
@@ -26,7 +28,7 @@ define([
      */
     AbstractPreview.prototype.setupFields = function () {
         _.forEach(this.config.fields_list, function (field) {
-            this[field] = ko.observable(false);
+            this[field] = ko.observable();
         }.bind(this));
     };
 
@@ -51,9 +53,31 @@ define([
     AbstractPreview.prototype.update = function (data) {
         _.forEach(data, function (value, key) {
             if (typeof this[key] !== 'undefined') {
+                var field = Config.getField(key);
+                if (typeof field.options !== 'undefined') {
+                    value = this.getOptionValue(value, field.options);
+                }
                 this[key](value);
             }
         }.bind(this));
+    };
+
+    /**
+     * Return the option value for a field
+     *
+     * @param value
+     * @param options
+     * @returns {*}
+     */
+    AbstractPreview.prototype.getOptionValue = function (value, options) {
+        var findOption = $.grep(options, function (option) {
+            return option.value == value;
+        });
+        if (typeof findOption[0] !== 'undefined') {
+            return findOption[0].label;
+        }
+
+        return value;
     };
 
     return AbstractPreview;
