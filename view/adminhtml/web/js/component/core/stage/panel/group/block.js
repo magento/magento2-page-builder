@@ -90,11 +90,15 @@ define([
                 // Determine the parent, and add the new block instance as a child
                 var parent = ko.dataFor(jQuery(event.target)[0]);
                 require([this.getBlockInstance()], function (BlockInstance) {
-                    parent.addChild(new BlockInstance(parent, parent.stage, this.config), index);
+                    var block = new BlockInstance(parent, parent.stage, this.config);
+                    parent.addChild(block, index);
                     parent.refreshChildren();
 
                     // Refresh sortable to ensure any new elements are recognised
                     jQuery(sortableThis).sortable('refresh');
+
+                    // Open the edit panel
+                    block.edit();
                 }.bind(this));
             }
         }
