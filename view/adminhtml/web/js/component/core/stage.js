@@ -6,9 +6,11 @@
  */
 define([
     'ko',
+    'underscore',
+    'bluefoot/stage/save',
     'bluefoot/stage/structural/row',
     'bluefoot/common'
-], function (ko, Row, Common) {
+], function (ko, _, Save, Row, Common) {
 
     /**
      * Stage Class
@@ -21,6 +23,8 @@ define([
         this.stageContent = stageContent;
         this.active = true;
         this.showBorders = parent.showBorders;
+
+        this.save = new Save(this);
     }
 
     /**
@@ -69,6 +73,23 @@ define([
         this.addChild(row);
 
         return row;
+    };
+
+    /**
+     * Convert to JSON for saving
+     *
+     * @returns {*}
+     */
+    Stage.prototype.toJSON = function () {
+        var children = [];
+        if (this.stageContent()) {
+            _.forEach(this.stageContent(), function (child) {
+                children.push(child.toJSON());
+            });
+            return children;
+        }
+
+        return {};
     };
 
     return Stage;

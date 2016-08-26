@@ -94,7 +94,7 @@ define([
 
                 // Determine the parent, and add the new block instance as a child
                 var parent = ko.dataFor(jQuery(event.target)[0]);
-                this.insert(parent, index, function (block) {
+                this.insert(parent, index, false, function (block) {
                     // Refresh sortable to ensure any new elements are recognised
                     jQuery(sortableThis).sortable('refresh');
 
@@ -110,11 +110,12 @@ define([
      *
      * @param parent
      * @param index
+     * @param formData
      * @param callbackFn
      */
-    Block.prototype.insert = function (parent, index, callbackFn) {
+    Block.prototype.insert = function (parent, index, formData, callbackFn) {
         require([this.getBlockInstance()], function (BlockInstance) {
-            var block = new BlockInstance(parent, parent.stage, this.config);
+            var block = new BlockInstance(parent, parent.stage, this.config, formData);
             parent.addChild(block, index);
             parent.refreshChildren();
 

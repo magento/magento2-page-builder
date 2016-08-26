@@ -91,5 +91,16 @@ define([
         return $super.onSortStart.apply(this, arguments);
     };
 
+    /**
+     * To JSON
+     *
+     * @returns {{children, formData}|{children: Array}}
+     */
+    Column.prototype.toJSON = function () {
+        var json = $super.toJSON.apply(this, arguments);
+        json.type = 'column';
+        return json;
+    };
+
     return Column;
 });
