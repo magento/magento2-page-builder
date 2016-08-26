@@ -7,8 +7,9 @@
 define([
     'ko',
     'jquery',
-    'uiRegistry'
-], function (ko, $, registry) {
+    'uiRegistry',
+    'bluefoot/config'
+], function (ko, $, registry, Config) {
 
     /**
      * Edit class constructor
@@ -84,12 +85,57 @@ define([
             var _originalRender = form.onRender;
 
             /**
+             * Override the form render function to implement caching in the Config
+             *
+             * @param params
+             * @returns {form}
+             */
+            form.render = function (params) {
+                var self = this,
+                    request,
+                    loadedForm;
+
+                if (this.isRendered) {
+                    return this;
+                }
+
+                self.previousParams = params || {};
+
+                $.async({
+                    component: this.name,
+                    ctx: '.' + this.contentSelector
+                }, function (el) {
+                    self.contentEl = $(el);
+                    self.startRender = true;
+                    params = _.extend({}, self.params, params || {});
+
+                    // Check to see if this form has already been loaded
+                    if (loadedForm = Config.loadForm(form.editingEntity.config.code)) {
+                        self.onRender(loadedForm);
+                    } else {
+                        request = self.requestData(params, self.renderSettings);
+                        request
+                            .done(self.onRender)
+                            .fail(self.onError);
+                    }
+                });
+
+                return this;
+            };
+
+            /**
              * Handle render function
              *
              * @param data
+             * @param loadedFromCache
              */
             form.onRender = function (data) {
                 _originalRender.call(form, data);
+
+                // Store into the config if the form isn't already present
+                if (!Config.loadForm(form.editingEntity.config.code)) {
+                    Config.addForm(form.editingEntity.config.code, data);
+                }
 
                 // The form.externalSource doesn't appear to be available on initial render, so start a loop
                 // waiting for its presence

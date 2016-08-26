@@ -24,8 +24,6 @@ define([
         AbstractStructural.call(this, parent, stage);
 
         this.config = config;
-        this.data = ko.observable({});
-        this.children = ko.observableArray([]);
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
