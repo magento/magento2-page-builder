@@ -6,7 +6,6 @@ use Gene\BlueFoot\Api\Data\AttributeInterface as BlueFootAttributeInterface;
 use Gene\BlueFoot\Api\AttributeGroupRepositoryInterface;
 use Gene\BlueFoot\Api\AttributeRepositoryInterface;
 use Magento\Catalog\Model\Locator\LocatorInterface;
-use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute as EavAttribute;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory as EavAttributeFactory;
 use Magento\Eav\Api\Data\AttributeGroupInterface;
@@ -160,6 +159,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     private $contentBlockRepository;
 
     /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    protected $url;
+
+    /**
      * Eav constructor.
      *
      * @param \Magento\Catalog\Model\Locator\LocatorInterface                           $locator
@@ -202,9 +206,14 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         ScopeOverriddenValue $scopeOverriddenValue,
         DataPersistorInterface $dataPersistor,
         ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
+
+        \Magento\Framework\UrlInterface $urlInterface, // temporary @Aidan
+
         $attributesToDisable = [],
         $attributesToEliminate = []
     ) {
+        $this->url = $urlInterface;
+
         $this->locator = $locator;
         $this->catalogEavValidationRules = $catalogEavValidationRules;
         $this->eavConfig = $eavConfig;
@@ -592,38 +601,25 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     }
 
     /**
-     * Search attribute meta data
-     * @param $attribute
-     * @param $meta
-     * @return array
-     */
-    /*public function customizeSearchAttribute($attribute, $meta)
-    {
-        $meta['arguments']['data']['config']['component'] = 'Magento_Catalog/js/custom-options-type';
-        $meta['arguments']['data']['config']['elementTmpl'] = 'ui/grid/filters/elements/ui-select';
-        $meta['arguments']['data']['config']['selectType'] = 'optgroup';
-        $meta['arguments']['data']['config']['disableLabel'] = true;
-        $meta['arguments']['data']['config']['multiple'] = false;
-        $meta['arguments']['data']['config']['filterOptions'] = true;
-
-        // @todo load data from model - ajax endpoint preferable
-        $meta['arguments']['data']['config']['options'] = [
-            ['label' => 'hey', 'value' => 'search']
-        ];
-
-        return $meta;
-    }*/
-
-    /**
-     * BlueFoot child entity input field
+     * BlueFoot widget injection
      * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
      * @param array $meta
      * @return array
      */
     public function injectWidget(BlueFootAttributeInterface $attribute, array $meta)
     {
-        $meta['arguments']['data']['config']['dataType'] = $attribute->getWidget();
-        $meta['arguments']['data']['config']['formElement'] = $attribute->getWidget();
+        switch ($attribute->getWidget()) {
+            case 'search':
+                $meta['arguments']['data']['config']['dataType'] = $attribute->getWidget();
+                $meta['arguments']['data']['config']['formElement'] = $attribute->getWidget();
+
+                $meta['arguments']['data']['config']['ajaxEndpoint'] = $this->url->getUrl(
+                    'bluefoot/stage_widget/search',
+                    ['context' => 'category']
+                );
+                break;
+        }
+
 
         return $meta;
     }

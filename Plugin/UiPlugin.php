@@ -17,10 +17,17 @@ class UiPlugin
      */
     public function afterConvert($subject, $output)
     {
+        // @todo generate these from XML
         $output['components'][0]['child_entity'] = $this->buildArray([
             'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\ChildEntity',
             'jsComponent' => 'Gene_BlueFoot/js/form/element/child_entity',
             'elementTmpl' => 'Gene_BlueFoot/form/element/child_entity',
+        ]);
+
+        $output['components'][0]['search'] = $this->buildArray([
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Search',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/search',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/search',
         ]);
 
         $output['components'][0]['alignment'] = $this->buildArray([
