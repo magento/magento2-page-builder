@@ -10,7 +10,8 @@ define([
     'bluefoot/stage/structural/abstract',
     'bluefoot/stage/edit',
     'mage/translate',
-], function (ko, $, AbstractStructural, Edit, $t) {
+    'bluefoot/block/preview/abstract'
+], function (ko, $, AbstractStructural, Edit, $t, Preview) {
 
     /**
      * Class for entity blocks being included on the page
@@ -24,6 +25,10 @@ define([
         AbstractStructural.call(this, parent, stage);
 
         this.config = config;
+        this.preview = new Preview(this, config);
+        this.data.subscribe(function (update) {
+            this.preview.update(update);
+        }.bind(this));
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
@@ -54,6 +59,10 @@ define([
      * @returns {string}
      */
     AbstractBlock.prototype.getTemplate = function () {
+        // If a preview template is set, the entity shall use that instead
+        if (this.preview.getPreviewTemplate()) {
+            return this.preview.getPreviewTemplate();
+        }
         return 'Gene_BlueFoot/component/core/block/abstract.html'
     };
 

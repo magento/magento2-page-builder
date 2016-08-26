@@ -165,7 +165,6 @@ define([
         if (!form.additionalInvalid && !form.source.get('params.invalid')) {
             var entityData = form.source.get('data.entity');
             this.parent.data(entityData);
-            this.parent.data.valueHasMutated();
 
             // Destroy the original instance of the source
             form.source.destroy();

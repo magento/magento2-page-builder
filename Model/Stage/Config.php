@@ -299,17 +299,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
     {
         if ($template = $contentBlock->getItemViewTemplate()) {
             $templatePath = $this->configInterface->getTemplate($template);
-            if ($templatePath && isset($templatePath['file'])) {
-                try {
-                    /* @var $block \Magento\Framework\View\Element\Template */
-                    $block = $this->layoutFactory->create()->createBlock('Magento\Backend\Block\Template');
-                    $block->setTemplate($templatePath['file']);
-                    if ($block) {
-                        return $block->toHtml();
-                    }
-                } catch (\Exception $e) {
-                    return false;
-                }
+            if ($templatePath && isset($templatePath['preview'])) {
+                return $templatePath['preview'];
             }
         }
 
