@@ -5,11 +5,10 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'uiClass',
     'ko',
     'jquery',
     'uiRegistry'
-], function (Class, ko, $, registry) {
+], function (ko, $, registry) {
 
     /**
      * Edit class constructor
@@ -40,6 +39,9 @@ define([
         var edit = registry.get('bluefoot_edit'),
             form = registry.get('bluefoot_edit.bluefoot_edit_form');
 
+        // Pass the currently being edited entity to the form
+        form.editingEntity = this.parent;
+
         // Override the onRender functionality
         this.handleOnRender(form);
 
@@ -57,12 +59,12 @@ define([
         // Only re-render the form completely if the code is different
         if (form.lastCode != this.entity.code) {
             form.renderSettings.url = form.renderSettings.originalUrl.replace('CONTENT_BLOCK_IDENTIFIER', this.entity.code);
-            form.destroyInserted();
         }
         form.lastCode = this.entity.code;
 
         edit.setTitle($.mage.__('Edit ' + this.entity.name));
 
+        form.destroyInserted();
         form.resetForm();
         form.render();
 
@@ -77,21 +79,31 @@ define([
      * @param form
      */
     Edit.prototype.handleOnRender = function (form) {
-        var _originalRender = form.onRender,
-            that = this;
-        form.onRender = function (data) {
-            _originalRender.call(form, data);
+        // We only need to override this function once
+        if (form.onRenderOverridden !== true) {
+            var _originalRender = form.onRender;
 
-            // The form.externalSource doesn't appear to be available on initial render, so start a loop
-            // waiting for its presence
-            var source,
-                interval = setInterval(function () {
-                if (source = form.externalSource()) {
-                    clearInterval(interval);
-                    source.set('data.entity', that.parent.data());
-                }
-                }, 5);
-        };
+            /**
+             * Handle render function
+             *
+             * @param data
+             */
+            form.onRender = function (data) {
+                _originalRender.call(form, data);
+
+                // The form.externalSource doesn't appear to be available on initial render, so start a loop
+                // waiting for its presence
+                var dataProvider,
+                    interval = setInterval(function () {
+                        if (dataProvider = registry.get('contentblock_entity_form.contentblock_form_data_source')) {
+                            clearInterval(interval);
+                            dataProvider.set('data.entity', form.editingEntity.parent.data());
+                        }
+                    }, 5);
+            };
+
+            form.onRenderOverridden = true;
+        }
     };
 
     /**
