@@ -54,15 +54,11 @@ class Config extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $config = $this->config->getConfig();
-
         // Does the system have any entity ID's?
         if (($entityIds = $this->getRequest()->getParam('entityIds')) && $entityIds != 'false') {
-            $config = array_merge($config, array(
-                'entities' => $this->build->getEntityConfig($entityIds)
-            ));
+            return $this->resultJsonFactory->create()->setData(
+                $this->build->getEntityConfig($entityIds)
+            );
         }
-
-        return $this->resultJsonFactory->create()->setData($config);
     }
 }

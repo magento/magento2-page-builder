@@ -5,9 +5,8 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'ko',
-    'bluefoot/config'
-], function (ko, Config) {
+    'ko'
+], function (ko) {
 
     /**
      * Content / page builder block residing inside groups within the panel
@@ -47,8 +46,10 @@ define([
         var original = jQuery(event.target);
         ui.helper.css({width: original.width(), height: original.height()});
 
-        // Hide the groups overlay
-        this.group.hidden(true);
+        if (this.group) {
+            // Hide the groups overlay
+            this.group.hidden(true);
+        }
     };
 
     /**
@@ -60,7 +61,9 @@ define([
      * @param draggableInstance
      */
     Block.prototype.onDragStop = function (draggableThis, event, ui, draggableInstance) {
-        this.group.hidden(false);
+        if (this.group) {
+            this.group.hidden(false);
+        }
     };
 
     /**
@@ -75,8 +78,10 @@ define([
     Block.prototype.onSortReceive = function (sortableThis, event, ui, sortableInstance) {
         // This event can fire multiple times, only capture the output once
         if (jQuery(event.target)[0] == sortableThis) {
-            // Ensure the group is inactive
-            this.group.active(false);
+            if (this.group) {
+                // Ensure the group is inactive
+                this.group.active(false);
+            }
 
             // Remove the dragged item
             if (sortableInstance.draggedItem) {
@@ -89,15 +94,34 @@ define([
 
                 // Determine the parent, and add the new block instance as a child
                 var parent = ko.dataFor(jQuery(event.target)[0]);
-                require([this.getBlockInstance()], function (BlockInstance) {
-                    parent.addChild(new BlockInstance(parent, parent.stage, this.config), index);
-                    parent.refreshChildren();
-
+                this.insert(parent, index, function (block) {
                     // Refresh sortable to ensure any new elements are recognised
                     jQuery(sortableThis).sortable('refresh');
-                }.bind(this));
+
+                    // Open the edit panel
+                    block.edit();
+                });
             }
         }
+    };
+
+    /**
+     * Insert block into parent
+     *
+     * @param parent
+     * @param index
+     * @param callbackFn
+     */
+    Block.prototype.insert = function (parent, index, callbackFn) {
+        require([this.getBlockInstance()], function (BlockInstance) {
+            var block = new BlockInstance(parent, parent.stage, this.config);
+            parent.addChild(block, index);
+            parent.refreshChildren();
+
+            if (typeof callbackFn === 'function') {
+                callbackFn(block);
+            }
+        }.bind(this));
     };
 
     return Block;

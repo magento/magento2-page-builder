@@ -57,35 +57,42 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
         },
 
         /**
-         * Retrieve the full configuration
+         * Load in entities
          *
-         * @param callback
          * @param entityIds
          * @param storeId
+         * @param callback
          */
-        initConfig: function (callback, entityIds, storeId) {
-            var params = {
-                storeId: storeId
-            };
-            if (typeof entityIds === 'object' && entityIds.length > 0) {
-                params.entityIds = entityIds;
+        loadEntities: function (entityIds, storeId, callback) {
+            if (typeof _config['entities'] === 'undefined') {
+                _config['entities'] = {};
             }
+
+            storeId = storeId || this.getStoreId();
 
             // Include the Ajax Class
             var Ajax = new AjaxClass(this.getInitConfig('formkey'));
-            Ajax.post(this.getInitConfig('config_url'), params, function (data) {
-                if (typeof _config.entities === 'object') {
-                    _config.entities = jQuery.extend(_config.entities, data.entities);
-                } else {
-                    // Merge the two configuration objects
-                    _config = jQuery.extend(this.getInitConfig(), data);
-                }
+            Ajax.post(this.getInitConfig('config_url'), {entityIds: entityIds, storeId: storeId}, function (data) {
+                jQuery.extend(_config['entities'], data);
+
                 if (typeof callback === 'function') {
                     callback(_config);
                 }
             }.bind(this), false, function () {
-                return require('bluefoot/modal').alert('An issue has occurred whilst attempting to load the Blue Foot configuration, please contact your development team.');
+                alert('can\'t load entities');
             });
+        },
+
+        /**
+         * Retrieve an entity from the configuration
+         *
+         * @param entityId
+         * @returns {*}
+         */
+        getEntity: function (entityId) {
+            if (typeof _config['entities'][entityId] !== 'undefined') {
+                return _config['entities'][entityId];
+            }
         },
 
         /**
@@ -95,8 +102,8 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @returns {*}
          */
         getContentTypeConfig: function (type) {
-            if (typeof _config.contentTypes === 'object' && typeof _config.contentTypes[type] === 'object') {
-                return _config.contentTypes[type];
+            if (typeof _initConfig.contentTypes === 'object' && typeof _initConfig.contentTypes[type] === 'object') {
+                return _initConfig.contentTypes[type];
             }
 
             return false;
@@ -195,7 +202,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             }
 
             _allFields = {};
-            jQuery.each(_config.contentTypes, function (index, element) {
+            jQuery.each(_initConfig.contentTypes, function (index, element) {
                 if (typeof element.fields === 'object') {
                     jQuery.extend(_allFields, element.fields);
                 }

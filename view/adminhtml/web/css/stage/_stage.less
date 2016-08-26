@@ -10,8 +10,8 @@
 .bluefoot-stage {
     margin-left: 60px; // temp
 
-    padding: 0 10px 60px 10px; // 60px to include the add row button
-    background: #f3f3f3;
+    padding: 0 4px 60px 4px; // 60px to include the add row button
+    border: 6px #f3f3f3 solid;
     min-height: 200px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -99,8 +99,6 @@
 .bluefoot-structure {
     border: 3px solid transparent;
     box-sizing: border-box;
-    padding: 0 10px;
-    margin: 10px 0;
     position: relative;
     z-index: 10;
 
@@ -123,6 +121,7 @@
         right: 0;
         top: -15px;
         text-align: center;
+        z-index: 50;
 
         ul.bluefoot-options-links {
             display: none;
@@ -175,6 +174,9 @@
                 -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
                 filter: blur(5px);
             }
+            &.bluefoot-entity-preview {
+                border: 3px transparent solid;
+            }
         }
 
         >.bluefoot-options {
@@ -196,7 +198,7 @@
     &.bluefoot-row {
         display: inline-block;
         width: 100%;
-        margin-bottom: 20px;
+        padding: 0 4px;
         position: relative;
 
         > .bluefoot-options {
@@ -246,7 +248,7 @@
     &.bluefoot-column {
         display: inline-block;
         width: 100%;
-        margin: 10px 0 20px 0;
+        margin: 4px 0 4px 0;
         ul.bluefoot-options-links {
             background: @columnColor;
         }
@@ -292,8 +294,10 @@
     &.bluefoot-entity {
         &.bluefoot-abstract {
             background: @entityColor;
-            border: none;
+            border: 3px solid transparent;
             color: white;
+            text-align: center;
+            padding: 20px 0;
 
             i {
                 font-size: 24px;
@@ -307,11 +311,12 @@
             }
         }
 
+        &.bluefoot-entity-preview {
+            font-size: 14px;
+        }
+
         display: inline-block;
         width: 100%;
-        margin-bottom: 20px;
-        text-align: center;
-        padding: 20px 0;
 
         .bluefoot-options {
             top: 50%;
@@ -386,9 +391,9 @@
     }
 
     &.bluefoot-placeholder-column {
-        height: 95px;
+        height: 90px;
         width: 12px;
-        margin: 20px -6px;
+        margin: 10px -6px;
         z-index: 500;
     }
 }

@@ -10,9 +10,10 @@ define([
     'uiRegistry',
     'jquery',
     'bluefoot/stage',
+    'bluefoot/stage/build',
     'bluefoot/common',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, ko, registry, jQuery, Stage, Common) {
+], function (Wysiwyg, $, ko, registry, jQuery, Stage, Build, Common) {
     'use strict';
 
     /**
@@ -55,6 +56,17 @@ define([
             });
 
             this.bindBlueFootButton(node);
+            this.checkForBlueFootContent(node);
+        },
+
+        /**
+         * Check to see if the WYSIWYG already contains BlueFoot content
+         */
+        checkForBlueFootContent: function (node) {
+            var build = new Build();
+            if (build.parseStructure(this.value())) {
+                return this.buildBlueFoot(false, build, node);
+            }
         },
 
         /**
@@ -79,24 +91,36 @@ define([
          * Handle a click event requesting that we build BlueFoot
          *
          * @param event
+         * @param buildInstance
+         * @param node
          */
-        buildBlueFoot: function (event) {
-            event.stopPropagation();
-            var panel;
+        buildBlueFoot: function (event, buildInstance, node) {
+            var button,
+                panel;
+            if (event) {
+                event.stopPropagation();
+                button = jQuery(event.currentTarget);
+            }
             if (panel = this.getBlueFootPanel()) {
                 panel.buildPanel();
 
                 // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
                 this.stage = new Stage(this, this.stageId, this.stageContent);
 
-                // Add an initial row to the stage
-                this.stage.addRow();
+                // Are we building from existing data?
+                if (buildInstance && node) {
+                    buildInstance.buildStage(this.stage);
+                    button = $(node).prevAll('.buttons-set').find('.init-gene-bluefoot');
+                } else {
+                    // Add an initial row to the stage
+                    this.stage.addRow();
+                }
 
                 // Hide the WYSIWYG and display the stage
-                jQuery(event.currentTarget).parents('[data-namespace]').hide();
-                if (jQuery(event.currentTarget).parents('.admin__control-grouped').length > 0) {
+                button.parents('[data-namespace]').hide();
+                if (button.parents('.admin__control-grouped').length > 0) {
                     // Add bluefoot active class to transform the field area full width
-                    jQuery(event.currentTarget).parents('.admin__control-grouped').addClass('bluefoot-active');
+                    button.parents('.admin__control-grouped').addClass('bluefoot-active');
                 }
 
                 // Mark the stage as active bringing it into display
