@@ -97,7 +97,7 @@ define([
                     interval = setInterval(function () {
                         if (dataProvider = registry.get('contentblock_entity_form.contentblock_form_data_source')) {
                             clearInterval(interval);
-                            dataProvider.set('data.entity', form.editingEntity.parent.data());
+                            dataProvider.set('data.entity', form.editingEntity.data());
                         }
                     }, 5);
             };
