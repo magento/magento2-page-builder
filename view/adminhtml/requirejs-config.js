@@ -40,6 +40,7 @@ var config = {
         'bluefoot/stage/structural/column/builder': 'Gene_BlueFoot/js/component/core/stage/structural/column/builder',
 
         'bluefoot/block/abstract': 'Gene_BlueFoot/js/component/core/block/abstract',
+        'bluefoot/block/preview/abstract': 'Gene_BlueFoot/js/component/core/block/preview/abstract',
 
         'bluefoot/template': 'Gene_BlueFoot/js/component/core/template',
 

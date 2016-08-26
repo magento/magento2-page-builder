@@ -33,6 +33,8 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
  * Class Eav
  *
  * @package Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier
 {

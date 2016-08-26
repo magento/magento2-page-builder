@@ -254,6 +254,33 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             if (jQuery('#store_switcher').length > 0) {
                 return jQuery('#store_switcher').val();
             }
+        },
+
+        /**
+         * Add a form to the configuration
+         *
+         * @param key
+         * @param data
+         */
+        addForm: function (key, data) {
+            if (typeof _config['forms'] === 'undefined') {
+                _config['forms'] = {};
+            }
+            _config['forms'][key] = data;
+        },
+
+        /**
+         * Try and load a form from the config
+         *
+         * @param key
+         * @returns {*}
+         */
+        loadForm: function (key) {
+            if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
+                return _config['forms'][key];
+            }
+
+            return null;
         }
     };
 });
