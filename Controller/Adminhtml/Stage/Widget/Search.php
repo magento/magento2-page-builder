@@ -235,7 +235,7 @@ class Search extends \Magento\Backend\App\Action
             }
 
             foreach ($items as $item) {
-                $results[] = ['label' => $item[$label] . ' (ID: ' . $item[$id] . ')', 'id' => $item[$id]];
+                $results[] = ['label' => $item[$label] . ' (ID: ' . $item[$id] . ')', 'value' => $item[$id]];
             }
         }
 
