@@ -36,6 +36,35 @@ define([
             return this;
         },
 
+        setInitialValue: function () {
+            this._super();
+
+            if (this.initialValue > 0) {
+                this.loaderVisible(true);
+                this.ajaxRequest = $.ajax({
+                    url: this.ajaxEndpoint + "id/" + this.initialValue,
+                    type: 'POST',
+                    data: {form_key: window.FORM_KEY}
+                }).done(function(data) {
+                    if (!data.length) {
+                        return;
+                    }
+
+                    this.options(data);
+                    this.cacheOptions.plain = data;
+                    this._setItemsQuantity(data.length);
+                    this.cleanHoveredElement();
+                    this.loaderVisible(false);
+                    this.ajaxRequest = null;
+                    this.toggleOptionSelected(data[0]);
+                    this.setCaption();
+
+                }.bind(this));
+            }
+
+            return this;
+        },
+
         filterOptionsList: function () {
             var value = this.filterInputValue().trim().toLowerCase();
 
