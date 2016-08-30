@@ -113,7 +113,7 @@ define([
                     button = $(node).prevAll('.buttons-set').find('.init-gene-bluefoot');
                 } else {
                     // Add an initial row to the stage
-                    this.stage.addRow();
+                    this.stage.addRow(this.stage);
                 }
 
                 // Hide the WYSIWYG and display the stage
