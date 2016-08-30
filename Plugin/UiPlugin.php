@@ -36,6 +36,12 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/alignment',
         ]);
 
+        $output['components'][0]['uploader'] = $this->buildArray([
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Uploader',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/uploader',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/uploader',
+        ]);
+
         return $output;
     }
 
