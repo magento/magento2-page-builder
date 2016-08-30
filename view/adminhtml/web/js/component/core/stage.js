@@ -55,7 +55,7 @@ define([
      * @param index
      */
     Stage.prototype.addChild = function (child, index) {
-        if (index !== undefined) {
+        if (index !== undefined && index !== false) {
             // Use the common function to add the item in the correct place within the array
             Common.moveArrayItemIntoArray(child, this.stageContent, index);
         } else {

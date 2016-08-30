@@ -86,7 +86,7 @@ define([
      * @param index
      */
     AbstractStructural.prototype.addChild = function (child, index) {
-        if (index !== undefined) {
+        if (index !== undefined && index !== false) {
             // Use the common function to add the item in the correct place within the array
             Common.moveArrayItemIntoArray(child, this.children, index);
         } else {
