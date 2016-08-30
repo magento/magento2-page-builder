@@ -99,5 +99,30 @@ define([
         return json;
     };
 
+    /**
+     * Add a child to the current element
+     *
+     * @param child
+     * @param index
+     * @param key
+     */
+    AbstractBlock.prototype.addChild = function (child, index, key) {
+        if (typeof key === 'undefined' || !key) {
+            console.error('Field must be specified when adding a child to an entity.');
+            return false;
+        }
+
+        // Update the data object to contain an object
+        if (typeof this.data()[key] !== 'object' && !Array.isArray(this.data()[key])) {
+            this.data()[key] = [];
+        }
+
+        // Add the child into the children data
+        this.data()[key].push(child);
+        this.children.push(child);
+
+        return false;
+    };
+
     return AbstractBlock;
 });

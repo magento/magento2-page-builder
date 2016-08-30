@@ -24,18 +24,22 @@ define([
      */
     function AbstractStructural(parent, stage) {
         this.parent = parent;
-        this.stage = stage;
+        this.stage = stage || false;
 
         this.id = Common.guid();
         this.options = new Options();
         this.data = ko.observable({});
         this.data.subscribe(function () {
-            this.stage.save.update();
+            if (this.stage) {
+                this.stage.save.update();
+            }
         }.bind(this));
 
         this.children = ko.observableArray([]);
         this.children.subscribe(function () {
-            this.stage.save.update();
+            if (this.stage) {
+                this.stage.save.update();
+            }
         }.bind(this));
 
         this.originalParent = false;

@@ -50,7 +50,6 @@ define([
                 regex.lastIndex = 0;
                 var matches = regex.exec(structure);
                 if (matches !== null && matches.length >= 2) {
-                    console.log(matches[1]);
                     var jsonConfig = JSON.parse(matches[1]);
                     if (typeof jsonConfig === 'object') {
                         this.structure = jsonConfig;
@@ -192,23 +191,7 @@ define([
     Build.prototype._rebuildIndividual = function (entity, parent, elementBuiltFn) {
         var newParent;
         if (entity && typeof entity.contentType !== 'undefined' && entity.contentType) {
-            var blockConfig = Config.getContentTypeConfig(entity.contentType),
-                blockInstance = new Block(blockConfig, false),
-                blockData;
-
-            if (typeof entity.formData === 'object' && !Array.isArray(entity.formData)) {
-                blockData = jQuery.extend(entity.formData, Config.getEntity(entity.entityId));
-            } else {
-                blockData = Config.getEntity(entity.entityId);
-            }
-
-            // Insert a block via it's instance into the parent
-            blockInstance.insert(parent, false, blockData, function (block) {
-                // @todo child entities
-                if (typeof elementBuiltFn === 'function') {
-                    elementBuiltFn();
-                }
-            });
+            return this._rebuildContentType(entity, parent, elementBuiltFn);
         } else if (entity && typeof entity.type !== 'undefined' && entity.type) {
             if (entity.type == 'row' && typeof parent.addRow === 'function') {
                 newParent = parent.addRow(this.stage, entity.formData);
@@ -224,6 +207,43 @@ define([
                 return this._rebuild(entity.children, newParent, elementBuiltFn);
             }
         }
+    };
+
+    /**
+     * Rebuild a content type
+     *
+     * @param entity
+     * @param parent
+     * @param callbackFn
+     * @param key
+     * @private
+     */
+    Build.prototype._rebuildContentType = function (entity, parent, callbackFn, key) {
+        key = key || false;
+        var blockConfig = Config.getContentTypeConfig(entity.contentType),
+            blockInstance = new Block(blockConfig, false),
+            blockData;
+
+        if (typeof entity.formData === 'object' && !Array.isArray(entity.formData)) {
+            blockData = jQuery.extend(entity.formData, Config.getEntity(entity.entityId));
+        } else {
+            blockData = Config.getEntity(entity.entityId);
+        }
+
+        // Insert a block via it's instance into the parent
+        blockInstance.insert(parent, false, blockData, function (block) {
+            if (entity.children) {
+                jQuery.each(entity.children, function (key, children) {
+                    jQuery.each(children, function (index, child) {
+                        this._rebuildContentType(child, block, false, key);
+                    }.bind(this));
+                }.bind(this));
+            }
+
+            if (typeof callbackFn === 'function') {
+                callbackFn(block);
+            }
+        }.bind(this), key);
     };
 
     return Build;

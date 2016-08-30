@@ -112,11 +112,13 @@ define([
      * @param index
      * @param formData
      * @param callbackFn
+     * @param key
      */
-    Block.prototype.insert = function (parent, index, formData, callbackFn) {
+    Block.prototype.insert = function (parent, index, formData, callbackFn, key) {
+        key = key || false;
         require([this.getBlockInstance()], function (BlockInstance) {
             var block = new BlockInstance(parent, parent.stage, this.config, formData);
-            parent.addChild(block, index);
+            parent.addChild(block, index, key);
             parent.refreshChildren();
 
             if (typeof callbackFn === 'function') {

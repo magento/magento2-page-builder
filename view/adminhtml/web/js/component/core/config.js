@@ -246,7 +246,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @returns {*}
          */
         getFormKey: function () {
-            return this.getInitConfig().form_key;
+            return window.FORM_KEY;
         },
 
         /**
