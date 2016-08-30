@@ -126,6 +126,16 @@ class Search extends \Magento\Backend\App\Action
     }
 
     /**
+     * Return the ID for a specific entry search
+     *
+     * @return mixed
+     */
+    protected function getId()
+    {
+        return $this->getRequest()->getParam('id') ?: false;
+    }
+
+    /**
      * Search for products based on a term
      *
      * @return array
@@ -173,8 +183,13 @@ class Search extends \Magento\Backend\App\Action
     protected function searchCategory()
     {
         $categories = $this->categoryCollectionFactory->create()
-            ->addAttributeToSelect('*')
-            ->addAttributeToFilter('name', array('like' => '%' . $this->getTerm() . '%'));
+            ->addAttributeToSelect('*');
+
+        if ($this->getId()) {
+            $categories->addAttributeToFilter('entity_id', $this->getId());
+        } else {
+            $categories->addAttributeToFilter('name', array('like' => '%' . $this->getTerm() . '%'));
+        }
 
         return $this->returnOptionArray($categories);
     }

@@ -513,7 +513,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         }
 
         // Inject additional meta information for the field.
-        if ($attribute->getWidget() == 'search') {
+        if ($attribute->getWidget()) {
             $meta = $this->injectWidget($attribute, $meta);
         } else {
             // Generic magento fields
@@ -533,6 +533,10 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
                 case 'price':
                     $meta = $this->customizePriceAttribute($attribute, $meta);
+                    break;
+
+                case 'image':
+                    $meta = $this->customizeImage($attribute, $meta);
                     break;
 
                 case 'gallery':
@@ -611,6 +615,20 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 break;
         }
 
+
+        return $meta;
+    }
+
+    /**
+     * BlueFoot child entity input field
+     * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
+     * @param array $meta
+     * @return array
+     */
+    public function customizeImage(BlueFootAttributeInterface $attribute, array $meta)
+    {
+        $meta['arguments']['data']['config']['dataType'] = 'uploader';
+        $meta['arguments']['data']['config']['formElement'] = 'uploader';
 
         return $meta;
     }
