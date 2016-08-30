@@ -33,7 +33,6 @@
 
             var options = {
                 uploadMultiple: false,
-                maxFiles: 1,
                 createImageThumbnails: false,
                 addRemoveLinks: false,
                 dictDefaultMessage: $t("Drop files here, or click to upload"),
@@ -48,7 +47,7 @@
             jQuery.extend(options, value);
 
             jQuery(element).addClass('dropzone');
-            new Dropzone(element, options); // jshint ignore:line
+            new Dropzone(element, options);
         }
 
     };

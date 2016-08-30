@@ -1,10 +1,12 @@
-<div data-bind="dropzone: {url: uploadUrl(), success: attachmentSuccess()}" class="bluefoot-upload-field">
+<div data-bind="dropzone: {url: uploadUrl(), success: attachmentSuccess(), error: attachmentError}" class="bluefoot-upload-field">
     <!-- ko if: value -->
     <img data-bind="attr: { src: value }" class="bluefoot-image-preview" />
     <!-- /ko -->
 </div>
 
 <button data-bind="click: openGallery">Open Media Gallery</button>
+
+<button data-bind="click: removeImage, visible: value">Remove Image</button>
 
 <input type="text"
        ko-value="value"

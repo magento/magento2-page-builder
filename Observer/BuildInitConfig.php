@@ -54,6 +54,10 @@ class BuildInitConfig implements ObserverInterface
         $pluginData['gene_widget_upload']['config']['upload_url']
             = $this->urlBuilder->getUrl('bluefoot/stage/widget_upload');
 
+        // Send the url for the media gallery
+        $pluginData['gene_widget_upload']['config']['gallery_url']
+            = $this->urlBuilder->getUrl('cms/wysiwyg_images');
+
         // Send the media upload URL for displaying images
         $uploadUrl = $this->configHelper->getUploadUrl(true);
         $pluginData['gene_widget_upload']['config']['media_url'] = $uploadUrl;
