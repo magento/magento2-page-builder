@@ -38,24 +38,28 @@ define([
     /**
      * Parse the potential structure
      *
-     * @param config
+     * @param structure
      * @returns {boolean}
      */
-    Build.prototype.parseStructure = function (config) {
+    Build.prototype.parseStructure = function (structure) {
         var regex = new RegExp('<!--' + Config.getInitConfig('encode_string') + '="(.*?)"-->', 'g');
 
-        // Test the expression first for performance
-        if (regex.test(config)) {
-            regex.lastIndex = 0;
-            var matches = regex.exec(config);
-            if (matches !== null && matches.length >= 2) {
-                console.log(matches[1]);
-                var jsonConfig = JSON.parse(matches[1]);
-                if (typeof jsonConfig === 'object') {
-                    this.structure = jsonConfig;
-                    return jsonConfig;
+        try {
+            // Test the expression first for performance
+            if (regex.test(structure)) {
+                regex.lastIndex = 0;
+                var matches = regex.exec(structure);
+                if (matches !== null && matches.length >= 2) {
+                    console.log(matches[1]);
+                    var jsonConfig = JSON.parse(matches[1]);
+                    if (typeof jsonConfig === 'object') {
+                        this.structure = jsonConfig;
+                        return jsonConfig;
+                    }
                 }
             }
+        } catch (e) {
+            return false;
         }
 
         return false;

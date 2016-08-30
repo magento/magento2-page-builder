@@ -64,7 +64,7 @@ define([
          */
         checkForBlueFootContent: function (node) {
             var build = new Build();
-            if (build.parseStructure(this.value())) {
+            if (build.parseStructure($(node).val())) {
                 return this.buildBlueFoot(false, build, node);
             }
         },
