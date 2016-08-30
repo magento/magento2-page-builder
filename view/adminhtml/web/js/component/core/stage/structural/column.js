@@ -24,7 +24,8 @@ define([
         AbstractStructural.call(this, parent, stage);
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.widthClasses = ko.observable(Config.getInitConfig("column_definitions")[0]['className']);
+        this.columnDefinition = Config.getInitConfig('column_definitions')[0];
+        this.widthClasses = ko.observable(this.columnDefinition['className']);
     }
 
     Column.prototype = Object.create(AbstractStructural.prototype);
@@ -56,7 +57,7 @@ define([
     Column.prototype.addColumn = function (data) {
         var column = new Column(this, this.stage);
         this.addChild(column);
-        column.widthClasses(data.className);
+        column.updateColumData(data);
         return column;
     };
 
@@ -72,7 +73,27 @@ define([
         }
 
         Common.moveArrayItemIntoArray(column, item.parent.children, index);
-        column.widthClasses(data.className);
+        column.updateColumData(data);
+    };
+
+    /**
+     * Update the column data to reflect the correct width
+     *
+     * @param data
+     */
+    Column.prototype.updateColumData = function (data) {
+        if (data.width) {
+            var columnDef = Config.getColumnDefinitionByBreakpoint(data.width);
+            if (columnDef) {
+                this.widthClasses(columnDef.className);
+                this.columnDefinition = columnDef;
+            }
+        } else if (data.className) {
+            this.widthClasses(data.className);
+            this.columnDefinition = Config.getColumnDefinitionByClassName(data.className);
+        }
+
+        this.data(data);
     };
 
     /**
@@ -99,6 +120,9 @@ define([
     Column.prototype.toJSON = function () {
         var json = $super.toJSON.apply(this, arguments);
         json.type = 'column';
+        if (this.columnDefinition) {
+            json.formData.width = this.columnDefinition['breakpoint'];
+        }
         return json;
     };
 

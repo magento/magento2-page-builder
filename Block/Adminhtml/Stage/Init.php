@@ -123,8 +123,8 @@ class Init extends \Magento\Backend\Block\Template
                     'displayed' => false
                 ],
                 [
-                    'label' => '5/6 (83.5%)',
-                    'breakpoint' => '0.835',
+                    'label' => '5/6 (82.5%)',
+                    'breakpoint' => '0.825',
                     'className' => 'bluefoot-structure-wrapper-width-five-sixths',
                     'displayed' => false
                 ]

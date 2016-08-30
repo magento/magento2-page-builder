@@ -210,19 +210,18 @@ define([
                 }
             });
         } else if (entity && typeof entity.type !== 'undefined' && entity.type) {
-            // @todo copy over structural data
             if (entity.type == 'row' && typeof parent.addRow === 'function') {
-                newParent = parent.addRow(this.stage);
+                newParent = parent.addRow(this.stage, entity.formData);
             } else if (entity.type == 'column' && typeof parent.addColumn === 'function') {
-                newParent = parent.addColumn();
+                newParent = parent.addColumn(entity.formData);
+            }
+
+            if (typeof elementBuiltFn === 'function') {
+                elementBuiltFn();
             }
 
             if (entity.children) {
                 return this._rebuild(entity.children, newParent, elementBuiltFn);
-            } else {
-                if (typeof elementBuiltFn === 'function') {
-                    elementBuiltFn();
-                }
             }
         }
     };

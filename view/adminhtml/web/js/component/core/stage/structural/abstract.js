@@ -279,10 +279,15 @@ define([
             });
         }
 
-        return {
-            children: children,
+        var json = {
             formData: this.data()
+        };
+
+        if (children.length > 0) {
+            json.children = children;
         }
+
+        return json;
     };
 
     return AbstractStructural;

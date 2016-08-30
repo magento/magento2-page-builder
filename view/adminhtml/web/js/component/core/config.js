@@ -133,6 +133,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             }
             return null;
         },
+
         /**
          * Deletes a value from the config providing you know the config key, the item key and the value to check for
          *
@@ -149,6 +150,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             });
             _config[key] = arr;
         },
+
         /**
          * Add to a config setting array without having to rebuild config.
          * @param key
@@ -157,6 +159,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
         mergeValues: function (key, values) {
             _config[key] = _config[key].concat(values);
         },
+
         /**
          * Update a value in the tempalates array
          * @param matchKey
@@ -288,6 +291,40 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             }
 
             return null;
-        }
+        },
+
+        /**
+         * Return a column definition based on the class name
+         *
+         * @param className
+         * @returns {*}
+         */
+        getColumnDefinitionByClassName: function (className) {
+            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
+                return className == columnDef.className;
+            });
+            if (search.length > 0) {
+                return search[0];
+            }
+
+            return null;
+        },
+
+        /**
+         * Return a column definition based on a breakpoint
+         *
+         * @param breakpoint
+         * @returns {*}
+         */
+        getColumnDefinitionByBreakpoint: function (breakpoint) {
+            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
+                return breakpoint == columnDef.breakpoint;
+            });
+            if (search.length > 0) {
+                return search[0];
+            }
+
+            return null;
+        },
     };
 });

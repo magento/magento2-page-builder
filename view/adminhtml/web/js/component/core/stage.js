@@ -67,8 +67,9 @@ define([
      * Add a row to the content
      *
      * @param self
+     * @param data
      */
-    Stage.prototype.addRow = function (self) {
+    Stage.prototype.addRow = function (self, data) {
         var row = new Row(self, self);
         this.addChild(row);
 
