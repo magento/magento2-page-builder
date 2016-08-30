@@ -49,6 +49,7 @@ define([
             regex.lastIndex = 0;
             var matches = regex.exec(config);
             if (matches !== null && matches.length >= 2) {
+                console.log(matches[1]);
                 var jsonConfig = JSON.parse(matches[1]);
                 if (typeof jsonConfig === 'object') {
                     this.structure = jsonConfig;
@@ -198,7 +199,7 @@ define([
             }
 
             // Insert a block via it's instance into the parent
-            blockInstance.insert(parent, 0, blockData, function (block) {
+            blockInstance.insert(parent, false, blockData, function (block) {
                 // @todo child entities
                 if (typeof elementBuiltFn === 'function') {
                     elementBuiltFn();

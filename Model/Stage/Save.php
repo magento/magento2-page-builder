@@ -4,6 +4,7 @@ namespace Gene\BlueFoot\Model\Stage;
 
 use Gene\BlueFoot\Api\EntityRepositoryInterface;
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Save
@@ -302,7 +303,7 @@ class Save extends \Magento\Framework\Model\AbstractModel
                 if ($entityId) {
                     try {
                         $entity = $this->entityRepository->getById($entityId);
-                    } catch (\NoSuchEntityException $e) {
+                    } catch (NoSuchEntityException $e) {
                         $entity = $this->entityFactory->create();
                     }
                 } else {
