@@ -9,8 +9,9 @@ define([
     'underscore',
     'bluefoot/stage/save',
     'bluefoot/stage/structural/row',
-    'bluefoot/common'
-], function (ko, _, Save, Row, Common) {
+    'bluefoot/common',
+    'uiRegistry'
+], function (ko, _, Save, Row, Common, registry) {
 
     /**
      * Stage Class
@@ -25,6 +26,8 @@ define([
         this.showBorders = parent.showBorders;
 
         this.save = new Save(this);
+
+        window.registry = registry;
     }
 
     /**

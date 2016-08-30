@@ -4,23 +4,20 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['ko'], function (ko) {
+define([
+    'ko',
+    'mageUtils'
+], function (ko, utils) {
 
     return {
 
         /**
-         * Generate a GUID? or just a unique ID
+         * Proxy through to the unique ID magento function
          *
          * @returns {string}
          */
         guid: function () {
-            function s4() {
-                return Math.floor((1 + Math.random()) * 0x10000)
-                    .toString(16)
-                    .substring(1);
-            }
-
-            return s4() + s4() + s4();
+            return utils.uniqueid();
         },
 
         /**

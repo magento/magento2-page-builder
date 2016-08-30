@@ -29,7 +29,7 @@ class Save extends Generic
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.bluefoot_edit_form',
+                                'targetName' => 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form',
                                 'actionName' => 'save',
                                 'params' => [
                                     false,
@@ -59,7 +59,7 @@ class Save extends Generic
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.bluefoot_edit_form',
+                                'targetName' => 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form',
                                 'actionName' => 'save',
                                 'params' => [
                                     false,

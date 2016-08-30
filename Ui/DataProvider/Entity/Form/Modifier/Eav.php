@@ -27,6 +27,7 @@ use Magento\Ui\DataProvider\Mapper\MetaProperties as MetaPropertiesMapper;
 use Magento\Ui\Component\Form\Element\Wysiwyg as WysiwygElement;
 use Magento\Catalog\Model\Attribute\ScopeOverriddenValue;
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Eav
@@ -243,20 +244,22 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     {
         $sortOrder = 0;
 
-        foreach ($this->getGroups() as $groupCode => $group) {
-            $attributes = !empty($this->getAttributes()[$groupCode]) ? $this->getAttributes()[$groupCode] : [];
+        if ($this->getAttributeSetId()) {
+            foreach ($this->getGroups() as $groupCode => $group) {
+                $attributes = !empty($this->getAttributes()[$groupCode]) ? $this->getAttributes()[$groupCode] : [];
 
-            if ($attributes) {
-                $meta[$groupCode]['children'] = $this->getAttributesMeta($attributes, $groupCode);
-                $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
-                $meta[$groupCode]['arguments']['data']['config']['label'] = __('%1', $group->getAttributeGroupName());
-                $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
-                $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
-                $meta[$groupCode]['arguments']['data']['config']['sortOrder'] =
-                    $sortOrder * self::SORT_ORDER_MULTIPLIER;
+                if ($attributes) {
+                    $meta[$groupCode]['children'] = $this->getAttributesMeta($attributes, $groupCode);
+                    $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
+                    $meta[$groupCode]['arguments']['data']['config']['label'] = __('%1', $group->getAttributeGroupName());
+                    $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
+                    $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
+                    $meta[$groupCode]['arguments']['data']['config']['sortOrder'] =
+                        $sortOrder * self::SORT_ORDER_MULTIPLIER;
+                }
+
+                $sortOrder++;
             }
-
-            $sortOrder++;
         }
 
         return $meta;
@@ -398,8 +401,12 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     {
         // @todo don't reference request directly
         $identifier = $this->request->getParam('identifier');
-        if ($contentBlock = $this->contentBlockRepositoryInterface->getByIdentifier($identifier)) {
-            return $contentBlock->getAttributeSetId();
+        try {
+            if ($contentBlock = $this->contentBlockRepositoryInterface->getByIdentifier($identifier)) {
+                return $contentBlock->getAttributeSetId();
+            }
+        } catch (NoSuchEntityException $e) {
+            return null;
         }
 
         return null;

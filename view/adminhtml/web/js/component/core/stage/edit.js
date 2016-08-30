@@ -37,8 +37,8 @@ define([
      * @returns {*}
      */
     Edit.prototype.open = function () {
-        var edit = registry.get('bluefoot_edit'),
-            form = registry.get('bluefoot_edit.bluefoot_edit_form');
+        var edit = registry.get('bluefoot_edit.bluefoot_edit'),
+            form = registry.get('bluefoot_edit.bluefoot_edit.bluefoot_edit_form');
 
         // Pass the currently being edited entity to the form
         form.editingEntity = this.parent;
@@ -63,7 +63,7 @@ define([
         }
         form.lastCode = this.entity.code;
 
-        edit.setTitle($.mage.__('Edit ' + this.entity.name));
+        edit.setTitle($.mage.__('Edit') + ' ' + this.entity.name);
 
         form.destroyInserted();
         form.resetForm();
@@ -127,7 +127,6 @@ define([
              * Handle render function
              *
              * @param data
-             * @param loadedFromCache
              */
             form.onRender = function (data) {
                 _originalRender.call(form, data);
@@ -143,6 +142,7 @@ define([
                     interval = setInterval(function () {
                         if (dataProvider = registry.get('contentblock_entity_form.contentblock_form_data_source')) {
                             clearInterval(interval);
+                            console.log(form.editingEntity.data());
                             dataProvider.set('data.entity', form.editingEntity.data());
                         }
                     }, 5);

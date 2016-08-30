@@ -18,67 +18,6 @@
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
 
-<script type="text/javascript">
-    var popup;
-    require(['Magento_Ui/js/modal/modal-component'], function (modal) {
-        var options = {
-            name: 'bluefoot_edit.bluefoot_edit',
-            type: 'slide',
-            modalClass: 'bluefoot-edit form-inline',
-            title: 'Modal',
-            responsive: true,
-            innerScroll: true,
-        };
-
-        popup = modal(options);
-    });
-</script>
-
-<div data-bind="scope: 'bluefoot_edit'">
+<div data-bind="scope: 'bluefoot_edit.bluefoot_edit'">
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
-<script type="text/x-magento-init">
-{
-	"*": {
-		"Magento_Ui/js/core/app": {
-			"components": {
-				"bluefoot_edit": {
-					"type": "container",
-					"name": "bluefoot_edit",
-					"children": {
-						"bluefoot_edit_form": {
-							"type": "container",
-							"name": "bluefoot_edit_form",
-							"dataScope": "",
-							"config": {
-								"component": "Magento_Ui\/js\/form\/components\/insert-form",
-								"label": "",
-								"componentType": "container",
-								"update_url": "http:\/\/bluefoot.dev\/admin\/mui\/index\/render\/key\/3102dc6550a579f92db12e5a2a3fa51c17fe01ceb2948ce4de261a6754268f8a\/",
-								"render_url": "<?php echo $block->getUrl('mui/index/render_handle', ['handle' => 'bluefoot_entity_edit', 'store' => 1, 'buttons' => 1, 'identifier' => 'CONTENT_BLOCK_IDENTIFIER']); ?>",
-								"autoRender": false,
-								"ns": "contentblock_entity_form",
-								"externalProvider": "contentblock_entity_form.contentblock_entity_form",
-								"toolbarContainer": "${ $.parentName }",
-								"formSubmitType": "ajax"
-							}
-						}
-					},
-					"config": {
-						"component": "Magento_Ui\/js\/modal\/modal-component",
-						"options": {
-							"type": "slide",
-							"title": "Edit Something"
-						},
-						"isTemplate": false,
-						"componentType": "modal",
-						"imports": {
-							"state": "!index=create_category:responseStatus"
-						}
-					}
-				}
-			}
-		}
-	}
-}
-</script>
