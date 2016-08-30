@@ -183,7 +183,7 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @returns {*}
          */
         getPluginConfig: function (plugin, key) {
-            var config = this.getConfig();
+            var config = _initConfig;
             if (typeof config.plugins[plugin] !== 'undefined' && typeof config.plugins[plugin]['config'] !== 'undefined' && typeof config.plugins[plugin]['config'][key] !== 'undefined') {
                 return config.plugins[plugin]['config'][key];
             }

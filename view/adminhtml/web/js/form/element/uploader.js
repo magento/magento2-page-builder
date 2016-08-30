@@ -7,20 +7,12 @@ define([
     'Magento_Ui/js/form/element/abstract',
     'underscore',
     'mage/translate',
-    'jquery',
-    'bluefoot/dropzone'
-], function (AbstractField, _, $t, jQuery, DropZone) {
+    'bluefoot/config',
+    'bluefoot/ko-dropzone'
+], function (AbstractField, _, $t, Config) {
     'use strict';
 
     return AbstractField.extend({
-        initialize: function () {
-            this._super();
-
-            jQuery("#"+this.dropzoneId()).dropzone({});
-
-            return this;
-        },
-
         /**
          * Open Magento gallery modal
          */
@@ -31,8 +23,19 @@ define([
             );
         },
 
-        dropzoneId: function() {
-            return this.uid + "_dropzone";
+        uploadUrl: function() {
+            return Config.getPluginConfig("gene_widget_upload", "upload_url");
+        },
+
+        attachmentSuccess: function() {
+            return function(file, response) {
+                if( response.file ) {
+                    this.value(response.file);
+                }
+                else {
+                    alert("Failed");
+                }
+            }.bind(this);
         }
 
     });

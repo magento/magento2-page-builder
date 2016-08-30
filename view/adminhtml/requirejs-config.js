@@ -9,7 +9,7 @@ var config = {
         /* Include our Knockout Sortable wrapper */
         'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
         'bluefoot/ko-resizable': 'Gene_BlueFoot/js/resource/resizable/knockout-resizable',
-        'bluefoot/dropzone': 'Gene_BlueFoot/js/resource/dropzone',
+        'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
 
         /* Core Component Aliases */
         'bluefoot/common': 'Gene_BlueFoot/js/component/core/common',
