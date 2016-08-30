@@ -18,7 +18,7 @@ define([
          */
         openGallery: function() {
             MediabrowserUtility.openDialog(
-                Config.getPluginConfig("gene_widget_upload", "gallery_url") + '/target_element_id/' + this.uid + '/',
+                Config.getPluginConfig("gene_widget_upload", "gallery_url") + 'target_element_id/' + this.uid + '/',
                 null, null, null, {closed: null}
             );
         },
