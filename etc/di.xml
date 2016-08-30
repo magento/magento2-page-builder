@@ -31,4 +31,12 @@
     <type name="Magento\Framework\View\Element\UiComponent\Config\Converter">
         <plugin name="gene_bluefoot_ui_injector" type="Gene\BlueFoot\Plugin\UiPlugin" sortOrder="1" />
     </type>
+
+    <type name="Magento\Eav\Model\Entity\AttributeCache">
+        <arguments>
+            <argument name="unsupportedTypes" xsi:type="array">
+                <item name="gene_bluefoot_entity" xsi:type="string">gene_bluefoot_entity</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
