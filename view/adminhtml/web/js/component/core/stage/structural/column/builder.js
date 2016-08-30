@@ -72,6 +72,7 @@ define([
      * Proxy to the correct parent's add column function
      */
     Builder.prototype.addColumn = function (parents, data) {
+        console.log(data);
         // Nest a column (within a column or on a row)
         if (this.position() == 'top') {
             parents[1].addColumn(data);

@@ -56,17 +56,6 @@ class Init extends \Magento\Backend\Block\Template
         $config = new \Magento\Framework\DataObject();
         $config->addData([
             'encode_string'                    => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
-            'stage_template'                   => '#gene-bluefoot-stage-template',
-            'template_template'                => '#gene-bluefoot-stage-template-controls',
-            'template_selection_grid_template' => '#gene-bluefoot-template-selection-grid',
-            'panel_template'                   => '#gene-bluefoot-stage-panel-template',
-            'row_template'                     => '#gene-bluefoot-row-template',
-            'column_template'                  => '#gene-bluefoot-column-template',
-            'option_template'                  => '#gene-bluefoot-option-template',
-            'entity_template'                  => '#gene-bluefoot-entity',
-            'entity_preview_template'          => '#gene-bluefoot-entity-preview',
-            'configure_template'               => '#gene-bluefoot-stage-configure-template',
-            'alert_template'                   => '#gene-bluefoot-alert',
             'form_key'                         => $this->formKey->getFormKey(),
             'init_button_class'                => '.init-gene-bluefoot',
             'config_url'                       => $this->urlBuilder->getUrl('bluefoot/stage/config'),
@@ -123,8 +112,8 @@ class Init extends \Magento\Backend\Block\Template
                     'displayed' => false
                 ],
                 [
-                    'label' => '5/6 (83.5%)',
-                    'breakpoint' => '0.835',
+                    'label' => '5/6 (82.5%)',
+                    'breakpoint' => '0.825',
                     'className' => 'bluefoot-structure-wrapper-width-five-sixths',
                     'displayed' => false
                 ]

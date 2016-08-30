@@ -9,8 +9,9 @@ define([
     'bluefoot/stage/structural/column',
     'mage/translate',
     'bluefoot/stage/structural/options/column',
+    'bluefoot/config',
     'bluefoot/ko-resizable'
-], function (AbstractStructural, Column, $t, ColumnOption) {
+], function (AbstractStructural, Column, $t, ColumnOption, Config) {
 
     /**
      * Row structural block
@@ -52,11 +53,7 @@ define([
     Row.prototype.addColumn = function (data) {
         var column = new Column(this, this.stage);
         this.addChild(column);
-
-        if (data) {
-            column.widthClasses(data.className);
-        }
-
+        column.updateColumData(data);
         return column;
     };
 
