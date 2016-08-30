@@ -306,7 +306,8 @@
                     ui.placeholder.show();
 
                     // If the next and previous items are columns add a class to the placeholder
-                    if ((ui.placeholder.prev().children().first().hasClass('bluefoot-column') ||
+                    if (ui.item.hasClass('bluefoot-column') &&
+                        (ui.placeholder.prev().children().first().hasClass('bluefoot-column') ||
                         ui.placeholder.next().children().first().hasClass('bluefoot-column'))
                     ) {
                         ui.placeholder.addClass('bluefoot-placeholder-column');
