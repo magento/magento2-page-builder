@@ -168,10 +168,10 @@ define([
 
             // Destroy the original instance of the source
             form.source.destroy();
-        }
 
-        if (closeModal) {
-            this.modal.closeModal();
+            if (closeModal) {
+                this.modal.closeModal();
+            }
         }
 
         return false;
