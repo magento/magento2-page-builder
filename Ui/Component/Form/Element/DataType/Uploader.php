@@ -3,7 +3,8 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class Text
+ * Class Uploader
+ * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
 class Uploader extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {

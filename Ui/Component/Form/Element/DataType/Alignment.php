@@ -3,7 +3,8 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class Text
+ * Class Alignment
+ * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
 class Alignment extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {
