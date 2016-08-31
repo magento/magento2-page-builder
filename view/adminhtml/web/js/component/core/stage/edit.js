@@ -142,7 +142,6 @@ define([
                     interval = setInterval(function () {
                         if (dataProvider = registry.get('contentblock_entity_form.contentblock_form_data_source')) {
                             clearInterval(interval);
-                            console.log(form.editingEntity.data());
                             dataProvider.set('data.entity', form.editingEntity.data());
                         }
                     }, 5);
