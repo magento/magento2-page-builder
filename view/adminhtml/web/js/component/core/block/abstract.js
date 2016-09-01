@@ -10,7 +10,7 @@ define([
     'bluefoot/stage/structural/abstract',
     'bluefoot/stage/edit',
     'mage/translate',
-    'bluefoot/block/preview/abstract'
+    'bluefoot/stage/previews'
 ], function (ko, $, AbstractStructural, Edit, $t, Preview) {
 
     /**
@@ -26,7 +26,10 @@ define([
         AbstractStructural.call(this, parent, stage);
 
         this.config = config;
-        this.preview = new Preview(this, config);
+
+        var previewInstance = Preview.get( this.config );
+        this.preview = new previewInstance(this, config);
+
         this.data.subscribe(function (update) {
             this.preview.update(update);
         }.bind(this));

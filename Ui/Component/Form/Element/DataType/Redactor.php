@@ -3,12 +3,12 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class ChildEntity
+ * Class Redactor
  * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
-class ChildEntity extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
+class Redactor extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {
-    const NAME = 'child_entity';
+    const NAME = 'redactor';
 
     /**
      * Get component name

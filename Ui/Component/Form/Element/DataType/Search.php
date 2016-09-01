@@ -3,7 +3,8 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class Text
+ * Class Search
+ * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
 class Search extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {

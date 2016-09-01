@@ -170,7 +170,11 @@
         }
 
         &.bluefoot-entity {
-            > *:not(.bluefoot-options) {
+            > .redactor-in + .bluefoot-options {
+                display: none;
+            }
+
+            > *:not(.bluefoot-options):not(.bluefoot-no-blur):not(.redactor-toolbar) {
                 -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
                 filter: blur(5px);
             }

@@ -24,6 +24,12 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/child_entity',
         ]);
 
+        $output['components'][0]['redactor'] = $this->buildArray([
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Redactor',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/redactor',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/redactor',
+        ]);
+
         $output['components'][0]['search'] = $this->buildArray([
             'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Search',
             'jsComponent' => 'Gene_BlueFoot/js/form/element/search',
