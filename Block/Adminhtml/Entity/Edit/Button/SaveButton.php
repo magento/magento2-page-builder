@@ -6,16 +6,19 @@
 namespace Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button;
 
 use Magento\Ui\Component\Control\Container;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Element\UiComponent\Context;
 
 /**
- * Class Save
+ * Class SaveButton
  *
  * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Save extends Generic
+class SaveButton extends Generic
 {
+
     /**
      * {@inheritdoc}
      */
@@ -29,7 +32,7 @@ class Save extends Generic
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form',
+                                'targetName' => $this->getTargetName(),
                                 'actionName' => 'save',
                                 'params' => [
                                     false,
@@ -59,7 +62,7 @@ class Save extends Generic
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form',
+                                'targetName' => $this->getTargetName(),
                                 'actionName' => 'save',
                                 'params' => [
                                     false,

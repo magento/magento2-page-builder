@@ -5,13 +5,13 @@ namespace Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button;
 use Magento\Ui\Component\Control\Container;
 
 /**
- * Class Close
+ * Class CloseButton
  *
  * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Close extends Generic
+class CloseButton extends Generic
 {
     /**
      * {@inheritdoc}
@@ -21,13 +21,14 @@ class Close extends Generic
         return [
             'label' => __('Close'),
             'sort_order' => 10,
+            'on_click' => false,
             'data_attribute' => [
                 'mage-init' => [
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_edit.bluefoot_edit_form',
-                                'actionName' => 'closeModal',
+                                'targetName' => $this->getTargetName(),
+                                'actionName' => 'close',
                                 'params' => [
                                     false
                                 ]
