@@ -97,7 +97,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 $output['templates'][$node->getAttribute('name')] = [
                     'name' => $node->getAttribute('name'),
                     'file' => $node->getAttribute('file'),
-                    'preview' => $node->getAttribute('preview')
+                    'preview' => $node->getAttribute('preview'),
+                    'preview_block' =>  $node->getAttribute('preview_block')
                 ];
 
                 if ($node->hasChildNodes()) {

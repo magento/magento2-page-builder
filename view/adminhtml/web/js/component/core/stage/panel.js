@@ -10,9 +10,10 @@ define([
     'jquery',
     'bluefoot/config',
     'bluefoot/stage/panel/group',
+    'bluefoot/stage/previews',
     'bluefoot/modal',
-    'bluefoot/ko-sortable'
-], function (Component, ko, jQuery, Config, Group) {
+    'bluefoot/ko-sortable',
+], function (Component, ko, jQuery, Config, Group, Previews) {
 
     /**
      * Extend the component for BlueFoot panel specific functionality
@@ -39,6 +40,10 @@ define([
 
             // Record the stages DOM elements on the page
             this.stages = false;
+
+            // Load preview templates
+            Previews.load();
+            Previews.load();
         },
 
         /**

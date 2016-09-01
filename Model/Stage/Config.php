@@ -285,6 +285,11 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $contentBlockData['preview_template'] = $previewTemplate;
         }
 
+        // Do we have a preview block for this content block?
+        if ($previewBlock = $this->getPreviewBlock($contentBlock)) {
+            $contentBlockData['preview_block'] = $previewBlock;
+        }
+
         return $contentBlockData;
     }
 
@@ -301,6 +306,25 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $templatePath = $this->configInterface->getTemplate($template);
             if ($templatePath && isset($templatePath['preview'])) {
                 return $templatePath['preview'];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the preview's block for the content block
+     *
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
+     *
+     * @return bool
+     */
+    protected function getPreviewBlock(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    {
+        if ($template = $contentBlock->getItemViewTemplate()) {
+            $templatePath = $this->configInterface->getTemplate($template);
+            if ($templatePath && isset($templatePath['preview_block'])) {
+                return $templatePath['preview_block'];
             }
         }
 
