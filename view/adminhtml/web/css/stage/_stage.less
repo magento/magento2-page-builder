@@ -1,3 +1,5 @@
+@border-size: 2px;
+
 .admin__fieldset > .admin__field > .admin__control-grouped {
     &.bluefoot-active {
         float: left;
@@ -16,6 +18,8 @@
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+
+    font-size: 0;
 }
 
 
@@ -61,7 +65,7 @@
         right: 0;
         bottom: 0;
         z-index: 20;
-        border: 3px dashed darken(@columnColor, 20%);
+        border: @border-size dashed darken(@columnColor, 20%);
         margin: 4px 0 4px;
     }
     .bluefoot-resize-size {
@@ -97,7 +101,7 @@
 
 }
 .bluefoot-structure {
-    border: 3px solid transparent;
+    border: @border-size solid transparent;
     box-sizing: border-box;
     position: relative;
     z-index: 10;
@@ -119,7 +123,8 @@
         position: absolute;
         left: 0;
         right: 0;
-        top: -15px;
+        top: 0;
+        transform: translateY(-100%);
         text-align: center;
         z-index: 50;
 
@@ -154,7 +159,7 @@
     }
 
     &:hover {
-        border: 3px #243743 dashed;
+        border: @border-size #243743 dashed;
         box-sizing: border-box;
         z-index: 15;
 
@@ -164,7 +169,7 @@
         &.bluefoot-column {
             border-color: @columnColor;
 
-            .bluefoot-column-add {
+            >.bluefoot-column-add {
                 display: block;
             }
         }
@@ -179,7 +184,7 @@
                 filter: blur(5px);
             }
             &.bluefoot-entity-preview {
-                border: 3px transparent solid;
+                border: @border-size transparent solid;
             }
         }
 
@@ -208,10 +213,10 @@
         > .bluefoot-options {
             z-index: 100;
             position: absolute;
-            left: -15px;
+            left: 0;
             right: 0;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translate(-100%, -50%);
             width: 29px;
             text-align: center;
 
@@ -298,7 +303,7 @@
     &.bluefoot-entity {
         &.bluefoot-abstract {
             background: @entityColor;
-            border: 3px solid transparent;
+            border: @border-size solid transparent;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -406,7 +411,7 @@
     &.bluefoot-show-borders {
         .bluefoot-canvas {
             .bluefoot-structure:not(.bluefoot-entity) {
-                border: 3px #243743 dashed;
+                border: @border-size #243743 dashed;
                 box-sizing: border-box;
 
                 &.bluefoot-row {
