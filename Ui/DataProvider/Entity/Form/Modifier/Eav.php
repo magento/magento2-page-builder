@@ -671,62 +671,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         $meta['arguments']['data']['config']['dataType'] = 'child_entity';
         $meta['arguments']['data']['config']['formElement'] = 'child_entity';
 
-        $additionalData = json_decode($attribute->getAdditionalData(), true);
-        if (isset($additionalData['entity_allowed_block_type'])) {
-            // Load the child entity block
-            $childEntityBlock = $this->contentBlockRepositoryInterface->getById(
-                $additionalData['entity_allowed_block_type']
-            );
-            $childEntityIdentifier = $childEntityBlock->getIdentifier();
-
-            // Build up a unique modal identifier
-            $formModalIdentifier = 'child_entity_modal_' . $childEntityIdentifier;
-
-            $meta['arguments']['data']['config']['formModal'] = $formModalIdentifier;
-            $this->additionalMeta[$formModalIdentifier] = [
-                'arguments' => [
-                    'data' => [
-                        'config' => [
-                            'isTemplate' => false,
-                            'componentType' => 'modal',
-                            'options' => [
-                                'title' => __('Edit Child Entity'),
-                            ],
-                        ],
-                    ],
-                ],
-                'children' => [
-                    'entity_form' => [
-                        'arguments' => [
-                            'data' => [
-                                'config' => [
-                                    'label' => '',
-                                    'componentType' => 'container',
-                                    'component' => 'Magento_Ui/js/form/components/insert-form',
-                                    'dataScope' => '',
-                                    'update_url' => $this->url->getUrl('mui/index/render'),
-                                    'render_url' => $this->url->getUrl(
-                                        'mui/index/render_handle',
-                                        [
-                                            'handle' => 'bluefoot_entity_edit',
-                                            'store' => $this->locator->getStore()->getId(),
-                                            'buttons' => 1,
-                                            'identifier' => $childEntityIdentifier
-                                        ]
-                                    ),
-                                    'autoRender' => false,
-                                    'ns' => 'contentblock_entity_form',
-                                    'externalProvider' => '${ $.ns }.contentblock_entity_form',
-                                    'toolbarContainer' => '${ $.parentName }',
-                                    'formSubmitType' => 'ajax',
-                                ],
-                            ],
-                        ]
-                    ]
-                ]
-            ];
-        }
-
         return $meta;
     }
 
