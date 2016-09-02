@@ -19,6 +19,10 @@ define([
      * Extend the component for BlueFoot panel specific functionality
      */
     return Component.extend({
+        defaults: {
+            visible: false,
+            groups: []
+        },
 
         /**
          * Initialize the panel component
@@ -34,16 +38,24 @@ define([
             // Once the panel is built, we don't need to build it again
             this.built = false;
 
-            // Observable information for the panel to be built at a later date
-            this.visible = ko.observable(false);
-            this.groups = ko.observableArray([]);
-
             // Record the stages DOM elements on the page
             this.stages = false;
 
             // Load preview templates
             Previews.load();
             Previews.load();
+        },
+
+        /**
+         * Initializes observable properties.
+         *
+         * @returns {Model} Chainable.
+         */
+        initObservable: function () {
+            this._super()
+                .observe('visible groups');
+
+            return this;
         },
 
         /**

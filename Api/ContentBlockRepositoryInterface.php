@@ -34,7 +34,7 @@ interface ContentBlockRepositoryInterface
      *
      * @param $contentBlockId
      *
-     * @return mixed
+     * @return \Gene\BlueFoot\Model\Attribute\ContentBlock
      */
     public function getById($contentBlockId);
 

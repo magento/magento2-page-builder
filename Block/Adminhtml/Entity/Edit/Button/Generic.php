@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -12,6 +9,8 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Class Generic
+ *
+ * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
  */
 class Generic implements ButtonProviderInterface
 {
@@ -71,5 +70,18 @@ class Generic implements ButtonProviderInterface
     public function getButtonData()
     {
         return [];
+    }
+
+    /**
+     * Get the button target
+     *
+     * @return mixed|string
+     */
+    public function getTargetName()
+    {
+        if ($editFormPath = $this->context->getRequestParam('edit_form_path')) {
+            return $editFormPath;
+        }
+        return 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form';
     }
 }

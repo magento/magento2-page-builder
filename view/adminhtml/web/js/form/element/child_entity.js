@@ -4,8 +4,9 @@ define([
     'mageUtils',
     'bluefoot/config',
     'bluefoot/stage/panel/group/block',
-    'Magento_Ui/js/form/element/abstract'
-], function (ko, _, utils, Config, PanelBlock, Abstract) {
+    'Magento_Ui/js/form/element/abstract',
+    'uiRegistry',
+], function (ko, _, utils, Config, PanelBlock, Abstract, registry) {
     'use strict';
 
     return Abstract.extend({
@@ -41,6 +42,18 @@ define([
             this.value(ko.utils.arrayFilter(this.value(), function (filterChild) {
                 return child.id != filterChild.id;
             }));
+        },
+
+        /**
+         * Retrieve the parent form
+         *
+         * @returns {*}
+         */
+        getParentForm: function () {
+            var container = registry.get(this.parentName),
+                fieldset = registry.get(container.parentName);
+
+            return registry.get(fieldset.parentName);
         },
 
         /**

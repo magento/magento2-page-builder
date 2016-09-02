@@ -7,6 +7,9 @@
                             "component": "bluefoot/stage/panel",
                             "template": "Gene_BlueFoot/component/core/stage/panel.html",
                             "config": <?php echo $this->getConfig(); ?>
+                        },
+                        "bluefoot-edit": {
+                            "component": "bluefoot/stage/edit/instance"
                         }
                     }
                 }
@@ -18,6 +21,10 @@
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
 
-<div data-bind="scope: 'bluefoot_edit.bluefoot_edit'">
-    <!-- ko template: getTemplate() --><!-- /ko -->
+<div data-bind="scope: 'bluefoot-edit'">
+    <!-- ko foreach: panels -->
+        <div data-bind="scope: id">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+    <!-- /ko -->
 </div>

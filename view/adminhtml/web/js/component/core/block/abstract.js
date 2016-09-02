@@ -58,8 +58,7 @@ define([
      * Edit a block
      */
     AbstractBlock.prototype.edit = function () {
-        var edit = new Edit(this);
-        return edit.open();
+        return new Edit(this);
     };
 
     /**

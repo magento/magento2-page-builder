@@ -8,8 +8,10 @@ define([
     'ko',
     'jquery',
     'uiRegistry',
-    'bluefoot/config'
-], function (ko, $, registry, Config) {
+    'bluefoot/config',
+    'bluefoot/common',
+    'mage/apply/main'
+], function (ko, $, registry, Config, Common, applyMain) {
 
     /**
      * Edit class constructor
@@ -20,6 +22,9 @@ define([
         this.parent = entity;
         this.entity = entity.config;
         this.modal = false;
+        this.form = false;
+
+        this.initModal();
     }
 
     /**
@@ -32,13 +37,110 @@ define([
     };
 
     /**
+     * Init a new modal
+     */
+    Edit.prototype.initModal = function () {
+        var originalForm = registry.get('bluefoot_edit.bluefoot_edit.bluefoot_edit_form'),
+            componentName = 'bluefoot_edit_' + Common.guid(),
+            fullPath = componentName + '.' + componentName,
+            formPath = fullPath + '.bluefoot_edit_form';
+
+        // Add the new panel to the panel thing
+        registry.get('bluefoot-edit').addPanel(fullPath);
+
+        var config = {
+            "types": {
+                "container": {
+                    "extends": componentName
+                },
+                "dataSource": {
+                    "component": "Magento_Ui\/js\/form\/provider"
+                },
+                "html_content": {
+                    "component": "Magento_Ui\/js\/form\/components\/html",
+                    "extends": componentName
+                }
+            },
+            "components": {}
+        };
+
+        // Add in our components
+        config.components[componentName] = {
+            children: {}
+        };
+        config.components[componentName].children[componentName] = {};
+        config.components[componentName].children[componentName] = {
+            "type": componentName,
+            "name": componentName,
+            "children": {
+                "bluefoot_edit_form": {
+                    "type": "container",
+                    "name": "bluefoot_edit_form",
+                    "config": {
+                        "component": "Magento_Ui\/js\/form\/components\/insert-form",
+                        "update_url": originalForm.update_url,
+                        "render_url": originalForm.render_url,
+                        "autoRender": false,
+                        "dataLinks": {
+                            "imports": false,
+                            "exports": false
+                        },
+                        "realTimeLink": false,
+                        "ns": componentName,
+                        "toolbarContainer": "${ $.parentName }",
+                        "externalProvider": "${ $.ns }." + componentName,
+                        "formSubmitType": "ajax"
+                    }
+                }
+            },
+            "config": {
+                "component": "Magento_Ui\/js\/modal\/modal-component",
+                "options": {
+                    "type": "slide"
+                }
+            }
+        };
+
+        // Add in our data source
+        config.components[componentName].children[componentName + '_data_source'] = {
+            "type": "dataSource",
+            "name": componentName + '_data_source',
+            "dataScope": componentName,
+            "config": {
+                "params": {
+                    "namespace": componentName
+                }
+            }
+        };
+
+        // Add our new sidebar UI component
+        applyMain.applyFor.call(null, false, config, 'Magento_Ui/js/core/app');
+
+        // Open the modal once it's been added to the page
+        var edit,
+            form,
+            interval = setInterval(function () {
+                edit = registry.get(fullPath);
+                form = registry.get(formPath);
+                if (edit !== undefined && form !== undefined) {
+                    clearInterval(interval);
+                    this.modal = edit;
+                    this.form = form;
+                    this.open(edit, form, formPath);
+                }
+            }.bind(this), 5);
+    };
+
+    /**
      * Open an edit panel
+     *
+     * @param edit
+     * @param form
+     * @param formPath
      *
      * @returns {*}
      */
-    Edit.prototype.open = function () {
-        var edit = registry.get('bluefoot_edit.bluefoot_edit'),
-            form = registry.get('bluefoot_edit.bluefoot_edit.bluefoot_edit_form');
+    Edit.prototype.open = function (edit, form, formPath) {
 
         // Pass the currently being edited entity to the form
         form.editingEntity = this.parent;
@@ -46,11 +148,17 @@ define([
         // Override the onRender functionality
         this.handleOnRender(form);
 
+        form.edit = edit;
+
         // Pass the save method over
         form.save = this.save.bind(this);
+
         form.close = function () {
-            edit.closeModal();
-        };
+            this.modal.closeModal();
+
+            //this.modal.destroyChildren();
+            //this.modal.destroy();
+        }.bind(this);
 
         // Record the original URL
         if (!form.renderSettings.originalUrl) {
@@ -59,9 +167,12 @@ define([
 
         // Only re-render the form completely if the code is different
         if (form.lastCode != this.entity.code) {
-            form.renderSettings.url = form.renderSettings.originalUrl.replace('CONTENT_BLOCK_IDENTIFIER', this.entity.code);
+            form.renderSettings.url = form.renderSettings.originalUrl
+                .replace('CONTENT_BLOCK_IDENTIFIER', this.entity.code)
+                .replace('EDIT_FORM_PATH_PLACERHOLDER', formPath);
         }
         form.lastCode = this.entity.code;
+        form.formPath = formPath;
 
         edit.setTitle($.mage.__('Edit') + ' ' + this.entity.name);
 
@@ -69,9 +180,7 @@ define([
         form.resetForm();
         form.render();
 
-        this.modal = edit;
-
-        return edit.openModal();
+        edit.openModal();
     };
 
     /**
@@ -110,14 +219,16 @@ define([
                     params = _.extend({}, self.params, params || {});
 
                     // Check to see if this form has already been loaded
-                    if (loadedForm = Config.loadForm(form.editingEntity.config.code)) {
-                        self.onRender(loadedForm);
-                    } else {
+                    //if (loadedForm = Config.loadForm(form.editingEntity.config.code)) {
+                    //    // Replace the form path place holder with the new form path
+                    //    loadedForm = loadedForm.split('EDIT_FORM_PATH_PLACERHOLDER').join(form.formPath);
+                    //    self.onRender(loadedForm);
+                    //} else {
                         request = self.requestData(params, self.renderSettings);
                         request
                             .done(self.onRender)
                             .fail(self.onError);
-                    }
+                    //}
                 });
 
                 return this;
@@ -132,15 +243,17 @@ define([
                 _originalRender.call(form, data);
 
                 // Store into the config if the form isn't already present
-                if (!Config.loadForm(form.editingEntity.config.code)) {
-                    Config.addForm(form.editingEntity.config.code, data);
-                }
+                //if (!Config.loadForm(form.editingEntity.config.code)) {
+                //    // Remove the form path from the data
+                //    data = data.split(form.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
+                //    Config.addForm(form.editingEntity.config.code, data);
+                //}
 
                 // The form.externalSource doesn't appear to be available on initial render, so start a loop
                 // waiting for its presence
                 var dataProvider,
                     interval = setInterval(function () {
-                        if (dataProvider = registry.get('contentblock_entity_form.contentblock_form_data_source')) {
+                        if (dataProvider = registry.get(form.edit.ns + '_form.contentblock_form_data_source')) {
                             clearInterval(interval);
                             dataProvider.set('data.entity', form.editingEntity.data());
                         }
@@ -158,7 +271,8 @@ define([
      * @param closeModal
      */
     Edit.prototype.save = function (redirect, closeModal) {
-        var form = this.getForm();
+        var form = registry.get(this.form.edit.ns + '_form.' + this.form.edit.ns + '_form');
+        console.log(form);
         form.validate();
 
         if (!form.additionalInvalid && !form.source.get('params.invalid')) {
@@ -169,7 +283,7 @@ define([
             form.source.destroy();
 
             if (closeModal) {
-                this.modal.closeModal();
+                this.form.close();
             }
         }
 

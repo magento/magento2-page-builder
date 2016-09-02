@@ -165,6 +165,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     protected $url;
 
     /**
+     * @var array
+     */
+    protected $additionalMeta = [];
+
+    /**
      * Eav constructor.
      *
      * @param \Magento\Catalog\Model\Locator\LocatorInterface                           $locator
@@ -260,6 +265,28 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
                 $sortOrder++;
             }
+        }
+
+        $meta = $this->addAdditionalMeta($meta);
+
+        return $meta;
+    }
+
+    /**
+     * Add any additional meta from the additionalMeta property
+     *
+     * @param array $meta
+     *
+     * @return array
+     */
+    protected function addAdditionalMeta(array $meta)
+    {
+        foreach ($this->additionalMeta as $key => $value) {
+            $meta = $this->arrayManager->set(
+                $key,
+                $meta,
+                $value
+            );
         }
 
         return $meta;
