@@ -288,6 +288,15 @@ class Save extends \Magento\Framework\Model\AbstractModel
         if (isset($element['formData']) && !empty($element['formData'])) {
             $contentBlock = $this->contentBlockRepository->getByIdentifier($element['contentType']);
             if ($contentBlock) {
+                // Clear the entity ID if this content is on 'content staging'
+                if ($this->request->getControllerModule() == "Magento_CmsStaging" &&
+                    $this->request->getActionName() == 'update_save') {
+                    $stagingData = $this->request->getParam('staging');
+                    if (empty($stagingData['update_id'])) {
+                        $element['formData']['entity_id'] = null;
+                    }
+                }
+
                 // Format the form data
                 $formData = $element['formData'];
                 $formData['attribute_set_id'] = $contentBlock->getId();
