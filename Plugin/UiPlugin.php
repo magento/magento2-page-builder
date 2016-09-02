@@ -48,6 +48,12 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/uploader',
         ]);
 
+        $output['components'][0]['magentowidget'] = $this->buildArray([
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Magentowidget',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/magentowidget',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/magentowidget',
+        ]);
+
         return $output;
     }
 

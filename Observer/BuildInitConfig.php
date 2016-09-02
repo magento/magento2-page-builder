@@ -58,6 +58,10 @@ class BuildInitConfig implements ObserverInterface
         $pluginData['gene_widget_upload']['config']['gallery_url']
             = $this->urlBuilder->getUrl('cms/wysiwyg_images');
 
+        // Send the url for the widget selector
+        $pluginData['gene_widget_magentowidget']['config']['widget_url']
+            = $this->urlBuilder->getUrl('adminhtml/widget/index');
+
         // Send the media upload URL for displaying images
         $uploadUrl = $this->configHelper->getUploadUrl(true);
         $pluginData['gene_widget_upload']['config']['media_url'] = $uploadUrl;
