@@ -3,6 +3,7 @@
  * Allows users to edit elements within the stage
  *
  * @author Dave Macaulay <dave@gene.co.uk>
+ * @todo create custom modal component to handle the majority of the functionality currently overriden in here
  */
 define([
     'ko',
@@ -124,6 +125,7 @@ define([
                 form = registry.get(formPath);
                 if (edit !== undefined && form !== undefined) {
                     clearInterval(interval);
+                    form.generatedName = componentName;
                     this.modal = edit;
                     this.form = form;
                     this.open(edit, form, formPath);
@@ -152,13 +154,7 @@ define([
 
         // Pass the save method over
         form.save = this.save.bind(this);
-
-        form.close = function () {
-            this.modal.closeModal();
-
-            //this.modal.destroyChildren();
-            //this.modal.destroy();
-        }.bind(this);
+        form.close = this.close.bind(this);
 
         // Record the original URL
         if (!form.renderSettings.originalUrl) {
@@ -173,8 +169,6 @@ define([
         }
         form.lastCode = this.entity.code;
         form.formPath = formPath;
-
-        edit.setTitle($.mage.__('Edit') + ' ' + this.entity.name);
 
         form.destroyInserted();
         form.resetForm();
@@ -219,10 +213,12 @@ define([
                     params = _.extend({}, self.params, params || {});
 
                     // Check to see if this form has already been loaded
+                    // @todo move into overriden form, use local storage
                     //if (loadedForm = Config.loadForm(form.editingEntity.config.code)) {
                     //    // Replace the form path place holder with the new form path
                     //    loadedForm = loadedForm.split('EDIT_FORM_PATH_PLACERHOLDER').join(form.formPath);
-                    //    self.onRender(loadedForm);
+                    //    loadedForm = loadedForm.split('GENERATED_NAME_PLACEHOLDER').join(form.generatedName);
+                    //    self.onRender.call(self, loadedForm);
                     //} else {
                         request = self.requestData(params, self.renderSettings);
                         request
@@ -240,14 +236,17 @@ define([
              * @param data
              */
             form.onRender = function (data) {
-                _originalRender.call(form, data);
 
                 // Store into the config if the form isn't already present
-                //if (!Config.loadForm(form.editingEntity.config.code)) {
-                //    // Remove the form path from the data
-                //    data = data.split(form.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
-                //    Config.addForm(form.editingEntity.config.code, data);
-                //}
+                // @todo move into overriden form, use local storage
+                if (!Config.loadForm(form.editingEntity.config.code)) {
+                    // Remove the form path from the data
+                    var storeData = data.split(form.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
+                    storeData = storeData.split(form.generatedName).join('GENERATED_NAME_PLACEHOLDER');
+                    Config.addForm(form.editingEntity.config.code, storeData);
+                }
+
+                _originalRender.call(form, data);
 
                 // The form.externalSource doesn't appear to be available on initial render, so start a loop
                 // waiting for its presence
@@ -256,12 +255,30 @@ define([
                         if (dataProvider = registry.get(form.edit.ns + '_form.contentblock_form_data_source')) {
                             clearInterval(interval);
                             dataProvider.set('data.entity', form.editingEntity.data());
+                            form.edit.setTitle($.mage.__('Edit') + ' ' + form.editingEntity.config.name);
                         }
                     }, 5);
+
+                // Destroy the adapter on the newly created sub form to not mess with other forms
+                var internalForm,
+                    insideInterval = setInterval(function () {
+                    if (internalForm = registry.get(form.edit.ns + '_form.' + form.edit.ns + '_form')) {
+                        clearInterval(insideInterval);
+                        internalForm.destroyAdapter();
+                    }
+                }, 5);
             };
 
             form.onRenderOverridden = true;
         }
+    };
+
+    /**
+     * Close a modal
+     */
+    Edit.prototype.close = function () {
+        var form = registry.get(this.form.edit.ns + '_form.' + this.form.edit.ns + '_form');
+        this.modal.closeModal();
     };
 
     /**
@@ -272,7 +289,6 @@ define([
      */
     Edit.prototype.save = function (redirect, closeModal) {
         var form = registry.get(this.form.edit.ns + '_form.' + this.form.edit.ns + '_form');
-        console.log(form);
         form.validate();
 
         if (!form.additionalInvalid && !form.source.get('params.invalid')) {
@@ -280,6 +296,7 @@ define([
             this.parent.data(entityData);
 
             // Destroy the original instance of the source
+            form.destroyAdapter();
             form.source.destroy();
 
             if (closeModal) {
