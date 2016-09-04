@@ -179,7 +179,7 @@
                 display: none;
             }
 
-            > *:not(.bluefoot-options):not(.bluefoot-no-blur):not(.redactor-toolbar):not(img) {
+            > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
                 -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
                 filter: blur(5px);
             }
@@ -304,13 +304,14 @@
     }
     &.bluefoot-entity {
         margin: 4px 0 4px 4px;
+        font-size: 0;
 
         &.bluefoot-abstract {
             background: @entityColor;
             border: @border-size solid transparent;
             color: white;
             text-align: center;
-            
+
             padding: 20px 8px 20px 0;
 
             i {

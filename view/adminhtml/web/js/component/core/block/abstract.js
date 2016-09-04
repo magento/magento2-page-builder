@@ -141,8 +141,6 @@ define([
             }.bind(this))
         }
 
-        console.log(json);
-
         return json;
     };
 

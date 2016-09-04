@@ -35,7 +35,6 @@ define([
      * Update our fellow input
      */
     Save.prototype.update = function () {
-        console.log(this.stageToJSON());
         this.stage.parent.value(
             Config.getInitConfig('encode_string') + this.stageToJSON()
         );
