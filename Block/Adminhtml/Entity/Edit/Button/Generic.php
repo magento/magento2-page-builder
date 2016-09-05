@@ -14,6 +14,8 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
  */
 class Generic implements ButtonProviderInterface
 {
+    const BLUEFOOT_TARGET_NAME_PLACEHOLDER = 'BLUEFOOT_TARGET_PLACEHOLDER';
+
     /**
      * Url Builder
      *
@@ -79,9 +81,6 @@ class Generic implements ButtonProviderInterface
      */
     public function getTargetName()
     {
-        if ($editFormPath = $this->context->getRequestParam('edit_form_path')) {
-            return $editFormPath;
-        }
-        return 'bluefoot_edit.bluefoot_edit.bluefoot_edit_form';
+        return self::BLUEFOOT_TARGET_NAME_PLACEHOLDER;
     }
 }
