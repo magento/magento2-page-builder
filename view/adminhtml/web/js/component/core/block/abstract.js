@@ -32,6 +32,7 @@ define([
         this.preview = new previewInstance(this, config);
 
         this.childEntityKeys = [];
+        this.populateChildEntityKeys(config.fields);
 
         this.data.subscribe(function (update) {
             this.preview.update(update);
@@ -113,9 +114,25 @@ define([
 
         // Add the child into the children data
         this.data()[key].push(child);
+
+        // Ensure the child entitys key is added into our array. This is covered by populateChildEntityKeys but this
+        // can catch extra children that aren't part of fields
         this.childEntityKeys = _.union(this.childEntityKeys, [key]);
 
         return false;
+    };
+
+    /**
+     * Populate the child entity keys on construct
+     *
+     * @param fields
+     */
+    AbstractBlock.prototype.populateChildEntityKeys = function (fields) {
+        _.forEach(fields, function (field) {
+            if (field.widget == 'child_block') {
+                this.childEntityKeys = _.union(this.childEntityKeys, [field.code]);
+            }
+        }.bind(this));
     };
 
     /**
