@@ -3,23 +3,23 @@
 namespace Gene\BlueFoot\Model\Cache;
 
 /**
- * Class Config
+ * Class Forms
  *
  * @package Gene\BlueFoot\Model\Cache
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Config extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
+class Forms extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
 {
     /**
      * Cache type code unique among all cache types
      */
-    const TYPE_IDENTIFIER = 'bluefoot_config_cache';
+    const TYPE_IDENTIFIER = 'bluefoot_forms_cache';
 
     /**
      * Cache tag used to distinguish the cache type from all other cache
      */
-    const CACHE_TAG = 'BLUEFOOT_CONFIG';
+    const CACHE_TAG = 'BLUEFOOT_FORMS';
 
     /**
      * @param \Magento\Framework\App\Cache\Type\FrontendPool $cacheFrontendPool

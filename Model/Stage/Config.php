@@ -154,13 +154,16 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 'globalFields'      => $this->getGlobalFields()
             ];
 
-            // Store the configuration in the cache for 7 days
-            $this->cacheManager->save(
-                json_encode($config),
-                self::BLUEFOOT_CONFIG_CACHE_KEY,
-                [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
-                (60 * 60 * 24 * 7) // Store in cache for 7 days
-            );
+            // If the cache is enabled, store the config in the cache
+            if ($this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER)) {
+                // Store the configuration in the cache for 7 days
+                $this->cacheManager->save(
+                    json_encode($config),
+                    self::BLUEFOOT_CONFIG_CACHE_KEY,
+                    [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
+                    (60 * 60 * 24 * 7) // Store in cache for 7 days
+                );
+            }
 
             return $config;
         }
