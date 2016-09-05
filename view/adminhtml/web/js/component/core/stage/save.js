@@ -36,8 +36,15 @@ define([
      */
     Save.prototype.update = function () {
         this.stage.parent.value(
-            Config.getInitConfig('encode_string') + JSON.stringify(this.stage.toJSON())
+            Config.getInitConfig('encode_string') + this.stageToJSON()
         );
+    };
+
+    /**
+     * Return the stage as a JSON string
+     */
+    Save.prototype.stageToJSON = function () {
+        return JSON.stringify(this.stage.toJSON());
     };
 
     /**

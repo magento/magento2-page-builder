@@ -21,6 +21,7 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            elementSelector: 'textarea.textarea',
             stageActive: false,
             stage: {},
             stageId: Common.guid(),

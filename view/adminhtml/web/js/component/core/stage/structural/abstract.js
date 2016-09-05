@@ -284,7 +284,7 @@ define([
         }
 
         var json = {
-            formData: this.data()
+            formData: _.extend({}, this.data()) // Clone the data into the JSON
         };
 
         if (children.length > 0) {

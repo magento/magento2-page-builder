@@ -69,6 +69,7 @@ define([
                     // Create a new block with no stage associated
                     var block = new BlockInstance(this, false, config);
                     this.value.push(block);
+                    return block.edit();
                 }.bind(this));
             } else {
                 console.warn('Unable to load child block to add new instance');

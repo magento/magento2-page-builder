@@ -1,7 +1,7 @@
-<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-heading">
-    <h2 data-bind="visible: preview.heading_type() == 'h2', text: preview.title"></h2>
-    <h3 data-bind="visible: preview.heading_type() == 'h3', text: preview.title"></h3>
-    <h4 data-bind="visible: preview.heading_type() == 'h4', text: preview.title"></h4>
-    <h5 data-bind="visible: preview.heading_type() == 'h5', text: preview.title"></h5>
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-heading bluefoot-no-blur">
+    <h2 data-bind="visible: preview.heading_type() == 'h2', html: preview.title, redactor: {clickToEdit: true, bind: data, bindKey: 'title'}"></h2>
+    <h3 data-bind="visible: preview.heading_type() == 'h3', html: preview.title, redactor: {clickToEdit: true, bind: data, bindKey: 'title'}"></h3>
+    <h4 data-bind="visible: preview.heading_type() == 'h4', html: preview.title, redactor: {clickToEdit: true, bind: data, bindKey: 'title'}"></h4>
+    <h5 data-bind="visible: preview.heading_type() == 'h5', html: preview.title, redactor: {clickToEdit: true, bind: data, bindKey: 'title'}"></h5>
     <!-- ko template: options.getTemplate() --><!-- /ko -->
 </div>

@@ -258,7 +258,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   user-select: none;
 }
 .bluefoot-structure .element-children {
-  min-height: 100px;
+  min-height: 80px;
   font-size: 0;
 }
 .bluefoot-structure .bluefoot-options {
@@ -316,7 +316,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure:hover.bluefoot-entity > .redactor-in + .bluefoot-options {
   display: none;
 }
-.bluefoot-structure:hover.bluefoot-entity > *:not(.bluefoot-options):not(.bluefoot-no-blur):not(.redactor-toolbar) {
+.bluefoot-structure:hover.bluefoot-entity > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
   -webkit-filter: blur(5px);
   /* Chrome, Safari, Opera */
   filter: blur(5px);
@@ -338,7 +338,8 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure.bluefoot-row {
   display: inline-block;
   width: 100%;
-  padding: 0 4px;
+  padding: 0 8px 0 0;
+  margin: 0 0 4px 0;
   position: relative;
 }
 .bluefoot-structure.bluefoot-row > .bluefoot-options {
@@ -385,7 +386,8 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure.bluefoot-column {
   display: inline-block;
   width: 100%;
-  margin: 4px 0 4px 0;
+  margin: 4px 0 4px 4px;
+  padding: 0 8px 0 0;
 }
 .bluefoot-structure.bluefoot-column ul.bluefoot-options-links {
   background: #28b78c;
@@ -426,6 +428,17 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   border-bottom-right-radius: 3px;
 }
 .bluefoot-structure.bluefoot-entity {
+  margin: 4px 0 4px 4px;
+  font-size: 0;
+  -user-select: all;
+  -webkit-user-select: all;
+  /* Chrome/Safari */
+  -webkit-user-select: text;
+  /* Safari only */
+  -moz-user-select: all;
+  /* Firefox */
+  -ms-user-select: all;
+  /* IE10+ */
   display: inline-block;
   width: 100%;
 }
@@ -434,7 +447,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   border: 2px solid transparent;
   color: white;
   text-align: center;
-  padding: 20px 0;
+  padding: 20px 8px 20px 0;
 }
 .bluefoot-structure.bluefoot-entity.bluefoot-abstract i {
   font-size: 24px;
@@ -852,20 +865,29 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   line-height: 20px;
   font-size: 14px;
 }
+.admin__field-control .redactor-toolbar {
+  box-shadow: none;
+  background: #f8f8f8;
+  border: 1px solid #e3e3e3;
+}
+.admin__field-control .redactor-toolbar li a:hover {
+  background: #414141;
+}
+.admin__field-control .redactor-in {
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #e3e3e3;
+  border-top: none;
+}
 /* Import Widget {less} */
 /* Widget {less} Imports */
 .bluefoot-upload-field {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   width: 100%;
   margin: 6px 0 18px 0;
-  border: 2px dashed #706360;
+  background: #f8f8f8;
+  border: 1px solid #e3e3e3;
   text-align: center;
-  padding: 20px 0;
-  color: #1d1a19;
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
+  padding: 30px 0;
   cursor: pointer;
   -webkit-transition: 200ms ease-in-out;
   -moz-transition: 200ms ease-in-out;
@@ -888,7 +910,8 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   padding: 0;
 }
 .bluefoot-upload-field.dz-drag-hover {
-  background: #ffffff;
+  background: #dfdfdf;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .bluefoot-upload-field:hover i {
   transform: scale(1.2);

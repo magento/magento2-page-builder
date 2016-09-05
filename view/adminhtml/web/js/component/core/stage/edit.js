@@ -277,7 +277,6 @@ define([
      * Close a modal
      */
     Edit.prototype.close = function () {
-        var form = registry.get(this.form.edit.ns + '_form.' + this.form.edit.ns + '_form');
         this.modal.closeModal();
     };
 

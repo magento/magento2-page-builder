@@ -5,13 +5,14 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'underscore',
     'ko',
     'jquery',
     'bluefoot/stage/structural/abstract',
     'bluefoot/stage/edit',
     'mage/translate',
     'bluefoot/stage/previews'
-], function (ko, $, AbstractStructural, Edit, $t, Preview) {
+], function (_, ko, $, AbstractStructural, Edit, $t, Preview) {
 
     /**
      * Class for entity blocks being included on the page
@@ -27,8 +28,11 @@ define([
 
         this.config = config;
 
-        var previewInstance = Preview.get( this.config );
+        var previewInstance = Preview.get(this.config);
         this.preview = new previewInstance(this, config);
+
+        this.childEntityKeys = [];
+        this.populateChildEntityKeys(config.fields);
 
         this.data.subscribe(function (update) {
             this.preview.update(update);
@@ -91,17 +95,6 @@ define([
     };
 
     /**
-     * To JSON
-     *
-     * @returns {{children, formData}|{children: Array}}
-     */
-    AbstractBlock.prototype.toJSON = function () {
-        var json = $super.toJSON.apply(this, arguments);
-        json.contentType = this.config.code;
-        return json;
-    };
-
-    /**
      * Add a child to the current element
      *
      * @param child
@@ -121,9 +114,51 @@ define([
 
         // Add the child into the children data
         this.data()[key].push(child);
-        this.children.push(child);
+
+        // Ensure the child entitys key is added into our array. This is covered by populateChildEntityKeys but this
+        // can catch extra children that aren't part of fields
+        this.childEntityKeys = _.union(this.childEntityKeys, [key]);
 
         return false;
+    };
+
+    /**
+     * Populate the child entity keys on construct
+     *
+     * @param fields
+     */
+    AbstractBlock.prototype.populateChildEntityKeys = function (fields) {
+        _.forEach(fields, function (field) {
+            if (field.widget == 'child_block') {
+                this.childEntityKeys = _.union(this.childEntityKeys, [field.code]);
+            }
+        }.bind(this));
+    };
+
+    /**
+     * To JSON
+     *
+     * @returns {{children, formData}|{children: Array}}
+     */
+    AbstractBlock.prototype.toJSON = function () {
+        var json = $super.toJSON.apply(this, arguments);
+        json.contentType = this.config.code;
+
+        // Reset children back to an object
+        json.children = {};
+        if (this.childEntityKeys.length > 0) {
+            _.forEach(this.childEntityKeys, function (key) {
+                json.children[key] = [];
+                if (typeof this.data()[key] === 'object' && Array.isArray(this.data()[key])) {
+                    _.forEach(this.data()[key], function (child) {
+                        json.children[key].push(child.toJSON());
+                    });
+                }
+                delete json.formData[key];
+            }.bind(this))
+        }
+
+        return json;
     };
 
     return AbstractBlock;
