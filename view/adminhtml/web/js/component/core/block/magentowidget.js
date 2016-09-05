@@ -6,7 +6,7 @@ define([
     'Gene_BlueFoot/js/form/element/magentowidget'
 ], function (jQuery, AbstractBlock, Config, Common) {
 
-    AbstractBlock.prototype.edit = function() {
+    AbstractBlock.edit = function() {
         var id = Common.guid(),
             dataKey = '';
 
