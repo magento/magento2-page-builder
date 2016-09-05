@@ -29,21 +29,28 @@
          * @param context
          */
         init: function (element, valueAccessor, allBindingsAccessor, data, context) {
-            var value = ko.unwrap(valueAccessor());
+            var value = ko.unwrap(valueAccessor()),
+                originalSuccess = value.success,
+                options = {
+                    uploadMultiple: false,
+                    createImageThumbnails: false,
+                    addRemoveLinks: false,
+                    dictDefaultMessage: $t("Drop files here, or click to upload"),
+                    init: function () {
+                        // Add the current formKey into the request
+                        this.on('sending', function (file, xhr, formData) {
+                            formData.append('form_key', FORM_KEY);
+                        });
+                    },
+                    success: function (file, response) {
+                        return originalSuccess.call(this, file, response, value.bindKey);
+                    }
+                };
 
-            var options = {
-                uploadMultiple: false,
-                createImageThumbnails: false,
-                addRemoveLinks: false,
-                dictDefaultMessage: $t("Drop files here, or click to upload"),
-                init: function () {
-                    // Add the current formKey into the request
-                    this.on('sending', function (file, xhr, formData) {
-                        formData.append('form_key', FORM_KEY);
-                    });
-                }
-            };
+            // Delete the success value
+            delete value.success;
 
+            // Extend the options with the values provided
             jQuery.extend(options, value);
 
             jQuery(element).addClass('dropzone');
