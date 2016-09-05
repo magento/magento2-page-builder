@@ -632,13 +632,18 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     {
         switch ($attribute->getWidget()) {
             case 'search':
-                $meta['arguments']['data']['config']['dataType'] = $attribute->getWidget();
-                $meta['arguments']['data']['config']['formElement'] = $attribute->getWidget();
+                $meta['arguments']['data']['config']['dataType'] ='search';
+                $meta['arguments']['data']['config']['formElement'] ='search';
 
                 $meta['arguments']['data']['config']['ajaxEndpoint'] = $this->url->getUrl(
                     'bluefoot/stage_widget/search',
                     ['context' => 'category']
                 );
+                break;
+
+            case 'magentowidget':
+                $meta['arguments']['data']['config']['dataType'] = 'magentowidget';
+                $meta['arguments']['data']['config']['formElement'] ='magentowidget';
                 break;
         }
 

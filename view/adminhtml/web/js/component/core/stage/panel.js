@@ -43,7 +43,6 @@ define([
 
             // Load preview templates
             Previews.load();
-            Previews.load();
         },
 
         /**

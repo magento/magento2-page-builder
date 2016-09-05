@@ -30,6 +30,10 @@ define([
      * @returns {string}
      */
     Block.prototype.getBlockInstance = function () {
+        if( typeof this.config.js_block == 'string' ) {
+            return this.config.js_block;
+        }
+
         return 'bluefoot/block/abstract';
     };
 
