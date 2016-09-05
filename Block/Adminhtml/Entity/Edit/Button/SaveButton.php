@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button;
 
 use Magento\Ui\Component\Control\Container;

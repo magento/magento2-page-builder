@@ -11,6 +11,8 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
  * Class Generic
  *
  * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Generic implements ButtonProviderInterface
 {

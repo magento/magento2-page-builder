@@ -2,8 +2,6 @@
 
 namespace Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button;
 
-use Magento\Ui\Component\Control\Container;
-
 /**
  * Class CloseButton
  *
