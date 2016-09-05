@@ -290,6 +290,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $contentBlockData['preview_block'] = $previewBlock;
         }
 
+        if ($jsBlock = $this->getJsBlock($contentBlock)) {
+            $contentBlockData['js_block'] = $jsBlock;
+        }
+
         return $contentBlockData;
     }
 
@@ -325,6 +329,24 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $templatePath = $this->configInterface->getTemplate($template);
             if ($templatePath && isset($templatePath['preview_block'])) {
                 return $templatePath['preview_block'];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     *
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
+     * @return bool
+     */
+    protected function getJsBlock(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    {
+        if ($template = $contentBlock->getItemViewTemplate()) {
+            $templatePath = $this->configInterface->getTemplate($template);
+            if ($templatePath && isset($templatePath['js_block'])) {
+                return $templatePath['js_block'];
             }
         }
 

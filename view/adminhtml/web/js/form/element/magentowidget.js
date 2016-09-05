@@ -83,11 +83,8 @@ define([
             }
         },
 
-        onValueChange: function(text)
-        {
-            // Only get the last widget data
+        onValueChange: function(text) {
             this.value(text.substring(text.lastIndexOf('{{widget '), text.length));
-            //this.value.valueHasMutated();
         },
 
         openWidgets: function() {
