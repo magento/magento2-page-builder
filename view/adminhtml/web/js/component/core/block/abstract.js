@@ -75,6 +75,7 @@ define([
         if (this.preview.getPreviewTemplate()) {
             return this.preview.getPreviewTemplate();
         }
+
         return 'Gene_BlueFoot/component/core/block/abstract.html'
     };
 

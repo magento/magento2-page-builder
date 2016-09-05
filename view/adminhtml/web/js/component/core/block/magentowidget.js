@@ -33,7 +33,7 @@ define([
 
         // Create dummy field on the page for the widget modal to populate.
         // Proxy through change() to knockout update
-        jQuery('body').append('<input type="text" id="' + id +'" />');
+        jQuery('body').append('<input type="text" id="' + id +'" style="display: none;" />');
         jQuery("#"+id).change(function() {
             updateData(this.value);
             jQuery(this).remove();
