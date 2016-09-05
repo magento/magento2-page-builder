@@ -47,12 +47,47 @@ define([
             this.loadOptions();
         }
     };
+    WysiwygWidget.Widget.prototype.initialize = function(formEl, widgetEl, widgetOptionsEl, optionsSourceUrl, widgetTargetId) {
+        $(formEl).insert({bottom: widgetTools.getDivHtml(widgetOptionsEl)});
+        jQuery('#' + formEl).mage('validation', {
+            ignore: ".skip-submit",
+            errorClass: 'mage-error'
+        });
+        this.formEl = formEl;
+        this.widgetEl = $(widgetEl);
+        this.widgetOptionsEl = $(widgetOptionsEl);
+        this.optionsUrl = optionsSourceUrl;
+        this.optionValues = new Hash({});
+        this.widgetTargetId = widgetTargetId;
+
+        // Bluefoot edit
+        if (typeof WysiwygWidget.Widget.prototype.bluefoot != 'function' ) {
+            if (typeof(tinyMCE) != "undefined" && tinyMCE.activeEditor) {
+                this.bMark = tinyMCE.activeEditor.selection.getBookmark();
+            }
+        }
+        else {
+            this.bMark = null;
+        }
+
+        Event.observe(this.widgetEl, "change", this.loadOptions.bind(this));
+
+        this.initOptionValues();
+    };
+
 
     return AbstractField.extend({
         defaults: {
             listens: {
                 value: 'onValueChange'
             }
+        },
+
+        onValueChange: function(text)
+        {
+            // Only get the last widget data
+            this.value(text.substring(text.lastIndexOf('{{widget '), text.length));
+            //this.value.valueHasMutated();
         },
 
         openWidgets: function() {
