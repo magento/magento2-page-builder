@@ -6,7 +6,14 @@ define([
     'Gene_BlueFoot/js/form/element/magentowidget'
 ], function (jQuery, AbstractBlock, Config, Common) {
 
-    AbstractBlock.edit = function() {
+    function Widget(parent, stage, config, formData) {
+        AbstractBlock.call(this, parent, stage, config, formData);
+    }
+
+    Widget.prototype = Object.create(AbstractBlock.prototype);
+    var $super = AbstractBlock.prototype;
+
+    Widget.prototype.edit = function() {
         var id = Common.guid(),
             dataKey = '';
 
@@ -19,7 +26,7 @@ define([
         }
 
         if (!dataKey) {
-            return false;
+            return $super.edit();
         }
 
         // Call Knockout binding
@@ -46,5 +53,5 @@ define([
         );
     };
 
-    return AbstractBlock;
+    return Widget;
 });

@@ -34,7 +34,7 @@ define([
             }
         }
 
-        if (widgetCode.indexOf('{{widget') != -1) {
+        if (widgetCode && widgetCode.indexOf('{{widget') != -1) {
             this.optionValues = new Hash({});
             widgetCode.gsub(/([a-z0-9\_]+)\s*\=\s*[\"]{1}([^\"]+)[\"]{1}/i, function(match){
                 if (match[1] == 'type') {

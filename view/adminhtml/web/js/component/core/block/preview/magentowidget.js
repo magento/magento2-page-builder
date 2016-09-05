@@ -9,7 +9,6 @@ define([
             type = '';
 
         value.gsub(/([a-z0-9\\_]+)\\s*\\=\\s*[\"]{1}([^\"]+)[\"]{1}/i, function(match) {
-            console.log(match);
         });
 
         // @todo Dynamically get this data
