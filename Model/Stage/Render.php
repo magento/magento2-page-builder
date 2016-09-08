@@ -3,6 +3,7 @@
 namespace Gene\BlueFoot\Model\Stage;
 
 use Gene\BlueFoot\Api\EntityRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Render
@@ -128,7 +129,13 @@ class Render extends \Magento\Framework\Model\AbstractModel
             return $loaded;
         }
 
-        return $this->entityRepository->getById($entityId);
+        // Handle missing entities
+        try {
+            return $this->entityRepository->getById($entityId);
+        } catch (NoSuchEntityException $e) {
+            // @todo log error
+            return false;
+        }
     }
 
     /**
@@ -462,7 +469,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
     {
         /* @var $entity \Gene\BlueFoot\Model\Entity */
         $entity = $this->getEntity($element['entityId']);
-        if (!$entity->getId()) {
+        if (!$entity || ($entity && !$entity->getId())) {
             return false;
         }
 
