@@ -133,7 +133,7 @@ class Render extends \Magento\Framework\Model\AbstractModel
         try {
             return $this->entityRepository->getById($entityId);
         } catch (NoSuchEntityException $e) {
-            // @todo log error
+            $this->_logger->error($e, ['entityId' => $entityId]);
             return false;
         }
     }
