@@ -624,21 +624,32 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
     /**
      * BlueFoot widget injection
+     *
      * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
      * @param array $meta
      * @return array
      */
     public function injectWidget(BlueFootAttributeInterface $attribute, array $meta)
     {
-        switch ($attribute->getWidget()) {
-            case 'search':
-                $meta['arguments']['data']['config']['dataType'] ='search';
-                $meta['arguments']['data']['config']['formElement'] ='search';
+        // Retrieve the widget name, the widget name is everything before the /
+        $widgetName = strtok($attribute->getWidget(), '/');
 
-                $meta['arguments']['data']['config']['ajaxEndpoint'] = $this->url->getUrl(
-                    'bluefoot/stage_widget/search',
-                    ['context' => 'category']
-                );
+        // Handle different widgets
+        switch ($widgetName) {
+            case 'search':
+                $context = explode('/', $attribute->getWidget());
+                if (isset($context[1])) {
+                    $meta['arguments']['data']['config']['dataType'] ='search';
+                    $meta['arguments']['data']['config']['formElement'] ='search';
+                    $meta['arguments']['data']['config']['context'] = $context[1];
+
+                    $meta['arguments']['data']['config']['ajaxEndpoint'] = $this->url->getUrl(
+                        'bluefoot/stage_widget/search',
+                        [
+                            'context' => $context[1]
+                        ]
+                    );
+                }
                 break;
 
             case 'magentowidget':
