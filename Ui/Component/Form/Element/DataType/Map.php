@@ -3,13 +3,15 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class MagentoWidget
+ * Class Map
  *
  * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
-class MagentoWidget extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
+class Map extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {
-    const NAME = 'magentowidget';
+    const NAME = 'map';
 
     /**
      * Get component name

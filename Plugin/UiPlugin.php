@@ -74,9 +74,15 @@ class UiPlugin
         ], $output);
 
         $this->addComponent('magentowidget', [
-            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Magentowidget',
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\MagentoWidget',
             'jsComponent' => 'Gene_BlueFoot/js/form/element/magentowidget',
             'elementTmpl' => 'Gene_BlueFoot/form/element/magentowidget',
+        ], $output);
+
+        $this->addComponent('map', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Map',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/map',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/map',
         ], $output);
 
         // Pass the output over to an event for custom UI components

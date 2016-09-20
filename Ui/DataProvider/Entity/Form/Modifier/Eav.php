@@ -656,6 +656,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta['arguments']['data']['config']['dataType'] = 'magentowidget';
                 $meta['arguments']['data']['config']['formElement'] ='magentowidget';
                 break;
+
+            case 'map':
+                $meta['arguments']['data']['config']['dataType'] = 'map';
+                $meta['arguments']['data']['config']['formElement'] ='map';
+                break;
         }
 
 
