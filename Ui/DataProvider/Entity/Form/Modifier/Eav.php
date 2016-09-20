@@ -258,6 +258,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                     $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
                     $meta[$groupCode]['arguments']['data']['config']['label'] = __('%1', $group->getAttributeGroupName());
                     $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
+                    $meta[$groupCode]['arguments']['data']['config']['opened'] = ($sortOrder == 0);
                     $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
                     $meta[$groupCode]['arguments']['data']['config']['sortOrder'] =
                         $sortOrder * self::SORT_ORDER_MULTIPLIER;
