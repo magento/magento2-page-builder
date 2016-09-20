@@ -142,32 +142,37 @@ class Search extends \Magento\Backend\App\Action
      */
     protected function searchProduct()
     {
-        // Create a filter group, this applies as an OR
-        $filterGroups = [];
-        $filterGroups[] = $this->filterGroupBuilder
-            ->addFilter(
-                $this->filterBuilder
-                    ->setField('sku')
-                    ->setConditionType('like')
-                    ->setValue('%' . $this->getTerm() . '%')
-                    ->create()
-            )
-            ->addFilter(
-                $this->filterBuilder
-                    ->setField('name')
-                    ->setConditionType('like')
-                    ->setValue('%' . $this->getTerm() . '%')
-                    ->create()
-            )
-            ->create();
+        if ($this->getId()) {
+            $searchCriteria = $this->searchCriteriaBuilder;
+            $searchCriteria->addFilter('entity_id', $this->getId());
+        } else {
+            // Create a filter group, this applies as an OR
+            $filterGroups = [];
+            $filterGroups[] = $this->filterGroupBuilder
+                ->addFilter(
+                    $this->filterBuilder
+                        ->setField('sku')
+                        ->setConditionType('like')
+                        ->setValue('%' . $this->getTerm() . '%')
+                        ->create()
+                )
+                ->addFilter(
+                    $this->filterBuilder
+                        ->setField('name')
+                        ->setConditionType('like')
+                        ->setValue('%' . $this->getTerm() . '%')
+                        ->create()
+                )
+                ->create();
 
-        // Build up our search criteria from the groups above
-        $searchCriteria = $this->searchCriteriaBuilder->setFilterGroups($filterGroups);
-        $searchCriteria->addFilter('status', 1, 'eq');
-        $searchCriteria->addFilter('visibility', [
-            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH,
-            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG
-        ], 'in');
+            // Build up our search criteria from the groups above
+            $searchCriteria = $this->searchCriteriaBuilder->setFilterGroups($filterGroups);
+            $searchCriteria->addFilter('status', 1, 'eq');
+            $searchCriteria->addFilter('visibility', [
+                \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH,
+                \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG
+            ], 'in');
+        }
 
         // Retrieve the products
         $products = $this->productRepository->getList($searchCriteria->create());
@@ -203,8 +208,13 @@ class Search extends \Magento\Backend\App\Action
     {
         $blocks = $this->blockCollectionFactory->create()
             ->addFieldToSelect('block_id', 'entity_id')
-            ->addFieldToSelect('title', 'name')
-            ->addFieldToFilter(
+            ->addFieldToSelect('title', 'name');
+
+        // Handle already loaded ID's
+        if ($this->getId()) {
+            $blocks->addFieldToFilter('entity_id', $this->getId());
+        } else {
+            $blocks->addFieldToFilter(
                 array('title', 'identifier'),
                 array(
                     array('like' => '%' . $this->getTerm() . '%'),
@@ -212,6 +222,7 @@ class Search extends \Magento\Backend\App\Action
                 )
             )
             ->addFieldToFilter('is_active', array('eq' => 1));
+        }
 
         return $this->returnOptionArray($blocks);
     }

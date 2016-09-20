@@ -41,6 +41,7 @@ define([
 
             if (this.initialValue > 0) {
                 this.loaderVisible(true);
+                console.log(this.initialValue);
                 this.ajaxRequest = $.ajax({
                     url: this.ajaxEndpoint + "id/" + this.initialValue,
                     type: 'POST',
@@ -56,6 +57,7 @@ define([
                     this.cleanHoveredElement();
                     this.loaderVisible(false);
                     this.ajaxRequest = null;
+                    console.log(data[0]);
                     this.toggleOptionSelected(data[0]);
                     this.setCaption();
 
