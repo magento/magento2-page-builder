@@ -27,17 +27,20 @@ class Edit extends AbstractAction
      * @param \Magento\Framework\View\Element\UiComponentFactory $factory
      * @param \Magento\Framework\App\CacheInterface              $cacheManager
      * @param \Magento\Framework\App\Cache\StateInterface        $cacheState
+     * @param \Magento\Framework\Registry                        $registry
      */
     public function __construct(
         Context $context,
         UiComponentFactory $factory,
         \Magento\Framework\App\CacheInterface $cacheManager,
-        \Magento\Framework\App\Cache\StateInterface $cacheState
+        \Magento\Framework\App\Cache\StateInterface $cacheState,
+        \Magento\Framework\Registry $registry
     ) {
         parent::__construct($context, $factory);
 
         $this->cacheManager = $cacheManager;
         $this->cacheState = $cacheState;
+        $this->registry = $registry;
     }
 
     /**
@@ -68,6 +71,8 @@ class Edit extends AbstractAction
 
         // If the response is not available in the cache build it
         if ($response === false) {
+            // Pass the identifier through the registry
+            $this->registry->register('bluefoot_edit_identifier', $identifier);
             $this->_view->loadLayout(['default', 'bluefoot_entity_edit'], true, true, false);
 
             $uiComponent = $this->_view->getLayout()->getBlock('contentblock_entity_form');

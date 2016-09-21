@@ -61,12 +61,6 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/search',
         ], $output);
 
-        $this->addComponent('alignment', [
-            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Alignment',
-            'jsComponent' => 'Gene_BlueFoot/js/form/element/alignment',
-            'elementTmpl' => 'Gene_BlueFoot/form/element/alignment',
-        ], $output);
-
         $this->addComponent('uploader', [
             'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Uploader',
             'jsComponent' => 'Gene_BlueFoot/js/form/element/uploader',
@@ -83,6 +77,18 @@ class UiPlugin
             'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Map',
             'jsComponent' => 'Gene_BlueFoot/js/form/element/map',
             'elementTmpl' => 'Gene_BlueFoot/form/element/map',
+        ], $output);
+
+        $this->addComponent('metric', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Metric',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/metric',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/metric',
+        ], $output);
+
+        $this->addComponent('align', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Align',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/align',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/align',
         ], $output);
 
         // Pass the output over to an event for custom UI components

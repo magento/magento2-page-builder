@@ -9,7 +9,6 @@ use Magento\Catalog\Model\Locator\LocatorInterface;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute as EavAttribute;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory as EavAttributeFactory;
 use Magento\Eav\Api\Data\AttributeGroupInterface;
-use Magento\Eav\Api\Data\AttributeInterface;
 use Magento\Eav\Model\Config;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory as GroupCollectionFactory;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -24,10 +23,12 @@ use Magento\Ui\Component\Form\Fieldset;
 use Magento\Catalog\Ui\DataProvider\CatalogEavValidationRules;
 use Magento\Ui\DataProvider\Mapper\FormElement as FormElementMapper;
 use Magento\Ui\DataProvider\Mapper\MetaProperties as MetaPropertiesMapper;
-use Magento\Ui\Component\Form\Element\Wysiwyg as WysiwygElement;
 use Magento\Catalog\Model\Attribute\ScopeOverriddenValue;
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Gene\BlueFoot\Model\Config\ConfigInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\Registry;
 
 /**
  * Class Eav
@@ -165,9 +166,14 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     protected $url;
 
     /**
-     * @var array
+     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $additionalMeta = [];
+    protected $configInterface;
+
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
 
     /**
      * Eav constructor.
@@ -190,6 +196,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      * @param \Magento\Catalog\Model\Attribute\ScopeOverriddenValue                     $scopeOverriddenValue
      * @param \Magento\Framework\App\Request\DataPersistorInterface                     $dataPersistor
      * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface                        $contentBlockRepositoryInterface
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                               $configInterface
+     * @param \Magento\Framework\UrlInterface                                           $urlInterface
      * @param array                                                                     $attributesToDisable
      * @param array                                                                     $attributesToEliminate
      */
@@ -212,14 +220,13 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         ScopeOverriddenValue $scopeOverriddenValue,
         DataPersistorInterface $dataPersistor,
         ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
-
-        \Magento\Framework\UrlInterface $urlInterface, // temporary @Aidan
-
+        ConfigInterface $configInterface,
+        UrlInterface $urlInterface,
+        Registry $registry,
         $attributesToDisable = [],
         $attributesToEliminate = []
     ) {
         $this->url = $urlInterface;
-
         $this->locator = $locator;
         $this->catalogEavValidationRules = $catalogEavValidationRules;
         $this->eavConfig = $eavConfig;
@@ -240,6 +247,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         $this->attributesToDisable = $attributesToDisable;
         $this->attributesToEliminate = $attributesToEliminate;
         $this->contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
+        $this->configInterface = $configInterface;
+        $this->registry = $registry;
     }
 
     /**
@@ -256,7 +265,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 if ($attributes) {
                     $meta[$groupCode]['children'] = $this->getAttributesMeta($attributes, $groupCode);
                     $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
-                    $meta[$groupCode]['arguments']['data']['config']['label'] = __('%1', $group->getAttributeGroupName());
+                    $meta[$groupCode]['arguments']['data']['config']['label'] =
+                        __('%1', $group->getAttributeGroupName());
                     $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
                     $meta[$groupCode]['arguments']['data']['config']['opened'] = ($sortOrder == 0);
                     $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
@@ -266,28 +276,87 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
                 $sortOrder++;
             }
-        }
 
-        $meta = $this->addAdditionalMeta($meta);
+            $meta = $this->handleGlobalFields($meta, $sortOrder);
+        }
 
         return $meta;
     }
 
     /**
-     * Add any additional meta from the additionalMeta property
+     * Add in any extra static global fields
      *
-     * @param array $meta
+     * @param $meta
+     * @param $sortOrder
      *
-     * @return array
+     * @return mixed
      */
-    protected function addAdditionalMeta(array $meta)
+    public function handleGlobalFields($meta, $sortOrder)
     {
-        foreach ($this->additionalMeta as $key => $value) {
-            $meta = $this->arrayManager->set(
-                $key,
-                $meta,
-                $value
+        $globalFields = $this->configInterface->getGlobalFields();
+        foreach ($globalFields as $globalField) {
+            $groupCode = strtolower($globalField['group']);
+
+            // If the group doesn't exist, create it
+            if (!isset($meta[$groupCode])) {
+                $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
+                $meta[$groupCode]['arguments']['data']['config']['label'] =
+                    __('%1', $globalField['group']);
+                $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
+                $meta[$groupCode]['arguments']['data']['config']['opened'] = ($sortOrder == 0);
+                $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
+                $meta[$groupCode]['arguments']['data']['config']['sortOrder'] =
+                    $sortOrder * self::SORT_ORDER_MULTIPLIER;
+
+                $sortOrder++;
+            }
+
+            // Create our container, alongside our field meta
+            $containerMeta = $this->arrayManager->set(
+                'arguments/data/config',
+                [],
+                [
+                    'formElement' => 'container',
+                    'componentType' => 'container',
+                    'breakLine' => false,
+                    'label' => $globalField['label'],
+                    'required' => (isset($globalField['required']) ? $globalField['required'] : false),
+                    'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER,
+                    'scopeLabel' => '',
+                ]
             );
+            $configPath = ltrim(static::META_CONFIG_PATH, ArrayManager::DEFAULT_PATH_DELIMITER);
+            $globalFieldMeta = $this->arrayManager->set($configPath, [], [
+                'dataType' => 'text',
+                'formElement' => 'input',
+                'visible' => true,
+                'required' => (isset($globalField['required']) ? $globalField['required'] : false),
+                'notice' => (isset($globalField['note']) ? $globalField['note'] : false),
+                'default' => (isset($globalField['default']) ? $globalField['default'] : ''),
+                'label' => $globalField['label'],
+                'code' => $globalField['code'],
+                'source' => $groupCode,
+                'scopeLabel' => '',
+                'globalScope' => false,
+                'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER,
+            ]);
+
+            if (!$this->arrayManager->exists($configPath . '/componentType', $globalFieldMeta)) {
+                $globalFieldMeta = $this->arrayManager->merge($configPath, $globalFieldMeta, [
+                    'componentType' => Field::NAME,
+                ]);
+            }
+
+            // Inject any widget data
+            if ($globalField['type'] == 'widget' && isset($globalField['widget'])) {
+                $globalFieldMeta = $this->injectWidgetName($globalField['widget'], $globalFieldMeta);
+            }
+
+            // Add our meta field into our container
+            $containerMeta['children'][$globalField['code']] = $globalFieldMeta;
+
+            // Add the container as a child of the meta group
+            $meta[$groupCode]['children'][] = $containerMeta;
         }
 
         return $meta;
@@ -427,8 +496,9 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      */
     private function getAttributeSetId()
     {
-        // @todo don't reference request directly
-        $identifier = $this->request->getParam('identifier');
+        // Retrieve the identifier from the registry
+        $identifier = $this->registry->registry('bluefoot_edit_identifier');
+
         try {
             if ($contentBlock = $this->contentBlockRepositoryInterface->getByIdentifier($identifier)) {
                 return $contentBlock->getAttributeSetId();
@@ -634,11 +704,23 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     {
         // Retrieve the widget name, the widget name is everything before the /
         $widgetName = strtok($attribute->getWidget(), '/');
+        return $this->injectWidgetName($widgetName, $meta);
+    }
 
+    /**
+     * Inject widget data into meta via a name
+     *
+     * @param       $widgetName
+     * @param array $meta
+     *
+     * @return array
+     */
+    protected function injectWidgetName($widgetName, array $meta)
+    {
         // Handle different widgets
         switch ($widgetName) {
             case 'search':
-                $context = explode('/', $attribute->getWidget());
+                $context = explode('/', $widgetName);
                 if (isset($context[1])) {
                     $meta['arguments']['data']['config']['dataType'] ='search';
                     $meta['arguments']['data']['config']['formElement'] ='search';
@@ -662,8 +744,17 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta['arguments']['data']['config']['dataType'] = 'map';
                 $meta['arguments']['data']['config']['formElement'] ='map';
                 break;
-        }
 
+            case 'metric':
+                $meta['arguments']['data']['config']['dataType'] = 'metric';
+                $meta['arguments']['data']['config']['formElement'] ='metric';
+                break;
+
+            case 'align':
+                $meta['arguments']['data']['config']['dataType'] = 'align';
+                $meta['arguments']['data']['config']['formElement'] ='align';
+                break;
+        }
 
         return $meta;
     }
