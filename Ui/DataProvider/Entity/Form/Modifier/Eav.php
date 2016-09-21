@@ -703,8 +703,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     public function injectWidget(BlueFootAttributeInterface $attribute, array $meta)
     {
         // Retrieve the widget name, the widget name is everything before the /
-        $widgetName = strtok($attribute->getWidget(), '/');
-        return $this->injectWidgetName($widgetName, $meta);
+        return $this->injectWidgetName($attribute->getWidget(), $meta);
     }
 
     /**
@@ -717,8 +716,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      */
     protected function injectWidgetName($widgetName, array $meta)
     {
+        // Extract the widget from the widget name
+        $widget = strtok($widgetName, '/');
+
         // Handle different widgets
-        switch ($widgetName) {
+        switch ($widget) {
             case 'search':
                 $context = explode('/', $widgetName);
                 if (isset($context[1])) {

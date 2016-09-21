@@ -34,6 +34,7 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                     // Attach the button
                     var button = this.button.addFirst('fontSize', $t('Size'));
                     this.button.addDropdown(button, dropdown);
+                    this.button.setIcon(button, '12px');
                 },
 
                 setFontSize: function(s) {
