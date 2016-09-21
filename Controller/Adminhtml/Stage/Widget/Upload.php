@@ -59,7 +59,10 @@ class Upload extends \Magento\Backend\App\Action
             // Attempt to save the file
             if ($uploaded = $fileUploader->save($this->configHelper->getUploadDir())) {
                 // Return a success callback once the file has been uploaded
-                return $this->resultJsonFactory->create()->setData(['success' => true, 'file' =>  $this->configHelper->getUploadUrl() . '/' . $uploaded['file']]);
+                return $this->resultJsonFactory->create()->setData([
+                    'success' => true,
+                    'file' =>  $this->configHelper->getRelativeUploadUrl() . '/' . $uploaded['file']
+                ]);
             } else {
                 throw new \Exception('An unknown error has occurred');
             }
