@@ -4,11 +4,12 @@
     <!-- /ko -->
 </div>
 
-<button data-bind="click: openGallery">Open Media Gallery</button>
+<button data-bind="click: openGallery, text: $('Open Media Gallery')"></button>
 
-<button data-bind="click: removeImage, visible: value">Remove Image</button>
+<button data-bind="click: removeImage, visible: value, text: $t('Remove Image')"></button>
 
 <input type="text"
        ko-value="value"
        attr="id: uid, name: inputName"
         data-bind="visible: false" />
+</div>

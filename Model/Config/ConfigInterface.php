@@ -8,7 +8,6 @@ namespace Gene\BlueFoot\Model\Config;
  * @package Gene\BlueFoot\Model\Config
  *
  * @author Dave Macaulay <dave@gene.co.uk>
- * @todo Comment methods
  */
 interface ConfigInterface
 {

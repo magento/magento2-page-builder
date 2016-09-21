@@ -3,12 +3,13 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class Alignment
+ * Class Align
+ *
  * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
-class Alignment extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
+class Align extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {
-    const NAME = 'alignment';
+    const NAME = 'align';
 
     /**
      * Get component name
