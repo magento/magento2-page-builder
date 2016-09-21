@@ -26,4 +26,15 @@
             </div>
         </div>
     </div>
+
+    <div class="layout-settings">
+        <label class="admin__field-label" >
+            <span data-bind="text: $t('Border Color:')"></span>
+        </label>
+        <div class="color-picker">
+            <div class="color-hash" data-bind="style: {color: borderTextColor}, click: function () { jQuery('[name=\'borderColor\']').ColorPickerShow(); }">#</div>
+            <input type="text" maxlength="7" name="borderColor" data-bind="afterRender: renderColorPicker, textInput: borderColor, style: {backgroundColor: '#' + borderColor(), color: borderTextColor}" class="color-picker-input" />
+            <div class="color-prompt" data-bind="click: function () { jQuery('[name=\'borderColor\']').ColorPickerShow(); }, text: $t('Select Color')"></div>
+        </div>
+    </div>
 </div>
