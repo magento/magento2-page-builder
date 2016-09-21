@@ -1,19 +1,20 @@
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
-        // AMD anonymous module
-        define(["knockout", "jquery", "Gene_BlueFoot/js/resource/redactor/library/redactor", "mage/translate"], factory);
-    } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-        // CommonJS module
-        var ko = require("knockout"),
-            jQuery = require("jquery"),
-            Dropzone = require("Gene_BlueFoot/js/resource/redactor/library/redactor");
+/**
+ * Redactor implementation for knockout
+ * @author Aidan Threadgold <aidan@gene.co.uk>
+ */
+define([
+    "knockout",
+    "jquery",
+    "Gene_BlueFoot/js/resource/redactor/library/redactor",
+    "Gene_BlueFoot/js/resource/redactor/plugins/magentovars"
+], function (ko, jQuery, Redactor, PluginMagentoVars) {
 
-        factory(ko, jQuery, Dropzone, translate);
-    } else {
-        // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery, window.Redactor);
+    // Attach redactor plugins based on arguments passed to this function.
+    for (var i=3; i < arguments.length; i++) {
+        if (typeof arguments[i] === 'function') {
+            arguments[i]();
+        }
     }
-})(function (ko, jQuery, Redactor) {
 
     // Create a new sortable Knockout binding
     ko.bindingHandlers.redactor = {
@@ -25,7 +26,8 @@
                         blur: function() {
                             value( this.code.get() );
                         }
-                    }
+                    },
+                    plugins: ['magentoVars']
                 },
                 options = valueAccessor();
 

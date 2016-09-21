@@ -66,6 +66,10 @@ class BuildInitConfig implements ObserverInterface
         $uploadUrl = $this->configHelper->getUploadUrl(true);
         $pluginData['gene_widget_upload']['config']['media_url'] = $uploadUrl;
 
+        // Send the redactor plugin URL
+        $pluginData['gene_redactor']['config']['magentovar_url']
+            = $this->urlBuilder->getUrl('adminhtml/system_variable/wysiwygPlugin');
+
         // Search URLs
         $pluginData['gene_widget_search_product']['config']['source_url']
             = $this->urlBuilder->getUrl('bluefoot/stage/widget_search', ['context' => 'product']);
