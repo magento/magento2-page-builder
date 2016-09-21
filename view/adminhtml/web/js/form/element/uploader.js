@@ -13,6 +13,33 @@ define([
     'use strict';
 
     return AbstractField.extend({
+
+        defaults: {
+            listens: {
+                value: 'extractUrl'
+            }
+        },
+
+        /**
+         * Extract the desired URL for media gallery images
+         */
+        extractUrl: function() {
+            var val = this.value(),
+                regex = /___directive\/(.*),\//g,
+                match = regex.exec(val);
+
+            // Find the base64 encoded string and decode it - returns a string similar to {{media url="wysiwyg/1470306531.png"}}
+            if (Array.isArray(match) && typeof match[1] === 'string') {
+                var decodedString = atob(match[1]),
+                    urlMatches = /url="(.*)"/g.exec(decodedString);
+
+                // Extract the url from the decoded string
+                if (Array.isArray(urlMatches)) {
+                    this.value("/media/" + urlMatches[1]);
+                }
+            }
+        },
+
         /**
          * Open Magento gallery modal
          */
