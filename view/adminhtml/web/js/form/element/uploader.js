@@ -25,7 +25,7 @@ define([
          */
         extractUrl: function() {
             var val = this.value(),
-                regex = /___directive\/(.*),\//g,
+                regex = /___directive\/([a-z0-9A-Z]*)(,)?(?=\/)/g,
                 match = regex.exec(val);
 
             // Find the base64 encoded string and decode it - returns a string similar to {{media url="wysiwyg/1470306531.png"}}
