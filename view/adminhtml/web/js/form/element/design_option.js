@@ -1,8 +1,9 @@
 define([
     'Magento_Ui/js/form/element/abstract',
-    'underscore',
-    'mage/translate'
-], function (AbstractField, _, $t) {
+    'ko',
+    'jquery',
+    'Gene_BlueFoot/js/resource/jquery/colorpicker/js/colorpicker'
+], function (AbstractField, ko, $) {
     'use strict';
 
     return AbstractField.extend({
@@ -16,6 +17,8 @@ define([
             borderRight: '-',
             borderBottom: '-',
             borderLeft: '-',
+            borderColor: '#000000',
+            borderTextColor: '#FFFFFF',
 
             paddingTop: '-',
             paddingRight: '-',
@@ -32,6 +35,7 @@ define([
                 borderRight: 'updateValue',
                 borderBottom: 'updateValue',
                 borderLeft: 'updateValue',
+                borderColor: 'updateValue',
 
                 paddingTop: 'updateValue',
                 paddingRight: 'updateValue',
@@ -59,6 +63,8 @@ define([
                 this.borderRight(obj.border[1]);
                 this.borderBottom(obj.border[2]);
                 this.borderLeft(obj.border[3]);
+                this.borderColor(obj.borderColor);
+                this.updateBorderTextColor();
 
                 this.paddingTop(obj.padding[0]);
                 this.paddingRight(obj.padding[1]);
@@ -74,7 +80,7 @@ define([
          */
         initObservable: function () {
             return this._super().observe('marginTop marginRight marginBottom marginLeft ' +
-                'borderTop borderRight borderBottom borderLeft ' +
+                'borderTop borderRight borderBottom borderLeft borderColor borderTextColor ' +
                 'paddingTop paddingRight paddingBottom paddingLeft');
         },
 
@@ -85,10 +91,38 @@ define([
             var obj = {
                 margin: [this.marginTop(), this.marginRight(), this.marginBottom(), this.marginLeft()],
                 border: [this.borderTop(), this.borderRight(), this.borderBottom(), this.borderLeft()],
+                borderColor: this.borderColor(),
                 padding: [this.paddingTop(), this.paddingRight(), this.paddingBottom(), this.paddingLeft()]
             };
 
             this.value(JSON.stringify(obj));
+
+            this.updateBorderTextColor();
+        },
+
+        /**
+         * Render the colour picker, fired from afterRender on element
+         *
+         * @param element
+         */
+        renderColorPicker: function (element) {
+            // Attach the color picker
+            $(element).ColorPicker({
+                color: this.borderColor(),
+                onChange: function (hsb, hex, rgb) {
+                    this.borderColor(hex);
+                }.bind(this)
+            });
+        },
+
+        /**
+         * Calculate the border text colour based on the border colour
+         */
+        updateBorderTextColor: function () {
+            if (this.borderColor()) {
+                this.borderColor(this.borderColor().replace('#', ''));
+                this.borderTextColor((parseInt(this.borderColor(), 16) > 0xffffff / 1.75) ? '#000000' : '#FFFFFF');
+            }
         }
 
     });
