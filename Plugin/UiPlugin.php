@@ -79,10 +79,10 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/map',
         ], $output);
 
-        $this->addComponent('metric', [
-            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Metric',
-            'jsComponent' => 'Gene_BlueFoot/js/form/element/metric',
-            'elementTmpl' => 'Gene_BlueFoot/form/element/metric',
+        $this->addComponent('design_option', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\DesignOption',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/design_option',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/design_option',
         ], $output);
 
         $this->addComponent('align', [
