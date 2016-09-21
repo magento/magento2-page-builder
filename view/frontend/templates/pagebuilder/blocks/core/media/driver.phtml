@@ -11,9 +11,8 @@
  *
  */
 $_entity = $block->getEntity();
-$_urlPrefix = $block->getUrl('pub/media/gene-cms');
+$_urlPrefix = $block->getMediaUrl() . 'gene-cms';
 ?>
-
 <div id="bluefoot-driver-<?php echo $_entity->getId(); ?>"
      class="bluefoot-driver <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
     <a href="<?php echo $_entity->getLinkUrl(); ?>"<?php echo ($_entity->getTargetBlank()) ? ' target="_blank"' : ''; ?>>

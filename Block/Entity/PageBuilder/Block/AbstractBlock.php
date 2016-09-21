@@ -235,4 +235,14 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
 
         return $html;
     }
+
+    /**
+     * Retrieve the media URL
+     *
+     * @return mixed
+     */
+    public function getMediaUrl()
+    {
+        return $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+    }
 }
