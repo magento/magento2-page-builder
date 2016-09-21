@@ -27,8 +27,9 @@ define(["jquery", "mage/translate", "bluefoot/config"], function(jQuery, $t, Con
         jQuery.Redactor.prototype.magentoVars = function () {
             return {
                 init: function () {
-                    var button = this.button.add('magentoVars', '<i class="fa fa-code" alt="' + $t('Variables') + '"></i>');
+                    var button = this.button.add('magentoVars', $t('Variables'));
                     this.button.addCallback(button, this.magentoVars.show);
+                    this.button.setIcon(button, '<i class="fa fa-code"></i>');
                 },
                 show: function () {
                     MagentovariablePlugin.loadChooser(Config.getPluginConfig("gene_redactor", "magentovar_url"), null);
