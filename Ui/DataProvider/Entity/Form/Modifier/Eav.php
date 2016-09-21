@@ -754,6 +754,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta['arguments']['data']['config']['dataType'] = 'align';
                 $meta['arguments']['data']['config']['formElement'] ='align';
                 break;
+
+            case 'color':
+                $meta['arguments']['data']['config']['dataType'] = 'color';
+                $meta['arguments']['data']['config']['formElement'] ='color';
+                break;
         }
 
         return $meta;

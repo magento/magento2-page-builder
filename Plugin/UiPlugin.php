@@ -91,6 +91,12 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/align',
         ], $output);
 
+        $this->addComponent('color', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Color',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/color',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/color',
+        ], $output);
+
         // Pass the output over to an event for custom UI components
         $outputObject = $this->dataObject->setData('output', $output);
         $this->eventDispatcher->dispatch('gene_bluefoot_add_ui_component', [
