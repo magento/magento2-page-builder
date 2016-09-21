@@ -6,19 +6,20 @@ define(["jquery", "mage/translate", "bluefoot/config"], function(jQuery, $t, Con
 
     /**
      * Override the default function to accept a bluefoot update callback
-     * @param value
      */
-    window.MagentovariablePlugin.insertVariableSuper = window.MagentovariablePlugin.insertVariable;
-    window.MagentovariablePlugin.insertVariable = function (value) {
-        if (typeof this.bluefootUpdate === 'function') {
-            this.bluefootUpdate(value);
-            Variables.closeDialogWindow();
-            this.bluefootUpdate = null;
-            return;
-        }
+    if (typeof window.MagentovariablePlugin === 'object') {
+        window.MagentovariablePlugin.insertVariableSuper = window.MagentovariablePlugin.insertVariable;
+        window.MagentovariablePlugin.insertVariable = function (value) {
+            if (typeof this.bluefootUpdate === 'function') {
+                this.bluefootUpdate(value);
+                Variables.closeDialogWindow();
+                this.bluefootUpdate = null;
+                return;
+            }
 
-        this.insertVariableSuper(value);
-    };
+            this.insertVariableSuper(value);
+        };
+    }
 
     /**
      * Redactor plugin

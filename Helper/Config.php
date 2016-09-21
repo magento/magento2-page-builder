@@ -37,8 +37,11 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getUploadDir()
     {
-        return $this->directoryList->getPath('media') . DIRECTORY_SEPARATOR . 'gene-cms';
+        return $this->directoryList->getPath('media')
+                . DIRECTORY_SEPARATOR .'wysiwyg'
+                . DIRECTORY_SEPARATOR . 'bluefoot';
     }
+
 
     /**
      * Return the upload URL for uploaded content
@@ -63,6 +66,6 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getRelativeUploadUrl()
     {
-        return '/media/gene-cms';
+        return '/media/wysiwyg/bluefoot';
     }
 }
