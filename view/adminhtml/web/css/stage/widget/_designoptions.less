@@ -1,0 +1,105 @@
+@metricsWidth: 300px;
+@metricsHeight: 250px;
+@spacing: 40px;
+
+.admin__field-design-options {
+    > input[type="text"] {
+        display: none;
+    }
+
+    .layout-onion {
+        width: @metricsWidth;
+        height: @metricsHeight;
+
+        input[type="text"] {
+            width: 30px;
+            font-size: 11px;
+            line-height: 11px;
+            text-align: center;
+        }
+
+        .layout-onion-layer {
+            position: relative;
+            width: @metricsWidth;
+            height: @metricsHeight;
+
+            span.label {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                font-size: 10px;
+            }
+
+            .layout-onion-top {
+                position: absolute;
+                top: 9px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .layout-onion-right {
+                position: absolute;
+                top: 50%;
+                right: 5px;
+                transform: translateY(-50%);
+            }
+            .layout-onion-bottom {
+                position: absolute;
+                bottom: 9px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .layout-onion-left {
+                position: absolute;
+                left: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            &.layout-margin {
+                background: #f8f8f8;
+                border: 1px dashed #e3e3e3;
+
+                >.layout-onion-bottom, >.layout-onion-top {
+                    margin-left: 2px;
+                }
+            }
+            &.layout-border {
+                background: darken(#f8f8f8, 5%);
+                border: 1px solid darken(#e3e3e3, 5%);
+                box-sizing: border-box;
+
+                >.layout-onion-right, >.layout-onion-left {
+                    margin-top: -1px;
+                }
+                >.layout-onion-bottom, >.layout-onion-top {
+                    margin-left: 1px;
+                }
+
+                position: absolute;
+                width: (@metricsWidth - (@spacing * 2));
+                height: (@metricsHeight - (@spacing * 2));
+                left: @spacing;
+                top: @spacing;
+                bottom: @spacing;
+                right: @spacing
+            }
+            &.layout-padding {
+                background: darken(#f8f8f8, 10%);
+                border: 1px solid darken(#e3e3e3, 10%);
+                box-sizing: border-box;
+
+                >.layout-onion-right, >.layout-onion-left {
+                    margin-top: -2px;
+                }
+
+                position: absolute;
+                width: (@metricsWidth - (@spacing * 4));
+                height: (@metricsHeight - (@spacing * 4));
+                left: @spacing;
+                top: @spacing;
+                bottom: @spacing;
+                right: @spacing
+            }
+        }
+    }
+}

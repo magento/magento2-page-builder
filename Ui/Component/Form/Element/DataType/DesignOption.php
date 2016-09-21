@@ -3,15 +3,15 @@
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
- * Class Align
+ * Class DesignOption
  *
  * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Metric extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
+class DesignOption extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {
-    const NAME = 'metric';
+    const NAME = 'design_option';
 
     /**
      * Get component name
