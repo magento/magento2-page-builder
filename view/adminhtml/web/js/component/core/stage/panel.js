@@ -22,6 +22,7 @@ define([
     return Component.extend({
         defaults: {
             visible: false,
+            floating: false,
             groups: []
         },
 
@@ -53,7 +54,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('visible groups');
+                .observe('visible groups floating');
 
             return this;
         },
@@ -112,6 +113,21 @@ define([
          */
         updateStages: function () {
             this.stages = jQuery('body').find('[data-role="bluefoot-stage"]');
+
+            if (jQuery('.modal-slide._show').length > 0) {
+                this.floating(true);
+
+                // Wait for the modal to close
+                var interval;
+                interval = setInterval(function () {
+                    if (jQuery('.modal-slide._show').length == 0) {
+                        this.floating(false);
+                        clearInterval(interval);
+                    }
+                }.bind(this), 100);
+            } else {
+                this.floating(false);
+            }
         },
 
         /**

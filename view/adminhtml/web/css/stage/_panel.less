@@ -60,9 +60,9 @@
     display: block;
     z-index: 600;
 
-    transition: 0.5s;
-    -moz-transition: 0.5s;
-    -webkit-transition: 0.5s;
+    transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
 
     transform: translateX(0rem);
     -moz-transform: translateX(0rem);
@@ -72,6 +72,22 @@
         transform: translateX(8.800000000000001rem);
         -moz-transform: translateX(8.800000000000001rem);
         -webkit-transform: translateX(8.800000000000001rem);
+
+        &.floating {
+            z-index: 1000;
+
+            transform: translateX(5.800000000000001rem);
+            -moz-transform: translateX(5.800000000000001rem);
+            -webkit-transform: translateX(5.800000000000001rem);
+
+            #bluefoot-panel {
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+
+                box-shadow: 0 0 18px rgba(0,0,0,0.5);
+            }
+        }
     }
 
     #bluefoot-panel {

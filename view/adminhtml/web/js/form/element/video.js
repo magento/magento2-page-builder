@@ -46,7 +46,6 @@ define([
                 this.type('youtube');
                 this.iframeSrc(iframeUrl);
             }
-        },
-
+        }
     });
 });
