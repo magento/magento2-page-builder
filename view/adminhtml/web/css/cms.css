@@ -1031,73 +1031,62 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .admin__field-map input[type="text"] {
   display: none;
 }
-.gene-bluefoot-video-iframe {
-  float: left;
-  width: 100%;
+.admin__field-video .video-field {
+  display: flex;
+  flex-direction: row;
 }
-.gene-bluefoot-video-iframe .gene-bluefoot-video-container {
-  float: left;
-  width: 100%;
-  display: block;
-  margin: 10px 0;
-  border: 1px solid #DCDCDC;
-  border-radius: 3px;
-  overflow: hidden;
+.admin__field-video .video-field ol {
+  list-style: none;
+  margin: 0;
+  width: 250px;
+  padding: 0;
+  font-size: 0;
+  vertical-align: middle;
+  display: flex;
+  margin-right: 6px;
 }
-.gene-bluefoot-video-iframe .gene-bluefoot-video-container iframe {
-  width: 100%;
-  height: 350px;
-  box-sizing: border-box;
-  border: 0;
-}
-.gene-bluefoot-video-iframe span {
-  float: left;
-  width: 100%;
-  margin: 10px 0;
-  border: 0;
-  padding: 10px 24px;
-  font-weight: normal;
+.admin__field-video .video-field ol li {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 6px;
   font-size: 14px;
-  color: white;
+  cursor: pointer;
+  background: #f8f8f8;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  height: 33px;
+  line-height: 33px;
   box-sizing: border-box;
-  background: #779ecb;
+  padding: 0 12px;
+  flex: 1;
 }
-.gene-bluefoot-video-iframe span .fa {
-  margin-right: 10px;
-}
-.gene-bluefoot-input-loading-indicator {
-  position: relative;
-}
-.gene-bluefoot-input-loading-indicator .fa-spinner,
-.gene-bluefoot-input-loading-indicator .fa-check {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  right: 10px;
-  top: 38px;
-}
-.gene-bluefoot-input-loading-indicator.searching .fa-spinner {
-  visibility: visible;
-  opacity: 1;
-}
-.gene-bluefoot-input-loading-indicator.success .fa-check {
-  visibility: visible;
-  opacity: 1;
-  color: #779ecb;
-}
-.gene-bluefoot-video-container {
-  width: 100%;
-  border: 1px solid #DCDCDC;
-  border-radius: 3px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.gene-bluefoot-video-container iframe {
+.admin__field-video .video-field ol li i {
+  vertical-align: middle;
+  margin-right: 6px;
+  font-size: 20px;
   float: left;
-  width: 100%;
-  height: 350px;
-  box-sizing: border-box;
-  border: 0;
+  height: 31px;
+  line-height: 31px;
+}
+.admin__field-video .video-field ol li span {
+  height: 31px;
+  line-height: 31px;
+  margin: 0;
+  float: left;
+}
+.admin__field-video .video-field ol li:last-child {
+  margin-right: 0;
+}
+.admin__field-video .video-field ol li:hover,
+.admin__field-video .video-field ol li.active {
+  background: #e9e9e9;
+  border: 1px solid #adadad;
+}
+.admin__field-video .video-field input[type="text"] {
+  flex: 1;
+}
+.admin__field-video .video-iframe {
+  margin-top: 6px;
 }
 .admin__field-design-options > input[type="text"] {
   display: none;
@@ -1275,7 +1264,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   background: #f8f8f8;
   border: 1px solid #e3e3e3;
   text-align: center;
-  padding: 22px 0;
+  padding: 2rem 0;
 }
 .admin__field-align ol li i {
   margin-right: 6px;

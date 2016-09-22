@@ -1,78 +1,62 @@
+.admin__field-video {
+  .video-field {
+    display:flex;
+    flex-direction:row;
+    ol {
+      list-style: none;
+      margin: 0;
+      width: 250px;
+      padding: 0;
+      font-size: 0;
+      vertical-align: middle;
+      display: flex;
+      margin-right: 6px;
 
-// Sidebar less
-.gene-bluefoot-video-iframe {
-  float:left;
-  width:100%;
-  .gene-bluefoot-video-container {
-    float:left;
-    width:100%;
-    display:block;
-    margin:@margin/2 0;
-    border:1px solid @confirgureColorDark;
-    border-radius:3px;
-    overflow:hidden;
-    iframe {
-      width:100%;
-      height:350px;
-      box-sizing:border-box;
-      border:0;
+      li {
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        background: #f8f8f8;
+        border: 1px solid #e3e3e3;
+        text-align: center;
+        height: 33px;
+        line-height: 33px;
+        box-sizing: border-box;
+        padding: 0 12px;
+        flex: 1;
+
+        i {
+          vertical-align: middle;
+          margin-right: 6px;
+          font-size: 20px;
+          float: left;
+          height: 31px;
+          line-height: 31px;
+        }
+        span {
+          height: 31px;
+          line-height: 31px;
+          margin: 0;
+          float: left;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover, &.active {
+          background: #e9e9e9;
+          border: 1px solid #adadad;
+        }
+      }
+    }
+    input[type="text"] {
+      flex: 1;
     }
   }
-  span {
-    float:left;
-    width:100%;
-    margin:@margin/2 0;
-    border:0;
-    padding:10px 24px;
-    font-weight:normal;
-    font-size:14px;
-    color:white;
-    box-sizing:border-box;
-    background:@theme_color_1;
-    .fa {
-      margin-right:10px;
-    }
-  }
-}
-
-.gene-bluefoot-input-loading-indicator {
-  position:relative;
-  .fa-spinner,
-  .fa-check {
-    position:absolute;
-    visibility:hidden;
-    opacity:0;
-    right:10px;
-    top:38px;
-    //.transition-fast;
-  }
-  &.searching {
-    .fa-spinner {
-      visibility:visible;
-      opacity:1;
-    }
-  }
-  &.success {
-    .fa-check {
-      visibility:visible;
-      opacity:1;
-      color:@theme_color_1;
-    }
-  }
-}
-
-
-.gene-bluefoot-video-container {
-  width:100%;
-  border:1px solid @confirgureColorDark;
-  border-radius:3px;
-  box-sizing:border-box;
-  overflow:hidden;
-  iframe {
-    float:left;
-    width:100%;
-    height:350px;
-    box-sizing:border-box;
-    border:0;
+  .video-iframe {
+    margin-top: 6px;
   }
 }

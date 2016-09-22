@@ -766,6 +766,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta['arguments']['data']['config']['dataType'] = 'tags';
                 $meta['arguments']['data']['config']['formElement'] ='tags';
                 break;
+
+            case 'video':
+                $meta['arguments']['data']['config']['dataType'] = 'video';
+                $meta['arguments']['data']['config']['formElement'] ='video';
+                break;
         }
 
         return $meta;

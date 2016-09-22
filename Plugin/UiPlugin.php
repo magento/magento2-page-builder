@@ -103,6 +103,12 @@ class UiPlugin
             'elementTmpl' => 'Gene_BlueFoot/form/element/tags',
         ], $output);
 
+        $this->addComponent('video', [
+            'class' => 'Gene\BlueFoot\Ui\Component\Form\Element\DataType\Video',
+            'jsComponent' => 'Gene_BlueFoot/js/form/element/video',
+            'elementTmpl' => 'Gene_BlueFoot/form/element/video',
+        ], $output);
+
         // Pass the output over to an event for custom UI components
         $outputObject = $this->dataObject->setData('output', $output);
         $this->eventDispatcher->dispatch('gene_bluefoot_add_ui_component', [
