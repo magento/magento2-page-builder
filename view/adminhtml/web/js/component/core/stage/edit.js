@@ -185,7 +185,8 @@ define([
     Edit.prototype.handleOnRender = function (form) {
         // We only need to override this function once
         if (form.onRenderOverridden !== true) {
-            var _originalRender = form.onRender;
+            var _originalRender = form.onRender,
+                that = this;
 
             /**
              * Override the form render function to implement caching in the Config
@@ -212,19 +213,16 @@ define([
                     self.startRender = true;
                     params = _.extend({}, self.params, params || {});
 
-                    // Check to see if this form has already been loaded
-                    // @todo move into overriden form, use local storage
-                    //if (loadedForm = Config.loadForm(form.editingEntity.config.code)) {
-                    //    // Replace the form path place holder with the new form path
-                    //    loadedForm = loadedForm.split('EDIT_FORM_PATH_PLACERHOLDER').join(form.formPath);
-                    //    loadedForm = loadedForm.split('GENERATED_NAME_PLACEHOLDER').join(form.generatedName);
-                    //    self.onRender.call(self, loadedForm);
-                    //} else {
+                    // Attempt to load the form
+                    var loadForm = that.loadForm(form.editingEntity.config.code, self, form);
+
+                    // Otherwise complete an Ajax request to check
+                    if (!loadForm) {
                         request = self.requestData(params, self.renderSettings);
                         request
                             .done(self.onRender)
                             .fail(self.onError);
-                    //}
+                    }
                 });
 
                 return this;
@@ -236,14 +234,9 @@ define([
              * @param data
              */
             form.onRender = function (data) {
-
                 // Store into the config if the form isn't already present
-                // @todo move into overriden form, use local storage
                 if (!Config.loadForm(form.editingEntity.config.code)) {
-                    // Remove the form path from the data
-                    var storeData = data.split(form.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
-                    storeData = storeData.split(form.generatedName).join('GENERATED_NAME_PLACEHOLDER');
-                    Config.addForm(form.editingEntity.config.code, storeData);
+                    that.saveForm(form, data);
                 }
 
                 _originalRender.call(form, data);
@@ -271,6 +264,47 @@ define([
 
             form.onRenderOverridden = true;
         }
+    };
+
+    /**
+     * Save the form into the config cache
+     *
+     * @param form
+     * @param data
+     */
+    Edit.prototype.saveForm = function (form, data) {
+        // Store the main form data
+        var storeData = data.split(form.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
+        storeData = storeData.split(form.generatedName).join('GENERATED_NAME_PLACEHOLDER');
+        Config.addForm(form.editingEntity.config.code, storeData);
+    };
+
+    /**
+     * Load a form in
+     *
+     * @param code
+     * @param caller
+     * @param form
+     * @returns {boolean}
+     */
+    Edit.prototype.loadForm = function (code, caller, form) {
+        var loadedForm;
+        if (loadedForm = Config.loadForm(code)) {
+            var actions = Config.loadForm(code + '.actions');
+
+            // Replace the form path place holder with the new form path
+            loadedForm = loadedForm.split('EDIT_FORM_PATH_PLACERHOLDER').join(form.formPath);
+            loadedForm = loadedForm.split('GENERATED_NAME_PLACEHOLDER').join(form.generatedName);
+
+            // Defer the loading, to ensure the element is present
+            setTimeout(function () {
+                // Call the onRender function
+                caller.onRender.call(caller, loadedForm);
+            }, 0);
+            return true;
+        }
+
+        return false;
     };
 
     /**
