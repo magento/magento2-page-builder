@@ -1,8 +1,8 @@
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * WYSIWYG UI Component
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
-
 define([
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
