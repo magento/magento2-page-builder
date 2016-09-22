@@ -1,3 +1,8 @@
+/**
+ * Child Entity UI Component
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
+ */
 define([
     'ko',
     'underscore',
@@ -5,13 +10,29 @@ define([
     'bluefoot/config',
     'bluefoot/stage/panel/group/block',
     'Magento_Ui/js/form/element/abstract',
-    'uiRegistry',
+    'uiRegistry'
 ], function (ko, _, utils, Config, PanelBlock, Abstract, registry) {
     'use strict';
 
     return Abstract.extend({
         defaults: {
             value: []
+        },
+
+        /**
+         * Convert the JSON string into it's respected values
+         *
+         * @returns {exports}
+         */
+        setInitialValue: function () {
+            this._super();
+
+            // Update the children to reflect the correct parent
+            ko.utils.arrayForEach(this.value(), function (child) {
+                child.parent = this;
+            }.bind(this));
+
+            return this;
         },
 
         /**
