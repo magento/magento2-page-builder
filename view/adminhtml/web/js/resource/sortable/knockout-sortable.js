@@ -122,7 +122,9 @@
     var Sortable = {
         draggedItem: false,
         ranOnSort: false,
+        callbackTarget: false,
         defaults: {
+            callbackTarget: false,
             tolerance: 'pointer',
             cursorAt: {
                 top: 0,
@@ -163,6 +165,11 @@
         init: function (element, extendedConfig) {
             var self = this,
                 config = this._getConfig(extendedConfig);
+
+            // Have we been passed a callback target?
+            if (typeof config.callbackTarget !== 'undefined') {
+                self.callbackTarget = config.callbackTarget;
+            }
 
             return jQuery(element)
                 .addClass(config.sortableClass)
@@ -221,6 +228,10 @@
          * @param self
          */
         onSortStart: function (event, ui, self) {
+            if (self.callbackTarget && typeof self.callbackTarget.onSortStart === 'function') {
+                return self.callbackTarget.onSortStart(this, event, ui, self);
+            }
+
             var koElement = ko.dataFor(ui.item[0]);
             if (koElement && typeof koElement.onSortStart === 'function') {
                 return koElement.onSortStart(this, event, ui, self);
@@ -237,6 +248,10 @@
          */
         onSortStop: function (event, ui, self) {
             self.ranOnSort = false;
+            if (self.callbackTarget && typeof self.callbackTarget.onSortStop === 'function') {
+                return self.callbackTarget.onSortStop(this, event, ui, self);
+            }
+
             var koElement = ko.dataFor(ui.item[0]);
             if (koElement && typeof koElement.onSortStop === 'function') {
                 return koElement.onSortStop(this, event, ui, self);
@@ -277,6 +292,10 @@
             if (ui.item.hasClass('bluefoot-draggable-block')) {
                 // Meaning it's not been "sorted"
                 return false;
+            }
+
+            if (self.callbackTarget && typeof self.callbackTarget.onSortUpdate === 'function') {
+                return self.callbackTarget.onSortUpdate(this, event, ui, self);
             }
 
             var koElement = ko.dataFor(ui.item[0]);

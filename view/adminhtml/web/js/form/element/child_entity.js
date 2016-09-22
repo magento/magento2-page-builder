@@ -8,10 +8,11 @@ define([
     'underscore',
     'mageUtils',
     'bluefoot/config',
+    'bluefoot/common',
     'bluefoot/stage/panel/group/block',
     'Magento_Ui/js/form/element/abstract',
     'uiRegistry'
-], function (ko, _, utils, Config, PanelBlock, Abstract, registry) {
+], function (ko, _, utils, Config, Common, PanelBlock, Abstract, registry) {
     'use strict';
 
     return Abstract.extend({
@@ -95,6 +96,64 @@ define([
             } else {
                 console.warn('Unable to load child block to add new instance');
             }
+        },
+
+        /**
+         * Event called when sorting starts on this element
+         *
+         * @param sortableThis
+         * @param event
+         * @param ui
+         * @param sortableInstance
+         */
+        onSortStart: function (sortableThis, event, ui, sortableInstance) {
+            ui.item.show();
+            ui.item.addClass('bluefoot-sorting-original');
+            ui.helper.css({width: '', height: ''});
+
+            this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+        },
+
+        /**
+         * On sort update move the element
+         *
+         * @param sortableThis
+         * @param event
+         * @param ui
+         * @param sortableInstance
+         * @returns {boolean}
+         */
+        onSortUpdate: function (sortableThis, event, ui, sortableInstance) {
+            var item = ui.item,
+                parentEl = ui.item.parent()[0],
+                newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+
+            ui.item.removeClass('bluefoot-sorting-original');
+
+            // Only run the event once
+            if (item && (sortableThis === parentEl)) {
+
+                // The element hasn't moved
+                if (this.originalIndex == newIndex) {
+                    return false;
+                }
+                // Move the array item to that new index
+                Common.moveArrayItem(this.value, this.originalIndex, newIndex);
+
+                // Remove the item from the UI
+                item.remove();
+
+                this.refreshValue();
+            }
+        },
+
+        /**
+         * Refresh the value
+         */
+        refreshValue: function () {
+            var data = this.value().slice(0);
+            this.value([]);
+            this.value(data);
         }
     });
 });
