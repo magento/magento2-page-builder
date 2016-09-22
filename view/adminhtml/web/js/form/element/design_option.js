@@ -18,7 +18,7 @@ define([
             borderRight: '-',
             borderBottom: '-',
             borderLeft: '-',
-            borderColor: '#000000',
+            borderColor: '000000',
             borderTextColor: '#FFFFFF',
             borderStyle: 'inherit',
             borderRadius: '0',
@@ -74,7 +74,9 @@ define([
                 this.borderRight(obj.border[1]);
                 this.borderBottom(obj.border[2]);
                 this.borderLeft(obj.border[3]);
-                this.borderColor(obj.borderColor);
+                if (obj.borderColor) {
+                    this.borderColor(obj.borderColor);
+                }
                 this.borderStyle(obj.borderStyle);
                 this.borderRadius(obj.borderRadius);
 

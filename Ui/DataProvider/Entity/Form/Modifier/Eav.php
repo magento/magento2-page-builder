@@ -761,6 +761,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 $meta['arguments']['data']['config']['dataType'] = 'color';
                 $meta['arguments']['data']['config']['formElement'] ='color';
                 break;
+
+            case 'tags':
+                $meta['arguments']['data']['config']['dataType'] = 'tags';
+                $meta['arguments']['data']['config']['formElement'] ='tags';
+                break;
         }
 
         return $meta;
@@ -847,13 +852,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
         $meta['arguments']['data']['config']['dataType'] = 'redactor';
         $meta['arguments']['data']['config']['formElement'] = 'redactor';
-        /*
-        $meta['arguments']['data']['config']['formElement'] = WysiwygElement::NAME;
-        $meta['arguments']['data']['config']['wysiwyg'] = true;
-        $meta['arguments']['data']['config']['wysiwygConfigData'] = [
-            'add_variables' => false,
-            'add_widgets' => false
-        ];*/
 
         return $meta;
     }
