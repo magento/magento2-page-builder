@@ -11,7 +11,6 @@ define([
     'bluefoot/config',
     'bluefoot/stage/panel/group',
     'bluefoot/stage/previews',
-    'bluefoot/modal',
     'bluefoot/ko-sortable',
     'bluefoot/ko-redactor'
 ], function (Component, ko, jQuery, Config, Group, Previews) {
