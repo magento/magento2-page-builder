@@ -315,7 +315,6 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
             Object.keys(localStorage)
                 .forEach(function(key) {
                     if (key.substring(0, cachePrefix.length) == cachePrefix) {
-                        console.log('removing ' + key);
                         localStorage.removeItem(key);
                     }
                 });
