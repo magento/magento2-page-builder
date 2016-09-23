@@ -12,8 +12,9 @@ define([
     'bluefoot/stage/structural/options',
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
-    'Magento_Ui/js/modal/confirm'
-], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation) {
+    'Magento_Ui/js/modal/confirm',
+    'jquery'
+], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, $) {
 
     /**
      * Abstract structural block
@@ -62,7 +63,15 @@ define([
     AbstractStructural.prototype.buildOptions = function () {
         // Add removal & move option that is available to all structural blocks
         this.options.addOption(this, 'move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
+        this.options.addOption(this, 'duplicate', '<i class="fa fa-files-o"></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
         this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
+
+    };
+
+    AbstractStructural.prototype.duplicate = function ($data, structural) {
+
+
+        console.log(structural);
     };
 
     /**
