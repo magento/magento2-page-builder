@@ -11,6 +11,8 @@ namespace Gene\BlueFoot\Block\Adminhtml\Stage;
  */
 class Init extends \Magento\Backend\Block\Template
 {
+    const BLUEFOOT_EDIT_CACHE_KEY = 'BLUEFOOT_EDIT_CACHE_KEY';
+
     /**
      * @var \Gene\BlueFoot\Model\Stage\Plugin
      */
@@ -27,6 +29,11 @@ class Init extends \Magento\Backend\Block\Template
     protected $stageConfig;
 
     /**
+     * @var \Magento\Framework\App\Cache\StateInterface
+     */
+    protected $cacheState;
+
+    /**
      * Init constructor.
      *
      * @param \Magento\Backend\Block\Template\Context $context
@@ -38,12 +45,16 @@ class Init extends \Magento\Backend\Block\Template
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Plugin $plugin,
         \Gene\BlueFoot\Model\Stage\Config $stageConfig,
+        \Magento\Framework\App\CacheInterface $cacheManager,
+        \Magento\Framework\App\Cache\StateInterface $cacheState,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->plugin = $plugin;
         $this->urlBuilder = $context->getUrlBuilder();
         $this->stageConfig = $stageConfig;
+        $this->cacheManager = $cacheManager;
+        $this->cacheState = $cacheState;
     }
 
     /**
@@ -53,6 +64,17 @@ class Init extends \Magento\Backend\Block\Template
      */
     public function getConfig()
     {
+        // Retrieve the cache key for the bluefoot edit panel
+        $editCacheKey = $this->cacheManager->load(self::BLUEFOOT_EDIT_CACHE_KEY);
+        if (!$editCacheKey) {
+            $editCacheKey = uniqid('bluefoot-edit-', true);
+            $this->cacheManager->save(
+                $editCacheKey,
+                self::BLUEFOOT_EDIT_CACHE_KEY,
+                [\Gene\BlueFoot\Model\Cache\Forms::CACHE_TAG]
+            );
+        }
+
         $config = new \Magento\Framework\DataObject();
         $config->addData([
             'encode_string'                    => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
@@ -63,6 +85,9 @@ class Init extends \Magento\Backend\Block\Template
             'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
             'template_delete_url'              => $this->urlBuilder->getUrl('bluefoot/stage/template_delete'),
             'template_pin_url'                 => $this->urlBuilder->getUrl('bluefoot/stage/template_pin'),
+            'edit_panel_cache_key'             => $editCacheKey,
+            'edit_panel_cache'                 =>
+                $this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Forms::TYPE_IDENTIFIER),
             'columns'                          => 6,
 
             /* Define the different column options to be given in the UI */

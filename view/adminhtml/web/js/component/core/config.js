@@ -273,10 +273,17 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @param data
          */
         addForm: function (key, data) {
-            if (typeof _config['forms'] === 'undefined') {
-                _config['forms'] = {};
+            if (this.getInitConfig('edit_panel_cache')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                    this.invalidateLocalStorage();
+                }
+                localStorage.setItem('bluefoot-edit-' + key, data);
+            } else {
+                if (typeof _config['forms'] === 'undefined') {
+                    _config['forms'] = {};
+                }
+                _config['forms'][key] = data;
             }
-            _config['forms'][key] = data;
         },
 
         /**
@@ -286,11 +293,34 @@ define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
          * @returns {*}
          */
         loadForm: function (key) {
-            if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
-                return _config['forms'][key];
+            if (this.getInitConfig('edit_panel_cache')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                    this.invalidateLocalStorage();
+                }
+                return localStorage.getItem('bluefoot-edit-' + key);
+            } else {
+                if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
+                    return _config['forms'][key];
+                }
             }
 
             return null;
+        },
+
+        /**
+         * Invalidate the localStorage cache
+         */
+        invalidateLocalStorage: function () {
+            var cachePrefix = 'bluefoot-edit-';
+            Object.keys(localStorage)
+                .forEach(function(key) {
+                    if (key.substring(0, cachePrefix.length) == cachePrefix) {
+                        console.log('removing ' + key);
+                        localStorage.removeItem(key);
+                    }
+                });
+
+            localStorage.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
         },
 
         /**
