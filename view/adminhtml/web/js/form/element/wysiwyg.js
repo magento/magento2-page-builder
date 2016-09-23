@@ -27,12 +27,14 @@ define([
             stageId: Common.guid(),
             stageContent: [],
             showBorders: false,
+            loading: false,
             links: {
                 stageActive: false,
                 stage: {},
                 stageId: false,
                 stageContent: [],
-                showBorders: false
+                showBorders: false,
+                loading: false,
             }
         },
 
@@ -42,7 +44,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('value stageId stageActive stageContent showBorders');
+                .observe('value stageId stageActive stageContent showBorders loading');
 
             return this;
         },
@@ -66,6 +68,7 @@ define([
         checkForBlueFootContent: function (node) {
             var build = new Build();
             if (build.parseStructure($(node).val())) {
+                this.loading(true);
                 return this.buildBlueFoot(false, build, node);
             }
         },

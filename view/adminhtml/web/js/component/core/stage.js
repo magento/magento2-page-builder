@@ -24,6 +24,7 @@ define([
         this.stageContent = stageContent;
         this.active = true;
         this.showBorders = parent.showBorders;
+        this.loading = parent.loading;
 
         this.save = new Save(this);
 

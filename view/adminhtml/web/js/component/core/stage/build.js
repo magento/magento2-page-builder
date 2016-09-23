@@ -5,11 +5,13 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'underscore',
+    'ko',
     'bluefoot/jquery',
     'bluefoot/config',
     'bluefoot/hook',
     'bluefoot/stage/panel/group/block'
-], function (jQuery, Config, Hook, Block) {
+], function (_, ko, jQuery, Config, Hook, Block) {
 
     /**
      * The build class handles building the stage with any previously saved content
@@ -140,9 +142,10 @@ define([
      * @private
      */
     Build.prototype._rebuild = function (entities, parent, elementBuiltFn) {
+        var completeTimeout;
 
         // Declare a function to be used as a callback when building entities
-        var elementBuilt = function () {
+        var elementBuilt = function (entity, newParent) {
             // Grab the next entity to be built
             if (entities.length > 0) {
                 var nextEntity = entities.shift();
@@ -151,8 +154,11 @@ define([
                 if (typeof elementBuiltFn === 'function') {
                     elementBuiltFn();
                 } else {
-                    this.stage.stageContent.valueHasMutated();
-                    // Stage has been rebuilt
+                    clearTimeout(completeTimeout);
+                    completeTimeout = setTimeout(function () {
+                        this.stage.stageContent.valueHasMutated();
+                        this.stage.loading(false);
+                    }.bind(this), 250);
                 }
             }
         }.bind(this);
@@ -162,6 +168,7 @@ define([
         if (!parent) {
             parent = this.stage;
         }
+
         this._rebuildIndividual(nextEntity, parent, elementBuilt);
     };
 
@@ -186,10 +193,10 @@ define([
             }
 
             if (typeof elementBuiltFn === 'function') {
-                elementBuiltFn();
+                elementBuiltFn(entity, newParent);
             }
 
-            if (entity.children) {
+            if (entity.children && entity.children.length > 0) {
                 return this._rebuild(entity.children, newParent, elementBuiltFn);
             }
         }
@@ -218,7 +225,7 @@ define([
 
         // Insert a block via it's instance into the parent
         blockInstance.insert(parent, false, blockData, function (block) {
-            if (entity.children) {
+            if (entity.children && entity.children.length > 0) {
                 jQuery.each(entity.children, function (key, children) {
                     jQuery.each(children, function (index, child) {
                         this._rebuildContentType(child, block, false, key);
@@ -227,7 +234,7 @@ define([
             }
 
             if (typeof callbackFn === 'function') {
-                callbackFn(block);
+                callbackFn(block, parent);
             }
         }.bind(this), key);
     };
