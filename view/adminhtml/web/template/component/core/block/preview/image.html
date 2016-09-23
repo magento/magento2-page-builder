@@ -1,5 +1,9 @@
 <div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-image" data-bind="css: {'loading': preview.loading()}, dropzone: {url: preview.uploadUrl(), drop: preview.attachmentDrop(), success: preview.attachmentSuccess(), error: preview.attachmentError, bindKey: 'image'}">
     <img data-bind="visible: preview.image, attr: {src: preview.image, alt: preview.alt_tag}" />
+    <div class="bluefoot-image-placeholder" data-bind="visible: !preview.image()">
+        <i class="fa fa-picture-o" aria-hidden="true"></i>
+        <p data-bind="text: $t('Drop image here to upload')"></p>
+    </div>
     <!-- ko if: preview.loading -->
         <div class="bluefoot-loading">
             <div class="spinner">
