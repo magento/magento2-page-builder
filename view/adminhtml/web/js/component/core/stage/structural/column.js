@@ -22,6 +22,7 @@ define([
      */
     function Column(parent, stage) {
         AbstractStructural.call(this, parent, stage);
+        this.ns = 'bluefoot/stage/structural/column';
 
         this.wrapperStyle = ko.observable({width: '100%'});
         this.columnDefinition = Config.getInitConfig('column_definitions')[0];
@@ -40,6 +41,21 @@ define([
 
         // Add column option
         this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
+    };
+
+    /**
+     * Copy data across to new instance
+     *
+     * @param duplicate
+     * @returns {Column}
+     */
+    Column.prototype.duplicateData = function (duplicate) {
+        // Run the parent
+        $super.duplicateData.apply(this, arguments);
+
+        // Copy over the wrapper style on duplicate
+        duplicate.updateColumData(this.data());
+        return this;
     };
 
     /**

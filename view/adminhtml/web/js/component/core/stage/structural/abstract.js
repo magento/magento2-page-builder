@@ -24,6 +24,8 @@ define([
      * @constructor
      */
     function AbstractStructural(parent, stage) {
+        this.ns = 'bluefoot/stage/structural/abstract';
+
         this.parent = parent;
         this.stage = stage || false;
 
@@ -68,10 +70,68 @@ define([
 
     };
 
-    AbstractStructural.prototype.duplicate = function ($data, structural) {
+    /**
+     * Duplicate function
+     *
+     * @param $data
+     * @param structural
+     * @param callbackFn
+     */
+    AbstractStructural.prototype.duplicate = function ($data, structural, callbackFn) {
+        /**
+         * Function constructor to allow dynamic variable passing
+         *
+         * @param f
+         * @param args
+         * @returns {*}
+         */
+        var construct = function(f, args) {
+            var params = [f].concat(args);
+            return f.bind.apply(f, params);
+        };
 
+        // Include the component by it's ns
+        require([structural.ns], function (Instance) {
+            // Duplicate the element, use bind to dynamically pass the arguments
+            var duplicate = new (construct(Instance, this.duplicateArgs()));
+            this.duplicateData(duplicate);
 
-        console.log(structural);
+            if (this.children().length > 0) {
+                ko.utils.arrayForEach(this.children(), function (child, index) {
+                    child.duplicate(false, child, function (childDuplicate) {
+                        childDuplicate.parent = duplicate;
+                        duplicate.addChild(childDuplicate, index);
+                    });
+                });
+            }
+
+            if (typeof callbackFn === 'function') {
+                callbackFn(duplicate);
+            } else {
+                var parentChildren = this.parent.children || this.parent.stageContent,
+                    newIndex = parentChildren.indexOf(this) + 1;
+                this.parent.addChild(duplicate, newIndex);
+            }
+        }.bind(this));
+    };
+
+    /**
+     * Copy data across to new instance
+     *
+     * @param duplicate
+     * @returns {AbstractStructural}
+     */
+    AbstractStructural.prototype.duplicateData = function (duplicate) {
+        duplicate.data(_.extend({}, this.data()));
+        return this;
+    };
+
+    /**
+     * Provide the arguments needed to duplicate this element
+     * @returns {*[]}
+     */
+    AbstractStructural.prototype.duplicateArgs = function () {
+        return [this.parent, this.stage];
     };
 
     /**

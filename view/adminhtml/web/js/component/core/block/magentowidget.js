@@ -8,6 +8,7 @@ define([
 
     function Widget(parent, stage, config, formData) {
         AbstractBlock.call(this, parent, stage, config, formData);
+        this.ns = 'Gene_BlueFoot/js/component/core/block/magentowidget';
     }
 
     Widget.prototype = Object.create(AbstractBlock.prototype);

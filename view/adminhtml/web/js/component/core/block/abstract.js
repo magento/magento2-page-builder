@@ -25,6 +25,7 @@ define([
      */
     function AbstractBlock(parent, stage, config, formData) {
         AbstractStructural.call(this, parent, stage);
+        this.ns = 'bluefoot/block/abstract';
 
         this.config = config;
 
@@ -56,6 +57,49 @@ define([
 
         // Add column option
         this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
+    };
+
+    /**
+     * Copy data across to new instance
+     *
+     * @param duplicate
+     * @returns {AbstractBlock}
+     */
+    AbstractBlock.prototype.duplicateData = function (duplicate) {
+        // Run the parent
+        $super.duplicateData.apply(this, arguments);
+
+        // Strip out any entity ID's
+        var data = duplicate.data();
+        data.entity_id = false;
+        if (data.preview_view) {
+            data.preview_view.entity_id = false;
+        }
+
+        // Handle data in child entities
+        if (this.childEntityKeys.length > 0) {
+            ko.utils.arrayForEach(this.childEntityKeys, function (childEntityKey) {
+                data[childEntityKey] = [];
+                ko.utils.arrayForEach(this.data()[childEntityKey], function (childEntity, index) {
+                    childEntity.duplicate(false, childEntity, function (childDuplicate) {
+                        childDuplicate.parent = duplicate;
+                        duplicate.addChild(childDuplicate, index, childEntityKey);
+                    });
+                });
+            }.bind(this));
+        }
+
+        duplicate.data(data);
+
+        return this;
+    };
+
+    /**
+     * Provide the arguments needed to duplicate this element
+     * @returns {*[]}
+     */
+    AbstractBlock.prototype.duplicateArgs = function () {
+        return [this.parent, this.stage, this.config, this.data()];
     };
 
     /**

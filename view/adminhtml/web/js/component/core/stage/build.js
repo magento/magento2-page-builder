@@ -19,20 +19,6 @@ define([
     function Build() {
         this.structure = false;
         this.stage = false;
-
-        //if (!disableBuild) {
-        //    // Register a responder to pick up any ajax actions
-        //    if (typeof Ajax !== 'undefined' && typeof Ajax.Responders !== 'undefined') {
-        //        Ajax.Responders.register({
-        //            onComplete: function (request) {
-        //                // Only run when we detect a load of a category
-        //                if (request.url.indexOf("catalog_category/edit") !== -1) {
-        //
-        //                }
-        //            }.bind(this)
-        //        });
-        //    }
-        //}
     }
 
     /**
