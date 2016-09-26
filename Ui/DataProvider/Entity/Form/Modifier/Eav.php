@@ -395,13 +395,13 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 ]
             );
 
-            $backendType = (isset($field['backend_type']) ? $field['backend_type'] : 'varchar');
-            $frontendInput = (isset($field['frontend_input']) ? $field['frontend_input'] : 'input');
+            $dataType = (isset($field['data_type']) ? $field['data_type'] : 'varchar');
+            $formElement = (isset($field['form_element']) ? $field['form_element'] : 'input');
 
             $configPath = ltrim(static::META_CONFIG_PATH, ArrayManager::DEFAULT_PATH_DELIMITER);
             $fieldMeta = $this->arrayManager->set($configPath, [], [
-                'dataType' => $backendType,
-                'formElement' => $frontendInput,
+                'dataType' => $dataType,
+                'formElement' => $formElement,
                 'visible' => true,
                 'required' => (isset($field['required']) ? $field['required'] : false),
                 'notice' => (isset($field['note']) ? $field['note'] : false),
@@ -427,8 +427,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                 // Fake an attribute using the field data
                 $attribute = $this->attributeFactory->create();
                 $attribute->setData($field);
-                $attribute->setBackendType($backendType);
-                $attribute->setFrontendInput($frontendInput);
+                $attribute->setBackendType($dataType);
+                $attribute->setFrontendInput($formElement);
                 $fieldMeta = $this->injectFieldMeta($attribute, $fieldMeta);
             }
 
