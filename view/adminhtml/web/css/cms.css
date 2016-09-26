@@ -155,6 +155,15 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   font-size: 0;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
 }
 .bluefoot-stage .bluefoot-emblem {
   background: url('images/emblem.png') center center no-repeat;
@@ -274,15 +283,6 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   box-sizing: border-box;
   position: relative;
   z-index: 10;
-  -webkit-user-select: none;
-  /* Chrome/Safari */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* IE10+ */
-  /* Rules below not implemented in browsers yet */
-  -o-user-select: none;
-  user-select: none;
 }
 .bluefoot-structure .element-children {
   min-height: 80px;
@@ -457,15 +457,6 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure.bluefoot-entity {
   margin: 4px 0 4px 4px;
   font-size: 0;
-  -user-select: all;
-  -webkit-user-select: all;
-  /* Chrome/Safari */
-  -webkit-user-select: text;
-  /* Safari only */
-  -moz-user-select: all;
-  /* Firefox */
-  -ms-user-select: all;
-  /* IE10+ */
   display: inline-block;
   width: 100%;
 }
@@ -538,6 +529,17 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   background: #243743;
   bottom: 0;
   right: 0;
+}
+.bluefoot-structure.bluefoot-entity.bluefoot-live-edit {
+  -user-select: all;
+  -webkit-user-select: all;
+  /* Chrome/Safari */
+  -webkit-user-select: text;
+  /* Safari only */
+  -moz-user-select: all;
+  /* Firefox */
+  -ms-user-select: all;
+  /* IE10+ */
 }
 .bluefoot-structure.bluefoot-entity.bluefoot-live-edit .bluefoot-options {
   top: 0;

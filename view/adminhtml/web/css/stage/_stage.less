@@ -21,6 +21,14 @@
 
     font-size: 0;
 
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+
     .bluefoot-emblem {
         background: url('images/emblem.png') center center no-repeat;
         background-size: 96px 96px;
@@ -137,14 +145,6 @@
     box-sizing: border-box;
     position: relative;
     z-index: 10;
-
-    -webkit-user-select: none; /* Chrome/Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-
-    /* Rules below not implemented in browsers yet */
-    -o-user-select: none;
-    user-select: none;
 
     .element-children {
         min-height: 80px;
@@ -338,12 +338,6 @@
         margin: 4px 0 4px 4px;
         font-size: 0;
 
-        -user-select: all;
-        -webkit-user-select: all; /* Chrome/Safari */
-        -webkit-user-select: text; /* Safari only */
-        -moz-user-select: all; /* Firefox */
-        -ms-user-select: all; /* IE10+ */
-
         &.bluefoot-abstract {
             background: @entityColor;
             border: @border-size solid transparent;
@@ -430,6 +424,12 @@
         }
 
         &.bluefoot-live-edit {
+            -user-select: all;
+            -webkit-user-select: all; /* Chrome/Safari */
+            -webkit-user-select: text; /* Safari only */
+            -moz-user-select: all; /* Firefox */
+            -ms-user-select: all; /* IE10+ */
+            
             .bluefoot-options {
                 top: 0;
                 right: 0;
