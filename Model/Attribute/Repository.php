@@ -6,7 +6,11 @@ use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * Class Repository
+ *
+ * @package Gene\BlueFoot\Model\Attribute
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Repository implements \Gene\BlueFoot\Api\AttributeRepositoryInterface
 {

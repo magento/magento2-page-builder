@@ -29,6 +29,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Gene\BlueFoot\Model\Config\ConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\Registry;
+use Gene\BlueFoot\Model\AttributeFactory;
 
 /**
  * Class Eav
@@ -176,6 +177,11 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     protected $registry;
 
     /**
+     * @var \Gene\BlueFoot\Model\AttributeFactory
+     */
+    protected $attributeFactory;
+
+    /**
      * Eav constructor.
      *
      * @param \Magento\Catalog\Model\Locator\LocatorInterface                           $locator
@@ -198,6 +204,9 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface                        $contentBlockRepositoryInterface
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface                               $configInterface
      * @param \Magento\Framework\UrlInterface                                           $urlInterface
+     * @param \Magento\Framework\Registry                                               $registry
+     * @param \Gene\BlueFoot\Model\AttributeFactory                                     $attributeFactory
+     * @param \Magento\Framework\App\ObjectManager                                      $objectManager
      * @param array                                                                     $attributesToDisable
      * @param array                                                                     $attributesToEliminate
      */
@@ -223,6 +232,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         ConfigInterface $configInterface,
         UrlInterface $urlInterface,
         Registry $registry,
+        AttributeFactory $attributeFactory,
         $attributesToDisable = [],
         $attributesToEliminate = []
     ) {
@@ -249,16 +259,24 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         $this->contentBlockRepositoryInterface = $contentBlockRepositoryInterface;
         $this->configInterface = $configInterface;
         $this->registry = $registry;
+        $this->attributeFactory = $attributeFactory;
     }
 
     /**
-     * {@inheritdoc}
+     * Modify the meta associated with the current content block
+     *
+     * @param array $meta
+     *
+     * @return array
      */
     public function modifyMeta(array $meta)
     {
         $sortOrder = 0;
 
-        if ($this->getAttributeSetId()) {
+        if ($this->isStructural()) {
+            $meta = $this->handleStructuralFields($meta, $sortOrder);
+            $meta = $this->handleGlobalFields($meta, $sortOrder);
+        } elseif ($this->getAttributeSetId()) {
             foreach ($this->getGroups() as $groupCode => $group) {
                 $attributes = !empty($this->getAttributes()[$groupCode]) ? $this->getAttributes()[$groupCode] : [];
 
@@ -284,6 +302,43 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     }
 
     /**
+     * Determine if the request is for a structural block
+     *
+     * @return bool
+     */
+    private function isStructural()
+    {
+        $identifier = $this->registry->registry('bluefoot_edit_identifier');
+        return in_array($identifier, ['row', 'column']);
+    }
+
+    /**
+     * Handle generating structural forms
+     *
+     * @param $meta
+     * @param $sortOrder
+     *
+     * @return mixed
+     */
+    public function handleStructuralFields($meta, $sortOrder)
+    {
+        $identifier = $this->registry->registry('bluefoot_edit_identifier');
+        $structural = $this->configInterface->getStructural($identifier);
+        if ($structural && isset($structural['fields'])) {
+            foreach ($structural['fields'] as &$field) {
+                // Set the default field as 'General'
+                if (!isset($field['group'])) {
+                    $field['group'] = 'General';
+                }
+            }
+
+            return $this->buildFieldsFromConfig($meta, $structural['fields'], $sortOrder);
+        }
+
+        return $meta;
+    }
+
+    /**
      * Add in any extra static global fields
      *
      * @param $meta
@@ -294,14 +349,28 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     public function handleGlobalFields($meta, $sortOrder)
     {
         $globalFields = $this->configInterface->getGlobalFields();
-        foreach ($globalFields as $globalField) {
-            $groupCode = strtolower($globalField['group']);
+        return $this->buildFieldsFromConfig($meta, $globalFields, $sortOrder);
+    }
+
+    /**
+     * Build up fields from XML configuration
+     *
+     * @param $meta
+     * @param $fields
+     * @param $sortOrder
+     *
+     * @return mixed
+     */
+    private function buildFieldsFromConfig($meta, $fields, &$sortOrder)
+    {
+        foreach ($fields as $field) {
+            $groupCode = strtolower($field['group']);
 
             // If the group doesn't exist, create it
             if (!isset($meta[$groupCode])) {
                 $meta[$groupCode]['arguments']['data']['config']['componentType'] = Fieldset::NAME;
                 $meta[$groupCode]['arguments']['data']['config']['label'] =
-                    __('%1', $globalField['group']);
+                    __('%1', $field['group']);
                 $meta[$groupCode]['arguments']['data']['config']['collapsible'] = true;
                 $meta[$groupCode]['arguments']['data']['config']['opened'] = ($sortOrder == 0);
                 $meta[$groupCode]['arguments']['data']['config']['dataScope'] = self::DATA_SCOPE;
@@ -319,41 +388,64 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
                     'formElement' => 'container',
                     'componentType' => 'container',
                     'breakLine' => false,
-                    'label' => $globalField['label'],
-                    'required' => (isset($globalField['required']) ? $globalField['required'] : false),
+                    'label' => $field['label'],
+                    'required' => (isset($field['required']) ? $field['required'] : false),
                     'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER,
                     'scopeLabel' => '',
                 ]
             );
+
+            $backendType = (isset($field['backend_type']) ? $field['backend_type'] : 'varchar');
+            $frontendInput = (isset($field['frontend_input']) ? $field['frontend_input'] : 'input');
+
             $configPath = ltrim(static::META_CONFIG_PATH, ArrayManager::DEFAULT_PATH_DELIMITER);
-            $globalFieldMeta = $this->arrayManager->set($configPath, [], [
-                'dataType' => 'text',
-                'formElement' => 'input',
+            $fieldMeta = $this->arrayManager->set($configPath, [], [
+                'dataType' => $backendType,
+                'formElement' => $frontendInput,
                 'visible' => true,
-                'required' => (isset($globalField['required']) ? $globalField['required'] : false),
-                'notice' => (isset($globalField['note']) ? $globalField['note'] : false),
-                'default' => (isset($globalField['default']) ? $globalField['default'] : ''),
-                'label' => $globalField['label'],
-                'code' => $globalField['code'],
+                'required' => (isset($field['required']) ? $field['required'] : false),
+                'notice' => (isset($field['note']) ? $field['note'] : false),
+                'default' => (isset($field['default']) ? $field['default'] : ''),
+                'label' => $field['label'],
+                'code' => $field['code'],
                 'source' => $groupCode,
                 'scopeLabel' => '',
                 'globalScope' => false,
                 'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER,
             ]);
 
-            if (!$this->arrayManager->exists($configPath . '/componentType', $globalFieldMeta)) {
-                $globalFieldMeta = $this->arrayManager->merge($configPath, $globalFieldMeta, [
+            if (!$this->arrayManager->exists($configPath . '/componentType', $fieldMeta)) {
+                $fieldMeta = $this->arrayManager->merge($configPath, $fieldMeta, [
                     'componentType' => Field::NAME,
                 ]);
             }
 
             // Inject any widget data
-            if ($globalField['type'] == 'widget' && isset($globalField['widget'])) {
-                $globalFieldMeta = $this->injectWidgetName($globalField['widget'], $globalFieldMeta);
+            if ($field['type'] == 'widget' && isset($field['widget'])) {
+                $fieldMeta = $this->injectWidgetName($field['widget'], $fieldMeta);
+            } else {
+                // Fake an attribute using the field data
+                $attribute = $this->attributeFactory->create();
+                $attribute->setData($field);
+                $attribute->setBackendType($backendType);
+                $attribute->setFrontendInput($frontendInput);
+                $fieldMeta = $this->injectFieldMeta($attribute, $fieldMeta);
+            }
+
+            // Dynamically load in the source model
+            if (isset($field['source_model'])) {
+                // @todo how to complete this without object manager
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $sourceModel = $objectManager->create($field['source_model']);
+                if (method_exists($sourceModel, 'toOptionArray')) {
+                    $fieldMeta = $this->arrayManager->merge($configPath, $fieldMeta, [
+                        'options' => $sourceModel->toOptionArray()
+                    ]);
+                }
             }
 
             // Add our meta field into our container
-            $containerMeta['children'][$globalField['code']] = $globalFieldMeta;
+            $containerMeta['children'][$field['code']] = $fieldMeta;
 
             // Add the container as a child of the meta group
             $meta[$groupCode]['children'][] = $containerMeta;
@@ -614,34 +706,49 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         if ($attribute->getWidget()) {
             $meta = $this->injectWidget($attribute, $meta);
         } else {
-            // Generic magento fields
-            switch ($attribute->getFrontendInput()) {
-                // Core BlueFoot  child entities input
-                case 'child_entity':
-                    $meta = $this->customizeChildEntity($attribute, $meta);
-                    break;
+            $meta = $this->injectFieldMeta($attribute, $meta);
+        }
 
-                case 'boolean':
-                    $meta = $this->customizeCheckbox($attribute, $meta);
-                    break;
+        return $meta;
+    }
 
-                case 'textarea':
-                    $meta = $this->customizeWysiwyg($attribute, $meta);
-                    break;
+    /**
+     * Inject the field meta
+     *
+     * @param \Gene\BlueFoot\Api\Data\AttributeInterface $attribute
+     * @param                                            $meta
+     *
+     * @return array
+     */
+    protected function injectFieldMeta(BlueFootAttributeInterface $attribute, $meta)
+    {
+        // Generic magento fields
+        switch ($attribute->getFrontendInput()) {
+            // Core BlueFoot  child entities input
+            case 'child_entity':
+                $meta = $this->customizeChildEntity($attribute, $meta);
+                break;
 
-                case 'price':
-                    $meta = $this->customizePriceAttribute($attribute, $meta);
-                    break;
+            case 'boolean':
+                $meta = $this->customizeCheckbox($attribute, $meta);
+                break;
 
-                case 'image':
-                    $meta = $this->customizeImage($attribute, $meta);
-                    break;
+            case 'textarea':
+                $meta = $this->customizeWysiwyg($attribute, $meta);
+                break;
 
-                case 'gallery':
-                    // Gallery attribute is being handled by "Images And Videos" section
-                    $meta = [];
-                    break;
-            }
+            case 'price':
+                $meta = $this->customizePriceAttribute($attribute, $meta);
+                break;
+
+            case 'image':
+                $meta = $this->customizeImage($attribute, $meta);
+                break;
+
+            case 'gallery':
+                // Gallery attribute is being handled by "Images And Videos" section
+                $meta = [];
+                break;
         }
 
         return $meta;

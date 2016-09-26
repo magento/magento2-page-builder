@@ -154,20 +154,18 @@
             <fields>
                 <field code="template">
                     <label><![CDATA[Template]]></label>
-                    <type>select</type>
+                    <type>int</type>
+                    <backend_type>select</backend_type>
+                    <frontend_input>select</frontend_input>
                     <code>template</code>
+                    <default>default.phtml</default>
                     <source_model>Gene\BlueFoot\Model\Stage\Source\Row\Template</source_model>
-                </field>
-                <field code="background_color">
-                    <label><![CDATA[Background Color]]></label>
-                    <type>widget</type>
-                    <widget>color</widget>
-                    <code>background_color</code>
                 </field>
                 <field code="background_image">
                     <label><![CDATA[Background Image]]></label>
-                    <type>widget</type>
-                    <widget>upload</widget>
+                    <type>text</type>
+                    <backend_type>text</backend_type>
+                    <frontend_input>image</frontend_input>
                     <code>background_image</code>
                 </field>
                 <field code="css_classes">
@@ -186,9 +184,10 @@
                 <field code="remove_padding">
                     <group><![CDATA[Advanced]]></group>
                     <label><![CDATA[Remove Padding]]></label>
-                    <type>select</type>
+                    <type>boolean</type>
+                    <backend_type>int</backend_type>
+                    <frontend_input>boolean</frontend_input>
                     <code>remove_padding</code>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field code="css_classes">
                     <group><![CDATA[Advanced]]></group>

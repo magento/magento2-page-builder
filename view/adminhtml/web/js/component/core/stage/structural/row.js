@@ -23,6 +23,10 @@ define([
     function Row(parent, stage) {
         AbstractStructural.call(this, parent, stage);
         this.ns = 'bluefoot/stage/structural/row';
+        this.config = {
+            code: 'row',
+            name: $t('Row')
+        };
     }
 
     Row.prototype = Object.create(AbstractStructural.prototype);

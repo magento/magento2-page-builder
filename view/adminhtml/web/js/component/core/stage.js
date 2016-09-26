@@ -75,6 +75,7 @@ define([
      */
     Stage.prototype.addRow = function (self, data) {
         var row = new Row(self, self);
+        row.data(data);
         this.addChild(row);
 
         return row;

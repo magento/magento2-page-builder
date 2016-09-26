@@ -13,8 +13,8 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
     'Magento_Ui/js/modal/confirm',
-    'jquery'
-], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, $) {
+    'bluefoot/stage/edit'
+], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, Edit) {
 
     /**
      * Abstract structural block
@@ -65,9 +65,9 @@ define([
     AbstractStructural.prototype.buildOptions = function () {
         // Add removal & move option that is available to all structural blocks
         this.options.addOption(this, 'move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
+        this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
         this.options.addOption(this, 'duplicate', '<i class="fa fa-files-o"></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
         this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
-
     };
 
     /**
@@ -79,7 +79,7 @@ define([
      */
     AbstractStructural.prototype.duplicate = function ($data, structural, callbackFn) {
         /**
-         * Function constructor to allow dynamic variable passing
+         * Function constructor to allow dynamic argument passing
          *
          * @param f
          * @param args
@@ -132,6 +132,13 @@ define([
      */
     AbstractStructural.prototype.duplicateArgs = function () {
         return [this.parent, this.stage];
+    };
+
+    /**
+     * Edit a block
+     */
+    AbstractStructural.prototype.edit = function () {
+        return new Edit(this);
     };
 
     /**

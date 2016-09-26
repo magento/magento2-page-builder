@@ -23,6 +23,10 @@ define([
     function Column(parent, stage) {
         AbstractStructural.call(this, parent, stage);
         this.ns = 'bluefoot/stage/structural/column';
+        this.config = {
+            code: 'column',
+            name: $t('Column')
+        };
 
         this.wrapperStyle = ko.observable({width: '100%'});
         this.columnDefinition = Config.getInitConfig('column_definitions')[0];

@@ -27,21 +27,29 @@ abstract class Attribute extends \Magento\Backend\App\Action
     protected $resultPageFactory;
 
     /**
+     * @var \Gene\BlueFoot\Api\AttributeRepositoryInterface
+     */
+    protected $attributeRepositoryInterface;
+
+    /**
      * Attribute constructor.
      *
-     * @param \Magento\Backend\App\Action\Context        $context
-     * @param \Magento\Framework\Registry                $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Backend\App\Action\Context             $context
+     * @param \Magento\Framework\Registry                     $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory      $resultPageFactory
+     * @param \Gene\BlueFoot\Api\AttributeRepositoryInterface $attributeRepositoryInterface
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Gene\BlueFoot\Api\AttributeRepositoryInterface $attributeRepositoryInterface
     ) {
         parent::__construct($context);
 
         $this->coreRegistry = $coreRegistry;
         $this->resultPageFactory = $resultPageFactory;
+        $this->attributeRepositoryInterface = $attributeRepositoryInterface;
     }
 
     /**

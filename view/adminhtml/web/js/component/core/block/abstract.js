@@ -9,10 +9,9 @@ define([
     'ko',
     'jquery',
     'bluefoot/stage/structural/abstract',
-    'bluefoot/stage/edit',
     'mage/translate',
     'bluefoot/stage/previews'
-], function (_, ko, $, AbstractStructural, Edit, $t, Preview) {
+], function (_, ko, $, AbstractStructural, $t, Preview) {
 
     /**
      * Class for entity blocks being included on the page
@@ -47,17 +46,6 @@ define([
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
     var $super = AbstractStructural.prototype;
-
-    /**
-     * Build up the options available on a row
-     */
-    AbstractBlock.prototype.buildOptions = function () {
-        // Run the parent
-        $super.buildOptions.apply(this, arguments);
-
-        // Add column option
-        this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
-    };
 
     /**
      * Copy data across to new instance
@@ -100,13 +88,6 @@ define([
      */
     AbstractBlock.prototype.duplicateArgs = function () {
         return [this.parent, this.stage, this.config, this.data()];
-    };
-
-    /**
-     * Edit a block
-     */
-    AbstractBlock.prototype.edit = function () {
-        return new Edit(this);
     };
 
     /**
