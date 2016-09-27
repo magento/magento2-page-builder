@@ -1,6 +1,7 @@
 /**
  * Font size for Redactor
- * @author Aidan Threadgold <aidan@gene.co.uk>
+ *
+ * @author Aidan Threadgold <aidan@gene.co.uk> & Dave Macaulay <dave@gene.co.uk>
  */
 define(["jquery", "mage/translate"], function(jQuery, $t) {
     /**
@@ -34,14 +35,41 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                     // Attach the button
                     var button = this.button.addFirst('fontSize', $t('Size'));
                     this.button.addDropdown(button, dropdown);
-                    this.button.setIcon(button, '12px');
+                    this.button.setIcon(button, '14px');
+
+                    this.$editor.on('keyup.redactor-limiter', this.fontSize.handleChange.bind(this));
+                    this.$editor.on('focus.redactor', this.fontSize.handleChange.bind(this));
+                    this.$editor.on('click', this.fontSize.handleChange.bind(this));
+                    this.$editor.on('sync', this.fontSize.handleChange.bind(this));
                 },
 
-                setFontSize: function(s) {
-                    this.inline.removeFormat();
+                /**
+                 * Update the button based on the selection
+                 *
+                 * @param event
+                 */
+                handleChange: function (event) {
+                    var element = this.selection.element(),
+                        fontSize = 14,
+                        button = this.button.get('fontSize');
 
+                    if (button) {
+                        if (jQuery(element).css('fontSize')) {
+                            fontSize = parseInt(jQuery(element).css('fontSize'));
+                        }
+                        this.button.setIcon(button, fontSize + 'px');
+                    }
+                },
+
+                /**
+                 * Set the font-size
+                 *
+                 * @param s
+                 */
+                setFontSize: function(s) {
                     if (s) {
                         this.inline.format('span', 'style', 'font-size: ' + s + 'px');
+                        this.button.setIcon(this.button.get('fontSize'), s + 'px');
                     }
                 }
             };

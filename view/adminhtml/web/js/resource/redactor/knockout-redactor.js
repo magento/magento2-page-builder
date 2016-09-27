@@ -7,8 +7,9 @@ define([
     "jquery",
     "Gene_BlueFoot/js/resource/redactor/library/redactor",
     "Gene_BlueFoot/js/resource/redactor/plugins/magentovars",
-    "Gene_BlueFoot/js/resource/redactor/plugins/font-size"
-], function (ko, jQuery, Redactor, PluginMagentoVars, PluginFontSize) {
+    "Gene_BlueFoot/js/resource/redactor/plugins/font-size",
+    "Gene_BlueFoot/js/resource/redactor/plugins/font-color"
+], function (ko, jQuery, Redactor) {
 
     // Attach redactor plugins based on arguments passed to this function.
     for (var i=3; i < arguments.length; i++) {
@@ -28,7 +29,8 @@ define([
                             value( this.code.get() );
                         }
                     },
-                    plugins: ['magentoVars', 'fontSize']
+                    plugins: ['magentoVars', 'fontSize', 'fontColor'],
+                    buttons: ['bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link']
                 },
                 options = valueAccessor();
 
