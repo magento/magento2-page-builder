@@ -100,5 +100,12 @@ define([
         return {};
     };
 
+    /**
+     * Open the template manager; passing the stage context through
+     */
+    Stage.prototype.openTemplateManager = function() {
+        registry.get('bluefoot-templates').openManager(this);
+    };
+
     return Stage;
 });

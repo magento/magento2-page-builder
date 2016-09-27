@@ -5,7 +5,7 @@ define([
     'uiRegistry'
 ], function (Component, _, applyMain, registry) {
 
-    function buildComponent(componentName) {
+    function buildFormComponent(componentName) {
         var fullPath = componentName + '.' + componentName,
             formPath = fullPath + '.modal_form',
             config = {
@@ -78,19 +78,25 @@ define([
             }
         };
 
-        console.log(componentName);
-
         // Add our new sidebar UI component
         applyMain.applyFor.call(null, false, config, 'Magento_Ui/js/core/app');
     }
 
     return Component.extend({
-        openManagerModal: function () {
+        defaults: {
+            stage: null,
+            formBuilt: false
+        },
 
+        openManager: function (context) {
+            this.stage = context;
+            this.openFormModal();
         },
 
         openFormModal: function() {
-            buildComponent("bluefoot_template_create");
+            if (!this.formBuilt) {
+                buildFormComponent("bluefoot_template_create");
+            }
         }
     });
 });
