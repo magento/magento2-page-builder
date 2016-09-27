@@ -89,8 +89,18 @@
                     jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
                     jQuery(this.parentNode.parentNode).find('.element-children').first().append(jQuery('<div />').addClass('bluefoot-resize-size'));
 
+                    // Disable user select on mouse down
+                    if (typeof context.currentColumn !== 'undefined' && typeof context.currentColumn.stage !== 'undefined') {
+                        context.currentColumn.stage.userSelect(false);
+                    }
+
                     // If the mouse leaves the window kill the bluefoot resizing functionality
                     jQuery('body').mouseleave(function () {
+                        // Disable user select on mouse down
+                        if (typeof context.currentColumn !== 'undefined' && typeof context.currentColumn.stage !== 'undefined') {
+                            context.currentColumn.stage.userSelect(true);
+                        }
+
                         context.currentColumn = null;
                         jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
                         jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {
@@ -104,6 +114,11 @@
                     return true;
                 })
                 .on('mouseup', function (event, ui) {
+                    // Disable user select on mouse down
+                    if (typeof context.currentColumn !== 'undefined' && typeof context.currentColumn.stage !== 'undefined') {
+                        context.currentColumn.stage.userSelect(true);
+                    }
+
                     context.currentColumn = null;
                     jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
                     jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {

@@ -24,10 +24,12 @@ define([
         this.stageContent = stageContent;
         this.active = true;
         this.showBorders = parent.showBorders;
+        this.userSelect = parent.userSelect;
         this.loading = parent.loading;
 
         this.save = new Save(this);
 
+        // @todo remove
         window.registry = registry;
     }
 

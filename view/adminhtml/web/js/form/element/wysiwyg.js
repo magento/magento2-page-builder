@@ -28,6 +28,7 @@ define([
             stageContent: [],
             showBorders: false,
             loading: false,
+            userSelect: true,
             links: {
                 stageActive: false,
                 stage: {},
@@ -35,6 +36,7 @@ define([
                 stageContent: [],
                 showBorders: false,
                 loading: false,
+                userSelect: true,
             }
         },
 
@@ -44,7 +46,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect');
 
             return this;
         },
