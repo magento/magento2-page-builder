@@ -1,29 +1,36 @@
 define([
-    'uiComponent',
-    'underscore',
+    'Magento_Ui/js/modal/modal-component',
+    'jquery',
     'mage/apply/main',
     'uiRegistry'
-], function (Component, _, applyMain, registry) {
+], function (Modal, $, applyMain, registry) {
 
-    function buildFormComponent(componentName) {
+    function buildFormComponent(componentName, params) {
         var fullPath = componentName + '.' + componentName,
-            formPath = fullPath + '.modal_form',
-            config = {
-                "types": {
-                    "container": {
-                        "extends": componentName
-                    },
-                    "dataSource": {
-                        "component": "Magento_Ui\/js\/form\/provider"
-                    },
-                    "html_content": {
-                        "component": "Magento_Ui\/js\/form\/components\/html",
-                        "extends": componentName
-                    }
-                },
-                "components": {}
-            };
+            formPath = fullPath + '.modal_form';
 
+        if (registry.get(fullPath)) {
+            registry.get(fullPath).openModal();
+            return;
+        }
+
+        var config = {
+            "types": {
+                "container": {
+                    "extends": componentName
+                },
+                "dataSource": {
+                    "component": "Magento_Ui\/js\/form\/provider"
+                },
+                "html_content": {
+                    "component": "Magento_Ui\/js\/form\/components\/html",
+                    "extends": componentName
+                }
+            },
+            "components": {}
+        };
+
+        // Inject into bluefoot edit panel to force rendering
         registry.get('bluefoot-edit').addPanel(fullPath);
 
         // Add in our components
@@ -43,8 +50,8 @@ define([
                         "generatedName": componentName,
                         "formPath": formPath,
                         "provider": componentName + '_form.contentblock_form_data_source',
-                        "update_url": 'updateaidan',
-                        "render_url": 'renderaidan',
+                        "update_url": params.update_url,
+                        "render_url": params.render_url,
                         "autoRender": true,
                         "dataLinks": {
                             "imports": false,
@@ -82,21 +89,37 @@ define([
         applyMain.applyFor.call(null, false, config, 'Magento_Ui/js/core/app');
     }
 
-    return Component.extend({
-        defaults: {
-            stage: null,
-            formBuilt: false
-        },
+    return Modal.extend({
+        stage: null,
+        isRendered: false,
 
         openManager: function (context) {
             this.stage = context;
-            this.openFormModal();
+
+            // Open the modal if it's already been rendered
+            if (this.isRendered) {
+               return this.openModal();
+            }
+
+            // Render the modal - triggers the async callback in initializeContent()
+            registry.get('bluefoot-edit').addPanel(this.name);
         },
 
-        openFormModal: function() {
-            if (!this.formBuilt) {
-                buildFormComponent("bluefoot_template_create");
-            }
+        initModal: function() {
+            this._super();
+            this.isRendered = true;
+            this.openModal();
+
+            return this;
+        },
+
+        actionSaveTemplate: function() {
+            console.log(this);
+
+            buildFormComponent("bluefoot_template_create", {
+                render_url: this.create_modal.render_url,
+                update_url: this.create_modal.update_url
+            });
         }
     });
 });

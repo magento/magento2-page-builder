@@ -67,6 +67,7 @@ define([
             }
 
             this.previousParams = params || {};
+            this.params.form_key = window.FORM_KEY;
 
             $.async({
                 component: this.name,
@@ -82,6 +83,11 @@ define([
             }.bind(this));
 
             return this;
+        },
+
+        onRender: function(data) {
+            console.log(this);
+            this._super(data);
         }
 
     });

@@ -104,7 +104,7 @@ define([
      * Open the template manager; passing the stage context through
      */
     Stage.prototype.openTemplateManager = function() {
-        registry.get('bluefoot-templates').openManager(this);
+        registry.get('bluefoot_template_manager.bluefoot_template_manager').openManager(this);
     };
 
     return Stage;
