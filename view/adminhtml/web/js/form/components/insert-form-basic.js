@@ -88,6 +88,10 @@ define([
         onRender: function(data) {
             console.log(this);
             this._super(data);
+        },
+
+        close: function() {
+            alert(1);
         }
 
     });
