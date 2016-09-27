@@ -8,7 +8,8 @@ define([
     'ko',
     'underscore',
     'jquery',
-    'bluefoot/config'
+    'bluefoot/config',
+    'bluefoot/ko-liveedit'
 ], function (ko, _, $, Config) {
 
     /**
