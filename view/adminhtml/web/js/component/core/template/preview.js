@@ -1,8 +1,9 @@
 define([
     'Magento_Ui/js/form/element/abstract',
     'jquery',
+    'uiRegistry',
     'Gene_BlueFoot/js/resource/html2canvas'
-], function (AbstractField, $) {
+], function (AbstractField, $, registry) {
     'use strict';
 
     return AbstractField.extend({
@@ -11,6 +12,10 @@ define([
         initObservable: function () {
             this._super();
             this.observe('noPreviewLoaded');
+
+            setTimeout(function() {
+                this.buildPreview();
+            }.bind(this), 100);
 
             return this;
         },
@@ -23,8 +28,8 @@ define([
         /**
          * Build the preview image
          */
-        buildPreview: function(stage) {
-            var templatePreview,
+        buildPreview: function() {
+            var stage = registry.get(this.stageNameSpace).stage,
                 stageEl = $('#' + stage.id());
 
             // hide the add button

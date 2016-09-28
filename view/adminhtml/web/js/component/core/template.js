@@ -47,7 +47,7 @@ define([
                     "type": "container",
                     "name": "modal_form",
                     "config": {
-                        "component": "Gene_BlueFoot\/js\/form\/components\/insert-form-basic",
+                        "component": "Gene_BlueFoot\/js\/form\/components\/insert-form-template",
                         "generatedName": componentName,
                         "formPath": formPath,
                         "provider": componentName + '_form.contentblock_form_data_source',
@@ -62,7 +62,10 @@ define([
                         "ns": componentName,
                         "toolbarContainer": "${ $.parentName }",
                         "externalProvider": "${ $.ns }." + componentName,
-                        "formSubmitType": "ajax"
+                        "formSubmitType": "ajax",
+                        "formNameSpace": "bluefoot_template_create.bluefoot_template_create",
+                        "modalFormNameSpace": "bluefoot_template_create_modal.bluefoot_template_create_modal.modal_form",
+                        "managerModalNameSpace": "bluefoot_template_manager.bluefoot_template_manager"
                     }
                 }
             },
@@ -120,6 +123,10 @@ define([
                 render_url: this.create_modal.render_url,
                 update_url: this.create_modal.update_url
             });
+        },
+
+        getStageStructure: function() {
+            return JSON.stringify(this.stage.toJSON());
         }
     });
 });

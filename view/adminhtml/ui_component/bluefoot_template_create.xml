@@ -28,7 +28,7 @@
             <argument name="requestFieldName" xsi:type="string">template_id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="backoffice/profile/save"/>
+                    <item name="submit_url" xsi:type="url" path="bluefoot/stage/template_save"/>
                 </item>
             </argument>
         </argument>
@@ -56,7 +56,7 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
                     <item name="sortOrder" xsi:type="number">10</item>
-                    <item name="dataScope" xsi:type="string">bluefoot_template_manager</item>
+                    <item name="dataScope" xsi:type="string">name</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
@@ -64,7 +64,7 @@
             </argument>
         </field>
 
-        <!--<field name="preview" class="Gene\BlueFoot\Ui\Component\Form\Element\DataType\TemplatePreview">
+        <field name="preview" class="Gene\BlueFoot\Ui\Component\Form\Element\DataType\TemplatePreview">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Template Preview</item>
@@ -72,13 +72,17 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
-                    <item name="dataScope" xsi:type="string">bluefoot_template_manager</item>
+                    <item name="dataScope" xsi:type="string">preview</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
                 </item>
                 <item name="js_config" xsi:type="array">
                     <item name="component" xsi:type="string">Gene_BlueFoot/js/component/core/template/preview</item>
                     <item name="template" xsi:type="string">Gene_BlueFoot/component/core/template/preview</item>
+                    <item name="stageNameSpace" xsi:type="string">bluefoot_template_manager.bluefoot_template_manager</item>
                 </item>
             </argument>
-        </field>-->
+        </field>
     </fieldset>
 </form>

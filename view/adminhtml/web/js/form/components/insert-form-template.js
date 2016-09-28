@@ -1,5 +1,5 @@
 /**
- * Dynamically load in a basic form
+ * Dynamically load in the form to create a template
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
@@ -12,6 +12,16 @@ define([
     'use strict';
 
     return InsertForm.extend({
+        /**
+         * Registry reference to the template manager modal
+         */
+        managerModalNameSpace: null,
+
+        /**
+         * Registry reference to the actual new template form
+         */
+        formNameSpace: null,
+
         /**
          * If auto render, also open the modal
          *
@@ -40,6 +50,8 @@ define([
                         internalForm.destroyAdapter();
                     }
                 }.bind(this), 5);
+
+            // @todo reset form
 
             return registry.get(this.parentName).openModal();
         },
@@ -85,13 +97,49 @@ define([
             return this;
         },
 
+        /**
+         * Close the modal and don't save the template
+         */
         close: function() {
             this.closeModal();
         },
 
+        /**
+         * Save the template
+         * @returns {boolean}
+         */
         save: function() {
-            console.log(arguments);
-            debugger;
+            // Validate the form
+            var form = registry.get(this.formNameSpace),
+                modal = registry.get(this.managerModalNameSpace);
+            form.validate();
+
+            if (!form.additionalInvalid && !form.source.get('params.invalid')) {
+                // Get form data and stage structure
+                var entityData = form.source.data;
+                entityData.form_key = window.FORM_KEY;
+                entityData.structure = modal.getStageStructure();
+
+                // Loading state on modal
+                registry.get(this.modalFormNameSpace).loading(true);
+
+                // Ajax post to save the template
+                var request = $.ajax({
+                    method: "POST",
+                    url: form.source.submit_url,
+                    data: entityData
+                });
+                request.done(function() {
+                    // Destroy the original instance of the source
+                    form.destroyAdapter();
+                    form.source.destroy();
+
+                    this.closeModal();
+                    modal.closeModal();
+                }.bind(this));
+            }
+
+            return false;
         }
     });
 });
