@@ -203,12 +203,17 @@
 
     .bluefoot-options {
         position: absolute;
-        left: 30%;
-        right: 30%;
+        left: 0;
+        right: 0;
         top: 0;
+        height: 0;
         transform: translateY(-100%);
         text-align: center;
         z-index: 50;
+
+        .bluefoot-options-wrapper {
+            height: 0;
+        }
 
         ul.bluefoot-options-links {
             display: none;
@@ -217,6 +222,7 @@
             padding: 0 8px;
             .border-radius(3px);
             box-sizing: border-box;
+            transform: translateY(-50%);
 
             font-size: 0;
 
@@ -356,6 +362,7 @@
         padding: 0 8px 0 0;
         ul.bluefoot-options-links {
             background: @columnColor;
+            transform: translateY(-100%);
         }
         .bluefoot-id {
             background: @columnColor;
