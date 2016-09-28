@@ -8,7 +8,7 @@ define([
     'underscore',
     'ko',
     'jquery',
-    './abstract'
+    'Gene_BlueFoot/js/component/core/block/abstract'
 ], function (_, ko, $, AbstractBlock) {
 
     /**
