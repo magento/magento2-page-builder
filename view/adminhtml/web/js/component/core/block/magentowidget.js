@@ -1,14 +1,25 @@
 define([
     'jquery',
-    'bluefoot/block/abstract',
+    'Gene_BlueFoot/js/component/core/block/abstract',
     'bluefoot/config',
     'bluefoot/common',
     'Gene_BlueFoot/js/form/element/magentowidget'
 ], function (jQuery, AbstractBlock, Config, Common) {
 
+    /**
+     * Widget constructor
+     *
+     * @param parent
+     * @param stage
+     * @param config
+     * @param formData
+     * @constructor
+     */
     function Widget(parent, stage, config, formData) {
         AbstractBlock.call(this, parent, stage, config, formData);
         this.ns = 'Gene_BlueFoot/js/component/core/block/magentowidget';
+
+        this.editOnInsert = true;
     }
 
     Widget.prototype = Object.create(AbstractBlock.prototype);

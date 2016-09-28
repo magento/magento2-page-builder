@@ -8,7 +8,7 @@ define([
     'underscore',
     'ko',
     'jquery',
-    './abstract'
+    'Gene_BlueFoot/js/component/core/block/abstract'
 ], function (_, ko, $, AbstractBlock) {
 
     /**
@@ -22,7 +22,7 @@ define([
      */
     function InlineBlock(parent, stage, config, formData) {
         AbstractBlock.call(this, parent, stage, config, formData);
-        this.ns = 'bluefoot/block/inline';
+        this.ns = 'Gene_BlueFoot/js/component/core/block/inline';
 
         this.editOnInsert = false;
     }
