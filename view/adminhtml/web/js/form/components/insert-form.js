@@ -200,6 +200,8 @@ define([
             var form = registry.get(this.ns + '_form.' + this.ns + '_form');
             form.validate();
 
+            alert(1);
+
             if (!form.additionalInvalid && !form.source.get('params.invalid')) {
                 var entityData = form.source.get('data.entity');
                 this.editingEntity.data(entityData);

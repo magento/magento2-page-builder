@@ -2,8 +2,9 @@ define([
     'Magento_Ui/js/modal/modal-component',
     'jquery',
     'mage/apply/main',
-    'uiRegistry'
-], function (Modal, $, applyMain, registry) {
+    'uiRegistry',
+    'mage/translate'
+], function (Modal, $, applyMain, registry, $t) {
 
     function buildFormComponent(componentName, params) {
         var fullPath = componentName + '.' + componentName,
@@ -68,7 +69,8 @@ define([
             "config": {
                 "component": "Magento_Ui\/js\/modal\/modal-component",
                 "options": {
-                    "type": "slide"
+                    "type": "slide",
+                    "title": $t("New Template")
                 }
             }
         };
@@ -114,9 +116,7 @@ define([
         },
 
         actionSaveTemplate: function() {
-            console.log(this);
-
-            buildFormComponent("bluefoot_template_create", {
+            buildFormComponent("bluefoot_template_create_modal", {
                 render_url: this.create_modal.render_url,
                 update_url: this.create_modal.update_url
             });

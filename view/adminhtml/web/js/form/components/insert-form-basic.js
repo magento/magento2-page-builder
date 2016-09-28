@@ -85,14 +85,13 @@ define([
             return this;
         },
 
-        onRender: function(data) {
-            console.log(this);
-            this._super(data);
+        close: function() {
+            this.closeModal();
         },
 
-        close: function() {
-            alert(1);
+        save: function() {
+            console.log(arguments);
+            debugger;
         }
-
     });
 });
