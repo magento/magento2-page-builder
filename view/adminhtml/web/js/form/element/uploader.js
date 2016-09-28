@@ -12,6 +12,14 @@ define([
 ], function (AbstractField, _, $t, Config) {
     'use strict';
 
+    var featherEditor = new Aviary.Feather({
+        apiKey: '4a3d25f47b984cf1aaf95ab374aa90c9',
+        theme: 'minimum',
+        onSave: function(imageID, newURL) {
+            console.log(arguments);
+        }
+    });
+
     return AbstractField.extend({
 
         defaults: {
@@ -87,6 +95,19 @@ define([
          */
         removeImage: function() {
             this.value("");
+        },
+
+        /**
+         * Ability to edit images
+         */
+        editImage: function () {
+            window.AV_ga = function () {
+                console.log(arguments);
+            };
+            featherEditor.launch({
+                image: this.uid + '-image',
+                url: this.value()
+            });
         }
 
     });

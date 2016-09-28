@@ -24,20 +24,30 @@ define([
         init: function (element, valueAccessor, allBindingsAccessor) {
             var value = allBindingsAccessor().value,
                 defaults = {
-                    callbacks: {
-                        blur: function(e) {
-                            value( this.code.get() );
-                            this.$element.parent().removeClass('redactor-active');
-                        },
-                        focus: function () {
-                            this.$element.parent().addClass('redactor-active');
-                        }
-                    },
                     plugins: ['magentoVars', 'fontSize', 'fontColor'],
                     buttons: ['bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link']
                 },
                 options = valueAccessor(),
                 recentValue = '';
+
+            // Default callbacks
+            options.callbacks = {};
+            options.callbacks.blur = function () {
+                var newValue = this.code.get();
+
+                // Strip HTML from the value
+                if (options.stripHtml) {
+                    var tmp = document.createElement("DIV");
+                    tmp.innerHTML = newValue;
+                    newValue = tmp.textContent || tmp.innerText || "";
+                }
+
+                value(newValue);
+                this.$element.parent().removeClass('redactor-active');
+            };
+            options.callbacks.focus = function () {
+                this.$element.parent().addClass('redactor-active');
+            };
 
             options = jQuery.extend(defaults, options);
 
