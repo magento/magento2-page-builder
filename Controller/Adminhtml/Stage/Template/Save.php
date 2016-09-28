@@ -76,6 +76,13 @@ class Save extends \Magento\Backend\App\Action
                 return $this->resultJsonFactory->create()->setData(['success' => false]);
             }
 
+            // Strip out entity IDs
+            $postData['structure'] = preg_replace(
+                "/(['|\"])entity_id(['|\"]):(['|\"])([0-9]{0,100})(['|\"])/",
+                "$1entity_id$2:null",
+                $postData['structure']
+            );
+
             // Create the modal instance
             $template = $this->template->create();
             $template->addData([

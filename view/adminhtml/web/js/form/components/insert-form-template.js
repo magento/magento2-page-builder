@@ -135,7 +135,12 @@ define([
                     form.source.destroy();
 
                     this.closeModal();
-                    modal.closeModal();
+                    //modal.closeModal();
+
+                    // Rebuild the list of templates
+                    var list = registry.get(this.managerModalNameSpace + '.bluefoot_template_manager_content');
+                    list.loading(true);
+                    list.dataRequest();
                 }.bind(this));
             }
 

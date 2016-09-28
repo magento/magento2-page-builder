@@ -1,3 +1,7 @@
+/**
+ * Template list UI component
+ * @author Aidan Threadgold <aidan@gene.co.uk>
+ */
 define([
     'uiElement',
     'jquery',

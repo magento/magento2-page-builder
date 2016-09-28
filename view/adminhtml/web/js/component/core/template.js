@@ -1,11 +1,21 @@
+/**
+ * Template Manager modal ui component.
+ * @author Aidan Threadgold <aidan@gene.co.uk>
+ */
 define([
     'Magento_Ui/js/modal/modal-component',
     'jquery',
     'mage/apply/main',
     'uiRegistry',
-    'mage/translate'
-], function (Modal, $, applyMain, registry, $t) {
+    'mage/translate',
+    'bluefoot/stage/build'
+], function (Modal, $, applyMain, registry, $t, build) {
 
+    /**
+     * Dynamically create a form ui component.
+     * @param componentName
+     * @param params
+     */
     function buildFormComponent(componentName, params) {
         var fullPath = componentName + '.' + componentName,
             formPath = fullPath + '.modal_form';
@@ -97,7 +107,13 @@ define([
     return Modal.extend({
         stage: null,
         isRendered: false,
+        selectedTemplate: null,
 
+        /**
+         * Open the template manager modal
+         * @param context
+         * @returns {*}
+         */
         openManager: function (context) {
             this.stage = context;
 
@@ -110,6 +126,9 @@ define([
             registry.get('bluefoot-edit').addPanel(this.name);
         },
 
+        /**
+         * @inheritDoc
+         */
         initModal: function() {
             this._super();
             this.isRendered = true;
@@ -118,6 +137,10 @@ define([
             return this;
         },
 
+        /**
+         * Open the save template modal.
+         * Dynamically generated so as to not clutter each page load
+         */
         actionSaveTemplate: function() {
             buildFormComponent("bluefoot_template_create_modal", {
                 render_url: this.create_modal.render_url,
@@ -125,8 +148,35 @@ define([
             });
         },
 
+        /**
+         * Convert the stage's content in JSON string
+         */
         getStageStructure: function() {
             return JSON.stringify(this.stage.toJSON());
+        },
+
+        /**
+         * update the stage's content to that of the template
+         * @returns {*}
+         */
+        actionDone: function() {
+            if (this.selectedTemplate) {
+                var builder = new build();
+                this.stage.stageContent([]);
+                builder.structure = JSON.parse(this.selectedTemplate.structure);
+                this.stage.loading(true);
+                builder.buildStage(this.stage);
+            }
+
+            return this._super();
+        },
+
+        /**
+         * Select a template
+         * @param data template's data
+         */
+        setTemplate: function(data) {
+            this.selectedTemplate = data;
         }
     });
 });

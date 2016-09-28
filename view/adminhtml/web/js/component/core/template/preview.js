@@ -1,3 +1,7 @@
+/**
+ * UI Field component to generate an image of the stage.
+ * @author Aidan Threadgold <aidan@gene.co.uk>
+ */
 define([
     'Magento_Ui/js/form/element/abstract',
     'jquery',
