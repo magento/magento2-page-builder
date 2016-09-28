@@ -12,23 +12,21 @@ define([
 ], function (AbstractField, _, $t, Config) {
     'use strict';
 
-    var featherEditor = new Aviary.Feather({
-        apiKey: '4a3d25f47b984cf1aaf95ab374aa90c9',
-        theme: 'minimum',
-        onSave: function(imageID, newURL) {
-            console.log(arguments);
-        },
-        onError: function () {
-            console.log(arguments);
-        }
-    });
-
     return AbstractField.extend({
-
         defaults: {
+            featherEditor: false,
+            links: {
+                featherEditor: false,
+            },
             listens: {
                 value: 'extractUrl'
             }
+        },
+
+        initialize: function () {
+            this._super();
+
+            return this;
         },
 
         /**
@@ -104,9 +102,42 @@ define([
          * Ability to edit images
          */
         editImage: function () {
-            featherEditor.launch({
+            var that = this;
+
+            if (typeof window.featherEditor !== 'undefined') {
+                this.launchEditor();
+            } else {
+                window.featherEditor = new Aviary.Feather({
+                    apiKey: '4a3d25f47b984cf1aaf95ab374aa90c9',
+                    theme: 'minimum',
+                    onSave: function(imageID, newURL) {
+                        that.value(newURL);
+                        featherEditor.close();
+                        return false;
+                    },
+                    onLoad: function () {
+                        this.launchEditor();
+                    }.bind(this),
+                    onError: function () {
+                        console.log(arguments);
+                    }
+                });
+            }
+        },
+
+        /**
+         * Launch the editor
+         *
+         * @param featherEditor
+         */
+        launchEditor: function () {
+            var url = this.value();
+            if (url.indexOf('http') === -1) {
+                url = document.location.origin + url;
+            }
+            window.featherEditor.launch({
                 image: this.uid + '-image',
-                url: document.location.origin + this.value()
+                url: url
             });
         }
 
