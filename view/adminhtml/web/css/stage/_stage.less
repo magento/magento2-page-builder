@@ -86,6 +86,44 @@
     }
 }
 
+.bluefoot-heading-h2 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 2rem;
+}
+.bluefoot-heading-h3 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: 1.7rem;
+}
+.bluefoot-heading-h4, .bluefoot-heading-h5, .bluefoot-heading-h6 {
+    font-weight: 600;
+    margin-top: 0;
+}
+.bluefoot-heading-h4 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    display: block;
+    font-weight: bold;
+}
+.bluefoot-heading-h5 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    line-height: 1.2;
+    font-size: 0.83em;
+    font-weight: bold;
+}
+.bluefoot-heading-h6 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    display: block;
+    font-size: 0.67em;
+    font-weight: bold;
+}
 
 .bluefoot-add-row-wrapper {
     float: left;
@@ -177,12 +215,17 @@
 
     .bluefoot-options {
         position: absolute;
-        left: 30%;
-        right: 30%;
+        left: 0;
+        right: 0;
         top: 0;
+        height: 0;
         transform: translateY(-100%);
         text-align: center;
         z-index: 50;
+
+        .bluefoot-options-wrapper {
+            height: 0;
+        }
 
         ul.bluefoot-options-links {
             display: none;
@@ -191,6 +234,7 @@
             padding: 0 8px;
             .border-radius(3px);
             box-sizing: border-box;
+            transform: translateY(-50%);
 
             font-size: 0;
 
@@ -231,10 +275,6 @@
         }
 
         &.bluefoot-entity {
-            > .redactor-in + .bluefoot-options {
-                display: none;
-            }
-
             > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
                 -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
                 filter: blur(5px);
@@ -249,7 +289,20 @@
                 display: inline-block;
             }
         }
+    }
+
+    .redactor-toolbar {
+        display: none;
+    }
+
+    &.redactor-active {
         >.bluefoot-live-edit-wrapper {
+            display: block;
+        }
+        >.bluefoot-options {
+            display: none;
+        }
+        >.redactor-toolbar {
             display: block;
         }
     }
@@ -321,6 +374,7 @@
         padding: 0 8px 0 0;
         ul.bluefoot-options-links {
             background: @columnColor;
+            transform: translateY(-100%);
         }
         .bluefoot-id {
             background: @columnColor;
@@ -410,6 +464,7 @@
                 width: 100%;
             }
             .bluefoot-image-placeholder {
+                cursor: pointer;
                 background: #f8f8f8;
                 border: 1px #e3e3e3 solid;
                 text-align: center;

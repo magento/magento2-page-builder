@@ -1,5 +1,5 @@
 /**
- * Template Manager modal ui component.
+ * Template Manager modal ui component
  * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([

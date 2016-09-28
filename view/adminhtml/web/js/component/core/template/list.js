@@ -77,6 +77,14 @@ define([
          */
         isSelected: function(item) {
             return this.selectedTemplate() == item.id ? 'selected' : '';
+        },
+
+        /**
+         * Reload the template data
+         */
+        rebuild: function() {
+            this.loading(true);
+            this.dataRequest();
         }
     });
 });

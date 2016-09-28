@@ -34,7 +34,7 @@ define([
             return this.config.js_block;
         }
 
-        return 'bluefoot/block/abstract';
+        return 'Gene_BlueFoot/js/component/core/block/abstract';
     };
 
     /**
@@ -46,9 +46,6 @@ define([
      * @param draggableInstance
      */
     Block.prototype.onDragStart = function (draggableThis, event, ui, draggableInstance) {
-        // Transfer over the width and height to the helper
-        var original = jQuery(event.target);
-
         if (this.group) {
             // Hide the groups overlay
             this.group.hidden(true);
@@ -101,8 +98,10 @@ define([
                     // Refresh sortable to ensure any new elements are recognised
                     jQuery(sortableThis).sortable('refresh');
 
-                    // Open the edit panel
-                    block.edit();
+                    if (block.editOnInsert) {
+                        // Open the edit panel
+                        block.edit();
+                    }
                 });
             }
         }

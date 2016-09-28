@@ -1,9 +1,5 @@
 <div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-heading bluefoot-no-blur bluefoot-live-edit" data-bind="liveEdit: { fields: ['heading_type'] }">
     <!-- ko template: liveEditTemplate --><!-- /ko -->
-    <h2 data-bind="visible: preview.heading_type() == 'h2', html: preview.title, redactor: {clickToEdit: true, air: true, bind: data, bindKey: 'title'}"></h2>
-    <h3 data-bind="visible: preview.heading_type() == 'h3', html: preview.title, redactor: {clickToEdit: true, air: true, bind: data, bindKey: 'title'}"></h3>
-    <h4 data-bind="visible: preview.heading_type() == 'h4', html: preview.title, redactor: {clickToEdit: true, air: true, bind: data, bindKey: 'title'}"></h4>
-    <h5 data-bind="visible: preview.heading_type() == 'h5', html: preview.title, redactor: {clickToEdit: true, air: true, bind: data, bindKey: 'title'}"></h5>
-    <h6 data-bind="visible: preview.heading_type() == 'h6', html: preview.title, redactor: {clickToEdit: true, air: true, bind: data, bindKey: 'title'}"></h6>
+    <div data-bind="css: 'bluefoot-heading-' + preview.heading_type(), html: preview.title, redactor: {clickToEdit: false, toolbar: false, bind: data, bindKey: 'title', placeholder: $t('Click here to edit...'), default: {heading_type: '78'}}"></div>
     <!-- ko template: options.getTemplate() --><!-- /ko -->
 </div>

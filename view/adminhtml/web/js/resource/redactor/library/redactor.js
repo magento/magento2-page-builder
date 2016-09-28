@@ -3846,7 +3846,7 @@
 						return;
 					}
 
-					if ($(e.target).closest('#' + this.core.id() + ', .redactor-toolbar, .redactor-dropdown, #redactor-modal-box').length !== 0)
+					if ($(e.target).closest('#' + this.core.id() + ', .redactor-toolbar, .redactor-dropdown, #redactor-modal-box, .redactor-no-blur').length !== 0)
 					{
 						return;
 					}

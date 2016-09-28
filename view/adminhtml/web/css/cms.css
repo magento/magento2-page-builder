@@ -213,6 +213,46 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-stage.screengrab .bluefoot-add-row-wrapper {
   display: none;
 }
+.bluefoot-heading-h2 {
+  margin: 0 0 2rem;
+  color: #41362f;
+  font-weight: 400;
+  line-height: 1.2;
+  font-size: 2rem;
+}
+.bluefoot-heading-h3 {
+  margin: 0 0 2rem;
+  color: #41362f;
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: 1.7rem;
+}
+.bluefoot-heading-h4,
+.bluefoot-heading-h5,
+.bluefoot-heading-h6 {
+  font-weight: 600;
+  margin-top: 0;
+}
+.bluefoot-heading-h4 {
+  margin: 0 0 2rem;
+  color: #41362f;
+  display: block;
+  font-weight: bold;
+}
+.bluefoot-heading-h5 {
+  margin: 0 0 2rem;
+  color: #41362f;
+  line-height: 1.2;
+  font-size: 0.83em;
+  font-weight: bold;
+}
+.bluefoot-heading-h6 {
+  margin: 0 0 2rem;
+  color: #41362f;
+  display: block;
+  font-size: 0.67em;
+  font-weight: bold;
+}
 .bluefoot-add-row-wrapper {
   float: left;
   width: 100%;
@@ -311,12 +351,16 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 }
 .bluefoot-structure .bluefoot-options {
   position: absolute;
-  left: 30%;
-  right: 30%;
+  left: 0;
+  right: 0;
   top: 0;
+  height: 0;
   transform: translateY(-100%);
   text-align: center;
   z-index: 50;
+}
+.bluefoot-structure .bluefoot-options .bluefoot-options-wrapper {
+  height: 0;
 }
 .bluefoot-structure .bluefoot-options ul.bluefoot-options-links {
   display: none;
@@ -330,6 +374,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   box-sizing: border-box;
+  transform: translateY(-50%);
   font-size: 0;
 }
 .bluefoot-structure .bluefoot-options ul.bluefoot-options-links li {
@@ -361,9 +406,6 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure:hover.bluefoot-column > .bluefoot-column-add {
   display: block;
 }
-.bluefoot-structure:hover.bluefoot-entity > .redactor-in + .bluefoot-options {
-  display: none;
-}
 .bluefoot-structure:hover.bluefoot-entity > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
   -webkit-filter: blur(5px);
   /* Chrome, Safari, Opera */
@@ -375,7 +417,16 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure:hover > .bluefoot-options ul.bluefoot-options-links {
   display: inline-block;
 }
-.bluefoot-structure:hover > .bluefoot-live-edit-wrapper {
+.bluefoot-structure .redactor-toolbar {
+  display: none;
+}
+.bluefoot-structure.redactor-active > .bluefoot-live-edit-wrapper {
+  display: block;
+}
+.bluefoot-structure.redactor-active > .bluefoot-options {
+  display: none;
+}
+.bluefoot-structure.redactor-active > .redactor-toolbar {
   display: block;
 }
 .bluefoot-structure .bluefoot-id {
@@ -442,6 +493,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 }
 .bluefoot-structure.bluefoot-column ul.bluefoot-options-links {
   background: #28b78c;
+  transform: translateY(-100%);
 }
 .bluefoot-structure.bluefoot-column .bluefoot-id {
   background: #28b78c;
@@ -522,6 +574,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   width: 100%;
 }
 .bluefoot-structure.bluefoot-entity.bluefoot-image .bluefoot-image-placeholder {
+  cursor: pointer;
   background: #f8f8f8;
   border: 1px #e3e3e3 solid;
   text-align: center;
@@ -1468,6 +1521,23 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-entity .redactor-toolbar a:hover {
   background: #534d49;
   color: #f8f3eb;
+}
+.redactor-toolbar a.re-fontColor {
+  height: 42px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.redactor-toolbar a.re-fontColor .redactor-color-picker {
+  float: left;
+  margin: 12px 0;
+  border: 2px solid #f8f3eb;
+  background: black;
+  border-radius: 10px;
+  width: 18px;
+  height: 18px;
+}
+.redactor-placeholder {
+  min-height: 10px;
 }
 /**
 * BlueFoot
