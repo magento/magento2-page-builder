@@ -118,9 +118,7 @@ define([
      */
     Block.prototype.insert = function (parent, index, formData, callbackFn, key) {
         key = key || false;
-        console.log(this.getBlockInstance());
         require([this.getBlockInstance()], function (BlockInstance) {
-            console.log(BlockInstance);
             var block = new BlockInstance(parent, parent.stage, this.config, formData);
             parent.addChild(block, index, key);
             parent.refreshChildren();
