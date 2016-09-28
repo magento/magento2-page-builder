@@ -245,4 +245,21 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
     {
         return $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
     }
+
+    /**
+     * Return an image URL
+     *
+     * @param $image
+     *
+     * @return string
+     */
+    public function getImageUrl($image)
+    {
+        if (strpos($image, '/media/') !== false) {
+            return $this->_storeManager->getStore()->getBaseUrl() . $image;
+        }
+
+        // Legacy image support
+        return $this->getMediaUrl() . 'gene-cms' . $image;
+    }
 }
