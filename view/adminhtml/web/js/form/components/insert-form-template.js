@@ -133,9 +133,7 @@ define([
                     // Destroy the original instance of the source
                     form.destroyAdapter();
                     form.source.destroy();
-
                     this.closeModal();
-                    modal.closeModal();
 
                     // Rebuild the list of templates
                     registry.get(this.managerModalNameSpace + '.bluefoot_template_manager_content').rebuild();

@@ -24,7 +24,7 @@ define([
             // Load the data once the parent has rendered
             $.async({
                 component: this.parentName
-            }, this.dataRequest.bind(this));
+            }, this.rebuild.bind(this));
         },
 
         /** @inheritDoc */
@@ -85,6 +85,7 @@ define([
         rebuild: function() {
             this.loading(true);
             this.dataRequest();
+            this.selectedTemplate(null);
         }
     });
 });

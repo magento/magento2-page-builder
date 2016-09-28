@@ -46,8 +46,8 @@ define([
 
                     //Shrink the canvas a bit to save space.
                     var scaleCan = document.createElement('canvas');
-                    scaleCan.width = canvas.width / 2.2;
-                    scaleCan.height = canvas.height / 2.2;
+                    scaleCan.width = canvas.width / 1.5;
+                    scaleCan.height = canvas.height / 1.5;
 
                     var ctx = scaleCan.getContext('2d');
                     ctx.drawImage(canvas, 0, 0, scaleCan.width, scaleCan.height);
