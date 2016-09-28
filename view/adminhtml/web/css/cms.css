@@ -365,8 +365,11 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
 .bluefoot-structure:hover > .bluefoot-options ul.bluefoot-options-links {
   display: inline-block;
 }
-.bluefoot-structure:hover > .bluefoot-live-edit-wrapper {
+.bluefoot-structure.redactor-active > .bluefoot-live-edit-wrapper {
   display: block;
+}
+.bluefoot-structure.redactor-active > .bluefoot-options {
+  display: none;
 }
 .bluefoot-structure .bluefoot-id {
   position: absolute;
@@ -512,6 +515,7 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   width: 100%;
 }
 .bluefoot-structure.bluefoot-entity.bluefoot-image .bluefoot-image-placeholder {
+  cursor: pointer;
   background: #f8f8f8;
   border: 1px #e3e3e3 solid;
   text-align: center;
@@ -1472,6 +1476,10 @@ button.gene-bluefoot.disable-gene-bluefoot:hover {
   border-radius: 10px;
   width: 18px;
   height: 18px;
+}
+.redactor-has-placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 400 !important;
 }
 /**
 * BlueFoot

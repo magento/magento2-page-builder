@@ -68,7 +68,7 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                  */
                 setFontSize: function(s) {
                     if (s) {
-                        this.inline.format('span', 'style', 'font-size: ' + s + 'px');
+                        this.inline.format('span', 'style', 'font-size: ' + s + 'px', 'add');
                         this.button.setIcon(this.button.get('fontSize'), s + 'px');
                     }
                 }

@@ -90,7 +90,7 @@ define([
                  */
                 setFontColor: function(c) {
                     if (c) {
-                        this.inline.format('span', 'style', 'color: #' + c);
+                        this.inline.format('span', 'style', 'color: #' + c, 'add');
                         var button = this.button.get('fontColor');
                         this.button.setIcon(button, '<div class="redactor-color-picker" style="background-color: #' + c + ';"></div>');
                     }

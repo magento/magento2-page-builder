@@ -27,6 +27,7 @@ define([
         this.ns = 'bluefoot/block/abstract';
 
         this.config = config;
+        this.editOnInsert = config.editOnInsert || true;
 
         var previewInstance = Preview.get(this.config);
         this.preview = new previewInstance(this, config);
