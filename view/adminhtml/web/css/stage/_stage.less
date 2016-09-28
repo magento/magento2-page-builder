@@ -219,10 +219,6 @@
         }
 
         &.bluefoot-entity {
-            > .redactor-in + .bluefoot-options {
-                display: none;
-            }
-
             > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
                 -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
                 filter: blur(5px);
@@ -239,12 +235,19 @@
         }
     }
 
+    .redactor-toolbar {
+        display: none;
+    }
+
     &.redactor-active {
         >.bluefoot-live-edit-wrapper {
             display: block;
         }
         >.bluefoot-options {
             display: none;
+        }
+        >.redactor-toolbar {
+            display: block;
         }
     }
 

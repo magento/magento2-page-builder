@@ -28,6 +28,9 @@ define([
                         blur: function(e) {
                             value( this.code.get() );
                             this.$element.parent().removeClass('redactor-active');
+                        },
+                        focus: function () {
+                            this.$element.parent().addClass('redactor-active');
                         }
                     },
                     plugins: ['magentoVars', 'fontSize', 'fontColor'],
@@ -74,69 +77,8 @@ define([
                     }, this));
                     this.$element.addClass('redactor-click-to-edit');
 
-                    if (options.placeholder) {
-                        if (options.bind()[options.bindKey] == '') {
-                            value(options.placeholder);
-                            this.$element.addClass('redactor-has-placeholder');
-                        }
-                        this.$element.parent().find('.redactor-click-to-edit').each(function (index, element) {
-                            if (jQuery(element).text() == options.placeholder) {
-                                jQuery(element).addClass('redactor-has-placeholder');
-                            } else {
-                                jQuery(element).removeClass('redactor-has-placeholder');
-                                console.log(jQuery(element));
-                            }
-                        });
-                    }
-
                     this.$element.parent().removeClass('redactor-active');
                 }
-            }
-
-            // Add a placeholder if the value is ''
-            if (options.placeholder && (typeof options.bind()[options.bindKey] === 'undefined' || options.bind()[options.bindKey] == options.placeholder)) {
-                value(options.placeholder);
-                jQuery(element).addClass('redactor-has-placeholder');
-
-                /**
-                 * On init set the value to '' if the placeholder is set
-                 */
-                options.callbacks.init = function () {
-                    if (options.bind()[options.bindKey] == options.placeholder) {
-                        value('');
-                    }
-
-                    this.$element.parent().find('.redactor-click-to-edit').each(function (index, element) {
-                        if (jQuery(element).text() == options.placeholder) {
-                            jQuery(element).addClass('redactor-has-placeholder');
-                        } else {
-                            jQuery(element).removeClass('redactor-has-placeholder');
-                        }
-                    });
-                };
-
-                /**
-                 * On focus update the value to '' and use the placeholder instead
-                 */
-                options.callbacks.focus = function () {
-                    this.$element.parent().addClass('redactor-active');
-                    if (this.code.get() == options.placeholder) {
-                        this.code.set('');
-                    }
-                };
-
-                /**
-                 * On value change evaluate the contents to modify the classes
-                 */
-                options.callbacks.keyup = function () {
-                    recentValue = this.code.get();
-                    this.$element.parent().find('.redactor-in').each(function (index, element) {
-                        jQuery(element).removeClass('redactor-has-placeholder');
-                        if (jQuery(element).text() == options.placeholder || jQuery(element).text() == '') {
-                            jQuery(element).addClass('redactor-has-placeholder');
-                        }
-                    }.bind(this));
-                };
             }
 
             // Update any default values needed
@@ -144,27 +86,6 @@ define([
                 jQuery.each(options.default, function (key, defaultValue) {
                     if (typeof options.bind()[key] === 'undefined' || options.bind()[key] == '') {
                         updateValue(key, defaultValue);
-                    }
-                });
-
-                options.bind.subscribe(function (newValue) {
-                    if (options.placeholder) {
-                        if (recentValue != options.placeholder && recentValue != '' && recentValue != newValue[options.bindKey]) {
-                            jQuery(element).parent().find('.redactor-click-to-edit').removeClass('redactor-has-placeholder');
-                            value(recentValue);
-                        }
-                        if (newValue[options.bindKey] == '') {
-                            value(options.placeholder);
-                            jQuery(element).addClass('redactor-has-placeholder');
-                        }
-
-                        jQuery(element).parent().find('.redactor-click-to-edit').each(function (index, element) {
-                            if (jQuery(element).text() == options.placeholder) {
-                                jQuery(element).addClass('redactor-has-placeholder');
-                            } else {
-                                jQuery(element).removeClass('redactor-has-placeholder');
-                            }
-                        });
                     }
                 });
             }
