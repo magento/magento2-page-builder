@@ -7,8 +7,8 @@
 
 <ul data-bind="foreach: {data: templateData, as: 'item'}" class="gene-bluefoot-template-grid">
     <li>
-        <div href="#" data-bind="css: $parent.isSelected(item), click: function(obj, event) { $parent.selectTemplate(item); $parents[1].setTemplate($parent.name, item); }" class="gene-bluefoot-template-container">
-            <img src="https://placekitten.com/200/190" class="gene-bluefoot-template-preview" />
+        <div data-bind="css: $parent.isSelected(item), click: function(obj, event) { $parent.selectTemplate(item); $parents[1].setTemplate($parent.name, item); }" class="gene-bluefoot-template-container">
+            <img data-bind="attr: {src: item.preview}" class="gene-bluefoot-template-preview" />
             <div data-bind="text: item.label" class="gene-bluefoot-template-label"></div>
         </div>
     </li>
