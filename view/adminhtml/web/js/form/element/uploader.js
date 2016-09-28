@@ -17,6 +17,9 @@ define([
         theme: 'minimum',
         onSave: function(imageID, newURL) {
             console.log(arguments);
+        },
+        onError: function () {
+            console.log(arguments);
         }
     });
 
@@ -101,12 +104,9 @@ define([
          * Ability to edit images
          */
         editImage: function () {
-            window.AV_ga = function () {
-                console.log(arguments);
-            };
             featherEditor.launch({
                 image: this.uid + '-image',
-                url: this.value()
+                url: document.location.origin + this.value()
             });
         }
 
