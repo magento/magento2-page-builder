@@ -130,7 +130,7 @@ class GroupRepository implements ContentBlockGroupRepositoryInterface
      *
      * @param $groupCode
      *
-     * @return mixed
+     * @return \Gene\BlueFoot\Model\Attribute\ContentBlock\Group
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getByCode($groupCode)

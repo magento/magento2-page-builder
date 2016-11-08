@@ -48,12 +48,12 @@ class InstallData implements InstallDataInterface
     /**
      * InstallData constructor.
      *
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                  $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory
-     * @param \Magento\Framework\Module\Dir\Reader                     $moduleReader
-     * @param \Magento\Framework\Filesystem\Io\File                    $ioFile
-     * @param \Gene\BlueFoot\Model\Installer\File                      $fileInstaller
-     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface  $contentBlockGroupRepositoryInterface
+     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                     $entitySetupFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory    $groupFactory
+     * @param \Magento\Framework\Module\Dir\Reader                        $moduleReader
+     * @param \Magento\Framework\Filesystem\Io\File                       $ioFile
+     * @param \Gene\BlueFoot\Model\Installer\File                         $fileInstaller
+     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface     $contentBlockGroupRepositoryInterface
      */
     public function __construct(
         EntitySetupFactory $entitySetupFactory,
@@ -82,15 +82,10 @@ class InstallData implements InstallDataInterface
         /** @var \Gene\BlueFoot\Setup\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
+        // Run a fresh installation if no previous version is present
         $setup->startSetup();
-
-        // Install the default entities required for the system
         $entitySetup->installEntities();
-
-        // Create the default groups
         $this->installGroups();
-
-        // Install the default content blocks
         $this->installDefaultContentBlocks();
 
         $setup->endSetup();
