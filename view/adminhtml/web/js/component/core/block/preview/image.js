@@ -22,6 +22,15 @@ define([
         AbstractPreview.call(this, parent, config);
 
         this.loading = ko.observable(false);
+
+        // Concat the media URL with the image url. Remove /media/ from the image URL if stored.
+        // /media/ is removed for data migration purposes
+        this.imageUrl = ko.computed(function () {
+            if (this.image()) {
+                return Config.getInitConfig('media_url') + this.image().replace('/media/', '');
+            }
+            return '';
+        }, this);
     }
 
     Image.prototype = Object.create(AbstractPreview.prototype);

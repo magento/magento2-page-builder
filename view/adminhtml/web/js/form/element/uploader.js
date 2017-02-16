@@ -44,7 +44,7 @@ define([
 
                 // Extract the url from the decoded string
                 if (Array.isArray(urlMatches)) {
-                    this.value("/media/" + urlMatches[1]);
+                    this.value(Config.getInitConfig('media_url') + urlMatches[1]);
                 }
             }
         },

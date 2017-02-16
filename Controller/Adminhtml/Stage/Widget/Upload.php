@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Widget;
 
+use Magento\Framework\File\Uploader;
+
 /**
  * Class Upload
  *
@@ -42,11 +44,11 @@ class Upload extends \Magento\Backend\App\Action
     /**
      * Allow users to upload images to the folder structure
      *
-     * @return $this
+     * @return $this|\Magento\Framework\Controller\Result\Json
      */
     public function execute()
     {
-        $fileUploader = new \Magento\Framework\File\Uploader('file');
+        $fileUploader = new Uploader('file');
 
         // Set our parameters
         $fileUploader->setFilesDispersion(true);
@@ -61,13 +63,14 @@ class Upload extends \Magento\Backend\App\Action
                 // Return a success callback once the file has been uploaded
                 return $this->resultJsonFactory->create()->setData([
                     'success' => true,
-                    'file' =>  $this->configHelper->getRelativeUploadUrl() . '/' . $uploaded['file']
+                    'file' =>  $this->configHelper->getRelativeUploadUrl() . $uploaded['file']
                 ]);
             } else {
                 throw new \Exception('An unknown error has occurred');
             }
         } catch (\Exception $e) {
             return $this->resultJsonFactory->create()->setData([
+                'success' => false,
                 'error' => 'Unable to upload file: ' . $e->getMessage()
             ]);
         }

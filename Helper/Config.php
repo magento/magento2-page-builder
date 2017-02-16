@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Helper;
 
+use Magento\Framework\UrlInterface;
+
 /**
  * Class Config
  *
@@ -52,7 +54,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getUploadUrl($removeHttp = false)
     {
-        $uploadUrl = $this->_urlBuilder->getBaseUrl() . '/media/gene-cms';
+        $uploadUrl = $this->_urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . '/media/gene-cms';
         if ($removeHttp) {
             $uploadUrl = str_replace('http:', '', $uploadUrl);
         }
