@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
+define(['jquery', 'bluefoot/ajax'], function (jQuery, AjaxClass) {
 
     /**
      * The initial config before the Ajax request

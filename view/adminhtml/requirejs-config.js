@@ -61,10 +61,6 @@ var config = {
     },
     map: {
         '*': {
-            /* Alias the BlueFoot jquery instances through to Magento 2's */
-            'bluefoot/jquery': 'jquery',
-            'bluefoot/jquery/ui': 'jquery/ui',
-
             /* Map the abstract widget to the input type widget */
             'bluefoot/widget/abstract': 'bluefoot/field/abstract',
         }

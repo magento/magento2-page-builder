@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/cms-config', 'bluefoot/config', 'bluefoot/jquery', 'bluefoot/dropzone', 'bluefoot/hook', 'bluefoot/modal'], function (InitConfig, Config, jQuery, Dropzone, Hook, Modal) {
+define(['bluefoot/cms-config', 'bluefoot/config', 'jquery', 'bluefoot/dropzone', 'bluefoot/hook', 'bluefoot/modal'], function (InitConfig, Config, jQuery, Dropzone, Hook, Modal) {
 
     /**
      * Our Field class

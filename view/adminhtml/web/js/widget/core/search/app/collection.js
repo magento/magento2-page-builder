@@ -4,7 +4,7 @@
  * @author Vicki Tingle <vicki@gene.co.uk>
  */
 
-define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'bluefoot/ajax'], function (Config, jQuery, Hook, AbstractField, AjaxClass) {
+define(['bluefoot/config', 'jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'bluefoot/ajax'], function (Config, jQuery, Hook, AbstractField, AjaxClass) {
 
     /**
      * Extend our abstract class

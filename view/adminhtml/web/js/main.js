@@ -3,7 +3,7 @@ define([
     'bluefoot/stage/build',
     'bluefoot/hook',
     'bluefoot/stage',
-    'bluefoot/jquery',
+    'jquery',
     'bluefoot/cms-config',
     'bluefoot/modal'
 ], function (

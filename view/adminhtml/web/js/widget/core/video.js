@@ -3,7 +3,7 @@
  *
  * @author Chloe Langford <chloe@gene.co.uk>
  */
-define(['bluefoot/config', 'bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], function (Config, jQuery, Hook, AbstractField) {
+define(['bluefoot/config', 'jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], function (Config, jQuery, Hook, AbstractField) {
 
     /**
      * Extend our abstract class

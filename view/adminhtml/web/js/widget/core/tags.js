@@ -5,7 +5,7 @@
  *
  * @author Hob Adams <hob@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/hook', 'bluefoot/widget/abstract', 'jquery/tag-it'], function (jQuery, jQueryUi, Hook, AbstractField) {
+define(['jquery', 'jquery/ui', 'bluefoot/hook', 'bluefoot/widget/abstract', 'jquery/tag-it'], function (jQuery, jQueryUi, Hook, AbstractField) {
 
     /**
      * Extend our abstract class

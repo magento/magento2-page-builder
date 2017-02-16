@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/widget/abstract'], function (jQuery, AbstractField) {
+define(['jquery', 'bluefoot/widget/abstract'], function (jQuery, AbstractField) {
 
     /**
      * Extend our abstract class

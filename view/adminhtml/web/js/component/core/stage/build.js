@@ -7,7 +7,7 @@
 define([
     'underscore',
     'ko',
-    'bluefoot/jquery',
+    'jquery',
     'bluefoot/config',
     'bluefoot/hook',
     'bluefoot/stage/panel/group/block'

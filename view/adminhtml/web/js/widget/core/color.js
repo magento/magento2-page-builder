@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'bluefoot/jquery/colorpicker'], function (jQuery, Hook, AbstractField) {
+define(['jquery', 'bluefoot/hook', 'bluefoot/widget/abstract', 'jquery/colorpicker'], function (jQuery, Hook, AbstractField) {
 
     /**
      * Extend our abstract class

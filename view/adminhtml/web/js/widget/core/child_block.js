@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['bluefoot/jquery', 'bluefoot/jquery/ui', 'bluefoot/config', 'bluefoot/hook'], function (jQuery, jQueryUi, Config, Hook) {
+define(['jquery', 'jquery/ui', 'bluefoot/config', 'bluefoot/hook'], function (jQuery, jQueryUi, Config, Hook) {
 
     /**
      * Handles child block relationships
