@@ -1,3 +1,9 @@
+/**
+ * - Main.js
+ * Entry point for BlueFoot JS framework
+ *
+ * @author Dave Macaulay <dave@gene.co.uk>
+ */
 define([
     'uiComponent',
     'bluefoot/stage/build',
@@ -15,7 +21,7 @@ define([
     InitConfig
 ) {
     /**
-     * Create a new componet for BlueFoot to intercept
+     * Create a new component for BlueFoot to intercept
      */
     return Component.extend({
         initialize: function () {
@@ -35,7 +41,7 @@ define([
                 /**
                  * Create a new instance of the stage
                  *
-                 * Each Gene CMS instance is ran by a stage, this handles all operations of the "page builder" which
+                 * Each BlueFoot instance is ran by a stage, this handles all operations of the "page builder" which
                  * is refereed to in code as the stage
                  */
                 var Stage = new StageClass();
