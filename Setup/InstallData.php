@@ -46,6 +46,11 @@ class InstallData implements InstallDataInterface
     protected $fileInstaller;
 
     /**
+     * @var \Magento\Eav\Model\Config
+     */
+    protected $_eavConfig;
+
+    /**
      * InstallData constructor.
      *
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                     $entitySetupFactory
@@ -61,14 +66,16 @@ class InstallData implements InstallDataInterface
         \Magento\Framework\Module\Dir\Reader $moduleReader,
         \Magento\Framework\Filesystem\Io\File $ioFile,
         \Gene\BlueFoot\Model\Installer\File $fileInstaller,
-        ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface
+        ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface,
+        \Magento\Eav\Model\Config $eavConfig
     ) {
-        $this->entitySetupFactory = $entitySetupFactory;
-        $this->groupFactory = $groupFactory;
-        $this->moduleReader = $moduleReader;
-        $this->ioFile = $ioFile;
-        $this->fileInstaller = $fileInstaller;
-        $this->contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
+        $this->_entitySetupFactory = $entitySetupFactory;
+        $this->_groupFactory = $groupFactory;
+        $this->_moduleReader = $moduleReader;
+        $this->_ioFile = $ioFile;
+        $this->_fileInstaller = $fileInstaller;
+        $this->_contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
+        $this->_eavConfig = $eavConfig;
     }
 
     /**
@@ -85,7 +92,15 @@ class InstallData implements InstallDataInterface
         // Run a fresh installation if no previous version is present
         $setup->startSetup();
         $entitySetup->installEntities();
+        $entitySetup->cleanCache();
+
+        // Clear the eavConfig cache
+        $this->_eavConfig->clear();
+
+        // Create the default groups
         $this->installGroups();
+
+        // Install the default content blocks
         $this->installDefaultContentBlocks();
 
         $setup->endSetup();
