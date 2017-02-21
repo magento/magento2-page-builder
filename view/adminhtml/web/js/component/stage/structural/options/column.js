@@ -25,7 +25,7 @@ define([
         Option.call(this, parent, code, icon, title, callbackFn, additionalClasses, sort);
 
         // Override the options template to use our column template
-        this.template = 'Gene_BlueFoot/component/core/stage/structural/options/column.html';
+        this.template = 'Gene_BlueFoot/component/stage/structural/options/column.html';
         this.active = ko.observable(false);
     }
 

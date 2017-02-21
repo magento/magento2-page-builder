@@ -147,7 +147,7 @@ define([
      * @returns {string}
      */
     AbstractStructural.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/abstract.html'
+        return 'Gene_BlueFoot/component/stage/structural/abstract.html'
     };
 
     /**
@@ -156,7 +156,7 @@ define([
      * @returns {string}
      */
     AbstractStructural.prototype.getChildTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/children.html'
+        return 'Gene_BlueFoot/component/stage/structural/children.html'
     };
 
     /**

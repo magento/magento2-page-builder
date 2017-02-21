@@ -102,7 +102,7 @@ define([
             return this.preview.getPreviewTemplate();
         }
 
-        return 'Gene_BlueFoot/component/core/block/abstract.html'
+        return 'Gene_BlueFoot/component/block/abstract.html'
     };
 
     /**

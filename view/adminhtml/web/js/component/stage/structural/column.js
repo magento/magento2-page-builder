@@ -68,7 +68,7 @@ define([
      * @returns {string}
      */
     Column.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/column.html'
+        return 'Gene_BlueFoot/component/stage/structural/column.html'
     };
 
     /**

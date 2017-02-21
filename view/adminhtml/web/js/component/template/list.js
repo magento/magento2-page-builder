@@ -11,7 +11,7 @@ define([
 
     return Element.extend({
         defaults: {
-            template: 'Gene_BlueFoot/component/core/template/select',
+            template: 'Gene_BlueFoot/component/template/select',
             loading: true,
             templateData: [],
             selectedTemplate: 0

@@ -33,7 +33,7 @@ define([
      * @returns {string}
      */
     Options.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/options.html'
+        return 'Gene_BlueFoot/component/stage/structural/options.html'
     };
 
     /**

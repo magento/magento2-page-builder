@@ -146,7 +146,7 @@ define([
          * @returns {string}
          */
         getStageTemplate: function () {
-            return 'Gene_BlueFoot/component/core/stage.html';
+            return 'Gene_BlueFoot/component/stage.html';
         }
 
     });

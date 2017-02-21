@@ -49,7 +49,7 @@ define([
      * @returns {string}
      */
     Row.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/row.html'
+        return 'Gene_BlueFoot/component/stage/structural/row.html'
     };
 
     /**

@@ -43,7 +43,7 @@ define([
      * Retrieve template path
      */
     Builder.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/core/stage/structural/column/builder.html'
+        return 'Gene_BlueFoot/component/stage/structural/column/builder.html'
     };
 
     /**

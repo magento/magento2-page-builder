@@ -28,7 +28,7 @@ define([
      */
     LiveEditOption.prototype.getTemplate = function () {
         if (this.config.type) {
-            return 'Gene_BlueFoot/component/core/block/live-edit/options/' + this.config.type;
+            return 'Gene_BlueFoot/component/block/live-edit/options/' + this.config.type;
         }
 
         return false;
@@ -69,7 +69,7 @@ define([
         this.element.addClass('bluefoot-ko-live-edit');
 
         // Add our live edit template to the context
-        this.context.liveEditTemplate = 'Gene_BlueFoot/component/core/block/live-edit/options';
+        this.context.liveEditTemplate = 'Gene_BlueFoot/component/block/live-edit/options';
         this.context.liveEdit = this;
 
         // Populate our options from the provided fields
