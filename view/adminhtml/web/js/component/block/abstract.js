@@ -24,7 +24,7 @@ define([
      */
     function AbstractBlock(parent, stage, config, formData) {
         AbstractStructural.call(this, parent, stage);
-        this.ns = 'Gene_BlueFoot/js/component/core/block/abstract';
+        this.ns = 'Gene_BlueFoot/js/component/block/abstract';
 
         this.config = config;
         this.editOnInsert = config.editOnInsert || true;

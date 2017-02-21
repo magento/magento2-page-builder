@@ -34,7 +34,7 @@ define([
             return this.config.js_block;
         }
 
-        return 'Gene_BlueFoot/js/component/core/block/abstract';
+        return 'Gene_BlueFoot/js/component/block/abstract';
     };
 
     /**

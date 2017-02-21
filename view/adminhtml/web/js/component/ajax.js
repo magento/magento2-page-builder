@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['jquery', 'bluefoot/config'], function (jQuery, Config) {
+define(['jquery'], function (jQuery) {
 
     /**
      * Define wrapping methods for the Ajax functions of your choice, this is in place if the system, or another developer

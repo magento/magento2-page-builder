@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'Gene_BlueFoot/js/component/core/block/abstract',
+    'Gene_BlueFoot/js/component/block/abstract',
     'bluefoot/config',
     'bluefoot/common',
     'Gene_BlueFoot/js/form/element/magentowidget'
@@ -17,7 +17,7 @@ define([
      */
     function Widget(parent, stage, config, formData) {
         AbstractBlock.call(this, parent, stage, config, formData);
-        this.ns = 'Gene_BlueFoot/js/component/core/block/magentowidget';
+        this.ns = 'Gene_BlueFoot/js/component/block/magentowidget';
 
         this.editOnInsert = true;
     }
