@@ -24,7 +24,22 @@ define([], function () {
      *
      * @type {Array}
      */
-    var whitelist = [];
+    var whitelist = []; 
+
+
+    /**
+     * Return hooks object for context if provided, or default otherwise.
+     */
+    function getHooksObj(context) {
+        return context && context.hooks || hooks;
+    }
+
+    /**
+     * Backwards-compatible way to identify arrays
+     */
+    function isArray(thing) {
+        return Object.prototype.toString.call(thing) === '[object Array]';
+    }
 
     return {
 
@@ -37,14 +52,17 @@ define([], function () {
          * @param context
          */
         attach: function (name, fn, context) {
-            context = context || hooks;
-            if (typeof context.hooks === 'undefined') {
-                context.hooks = {};
+            var localHooks = hooks;
+            if (context) {
+                if (typeof context.hooks === 'undefined') {
+                    context.hooks = {};
+                }
+                localHooks = context.hooks;
             }
-            if (typeof context.hooks[name] === 'undefined') {
-                context.hooks[name] = [];
+            if (typeof localHooks[name] === 'undefined') {
+                localHooks[name] = [];
             }
-            context.hooks[name].push(fn);
+            localHooks[name].push(fn);
         },
 
         /**
@@ -65,23 +83,22 @@ define([], function () {
                 return true;
             }
 
-            context = context || hooks;
+            var localHooks = getHooksObj(context);
+            var localNamedHooks = localHooks && isArray(localHooks[name]) && localHooks[name]
             params = params || {};
-            if (typeof context.hooks !== 'undefined' && typeof context.hooks[name] !== 'undefined') {
+            if (localNamedHooks) {
 
                 // Store the original events for this name so we can restore after they've been triggered
-                var runHooks = context.hooks[name].slice(0);
+                var runHooks = localNamedHooks.slice();
 
                 // Trigger the next event and loop
                 this.triggerNextEvent(runHooks, params, completeFn, context);
 
-            } else if (typeof context.hooks === 'undefined' || typeof context.hooks[name] === 'undefined' || !this.hasHooks(name, context)) {
+            } else if (typeof completeFn === 'function') {
                 // Handle events that have no subscribers
-                if (typeof completeFn === 'function') {
-                    return completeFn(params);
-                }
-                return true;
+                return completeFn(params);
             }
+            return true;
         },
 
         /**
@@ -92,12 +109,8 @@ define([], function () {
          * @returns {boolean}
          */
         hasHooks: function (name, context) {
-            for (var prop in context.hooks[name]) {
-                if (context.hooks[name].hasOwnProperty(prop))
-                    return false;
-            }
-
-            return true;
+            var hooks = getHooksObj(context);
+            return isArray(hooks[name]) && hooks[name].length > 0;
         },
 
         /**
@@ -114,28 +127,26 @@ define([], function () {
          */
         triggerNextEvent: function (hooks, params, completeFn, context) {
             context = context || hooks;
-            if (typeof hooks === 'object') {
 
-                // Run the complete function
-                if (hooks.length == 0) {
-                    if (typeof completeFn === 'function') {
-                        return completeFn(params);
-                    }
-                    return true;
+            // Run the complete function
+            if (hooks.length == 0) {
+                if (typeof completeFn === 'function') {
+                    return completeFn(params);
                 }
-
-                // Declare the $hook done function
-                var $hook = {
-                    done: function () {
-                        return this.triggerNextEvent(hooks, params, completeFn);
-                    }.bind(this),
-                    params: params
-                };
-
-                // Grab the next event
-                var nextEvent = hooks.shift();
-                nextEvent.call(context, $hook);
+                return true;
             }
+
+            // Declare the $hook done function
+            var $hook = {
+                done: function () {
+                    return this.triggerNextEvent(hooks, params, completeFn);
+                }.bind(this),
+                params: params
+            };
+
+            // Grab the next event
+            var nextEvent = hooks.shift();
+            nextEvent.call(context, $hook);
         },
 
         /**
@@ -158,11 +169,11 @@ define([], function () {
          * @param name
          */
         addWhitelist: function (name) {
-            if (typeof name === 'object' && name instanceof Array) {
+            if (isArray(name)) {
                 whitelist = whitelist.concat(name);
             } else {
                 whitelist.push(name);
             }
         }
     }
-});
+     });
