@@ -3,6 +3,7 @@ var srcPaths = {
     'jquery': 'test/lib/jquery',
     'bluefoot/jquery': 'test/lib/jquery',
     'bluefoot/ajax': 'test/mock/ajax',
+    'bluefoot/persistence': 'test/mock/persistence',
     'bluefoot/cms-config': 'test/data/cms-config'
 };
 var TEST_REGEXP = /(spec|test)\.js$/i
