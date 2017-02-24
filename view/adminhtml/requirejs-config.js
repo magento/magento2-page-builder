@@ -17,6 +17,7 @@ var config = {
         'bluefoot/common': 'Gene_BlueFoot/js/component/common',
         'bluefoot/ajax': 'Gene_BlueFoot/js/component/ajax',
         'bluefoot/config': 'Gene_BlueFoot/js/component/config',
+        'bluefoot/persistence': 'Gene_BlueFoot/js/component/persistence',
 
         'bluefoot/hook': 'Gene_BlueFoot/js/component/hook',
 
