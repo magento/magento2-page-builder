@@ -28,24 +28,7 @@ define([
          * @param toIndex
          */
         moveArrayItem: function (array, fromIndex, toIndex) {
-            // If the array is a KnockoutJS function, retrieve the underlying array
-            if (typeof array === 'function') {
-                var arrayFn = array;
-                array = ko.utils.unwrapObservable(array);
-
-                if (typeof arrayFn.valueWillMutate === 'function') {
-                    arrayFn.valueWillMutate()
-                }
-            }
-
-            var element = array[fromIndex];
-            array.splice(fromIndex, 1);
-            array.splice(toIndex, 0, element);
-
-            if (typeof arrayFn === 'function') {
-                arrayFn(array);
-            }
-
+            array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
             return array;
         },
 
@@ -58,23 +41,7 @@ define([
          * @returns {*}
          */
         moveArrayItemIntoArray: function (item, array, toIndex) {
-
-            // If the array is a KnockoutJS function, retrieve the underlying array
-            if (typeof array === 'function') {
-                var arrayFn = array;
-                array = ko.utils.unwrapObservable(array);
-
-                if (typeof arrayFn.valueWillMutate === 'function') {
-                    arrayFn.valueWillMutate()
-                }
-            }
-
             array.splice(toIndex, 0, item);
-
-            if (typeof arrayFn === 'function') {
-                arrayFn(array);
-            }
-
             return array;
         }
     }

@@ -178,12 +178,13 @@ define([
      * Remove a child from the children array
      *
      * @param child
+     *
+     * @todo explore better option of removing children
      */
     AbstractStructural.prototype.removeChild = function (child) {
         this.children(ko.utils.arrayFilter(this.children(), function (filterChild) {
             return child.id != filterChild.id;
         }));
-        this.refreshChildren();
     };
 
     /**
@@ -203,15 +204,6 @@ define([
                 }.bind(this)
             }
         });
-    };
-
-    /**
-     * Refresh children within stage
-     */
-    AbstractStructural.prototype.refreshChildren = function () {
-        var data = this.children().slice(0);
-        this.children([]);
-        this.children(data);
     };
 
     /**
@@ -317,7 +309,6 @@ define([
                 } else {
                     // Remove the item from the original parent
                     this.originalParent.removeChild(this);
-                    this.originalParent.refreshChildren();
 
                     // Move the item into a different array, removing the original instance
                     Common.moveArrayItemIntoArray(this, childrenArray, newIndex);
@@ -325,13 +316,6 @@ define([
 
                 // Remove the item from the UI
                 item.remove();
-
-                // Always ensure the DOM is updated before refreshing the children
-                parent.refreshChildren();
-                setTimeout(function () {
-                    // Force refresh the children to update the UI
-                    parent.refreshChildren();
-                }, 10);
             }
 
             // If using deferred updates plugin, force updates

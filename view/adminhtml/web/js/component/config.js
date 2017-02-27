@@ -277,7 +277,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
                 if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
-                localStorage.setItem('bluefoot-edit-' + key, data);
+                persistence.setItem('bluefoot-edit-' + key, data);
             } else {
                 if (typeof _config['forms'] === 'undefined') {
                     _config['forms'] = {};
@@ -297,7 +297,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
                 if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
-                return localStorage.getItem('bluefoot-edit-' + key);
+                return persistence.getItem('bluefoot-edit-' + key);
             } else {
                 if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
                     return _config['forms'][key];
@@ -312,14 +312,14 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
          */
         invalidateLocalStorage: function () {
             var cachePrefix = 'bluefoot-edit-';
-            Object.keys(localStorage)
+            persistence.keys()
                 .forEach(function(key) {
                     if (key.substring(0, cachePrefix.length) == cachePrefix) {
                         localStorage.removeItem(key);
                     }
                 });
 
-            localStorage.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
+            persistence.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
         },
 
         /**
@@ -354,6 +354,6 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
             }
 
             return null;
-        },
+        }
     };
 });

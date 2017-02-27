@@ -37,21 +37,13 @@ define([
      * Remove a child from the stageContent array
      *
      * @param child
+     *
+     * @todo explore better option of removing child
      */
     Stage.prototype.removeChild = function (child) {
         this.stageContent(ko.utils.arrayFilter(this.stageContent(), function (filterChild) {
             return child.id != filterChild.id;
         }));
-        this.refreshChildren();
-    };
-
-    /**
-     * Refresh children within stage
-     */
-    Stage.prototype.refreshChildren = function () {
-        var data = this.stageContent().slice(0);
-        this.stageContent([]);
-        this.stageContent(data);
     };
 
     /**
