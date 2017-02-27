@@ -17,7 +17,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
     /**
      * Cache the config within this module
      *
-     * @type {boolean}
+     * @type {{}}
      * @private
      */
     var _config = {};
@@ -25,7 +25,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
     /**
      * Store all the fields in a cache so we don't have to re-generate them
      *
-     * @type {boolean}
+     * @type {{}|boolean}
      * @private
      */
     var _allFields = false;
@@ -71,7 +71,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
             storeId = storeId || this.getStoreId();
 
             // Include the Ajax Class
-            var Ajax = new AjaxClass(this.getInitConfig('formkey'));
+            var Ajax = new AjaxClass();
             Ajax.post(this.getInitConfig('config_url'), {entityIds: entityIds, storeId: storeId}, function (data) {
                 jQuery.extend(_config['entities'], data);
 
@@ -112,7 +112,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
         /**
          * Retrieve the previously built configuration
          *
-         * @returns {boolean}
+         * @returns {{}}
          */
         getConfig: function () {
             return _config;
@@ -161,7 +161,8 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
         },
 
         /**
-         * Update a value in the tempalates array
+         * Update a value in the templates array
+         * 
          * @param matchKey
          * @param matchValue
          * @param newValueKey
