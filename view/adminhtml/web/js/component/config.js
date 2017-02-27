@@ -271,10 +271,12 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
          *
          * @param key
          * @param data
+         *
+         * @todo replace with client side rendering of forms
          */
         addForm: function (key, data) {
             if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
                 persistence.setItem('bluefoot-edit-' + key, data);
@@ -291,10 +293,12 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
          *
          * @param key
          * @returns {*}
+         *
+         * @todo replace with client side rendering of forms
          */
         loadForm: function (key) {
             if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
                 return persistence.getItem('bluefoot-edit-' + key);
@@ -309,13 +313,15 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
 
         /**
          * Invalidate the localStorage cache
+         *
+         * @todo replace with client side rendering of forms
          */
         invalidateLocalStorage: function () {
             var cachePrefix = 'bluefoot-edit-';
             persistence.keys()
                 .forEach(function(key) {
                     if (key.substring(0, cachePrefix.length) == cachePrefix) {
-                        localStorage.removeItem(key);
+                        persistence.removeItem(key);
                     }
                 });
 
