@@ -61,11 +61,12 @@ define(['test/data/mock-requests'], function (requests) {
         dataType = dataType || 'json';
 
         // Check we have a mock request for call
-        if (typeof requests[url] === 'object') {
+        if (typeof requests[url] === 'function') {
             setTimeout(function () {
-                if (requests[url].success) {
+                var mockRequest = requests[url](parameters);
+                if (mockRequest.success) {
                     if (typeof successCallback === 'function') {
-                        var response = requests[url].responseText;
+                        var response = mockRequest.responseText;
                         if (dataType == 'json') {
                             response = JSON.parse(response);
                         }

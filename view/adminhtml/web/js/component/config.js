@@ -4,7 +4,12 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function (jQuery, AjaxClass, persistence) {
+define([
+    'underscore',
+    'jquery',
+    'bluefoot/utils/ajax',
+    'bluefoot/utils/persistence'
+], function (_, jQuery, AjaxClass, persistence) {
 
     /**
      * The initial config before the Ajax request
@@ -31,6 +36,28 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
     var _allFields = false;
 
     return {
+
+        /**
+         * Set config values
+         *
+         * @param key
+         * @param value
+         * @private
+         */
+        _setConfig: function (key, value) {
+            _config[key] = value;
+        },
+
+        /**
+         * Set specific initConfig values
+         *
+         * @param key
+         * @param value
+         * @private
+         */
+        _setInitConfig: function (key, value) {
+            _initConfig[key] = value;
+        },
 
         /**
          * Set the initial config
@@ -336,14 +363,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
          * @returns {*}
          */
         getColumnDefinitionByClassName: function (className) {
-            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
-                return className == columnDef.className;
-            });
-            if (search.length > 0) {
-                return search[0];
-            }
-
-            return null;
+            return this._getColumnDef('className', className);
         },
 
         /**
@@ -353,14 +373,21 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
          * @returns {*}
          */
         getColumnDefinitionByBreakpoint: function (breakpoint) {
-            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
-                return breakpoint == columnDef.breakpoint;
-            });
-            if (search.length > 0) {
-                return search[0];
-            }
+            return this._getColumnDef('breakpoint', breakpoint);
+        },
 
-            return null;
+        /**
+         * Get column definition by field & value
+         *
+         * @param field
+         * @param value
+         * @returns {*}
+         * @private
+         */
+        _getColumnDef: function (field, value) {
+            var searchObj = {};
+            searchObj[field] = value;
+            return _.findWhere(this.getInitConfig('column_definitions'), searchObj);
         }
     };
 });
