@@ -162,7 +162,7 @@ define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function
 
         /**
          * Update a value in the templates array
-         * 
+         *
          * @param matchKey
          * @param matchValue
          * @param newValueKey

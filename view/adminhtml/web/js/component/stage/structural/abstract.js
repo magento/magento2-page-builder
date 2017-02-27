@@ -179,13 +179,9 @@ define([
      * Remove a child from the children array
      *
      * @param child
-     *
-     * @todo explore better option of removing children
      */
     AbstractStructural.prototype.removeChild = function (child) {
-        this.children(ko.utils.arrayFilter(this.children(), function (filterChild) {
-            return child.id != filterChild.id;
-        }));
+        utils.remove(this.children, child);
     };
 
     /**

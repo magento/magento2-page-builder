@@ -10,8 +10,9 @@ define([
     'bluefoot/stage/save',
     'bluefoot/stage/structural/row',
     'bluefoot/utils/array',
-    'uiRegistry'
-], function (ko, _, Save, Row, arrayUtil, registry) {
+    'uiRegistry',
+    'mageUtils'
+], function (ko, _, Save, Row, arrayUtil, registry, utils) {
 
     /**
      * Stage Class
@@ -28,22 +29,15 @@ define([
         this.loading = parent.loading;
 
         this.save = new Save(this);
-
-        // @todo remove
-        window.registry = registry;
     }
 
     /**
      * Remove a child from the stageContent array
      *
      * @param child
-     *
-     * @todo explore better option of removing child
      */
     Stage.prototype.removeChild = function (child) {
-        this.stageContent(ko.utils.arrayFilter(this.stageContent(), function (filterChild) {
-            return child.id != filterChild.id;
-        }));
+        utils.remove(this.stageContent, child);
     };
 
     /**
