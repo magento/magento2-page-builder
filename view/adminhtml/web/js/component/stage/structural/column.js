@@ -8,10 +8,10 @@ define([
     'ko',
     'bluefoot/stage/structural/abstract',
     'mage/translate',
-    'bluefoot/common',
+    'bluefoot/utils/array',
     'bluefoot/stage/structural/options/column',
     'bluefoot/config'
-], function (ko, AbstractStructural, $t, Common, ColumnOption, Config) {
+], function (ko, AbstractStructural, $t, arrayUtil, ColumnOption, Config) {
 
     /**
      * Column structural block
@@ -92,7 +92,7 @@ define([
             ++index;
         }
 
-        Common.moveArrayItemIntoArray(column, item.parent.children, index);
+        arrayUtil.moveArrayItemIntoArray(column, item.parent.children, index);
         column.updateColumData(data);
     };
 

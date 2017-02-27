@@ -14,16 +14,9 @@ var config = {
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
 
         /* Core Component Aliases */
-        'bluefoot/common': 'Gene_BlueFoot/js/component/common',
-        'bluefoot/ajax': 'Gene_BlueFoot/js/component/ajax',
         'bluefoot/config': 'Gene_BlueFoot/js/component/config',
-        'bluefoot/persistence': 'Gene_BlueFoot/js/component/persistence',
 
         'bluefoot/hook': 'Gene_BlueFoot/js/component/hook',
-
-        'bluefoot/modal': 'Gene_BlueFoot/js/component/modal',
-
-        'bluefoot/plugins': 'Gene_BlueFoot/js/component/plugins',
 
         'bluefoot/stage': 'Gene_BlueFoot/js/component/stage',
         'bluefoot/stage/build': 'Gene_BlueFoot/js/component/stage/build',
@@ -49,21 +42,15 @@ var config = {
 
         'bluefoot/template': 'Gene_BlueFoot/js/component/template',
 
-        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/stage/edit',
-
-        'bluefoot/field/text': 'Gene_BlueFoot/js/component/edit/fields/text',
-        'bluefoot/field/select': 'Gene_BlueFoot/js/component/edit/fields/select',
-        'bluefoot/field/textarea': 'Gene_BlueFoot/js/component/edit/fields/textarea',
-        'bluefoot/field/date': 'Gene_BlueFoot/js/component/edit/fields/date',
-        'bluefoot/field/abstract': 'Gene_BlueFoot/js/component/edit/fields/abstract',
-
-        /* Content Types */
-        'bluefoot/content-type/abstract': 'Gene_BlueFoot/js/content-type/core/abstract'
+        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/stage/edit'
     },
     map: {
         '*': {
             /* Map the abstract widget to the input type widget */
             'bluefoot/widget/abstract': 'bluefoot/field/abstract',
+
+            /* Utilities */
+            'bluefoot/utils': 'Gene_BlueFoot/js/utils'
         }
     },
     shim: {

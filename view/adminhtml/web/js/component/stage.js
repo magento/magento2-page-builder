@@ -9,9 +9,9 @@ define([
     'underscore',
     'bluefoot/stage/save',
     'bluefoot/stage/structural/row',
-    'bluefoot/common',
+    'bluefoot/utils/array',
     'uiRegistry'
-], function (ko, _, Save, Row, Common, registry) {
+], function (ko, _, Save, Row, arrayUtil, registry) {
 
     /**
      * Stage Class
@@ -55,7 +55,7 @@ define([
     Stage.prototype.addChild = function (child, index) {
         if (index !== undefined && index !== false) {
             // Use the common function to add the item in the correct place within the array
-            Common.moveArrayItemIntoArray(child, this.stageContent, index);
+            arrayUtil.moveArrayItemIntoArray(child, this.stageContent, index);
         } else {
             this.stageContent.push(child);
         }

@@ -1,19 +1,18 @@
 ;(function(factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", "bluefoot/common", "jquery/ui"], factory);
+        define(["knockout", "jquery", "jquery/ui"], factory);
     } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
         // CommonJS module
         var ko = require("knockout"),
-            jQuery = require("jquery"),
-            Common = require("bluefoot/common");
+            jQuery = require("jquery");
         require("jquery/ui");
-        factory(ko, jQuery, Common);
+        factory(ko, jQuery);
     } else {
         // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery, window.Common);
+        factory(window.ko, window.jQuery);
     }
-})(function(ko, jQuery, Common) {
+})(function(ko, jQuery) {
 
     var Draggable = {
         defaults: {

@@ -7,7 +7,7 @@
 define([
     'ko',
     'underscore',
-    'bluefoot/common',
+    'bluefoot/utils/array',
     'bluefoot/stage/save',
     'bluefoot/stage/structural/options',
     'mage/translate',
@@ -15,7 +15,7 @@ define([
     'Magento_Ui/js/modal/confirm',
     'bluefoot/stage/edit',
     'mageUtils'
-], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, Edit, utils) {
+], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, confirmation, Edit, utils) {
 
     /**
      * Abstract structural block
@@ -168,8 +168,8 @@ define([
      */
     AbstractStructural.prototype.addChild = function (child, index) {
         if (index !== undefined && index !== false) {
-            // Use the common function to add the item in the correct place within the array
-            Common.moveArrayItemIntoArray(child, this.children, index);
+            // Use the arrayUtil function to add the item in the correct place within the array
+            arrayUtil.moveArrayItemIntoArray(child, this.children, index);
         } else {
             this.children.push(child);
         }
@@ -306,13 +306,13 @@ define([
                         return false;
                     }
                     // Move the array item to that new index
-                    Common.moveArrayItem(childrenArray, this.originalIndex, newIndex);
+                    arrayUtil.moveArrayItem(childrenArray, this.originalIndex, newIndex);
                 } else {
                     // Remove the item from the original parent
                     this.originalParent.removeChild(this);
 
                     // Move the item into a different array, removing the original instance
-                    Common.moveArrayItemIntoArray(this, childrenArray, newIndex);
+                    arrayUtil.moveArrayItemIntoArray(this, childrenArray, newIndex);
                 }
 
                 // Remove the item from the UI

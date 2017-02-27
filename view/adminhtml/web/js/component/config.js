@@ -4,7 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, AjaxClass, persistence) {
+define(['jquery', 'bluefoot/utils/ajax', 'bluefoot/utils/persistence'], function (jQuery, AjaxClass, persistence) {
 
     /**
      * The initial config before the Ajax request

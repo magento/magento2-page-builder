@@ -4,10 +4,7 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define([
-    'ko',
-    'mageUtils'
-], function (ko, utils) {
+define([], function () {
 
     return {
         /**
