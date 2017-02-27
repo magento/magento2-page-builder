@@ -13,8 +13,9 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
     'Magento_Ui/js/modal/confirm',
-    'bluefoot/stage/edit'
-], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, Edit) {
+    'bluefoot/stage/edit',
+    'mageUtils'
+], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, Edit, utils) {
 
     /**
      * Abstract structural block
@@ -29,7 +30,7 @@ define([
         this.parent = parent;
         this.stage = stage || false;
 
-        this.id = Common.guid();
+        this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
         this.data.subscribe(function () {

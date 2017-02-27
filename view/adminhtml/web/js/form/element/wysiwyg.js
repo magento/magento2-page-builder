@@ -11,9 +11,9 @@ define([
     'jquery',
     'bluefoot/stage',
     'bluefoot/stage/build',
-    'bluefoot/common',
+    'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, ko, registry, jQuery, Stage, Build, Common) {
+], function (Wysiwyg, $, ko, registry, jQuery, Stage, Build, utils) {
     'use strict';
 
     /**
@@ -24,7 +24,7 @@ define([
             elementSelector: 'textarea.textarea',
             stageActive: false,
             stage: {},
-            stageId: Common.guid(),
+            stageId: utils.uniqueid(),
             stageContent: [],
             showBorders: false,
             loading: false,

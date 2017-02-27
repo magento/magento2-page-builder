@@ -10,16 +10,6 @@ define([
 ], function (ko, utils) {
 
     return {
-
-        /**
-         * Proxy through to the unique ID magento function
-         *
-         * @returns {string}
-         */
-        guid: function () {
-            return utils.uniqueid();
-        },
-
         /**
          * Move an array item within an array based on indexes
          *
