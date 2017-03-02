@@ -7,14 +7,15 @@
 define([
     'ko',
     'underscore',
-    'bluefoot/common',
+    'bluefoot/utils/array',
     'bluefoot/stage/save',
     'bluefoot/stage/structural/options',
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
     'Magento_Ui/js/modal/confirm',
-    'bluefoot/stage/edit'
-], function (ko, _, Common, Save, Options, $t, ColumnBuilder, confirmation, Edit) {
+    'bluefoot/stage/edit',
+    'mageUtils'
+], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, confirmation, Edit, utils) {
 
     /**
      * Abstract structural block
@@ -29,7 +30,7 @@ define([
         this.parent = parent;
         this.stage = stage || false;
 
-        this.id = Common.guid();
+        this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
         this.data.subscribe(function () {
@@ -167,8 +168,8 @@ define([
      */
     AbstractStructural.prototype.addChild = function (child, index) {
         if (index !== undefined && index !== false) {
-            // Use the common function to add the item in the correct place within the array
-            Common.moveArrayItemIntoArray(child, this.children, index);
+            // Use the arrayUtil function to add the item in the correct place within the array
+            arrayUtil.moveArrayItemIntoArray(child, this.children, index);
         } else {
             this.children.push(child);
         }
@@ -180,10 +181,7 @@ define([
      * @param child
      */
     AbstractStructural.prototype.removeChild = function (child) {
-        this.children(ko.utils.arrayFilter(this.children(), function (filterChild) {
-            return child.id != filterChild.id;
-        }));
-        this.refreshChildren();
+        utils.remove(this.children, child);
     };
 
     /**
@@ -203,15 +201,6 @@ define([
                 }.bind(this)
             }
         });
-    };
-
-    /**
-     * Refresh children within stage
-     */
-    AbstractStructural.prototype.refreshChildren = function () {
-        var data = this.children().slice(0);
-        this.children([]);
-        this.children(data);
     };
 
     /**
@@ -313,25 +302,17 @@ define([
                         return false;
                     }
                     // Move the array item to that new index
-                    Common.moveArrayItem(childrenArray, this.originalIndex, newIndex);
+                    arrayUtil.moveArrayItem(childrenArray, this.originalIndex, newIndex);
                 } else {
                     // Remove the item from the original parent
                     this.originalParent.removeChild(this);
-                    this.originalParent.refreshChildren();
 
                     // Move the item into a different array, removing the original instance
-                    Common.moveArrayItemIntoArray(this, childrenArray, newIndex);
+                    arrayUtil.moveArrayItemIntoArray(this, childrenArray, newIndex);
                 }
 
                 // Remove the item from the UI
                 item.remove();
-
-                // Always ensure the DOM is updated before refreshing the children
-                parent.refreshChildren();
-                setTimeout(function () {
-                    // Force refresh the children to update the UI
-                    parent.refreshChildren();
-                }, 10);
             }
 
             // If using deferred updates plugin, force updates

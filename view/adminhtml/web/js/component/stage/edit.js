@@ -11,9 +11,9 @@ define([
     'jquery',
     'uiRegistry',
     'bluefoot/config',
-    'bluefoot/common',
+    'mageUtils',
     'mage/apply/main'
-], function (ko, $, registry, Config, Common, applyMain) {
+], function (ko, $, registry, Config, utils, applyMain) {
 
     /**
      * Edit class constructor
@@ -34,7 +34,7 @@ define([
      */
     Edit.prototype.initModal = function () {
         var originalForm = registry.get('bluefoot_edit.bluefoot_edit.bluefoot_edit_form'),
-            componentName = 'bluefoot_edit_' + Common.guid(),
+            componentName = 'bluefoot_edit_' + utils.uniqueid(),
             fullPath = componentName + '.' + componentName,
             formPath = fullPath + '.bluefoot_edit_form';
 

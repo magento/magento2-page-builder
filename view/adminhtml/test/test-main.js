@@ -1,10 +1,10 @@
 var allTestFiles = [];
 var srcPaths = {
     'jquery': 'test/lib/jquery',
+    'underscore': 'test/lib/underscore',
     'bluefoot/jquery': 'test/lib/jquery',
-    'bluefoot/ajax': 'test/mock/ajax',
-    'bluefoot/persistence': 'test/mock/persistence',
-    'bluefoot/cms-config': 'test/data/cms-config'
+    'bluefoot/utils/ajax': 'test/mock/ajax',
+    'bluefoot/utils/persistence': 'test/mock/persistence'
 };
 var TEST_REGEXP = /(spec|test)\.js$/i
 var SRC_REGEXP = /^\/base\/web\//

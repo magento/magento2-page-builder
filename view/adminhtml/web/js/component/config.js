@@ -4,7 +4,12 @@
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, AjaxClass, persistence) {
+define([
+    'underscore',
+    'jquery',
+    'bluefoot/utils/ajax',
+    'bluefoot/utils/persistence'
+], function (_, jQuery, AjaxClass, persistence) {
 
     /**
      * The initial config before the Ajax request
@@ -17,7 +22,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
     /**
      * Cache the config within this module
      *
-     * @type {boolean}
+     * @type {{}}
      * @private
      */
     var _config = {};
@@ -25,12 +30,34 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
     /**
      * Store all the fields in a cache so we don't have to re-generate them
      *
-     * @type {boolean}
+     * @type {{}|boolean}
      * @private
      */
     var _allFields = false;
 
     return {
+
+        /**
+         * Set config values
+         *
+         * @param key
+         * @param value
+         * @private
+         */
+        _setConfig: function (key, value) {
+            _config[key] = value;
+        },
+
+        /**
+         * Set specific initConfig values
+         *
+         * @param key
+         * @param value
+         * @private
+         */
+        _setInitConfig: function (key, value) {
+            _initConfig[key] = value;
+        },
 
         /**
          * Set the initial config
@@ -71,7 +98,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
             storeId = storeId || this.getStoreId();
 
             // Include the Ajax Class
-            var Ajax = new AjaxClass(this.getInitConfig('formkey'));
+            var Ajax = new AjaxClass();
             Ajax.post(this.getInitConfig('config_url'), {entityIds: entityIds, storeId: storeId}, function (data) {
                 jQuery.extend(_config['entities'], data);
 
@@ -112,7 +139,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
         /**
          * Retrieve the previously built configuration
          *
-         * @returns {boolean}
+         * @returns {{}}
          */
         getConfig: function () {
             return _config;
@@ -161,7 +188,8 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
         },
 
         /**
-         * Update a value in the tempalates array
+         * Update a value in the templates array
+         *
          * @param matchKey
          * @param matchValue
          * @param newValueKey
@@ -271,13 +299,15 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
          *
          * @param key
          * @param data
+         *
+         * @todo replace with client side rendering of forms
          */
         addForm: function (key, data) {
             if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
-                localStorage.setItem('bluefoot-edit-' + key, data);
+                persistence.setItem('bluefoot-edit-' + key, data);
             } else {
                 if (typeof _config['forms'] === 'undefined') {
                     _config['forms'] = {};
@@ -291,13 +321,15 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
          *
          * @param key
          * @returns {*}
+         *
+         * @todo replace with client side rendering of forms
          */
         loadForm: function (key) {
             if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== localStorage.getItem('bluefoot-edit-key')) {
+                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
                     this.invalidateLocalStorage();
                 }
-                return localStorage.getItem('bluefoot-edit-' + key);
+                return persistence.getItem('bluefoot-edit-' + key);
             } else {
                 if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
                     return _config['forms'][key];
@@ -309,17 +341,19 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
 
         /**
          * Invalidate the localStorage cache
+         *
+         * @todo replace with client side rendering of forms
          */
         invalidateLocalStorage: function () {
             var cachePrefix = 'bluefoot-edit-';
-            Object.keys(localStorage)
+            persistence.keys()
                 .forEach(function(key) {
                     if (key.substring(0, cachePrefix.length) == cachePrefix) {
-                        localStorage.removeItem(key);
+                        persistence.removeItem(key);
                     }
                 });
 
-            localStorage.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
+            persistence.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
         },
 
         /**
@@ -329,14 +363,7 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
          * @returns {*}
          */
         getColumnDefinitionByClassName: function (className) {
-            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
-                return className == columnDef.className;
-            });
-            if (search.length > 0) {
-                return search[0];
-            }
-
-            return null;
+            return this._getColumnDef('className', className);
         },
 
         /**
@@ -346,14 +373,21 @@ define(['jquery', 'bluefoot/ajax', 'bluefoot/persistence'], function (jQuery, Aj
          * @returns {*}
          */
         getColumnDefinitionByBreakpoint: function (breakpoint) {
-            var search = jQuery.grep(this.getInitConfig('column_definitions'), function (columnDef) {
-                return breakpoint == columnDef.breakpoint;
-            });
-            if (search.length > 0) {
-                return search[0];
-            }
-
-            return null;
+            return this._getColumnDef('breakpoint', breakpoint);
         },
+
+        /**
+         * Get column definition by field & value
+         *
+         * @param field
+         * @param value
+         * @returns {*}
+         * @private
+         */
+        _getColumnDef: function (field, value) {
+            var searchObj = {};
+            searchObj[field] = value;
+            return _.findWhere(this.getInitConfig('column_definitions'), searchObj);
+        }
     };
 });

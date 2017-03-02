@@ -8,11 +8,11 @@ define([
     'underscore',
     'mageUtils',
     'bluefoot/config',
-    'bluefoot/common',
+    'bluefoot/utils/array',
     'bluefoot/stage/panel/group/block',
     'Magento_Ui/js/form/element/abstract',
     'uiRegistry'
-], function (ko, _, utils, Config, Common, PanelBlock, Abstract, registry) {
+], function (ko, _, utils, Config, arrayUtil, PanelBlock, Abstract, registry) {
     'use strict';
 
     return Abstract.extend({
@@ -138,7 +138,7 @@ define([
                     return false;
                 }
                 // Move the array item to that new index
-                Common.moveArrayItem(this.value, this.originalIndex, newIndex);
+                arrayUtil.moveArrayItem(this.value, this.originalIndex, newIndex);
 
                 // Remove the item from the UI
                 item.remove();

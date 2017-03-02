@@ -121,7 +121,6 @@ define([
         require([this.getBlockInstance()], function (BlockInstance) {
             var block = new BlockInstance(parent, parent.stage, this.config, formData);
             parent.addChild(block, index, key);
-            parent.refreshChildren();
 
             if (typeof callbackFn === 'function') {
                 callbackFn(block);

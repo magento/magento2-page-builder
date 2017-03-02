@@ -9,9 +9,10 @@ define([
     'underscore',
     'bluefoot/stage/save',
     'bluefoot/stage/structural/row',
-    'bluefoot/common',
-    'uiRegistry'
-], function (ko, _, Save, Row, Common, registry) {
+    'bluefoot/utils/array',
+    'uiRegistry',
+    'mageUtils'
+], function (ko, _, Save, Row, arrayUtil, registry, utils) {
 
     /**
      * Stage Class
@@ -28,9 +29,6 @@ define([
         this.loading = parent.loading;
 
         this.save = new Save(this);
-
-        // @todo remove
-        window.registry = registry;
     }
 
     /**
@@ -39,19 +37,7 @@ define([
      * @param child
      */
     Stage.prototype.removeChild = function (child) {
-        this.stageContent(ko.utils.arrayFilter(this.stageContent(), function (filterChild) {
-            return child.id != filterChild.id;
-        }));
-        this.refreshChildren();
-    };
-
-    /**
-     * Refresh children within stage
-     */
-    Stage.prototype.refreshChildren = function () {
-        var data = this.stageContent().slice(0);
-        this.stageContent([]);
-        this.stageContent(data);
+        utils.remove(this.stageContent, child);
     };
 
     /**
@@ -63,7 +49,7 @@ define([
     Stage.prototype.addChild = function (child, index) {
         if (index !== undefined && index !== false) {
             // Use the common function to add the item in the correct place within the array
-            Common.moveArrayItemIntoArray(child, this.stageContent, index);
+            arrayUtil.moveArrayItemIntoArray(child, this.stageContent, index);
         } else {
             this.stageContent.push(child);
         }

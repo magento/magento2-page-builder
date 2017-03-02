@@ -2,9 +2,9 @@ define([
     'jquery',
     'Gene_BlueFoot/js/component/block/abstract',
     'bluefoot/config',
-    'bluefoot/common',
+    'mageUtils',
     'Gene_BlueFoot/js/form/element/magentowidget'
-], function (jQuery, AbstractBlock, Config, Common) {
+], function (jQuery, AbstractBlock, Config, utils) {
 
     /**
      * Widget constructor
@@ -26,7 +26,7 @@ define([
     var $super = AbstractBlock.prototype;
 
     Widget.prototype.edit = function() {
-        var id = Common.guid(),
+        var id = utils.uniqueid(),
             dataKey = '';
 
         // Determine the field ID for the magento widget
