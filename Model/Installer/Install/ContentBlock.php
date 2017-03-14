@@ -5,6 +5,7 @@ namespace Gene\BlueFoot\Model\Installer\Install;
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 use Gene\BlueFoot\Setup\EntitySetupFactory;
+use Gene\BlueFoot\Setup\EntitySetup;
 
 /**
  * Class ContentBlock
@@ -118,13 +119,14 @@ class ContentBlock extends AbstractInstall
     /**
      * Create a single content block
      *
-     * @param            $contentBlockData
-     * @param bool|false $contentBlockIdentifier
+     * @param             $contentBlockData
+     * @param EntitySetup $eavSetup
+     * @param bool        $contentBlockIdentifier
      *
      * @return $this
      * @throws \Exception
      */
-    public function createContentBlock($contentBlockData, $contentBlockIdentifier = false)
+    public function createContentBlock($contentBlockData, EntitySetup $eavSetup, $contentBlockIdentifier = false)
     {
         // Set the attribute code into the data if passed separately
         if ($contentBlockIdentifier === false && isset($contentBlockData['identifier'])) {
@@ -164,7 +166,7 @@ class ContentBlock extends AbstractInstall
             // Determine if this content block has all the required attributes
             $missingAttributes = [];
             foreach ($attributes as $attributeCode) {
-                if (!$this->attributeExists($attributeCode)) {
+                if (!$this->attributeExists($attributeCode, $eavSetup)) {
                     $missingAttributes[] = $attributeCode;
                 }
             }
@@ -206,12 +208,13 @@ class ContentBlock extends AbstractInstall
     /**
      * Create multiple content blocks
      *
-     * @param $contentBlocks
-     * @param $installData
+     * @param             $contentBlocks
+     * @param             $installData
+     * @param EntitySetup $eavSetup
      *
      * @return $this
      */
-    public function createContentBlocks($contentBlocks, $installData)
+    public function createContentBlocks($contentBlocks, $installData, EntitySetup $eavSetup)
     {
         if (is_array($installData) && !empty($installData)) {
             $this->setInstallData($installData);
@@ -220,7 +223,7 @@ class ContentBlock extends AbstractInstall
         if (is_array($contentBlocks)) {
             foreach ($contentBlocks as $contentBlock) {
                 if (isset($contentBlock['identifier'])) {
-                    $this->createContentBlock($contentBlock, $contentBlock['identifier']);
+                    $this->createContentBlock($contentBlock, $eavSetup, $contentBlock['identifier']);
                 }
             }
         }

@@ -4,6 +4,7 @@ namespace Gene\BlueFoot\Model\Installer\Install;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Gene\BlueFoot\Setup\EntitySetupFactory;
+use Gene\BlueFoot\Setup\EntitySetup;
 
 /**
  * Class Attribute
@@ -18,11 +19,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @var \Gene\BlueFoot\Setup\EntitySetupFactory
      */
     protected $entitySetupFactory;
-
-    /**
-     * @var bool
-     */
-    protected $eavSetup = false;
 
     /**
      * @var \Magento\Eav\Model\Entity\Type
@@ -97,7 +93,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         $this->moduleReader = $moduleReader;
         $this->contentBlockRepository = $contentBlockRepositoryInterface;
 
-        $this->eavSetup = $this->entitySetupFactory->create();
         $this->entity = $entity;
 
         // Declare the model fields that require to be mapped
@@ -129,26 +124,28 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     /**
      * Determine whether an attribute already exists
      *
-     * @param $attributeCode
+     * @param             $attributeCode
+     * @param EntitySetup $eavSetup
      *
      * @return mixed
      */
-    protected function attributeExists($attributeCode)
+    protected function attributeExists($attributeCode, EntitySetup $eavSetup)
     {
-        return $this->eavSetup->getAttribute($this->getEntityTypeId(), $attributeCode, 'attribute_code');
+        return $eavSetup->getAttribute($this->getEntityTypeId(), $attributeCode, 'attribute_code');
     }
 
     /**
      * Determine whether an attribute exists, or will exist by the time the installation has finished
      *
-     * @param $attributeCode
+     * @param             $attributeCode
+     * @param EntitySetup $eavSetup
      *
      * @return bool
      */
-    protected function attributeWillExist($attributeCode)
+    protected function attributeWillExist($attributeCode, EntitySetup $eavSetup)
     {
         // Check to see if the attribute already exists?
-        if ($this->attributeExists($attributeCode)) {
+        if ($this->attributeExists($attributeCode, $eavSetup)) {
             return true;
         }
 

@@ -4,6 +4,7 @@ namespace Gene\BlueFoot\Model\Installer\Install;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Gene\BlueFoot\Setup\EntitySetupFactory;
+use Gene\BlueFoot\Setup\EntitySetup;
 
 /**
  * Class Attribute
@@ -89,13 +90,14 @@ class Attribute extends AbstractInstall
     /**
      * Create an attribute
      *
-     * @param            $attributeData
-     * @param bool|false $attributeCode
+     * @param             $attributeData
+     * @param EntitySetup $eavSetup
+     * @param bool        $attributeCode
      *
      * @return $this
      * @throws \Exception
      */
-    public function createAttribute($attributeData, $attributeCode = false)
+    public function createAttribute($attributeData, EntitySetup $eavSetup, $attributeCode = false)
     {
         // Set the attribute code into the data if passed separately
         if ($attributeCode === false && isset($attributeData['attribute_code'])) {
@@ -109,7 +111,7 @@ class Attribute extends AbstractInstall
         }
 
         // Add the new attribute providing it doesn't already exist
-        $attribute = $this->attributeExists($attributeCode);
+        $attribute = $this->attributeExists($attributeCode, $eavSetup);
         if (!$attribute) {
             // Force the eavSetup to not attempt to automatically create a group, as the .json file implements the
             // names differently there is no need to cache and restore this data. Eg. Magento expects backend, where as
@@ -153,7 +155,7 @@ class Attribute extends AbstractInstall
             }
 
             // Add the attribute into Magento
-            $this->eavSetup->addAttribute($this->getEntityTypeId(), $attributeCode, $attributeData);
+            $eavSetup->addAttribute($this->getEntityTypeId(), $attributeCode, $attributeData);
         }
 
         return $this;
@@ -162,13 +164,13 @@ class Attribute extends AbstractInstall
     /**
      * Create multiple attributes
      *
-     * @param       $attributes
-     * @param array $installData
+     * @param             $attributes
+     * @param             $installData
+     * @param EntitySetup $eavSetup
      *
      * @return $this
-     * @throws \Exception
      */
-    public function createAttributes($attributes, $installData)
+    public function createAttributes($attributes, $installData, EntitySetup $eavSetup)
     {
         if (is_array($installData) && !empty($installData)) {
             $this->setInstallData($installData);
@@ -177,7 +179,7 @@ class Attribute extends AbstractInstall
         if (is_array($attributes)) {
             foreach ($attributes as $attribute) {
                 if (isset($attribute['attribute_code'])) {
-                    $this->createAttribute($attribute, $attribute['attribute_code']);
+                    $this->createAttribute($attribute, $eavSetup, $attribute['attribute_code']);
                 }
             }
         }
@@ -188,10 +190,11 @@ class Attribute extends AbstractInstall
     /**
      * Resolve any unmapped ID's in the additional data field
      *
+     * @param EntitySetup $eavSetup
+     *
      * @return $this
-     * @throws \Zend_Json_Exception
      */
-    public function resolveAdditionalData()
+    public function resolveAdditionalData(EntitySetup $eavSetup)
     {
         if (!empty($this->unresolvedAdditionalData)) {
             foreach ($this->unresolvedAdditionalData as $attributeCode) {
@@ -211,7 +214,7 @@ class Attribute extends AbstractInstall
                         }
 
                         // Update the attribute
-                        $this->eavSetup->updateAttribute(
+                        $eavSetup->updateAttribute(
                             $this->getEntityTypeId(),
                             $attribute->getId(),
                             'additional_data',

@@ -48,17 +48,23 @@ class InstallData implements InstallDataInterface
     /**
      * @var \Magento\Eav\Model\Config
      */
-    protected $_eavConfig;
+    protected $eavConfig;
+
+    /**
+     * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
+     */
+    protected $contentBlockGroupRepository;
 
     /**
      * InstallData constructor.
      *
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                     $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory    $groupFactory
-     * @param \Magento\Framework\Module\Dir\Reader                        $moduleReader
-     * @param \Magento\Framework\Filesystem\Io\File                       $ioFile
-     * @param \Gene\BlueFoot\Model\Installer\File                         $fileInstaller
-     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface     $contentBlockGroupRepositoryInterface
+     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                  $entitySetupFactory
+     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory
+     * @param \Magento\Framework\Module\Dir\Reader                     $moduleReader
+     * @param \Magento\Framework\Filesystem\Io\File                    $ioFile
+     * @param \Gene\BlueFoot\Model\Installer\File                      $fileInstaller
+     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface  $contentBlockGroupRepositoryInterface
+     * @param \Magento\Eav\Model\Config                                $eavConfig
      */
     public function __construct(
         EntitySetupFactory $entitySetupFactory,
@@ -69,13 +75,13 @@ class InstallData implements InstallDataInterface
         ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface,
         \Magento\Eav\Model\Config $eavConfig
     ) {
-        $this->_entitySetupFactory = $entitySetupFactory;
-        $this->_groupFactory = $groupFactory;
-        $this->_moduleReader = $moduleReader;
-        $this->_ioFile = $ioFile;
-        $this->_fileInstaller = $fileInstaller;
-        $this->_contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
-        $this->_eavConfig = $eavConfig;
+        $this->entitySetupFactory = $entitySetupFactory;
+        $this->groupFactory = $groupFactory;
+        $this->moduleReader = $moduleReader;
+        $this->ioFile = $ioFile;
+        $this->fileInstaller = $fileInstaller;
+        $this->contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
+        $this->eavConfig = $eavConfig;
     }
 
     /**
@@ -95,13 +101,13 @@ class InstallData implements InstallDataInterface
         $entitySetup->cleanCache();
 
         // Clear the eavConfig cache
-        $this->_eavConfig->clear();
+        $this->eavConfig->clear();
 
         // Create the default groups
         $this->installGroups();
 
         // Install the default content blocks
-        $this->installDefaultContentBlocks();
+        $this->installDefaultContentBlocks($setup);
 
         $setup->endSetup();
     }
@@ -152,7 +158,7 @@ class InstallData implements InstallDataInterface
      *
      * @return $this
      */
-    protected function installDefaultContentBlocks()
+    protected function installDefaultContentBlocks($setup)
     {
         $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR .
             'Setup' . DIRECTORY_SEPARATOR .
@@ -160,7 +166,7 @@ class InstallData implements InstallDataInterface
             'pagebuilder_blocks_core.json';
 
         if ($this->ioFile->fileExists($file)) {
-            $this->fileInstaller->install($file);
+            $this->fileInstaller->install($file, $setup);
         }
 
         return $this;

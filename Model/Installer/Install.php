@@ -2,6 +2,8 @@
 
 namespace Gene\BlueFoot\Model\Installer;
 
+use Gene\BlueFoot\Setup\EntitySetupFactory;
+
 /**
  * Class Install
  *
@@ -27,6 +29,11 @@ class Install extends \Magento\Framework\Model\AbstractModel
     protected $contentBlockInstall;
 
     /**
+     * @var \Gene\BlueFoot\Setup\EntitySetupFactory
+     */
+    protected $entitySetupFactory;
+
+    /**
      * Install constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
@@ -42,6 +49,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         Install\Attribute $attribute,
         Install\ContentBlock $contentBlock,
+        EntitySetupFactory $entitySetupFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -50,6 +58,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
 
         $this->attributeInstall = $attribute;
         $this->contentBlockInstall = $contentBlock;
+        $this->entitySetupFactory = $entitySetupFactory;
     }
 
     /**
@@ -60,26 +69,27 @@ class Install extends \Magento\Framework\Model\AbstractModel
      * @return bool
      * @throws \Exception
      */
-    public function install($data)
+    public function install($data, $setup)
     {
         if (!is_array($data)) {
             throw new \Exception('Data must be a valid array');
         }
 
         $this->installData = $data;
+        $eavSetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Install the attributes first
         if ($this->hasAttributes()) {
-            $this->attributeInstall->createAttributes($this->getAttributes(), $data);
+            $this->attributeInstall->createAttributes($this->getAttributes(), $data, $eavSetup);
         }
 
         // Then any content blocks
         if ($this->hasContentBlocks()) {
-            $this->contentBlockInstall->createContentBlocks($this->getContentBlocks(), $data);
+            $this->contentBlockInstall->createContentBlocks($this->getContentBlocks(), $data, $eavSetup);
         }
 
         // Resolve any unmapped additional data
-        $this->attributeInstall->resolveAdditionalData();
+        $this->attributeInstall->resolveAdditionalData($eavSetup);
 
         return true;
     }
