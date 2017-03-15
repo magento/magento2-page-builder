@@ -11,9 +11,8 @@ define([
     'jquery',
     'uiRegistry',
     'bluefoot/config',
-    'mageUtils',
-    'mage/apply/main'
-], function (ko, $, registry, Config, utils, applyMain) {
+    'mageUtils'
+], function (ko, $, registry, Config, utils) {
 
     /**
      * Edit class constructor
@@ -112,7 +111,7 @@ define([
         };
 
         // Add our new sidebar UI component
-        applyMain.applyFor.call(null, false, config, 'Magento_Ui/js/core/app');
+        this.parent.requestAddComponent(false, config, 'Magento_Ui/js/core/app');
     };
 
     return Edit;

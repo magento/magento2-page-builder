@@ -5,7 +5,6 @@
 define([
     'Magento_Ui/js/modal/modal-component',
     'jquery',
-    'mage/apply/main',
     'uiRegistry',
     'mage/translate',
     'bluefoot/stage/build'
@@ -16,7 +15,7 @@ define([
      * @param componentName
      * @param params
      */
-    function buildFormComponent(componentName, params) {
+    function buildFormComponent(modal, componentName, params) {
         var fullPath = componentName + '.' + componentName,
             formPath = fullPath + '.modal_form';
 
@@ -101,7 +100,9 @@ define([
         };
 
         // Add our new sidebar UI component
-        applyMain.applyFor.call(null, false, config, 'Magento_Ui/js/core/app');
+        if (modal.stage) {
+            modal.stage.addComponent(false, config, 'Magento_Ui/js/core/app');
+        }
     }
 
     return Modal.extend({
@@ -142,7 +143,7 @@ define([
          * Dynamically generated so as to not clutter each page load
          */
         actionSaveTemplate: function() {
-            buildFormComponent("bluefoot_template_create_modal", {
+            buildFormComponent(this, "bluefoot_template_create_modal", {
                 render_url: this.create_modal.render_url,
                 update_url: this.create_modal.update_url
             });

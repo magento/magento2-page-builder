@@ -6,6 +6,8 @@
 define([
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
+    'Magento_Ui/js/modal/confirm',
+    'mage/apply/main',
     'ko',
     'uiRegistry',
     'jquery',
@@ -13,7 +15,7 @@ define([
     'bluefoot/stage/build',
     'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, ko, registry, jQuery, Stage, Build, utils) {
+], function (Wysiwyg, $, confirmation, applyMain, ko, registry, jQuery, Stage, Build, utils) {
     'use strict';
 
     /**
@@ -147,6 +149,31 @@ define([
          */
         getStageTemplate: function () {
             return 'Gene_BlueFoot/component/stage.html';
+        },
+
+        /**
+         * Throw a confirmation dialog in the exterior system.
+         * 
+         * @param {object} options
+         * @returns {null}
+         */
+        confirmationDialog: function (options) {
+            if (options.actions && (
+                ['always', 'confirm', 'cancel'].some(function (action) {
+                    return typeof options[action] === 'function';
+                })
+            )) {
+                confirmation(options);
+            } else {
+                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+            }
+        },
+
+        /**
+         * Run the apply function to load modules detected in the DOM.
+         */
+        applyConfigFor: function () {
+            return applyMain.applyFor.apply(null, arguments);
         }
 
     });

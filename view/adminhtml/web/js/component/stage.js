@@ -93,5 +93,14 @@ define([
         registry.get('bluefoot_template_manager.bluefoot_template_manager').openManager(this);
     };
 
+    /**
+     * Run the apply function passed from the parent,
+     * to add a new sidebar UI component from
+     * modules detected in the DOM.
+     */
+    Stage.prototype.addComponent = function () {
+        return this.parent.applyConfigFor.apply(null, arguments);
+    };
+
     return Stage;
 });
