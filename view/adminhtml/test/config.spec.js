@@ -4,7 +4,7 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'web/js/component/config',
+    'bluefoot/config',
     'test/data/cms-config'
 ], function (Config, initConfig) {
 
