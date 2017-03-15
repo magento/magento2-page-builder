@@ -2,6 +2,11 @@ var allTestFiles = [];
 var pathOverrides = {
     'jquery': 'test/lib/jquery',
     'underscore': 'test/lib/underscore',
+    'ko': 'test/lib/knockout',
+    'es6-collections': 'test/lib/es6-collections',
+    'uiRegistry': 'test/lib/registry',
+    'mageUtils': 'test/lib/stub-mageUtils',
+    'mage/translate': 'test/lib/stub-translate',
     'bluefoot/jquery': 'test/lib/jquery',
     'bluefoot/utils/ajax': 'test/mock/ajax',
     'bluefoot/utils/persistence': 'test/mock/persistence',
