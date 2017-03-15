@@ -51,19 +51,19 @@ class File extends \Magento\Framework\Model\AbstractModel
      * Install data from a file path
      *
      * @param $filePath
+     * @param $setup
      *
      * @return bool
      * @throws \Exception
-     * @throws \Zend_Json_Exception
      */
-    public function install($filePath)
+    public function install($filePath, $setup)
     {
         if ($this->ioFile->fileExists($filePath)) {
             $fileContents = $this->ioFile->read($filePath);
             if (strlen($fileContents) > 0) {
                 $installData = \Zend_Json::decode($fileContents);
                 if (is_array($installData)) {
-                    return $this->install->install($installData);
+                    return $this->install->install($installData, $setup);
                 }
 
                 throw new \Exception('Unable to correctly parse file ' . $filePath);
