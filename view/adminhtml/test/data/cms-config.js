@@ -7,6 +7,10 @@ define([], function () {
             {
                 className: 'test',
                 breakpoint: '0.5'
+            },
+            {
+                className: 'test1',
+                breakpoint: '0.6'
             }
         ]
     };
