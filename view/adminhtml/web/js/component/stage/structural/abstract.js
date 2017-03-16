@@ -12,10 +12,9 @@ define([
     'bluefoot/stage/structural/options',
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
-    'Magento_Ui/js/modal/confirm',
     'bluefoot/stage/edit',
     'mageUtils'
-], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, confirmation, Edit, utils) {
+], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, Edit, utils) {
 
     /**
      * Abstract structural block
@@ -191,7 +190,7 @@ define([
      * @param structural
      */
     AbstractStructural.prototype.remove = function ($data, structural) {
-        confirmation({
+        this.stage.parent.confirmationDialog({
             title: 'Confirm Item Removal',
             content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
             actions: {
@@ -349,6 +348,15 @@ define([
         }
 
         return json;
+    };
+
+    /**
+     * Request that parent stage add UI to the outer sidebar.
+     */
+    AbstractStructural.prototype.requestAddComponent = function (el, config, path) {
+        if (this.stage) {
+            this.stage.addComponent(el, config, path);
+        }
     };
 
     return AbstractStructural;

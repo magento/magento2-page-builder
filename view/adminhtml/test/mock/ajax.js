@@ -62,27 +62,23 @@ define(['test/data/mock-requests'], function (requests) {
 
         // Check we have a mock request for call
         if (typeof requests[url] === 'function') {
+            console.log('mock-ajax: Found mock response for ' + url);
             setTimeout(function () {
                 var mockRequest = requests[url](parameters);
-                if (mockRequest.success) {
-                    if (typeof successCallback === 'function') {
-                        var response = mockRequest.responseText;
-                        if (dataType == 'json') {
-                            response = JSON.parse(response);
-                        }
-                        successCallback(response);
+                if (mockRequest.success && typeof successCallback === 'function') {
+                    var response = mockRequest.responseText;
+                    if (dataType == 'json') {
+                        response = JSON.parse(response);
                     }
-                } else {
-                    if (typeof failedCallback === 'function') {
-                        failedCallback();
-                    }
-                }
-                if (typeof doneCallback === 'function') {
+                    successCallback(response);
+                } else if (typeof failedCallback === 'function') {
+                    failedCallback();
+                } else if (typeof doneCallback === 'function') {
                     doneCallback();
                 }
             }, 0);
         } else {
-            throw new Error('No mock request for ' + url);
+            throw new Error('No mock response for ' + url);
         }
     };
 

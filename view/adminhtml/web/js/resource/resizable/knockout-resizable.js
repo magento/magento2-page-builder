@@ -1,10 +1,10 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", 'bluefoot/config'], factory);
+        define(["ko", "jquery", 'bluefoot/config'], factory);
     } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
         // CommonJS module
-        var ko = require("knockout"),
+        var ko = require("ko"),
             jQuery = require("jquery"),
             Config = require('bluefoot/config');
 
@@ -15,7 +15,7 @@
     }
 })(function (ko, jQuery, Config) {
 
-    var allowedSizes = Config.getInitConfig('column_definitions'),
+    var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},
         smallestColumn = {breakpoint: 1};
 
