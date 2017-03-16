@@ -32,18 +32,8 @@ define([
         this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
-        this.data.subscribe(function () {
-            if (this.stage) {
-                this.stage.save.update();
-            }
-        }.bind(this));
 
         this.children = ko.observableArray([]);
-        this.children.subscribe(function () {
-            if (this.stage) {
-                this.stage.save.update();
-            }
-        }.bind(this));
 
         this.originalParent = false;
         this.originalIndex = false;
@@ -55,7 +45,27 @@ define([
 
         // Build the options on initialization
         this.buildOptions();
+
+        // Init our subscriptions
+        this.initSubscriptions();
     }
+
+    /**
+     * Init subscriptions on knockout observables
+     */
+    AbstractStructural.prototype.initSubscriptions = function () {
+        this.data.subscribe(function () {
+            if (this.stage) {
+                this.stage.save.update();
+            }
+        }.bind(this));
+
+        this.children.subscribe(function () {
+            if (this.stage) {
+                this.stage.save.update();
+            }
+        }.bind(this));
+    };
 
     /**
      * Build up any options the structural block has
