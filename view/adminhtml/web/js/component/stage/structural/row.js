@@ -58,7 +58,7 @@ define([
     Row.prototype.addColumn = function (data) {
         var column = new Column(this, this.stage);
         this.addChild(column);
-        column.updateColumData(data);
+        column.updateColumnData(data);
         return column;
     };
 
