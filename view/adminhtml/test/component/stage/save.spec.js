@@ -1,13 +1,12 @@
 /**
- * JS Unit Test for stage.js
+ * JS Unit Test for stage/save.js
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',
-    'bluefoot/stage',
     'bluefoot/stage/save'
-], function (ko, Stage, Save) {
+], function (ko, Save) {
     describe("Gene_BlueFoot/js/component/stage/save", function () {
         var stage, save;
         beforeEach(function () {
