@@ -12,9 +12,7 @@ define([
         beforeEach(function () {
             stage = {
                 stageContent: ko.observableArray([]),
-                parent: {
-                    value: function () {}
-                },
+                parent: {},
                 toJSON: function () {
                     return {'test': 1}
                 }
@@ -27,20 +25,16 @@ define([
             };
         });
 
-        it("will call update on stageContent change", function (done) {
-            var originalUpdate = save.update;
-            save.update = function () {
-                done();
-            };
+        it("will call update on stageContent change", function () {
+            spyOn(save, "update");
             stage.stageContent.push(1);
-            save.update = originalUpdate;
+            expect(save.update).toHaveBeenCalled();
         });
 
-        it("update will update stage parent value", function (done) {
-            stage.parent.value = function () {
-                done();
-            }
+        it("update will update stage parent value", function () {
+            save.stage.parent.value = jasmine.createSpy("value");
             save.update();
+            expect(save.stage.parent.value).toHaveBeenCalled();
         });
 
         it("will return json string when converting the stage", function () {
