@@ -160,7 +160,7 @@ define([
         confirmationDialog: function (options) {
             if (options.actions && (
                 ['always', 'confirm', 'cancel'].some(function (action) {
-                    return typeof options[action] === 'function';
+                    return typeof options.actions[action] === 'function';
                 })
             )) {
                 confirmation(options);

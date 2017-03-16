@@ -8,7 +8,7 @@ define([
     'uiRegistry',
     'mage/translate',
     'bluefoot/stage/build'
-], function (Modal, $, applyMain, registry, $t, build) {
+], function (Modal, $, registry, $t, build) {
 
     /**
      * Dynamically create a form ui component.

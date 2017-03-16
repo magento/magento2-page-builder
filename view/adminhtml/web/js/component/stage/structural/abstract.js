@@ -190,7 +190,7 @@ define([
      * @param structural
      */
     AbstractStructural.prototype.remove = function ($data, structural) {
-        this.parent.confirmationDialog({
+        this.stage.parent.confirmationDialog({
             title: 'Confirm Item Removal',
             content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
             actions: {
