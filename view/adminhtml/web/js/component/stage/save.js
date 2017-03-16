@@ -19,6 +19,8 @@ define([
 
         this.deleted = [];
 
+        this.stageContentSubscription = false;
+
         this.init();
     }
 
@@ -26,7 +28,7 @@ define([
      * Build up our save instance
      */
     Save.prototype.init = function () {
-        this.stage.stageContent.subscribe(function () {
+        this.stageContentSubscription = this.stage.stageContent.subscribe(function () {
             this.update();
         }.bind(this));
     };
