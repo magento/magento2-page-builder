@@ -37,6 +37,29 @@ define([
             expect(abstract.options.options().length).not.toBeLessThan(0);
         });
 
+        it("duplicate copies data into new instance", function (done) {
+            var mockData = {'testDuplicate': 1};
+            abstract.data(mockData);
+            abstract.duplicate(false, abstract, function (duplicate) {
+                expect(duplicate.data()).toEqual(mockData);
+                done();
+            });
+        });
+
+        it("duplicate copies children into new instance", function () {
+            var mockChildDuplicate = {
+                'childDuplicate': 1
+            };
+            abstract.children.push({
+                duplicate: function ($data, structural, callbackFn) {
+                    return callbackFn(mockChildDuplicate);
+                }
+            });
+            abstract.duplicate(false, abstract, function (duplicate) {
+                expect(duplicate.children()[0]).toEqual(mockChildDuplicate);
+            });
+        });
+
         it("duplicate data duplicates data correctly", function () {
             var testData = {'testData': 1};
             abstract.data(testData);

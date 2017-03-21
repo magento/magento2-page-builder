@@ -81,6 +81,18 @@ define([
     };
 
     /**
+     * Retrieve the component duplicate instance
+     *
+     * @param component
+     * @param callbackFn
+     */
+    AbstractStructural.prototype.getDuplicateInstance = function (component, callbackFn) {
+        require([component.ns], function (componentInstance) {
+            return callbackFn(componentInstance);
+        });
+    };
+
+    /**
      * Duplicate function
      *
      * @param $data
@@ -101,7 +113,7 @@ define([
         };
 
         // Include the component by it's ns
-        require([structural.ns], function (Instance) {
+        this.getDuplicateInstance(structural, function (Instance) {
             // Duplicate the element, use bind to dynamically pass the arguments
             var duplicate = new (construct(Instance, this.duplicateArgs()));
             this.duplicateData(duplicate);
