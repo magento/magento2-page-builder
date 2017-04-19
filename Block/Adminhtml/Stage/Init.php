@@ -16,11 +16,6 @@ class Init extends \Magento\Backend\Block\Template
     const BLUEFOOT_EDIT_CACHE_KEY = 'BLUEFOOT_EDIT_CACHE_KEY';
 
     /**
-     * @var \Gene\BlueFoot\Model\Stage\Plugin
-     */
-    protected $plugin;
-
-    /**
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlBuilder;
@@ -44,20 +39,17 @@ class Init extends \Magento\Backend\Block\Template
      * Init constructor.
      *
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Plugin       $plugin
      * @param \Gene\BlueFoot\Model\Stage\Config       $stageConfig
      * @param array                                   $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
-        \Gene\BlueFoot\Model\Stage\Plugin $plugin,
         \Gene\BlueFoot\Model\Stage\Config $stageConfig,
         \Magento\Framework\App\CacheInterface $cacheManager,
         \Magento\Framework\App\Cache\StateInterface $cacheState,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->plugin = $plugin;
         $this->urlBuilder = $context->getUrlBuilder();
         $this->stageConfig = $stageConfig;
         $this->cacheManager = $cacheManager;
@@ -152,9 +144,6 @@ class Init extends \Magento\Backend\Block\Template
                 ]
             ]
         ]);
-
-        // Include our plugin information
-        $config->setData('plugins', $this->plugin->getJsPlugins());
 
         // Add in the panels configuration
         $config->addData($this->stageConfig->getConfig());
