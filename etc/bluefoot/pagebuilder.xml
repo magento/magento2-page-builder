@@ -1,72 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="pagebuilder.xsd">
-    <plugins>
-        <js>
-            <plugin name="gene_widget_upload">
-                <file alias="bluefoot/dropzone" path="Gene_BlueFoot/js/resource/dropzone" />
-                <file alias="bluefoot/widget/upload" path="Gene_BlueFoot/js/widget/core/upload" />
-            </plugin>
-            <plugin name="gene_widget_color">
-                <file alias="bluefoot/widget/color" path="Gene_BlueFoot/js/widget/core/color" />
-            </plugin>
-            <plugin name="gene_widget_wysiwyg">
-                <file alias="bluefoot/widget/wysiwyg" path="Gene_BlueFoot/js/widget/core/wysiwyg" />
-            </plugin>
-            <plugin name="gene_widget_tags">
-                <file alias="bluefoot/widget/tags" path="Gene_BlueFoot/js/widget/core/tags" />
-            </plugin>
-            <plugin name="gene_widget_map">
-                <file alias="bluefoot/widget/map" path="Gene_BlueFoot/js/widget/core/map" />
-            </plugin>
-            <plugin name="gene_widget_child_blocks">
-                <file alias="bluefoot/widget/child_block" path="Gene_BlueFoot/js/widget/core/child_block" />
-            </plugin>
-            <plugin name="gene_widget_category_search">
-                <file alias="bluefoot/widget/search/category" path="Gene_BlueFoot/js/widget/core/search/category" />
-            </plugin>
-            <plugin name="gene_widget_staticblock_search">
-                <file alias="bluefoot/widget/search/staticblock" path="Gene_BlueFoot/js/widget/core/search/staticblock" />
-            </plugin>
-            <plugin name="gene_widget_product_search">
-                <file alias="bluefoot/widget/search/product" path="Gene_BlueFoot/js/widget/core/search/product" />
-            </plugin>
-            <plugin name="gene_widget_video">
-                <file alias="bluefoot/widget/video" path="Gene_BlueFoot/js/widget/core/video" />
-            </plugin>
-            <plugin name="gene_metric">
-                <file alias="bluefoot/widget/metric" path="Gene_BlueFoot/js/widget/core/metric" />
-            </plugin>
-            <plugin name="gene_align_widget">
-                <file alias="bluefoot/widget/align" path="Gene_BlueFoot/js/widget/core/align" />
-            </plugin>
-            <plugin name="gene_app_entity_search">
-                <file alias="bluefoot/widget/search/app/entity" path="Gene_BlueFoot/js/widget/core/search/app/entity" />
-            </plugin>
-            <plugin name="gene_app_collection_search">
-                <file alias="bluefoot/widget/search/app/collection" path="Gene_BlueFoot/js/widget/core/search/app/collection" />
-            </plugin>
-        </js>
-
-        <jquery>
-            <plugin name="jquery_tag_it" alias="jquery/tag-it" path="Gene_BlueFoot/js/resource/jquery/tag-it/tag-it.min">
-                <dep name="jquery_ui" alias="bluefoot/jquery/ui" />
-            </plugin>
-            <plugin name="jquery_touch_punch" alias="jquery/ui-touch-punch" path="Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min">
-                <dep name="jquery_ui" alias="bluefoot/jquery/ui" />
-            </plugin>
-            <plugin name="jquery_bluefoot_accordion" alias="jquery/bluefoot-accordion" path="Gene_BlueFoot/js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.min" />
-            <plugin name="jquery_bluefoot_tabs" alias="jquery/bluefoot-tabs" path="Gene_BlueFoot/js/resource/jquery/bluefoot-tabs/jquery.bluefoot.tabs.min" />
-            <plugin name="jquery_bluefoot_normalise_heights" alias="jquery/bluefoot-normalise-heights" path="Gene_BlueFoot/js/resource/jquery/bluefoot-normalise-heights/jquery.bluefoot.normaliseHeights.min" />
-            <plugin name="jquery_slick" alias="jquery/slick" path="Gene_BlueFoot/js/resource/jquery/slick/slick.min" />
-            <plugin name="highlight" alias="highlight" path="Gene_BlueFoot/js/resource/highlight/highlight.pack" />
-            <plugin name="jquery_colorpicker" alias="bluefoot/jquery/colorpicker" path="Gene_BlueFoot/js/resource/jquery/colorpicker/js/colorpicker" />
-        </jquery>
-
-        <async>
-            <plugin name="google_maps" path="//maps.google.com/maps/api/js" />
-        </async>
-    </plugins>
-
     <widgets>
         <widget name="gene_upload" label="Upload" alias="upload" inputType="file" group="Blue Foot" />
         <widget name="gene_tag" label="Tag" alias="tags" inputType="text" group="Blue Foot" />
@@ -86,7 +19,7 @@
         <widget name="gene_search_staticblock" label="Static Block Search" alias="search/staticblock" inputType="text" group="Blue Foot">
             <data_model>Gene\BlueFoot\Model\Attribute\Data\Widget\StaticBlock</data_model>
         </widget>
-        <widget name="gene_magentowidget" label="Magento Widget" alias="magentowidget" inputType="text" group="Blue Foot"></widget>
+        <widget name="gene_magentowidget" label="Magento Widget" alias="magentowidget" inputType="text" group="Blue Foot" />
     </widgets>
 
     <content_blocks>
@@ -191,12 +124,6 @@
             </fields>
         </structural>
     </structurals>
-
-    <on_build>
-        <widgets>
-            <widget name="gene_align_widget" widget="align" method="updateEntity" />
-        </widgets>
-    </on_build>
 
     <global_fields>
         <field code="align">

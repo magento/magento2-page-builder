@@ -43,6 +43,7 @@ class BuildInitConfig implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      *
      * @return $this
+     * @todo provide outside of plugin data
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {

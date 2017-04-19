@@ -12,82 +12,39 @@ namespace Gene\BlueFoot\Model\Config;
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     /**
-     * Convert dom node tree to array
+     * Convert XML structure into output array
      *
      * @param \DOMDocument $source
+     *
      * @return array
-     * @throws \InvalidArgumentException
      */
     public function convert($source)
     {
         $xpath = new \DOMXPath($source);
         $output = [
-            'plugins' => [],
             'templates' => [],
             'renderers' => [],
             'widgets' => [],
             'global_fields' => []
         ];
 
-        // Pull in all of the JS plugins
-        $jsPluginList = $xpath->query('/config/plugins/js/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $jsPluginList->length; $i++) {
-            $node = $jsPluginList->item($i);
-            if ($node->hasChildNodes()) {
-                foreach ($node->childNodes as $file) {
-                    if ($file->nodeName == 'file') {
-                        $output['plugins'][$node->getAttribute('name')][] = [
-                            'alias' => $file->getAttribute('alias'),
-                            'path' => $file->getAttribute('path')
-                        ];
-                    }
-                }
-            }
-        }
+        $this->convertTemplates($xpath, $output);
+        $this->convertRenderers($xpath, $output);
+        $this->convertWidgets($xpath, $output);
+        $this->convertStructurals($xpath, $output);
+        $this->convertGlobalFields($xpath, $output);
 
-        // Pull in all of the on_build widgets
-        $onBuild = $xpath->query('/config/on_build/widgets/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $onBuild->length; $i++) {
-            $node = $onBuild->item($i);
-            if ($node->nodeName == 'widget') {
-                $output['plugins']['on_build'][$node->getAttribute('name')] = [
-                    'widget' => $node->getAttribute('widget'),
-                    'method' => $node->getAttribute('method')
-                ];
-            }
-        }
+        return $output;
+    }
 
-        // Pull in all of the jQuery plugins
-        $jQueryPluginList = $xpath->query('/config/plugins/jquery/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $jQueryPluginList->length; $i++) {
-            $node = $jQueryPluginList->item($i);
-            $output['plugins']['jquery'][$node->getAttribute('name')] = [
-                'alias' => $node->getAttribute('alias'),
-                'path' => $node->getAttribute('path')
-            ];
-            if ($node->hasChildNodes()) {
-                foreach ($node->childNodes as $dep) {
-                    if ($dep->nodeName == 'dep') {
-                        $output['plugins']['jquery'][$node->getAttribute('name')]['deps'][$dep->getAttribute('name')]
-                            = $dep->getAttribute('alias');
-                    }
-                }
-            }
-        }
-
-        // Pull in all of the async plugins
-        $asyncPluginList = $xpath->query('/config/plugins/async/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $asyncPluginList->length; $i++) {
-            $node = $asyncPluginList->item($i);
-            $output['plugins']['async'][$node->getAttribute('name')] = [
-                'path' => $node->getAttribute('path')
-            ];
-        }
-
+    /**
+     * Build up our template list from our config
+     *
+     * @param \DOMXPath $xpath
+     * @param           $output
+     */
+    protected function convertTemplates(\DOMXPath $xpath, &$output)
+    {
         // Pull in all of the templates
         $templateList = $xpath->query('/config/content_blocks/templates/*');
         /** @var $node \DOMNode */
@@ -115,7 +72,16 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 }
             }
         }
+    }
 
+    /**
+     * Convert the XML nodes into renderers
+     *
+     * @param \DOMXPath $xpath
+     * @param           $output
+     */
+    protected function convertRenderers(\DOMXPath $xpath, &$output)
+    {
         // Pull in all of the renderers
         $rendererList = $xpath->query('/config/content_blocks/renderers/*');
         /** @var $node \DOMNode */
@@ -128,7 +94,16 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 ];
             }
         }
+    }
 
+    /**
+     * Convert the XML nodes into widgets
+     *
+     * @param \DOMXPath $xpath
+     * @param           $output
+     */
+    protected function convertWidgets(\DOMXPath $xpath, &$output)
+    {
         // Pull in all of the widgets
         $rendererList = $xpath->query('/config/widgets/*');
         /** @var $node \DOMNode */
@@ -150,11 +125,20 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 }
             }
         }
+    }
 
+    /**
+     * Convert structurals XML into array
+     *
+     * @param \DOMXPath $xpath
+     * @param           $output
+     */
+    protected function convertStructurals(\DOMXPath $xpath, &$output)
+    {
         // Pull in all of the structural information
         $structuralsList = $xpath->query('/config/structurals/*');
         for ($i = 0; $i < $structuralsList->length; $i++) {
-            /* @var $node DOMElement */
+            /* @var $node \DOMElement */
             $node = $structuralsList->item($i);
             if ($node->nodeName == 'structural') {
                 $output['structurals'][$node->getAttribute('code')] = [
@@ -176,33 +160,59 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     $output['structurals'][$node->getAttribute('code')]['renderer'] = $renderer->getAttribute('class');
                 }
 
-                // Build up the fields data
-                $fieldsElement = $node->getElementsByTagName('fields');
-                if ($fields = $fieldsElement->item(0)) {
-                    if ($fields->hasChildNodes()) {
-                        $fieldsElements = $fields->getElementsByTagName('field');
-                        if ($fieldsElements->length > 0) {
-                            $fieldsArray = [];
-                            for ($fieldCount = 0; $fieldCount < $fieldsElements->length; $fieldCount++) {
-                                /* @var $field \DOMElement */
-                                $field = $fieldsElements->item($fieldCount);
-                                $fieldsArray[$field->getAttribute('code')] = [];
-                                if ($field->hasChildNodes()) {
-                                    foreach ($field->childNodes as $fieldAttr) {
-                                        if ($fieldAttr instanceof \DOMElement) {
-                                            $fieldsArray[$field->getAttribute('code')][$fieldAttr->nodeName]
-                                                = $fieldAttr->nodeValue;
-                                        }
-                                    }
+                // Convert the structurals fields
+                $output['structurals'][$node->getAttribute('code')]['fields'] =
+                    $this->retrieveStructuralsFields($node);
+            }
+        }
+    }
+
+    /**
+     * Retrieve structural fields from a node
+     *
+     * @param \DOMElement $node
+     *
+     * @return array
+     */
+    protected function retrieveStructuralsFields(\DOMElement $node)
+    {
+        // Build up the fields data
+        $fieldsElement = $node->getElementsByTagName('fields');
+        if ($fields = $fieldsElement->item(0)) {
+            if ($fields->hasChildNodes()) {
+                $fieldsElements = $fields->getElementsByTagName('field');
+                if ($fieldsElements->length > 0) {
+                    $fieldsArray = [];
+                    for ($fieldCount = 0; $fieldCount < $fieldsElements->length; $fieldCount++) {
+                        /* @var $field \DOMElement */
+                        $field = $fieldsElements->item($fieldCount);
+                        $fieldsArray[$field->getAttribute('code')] = [];
+                        if ($field->hasChildNodes()) {
+                            foreach ($field->childNodes as $fieldAttr) {
+                                if ($fieldAttr instanceof \DOMElement) {
+                                    $fieldsArray[$field->getAttribute('code')][$fieldAttr->nodeName]
+                                        = $fieldAttr->nodeValue;
                                 }
                             }
-                            $output['structurals'][$node->getAttribute('code')]['fields'] = $fieldsArray;
                         }
                     }
+
+                    return $fieldsArray;
                 }
             }
         }
 
+        return [];
+    }
+
+    /**
+     * Convert XML into global fields
+     *
+     * @param \DOMXPath $xpath
+     * @param           $output
+     */
+    protected function convertGlobalFields(\DOMXPath $xpath, &$output)
+    {
         // Pull in all of the global fields
         $globalFields = $xpath->query('/config/global_fields/*');
         for ($i = 0; $i < $globalFields->length; $i++) {
@@ -222,7 +232,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 }
             }
         }
-
-        return $output;
     }
 }
