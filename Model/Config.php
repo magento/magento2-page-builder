@@ -131,37 +131,6 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
     }
 
     /**
-     * Get the widget data
-     *
-     * @return array|mixed|null
-     */
-    public function getWidgets()
-    {
-        if ($widgets = $this->get('widgets')) {
-            return $widgets;
-        }
-
-        return [];
-    }
-
-    /**
-     * Return a widgets instance
-     *
-     * @param $name
-     *
-     * @return array|mixed|null
-     */
-    public function getWidget($name)
-    {
-        $widgets = $this->getWidgets();
-        if (isset($widgets[$name])) {
-            return $widgets[$name];
-        }
-
-        return null;
-    }
-
-    /**
      * Return the defined global fields
      *
      * @return array|mixed|null

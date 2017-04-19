@@ -24,13 +24,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $output = [
             'templates' => [],
             'renderers' => [],
-            'widgets' => [],
+            'structurals' => [],
             'global_fields' => []
         ];
 
         $this->convertTemplates($xpath, $output);
         $this->convertRenderers($xpath, $output);
-        $this->convertWidgets($xpath, $output);
         $this->convertStructurals($xpath, $output);
         $this->convertGlobalFields($xpath, $output);
 
@@ -60,7 +59,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 ];
 
                 if ($node->hasChildNodes()) {
-                    /* @var $assets DOMNodeList */
+                    /* @var $assets \DOMNodeList */
                     $assets = $node->getElementsByTagName('asset');
                     if ($assets->length > 0) {
                         for ($assetI = 0; $assetI < $assets->length; $assetI++) {
@@ -92,37 +91,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     'name' => $node->getAttribute('name'),
                     'class' => $node->getAttribute('class')
                 ];
-            }
-        }
-    }
-
-    /**
-     * Convert the XML nodes into widgets
-     *
-     * @param \DOMXPath $xpath
-     * @param           $output
-     */
-    protected function convertWidgets(\DOMXPath $xpath, &$output)
-    {
-        // Pull in all of the widgets
-        $rendererList = $xpath->query('/config/widgets/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $rendererList->length; $i++) {
-            $node = $rendererList->item($i);
-            if ($node->nodeName == 'widget') {
-                $output['widgets'][$node->getAttribute('alias')] = [
-                    'name' => $node->getAttribute('name'),
-                    'label' => $node->getAttribute('label'),
-                    'alias' => $node->getAttribute('alias'),
-                    'input_type' => $node->getAttribute('inputType'),
-                    'group' => $node->getAttribute('group')
-                ];
-
-                // Retrieve the template if one is set
-                $templateElement = $node->getElementsByTagName('data_model');
-                if ($template = $templateElement->item(0)) {
-                    $output['widgets'][$node->getAttribute('alias')]['data_model'] = $template->nodeValue;
-                }
             }
         }
     }
@@ -216,7 +184,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         // Pull in all of the global fields
         $globalFields = $xpath->query('/config/global_fields/*');
         for ($i = 0; $i < $globalFields->length; $i++) {
-            /* @var $node DOMElement */
+            /* @var $node \DOMElement */
             $node = $globalFields->item($i);
             if ($node->nodeName == 'field') {
                 $output['global_fields'][$node->getAttribute('code')] = [];

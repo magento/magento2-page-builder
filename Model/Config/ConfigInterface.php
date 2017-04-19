@@ -58,16 +58,5 @@ interface ConfigInterface
     /**
      * @return mixed
      */
-    public function getWidgets();
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function getWidget($name);
-
-    /**
-     * @return mixed
-     */
     public function getGlobalFields();
 }
