@@ -157,9 +157,9 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     private $bannedInputTypes = ['media_image'];
 
     /**
-     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockRepository
+     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
      */
-    private $contentBlockRepository;
+    private $contentBlockRepositoryInterface;
 
     /**
      * @var \Magento\Framework\UrlInterface
@@ -206,7 +206,6 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
      * @param \Magento\Framework\UrlInterface                                           $urlInterface
      * @param \Magento\Framework\Registry                                               $registry
      * @param \Gene\BlueFoot\Model\AttributeFactory                                     $attributeFactory
-     * @param \Magento\Framework\App\ObjectManager                                      $objectManager
      * @param array                                                                     $attributesToDisable
      * @param array                                                                     $attributesToEliminate
      */
@@ -273,10 +272,8 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     {
         $sortOrder = 0;
 
-        if ($this->isStructural()) {
-            $meta = $this->handleStructuralFields($meta, $sortOrder);
-            $meta = $this->handleGlobalFields($meta, $sortOrder);
-        } elseif ($this->getAttributeSetId()) {
+        // Pull the attribute set ID to retrieve the associated fields
+        if ($this->getAttributeSetId()) {
             foreach ($this->getGroups() as $groupCode => $group) {
                 $attributes = !empty($this->getAttributes()[$groupCode]) ? $this->getAttributes()[$groupCode] : [];
 
@@ -294,46 +291,10 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
                 $sortOrder++;
             }
-
-            $meta = $this->handleGlobalFields($meta, $sortOrder);
         }
 
-        return $meta;
-    }
-
-    /**
-     * Determine if the request is for a structural block
-     *
-     * @return bool
-     */
-    private function isStructural()
-    {
-        $identifier = $this->registry->registry('bluefoot_edit_identifier');
-        return in_array($identifier, ['row', 'column']);
-    }
-
-    /**
-     * Handle generating structural forms
-     *
-     * @param $meta
-     * @param $sortOrder
-     *
-     * @return mixed
-     */
-    public function handleStructuralFields($meta, $sortOrder)
-    {
-        $identifier = $this->registry->registry('bluefoot_edit_identifier');
-        $structural = $this->configInterface->getStructural($identifier);
-        if ($structural && isset($structural['fields'])) {
-            foreach ($structural['fields'] as &$field) {
-                // Set the default field as 'General'
-                if (!isset($field['group'])) {
-                    $field['group'] = 'General';
-                }
-            }
-
-            return $this->buildFieldsFromConfig($meta, $structural['fields'], $sortOrder);
-        }
+        // Include global fields within all meta's
+        $meta = $this->handleGlobalFields($meta, $sortOrder);
 
         return $meta;
     }
@@ -605,7 +566,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
     /**
      * Retrieve attributes
      *
-     * @return BlueFootAttributeInterface[]
+     * @return array
      */
     private function getAttributes()
     {
