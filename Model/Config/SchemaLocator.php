@@ -31,8 +31,8 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
     public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
     {
         $etcDir = $moduleReader->getModuleDir('etc', 'Gene_BlueFoot');
-        $this->schema = $etcDir . '/bluefoot/pagebuilder.xsd';
-        $this->perFileSchema = $etcDir . '/bluefoot/pagebuilder.xsd';
+        $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'advanced_cms.xsd';
+        $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'advanced_cms.xsd';
     }
 
     /**

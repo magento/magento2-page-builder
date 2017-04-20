@@ -17,15 +17,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @var array
      */
     protected $_idAttributes = [
-        '/config/plugins/js/plugin' => 'name',
-        '/config/plugins/jquery/plugin' => 'name',
-        '/config/plugins/async/plugin' => 'name',
-        '/config/widgets/widget' => 'name',
-        '/config/content_blocks/templates/template' => 'name',
-        '/config/content_blocks/renderers/renderer' => 'name',
-        '/config/structurals/structural' => 'code',
-        '/config/structurals/structural/fields/field' => 'code',
-        '/config/on_build/widgets/widget' => 'name',
+        '/config/content_blocks/content_block' => 'name',
         '/config/global_fields/field' => 'code'
     ];
 
@@ -46,7 +38,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Gene\BlueFoot\Model\Config\Converter $converter,
         \Gene\BlueFoot\Model\Config\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        $fileName = 'bluefoot/pagebuilder.xml',
+        $fileName = 'advanced_cms.xml',
         $idAttributes = [],
         $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global'

@@ -79,7 +79,8 @@ class Init extends \Magento\Backend\Block\Template
             'encode_string'                    => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
             'form_key'                         => $this->formKey->getFormKey(),
             'init_button_class'                => '.init-gene-bluefoot',
-            'media_url'                        => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
+            'media_url'                        =>
+                $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'config_url'                       => $this->urlBuilder->getUrl('bluefoot/stage/config'),
             'data_update_url'                  => $this->urlBuilder->getUrl('bluefoot/stage/preview'),
             'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
