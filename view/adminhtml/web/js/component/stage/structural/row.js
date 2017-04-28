@@ -29,6 +29,7 @@ define([
         };
 
         this.serializeTags = ['row'];
+        this.dataTag = 'row';
     }
 
     Row.prototype = Object.create(AbstractStructural.prototype);

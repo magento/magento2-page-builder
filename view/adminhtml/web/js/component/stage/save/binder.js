@@ -40,7 +40,14 @@ define([
             }
 
             var wrapped = h('div', domElement);
-            ko.applyBindings(viewModel, wrapped);
+
+            // If we're unable to applyBindings for any reason we shouldn't throw a hard error
+            try {
+                ko.applyBindings(viewModel, wrapped);
+            } catch (e) {
+                console.warn('A failure occurred whilst trying to bind the representation', e);
+            }
+
             return cleanup(wrapped.children);
         }
     }

@@ -38,6 +38,9 @@ define([
             return this.columnDefinition()['breakpoint'] * 100;
         }, this);
         this.serializeTags = ['column', ['column-', this.serializedWidth]];
+        this.dataTag = 'column';
+        this.dataAttributes = {width: this.serializedWidth};
+        this.dataEntityDataIgnore = ['label', 'className'];
     }
 
     Column.prototype = Object.create(AbstractStructural.prototype);

@@ -40,6 +40,7 @@ define([
 
         this.serializeTags = ['stage'];
         this.serializeChildren = [this.stageContent];
+        this.dataTag = 'stage';
     }
 
     /**
