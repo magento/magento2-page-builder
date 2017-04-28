@@ -29,8 +29,15 @@ define([
         };
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.columnDefinition = Config.getInitConfig('column_definitions')[0];
-        this.widthClasses = ko.observable(this.columnDefinition['className']);
+        this.columnDefinition = ko.observable(Config.getInitConfig('column_definitions')[0]);
+        this.widthClasses = ko.computed(function () {
+            return this.columnDefinition()['className'];
+        }, this);
+
+        this.serializedWidth = ko.computed(function () {
+            return this.columnDefinition()['breakpoint'] * 100;
+        }, this);
+        this.serializeTags = ['column', ['column-', this.serializedWidth]];
     }
 
     Column.prototype = Object.create(AbstractStructural.prototype);
@@ -105,12 +112,10 @@ define([
         if (data.width) {
             var columnDef = Config.getColumnDefinitionByBreakpoint(data.width);
             if (columnDef) {
-                this.widthClasses(columnDef.className);
-                this.columnDefinition = columnDef;
+                this.columnDefinition(columnDef);
             }
         } else if (data.className) {
-            this.widthClasses(data.className);
-            this.columnDefinition = Config.getColumnDefinitionByClassName(data.className);
+            this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
         }
 
         this.data(data);

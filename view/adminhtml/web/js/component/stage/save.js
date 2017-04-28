@@ -5,46 +5,258 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'bluefoot/config'
-], function (Config) {
+    'bluefoot/config',
+    'underscore',
+    'hyperscript'
+], function (Config, _, h) {
 
     /**
-     * Our Stage class
+     * Save class for serialization of the stage
      *
+     * @param stage
+     * @param valueFn
+     * @param renderer
+     * @param binder
      * @constructor
      */
-    function Save(stage) {
+    function Save(stage, valueFn, renderer, binder) {
         this.stage = stage;
         this.input = false;
 
+        this.valueFn = valueFn;
+        this.renderer = renderer;
+        this.binder = binder;
+
         this.deleted = [];
 
-        this.init();
+        this.prefix = 'm2-cms-';
     }
 
     /**
-     * Build up our save instance
+     * Update function, which debounces calls to commit by 250ms
+     *
+     * @type {Function}
      */
-    Save.prototype.init = function () {
-        this.stage.stageContent.subscribe(function () {
-            this.update();
-        }.bind(this));
+    Save.prototype.update = _.debounce(
+        this.commit.bind(this),
+        250
+    );
+
+    /**
+     * Observe a specific knockout observable to fire serialization
+     *
+     * @param observables
+     */
+    Save.prototype.observe = function (observables) {
+        if (!Array.isArray(observables)) {
+            observables = [observables];
+        }
+        var self = this;
+        _.forEach(observables, function (observable) {
+            if (typeof observable.subscribe !== 'function') {
+                throw Error('Observable passed to Save.observe() is not observable');
+            }
+            observable.subscribe(self.update);
+        });
     };
 
     /**
-     * Update our fellow input
+     * Commit changes to the text area value
      */
-    Save.prototype.update = function () {
-        this.stage.parent.value(
-            Config.getInitConfig('encode_string') + this.stageToJSON()
+    Save.prototype.commit = function () {
+        var self = this;
+        this.serializeStage().then(function (result) {
+            console.log(result.structure);
+            self.valueFn(result.structure);
+        }).catch(function (reason) {
+            // Report chained errors to the console
+            console.error(reason);
+        });;
+    };
+
+    /**
+     * Retrieve the stages HTML structure
+     *
+     * @returns {Promise}
+     */
+    Save.prototype.serializeStage = function () {
+        return this.serializeObject(this.stage);
+    };
+
+    /**
+     * Serialize an individual object
+     *
+     * @param object
+     * @returns {Promise}
+     */
+    Save.prototype.serializeObject = function (object) {
+        var self = this;
+        if (!object.serializeTags) {
+            return Promise.reject(Error('Object must declare at least serializeTags to be serialized.'));
+        }
+        return Promise.all([
+            this.retrieveChildren(object),
+            this.retrieveRepresentation(object)
+        ]).then(function (result) {
+            var children = result[0],
+                structureChildren = children.structure,
+                representation = result[1],
+                dataChildren = children.data;
+
+            // Detect if the representation is a HTMLCollection or not
+            if (representation && representation instanceof HTMLCollection) {
+                _.forEach(representation, function (element) {
+                    structureChildren.push(element);
+                });
+            } else if (representation) {
+                structureChildren.push(representation);
+            }
+
+            // Build both the data and the structure
+            var structure = self.buildStructureElement(
+                self.buildTag(object.serializeTags), /* Build the hyperscript tag e.g. div.m2-class-row */
+                object.serializeData || {}, /* Provide any specific element attributes e.g. data-role="heading" */
+                structureChildren /* Provide all children elements from the children.structure function */
+            ),
+                data = '';
+
+            return {
+                structure: structure,
+                data: data
+            };
+        });
+    };
+
+    /**
+     * Build the structure element using Hyperscript
+     *
+     * @param tag
+     * @param data
+     * @param children
+     * @returns {*}
+     */
+    Save.prototype.buildStructureElement = function (tag, data, children) {
+        return h(
+            tag, /* Build the hyperscript tag e.g. div.m2-class-row */
+            data || {}, /* Provide any specific element attributes e.g. data-role="heading" */
+            children /* Provide all children elements from the children.structure function */
         );
     };
 
     /**
-     * Return the stage as a JSON string
+     * Retrieve children from object
+     *
+     * @param object
+     * @returns {Promise}
      */
-    Save.prototype.stageToJSON = function () {
-        return JSON.stringify(this.stage.toJSON());
+    Save.prototype.retrieveChildren = function (object) {
+        if (object.serializeChildren) {
+            return this.serializeChildren(object.serializeChildren).then(function(result) {
+                return {
+                    structure: result.structure,
+                    data: result.data
+                }
+            });
+        } else {
+            return Promise.resolve({
+                structure: [],
+                data: []
+            });
+        }
+    };
+
+    /**
+     * Retrieve a representation
+     *
+     * @param object
+     * @returns {Promise}
+     */
+    Save.prototype.retrieveRepresentation = function (object) {
+        if (object.serializeRepresentation) {
+            var self = this;
+            return this.renderer.render(object.serializeRepresentation).then(function (template) {
+                return self.binder.applyBindings(object.data() || {}, template);
+            });
+        } else {
+            return Promise.resolve(null);
+        }
+    };
+
+    /**
+     * Serialize children of an object
+     *
+     * @param children
+     * @returns {Promise}
+     */
+    Save.prototype.serializeChildren = function (children) {
+        var self = this;
+        if (children && children.length > 0) {
+            var childSerializePromises = [];
+            _.forEach(children, function (childFn) {
+                if (typeof childFn !== 'function') {
+                    return Promise.reject(Error('An entry in serializeChildren is not a valid Knockout function.'));
+                }
+                _.forEach(childFn(), function (child) {
+                    childSerializePromises.push(self.serializeObject(child));
+                });
+            });
+            return Promise.all(childSerializePromises).then(function(result) {
+                var childStructure = [],
+                    childData = [];
+                _.each(result, function (child) {
+                    childStructure.push(child.structure);
+                    childData.push(child.data);
+                });
+                return {
+                    structure: childStructure,
+                    data: childData
+                };
+            });
+        } else {
+            return Promise.resolve({
+                structure: [],
+                data: []
+            });
+        }
+    };
+
+    /**
+     * Build up our hyperscript tag
+     *
+     * @param tags
+     * @returns {string}
+     */
+    Save.prototype.buildTag = function (tags) {
+        var result = 'div';
+        result += this.convertTagsToString(tags).join('');
+        return result;
+    };
+
+    /**
+     * Convert tags into a string format for hyperscript
+     *
+     * Examples:
+     * ['column'] = div.m2-cms-column
+     * ['column', ['test', function () { return '1234'; }]] = div.m2-cms-column.m2-cms-test-1234
+     *
+     * @param tags
+     * @param ignorePrefix
+     * @returns {Array}
+     */
+    Save.prototype.convertTagsToString = function (tags, ignorePrefix) {
+        var self = this,
+            result = [];
+        _.forEach(tags, function (tag) {
+            if (Array.isArray(tag)) {
+                result.push('.' + self.prefix + self.convertTagsToString(tag, true).join(''));
+            } else {
+                if (typeof tag === 'function') {
+                    tag = tag();
+                }
+                result.push((!ignorePrefix ? '.' + self.prefix : '') + tag);
+            }
+        });
+        return result;
     };
 
     /**
@@ -54,14 +266,6 @@ define([
      */
     Save.prototype.delete = function (entityId) {
         this.deleted.push(entityId);
-    };
-
-    /**
-     * Return the JSON data
-     * @returns {*}
-     */
-    Save.prototype.getData = function () {
-        return JSON.parse(this.input.val());
     };
 
     return Save;

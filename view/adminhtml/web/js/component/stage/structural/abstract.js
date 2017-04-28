@@ -32,18 +32,10 @@ define([
         this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
-        this.data.subscribe(function () {
-            if (this.stage) {
-                this.stage.save.update();
-            }
-        }.bind(this));
-
         this.children = ko.observableArray([]);
-        this.children.subscribe(function () {
-            if (this.stage) {
-                this.stage.save.update();
-            }
-        }.bind(this));
+
+        // Observe the data & children of the current class within our save functionality
+        this.stage.save.observe([this.data, this.children]);
 
         this.originalParent = false;
         this.originalIndex = false;
@@ -55,6 +47,10 @@ define([
 
         // Build the options on initialization
         this.buildOptions();
+
+        // Define what should be serialized within this system
+        this.serializeTags = ['structural'];
+        this.serializeChildren = [this.children];
     }
 
     /**
@@ -324,30 +320,6 @@ define([
             this.originalIndex = false;
 
         }
-    };
-
-    /**
-     * To JSON
-     *
-     * @returns {{children: Array}}
-     */
-    AbstractStructural.prototype.toJSON = function () {
-        var children = [];
-        if (this.children()) {
-            _.forEach(this.children(), function (child) {
-                children.push(child.toJSON());
-            });
-        }
-
-        var json = {
-            formData: _.extend({}, this.data()) // Clone the data into the JSON
-        };
-
-        if (children.length > 0) {
-            json.children = children;
-        }
-
-        return json;
     };
 
     /**

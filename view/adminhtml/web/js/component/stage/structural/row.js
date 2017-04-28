@@ -27,6 +27,8 @@ define([
             code: 'row',
             name: $t('Row')
         };
+
+        this.serializeTags = ['row'];
     }
 
     Row.prototype = Object.create(AbstractStructural.prototype);

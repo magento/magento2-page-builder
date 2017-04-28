@@ -43,6 +43,10 @@ define([
         if (formData) {
             this.data(formData);
         }
+
+        this.serializeTags = [this.config.code];
+        this.serializeData = {'data-role': this.config.code};
+        this.serializeRepresentation = this.config.representation || false;
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);

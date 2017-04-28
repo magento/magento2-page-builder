@@ -5,6 +5,7 @@ var config = {
         /* Extra Resources Needed */
         'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
         'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
+        'hyperscript': 'Gene_BlueFoot/js/resource/hyperscript/hyperscript',
 
         /* Include our Knockout Sortable wrapper */
         'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
@@ -26,6 +27,8 @@ var config = {
         'bluefoot/stage/panel/group/block': 'Gene_BlueFoot/js/component/stage/panel/group/block',
 
         'bluefoot/stage/save': 'Gene_BlueFoot/js/component/stage/save',
+        'bluefoot/stage/save/renderer': 'Gene_BlueFoot/js/component/stage/save/renderer',
+        'bluefoot/stage/save/binder': 'Gene_BlueFoot/js/component/stage/save/binder',
 
         'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/stage/structural/abstract',
         'bluefoot/stage/structural/row': 'Gene_BlueFoot/js/component/stage/structural/row',

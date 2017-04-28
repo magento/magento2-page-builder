@@ -11,8 +11,10 @@ define([
     'bluefoot/stage/structural/row',
     'bluefoot/utils/array',
     'uiRegistry',
-    'mageUtils'
-], function (ko, _, Save, Row, arrayUtil, registry, utils) {
+    'mageUtils',
+    'bluefoot/stage/save/renderer',
+    'bluefoot/stage/save/binder'
+], function (ko, _, Save, Row, arrayUtil, registry, utils, saveRenderer, saveBinder) {
 
     /**
      * Stage Class
@@ -28,7 +30,16 @@ define([
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
 
-        this.save = new Save(this);
+        this.save = new Save(
+            this,
+            this.parent.value,
+            saveRenderer,
+            saveBinder
+        );
+        this.save.observe(this.stageContent);
+
+        this.serializeTags = ['stage'];
+        this.serializeChildren = [this.stageContent];
     }
 
     /**
@@ -67,23 +78,6 @@ define([
         this.addChild(row);
 
         return row;
-    };
-
-    /**
-     * Convert to JSON for saving
-     *
-     * @returns {*}
-     */
-    Stage.prototype.toJSON = function () {
-        var children = [];
-        if (this.stageContent()) {
-            _.forEach(this.stageContent(), function (child) {
-                children.push(child.toJSON());
-            });
-            return children;
-        }
-
-        return {};
     };
 
     /**
