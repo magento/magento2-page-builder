@@ -11,10 +11,8 @@ define([
     'bluefoot/stage/structural/row',
     'bluefoot/utils/array',
     'uiRegistry',
-    'mageUtils',
-    'bluefoot/stage/save/renderer',
-    'bluefoot/stage/save/binder'
-], function (ko, _, Save, Row, arrayUtil, registry, utils, saveRenderer, saveBinder) {
+    'mageUtils'
+], function (ko, _, Save, Row, arrayUtil, registry, utils) {
 
     /**
      * Stage Class
@@ -32,9 +30,7 @@ define([
 
         this.save = new Save(
             this,
-            this.parent.value,
-            saveRenderer,
-            saveBinder
+            this.parent.value
         );
         this.save.observe(this.stageContent);
 

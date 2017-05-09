@@ -47,7 +47,6 @@ define([
         this.serializeTags = [this.config.code];
         this.serializeData = {'data-role': this.config.code};
         this.serializeRepresentation = this.config.representation || false;
-        this.dataTag = 'entity';
         this.dataEntityDataIgnore = ['preview_view'];
     }
 

@@ -51,8 +51,8 @@ define([
         // Define what should be serialized within this system
         this.serializeTags = ['structural'];
         this.serializeChildren = [this.children];
-        this.dataTag = 'structural';
         this.dataEntityData = [this.data];
+        this.dataEntityDataIgnore = [];
     }
 
     /**

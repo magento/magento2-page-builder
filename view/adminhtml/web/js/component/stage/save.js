@@ -20,13 +20,11 @@ define([
      * @param binder
      * @constructor
      */
-    function Save(stage, valueFn, renderer, binder) {
+    function Save(stage, valueFn) {
         this.stage = stage;
         this.input = false;
 
         this.valueFn = valueFn;
-        this.renderer = renderer;
-        this.binder = binder;
 
         this.deleted = [];
 
@@ -61,12 +59,8 @@ define([
      */
     Save.prototype.commit = function () {
         var self = this;
-        this.serializeStage().then(function (result) {
-            var structure = result.structure,
-                data = x.compile(result.data, [])(); // Commit the XML structure creating an XML string
-
-            // @todo determine submission strategy for this data
-            console.log(structure, data);
+        this.serializeStage().then(function (structure) {
+            console.log(structure);
             self.valueFn(structure);
         }).catch(function (reason) {
             // Report chained errors to the console
@@ -94,28 +88,15 @@ define([
         if (!object.serializeTags) {
             return Promise.reject(Error('Object must declare at least serializeTags to be serialized.'));
         }
-        return Promise.all([
-            this.retrieveChildren(object),
-            this.retrieveRepresentation(object)
-        ]).then(function (result) {
-            var children = result[0],
-                structureChildren = children.structure || [],
-                representation = result[1],
-                dataChildren = children.data || [];
 
-            return {
-                structure: self.buildStructureElement(
-                    self.buildTag(object.serializeTags), /* Build the hyperscript tag e.g. div.m2-class-row */
-                    object.serializeData || {}, /* Provide any specific element attributes e.g. data-role="heading" */
-                    self.buildStructureChildren(structureChildren, representation)
-                        /* Provide all children elements from the children.structure function */
-                ),
-                data: self.buildDataElement(
-                    object.dataTag, /* The data tag is the XML tagName e.g. entity */
-                    self.buildDataAttributes(object), /* These are the attributes applied to the element */
-                    self.buildDataChildren(dataChildren, object) /* These are any children applied within the element */
-                )
-            };
+        return this.retrieveChildren(object).then(function (result) {
+            var children = result[0];
+
+            return self.buildStructureElement(
+                self.buildTag(object.serializeTags), /* Build the hyperscript tag e.g. div.m2-class-row */
+                object.serializeData || {}, /* Provide any specific element attributes e.g. data-role="heading" */
+                self.buildData(object, children) /* Provide all children elements from the children.structure function */
+            );
         }).catch(function (reason) {
             // Report chained errors to the console
             console.error(reason);
@@ -123,23 +104,34 @@ define([
     };
 
     /**
-     * Build up the structure children, this is a combination of child elements & any HTML representation
+     * Build the data for the object
      *
-     * @param structureChildren
-     * @param representation
-     * @returns []
+     * @param object
+     * @param children
      */
-    Save.prototype.buildStructureChildren = function (structureChildren, representation) {
-        // Detect if the representation is a HTMLCollection or not
-        if (representation && representation instanceof HTMLCollection) {
-            _.forEach(representation, function (element) {
-                structureChildren.push(element);
-            });
-        } else if (representation) {
-            structureChildren.push(representation);
+    Save.prototype.buildData = function (object, children) {
+        var objectData = this.retrieveObjectData(object);
+        children = children || [];
+
+        // Only include the data <script /> tag if the object contains data
+        if (!_.isEmpty(objectData)) {
+            // Ensure the children are in an array
+            if (!_.isArray(children)) {
+                children = [children];
+            }
+
+            // Include the data <script /> tag as the first item in the child
+            children.unshift(h(
+                'script',
+                {
+                    'type': 'text/advanced-cms-data',
+                    'data-checksum': '' // Checksum is generated server side once saved
+                },
+                JSON.stringify(this.retrieveObjectData(object))
+            ));
         }
 
-        return structureChildren;
+        return children;
     };
 
     /**
@@ -148,50 +140,25 @@ define([
      * @param object
      * @returns {{}}
      */
-    Save.prototype.buildDataAttributes = function (object) {
-        if (object.dataAttributes && typeof object.dataAttributes == 'object') {
-            var attributes = {};
-            _.forEach(object.dataAttributes, function (value, key) {
-                if (typeof value === 'function') {
-                    value = value();
+    Save.prototype.retrieveObjectData = function (object) {
+        var attributes = {};
+        if (object.dataEntityData && _.isArray(object.dataEntityData)) {
+            _.forEach(object.dataEntityData, function (object) {
+                // Handle KO observables & anonymous functions
+                if (typeof object === 'function') {
+                    object = object();
                 }
-                attributes[key] = x.param(value);
+                if (typeof object === 'object' && !_.isArray(object)) {
+                    _.extend(attributes, object);
+                }
             });
-            return attributes;
         }
 
-        return {};
-    };
-
-    /**
-     * Build up the children of an object to be inserted into the data tree. This includes child elements alongside
-     * an <attributes /> node if required.
-     *
-     * <attributes /> is used to store data to be persisted to the database. It'll be parsed, stored & removed server
-     * side.
-     *
-     * @param dataChildren
-     * @param object
-     * @returns []
-     */
-    Save.prototype.buildDataChildren = function (dataChildren, object) {
-        if (object.dataEntityData) {
-            _.forEach(object.dataEntityData, function (dataAttr) {
-                if (typeof dataAttr === 'function') {
-                    var attributes = [];
-                    _.forEach(dataAttr(), function (value, key) {
-                        if (_.indexOf(object.dataEntityDataIgnore || [], key) === -1) {
-                            attributes.push(x.x(key, [
-                                x.cdata(value)
-                            ]));
-                        }
-                    });
-                    dataChildren.push(x.x('attributes', attributes));
-                }
-            })
+        if (object.dataEntityDataIgnore && _.isArray(object.dataEntityDataIgnore)) {
+            attributes = _.omit(attributes, object.dataEntityDataIgnore);
         }
 
-        return dataChildren;
+        return attributes;
     };
 
     /**
@@ -211,22 +178,6 @@ define([
     };
 
     /**
-     * Build the data XML element using xyperscript
-     *
-     * @param tag
-     * @param attributes
-     * @param children
-     * @returns {*}
-     */
-    Save.prototype.buildDataElement = function (tag, attributes, children) {
-        return x.x(
-            tag,
-            attributes || {},
-            children
-        );
-    };
-
-    /**
      * Retrieve children from object
      *
      * @param object
@@ -235,34 +186,10 @@ define([
     Save.prototype.retrieveChildren = function (object) {
         if (object.serializeChildren) {
             return this.serializeChildren(object.serializeChildren).then(function(result) {
-                return {
-                    structure: result.structure,
-                    data: result.data
-                }
+                return result;
             });
         } else {
-            return Promise.resolve({
-                structure: [],
-                data: []
-            });
-        }
-    };
-
-    /**
-     * Retrieve the HTML representation of an object, this will allow 3rd parties to understand the format of the
-     * object. This will be a KnockoutJS template stored against an XML node in advanced_cms.xml
-     *
-     * @param object
-     * @returns {Promise}
-     */
-    Save.prototype.retrieveRepresentation = function (object) {
-        if (object.serializeRepresentation) {
-            var self = this;
-            return this.renderer.render(object.serializeRepresentation).then(function (template) {
-                return self.binder.applyBindings(object.data() || {}, template);
-            });
-        } else {
-            return Promise.resolve(null);
+            return Promise.resolve({});
         }
     };
 
@@ -285,22 +212,10 @@ define([
                 });
             });
             return Promise.all(childSerializePromises).then(function(result) {
-                var childStructure = [],
-                    childData = [];
-                _.each(result, function (child) {
-                    childStructure.push(child.structure);
-                    childData.push(child.data);
-                });
-                return {
-                    structure: childStructure,
-                    data: childData
-                };
+                return result;
             });
         } else {
-            return Promise.resolve({
-                structure: [],
-                data: []
-            });
+            return Promise.resolve({});
         }
     };
 
