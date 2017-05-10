@@ -85,14 +85,13 @@ define([
      */
     Save.prototype.serializeObject = function (object) {
         var self = this;
-        if (!object.serializeTags) {
-            return Promise.reject(Error('Object must declare at least serializeTags to be serialized.'));
+        if (!object.serializeRole) {
+            return Promise.reject(Error('Object must declare a serialization role.'));
         }
 
         return this.retrieveChildren(object).then(function (children) {
             return self.buildStructureElement(
-                self.buildTag(object.serializeTags), /* Build the hyperscript tag e.g. div.m2-class-row */
-                object.serializeData || {}, /* Provide any specific element attributes e.g. data-role="heading" */
+                {'data-role': object.serializeRole}, /* Provide any specific element attributes e.g. data-role="heading" */
                 self.buildData(object, children) /* Provide all children elements from the children.structure function */
             );
         }).catch(function (reason) {
@@ -162,14 +161,13 @@ define([
     /**
      * Build the structure element using Hyperscript
      *
-     * @param tag
      * @param data
      * @param children
      * @returns {*}
      */
-    Save.prototype.buildStructureElement = function (tag, data, children) {
+    Save.prototype.buildStructureElement = function (data, children) {
         return h(
-            tag, /* Build the hyperscript tag e.g. div.m2-class-row */
+            'div', /* Build the hyperscript tag e.g. div.m2-class-row */
             data || {}, /* Provide any specific element attributes e.g. data-role="heading" */
             children /* Provide all children elements from the children.structure function */
         );
@@ -215,45 +213,6 @@ define([
         } else {
             return Promise.resolve({});
         }
-    };
-
-    /**
-     * Build up our hyperscript tag
-     *
-     * @param tags
-     * @returns {string}
-     */
-    Save.prototype.buildTag = function (tags) {
-        var result = 'div';
-        result += this.convertTagsToString(tags).join('');
-        return result;
-    };
-
-    /**
-     * Convert tags into a string format for hyperscript
-     *
-     * Examples:
-     * ['column'] = div.m2-cms-column
-     * ['column', ['test', function () { return '1234'; }]] = div.m2-cms-column.m2-cms-test-1234
-     *
-     * @param tags
-     * @param ignorePrefix
-     * @returns {Array}
-     */
-    Save.prototype.convertTagsToString = function (tags, ignorePrefix) {
-        var self = this,
-            result = [];
-        _.forEach(tags, function (tag) {
-            if (Array.isArray(tag)) {
-                result.push('.' + self.prefix + self.convertTagsToString(tag, true).join(''));
-            } else {
-                if (typeof tag === 'function') {
-                    tag = tag();
-                }
-                result.push((!ignorePrefix ? '.' + self.prefix : '') + tag);
-            }
-        });
-        return result;
     };
 
     /**

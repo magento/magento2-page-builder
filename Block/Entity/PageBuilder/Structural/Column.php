@@ -18,7 +18,7 @@ class Column extends AbstractStructural
      */
     protected function getWidth()
     {
-        return $this->getFormData('width');
+        return $this->getEntityData('width');
     }
 
     /**

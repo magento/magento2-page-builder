@@ -44,9 +44,7 @@ define([
             this.data(formData);
         }
 
-        this.serializeTags = [this.config.code];
-        this.serializeData = {'data-role': this.config.code};
-        this.serializeRepresentation = this.config.representation || false;
+        this.serializeRole = this.config.code;
         this.dataEntityDataIgnore = ['preview_view'];
     }
 

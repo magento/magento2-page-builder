@@ -46,8 +46,11 @@ class Save
         foreach ($fields as $field) {
             if ($html = $object->getData($field)) {
                 // @todo determine which store ID should be retrieved from CMS pages
-                $processedOutput = $this->processHtml($html, 0);
-                var_dump($processedOutput);
+                $processedOutput = $this->processHtml($html, 0, $object);
+
+                echo '<pre>';
+                echo htmlentities($processedOutput);
+                echo '</pre>';
                 exit;
                 if ($processedOutput) {
                     $object->setData($field, $processedOutput);
@@ -59,12 +62,13 @@ class Save
     /**
      * Process HTML through the parser and renderer
      *
-     * @param     $html
-     * @param int $storeId
+     * @param      $html
+     * @param int  $storeId
+     * @param bool $object Used for contextual awareness in rendering
      *
      * @return bool|string
      */
-    public function processHtml($html, $storeId = 0)
+    public function processHtml($html, $storeId = 0, $object = false)
     {
         // Parser turns the HTML string into nested Parser\Element's
         $parser = $this->parserFactory->create([
@@ -77,9 +81,11 @@ class Save
 
             // Render the stage element as HTML
             return $this->rendererFactory->create([
-                'storeId' => $storeId
+                'storeId' => $storeId,
+                'object' => $object /* Object passed for contextual rendering */
             ])->render(
-                $stageElement
+                $stageElement,
+                true
             );
         }
 

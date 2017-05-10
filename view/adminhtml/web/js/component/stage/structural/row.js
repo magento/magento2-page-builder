@@ -28,8 +28,7 @@ define([
             name: $t('Row')
         };
 
-        this.serializeTags = ['row'];
-        this.serializeData = {'data-role': 'row'};
+        this.serializeRole = 'row';
     }
 
     Row.prototype = Object.create(AbstractStructural.prototype);

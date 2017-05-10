@@ -49,7 +49,7 @@ define([
         this.buildOptions();
 
         // Define what should be serialized within this system
-        this.serializeTags = ['structural'];
+        this.serializeRole = 'structural';
         this.serializeChildren = [this.children];
         this.dataEntityData = [this.data];
         this.dataEntityDataIgnore = [];

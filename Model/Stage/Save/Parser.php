@@ -51,7 +51,7 @@ class Parser
         }
 
         $domDocument = new \DOMDocument();
-        $domDocument->loadHTML($html);
+        $domDocument->loadHTML($html, LIBXML_HTML_NOIMPLIED);
         $this->html = $domDocument;
     }
 

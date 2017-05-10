@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
  *
  * @author  Dave Macaulay <dave@gene.co.uk>
  */
-class AbstractStructural extends \Magento\Framework\View\Element\Template
+class AbstractStructural extends \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock
 {
     /**
      * Array of directions, used for the metrics

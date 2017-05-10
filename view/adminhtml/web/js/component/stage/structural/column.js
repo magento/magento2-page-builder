@@ -37,9 +37,15 @@ define([
         this.serializedWidth = ko.computed(function () {
             return this.columnDefinition()['breakpoint'] * 100;
         }, this);
-        this.serializeData = {'data-role': 'column'};
-        this.serializeTags = ['column', ['column-', this.serializedWidth]];
-        //this.dataEntityData = [this.data, {width: this.serializedWidth}];
+
+        this.serializeRole = 'column';
+        var self = this;
+        this.dataEntityData = [
+            this.data,
+            function () {
+                return {width: self.serializedWidth()};
+            }
+        ];
         this.dataEntityDataIgnore = ['label', 'className'];
     }
 

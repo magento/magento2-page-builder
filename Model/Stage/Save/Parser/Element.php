@@ -56,6 +56,7 @@ class Element
      * Retrieve data for the current element
      *
      * @return array|null
+     * @throws \Exception
      */
     public function getData()
     {
@@ -63,9 +64,14 @@ class Element
             if ($this->element->hasChildNodes()) {
                 /* @var $childNode \DOMElement */
                 foreach ($this->element->childNodes as $childNode) {
-                    if ($childNode->tagName === 'script') {
-                        var_dump($childNode);
-                        exit;
+                    if ($childNode->tagName === 'script'
+                        && $childNode->attributes->getNamedItem('type')->nodeValue == 'text/advanced-cms-data'
+                    ) {
+                        $data = json_decode($childNode->nodeValue, true);
+                        if (!is_array($data)) {
+                            throw new \Exception('Unable to parse entity data from <script /> tag.');
+                        }
+                        $this->data = $data;
                     }
                 }
             } else {
