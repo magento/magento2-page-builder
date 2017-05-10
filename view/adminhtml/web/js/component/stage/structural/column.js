@@ -37,6 +37,7 @@ define([
         this.serializedWidth = ko.computed(function () {
             return this.columnDefinition()['breakpoint'] * 100;
         }, this);
+        this.serializeData = {'data-role': 'column'};
         this.serializeTags = ['column', ['column-', this.serializedWidth]];
         //this.dataEntityData = [this.data, {width: this.serializedWidth}];
         this.dataEntityDataIgnore = ['label', 'className'];
@@ -137,20 +138,6 @@ define([
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);
-    };
-
-    /**
-     * To JSON
-     *
-     * @returns {{children, formData}|{children: Array}}
-     */
-    Column.prototype.toJSON = function () {
-        var json = $super.toJSON.apply(this, arguments);
-        json.type = 'column';
-        if (this.columnDefinition) {
-            json.formData.width = this.columnDefinition['breakpoint'];
-        }
-        return json;
     };
 
     return Column;

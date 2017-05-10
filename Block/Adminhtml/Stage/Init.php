@@ -76,7 +76,6 @@ class Init extends \Magento\Backend\Block\Template
 
         $config = new \Magento\Framework\DataObject();
         $config->addData([
-            'encode_string'                    => \Gene\BlueFoot\Model\Stage\Save::BLUEFOOT_STRING,
             'form_key'                         => $this->formKey->getFormKey(),
             'init_button_class'                => '.init-gene-bluefoot',
             'media_url'                        =>

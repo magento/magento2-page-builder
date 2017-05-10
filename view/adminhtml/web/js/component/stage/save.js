@@ -61,7 +61,7 @@ define([
         var self = this;
         this.serializeStage().then(function (structure) {
             console.log(structure);
-            self.valueFn(structure);
+            self.valueFn(structure.outerHTML);
         }).catch(function (reason) {
             // Report chained errors to the console
             console.error(reason);
@@ -89,9 +89,7 @@ define([
             return Promise.reject(Error('Object must declare at least serializeTags to be serialized.'));
         }
 
-        return this.retrieveChildren(object).then(function (result) {
-            var children = result[0];
-
+        return this.retrieveChildren(object).then(function (children) {
             return self.buildStructureElement(
                 self.buildTag(object.serializeTags), /* Build the hyperscript tag e.g. div.m2-class-row */
                 object.serializeData || {}, /* Provide any specific element attributes e.g. data-role="heading" */

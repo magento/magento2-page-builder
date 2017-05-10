@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="controller_action_predispatch">
-        <observer name="save_pagebuilder" instance="Gene\BlueFoot\Observer\SavePageBuilder" />
+    <event name="model_save_before">
+        <observer name="advanced_cms_save_model" instance="Gene\BlueFoot\Observer\SaveEntity" />
     </event>
     <event name="gene_bluefoot_stage_build_config">
         <observer name="bluefoot_inject_widget" instance="Gene\BlueFoot\Observer\BuildInitConfig" />

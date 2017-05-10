@@ -29,6 +29,7 @@ define([
         };
 
         this.serializeTags = ['row'];
+        this.serializeData = {'data-role': 'row'};
     }
 
     Row.prototype = Object.create(AbstractStructural.prototype);
@@ -62,17 +63,6 @@ define([
         this.addChild(column);
         column.updateColumData(data);
         return column;
-    };
-
-    /**
-     * To JSON
-     *
-     * @returns {{children, formData}|{children: Array}}
-     */
-    Row.prototype.toJSON = function () {
-        var json = $super.toJSON.apply(this, arguments);
-        json.type = 'row';
-        return json;
     };
 
     return Row;

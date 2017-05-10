@@ -35,6 +35,7 @@ define([
         this.save.observe(this.stageContent);
 
         this.serializeTags = ['stage'];
+        this.serializeData = {'data-role': 'stage'};
         this.serializeChildren = [this.stageContent];
         this.dataTag = 'stage';
     }

@@ -167,31 +167,5 @@ define([
         }.bind(this));
     };
 
-    /**
-     * To JSON
-     *
-     * @returns {{children, formData}|{children: Array}}
-     */
-    AbstractBlock.prototype.toJSON = function () {
-        var json = $super.toJSON.apply(this, arguments);
-        json.contentType = this.config.code;
-
-        // Reset children back to an object
-        json.children = {};
-        if (this.childEntityKeys.length > 0) {
-            _.forEach(this.childEntityKeys, function (key) {
-                json.children[key] = [];
-                if (typeof this.data()[key] === 'object' && Array.isArray(this.data()[key])) {
-                    _.forEach(this.data()[key], function (child) {
-                        json.children[key].push(child.toJSON());
-                    });
-                }
-                delete json.formData[key];
-            }.bind(this))
-        }
-
-        return json;
-    };
-
     return AbstractBlock;
 });
