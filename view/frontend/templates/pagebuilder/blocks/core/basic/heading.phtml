@@ -7,11 +7,12 @@
  * @author Hob Adams <hob@gene.co.uk>
  *
  * Heading Template
- * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock
  *
  */
-$_entity = $block->getEntity();
-$_headingType = strtolower($block->getAttributeText('heading_type'));
+//$headingType = strtolower($block->getEntityData('heading_type'));
+$headingType = 'h2'; // @todo determine how we're storing content block fields to convert the entity data to values
 ?>
-<<?php echo $_headingType; ?> class="bluefoot-entity <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
-<span><?php echo $block->escapeHtml($_entity->getTitle()); ?></span></<?php echo $_headingType; ?>>
+<<?php echo $headingType; ?> class="bluefoot-entity <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getAttributeHtml(); ?>>
+    <span><?php echo $block->escapeHtml($block->getEntityData('title')); ?></span>
+</<?php echo $headingType; ?>>

@@ -7,9 +7,8 @@
 define([
     'bluefoot/config',
     'underscore',
-    'hyperscript',
-    'xyperscript'
-], function (Config, _, h, x) {
+    'hyperscript'
+], function (Config, _, h) {
 
     /**
      * Save class for serialization of the stage

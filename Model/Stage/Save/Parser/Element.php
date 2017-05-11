@@ -120,10 +120,29 @@ class Element
      * Add a child into the element
      *
      * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
-     * @param string                                         $name
      */
-    public function addChild(Element $element, $name = '')
+    public function addChild(Element $element)
     {
-        $this->children[$name] = $element;
+        $this->children[] = $element;
+    }
+
+    /**
+     * Retrieve the element as an array, useful for debugging
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $childArray = [];
+        /* @var $child Element */
+        foreach ($this->getChildren() as $child) {
+            $childArray[] = $child->toArray();
+        }
+
+        return [
+            'role' => $this->getRole(),
+            'data' => $this->getData(),
+            'children' => $childArray
+        ];
     }
 }

@@ -47,11 +47,6 @@ class Save
             if ($html = $object->getData($field)) {
                 // @todo determine which store ID should be retrieved from CMS pages
                 $processedOutput = $this->processHtml($html, 0, $object);
-
-                echo '<pre>';
-                echo htmlentities($processedOutput);
-                echo '</pre>';
-                exit;
                 if ($processedOutput) {
                     $object->setData($field, $processedOutput);
                 }

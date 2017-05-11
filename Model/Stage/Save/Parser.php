@@ -51,7 +51,10 @@ class Parser
         }
 
         $domDocument = new \DOMDocument();
-        $domDocument->loadHTML($html, LIBXML_HTML_NOIMPLIED);
+        $domDocument->loadHTML(
+            mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
         $this->html = $domDocument;
     }
 

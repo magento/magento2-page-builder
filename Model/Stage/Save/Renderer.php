@@ -134,8 +134,9 @@ class Renderer
 
         $this->emulation->stopEnvironmentEmulation();
         if ($indentOutput) {
-            $output = $this->indenter->indent($output);
+            return $this->indenter->indent($output);
         }
+
         return $output;
     }
 
@@ -149,11 +150,22 @@ class Renderer
     public function retrieveBlockTree(Parser\Element $element)
     {
         // Retrieve the content block for an element
-        if ($config = $this->getRenderingConfig($element)) {
-            $block = $this->retrieveElementBlock($element, $config);
+        $config = $this->getRenderingConfig($element);
+        if ($config && isset($config['frontend']['block'])) {
+            $blockType = $config['frontend']['block'];
         } else {
-            $block = $this->retrieveGenericBlock($element);
+            $blockType = $this->genericBlock;
         }
+
+        // Determine if the block has a specific template set in the config
+        $template = (isset($config['frontend']['template']) ? $config['frontend']['template'] : false);
+
+        // Retrieve the block
+        $block = $this->retrieveBlock(
+            $blockType,
+            $element,
+            $template
+        );
 
         // Iterate through children and render them
         if ($element->hasChildren()) {
@@ -185,41 +197,6 @@ class Renderer
     }
 
     /**
-     * Retrieve an elements block
-     *
-     * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
-     * @param                                                $config
-     *
-     * @return \Magento\Framework\View\Element\Template
-     */
-    protected function retrieveElementBlock(Parser\Element $element, $config)
-    {
-        if (isset($config['frontend']['block'])) {
-            $template = (isset($config['frontend']['template']) ? $config['frontend']['template'] : false);
-            $block = $this->retrieveBlock(
-                $config['frontend']['block'],
-                $element,
-                $template
-            );
-            return $block;
-        }
-
-        return $this->retrieveGenericBlock($element);
-    }
-
-    /**
-     * Retrieve a generic block for elements that don't have a custom block renderer
-     *
-     * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
-     *
-     * @return \Magento\Framework\View\Element\Template
-     */
-    protected function retrieveGenericBlock(Parser\Element $element)
-    {
-        return $this->retrieveBlock($this->genericBlock, $element);
-    }
-
-    /**
      * Retrieve a block from the front-end application
      *
      * @param                                                $type
@@ -238,15 +215,70 @@ class Renderer
             }
 
             // Pass over the entity data to the block
-            $block->setData('entity_data', $element->getData());
-
-            // Add required attributes to the block
-            $block->addAttribute('data-role', $element->getRole());
+            $block->setData([
+                'element' => $element,
+                'renderer' => $this
+            ]);
 
             // Convert the block to HTML
             return $block;
         }
 
         return false;
+    }
+
+    /**
+     * Embed meta data into the blocks output
+     *
+     * @param                                                       $html
+     * @param \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock $block
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function embedMetadataIntoBlockOutput($html, \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock $block)
+    {
+        // Create a dom document of the blocks output
+        $dom = new \DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadHTML(
+            mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        // Count nodes within html
+        $elementCount = 0;
+        $rootNode = false;
+        foreach ($dom->childNodes as $childNode) {
+            if ($childNode instanceof \DOMElement) {
+                ++$elementCount;
+
+                // All blocks must contain a single root level node
+                if ($elementCount > 1) {
+                    throw new \Exception(
+                        'All advanced CMS block templates must contain one root level node. ' . $block->getTemplate() .
+                        ' contains ' . $elementCount . '.'
+                    );
+                }
+
+                $rootNode = $childNode;
+            }
+        }
+
+        // Add the data-role attribute
+        if (!$rootNode->hasAttribute('data-role')) {
+            $rootNode->setAttribute('data-role', $block->getElement()->getRole());
+        }
+
+        // Add in the data script tag
+        $blockData = ($block->getElement()->getData() ? json_encode($block->getElement()->getData()) : '');
+        $dataTag = $dom->createElement('script', $blockData);
+        $dataTag->setAttribute('type', 'text/advanced-cms-data');
+        $dataTag->setAttribute('data-checksum', md5($blockData));
+        $rootNode->insertBefore($dataTag, $rootNode->childNodes->item(0));
+
+        // Return the new HTML
+        return $dom->saveHTML();
     }
 }
