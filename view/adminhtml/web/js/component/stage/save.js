@@ -59,7 +59,6 @@ define([
     Save.prototype.commit = function () {
         var self = this;
         this.serializeStage().then(function (structure) {
-            console.log(structure);
             self.valueFn(structure.outerHTML);
         }).catch(function (reason) {
             // Report chained errors to the console
