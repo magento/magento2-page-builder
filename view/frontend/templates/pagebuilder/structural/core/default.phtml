@@ -1,15 +1,13 @@
 <?php
 /**
- * Advanced CMS row template
+ * Generic block for content blocks without rendering blocks
  *
  * @var $block \Magento\Framework\View\Element\Template
  * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
  */
 $advancedCms = $block->getAdvancedCms();
 ?>
-<div<?php echo $advancedCms->getAttributeHtml(['class' => ['bluefoot-row']]); ?>>
+<div<?php echo $advancedCms->getAttributeHtml(); ?>>
     <?php echo $advancedCms->getDataHtml(); ?>
-    <div class="bluefoot-wrapper">
-        <?php echo $block->getChildHtml(); ?>
-    </div>
+    <?php echo $block->getChildHtml(); ?>
 </div>

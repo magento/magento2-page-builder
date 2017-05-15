@@ -49,7 +49,19 @@ class Renderer
     /**
      * @var string
      */
-    protected $genericBlock = '\Gene\BlueFoot\Block\Entity\PageBuilder\Generic';
+    protected $defaultBlock = '\Magento\Framework\View\Element\Template';
+
+    /**
+     * Default template used if a content block doesn't have an assigned template
+     *
+     * @var string
+     */
+    protected $defaultTemplate = 'Gene_BlueFoot::pagebuilder/structural/core/default.phtml';
+
+    /**
+     * @var \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory
+     */
+    protected $advancedCmsBlockFactory;
 
     /**
      * Dictate which attributes will be merged on the wrapping elements
@@ -73,14 +85,15 @@ class Renderer
     /**
      * Renderer constructor.
      *
-     * @param \Gene\BlueFoot\Model\Config             $config
-     * @param \Magento\Framework\View\LayoutInterface $layoutInterface
-     * @param \Magento\Store\Model\App\Emulation      $emulation
-     * @param \Magento\Framework\App\State            $appState
-     * @param \Gajus\Dindent\Indenter                 $indenter
-     * @param int                                     $storeId
-     * @param bool                                    $object
-     * @param bool                                    $genericBlock
+     * @param \Gene\BlueFoot\Model\Config                           $config
+     * @param \Magento\Framework\View\LayoutInterface               $layoutInterface
+     * @param \Magento\Store\Model\App\Emulation                    $emulation
+     * @param \Magento\Framework\App\State                          $appState
+     * @param \Gajus\Dindent\Indenter                               $indenter
+     * @param \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsBlockFactory
+     * @param int                                                   $storeId
+     * @param bool                                                  $object
+     * @param bool                                                  $genericBlock
      */
     public function __construct(
         \Gene\BlueFoot\Model\Config $config,
@@ -88,6 +101,7 @@ class Renderer
         \Magento\Store\Model\App\Emulation $emulation,
         \Magento\Framework\App\State $appState,
         \Gajus\Dindent\Indenter $indenter,
+        \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsBlockFactory,
         $storeId = 0,
         $object = false,
         $genericBlock = false
@@ -97,6 +111,7 @@ class Renderer
         $this->emulation = $emulation;
         $this->appState = $appState;
         $this->indenter = $indenter;
+        $this->advancedCmsBlockFactory = $advancedCmsBlockFactory;
         $this->storeId = $storeId;
         $this->object = $object;
 
@@ -154,7 +169,7 @@ class Renderer
         if ($config && isset($config['frontend']['block'])) {
             $blockType = $config['frontend']['block'];
         } else {
-            $blockType = $this->genericBlock;
+            $blockType = $this->defaultBlock;
         }
 
         // Determine if the block has a specific template set in the config
@@ -203,82 +218,33 @@ class Renderer
      * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
      * @param bool                                           $template
      *
-     * @return mixed
+     * @return \Magento\Framework\View\Element\Template|bool
      */
     protected function retrieveBlock($type, Parser\Element $element, $template = false)
     {
-        /* @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock */
+        // Create an instance of our advanced CMS block model
+        $advancedCmsBlock = $this->advancedCmsBlockFactory->create([
+            'element' => $element
+        ]);
+
+        /* @var $block \Magento\Framework\View\Element\Template */
         $block = $this->layoutInterface->createBlock($type);
         if ($block) {
-            if ($template) {
-                $block->setTemplate($template);
-            }
+            /*
+             * To retrieve Advanced CMS specific information within the block you need to call $block->getAdvancedCms()
+             * to return an instance of \Gene\BlueFoot\Model\Stage\Save\Renderer\Block which implements required
+             * functionality for the advanced CMS
+             */
+            $block->setData('advanced_cms', $advancedCmsBlock);
 
-            // Pass over the entity data to the block
-            $block->setData([
-                'element' => $element,
-                'renderer' => $this
-            ]);
+            /**
+             * Templates can be set in advanced_cms.xml or will default to the build in template
+             */
+            $block->setTemplate(($template ? $template : $this->defaultTemplate));
 
-            // Convert the block to HTML
             return $block;
         }
 
         return false;
-    }
-
-    /**
-     * Embed meta data into the blocks output
-     *
-     * @param                                                       $html
-     * @param \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock $block
-     *
-     * @return string
-     * @throws \Exception
-     */
-    public function embedMetadataIntoBlockOutput($html, \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock $block)
-    {
-        // Create a dom document of the blocks output
-        $dom = new \DOMDocument();
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadHTML(
-            mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
-            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
-        );
-
-        // Count nodes within html
-        $elementCount = 0;
-        $rootNode = false;
-        foreach ($dom->childNodes as $childNode) {
-            if ($childNode instanceof \DOMElement) {
-                ++$elementCount;
-
-                // All blocks must contain a single root level node
-                if ($elementCount > 1) {
-                    throw new \Exception(
-                        'All advanced CMS block templates must contain one root level node. ' . $block->getTemplate() .
-                        ' contains ' . $elementCount . '.'
-                    );
-                }
-
-                $rootNode = $childNode;
-            }
-        }
-
-        // Add the data-role attribute
-        if (!$rootNode->hasAttribute('data-role')) {
-            $rootNode->setAttribute('data-role', $block->getElement()->getRole());
-        }
-
-        // Add in the data script tag
-        $blockData = ($block->getElement()->getData() ? json_encode($block->getElement()->getData()) : '');
-        $dataTag = $dom->createElement('script', $blockData);
-        $dataTag->setAttribute('type', 'text/advanced-cms-data');
-        $dataTag->setAttribute('data-checksum', md5($blockData));
-        $rootNode->insertBefore($dataTag, $rootNode->childNodes->item(0));
-
-        // Return the new HTML
-        return $dom->saveHTML();
     }
 }
