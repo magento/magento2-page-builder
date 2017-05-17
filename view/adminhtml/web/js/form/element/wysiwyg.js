@@ -7,6 +7,8 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
     'Magento_Ui/js/modal/confirm',
+    'Magento_Ui/js/modal/alert',
+    'mage/translate',
     'mage/apply/main',
     'ko',
     'uiRegistry',
@@ -15,7 +17,7 @@ define([
     'bluefoot/stage/build',
     'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, confirmation, applyMain, ko, registry, jQuery, Stage, Build, utils) {
+], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, utils) {
     'use strict';
 
     /**
@@ -163,9 +165,27 @@ define([
                     return typeof options.actions[action] === 'function';
                 })
             )) {
-                confirmation(options);
+                confirmationPrompt(options);
             } else {
                 throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+            }
+        },
+
+        /**
+         * Throw an alert dialog in the exterior system.
+         *
+         * @param {object} options
+         * @returns {null}
+         */
+        alertDialog: function (options) {
+            if (options.content) {
+                options.content = $t(options.content);
+                if (options.title) {
+                    options.title = $t(options.title);
+                }
+                alertPrompt(options);
+            } else {
+                throw new Error('Wysiwyg.alertDialog: options.message must be provided');
             }
         },
 

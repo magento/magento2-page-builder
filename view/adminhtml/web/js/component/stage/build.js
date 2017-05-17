@@ -54,6 +54,13 @@ define([
             self.stage.stageContent.valueHasMutated();
             self.stage.loading(false);
         }).catch(function (e) {
+            // Inform the user that an issue has occurred
+            stage.parent.alertDialog({
+                title: 'Advanced CMS Error',
+                content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " +
+                "with your development team on how to resolve."
+            });
+
             console.error(e);
         });
     };
@@ -76,7 +83,6 @@ define([
 
         // Add element to stage
         return this.buildElement(role, data, parent).then(function (newParent) {
-            console.log(newParent);
             if (children.length > 0) {
                 var childPromises = [];
                 _.forEach(children, function (child) {
@@ -125,8 +131,6 @@ define([
      * Attempt to find deep children in an element
      *
      * @param element {Element}
-     *
-     * @todo test multiple levels of missing [data-role]'s
      */
     Build.prototype.findDeepChildren = function (element) {
         var self = this;

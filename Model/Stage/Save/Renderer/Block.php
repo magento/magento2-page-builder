@@ -46,7 +46,7 @@ class Block
      */
     public function addAttribute($name, $value)
     {
-        // Attributes can only contain strings, luckily these are space seperated
+        // Attributes can only contain strings, luckily these are space separated
         if (is_array($value)) {
             $value = implode(' ', $value);
         }
