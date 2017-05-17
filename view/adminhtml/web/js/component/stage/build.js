@@ -113,40 +113,28 @@ define([
     /**
      * Return elements children, search for direct decedents, or traverse through to find deep children
      *
-     * @todo requires IE 11 polyfill for use of :scope
-     *
-     * @param element
-     * @returns {array|NodeList}
+     * @param element {Element}
+     * @returns {[]|NodeList}
      */
     Build.prototype.getElementChildren = function (element) {
-        var directChildren = element.querySelectorAll(':scope > [data-role]');
-        if (directChildren.length > 0) {
-            return directChildren;
-        }
-
-        return this.findDeepChildren(element);
-    };
-
-    /**
-     * Attempt to find deep children in an element
-     *
-     * @param element {Element}
-     */
-    Build.prototype.findDeepChildren = function (element) {
         var self = this;
         if (element.hasChildNodes()) {
-            var deepChildren = [];
+            var children = [];
+            // Find direct children of the element
             _.forEach(element.childNodes, function (child) {
                 // Only search elements which tagName's and not script tags
                 if (child.tagName && child.tagName != 'SCRIPT') {
                     if (child.hasAttribute('data-role')) {
-                        deepChildren.push(child);
+                        children.push(child);
                     } else {
-                        deepChildren = self.findDeepChildren(child);
+                        children = self.getElementChildren(child);
                     }
                 }
             });
-            return deepChildren;
+
+            if (children.length > 0) {
+                return children;
+            }
         }
 
         return [];
