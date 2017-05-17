@@ -19,7 +19,7 @@ define([
      *
      * @constructor
      */
-    function Stage(parent, stageId, stageContent) {
+    function Stage(parent, stageId, stageContent, buildInstance) {
         this.id = stageId;
         this.parent = parent;
         this.stageContent = stageContent;
@@ -37,7 +37,41 @@ define([
         this.serializeRole = 'stage';
         this.serializeChildren = [this.stageContent];
         this.dataTag = 'stage';
+        this.buildInstance = buildInstance || false;
     }
+
+    /**
+     * Build the stage
+     */
+    Stage.prototype.build = function () {
+        var self = this;
+        if (this.buildInstance) {
+            this.buildInstance.buildStage(this)
+                .on('buildDone', self.ready.bind(self))
+                .on('buildError', function (event, error) {
+                    // Inform the user that an issue has occurred
+                    self.parent.alertDialog({
+                        title: 'Advanced CMS Error',
+                        content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " +
+                        "with your development team on how to resolve."
+                    });
+
+                    console.error(error);
+                });
+        } else {
+            // If no build instance is present we're initiating a new stage
+            this.addRow(this);
+            this.ready();
+        }
+    };
+
+    /**
+     * The stage has been initiated fully and is ready
+     */
+    Stage.prototype.ready = function () {
+        this.stageContent.valueHasMutated();
+        this.loading(false);
+    };
 
     /**
      * Remove a child from the stageContent array

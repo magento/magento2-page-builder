@@ -115,15 +115,17 @@ define([
                 panel.buildPanel();
 
                 // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-                this.stage = new Stage(this, this.stageId, this.stageContent);
+                this.stage = new Stage(
+                    this,
+                    this.stageId,
+                    this.stageContent,
+                    buildInstance
+                );
+                this.stage.build();
 
                 // Are we building from existing data?
                 if (buildInstance && node) {
-                    buildInstance.buildStage(this.stage);
                     button = $(node).prevAll('.buttons-set').find('.init-gene-bluefoot');
-                } else {
-                    // Add an initial row to the stage
-                    this.stage.addRow(this.stage);
                 }
 
                 // Hide the WYSIWYG and display the stage

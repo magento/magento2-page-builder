@@ -3,6 +3,8 @@
  * Handles observer event (pub/sub) magic
  *
  * @author Dave Macaulay <dave@gene.co.uk>
+ *
+ * @deprecated use event-emitter
  */
 define([], function () {
 

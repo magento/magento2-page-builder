@@ -5,13 +5,13 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'bluefoot/event-emitter',
     'underscore',
     'ko',
     'jquery',
     'bluefoot/config',
-    'bluefoot/hook',
     'bluefoot/stage/panel/group/block'
-], function (_, ko, jQuery, Config, Hook, Block) {
+], function (EventEmitter, _, ko, jQuery, Config, Block) {
 
     /**
      * The build class handles building the stage with any previously saved content
@@ -25,7 +25,10 @@ define([
         this.stage = false;
         /** @type {Element|bool} */
         this.document = false;
+
+        EventEmitter.apply(this, arguments);
     }
+    Build.prototype = EventEmitter.prototype;
 
     /**
      * Parse the potential structure
@@ -43,26 +46,33 @@ define([
     };
 
     /**
-     * Build a stage from previous data
+     * Build a stage from a preexisting structure
      *
      * @param stage
+     * @returns {Build}
      */
     Build.prototype.buildStage = function (stage) {
-        var self = this;
         this.stage = stage;
-        this.parseAndBuildElement(this.stageElement).then(function () {
-            self.stage.stageContent.valueHasMutated();
-            self.stage.loading(false);
-        }).catch(function (e) {
-            // Inform the user that an issue has occurred
-            stage.parent.alertDialog({
-                title: 'Advanced CMS Error',
-                content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " +
-                "with your development team on how to resolve."
-            });
+        this.parseAndBuildStage(this.stageElement);
+        return this;
+    };
 
-            console.error(e);
-        });
+    /**
+     * Parse and build the stage from the stage element
+     *
+     * @param stageElement
+     * @returns {Promise.<*>}
+     */
+    Build.prototype.parseAndBuildStage = function (stageElement) {
+        var self = this;
+
+        // Handle the building with the events system
+        return this.parseAndBuildElement(stageElement, this.stage)
+            .then(function () {
+                self.emit('buildDone');
+            }).catch(function (error) {
+                self.emit('buildError', error);
+            });
     };
 
     /**
