@@ -292,11 +292,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'js_block'         => $contentBlock->getAreaConfig(
                 \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
                 'js'
-            ),
-            'representation' => $contentBlock->getAreaConfig(
-                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
-                'representation'
-            ),
+            )
         ];
     }
 

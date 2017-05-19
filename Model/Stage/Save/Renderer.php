@@ -49,7 +49,7 @@ class Renderer
     /**
      * @var string
      */
-    protected $defaultBlock = '\Magento\Framework\View\Element\Template';
+    protected $defaultBlock = '\Gene\BlueFoot\Block\Entity\PageBuilder\Block';
 
     /**
      * Default template used if a content block doesn't have an assigned template
@@ -62,25 +62,6 @@ class Renderer
      * @var \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory
      */
     protected $advancedCmsBlockFactory;
-
-    /**
-     * Dictate which attributes will be merged on the wrapping elements
-     *
-     * @var array
-     */
-    protected $mergeAttributes = [
-        'style',
-        'class'
-    ];
-
-    /**
-     * Which attributes should never be merged?
-     *
-     * @var array
-     */
-    protected $protectedAttributes = [
-        'data-role'
-    ];
 
     /**
      * Renderer constructor.
@@ -124,11 +105,10 @@ class Renderer
      * Render an individual element
      *
      * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
-     * @param bool                                           $indentOutput
      *
      * @return string
      */
-    public function render(Parser\Element $element, $indentOutput = true)
+    public function render(Parser\Element $element)
     {
         // Emulate the store ID
         $this->emulation->startEnvironmentEmulation(
@@ -148,11 +128,9 @@ class Renderer
         );
 
         $this->emulation->stopEnvironmentEmulation();
-        if ($indentOutput) {
-            return $this->indenter->indent($output);
-        }
 
-        return $output;
+        // Indent the output for human readability
+        return $this->indenter->indent($output);
     }
 
     /**
@@ -218,7 +196,8 @@ class Renderer
      * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
      * @param bool                                           $template
      *
-     * @return \Magento\Framework\View\Element\Template|bool
+     * @return \Magento\Framework\View\Element\Template
+     * @throws \Exception
      */
     protected function retrieveBlock($type, Parser\Element $element, $template = false)
     {
@@ -227,15 +206,17 @@ class Renderer
             'element' => $element
         ]);
 
-        if ($block) {
-            /**
-             * Templates can be set in advanced_cms.xml or will default to the build in template
-             */
-            $block->setTemplate(($template ? $template : $this->defaultTemplate));
-
-            return $block;
+        // Validate the block correctly implemented the advanced CMS functionality, only in development mode
+        if ($this->appState->getMode() == \Magento\Framework\App\State::MODE_DEVELOPER) {
+            if (!method_exists($block, 'getAdvancedCms')) {
+                throw new \Exception(
+                    get_class($block) . ' must implemented a getAdvancedCms() method returning an instance of 
+                    \Gene\BlueFoot\Model\Stage\Save\Renderer\Block'
+                );
+            }
         }
 
-        return false;
+        $block->setTemplate(($template ? $template : $this->defaultTemplate));
+        return $block;
     }
 }

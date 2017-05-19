@@ -42,20 +42,7 @@ class Parser
         $html = ''
     ) {
         $this->elementFactory = $elementFactory;
-
-        if (empty($html)) {
-            throw new \InvalidArgumentException('HTML must be provided in factory create function.');
-        }
-        if (!is_string($html)) {
-            throw new \InvalidArgumentException('The parser can only only accept a HTML string.');
-        }
-
-        $domDocument = new \DOMDocument();
-        $domDocument->loadHTML(
-            mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
-            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
-        );
-        $this->html = $domDocument;
+        $this->html = $html;
     }
 
     /**
@@ -66,7 +53,20 @@ class Parser
     public function getStage()
     {
         if ($this->stage === null) {
-            $this->xpath = new \DOMXPath($this->html);
+            if (empty($this->html)) {
+                throw new \InvalidArgumentException('HTML must be provided in factory create function.');
+            }
+            if (!is_string($this->html)) {
+                throw new \InvalidArgumentException('The parser can only only accept a HTML string.');
+            }
+
+            $domDocument = new \DOMDocument();
+            $domDocument->loadHTML(
+                mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'),
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+            );
+
+            $this->xpath = new \DOMXPath($domDocument);
             $query = $this->xpath->query('//*[@data-role="stage"]');
             if ($query->length > 0) {
                 $this->stage = $query->item(0);
@@ -98,7 +98,7 @@ class Parser
     public function parse($element = false)
     {
         if (!$element) {
-            $element = $this->stage;
+            $element = $this->getStage();
         }
 
         // Create a new element

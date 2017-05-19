@@ -1,18 +1,14 @@
 <?php
 /**
- * BlueFoot
+ * Advanced CMS heading template
  *
- * Version 1.0
- *
- * @author Hob Adams <hob@gene.co.uk>
- *
- * Heading Template
- * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\AbstractBlock
- *
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
  */
-//$headingType = strtolower($block->getEntityData('heading_type'));
-$headingType = 'h2'; // @todo determine how we're storing content block fields to convert the entity data to values
+$advancedCms = $block->getAdvancedCms();
+$headingType = 'h2'; /* @todo change how this is stored */
 ?>
-<<?php echo $headingType; ?> class="bluefoot-entity <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getAttributeHtml(); ?>>
-    <span><?php echo $block->escapeHtml($block->getEntityData('title')); ?></span>
+<<?php echo $headingType; ?><?php echo $advancedCms->getAttributeHtml(['class' => ['bluefoot-entity']]); ?>>
+    <?php echo $advancedCms->getDataHtml(); ?>
+    <span><?php echo $block->escapeHtml($advancedCms->getEntityData('title')); ?></span>
 </<?php echo $headingType; ?>>

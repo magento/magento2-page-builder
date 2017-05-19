@@ -19,23 +19,20 @@ class Block
     /**
      * @var array
      */
-    protected $mergeAttributes = [
-        'style',
-        'class'
-    ];
+    protected $mergeAttributes = [];
 
     /**
      * Block constructor.
      *
      * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
+     * @param array                                          $mergeAttributes
      */
     public function __construct(
-        \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element
+        \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element,
+        $mergeAttributes = []
     ) {
         $this->element = $element;
-
-        // All blocks have to contain a [data-role] entry
-        $this->addAttribute('data-role', $element->getRole());
+        $this->mergeAttributes = $mergeAttributes;
     }
 
     /**
@@ -44,7 +41,7 @@ class Block
      * @param      $name
      * @param      $value
      */
-    public function addAttribute($name, $value)
+    public function setAttribute($name, $value)
     {
         // Attributes can only contain strings, luckily these are space separated
         if (is_array($value)) {
@@ -67,6 +64,18 @@ class Block
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * Does the instance contain a specific attribute?
+     *
+     * @param $name
+     *
+     * @return bool
+     */
+    public function hasAttribute($name)
+    {
+        return isset($this->attributes[$name]);
     }
 
     /**
@@ -97,6 +106,8 @@ class Block
             }
         }
 
+        // All elements must contain a [data-role], this cannot be overridden
+        $attributes['data-role'] = $this->element->getRole();
         if (count($attributes) > 0) {
             $attributeHtml = '';
             foreach ($attributes as $name => $value) {
