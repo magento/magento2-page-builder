@@ -222,21 +222,12 @@ class Renderer
      */
     protected function retrieveBlock($type, Parser\Element $element, $template = false)
     {
-        // Create an instance of our advanced CMS block model
-        $advancedCmsBlock = $this->advancedCmsBlockFactory->create([
+        /* @var $block \Magento\Framework\View\Element\Template */
+        $block = $this->layoutInterface->createBlock($type, '', [
             'element' => $element
         ]);
 
-        /* @var $block \Magento\Framework\View\Element\Template */
-        $block = $this->layoutInterface->createBlock($type);
         if ($block) {
-            /*
-             * To retrieve Advanced CMS specific information within the block you need to call $block->getAdvancedCms()
-             * to return an instance of \Gene\BlueFoot\Model\Stage\Save\Renderer\Block which implements required
-             * functionality for the advanced CMS
-             */
-            $block->setData('advanced_cms', $advancedCmsBlock);
-
             /**
              * Templates can be set in advanced_cms.xml or will default to the build in template
              */

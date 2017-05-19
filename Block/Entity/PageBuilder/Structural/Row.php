@@ -3,31 +3,47 @@
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
 
 /**
- * Class Column
+ * Class Row
  *
  * @package Gene\BlueFoot\Block\Entity\PageBuilder\Structural
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Row extends AbstractStructural
+class Row extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Base path of templates
-     * @var string
+     * @var \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
      */
-    protected $path = 'Gene_BlueFoot::pagebuilder/structural/core/row/';
+    protected $advancedCms;
 
     /**
-     * Render block HTML
+     * Row constructor.
      *
-     * @return string
+     * @param \Magento\Framework\View\Element\Template\Context      $context
+     * @param \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsFactory
+     * @param \Gene\BlueFoot\Model\Stage\Save\Parser\Element        $element
+     * @param array                                                 $data
      */
-    protected function _toHtml()
-    {
-        if (($template = $this->getFormData('template')) && $template != 'default.phtml') {
-            $this->setTemplate($this->path . $template);
-        }
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsFactory,
+        \Gene\BlueFoot\Model\Stage\Save\Parser\Element $element,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
 
-        return parent::_toHtml();
+        $this->advancedCms = $advancedCmsFactory->create([
+            'element' => $element
+        ]);
+    }
+
+    /**
+     * Return advanced CMS instance
+     *
+     * @return \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
+     */
+    public function getAdvancedCms()
+    {
+        return $this->advancedCms;
     }
 }
