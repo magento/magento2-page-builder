@@ -32,6 +32,7 @@ define([
         this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
+
         this.children = ko.observableArray([]);
 
         // Observe the data & children of the current class within our save functionality
@@ -53,7 +54,27 @@ define([
         this.serializeChildren = [this.children];
         this.dataEntityData = [this.data];
         this.dataEntityDataIgnore = [];
+
+        // Init our subscriptions
+        this.initSubscriptions();
     }
+
+    /**
+     * Init subscriptions on knockout observables
+     */
+    AbstractStructural.prototype.initSubscriptions = function () {
+        this.data.subscribe(function () {
+            if (this.stage) {
+                this.stage.save.update();
+            }
+        }.bind(this));
+
+        this.children.subscribe(function () {
+            if (this.stage) {
+                this.stage.save.update();
+            }
+        }.bind(this));
+    };
 
     /**
      * Build up any options the structural block has
@@ -66,6 +87,18 @@ define([
         this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
         this.options.addOption(this, 'duplicate', '<i class="fa fa-files-o"></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
         this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
+    };
+
+    /**
+     * Retrieve the component duplicate instance
+     *
+     * @param component
+     * @param callbackFn
+     */
+    AbstractStructural.prototype.getDuplicateInstance = function (component, callbackFn) {
+        require([component.ns], function (componentInstance) {
+            return callbackFn(componentInstance);
+        });
     };
 
     /**
@@ -89,7 +122,7 @@ define([
         };
 
         // Include the component by it's ns
-        require([structural.ns], function (Instance) {
+        this.getDuplicateInstance(structural, function (Instance) {
             // Duplicate the element, use bind to dynamically pass the arguments
             var duplicate = new (construct(Instance, this.duplicateArgs()));
             this.duplicateData(duplicate);

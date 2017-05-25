@@ -15,8 +15,6 @@ define([
      *
      * @param stage
      * @param valueFn
-     * @param renderer
-     * @param binder
      * @constructor
      */
     function Save(stage, valueFn) {
@@ -33,7 +31,19 @@ define([
             this.commit.bind(this),
             250
         );
+        this.stageContentSubscription = false;
+
+        this.init();
     }
+
+    /**
+     * Build up our save instance
+     */
+    Save.prototype.init = function () {
+        this.stageContentSubscription = this.stage.stageContent.subscribe(function () {
+            this.update();
+        }.bind(this));
+    };
 
     /**
      * Observe a specific knockout observable to fire serialization
