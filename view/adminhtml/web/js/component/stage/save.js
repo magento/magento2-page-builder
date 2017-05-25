@@ -25,8 +25,6 @@ define([
 
         this.deleted = [];
 
-        this.prefix = 'm2-cms-';
-
         this.update = _.debounce(
             this.commit.bind(this),
             250
@@ -98,8 +96,10 @@ define([
         }
 
         return this.retrieveChildren(object).then(function (children) {
+            var data = {};
+            data[Config.getValue('dataRoleAttributeName')] = object.serializeRole;
             return self.buildStructureElement(
-                {'data-role': object.serializeRole}, /* Provide any specific element attributes e.g. data-role="heading" */
+                data, /* Provide any specific element attributes e.g. data-role="heading" */
                 self.buildData(object, children) /* Provide all children elements from the children.structure function */
             );
         }).catch(function (reason) {
@@ -193,7 +193,7 @@ define([
                 return result;
             });
         } else {
-            return Promise.resolve({});
+            return Promise.resolve([]);
         }
     };
 
@@ -219,7 +219,7 @@ define([
                 return result;
             });
         } else {
-            return Promise.resolve({});
+            return Promise.resolve([]);
         }
     };
 

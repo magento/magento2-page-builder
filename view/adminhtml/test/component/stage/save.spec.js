@@ -5,24 +5,23 @@
  */
 define([
     'ko',
-    'bluefoot/stage/save'
-], function (ko, Save) {
+    'bluefoot/stage/save',
+    'bluefoot/config'
+], function (ko, Save, Config) {
     describe("Gene_BlueFoot/js/component/stage/save", function () {
-        var stage, save;
+        var stage, save, stageData, valueFn;
         beforeEach(function () {
+            stageData = ko.observable({
+                'test': 1
+            });
             stage = {
                 stageContent: ko.observableArray([]),
                 parent: {},
-                toJSON: function () {
-                    return {'test': 1}
-                }
+                serializeRole: 'stage',
+                dataEntityData: [stageData]
             };
-            save = new Save(stage);
-            save.input = {
-                val: function () {
-                    return '{"test":1}';
-                }
-            };
+            valueFn = function () { };
+            save = new Save(stage, valueFn);
         });
 
         it("will call update on stageContent change", function () {
@@ -31,23 +30,163 @@ define([
             expect(save.update).toHaveBeenCalled();
         });
 
-        it("update will update stage parent value", function () {
-            save.stage.parent.value = jasmine.createSpy("value");
-            save.update();
-            expect(save.stage.parent.value).toHaveBeenCalled();
+        it("will run observe knockout observable", function () {
+            spyOn(save, "update");
+            var observable = ko.observable('testValue');
+            save.observe(observable);
+            observable('newValue');
+            expect(save.update).toHaveBeenCalled();
         });
 
-        it("will return json string when converting the stage", function () {
-            expect(save.stageToJSON()).toEqual('{"test":1}');
+        it ("will throw error if non observable is passed to observe fn", function () {
+            var nonObservable = {};
+            expect(function () {
+                save.observe([nonObservable])
+            }).toThrow();
+        });
+
+        it ("commit updates valueFn with valid stage element", function (done) {
+            spyOn(save, "valueFn").and.callFake(function (result) {
+                expect(result).toContain(Config.getValue('dataRoleAttributeName') + '="stage"');
+                done();
+            });
+            save.commit();
+        });
+
+        it ("serialize stage creates HTMLDivElement", function (done) {
+            save.serializeStage().then(function (structure) {
+                expect(structure.constructor.name).toEqual('HTMLDivElement');
+                done();
+            });
+        });
+
+        it ("serialize stage element has [data-role] of stage", function (done) {
+            save.serializeStage().then(function (structure) {
+                expect(structure.getAttribute(Config.getValue('dataRoleAttributeName'))).toEqual('stage');
+                done();
+            });
+        });
+
+        it ("serialize stage element contains valid <script /> entity data", function (done) {
+            save.serializeStage().then(function (structure) {
+                expect(structure.childNodes.length).toEqual(1);
+                expect(structure.childNodes.item(0).tagName).toEqual('SCRIPT');
+                var entityData = JSON.parse(structure.childNodes.item(0).innerHTML);
+                expect(entityData).toEqual(jasmine.any(Object));
+                expect(entityData).toEqual(stageData());
+                done();
+            });
+        });
+
+        it ("serializeObject requires serializeRole on object", function (done) {
+            save.serializeObject({}).then(function () {
+                done(new Error('Promise should not complete'));
+            }, function () {
+                done();
+            });
+        });
+
+        it ("buildData returns valid <script /> element for object", function () {
+            var data = ko.observable({'mockData': true}),
+                object = {
+                    dataEntityData: [data]
+                };
+            var builtDataArray = save.buildData(object);
+            expect(builtDataArray.length).toEqual(1);
+            expect(builtDataArray[0].constructor.name).toEqual('HTMLScriptElement');
+            expect(JSON.parse(builtDataArray[0].innerHTML)).toEqual(data());
+        });
+
+        it ("buildData pushes invalid data into array", function () {
+            var data = ko.observable({'mockData': true}),
+                object = {
+                    dataEntityData: [data]
+                };
+            var builtDataArray = save.buildData(object, {'child': true});
+            expect(builtDataArray.length).toEqual(2);
+        });
+
+        it ("retrieveObjectData return all data for object", function () {
+            var mainData = ko.observable({'mockData': true}),
+                subsequentData = ko.observable({'subsequentData': true}),
+                object = {
+                    dataEntityData: [mainData, subsequentData]
+                };
+            var objectData = save.retrieveObjectData(object);
+            expect(objectData).toEqual(jasmine.any(Object));
+            expect(objectData['mockData']).toBeTruthy();
+            expect(objectData['subsequentData']).toBeTruthy();
+        });
+
+        it ("retrieveObjectData ignores specific attributes", function () {
+            var mainData = ko.observable({'mockData': true, 'ignored': true}),
+                object = {
+                    dataEntityData: [mainData],
+                    dataEntityDataIgnore: ['ignored']
+                };
+            var objectData = save.retrieveObjectData(object);
+            expect(objectData).toEqual(jasmine.any(Object));
+            expect(objectData['mockData']).toBeTruthy();
+            expect(objectData['ignored']).toBeUndefined();
+        });
+
+        it ("buildStructureElement returns valid HTMLDivElement", function () {
+            var element = save.buildStructureElement({}, []);
+            expect(element.constructor.name).toEqual('HTMLDivElement');
+        });
+
+        it ("buildStructureElement add element attributes", function () {
+            var element = save.buildStructureElement({
+                'data-test': 'test'
+            }, []);
+            expect(element.hasAttribute('data-test')).toBeTruthy();
+            expect(element.getAttribute('data-test')).toEqual('test');
+        });
+
+        it ("buildStructureElement inserts child elements", function () {
+            var children = [document.createElement('div')],
+                element = save.buildStructureElement({}, children);
+            expect(element.childNodes.length).toEqual(1);
+        });
+
+        it ("retrieveChildren retrieves children from object", function (done) {
+            var childObject = {
+                    serializeRole: 'mockChild'
+                },
+                children = ko.observableArray([childObject]),
+                object = {
+                    serializeChildren: [children]
+                };
+
+            save.retrieveChildren(object).then(function (result) {
+                expect(result).toEqual(jasmine.any(Array));
+                expect(result.length).toEqual(1);
+                expect(result[0].getAttribute(Config.getValue('dataRoleAttributeName'))).toEqual('mockChild');
+                done();
+            });
+        });
+
+        it ("retrieveChildren returns valid Array when no children are present", function (done) {
+            var children = [];
+            save.serializeChildren(children).then(function (result) {
+                expect(result).toEqual(jasmine.any(Array));
+                expect(result.length).toEqual(0);
+                done();
+            });
+        });
+
+        it ("serializeChildren throws error on invalid serializeChildren value", function (done) {
+            var children = [{'invalidObject': true}];
+            save.serializeChildren(children).then(function (result) {
+                done(new Error('serializeChildren should throw error'));
+            }, function (error) {
+                done();
+            });
         });
 
         it("deleted items are recorded in save.deleted", function () {
             save.delete('testDelete');
             expect(save.deleted[0]).toEqual('testDelete')
-        });
-
-        it("will return object when getting data from input", function () {
-            expect(save.getData()).toEqual({'test': 1});
         });
     });
 });
