@@ -19,8 +19,6 @@ define([
      * @constructor
      */
     function Build() {
-        /** @type {Element|bool} */
-        this.stageElement = false;
         /** @type {Stage|bool} */
         this.stage = false;
         /** @type {Element|bool} */
@@ -39,21 +37,21 @@ define([
     Build.prototype.parseStructure = function (structure) {
         this.document = document.createElement('div');
         this.document.innerHTML = structure;
-        this.stageElement = this.document.querySelector('[data-role="stage"]');
 
         // Return the stage element if the structure is present, otherwise return false
-        return this.stageElement || false;
+        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]') || false;
     };
 
     /**
      * Build a stage from a preexisting structure
      *
      * @param stage
+     * @param stageElement
      * @returns {Build}
      */
-    Build.prototype.buildStage = function (stage) {
+    Build.prototype.buildStage = function (stage, stageElement) {
         this.stage = stage;
-        this.parseAndBuildStage(this.stageElement);
+        this.parseAndBuildStage(stageElement);
         return this;
     };
 
@@ -76,33 +74,37 @@ define([
     };
 
     /**
-     * Recursively rebuild the stage, the wait lock included within this function is to ensure that all content is built
-     * in the correct order. As the way we build entities is handled by the stage we have no reliable way of waiting
-     * for it to be finished
+     * Parse an element in the structure and build the required element
      *
-     * @param element {Element}
-     * @param parent {{=}}
-     * @returns {boolean}
+     * @param element
+     * @param parent
+     * @returns {*}
      */
     Build.prototype.parseAndBuildElement = function (element, parent) {
-        var self = this,
-            role = element.getAttribute('data-role'),
-            data = this.getElementData(element),
-            children = this.getElementChildren(element),
+        if (element instanceof HTMLElement &&
+            element.getAttribute(Config.getValue('dataRoleAttributeName'))
+        ) {
             parent = parent || this.stage;
+            var self = this,
+                role = element.getAttribute(Config.getValue('dataRoleAttributeName')),
+                data = this.getElementData(element),
+                children = this.getElementChildren(element);
 
-        // Add element to stage
-        return this.buildElement(role, data, parent).then(function (newParent) {
-            if (children.length > 0) {
-                var childPromises = [];
-                _.forEach(children, function (child) {
-                    childPromises.push(self.parseAndBuildElement(child, newParent));
-                });
-                return Promise.all(childPromises);
-            } else {
-                return Promise.resolve();
-            }
-        });
+            // Add element to stage
+            return this.buildElement(role, data, parent).then(function (newParent) {
+                if (children.length > 0) {
+                    var childPromises = [];
+                    _.forEach(children, function (child) {
+                        childPromises.push(self.parseAndBuildElement(child, newParent));
+                    });
+                    return Promise.all(childPromises);
+                } else {
+                    return Promise.resolve(newParent);
+                }
+            });
+        } else {
+            return Promise.reject(new Error('Element does not contain valid role attribute.'));
+        }
     };
 
     /**
@@ -121,7 +123,7 @@ define([
     };
 
     /**
-     * Return elements children, search for direct decedents, or traverse through to find deep children
+     * Return elements children, search for direct decedents, or traverse through to find deeper children
      *
      * @param element {Element}
      * @returns {[]|NodeList}
@@ -134,7 +136,7 @@ define([
             _.forEach(element.childNodes, function (child) {
                 // Only search elements which tagName's and not script tags
                 if (child.tagName && child.tagName != 'SCRIPT') {
-                    if (child.hasAttribute('data-role')) {
+                    if (child.hasAttribute(Config.getValue('dataRoleAttributeName'))) {
                         children.push(child);
                     } else {
                         children = self.getElementChildren(child);

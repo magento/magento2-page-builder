@@ -72,10 +72,11 @@ define([
          * Check to see if the WYSIWYG already contains BlueFoot content
          */
         checkForBlueFootContent: function (node) {
-            var build = new Build();
-            if (build.parseStructure($(node).val())) {
+            var buildInstance = new Build(),
+                buildStructure;
+            if (buildStructure = buildInstance.parseStructure($(node).val())) {
                 this.loading(true);
-                return this.buildBlueFoot(false, build, node);
+                return this.buildBlueFoot(false, buildInstance, buildStructure, node);
             }
         },
 
@@ -102,9 +103,10 @@ define([
          *
          * @param event
          * @param buildInstance
+         * @param buildStructure
          * @param node
          */
-        buildBlueFoot: function (event, buildInstance, node) {
+        buildBlueFoot: function (event, buildInstance, buildStructure, node) {
             var button,
                 panel;
             if (event) {
@@ -118,10 +120,9 @@ define([
                 this.stage = new Stage(
                     this,
                     this.stageId,
-                    this.stageContent,
-                    buildInstance
+                    this.stageContent
                 );
-                this.stage.build();
+                this.stage.build(buildInstance, buildStructure);
 
                 // Are we building from existing data?
                 if (buildInstance && node) {
