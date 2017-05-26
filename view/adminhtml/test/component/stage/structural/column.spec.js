@@ -23,7 +23,7 @@ define([
                 },
                 removeChild: function (child) {
                     utils.remove(this.children, child);
-                }
+                },
             };
             stage = {
                 parent: parent,
@@ -32,6 +32,7 @@ define([
                     observe: function () {}
                 }
             };
+            parent.stage = stage;
             column = new Column(parent, stage);
         });
 
