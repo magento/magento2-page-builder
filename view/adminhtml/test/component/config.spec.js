@@ -189,22 +189,12 @@ define([
 
         describe('getColumnDefinitionByClassName', function () {
             it('can retrieve column definition by class name', function () {
-                Config._setInitConfig('column_definitions', [
-                    {
-                        className: 'test'
-                    }
-                ]);
                 expect(Config.getColumnDefinitionByClassName('test')).toBeDefined();
             });
         });
 
         describe('getColumnDefinitionByBreakpoint', function () {
             it('can retrieve column definition by breakpoint', function () {
-                Config._setInitConfig('column_definitions', [
-                    {
-                        breakpoint: '0.5'
-                    }
-                ]);
                 expect(Config.getColumnDefinitionByBreakpoint('0.5')).toBeDefined();
             });
         });

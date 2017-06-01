@@ -58,7 +58,7 @@ define([
         $super.duplicateData.apply(this, arguments);
 
         // Copy over the wrapper style on duplicate
-        duplicate.updateColumData(this.data());
+        duplicate.updateColumnData(this.data());
         return this;
     };
 
@@ -77,7 +77,7 @@ define([
     Column.prototype.addColumn = function (data) {
         var column = new Column(this, this.stage);
         this.addChild(column);
-        column.updateColumData(data);
+        column.updateColumnData(data);
         return column;
     };
 
@@ -93,7 +93,9 @@ define([
         }
 
         arrayUtil.moveArrayItemIntoArray(column, item.parent.children, index);
-        column.updateColumData(data);
+        column.updateColumnData(data);
+
+        return column;
     };
 
     /**
@@ -101,7 +103,8 @@ define([
      *
      * @param data
      */
-    Column.prototype.updateColumData = function (data) {
+    Column.prototype.updateColumnData = function (data) {
+        data = data || {};
         if (data.width) {
             var columnDef = Config.getColumnDefinitionByBreakpoint(data.width);
             if (columnDef) {
