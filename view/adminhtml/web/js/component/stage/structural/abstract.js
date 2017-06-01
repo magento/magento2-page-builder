@@ -54,17 +54,14 @@ define([
      * Init subscriptions on knockout observables
      */
     AbstractStructural.prototype.initSubscriptions = function () {
-        this.data.subscribe(function () {
+        var saveStage = function saveStage() {
             if (this.stage) {
                 this.stage.save.update();
             }
-        }.bind(this));
+        }.bind(this);
 
-        this.children.subscribe(function () {
-            if (this.stage) {
-                this.stage.save.update();
-            }
-        }.bind(this));
+        this.data.subscribe(saveStage);
+        this.children.subscribe(saveStage);
     };
 
     /**
@@ -128,7 +125,7 @@ define([
             }
 
             if (typeof callbackFn === 'function') {
-                callbackFn(duplicate);
+                _.defer(callbackFn, duplicate);
             } else {
                 var parentChildren = this.parent.children || this.parent.stageContent,
                     newIndex = parentChildren.indexOf(this) + 1;

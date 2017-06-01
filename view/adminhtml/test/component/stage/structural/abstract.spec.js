@@ -46,7 +46,7 @@ define([
             });
         });
 
-        it("duplicate copies children into new instance", function () {
+        it("duplicate copies children into new instance", function (done) {
             var mockChildDuplicate = {
                 'childDuplicate': 1
             };
@@ -57,6 +57,7 @@ define([
             });
             abstract.duplicate(false, abstract, function (duplicate) {
                 expect(duplicate.children()[0]).toEqual(mockChildDuplicate);
+                done();
             });
         });
 
