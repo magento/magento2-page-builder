@@ -7,215 +7,128 @@ namespace Gene\BlueFoot\Model\Config;
  *
  * @package Gene\BlueFoot\Model\Config
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     /**
-     * Convert dom node tree to array
+     * Convert XML structure into output array
      *
      * @param \DOMDocument $source
+     *
      * @return array
-     * @throws \InvalidArgumentException
      */
     public function convert($source)
     {
-        $xpath = new \DOMXPath($source);
         $output = [
-            'plugins' => [],
-            'templates' => [],
-            'renderers' => [],
-            'widgets' => [],
-            'global_fields' => []
+            'content_blocks' => [],
+            'global_fields'  => []
         ];
 
-        // Pull in all of the JS plugins
-        $jsPluginList = $xpath->query('/config/plugins/js/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $jsPluginList->length; $i++) {
-            $node = $jsPluginList->item($i);
-            if ($node->hasChildNodes()) {
-                foreach ($node->childNodes as $file) {
-                    if ($file->nodeName == 'file') {
-                        $output['plugins'][$node->getAttribute('name')][] = [
-                            'alias' => $file->getAttribute('alias'),
-                            'path' => $file->getAttribute('path')
-                        ];
-                    }
+        /** @var \DOMNodeList $contentBlocks */
+        $contentBlocks = $source->getElementsByTagName('content_block');
+        /** @var \DOMNode $contentBlock */
+        foreach ($contentBlocks as $contentBlock) {
+            $identifier = $contentBlock->attributes->getNamedItem('identifier')->nodeValue;
+            $contentBlockConfig = [];
+            if (!$identifier) {
+                throw new \InvalidArgumentException('Identifier is missing from content_block node');
+            }
+            /** @var \DOMElement $childNode */
+            foreach ($contentBlock->childNodes as $childNode) {
+                if ($childNode->nodeName == 'frontend' || $childNode->nodeName == 'adminhtml') {
+                    $contentBlockConfig[$childNode->nodeName] = $this->convertArea($childNode);
                 }
+            }
+            $output['content_blocks'][$identifier] = $contentBlockConfig;
+        }
+
+        // Convert the global fields out from the XML
+        $output['global_fields'] = $this->convertGlobalFields($source);
+
+        return $output;
+    }
+
+    /**
+     * Convert an area children into the output array
+     *
+     * @param \DOMElement $node
+     *
+     * @return array
+     */
+    protected function convertArea(\DOMElement $node)
+    {
+        $area = [];
+        /** @var \DOMElement $childNode */
+        foreach ($node->childNodes as $childNode) {
+            if ($childNode->nodeType == XML_ELEMENT_NODE ||
+                ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
+                    $childNode->nodeType == XML_TEXT_NODE && trim(
+                        $childNode->nodeValue
+                    ) != '')
+            ) {
+                // Convert any assets associated with the front-end
+                $nodeValue = $childNode->nodeValue;
+                if ($childNode->nodeName == 'assets') {
+                    $nodeValue = $this->convertAreaAssets($childNode);
+                }
+
+                $area[$childNode->nodeName] = $nodeValue;
             }
         }
 
-        // Pull in all of the on_build widgets
-        $onBuild = $xpath->query('/config/on_build/widgets/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $onBuild->length; $i++) {
-            $node = $onBuild->item($i);
-            if ($node->nodeName == 'widget') {
-                $output['plugins']['on_build'][$node->getAttribute('name')] = [
-                    'widget' => $node->getAttribute('widget'),
-                    'method' => $node->getAttribute('method')
-                ];
+        return $area;
+    }
+
+    /**
+     * Convert assets within an area to an array
+     *
+     * @param \DOMElement $node
+     *
+     * @return array
+     */
+    protected function convertAreaAssets(\DOMElement $node)
+    {
+        $assets = [];
+        /** @var \DOMElement $assetNode */
+        foreach ($node->childNodes as $assetNode) {
+            if ($assetNode->nodeType == XML_ELEMENT_NODE ||
+                ($assetNode->nodeType == XML_CDATA_SECTION_NODE ||
+                    $assetNode->nodeType == XML_TEXT_NODE && trim(
+                        $assetNode->nodeValue
+                    ) != '')
+            ) {
+                $assets[$assetNode->attributes->getNamedItem('name')->nodeValue] = $assetNode->nodeValue;
             }
         }
 
-        // Pull in all of the jQuery plugins
-        $jQueryPluginList = $xpath->query('/config/plugins/jquery/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $jQueryPluginList->length; $i++) {
-            $node = $jQueryPluginList->item($i);
-            $output['plugins']['jquery'][$node->getAttribute('name')] = [
-                'alias' => $node->getAttribute('alias'),
-                'path' => $node->getAttribute('path')
-            ];
-            if ($node->hasChildNodes()) {
-                foreach ($node->childNodes as $dep) {
-                    if ($dep->nodeName == 'dep') {
-                        $output['plugins']['jquery'][$node->getAttribute('name')]['deps'][$dep->getAttribute('name')]
-                            = $dep->getAttribute('alias');
-                    }
-                }
-            }
-        }
+        return $assets;
+    }
 
-        // Pull in all of the async plugins
-        $asyncPluginList = $xpath->query('/config/plugins/async/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $asyncPluginList->length; $i++) {
-            $node = $asyncPluginList->item($i);
-            $output['plugins']['async'][$node->getAttribute('name')] = [
-                'path' => $node->getAttribute('path')
-            ];
-        }
-
-        // Pull in all of the templates
-        $templateList = $xpath->query('/config/content_blocks/templates/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $templateList->length; $i++) {
-            $node = $templateList->item($i);
-            if ($node->nodeName == 'template') {
-                $output['templates'][$node->getAttribute('name')] = [
-                    'name' => $node->getAttribute('name'),
-                    'file' => $node->getAttribute('file'),
-                    'preview' => $node->getAttribute('preview'),
-                    'preview_block' => $node->getAttribute('preview_block'),
-                    'js_block' => $node->getAttribute('block')
-                ];
-
-                if ($node->hasChildNodes()) {
-                    /* @var $assets DOMNodeList */
-                    $assets = $node->getElementsByTagName('asset');
-                    if ($assets->length > 0) {
-                        for ($assetI = 0; $assetI < $assets->length; $assetI++) {
-                            $asset = $assets->item($assetI);
-                            $output['templates'][$node->getAttribute('name')]['assets'][$asset->getAttribute('name')]
-                                = $asset->getAttribute('src');
-                        }
-                    }
-                }
-            }
-        }
-
-        // Pull in all of the renderers
-        $rendererList = $xpath->query('/config/content_blocks/renderers/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $rendererList->length; $i++) {
-            $node = $rendererList->item($i);
-            if ($node->nodeName == 'renderer') {
-                $output['renderers'][$node->getAttribute('name')] = [
-                    'name' => $node->getAttribute('name'),
-                    'class' => $node->getAttribute('class')
-                ];
-            }
-        }
-
-        // Pull in all of the widgets
-        $rendererList = $xpath->query('/config/widgets/*');
-        /** @var $node \DOMNode */
-        for ($i = 0; $i < $rendererList->length; $i++) {
-            $node = $rendererList->item($i);
-            if ($node->nodeName == 'widget') {
-                $output['widgets'][$node->getAttribute('alias')] = [
-                    'name' => $node->getAttribute('name'),
-                    'label' => $node->getAttribute('label'),
-                    'alias' => $node->getAttribute('alias'),
-                    'input_type' => $node->getAttribute('inputType'),
-                    'group' => $node->getAttribute('group')
-                ];
-
-                // Retrieve the template if one is set
-                $templateElement = $node->getElementsByTagName('data_model');
-                if ($template = $templateElement->item(0)) {
-                    $output['widgets'][$node->getAttribute('alias')]['data_model'] = $template->nodeValue;
-                }
-            }
-        }
-
-        // Pull in all of the structural information
-        $structuralsList = $xpath->query('/config/structurals/*');
-        for ($i = 0; $i < $structuralsList->length; $i++) {
-            /* @var $node DOMElement */
-            $node = $structuralsList->item($i);
-            if ($node->nodeName == 'structural') {
-                $output['structurals'][$node->getAttribute('code')] = [
-                    'code' => $node->getAttribute('code'),
-                    'icon' => $node->getAttribute('icon'),
-                    'name' => $node->getAttribute('name'),
-                    'color' => $node->getAttribute('color'),
-                ];
-
-                // Retrieve the template if one is set
-                $templateElement = $node->getElementsByTagName('template');
-                if ($template = $templateElement->item(0)) {
-                    $output['structurals'][$node->getAttribute('code')]['template'] = $template->getAttribute('file');
-                }
-
-                // Retrieve the renderer if one is set
-                $rendererElement = $node->getElementsByTagName('renderer');
-                if ($renderer = $rendererElement->item(0)) {
-                    $output['structurals'][$node->getAttribute('code')]['renderer'] = $renderer->getAttribute('class');
-                }
-
-                // Build up the fields data
-                $fieldsElement = $node->getElementsByTagName('fields');
-                if ($fields = $fieldsElement->item(0)) {
-                    if ($fields->hasChildNodes()) {
-                        $fieldsElements = $fields->getElementsByTagName('field');
-                        if ($fieldsElements->length > 0) {
-                            $fieldsArray = [];
-                            for ($fieldCount = 0; $fieldCount < $fieldsElements->length; $fieldCount++) {
-                                /* @var $field \DOMElement */
-                                $field = $fieldsElements->item($fieldCount);
-                                $fieldsArray[$field->getAttribute('code')] = [];
-                                if ($field->hasChildNodes()) {
-                                    foreach ($field->childNodes as $fieldAttr) {
-                                        if ($fieldAttr instanceof \DOMElement) {
-                                            $fieldsArray[$field->getAttribute('code')][$fieldAttr->nodeName]
-                                                = $fieldAttr->nodeValue;
-                                        }
-                                    }
-                                }
-                            }
-                            $output['structurals'][$node->getAttribute('code')]['fields'] = $fieldsArray;
-                        }
-                    }
-                }
-            }
-        }
-
+    /**
+     * Convert XML into global fields
+     *
+     * @param \DOMDocument $source
+     *
+     * @return array
+     */
+    protected function convertGlobalFields(\DOMDocument $source)
+    {
         // Pull in all of the global fields
-        $globalFields = $xpath->query('/config/global_fields/*');
-        for ($i = 0; $i < $globalFields->length; $i++) {
-            /* @var $node DOMElement */
-            $node = $globalFields->item($i);
+        $xpath = new \DOMXPath($source);
+        $globalFields = [];
+        $globalFieldsQuery = $xpath->query('/config/global_fields/*');
+        for ($i = 0; $i < $globalFieldsQuery->length; $i++) {
+            /* @var $node \DOMElement */
+            $node = $globalFieldsQuery->item($i);
             if ($node->nodeName == 'field') {
-                $output['global_fields'][$node->getAttribute('code')] = [];
+                $globalFields[$node->getAttribute('code')] = [];
 
                 if ($node->hasChildNodes()) {
                     $fieldsElements = $node->childNodes;
                     foreach ($fieldsElements as $fieldAttr) {
                         if ($fieldAttr instanceof \DOMElement) {
-                            $output['global_fields'][$node->getAttribute('code')][$fieldAttr->nodeName]
+                            $globalFields[$node->getAttribute('code')][$fieldAttr->nodeName]
                                 = $fieldAttr->nodeValue;
                         }
                     }
@@ -223,6 +136,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
         }
 
-        return $output;
+        return $globalFields;
     }
 }

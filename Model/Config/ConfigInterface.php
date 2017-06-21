@@ -12,62 +12,19 @@ namespace Gene\BlueFoot\Model\Config;
 interface ConfigInterface
 {
     /**
-     * @return mixed
+     * @return array
      */
-    public function getJsPluginConfig();
+    public function getContentBlocks();
 
     /**
-     * @return mixed
+     * @param $identifier
+     *
+     * @return array
      */
-    public function getTemplates();
+    public function getContentBlock($identifier);
 
     /**
-     * @param $code
-     * @return mixed
-     */
-    public function getTemplate($code);
-
-    /**
-     * @param $code
-     * @return mixed
-     */
-    public function getTemplateFile($code);
-
-    /**
-     * @return mixed
-     */
-    public function getRenderers();
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function getRendererClass($name);
-
-    /**
-     * @return mixed
-     */
-    public function getStructurals();
-
-    /**
-     * @param $type
-     * @return mixed
-     */
-    public function getStructural($type);
-
-    /**
-     * @return mixed
-     */
-    public function getWidgets();
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function getWidget($name);
-
-    /**
-     * @return mixed
+     * @return array
      */
     public function getGlobalFields();
 }

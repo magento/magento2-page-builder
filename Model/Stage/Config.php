@@ -17,11 +17,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
 
     /**
-     * @var \Gene\BlueFoot\Model\Stage\Structural
-     */
-    protected $structural;
-
-    /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
      */
     protected $contentBlockCollection;
@@ -77,11 +72,20 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected $entity;
 
     /**
+     * @var \Magento\Framework\App\CacheInterface
+     */
+    protected $cacheManager;
+
+    /**
+     * @var \Magento\Framework\App\Cache\StateInterface
+     */
+    protected $cacheState;
+
+    /**
      * Config constructor.
      *
      * @param \Magento\Framework\Model\Context                                            $context
      * @param \Magento\Framework\Registry                                                 $registry
-     * @param \Gene\BlueFoot\Model\Stage\Structural                                       $structural
      * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory
      * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface                     $contentBlockGroupRepository
      * @param \Magento\Eav\Model\EntityFactory                                            $eavEntityFactory
@@ -100,7 +104,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Gene\BlueFoot\Model\Stage\Structural $structural,
         \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory,
         ContentBlockGroupRepositoryInterface $contentBlockGroupRepository,
         \Magento\Eav\Model\EntityFactory $eavEntityFactory,
@@ -118,7 +121,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     ) {
         $this->cacheManager = $context->getCacheManager();
         $this->cacheState = $cacheState;
-        $this->structural = $structural;
         $this->contentBlockCollection = $contentBlockCollectionFactory;
         $this->contentBlockGroupRepository = $contentBlockGroupRepository;
         $this->eavEntityFactory = $eavEntityFactory;
@@ -149,7 +151,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $config = [
                 'contentTypeGroups' => $this->getContentBlockGroups(),
                 'contentTypes'      => $this->getContentBlockData(),
-                'structural'        => $this->structural->getStructuralConfig(),
                 'templates'         => $this->getTemplateData(),
                 'globalFields'      => $this->getGlobalFields()
             ];
@@ -236,6 +237,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getContentBlockData()
     {
+        // Do a single load for the attribute data
+        $this->buildAllAttributeData();
+
         // Retrieve content blocks
         $contentBlocks = $this->contentBlockCollection->create();
         $contentBlocks->setOrder('entity_type.sort_order', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
@@ -266,94 +270,30 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     protected function flattenContentBlockData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
     {
-        $this->buildAllAttributeData();
-
         $fields = $this->getContentBlockFields($contentBlock, $this->getAttributeGroupData($contentBlock));
 
-        $contentBlockData = [
-            'code' => $contentBlock->getIdentifier(),
-            'name' => $contentBlock->getName(),
-            'icon' => '<i class="' . $contentBlock->getIconClass() . '"></i>',
-            'color' => '#444',
-            'color_theme' => $this->getColorTheme('#444'),
-            'contentType' => '',
-            'group' => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
-            'fields' => $fields,
-            'fields_list' => array_keys($fields),
-            'visible' => (bool) $contentBlock->getShowInPageBuilder()
+        return [
+            'code'             => $contentBlock->getIdentifier(),
+            'name'             => $contentBlock->getName(),
+            'icon'             => $contentBlock->getIconClass(),
+            'contentType'      => '',
+            'group'            => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
+            'fields'           => $fields,
+            'fields_list'      => array_keys($fields),
+            'visible'          => (bool) $contentBlock->getShowInPageBuilder(),
+            'preview_template' => $contentBlock->getAreaConfig(
+                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
+                'preview'
+            ),
+            'preview_block'    => $contentBlock->getAreaConfig(
+                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
+                'preview_block'
+            ),
+            'js_block'         => $contentBlock->getAreaConfig(
+                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
+                'js'
+            )
         ];
-
-        // Do we have a preview template for this content block?
-        if ($previewTemplate = $this->getPreviewTemplate($contentBlock)) {
-            $contentBlockData['preview_template'] = $previewTemplate;
-        }
-
-        // Do we have a preview block for this content block?
-        if ($previewBlock = $this->getPreviewBlock($contentBlock)) {
-            $contentBlockData['preview_block'] = $previewBlock;
-        }
-
-        if ($jsBlock = $this->getJsBlock($contentBlock)) {
-            $contentBlockData['js_block'] = $jsBlock;
-        }
-
-        return $contentBlockData;
-    }
-
-    /**
-     * Get the preview template for the content block
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     *
-     * @return bool
-     */
-    protected function getPreviewTemplate(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
-    {
-        if ($template = $contentBlock->getItemViewTemplate()) {
-            $templatePath = $this->configInterface->getTemplate($template);
-            if ($templatePath && isset($templatePath['preview'])) {
-                return $templatePath['preview'];
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get the preview's block for the content block
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     *
-     * @return bool
-     */
-    protected function getPreviewBlock(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
-    {
-        if ($template = $contentBlock->getItemViewTemplate()) {
-            $templatePath = $this->configInterface->getTemplate($template);
-            if ($templatePath && isset($templatePath['preview_block'])) {
-                return $templatePath['preview_block'];
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     * @return bool
-     */
-    protected function getJsBlock(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
-    {
-        if ($template = $contentBlock->getItemViewTemplate()) {
-            $templatePath = $this->configInterface->getTemplate($template);
-            if ($templatePath && isset($templatePath['js_block'])) {
-                return $templatePath['js_block'];
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -542,32 +482,5 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         return $data;
-    }
-
-    /**
-     * Send a color theme based on the content types color
-     *
-     * @param $hex
-     *
-     * @return string
-     */
-    protected function getColorTheme($hex)
-    {
-        $hex = str_replace('#', '', $hex);
-        $r = hexdec(substr($hex, 0, 2));
-        $g = hexdec(substr($hex, 2, 2));
-        $b = hexdec(substr($hex, 4, 2));
-
-        $contrast = sqrt(
-            $r * $r * .241 +
-            $g * $g * .691 +
-            $b * $b * .068
-        );
-
-        if ($contrast > 190) {
-            return 'dark';
-        } else {
-            return 'light';
-        }
     }
 }

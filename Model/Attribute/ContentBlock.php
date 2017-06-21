@@ -19,12 +19,25 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
     protected $entityFactory;
 
     /**
+     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
+     */
+    protected $configInterface;
+
+    /**
+     * @var null|array
+     */
+    protected $config = null;
+
+    const AREA_FRONTEND = 'frontend';
+    const AREA_ADMINHTML = 'adminhtml';
+
+    /**
      * ContentBlock constructor.
      *
      * @param \Magento\Framework\Model\Context                             $context
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Magento\Framework\Api\ExtensionAttributesFactory            $extensionFactory
-     * @param AttributeValueFactory    $customAttributeFactory
+     * @param \Magento\Framework\Api\AttributeValueFactory                 $customAttributeFactory
      * @param \Magento\Eav\Model\Config                                    $eavConfig
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory             $attrGroupFactory
      * @param \Magento\Eav\Model\Entity\AttributeFactory                   $attributeFactory
@@ -44,6 +57,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
         \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute,
         \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory,
+        \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -63,6 +77,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
         );
 
         $this->entityFactory = $entityFactory;
+        $this->configInterface = $configInterface;
     }
 
     /**
@@ -87,6 +102,37 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
             $entityResource = $this->entityFactory->create();
             return $entityResource->loadAllAttributes()
                 ->getSortedAttributes($this->getId());
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieve the content blocks configuration
+     *
+     * @param $area
+     * @param $key
+     *
+     * @return array|mixed|null
+     */
+    public function getAreaConfig($area, $key)
+    {
+        if ($this->config === null) {
+            $this->config = $this->configInterface->getContentBlock($this->getIdentifier());
+        }
+
+        // Validate we're accessing a valid area
+        if ($area != self::AREA_ADMINHTML && $area != self::AREA_FRONTEND) {
+            throw new \InvalidArgumentException('Invalid area specified for content block area config.');
+        }
+
+        if (isset($this->config[$area])) {
+            $area = $this->config[$area];
+            if ($key && isset($area[$key])) {
+                return $area[$key];
+            } elseif (!$key) {
+                return $area;
+            }
         }
 
         return null;

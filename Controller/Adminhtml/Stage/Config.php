@@ -50,7 +50,7 @@ class Config extends \Magento\Backend\App\Action
     /**
      * Return the systems configuration as a JSON string
      *
-     * @return $this
+     * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute()
     {
