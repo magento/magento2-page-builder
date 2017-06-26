@@ -25,7 +25,9 @@ define([
      * @type {{}}
      * @private
      */
-    var _config = {};
+    var _config = {
+        'dataRoleAttributeName': 'data-role'
+    };
 
     /**
      * Store all the fields in a cache so we don't have to re-generate them

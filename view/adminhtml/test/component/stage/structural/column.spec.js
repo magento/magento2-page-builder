@@ -23,12 +23,16 @@ define([
                 },
                 removeChild: function (child) {
                     utils.remove(this.children, child);
-                }
+                },
             };
             stage = {
                 parent: parent,
-                showBorders: ko.observable(false)
+                showBorders: ko.observable(false),
+                save: {
+                    observe: function () {}
+                }
             };
+            parent.stage = stage;
             column = new Column(parent, stage);
         });
 
@@ -58,7 +62,7 @@ define([
                 width: '0.6'
             });
             expect(column.widthClasses()).toEqual('test1');
-            expect(column.columnDefinition).toEqual(Config.getColumnDefinitionByBreakpoint('0.6'));
+            expect(column.columnDefinition()).toEqual(Config.getColumnDefinitionByBreakpoint('0.6'));
         });
 
         it("can update column data with className", function () {
@@ -66,16 +70,7 @@ define([
                 className: 'test1'
             });
             expect(column.widthClasses()).toEqual('test1');
-            expect(column.columnDefinition).toEqual(Config.getColumnDefinitionByClassName('test1'));
-        });
-
-        it("will return a valid JSON object", function () {
-            expect(column.toJSON()).toEqual({
-                'formData': {
-                    'width': '0.5'
-                },
-                'type': 'column'
-            });
+            expect(column.columnDefinition()).toEqual(Config.getColumnDefinitionByClassName('test1'));
         });
     });
 

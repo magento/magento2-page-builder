@@ -27,7 +27,10 @@ define([
             };
             stage = {
                 parent: parent,
-                showBorders: ko.observable(false)
+                showBorders: ko.observable(false),
+                save: {
+                    observe: function () {}
+                }
             };
             AbstractStructural.prototype.initSubscriptions = function () { };
             abstract = new AbstractStructural(parent, stage);
@@ -119,17 +122,6 @@ define([
             var testData = {'testKey': 'testValue'};
             abstract.updateWrapperStyle(testData);
             expect(abstract.wrapperStyle()).toEqual(testData);
-        });
-
-        it("will return a valid JSON object", function () {
-            var child = {
-                    toJSON: function () {
-                        return {'test': 1}
-                    }
-                },
-                expected = {formData: {}, children: [{'test': 1}]};
-            abstract.addChild(child);
-            expect(abstract.toJSON()).toEqual(expected);
         });
     });
 });

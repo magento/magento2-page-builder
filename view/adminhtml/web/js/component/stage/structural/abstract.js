@@ -53,6 +53,9 @@ define([
         this.serializeChildren = [this.children];
         this.dataEntityData = [this.data];
         this.dataEntityDataIgnore = [];
+
+        // Init our subscriptions
+        this.initSubscriptions();
     }
 
     /**

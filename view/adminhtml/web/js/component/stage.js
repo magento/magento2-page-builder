@@ -19,7 +19,7 @@ define([
      *
      * @constructor
      */
-    function Stage(parent, stageId, stageContent, buildInstance) {
+    function Stage(parent, stageId, stageContent) {
         this.id = stageId;
         this.parent = parent;
         this.stageContent = stageContent;
@@ -37,16 +37,15 @@ define([
         this.serializeRole = 'stage';
         this.serializeChildren = [this.stageContent];
         this.dataTag = 'stage';
-        this.buildInstance = buildInstance || false;
     }
 
     /**
      * Build the stage
      */
-    Stage.prototype.build = function () {
+    Stage.prototype.build = function (buildInstance, buildStructure) {
         var self = this;
-        if (this.buildInstance) {
-            this.buildInstance.buildStage(this)
+        if (buildInstance && buildStructure) {
+            buildInstance.buildStage(this, buildStructure)
                 .on('buildDone', self.ready.bind(self))
                 .on('buildError', function (event, error) {
                     // Inform the user that an issue has occurred

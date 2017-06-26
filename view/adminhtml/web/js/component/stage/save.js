@@ -15,8 +15,6 @@ define([
      *
      * @param stage
      * @param valueFn
-     * @param renderer
-     * @param binder
      * @constructor
      */
     function Save(stage, valueFn) {
@@ -33,7 +31,19 @@ define([
             this.commit.bind(this),
             250
         );
+
+        this.stageContentSubscription = false;
+        this.init();
     }
+
+    /**
+     * Build up our save instance
+     */
+    Save.prototype.init = function () {
+        this.stageContentSubscription = this.stage.stageContent.subscribe(function () {
+            this.update();
+        }.bind(this));
+    };
 
     /**
      * Observe a specific knockout observable to fire serialization
@@ -88,8 +98,10 @@ define([
         }
 
         return this.retrieveChildren(object).then(function (children) {
+            var data = {};
+            data[Config.getValue('dataRoleAttributeName')] = object.serializeRole;
             return self.buildStructureElement(
-                {'data-role': object.serializeRole}, /* Provide any specific element attributes e.g. data-role="heading" */
+                data, /* Provide any specific element attributes e.g. data-role="heading" */
                 self.buildData(object, children) /* Provide all children elements from the children.structure function */
             );
         }).catch(function (reason) {
@@ -183,7 +195,7 @@ define([
                 return result;
             });
         } else {
-            return Promise.resolve({});
+            return Promise.resolve([]);
         }
     };
 
@@ -209,7 +221,7 @@ define([
                 return result;
             });
         } else {
-            return Promise.resolve({});
+            return Promise.resolve([]);
         }
     };
 
