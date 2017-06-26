@@ -56,6 +56,20 @@ define([
     }
 
     /**
+     * Init subscriptions on knockout observables
+     */
+    AbstractStructural.prototype.initSubscriptions = function () {
+        var saveStage = function saveStage() {
+            if (this.stage) {
+                this.stage.save.update();
+            }
+        }.bind(this);
+
+        this.data.subscribe(saveStage);
+        this.children.subscribe(saveStage);
+    };
+
+    /**
      * Build up any options the structural block has
      *
      * @returns {boolean}
@@ -66,6 +80,18 @@ define([
         this.options.addOption(this, 'edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
         this.options.addOption(this, 'duplicate', '<i class="fa fa-files-o"></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
         this.options.addOption(this, 'remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
+    };
+
+    /**
+     * Retrieve the component duplicate instance
+     *
+     * @param component
+     * @param callbackFn
+     */
+    AbstractStructural.prototype.getDuplicateInstance = function (component, callbackFn) {
+        require([component.ns], function (componentInstance) {
+            return callbackFn(componentInstance);
+        });
     };
 
     /**
@@ -89,7 +115,7 @@ define([
         };
 
         // Include the component by it's ns
-        require([structural.ns], function (Instance) {
+        this.getDuplicateInstance(structural, function (Instance) {
             // Duplicate the element, use bind to dynamically pass the arguments
             var duplicate = new (construct(Instance, this.duplicateArgs()));
             this.duplicateData(duplicate);
@@ -104,7 +130,7 @@ define([
             }
 
             if (typeof callbackFn === 'function') {
-                callbackFn(duplicate);
+                _.defer(callbackFn, duplicate);
             } else {
                 var parentChildren = this.parent.children || this.parent.stageContent,
                     newIndex = parentChildren.indexOf(this) + 1;
