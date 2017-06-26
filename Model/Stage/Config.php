@@ -275,7 +275,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         return [
             'code'             => $contentBlock->getIdentifier(),
             'name'             => $contentBlock->getName(),
-            'icon'             => '<i class="' . $contentBlock->getIconClass() . '"></i>',
+            'icon'             => $contentBlock->getIconClass(),
             'contentType'      => '',
             'group'            => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
             'fields'           => $fields,
