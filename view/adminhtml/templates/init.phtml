@@ -1,30 +1,5 @@
-<script type="text/x-magento-init">
-    {
-        "*": {
-            "Magento_Ui/js/core/app": {
-                "components": {
-                        "bluefoot-panel": {
-                            "component": "bluefoot/stage/panel",
-                            "template": "Gene_BlueFoot/component/stage/panel.html",
-                            "config": <?php echo $this->getConfig(); ?>
-                        },
-                        "bluefoot-edit": {
-                            "component": "bluefoot/stage/edit/instance"
-                        }
-                    }
-                }
-            }
-    }
+<script type="text/javascript">
+    define('advanced-cms-init-config', function () {
+        return <?php echo $this->getConfig(); ?>;
+    });
 </script>
-
-<div data-bind="scope: 'bluefoot-panel'">
-    <!-- ko template: getTemplate() --><!-- /ko -->
-</div>
-
-<div data-bind="scope: 'bluefoot-edit'">
-    <!-- ko foreach: panels -->
-        <div data-bind="scope: id">
-            <!-- ko template: getTemplate() --><!-- /ko -->
-        </div>
-    <!-- /ko -->
-</div>

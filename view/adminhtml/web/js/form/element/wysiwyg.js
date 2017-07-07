@@ -15,10 +15,13 @@ define([
     'jquery',
     'bluefoot/stage',
     'bluefoot/stage/build',
+    'bluefoot/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, utils) {
+], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
+
+    window.registry = registry;
 
     /**
      * Extend the original WYSIWYG with added BlueFoot functionality
@@ -33,6 +36,7 @@ define([
             showBorders: false,
             loading: false,
             userSelect: true,
+            panel: new Panel(),
             links: {
                 stageActive: false,
                 stage: {},
@@ -40,7 +44,7 @@ define([
                 stageContent: [],
                 showBorders: false,
                 loading: false,
-                userSelect: true,
+                userSelect: true
             }
         },
 
@@ -81,15 +85,6 @@ define([
         },
 
         /**
-         * Retrieve the panel from the registry
-         *
-         * @returns {*}
-         */
-        getBlueFootPanel: function () {
-            return registry.get('bluefoot-panel');
-        },
-
-        /**
          * Bind a click event to the BlueFoot init button
          *
          * @param node
@@ -107,44 +102,29 @@ define([
          * @param node
          */
         buildBlueFoot: function (event, buildInstance, buildStructure, node) {
-            var button,
-                panel;
+            var self = this;
             if (event) {
                 event.stopPropagation();
-                button = jQuery(event.currentTarget);
             }
-            if (panel = this.getBlueFootPanel()) {
-                panel.buildPanel();
 
-                // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-                this.stage = new Stage(
-                    this,
-                    this.stageId,
-                    this.stageContent
-                );
-                this.stage.build(buildInstance, buildStructure);
+            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
+            this.stage = new Stage(
+                this,
+                this.stageId,
+                this.stageContent
+            );
 
-                // Are we building from existing data?
-                if (buildInstance && node) {
-                    button = $(node).prevAll('.buttons-set').find('.init-gene-bluefoot');
-                }
+            // On stage ready show the interface
+            this.stage.on('stageReady', function () {
+                self.stageActive(true); // Display the stage UI
+                self.visible(false); // Hide the original WYSIWYG editor
+            });
 
-                // Hide the WYSIWYG and display the stage
-                button.parents('[data-namespace]').hide();
-                if (button.parents('.admin__control-grouped').length > 0) {
-                    // Add bluefoot active class to transform the field area full width
-                    button.parents('.admin__control-grouped').addClass('bluefoot-active');
-                }
+            // Create a new instance of the panel
+            this.panel.bindStage(this.stage);
 
-                // Mark the stage as active bringing it into display
-                this.stageActive(true);
-
-                // Update the panel instance to realise our new stage instance
-                panel.updateStages();
-
-            } else {
-                console.warn('Unable to locate the BlueFoot panel for initialization.');
-            }
+            // Build the stage instance using any existing build data
+            this.stage.build(buildInstance, buildStructure);
         },
 
         /**

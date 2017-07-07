@@ -3,6 +3,10 @@
 </div>
 <br />
 
+<!-- ko with: panel -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+
 <div class="bluefoot-stage" data-bind="attr: {id: stageId, 'data-role': stageActive() ? 'bluefoot-stage' : '' }, css: {'bluefoot-show-borders': showBorders, 'bluefoot-no-user-select': !userSelect()}">
     <div class="bluefoot-stage-loading" data-bind="visible: loading">
         <div class="bluefoot-emblem"></div>
@@ -17,6 +21,6 @@
         <div class="bluefoot-row-wrapper" data-bind="template: getTemplate(), attr: {id: id}, style: wrapperStyle"></div>
     </div>
     <div class="bluefoot-add-row-wrapper" data-bind="visible: !loading()">
-        <a href="#" class="bluefoot-add-row" title="Add Row" data-bind="click: function () { return stage.addRow($data.stage); }"><i class="fa fa-plus"></i></a>
+        <button type="button" class="action-default scalable action-secondary" title="Add Row" data-bind="click: function () { return stage.addRow($data.stage); }"><i class="fa fa-plus"></i> Add Row</button>
     </div>
 </div>

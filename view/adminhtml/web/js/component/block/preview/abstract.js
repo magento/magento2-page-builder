@@ -53,8 +53,8 @@ define([
      */
     AbstractPreview.prototype.update = function (data) {
         _.forEach(data, function (value, key) {
-            if (typeof this[key] !== 'undefined') {
-                var field = Config.getField(key);
+            var field;
+            if (typeof this[key] !== 'undefined' && (field = Config.getField(key))) {
                 if (typeof field.options !== 'undefined') {
                     value = this.getOptionValue(value, field.options);
                 }
@@ -72,7 +72,7 @@ define([
      */
     AbstractPreview.prototype.getOptionValue = function (value, options) {
         var findOption = $.grep(options, function (option) {
-            return option.value == value;
+            return option.value === value;
         });
         if (typeof findOption[0] !== 'undefined') {
             return findOption[0].label;

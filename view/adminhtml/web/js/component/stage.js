@@ -5,6 +5,7 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'bluefoot/event-emitter',
     'ko',
     'underscore',
     'bluefoot/stage/save',
@@ -12,7 +13,7 @@ define([
     'bluefoot/utils/array',
     'uiRegistry',
     'mageUtils'
-], function (ko, _, Save, Row, arrayUtil, registry, utils) {
+], function (EventEmitter, ko, _, Save, Row, arrayUtil, registry, utils) {
 
     /**
      * Stage Class
@@ -37,7 +38,10 @@ define([
         this.serializeRole = 'stage';
         this.serializeChildren = [this.stageContent];
         this.dataTag = 'stage';
+
+        EventEmitter.apply(this, arguments);
     }
+    Stage.prototype = EventEmitter.prototype;
 
     /**
      * Build the stage
@@ -55,6 +59,7 @@ define([
                         "with your development team on how to resolve."
                     });
 
+                    self.emit('stageError', error);
                     console.error(error);
                 });
         } else {
@@ -68,6 +73,7 @@ define([
      * The stage has been initiated fully and is ready
      */
     Stage.prototype.ready = function () {
+        this.emit('stageReady');
         this.stageContent.valueHasMutated();
         this.loading(false);
     };

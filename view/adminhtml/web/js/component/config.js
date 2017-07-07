@@ -8,8 +8,9 @@ define([
     'underscore',
     'jquery',
     'bluefoot/utils/ajax',
-    'bluefoot/utils/persistence'
-], function (_, jQuery, AjaxClass, persistence) {
+    'bluefoot/utils/persistence',
+    'advanced-cms-init-config'
+], function (_, jQuery, AjaxClass, persistence, initConfig) {
 
     /**
      * The initial config before the Ajax request
@@ -17,7 +18,7 @@ define([
      * @type {{}}
      * @private
      */
-    var _initConfig = {};
+    var _initConfig = initConfig;
 
     /**
      * Cache the config within this module

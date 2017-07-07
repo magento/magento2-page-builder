@@ -10,10 +10,11 @@ define([
     'jquery',
     'bluefoot/config',
     'bluefoot/stage/panel/group',
+    'bluefoot/stage/panel/group/block',
     'bluefoot/stage/previews',
     'bluefoot/ko-sortable',
     'bluefoot/ko-redactor'
-], function (Component, ko, jQuery, Config, Group, Previews) {
+], function (Component, ko, jQuery, Config, Group, GroupBlock, Previews) {
 
     /**
      * Extend the component for BlueFoot panel specific functionality
@@ -21,29 +22,41 @@ define([
     return Component.extend({
         defaults: {
             visible: false,
-            floating: false,
-            groups: []
+            groups: [],
+            searching: false,
+            searchResults: []
         },
 
         /**
          * Initialize the panel component
-         *
-         * @param config
          */
-        initialize: function (config) {
+        initialize: function () {
             this._super();
-
-            // Store the init config in the main model
-            Config.setInitConfig(config);
-
-            // Once the panel is built, we don't need to build it again
-            this.built = false;
-
-            // Record the stages DOM elements on the page
-            this.stages = false;
 
             // Load preview templates
             Previews.load();
+        },
+
+        /**
+         * Bind the stage to the panel instance
+         *
+         * @param stage
+         */
+        bindStage: function (stage) {
+            var self = this;
+            stage.on('stageReady', function () {
+                self.populateContentBlocks();
+                self.visible(true);
+            });
+        },
+
+        /**
+         * Return the full path to the template
+         *
+         * @returns {string}
+         */
+        getTemplate: function () {
+            return 'Gene_BlueFoot/component/stage/panel.html';
         },
 
         /**
@@ -53,129 +66,71 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('visible groups floating');
+                .observe('visible groups searching searchResults');
 
             return this;
         },
 
         /**
-         * Build the panel, check to see if panel is built first
+         * Conduct a search on the available content blocks
+         *
+         * @param self
+         * @param event
          */
-        buildPanel: function () {
-            // Do we need to rebuild the panel?
-            if (!this.built) {
-                this.populatePanel();
-                this.bindEvents();
+        search: function (self, event) {
+            var searchValue = event.currentTarget.value.toLowerCase();
+            if (searchValue === '') {
+                this.searching(false);
             } else {
-                this.updateStages();
+                this.searching(true);
+                this.searchResults(_.map(
+                    _.filter(
+                        Config.getInitConfig('contentBlocks'),
+                        function (contentBlock) {
+                            return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 &&
+                                contentBlock.visible === true;
+                        }
+                    ),
+                    function (contentBlock) {
+                        // Create a new instance of GroupBlock for each result
+                        return new GroupBlock(contentBlock);
+                    })
+                );
             }
         },
 
         /**
-         * Populate the panel
+         * Populate the panel with the content blocks
          */
-        populatePanel: function () {
+        populateContentBlocks: function () {
+            var self = this,
+                groups = Config.getInitConfig('groups'),
+                contentBlocks = Config.getInitConfig('contentBlocks');
             // Verify the configuration contains the required information
-            if (Config.getInitConfig('contentTypeGroups') && Config.getInitConfig('contentTypes')) {
-                // Populate the groups array with our groups
-                var groupsLookup = {};
-                var groups = [];
-                jQuery.each(Config.getInitConfig('contentTypeGroups'), function (id, group) {
-                    groupsLookup[id] = new Group(id, group);
-                    groups.push(groupsLookup[id]);
-                }.bind(this));
-
-                // Add blocks into the groups
-                jQuery.each(Config.getInitConfig('contentTypes'), function (id, block) {
-                    if (typeof groupsLookup[block.group] !== 'undefined' && block.visible === true) {
-                        groupsLookup[block.group].addBlock(block);
-                    }
-                }.bind(this));
-
-                // Update groups all at once
-                this.groups(groups);
-                groupsLookup = {};
-                groups = {};
+            if (groups && contentBlocks) {
+                // Iterate through the groups creating new instances with their associated content blocks
+                _.each(groups, function (group, id) {
+                    // Push the group instance into the observable array to update the UI
+                    self.groups.push(new Group(
+                        id,
+                        group,
+                        _.map(
+                            _.where(contentBlocks, {
+                                group: id,
+                                visible: true
+                            }), /* Retrieve content blocks with group id */
+                            function (contentBlock) {
+                                return new GroupBlock(contentBlock);
+                            }
+                        )
+                    ));
+                });
 
                 // Display the panel
                 this.visible(true);
-
-                this.built = true;
-                this.updateStages();
             } else {
                 console.warn('Configuration is not properly initialized, please check the Ajax response.');
             }
-        },
-
-        /**
-         * Update the stages cache with any new stages
-         */
-        updateStages: function () {
-            this.stages = jQuery('body').find('[data-role="bluefoot-stage"]');
-
-            if (jQuery('.modal-slide._show').length > 0) {
-                this.floating(true);
-
-                // Wait for the modal to close
-                var interval;
-                interval = setInterval(function () {
-                    if (jQuery('.modal-slide._show').length == 0) {
-                        this.floating(false);
-                        clearInterval(interval);
-                    }
-                }.bind(this), 100);
-            } else {
-                this.floating(false);
-            }
-        },
-
-        /**
-         * Bind events for the panel
-         */
-        bindEvents: function () {
-            var that = this,
-                stageInView = false,
-                timeout;
-
-            // Attach a scroll event to the window to monitor stages coming in and out of view
-            jQuery(window).scroll(function () {
-                if (that.built && that.stages.length > 0) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(function () {
-                        stageInView = false;
-                        that.stages.each(function () {
-                            if (that._elementInViewport(jQuery(this))) {
-                                stageInView = true;
-                                return true;
-                            }
-                        });
-
-                        that.visible(stageInView);
-                    }, 100);
-                }
-            });
-        },
-
-        /**
-         * Determine if an element is within the view port
-         *
-         * @param el
-         * @returns {boolean}
-         * @private
-         */
-        _elementInViewport: function (el) {
-            if (typeof jQuery === "function" && el instanceof jQuery) {
-                el = el[0];
-            }
-
-            var rect = el.getBoundingClientRect();
-
-            return (
-                (rect.top + rect.height - 150) >= 0 &&
-                rect.left >= 0 &&
-                (rect.bottom - rect.height + 150) <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
         }
     });
 });

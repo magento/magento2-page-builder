@@ -12,16 +12,13 @@ define([
      * Content / page builder block residing inside groups within the panel
      *
      * @param block
-     * @param group
      * @constructor
      */
-    function Block(block, group) {
+    function Block(block) {
         this.config = block;
         this.code = ko.observable(block.code);
         this.name = ko.observable(block.name);
         this.icon = ko.observable(block.icon);
-
-        this.group = group;
     }
 
     /**
@@ -30,40 +27,11 @@ define([
      * @returns {string}
      */
     Block.prototype.getBlockInstance = function () {
-        if( typeof this.config.js_block == 'string' ) {
+        if (typeof this.config.js_block === 'string') {
             return this.config.js_block;
         }
 
         return 'Gene_BlueFoot/js/component/block/abstract';
-    };
-
-    /**
-     * On drag start hide the popped out panel
-     *
-     * @param draggableThis
-     * @param event
-     * @param ui
-     * @param draggableInstance
-     */
-    Block.prototype.onDragStart = function (draggableThis, event, ui, draggableInstance) {
-        if (this.group) {
-            // Hide the groups overlay
-            this.group.hidden(true);
-        }
-    };
-
-    /**
-     * On drag stop hide the popped out panel
-     *
-     * @param draggableThis
-     * @param event
-     * @param ui
-     * @param draggableInstance
-     */
-    Block.prototype.onDragStop = function (draggableThis, event, ui, draggableInstance) {
-        if (this.group) {
-            this.group.hidden(false);
-        }
     };
 
     /**
@@ -77,12 +45,7 @@ define([
      */
     Block.prototype.onSortReceive = function (sortableThis, event, ui, sortableInstance) {
         // This event can fire multiple times, only capture the output once
-        if (jQuery(event.target)[0] == sortableThis) {
-            if (this.group) {
-                // Ensure the group is inactive
-                this.group.active(false);
-            }
-
+        if (jQuery(event.target)[0] === sortableThis) {
             // Remove the dragged item
             if (sortableInstance.draggedItem) {
                 var index = sortableInstance.draggedItem.index();
