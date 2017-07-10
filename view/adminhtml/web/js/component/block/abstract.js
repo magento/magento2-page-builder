@@ -46,6 +46,9 @@ define([
 
         this.serializeRole = this.config.code;
         this.dataEntityDataIgnore = ['preview_view'];
+
+        // Attach specific events to the block
+        this.on('blockReady', this.onBlockReady.bind(this));
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
@@ -163,6 +166,15 @@ define([
                 this.childEntityKeys = _.union(this.childEntityKeys, [field.code]);
             }
         }.bind(this));
+    };
+
+    /**
+     * Event ran after the block is ready
+     */
+    AbstractBlock.prototype.onBlockReady = function () {
+        if (this.editOnInsert) {
+            this.edit();
+        }
     };
 
     return AbstractBlock;

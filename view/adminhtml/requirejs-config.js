@@ -10,6 +10,7 @@ var config = {
 
         /* Include our Knockout Sortable wrapper */
         'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
+        'bluefoot/ko-draggable': 'Gene_BlueFoot/js/resource/draggable/knockout-draggable',
         'bluefoot/ko-resizable': 'Gene_BlueFoot/js/resource/resizable/knockout-resizable',
         'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
@@ -41,6 +42,7 @@ var config = {
         'bluefoot/stage/structural/options/column': 'Gene_BlueFoot/js/component/stage/structural/options/column',
         'bluefoot/stage/structural/column/builder': 'Gene_BlueFoot/js/component/stage/structural/column/builder',
 
+        'bluefoot/block/factory': 'Gene_BlueFoot/js/component/block/factory',
         'bluefoot/block/abstract': 'Gene_BlueFoot/js/component/block/abstract',
         'bluefoot/block/inline': 'Gene_BlueFoot/js/component/block/inline',
         'bluefoot/block/preview/abstract': 'Gene_BlueFoot/js/component/block/preview/abstract',

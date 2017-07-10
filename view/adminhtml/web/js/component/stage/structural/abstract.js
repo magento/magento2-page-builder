@@ -5,6 +5,7 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'bluefoot/event-emitter',
     'ko',
     'underscore',
     'bluefoot/utils/array',
@@ -13,8 +14,9 @@ define([
     'mage/translate',
     'bluefoot/stage/structural/column/builder',
     'bluefoot/stage/edit',
-    'mageUtils'
-], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, Edit, utils) {
+    'mageUtils',
+    'bluefoot/block/factory'
+], function (EventEmitter, ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, Edit, utils, BlockFactory) {
 
     /**
      * Abstract structural block
@@ -56,7 +58,13 @@ define([
 
         // Init our subscriptions
         this.initSubscriptions();
+
+        EventEmitter.apply(this, arguments);
+
+        // Attach events to structural elements
+        this.on('blockDropped', this.onBlockDropped.bind(this));
     }
+    AbstractStructural.prototype = Object.create(EventEmitter.prototype);
 
     /**
      * Init subscriptions on knockout observables
@@ -244,6 +252,26 @@ define([
         }
         var style = _.extend(this.wrapperStyle(), newStyles);
         this.wrapperStyle(style);
+    };
+
+    /**
+     * Handle a block being dropped into the structural element
+     *
+     * @param event
+     * @param params
+     */
+    AbstractStructural.prototype.onBlockDropped = function (event, params) {
+        var self = this,
+            index = params.index || 0;
+        if (params.block) {
+            var blockFactory = new BlockFactory();
+            blockFactory.create(params.block.config, this).then(function (block) {
+                self.addChild(block, index);
+                block.emit('blockReady');
+            }).catch(function (error) {
+                console.error(error);
+            });
+        }
     };
 
     /**

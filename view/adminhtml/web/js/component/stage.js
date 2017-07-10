@@ -41,7 +41,7 @@ define([
 
         EventEmitter.apply(this, arguments);
     }
-    Stage.prototype = EventEmitter.prototype;
+    Stage.prototype = Object.create(EventEmitter.prototype);
 
     /**
      * Build the stage

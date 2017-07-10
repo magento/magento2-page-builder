@@ -13,6 +13,7 @@ define([
     'bluefoot/stage/panel/group/block',
     'bluefoot/stage/previews',
     'bluefoot/ko-sortable',
+    'bluefoot/ko-draggable',
     'bluefoot/ko-redactor'
 ], function (Component, ko, jQuery, Config, Group, GroupBlock, Previews) {
 

@@ -14,117 +14,6 @@
     }
 })(function(ko, jQuery) {
 
-    var Draggable = {
-        defaults: {
-            scroll: true,
-            revert: true,
-            revertDuration: 0,
-            zIndex: 500,
-            connectToSortable: '.bluefoot-sortable',
-            appendTo: document.body,
-            helper: 'clone'
-        },
-
-        /**
-         * Init draggable on the elements
-         *
-         * @param elements
-         * @param extendedConfig
-         * @returns {*}
-         */
-        init: function (elements, extendedConfig) {
-            var self = this;
-            return jQuery(elements)
-                .draggable(this._getConfig(extendedConfig))
-                .on('dragstart', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onDragStart.apply(this, arguments);
-                })
-                .on('dragstop', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onDragStop.apply(this, arguments);
-                });
-        },
-
-        /**
-         * Return the draggable config
-         *
-         * @param extendedConfig
-         * @returns {Draggable.defaults|{scroll, revert, revertDuration, helper, zIndex}}
-         * @private
-         */
-        _getConfig: function (extendedConfig) {
-            var config = this.defaults;
-
-            // Extend the config with any custom configuration
-            if (extendedConfig) {
-                if (typeof extendedConfig === 'function') {
-                    extendedConfig = extendedConfig();
-                }
-                config = ko.utils.extend(config, extendedConfig);
-            }
-
-            return config;
-        },
-
-        /**
-         * Attach an event when a user starts dragging elements
-         *
-         * @param event
-         * @param ui
-         * @param self
-         * @returns {*}
-         */
-        onDragStart: function (event, ui, self) {
-            var koElement = ko.dataFor(jQuery(event.target)[0]);
-            if (koElement && typeof koElement.onDragStart === 'function') {
-                return koElement.onDragStart(this, event, ui, self);
-            }
-        },
-
-        /**
-         * Attach an event when a user stops dragging elements
-         *
-         * @param event
-         * @param ui
-         * @param self
-         * @returns {*}
-         */
-        onDragStop: function (event, ui, self) {
-            var koElement = ko.dataFor(jQuery(event.target)[0]);
-            if (koElement && typeof koElement.onDragStop === 'function') {
-                return koElement.onDragStop(this, event, ui, self);
-            }
-        }
-
-    };
-
-    // Create a new draggable Knockout binding
-    ko.bindingHandlers.draggable = {
-
-        /**
-         * Init the draggable binding on an element
-         *
-         * @param element
-         * @param valueAccessor
-         * @param allBindingsAccessor
-         * @param data
-         * @param context
-         */
-        init: function(element, valueAccessor, allBindingsAccessor, data, context) {
-            // Initialize draggable on all children of the element
-            Draggable.init(jQuery(element).children(), valueAccessor);
-
-            // Does the element contain a foreach element that could change overtime?
-            if (allBindingsAccessor().foreach) {
-                allBindingsAccessor().foreach.subscribe(function () {
-                    Draggable.init(jQuery(element).children(), valueAccessor);
-                });
-            }
-        }
-
-    };
-
     var Sortable = {
         draggedItem: false,
         ranOnSort: false,
@@ -177,7 +66,7 @@
                 self.callbackTarget = config.callbackTarget;
             }
 
-            return jQuery(element)
+            jQuery(element)
                 .addClass(config.sortableClass)
                 .sortable(config)
                 .on('sortstart', function (event, ui) {
@@ -188,20 +77,29 @@
                     [].push.call(arguments, self);
                     return self.onSortStop.apply(this, arguments);
                 })
-                .on('sortreceive', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortReceive.apply(this, arguments);
-                })
                 .on('sortupdate', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortUpdate.apply(this, arguments);
                 })
-                .on('sortbeforestop', function (event, ui) {
-                    self.draggedItem = ui.item;
-                })
                 .on('sortchange', function (event, ui) {
                     [].push.call(arguments, self);
                     return self.onSortChange.apply(this, arguments);
+                })
+                .on('sortbeforestop', function (event, ui) {
+                    // Record the dragged item so we can determine the index
+                    self.draggedItem = ui.item;
+                })
+                .on('sortreceive', function (event, ui) {
+                    if (jQuery(event.target)[0] === this) {
+                        var block = ko.dataFor(ui.item[0]),
+                            target = ko.dataFor(jQuery(event.target)[0]);
+
+                        // Emit the blockDropped event upon the target
+                        target.emit('blockDropped', {
+                            block: block,
+                            index: self.draggedItem.index()
+                        });
+                    }
                 });
         },
 
@@ -262,27 +160,6 @@
             if (koElement && typeof koElement.onSortStop === 'function') {
                 return koElement.onSortStop(this, event, ui, self);
             }
-        },
-
-        /**
-         * Attach an event for when sorting stops
-         *
-         * @param event
-         * @param ui
-         * @param self
-         * @returns {*}
-         */
-        onSortReceive: function (event, ui, self) {
-            // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
-            if (ui.item.hasClass('bluefoot-draggable-block')) {
-                var koElement = ko.dataFor(ui.item[0]);
-                if (koElement && typeof koElement.onSortReceive === 'function') {
-                    return koElement.onSortReceive(this, event, ui, self);
-                }
-            }
-
-            // Refresh sortable to ensure any new elements are recognised
-            jQuery(this).sortable('refresh');
         },
 
         /**
