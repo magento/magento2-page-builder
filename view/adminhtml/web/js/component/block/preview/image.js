@@ -19,7 +19,7 @@ define([
      * @constructor
      */
     function Image(parent, config) {
-        AbstractPreview.call(this, parent, config);
+        AbstractPreview.apply(this, arguments);
 
         this.loading = ko.observable(false);
 

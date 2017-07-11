@@ -27,7 +27,10 @@ define([
         this.ns = 'Gene_BlueFoot/js/component/block/abstract';
 
         this.config = config;
-        this.editOnInsert = config.editOnInsert || true;
+        this.editOnInsert = true;
+        if (typeof config.editOnInsert !== 'undefined') {
+            this.editOnInsert = config.editOnInsert;
+        }
 
         var previewInstance = Preview.get(this.config);
         this.preview = new previewInstance(this, config);
@@ -49,6 +52,7 @@ define([
 
         // Attach specific events to the block
         this.on('blockReady', this.onBlockReady.bind(this));
+        this.on('blockMoved', this.onBlockMoved.bind(this));
     }
 
     AbstractBlock.prototype = Object.create(AbstractStructural.prototype);
@@ -114,14 +118,13 @@ define([
     /**
      * Event called when sorting starts on this element
      *
-     * @param sortableThis
      * @param event
-     * @param ui
-     * @param sortableInstance
+     * @param params
+     * @returns {*}
      */
-    AbstractBlock.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+    AbstractBlock.prototype.onSortStart = function (event, params) {
         // Copy over the column class for the width
-        ui.helper.html(jQuery('<h3 />').text(this.config.name));
+        params.helper.html(jQuery('<h3 />').text(this.config.name));
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);
@@ -175,6 +178,13 @@ define([
         if (this.editOnInsert) {
             this.edit();
         }
+    };
+
+    /**
+     * Update the instance
+     */
+    AbstractBlock.prototype.onBlockMoved = function () {
+        this.preview.update(this.data());
     };
 
     return AbstractBlock;

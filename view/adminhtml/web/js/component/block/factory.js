@@ -38,11 +38,11 @@ define([], function () {
      * Retrieve the block instance
      *
      * @param config
-     * @returns {*}
+     * @returns string
      * @private
      */
     BlockFactory.prototype._getBlockInstance = function (config) {
-        return config.js_block || 'Gene_BlueFoot/js/component/block/abstract';
+        return config.js_block || 'bluefoot/block/abstract';
     };
 
     return BlockFactory;

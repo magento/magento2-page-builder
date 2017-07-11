@@ -62,7 +62,6 @@ define(['test/data/mock-requests'], function (requests) {
 
         // Check we have a mock request for call
         if (typeof requests[url] === 'function') {
-            console.log('mock-ajax: Found mock response for ' + url);
             setTimeout(function () {
                 var mockRequest = requests[url](parameters);
                 if (mockRequest.success && typeof successCallback === 'function') {

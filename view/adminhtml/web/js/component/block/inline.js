@@ -21,7 +21,7 @@ define([
      * @constructor
      */
     function InlineBlock(parent, stage, config, formData) {
-        AbstractBlock.call(this, parent, stage, config, formData);
+        AbstractBlock.apply(this, arguments);
         this.ns = 'Gene_BlueFoot/js/component/block/inline';
 
         this.editOnInsert = false;

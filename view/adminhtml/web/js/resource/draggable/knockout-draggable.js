@@ -46,10 +46,16 @@
             return jQuery(elements)
                 .draggable(this._getConfig(extendedConfig))
                 .on('dragstart', function (event, ui) {
-                    getViewModelFromEvent(event).emit('dragStart', {event: event, ui: ui});
+                    getViewModelFromEvent(event).emit('dragStart', {
+                        event: event,
+                        ui: ui
+                    });
                 })
                 .on('dragstop', function (event, ui) {
-                    getViewModelFromEvent(event).emit('dragStop', {event: event, ui: ui});
+                    getViewModelFromEvent(event).emit('dragStop', {
+                        event: event,
+                        ui: ui
+                    });
                 });
         },
 
