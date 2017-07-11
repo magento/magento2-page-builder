@@ -53,11 +53,11 @@ define([
      */
     AbstractPreview.prototype.update = function (data) {
         _.forEach(data, function (value, key) {
-            var field;
-            if (typeof this[key] !== 'undefined' && (field = Config.getField(key))) {
+            if (typeof this[key] !== 'undefined') {
+                /* @todo re-implement options once new storage format for fields is implemented
                 if (typeof field.options !== 'undefined') {
                     value = this.getOptionValue(value, field.options);
-                }
+                } */
                 this[key](value);
             }
         }.bind(this));

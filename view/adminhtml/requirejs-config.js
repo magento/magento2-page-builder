@@ -33,6 +33,7 @@ var config = {
         'bluefoot/stage/save/renderer': 'Gene_BlueFoot/js/component/stage/save/renderer',
         'bluefoot/stage/save/binder': 'Gene_BlueFoot/js/component/stage/save/binder',
 
+        'bluefoot/stage/structural/editable-area': 'Gene_BlueFoot/js/component/stage/structural/editable-area',
         'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/stage/structural/abstract',
         'bluefoot/stage/structural/row': 'Gene_BlueFoot/js/component/stage/structural/row',
         'bluefoot/stage/structural/column': 'Gene_BlueFoot/js/component/stage/structural/column',

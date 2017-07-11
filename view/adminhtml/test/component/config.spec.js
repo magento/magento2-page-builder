@@ -5,7 +5,7 @@
  */
 define([
     'bluefoot/config',
-    'test/data/cms-config'
+    'advanced-cms-init-config'
 ], function (Config, initConfig) {
 
     describe("Gene_BlueFoot/js/component/core/config", function () {

@@ -1,25 +1,32 @@
 ;(function(factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", "jquery/ui"], factory);
+        define(["knockout", "jquery", "underscore", "jquery/ui"], factory);
     } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
         // CommonJS module
         var ko = require("knockout"),
-            jQuery = require("jquery");
+            jQuery = require("jquery"),
+            _ = require("underscore");
         require("jquery/ui");
-        factory(ko, jQuery);
+        factory(ko, jQuery, _);
     } else {
         // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery);
+        factory(window.ko, window.jQuery, window._);
     }
-})(function(ko, jQuery) {
+})(function(ko, jQuery, _) {
+
+    /**
+     * Retrieve the view model for an element
+     *
+     * @param ui
+     * @returns {{}}
+     */
+    function getViewModelFromUi(ui) {
+        return ko.dataFor(ui.item[0]) || {};
+    }
 
     var Sortable = {
-        draggedItem: false,
-        ranOnSort: false,
-        callbackTarget: false,
         defaults: {
-            callbackTarget: false,
             tolerance: 'pointer',
             cursorAt: {
                 top: 0,
@@ -58,56 +65,25 @@
          * @returns {*}
          */
         init: function (element, extendedConfig) {
-            var self = this,
-                config = this._getConfig(extendedConfig);
+            var config = this._getConfig(extendedConfig);
 
-            // Have we been passed a callback target?
-            if (typeof config.callbackTarget !== 'undefined') {
-                self.callbackTarget = config.callbackTarget;
-            }
-
-            jQuery(element)
+            // Init sortable on our element with necessary event handlers
+            element
                 .addClass(config.sortableClass)
                 .sortable(config)
-                .on('sortstart', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortStart.apply(this, arguments);
-                })
-                .on('sortstop', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortStop.apply(this, arguments);
-                })
-                .on('sortupdate', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortUpdate.apply(this, arguments);
-                })
-                .on('sortchange', function (event, ui) {
-                    [].push.call(arguments, self);
-                    return self.onSortChange.apply(this, arguments);
-                })
-                .on('sortbeforestop', function (event, ui) {
-                    // Record the dragged item so we can determine the index
-                    self.draggedItem = ui.item;
-                })
-                .on('sortreceive', function (event, ui) {
-                    if (jQuery(event.target)[0] === this) {
-                        var block = ko.dataFor(ui.item[0]),
-                            target = ko.dataFor(jQuery(event.target)[0]);
-
-                        // Emit the blockDropped event upon the target
-                        target.emit('blockDropped', {
-                            block: block,
-                            index: self.draggedItem.index()
-                        });
-                    }
-                });
+                .on('sortstart', this.onSortStart)
+                .on('sortstop', this.onSortStop)
+                .on('sortupdate', this.onSortUpdate)
+                .on('sortchange', this.onSortChange)
+                .on('sortbeforestop', this.onSortBeforeStop)
+                .on('sortreceive', this.onSortReceive);
         },
 
         /**
          * Return the draggable config
          *
          * @param extendedConfig
-         * @returns {Draggable.defaults|{scroll, revert, revertDuration, helper, zIndex}}
+         * @returns {Sortable.defaults|{scroll, revert, revertDuration, helper, zIndex}}
          * @private
          */
         _getConfig: function (extendedConfig) {
@@ -125,20 +101,95 @@
         },
 
         /**
-         * Attach an event when a user starts sorting elements
+         * Handle sort start
          *
          * @param event
          * @param ui
-         * @param self
          */
-        onSortStart: function (event, ui, self) {
-            if (self.callbackTarget && typeof self.callbackTarget.onSortStart === 'function') {
-                return self.callbackTarget.onSortStart(this, event, ui, self);
-            }
+        onSortStart: function (event, ui) {
+            var block = getViewModelFromUi(ui),
+                eventData = {
+                    event: event,
+                    helper: ui.helper,
+                    placeholder: ui.placeholder,
+                    originalEle: ui.item
+                };
 
-            var koElement = ko.dataFor(ui.item[0]);
-            if (koElement && typeof koElement.onSortStart === 'function') {
-                return koElement.onSortStart(this, event, ui, self);
+            // Store the original parent for use in the update call
+            block.originalParent = block.parent || false;
+
+            if (block && typeof block.emit === 'function' && ui.position) {
+                // ui.position to ensure we're only reacting to sorting events
+                block.emit('sortStart', eventData);
+                eventData['block'] = block;
+                block.stage.emit('sortingStart', eventData);
+            }
+        },
+
+        /**
+         * Handle sort stop
+         *
+         * @param event
+         * @param ui
+         */
+        onSortStop: function (event, ui) {
+            var block = getViewModelFromUi(ui),
+                eventData = {
+                    event: event,
+                    helper: ui.helper,
+                    placeholder: ui.placeholder,
+                    originalEle: ui.item
+                };
+
+            if (block && typeof block.emit === 'function' && ui.position) {
+                // ui.position to ensure we're only reacting to sorting events
+                block.emit('sortStop', eventData);
+                eventData['block'] = block;
+                block.stage.emit('sortingStop', eventData);
+            }
+        },
+
+        /**
+         * Handle a sort update event, this occurs when a sortable item is sorted
+         *
+         * @param event
+         * @param ui
+         */
+        onSortUpdate: function (event, ui) {
+            var blockEl = ui.item,
+                newParentEl = blockEl.parent()[0],
+                newIndex = blockEl.index();
+
+            if (blockEl && (newParentEl === this)) {
+                var block = ko.dataFor(blockEl[0]),
+                    newParent = ko.dataFor(newParentEl);
+
+                // Detect if we're sorting items within the stage
+                if (typeof newParent.stageId === 'function' && newParent.stageId()) {
+                    newParent = block.stage;
+                }
+
+                // Fire our events on the various parents of the operation
+                if (block !== newParent) {
+                    ui.item.remove();
+                    if (block.originalParent === newParent) {
+                        newParent.emit('blockSorted', {
+                            block: block,
+                            index: newIndex
+                        });
+                    } else {
+                        block.originalParent.emit('blockRemoved', {
+                            block: block
+                        });
+                        newParent.emit('blockInstanceDropped', {
+                            blockInstance: block,
+                            index: newIndex
+                        });
+                    }
+
+                    block.originalParent = false;
+                    jQuery(this).sortable('refresh');
+                }
             }
         },
 
@@ -147,58 +198,9 @@
          *
          * @param event
          * @param ui
-         * @param self
          * @returns {*}
          */
-        onSortStop: function (event, ui, self) {
-            self.ranOnSort = false;
-            if (self.callbackTarget && typeof self.callbackTarget.onSortStop === 'function') {
-                return self.callbackTarget.onSortStop(this, event, ui, self);
-            }
-
-            var koElement = ko.dataFor(ui.item[0]);
-            if (koElement && typeof koElement.onSortStop === 'function') {
-                return koElement.onSortStop(this, event, ui, self);
-            }
-        },
-
-        /**
-         * When a sort is updated we need to shift the elements in Knockout
-         *
-         * @param event
-         * @param ui
-         * @param self
-         * @returns {boolean}
-         */
-        onSortUpdate: function (event, ui, self) {
-            // If the element has a class of bluefoot-draggable-block it's been dragged in from the left hand side
-            if (ui.item.hasClass('bluefoot-draggable-block')) {
-                // Meaning it's not been "sorted"
-                return false;
-            }
-
-            if (self.callbackTarget && typeof self.callbackTarget.onSortUpdate === 'function') {
-                return self.callbackTarget.onSortUpdate(this, event, ui, self);
-            }
-
-            var koElement = ko.dataFor(ui.item[0]);
-            if (koElement && typeof koElement.onSortUpdate === 'function') {
-                return koElement.onSortUpdate(this, event, ui, self);
-            }
-
-            // Refresh sortable to ensure any new elements are recognised
-            jQuery(this).sortable('refresh');
-        },
-
-        /**
-         * Attach an event for when sorting stops
-         *
-         * @param event
-         * @param ui
-         * @param self
-         * @returns {*}
-         */
-        onSortChange: function (event, ui, self) {
+        onSortChange: function (event, ui) {
             if (!ui.item.hasClass('bluefoot-draggable-block')) {
                 if (
                     (ui.placeholder.prev().is(ui.item) || ui.placeholder.next().is(ui.item))
@@ -216,6 +218,39 @@
                     } else {
                         ui.placeholder.removeClass('bluefoot-placeholder-column');
                     }
+                }
+            }
+        },
+
+        /**
+         * Handle capturing the dragged item just before the sorting stops
+         *
+         * @param event
+         * @param ui
+         */
+        onSortBeforeStop: function (event, ui) {
+            this.draggedItem = ui.item;
+        },
+
+        /**
+         * Handle recieving a block from the panel
+         *
+         * @param event
+         * @param ui
+         */
+        onSortReceive: function (event, ui) {
+            if (jQuery(event.target)[0] === this) {
+                var block = getViewModelFromUi(ui),
+                    target = ko.dataFor(jQuery(event.target)[0]);
+
+                if (block.droppable) {
+                    event.stopPropagation();
+                    // Emit the blockDropped event upon the target
+                    target.emit('blockDropped', {
+                        block: block,
+                        index: this.draggedItem.index()
+                    });
+                    this.draggedItem.remove();
                 }
             }
         }

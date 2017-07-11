@@ -136,14 +136,13 @@ define([
     /**
      * Event called when sorting starts on this element
      *
-     * @param sortableThis
      * @param event
-     * @param ui
-     * @param sortableInstance
+     * @param params
+     * @returns {*}
      */
-    Column.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+    Column.prototype.onSortStart = function (event, params) {
         // Copy over the column class for the width
-        ui.placeholder.addClass(this.widthClasses());
+        jQuery(params.placeholder).addClass(this.widthClasses());
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);

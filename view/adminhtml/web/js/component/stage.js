@@ -5,7 +5,7 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
-    'bluefoot/event-emitter',
+    'bluefoot/stage/structural/editable-area',
     'ko',
     'underscore',
     'bluefoot/stage/save',
@@ -13,7 +13,7 @@ define([
     'bluefoot/utils/array',
     'uiRegistry',
     'mageUtils'
-], function (EventEmitter, ko, _, Save, Row, arrayUtil, registry, utils) {
+], function (EditableArea, ko, _, Save, Row, arrayUtil, registry, utils) {
 
     /**
      * Stage Class
@@ -22,7 +22,11 @@ define([
      */
     function Stage(parent, stageId, stageContent) {
         this.id = stageId;
+
+        // All EditableArea's should have a reference to parent & stage
         this.parent = parent;
+        this.stage = this;
+
         this.stageContent = stageContent;
         this.active = true;
         this.showBorders = parent.showBorders;
@@ -37,11 +41,13 @@ define([
 
         this.serializeRole = 'stage';
         this.serializeChildren = [this.stageContent];
-        this.dataTag = 'stage';
 
-        EventEmitter.apply(this, arguments);
+        EditableArea.call(this, this.stageContent, this);
+
+        this.on('sortingStart', this.onSortingStart.bind(this));
+        this.on('sortingStop', this.onSortingStop.bind(this));
     }
-    Stage.prototype = Object.create(EventEmitter.prototype);
+    Stage.prototype = Object.create(EditableArea.prototype);
 
     /**
      * Build the stage
@@ -79,30 +85,6 @@ define([
     };
 
     /**
-     * Remove a child from the stageContent array
-     *
-     * @param child
-     */
-    Stage.prototype.removeChild = function (child) {
-        utils.remove(this.stageContent, child);
-    };
-
-    /**
-     * Add a child to the current element
-     *
-     * @param child
-     * @param index
-     */
-    Stage.prototype.addChild = function (child, index) {
-        if (index !== undefined && index !== false) {
-            // Use the common function to add the item in the correct place within the array
-            arrayUtil.moveArrayItemIntoArray(child, this.stageContent, index);
-        } else {
-            this.stageContent.push(child);
-        }
-    };
-
-    /**
      * Add a row to the content
      *
      * @param self
@@ -130,6 +112,20 @@ define([
      */
     Stage.prototype.addComponent = function () {
         return this.parent.applyConfigFor.apply(null, arguments);
+    };
+
+    /**
+     * Event handler for any element being sorted in the stage
+     */
+    Stage.prototype.onSortingStart = function () {
+        this.showBorders(true);
+    };
+
+    /**
+     * Event handler for when sorting stops
+     */
+    Stage.prototype.onSortingStop = function () {
+        this.showBorders(false);
     };
 
     return Stage;

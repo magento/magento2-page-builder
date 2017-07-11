@@ -21,6 +21,8 @@ define([
         this.name = ko.observable(block.name);
         this.icon = ko.observable(block.icon);
 
+        this.droppable = true;
+
         EventEmitter.apply(this, arguments);
     }
     Block.prototype = Object.create(EventEmitter.prototype);
