@@ -18,9 +18,10 @@ define([
      * @param callbackFn
      * @param additionalClasses
      * @param sort
+     * @param template
      * @constructor
      */
-    function Option(parent, code, icon, title, callbackFn, additionalClasses, sort) {
+    function Option(parent, code, icon, title, callbackFn, additionalClasses, sort, template) {
         this.parent = parent;
         this.code = code;
         this.icon = icon;
@@ -33,7 +34,7 @@ define([
         }
         this.sort = sort;
 
-        this.template = null;
+        this.template = template || null;
     }
 
     /**

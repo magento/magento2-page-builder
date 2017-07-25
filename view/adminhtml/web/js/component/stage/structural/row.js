@@ -23,6 +23,7 @@ define([
     function Row(parent, stage) {
         AbstractStructural.call(this, parent, stage);
         this.ns = 'bluefoot/stage/structural/row';
+        this.title = $t('Row');
         this.config = {
             code: 'row',
             name: $t('Row')
@@ -42,7 +43,7 @@ define([
         $super.buildOptions.apply(this, arguments);
 
         // Add column option
-        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
+        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
     };
 
     /**

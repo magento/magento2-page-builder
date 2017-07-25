@@ -7,16 +7,38 @@
 define([
     'underscore',
     'ko',
-    'bluefoot/stage/structural/options/option'
-], function (_, ko, Option) {
+    'bluefoot/stage/structural/options/option',
+    'mage/translate'
+], function (_, ko, Option, $t) {
 
     /**
+     * Options constructor
      *
+     * @param parent
      * @constructor
      */
-    function Options() {
+    function Options(parent) {
+        this.parent = parent;
         this.options = ko.observableArray([]);
+
+        this.addTitleOption();
     }
+
+    /**
+     * Add a new option to display the title
+     */
+    Options.prototype.addTitleOption = function () {
+        this.addOption(
+            'title',
+            false,
+            false,
+            false,
+            ['block-title'],
+            20,
+            false,
+            'Gene_BlueFoot/component/stage/structural/options/title.html'
+        );
+    };
 
     /**
      * Sort the options based on their sort value
@@ -39,7 +61,6 @@ define([
     /**
      * Add an option
      *
-     * @param parent
      * @param code
      * @param icon
      * @param title
@@ -47,8 +68,9 @@ define([
      * @param additionalClasses
      * @param sort
      * @param optionInstance
+     * @param template
      */
-    Options.prototype.addOption = function (parent, code, icon, title, callbackFn, additionalClasses, sort, optionInstance) {
+    Options.prototype.addOption = function (code, icon, title, callbackFn, additionalClasses, sort, optionInstance, template) {
 
         // If the callbackFn isn't defined return false
         if (!callbackFn || callbackFn && typeof callbackFn !== 'function') {
@@ -69,7 +91,7 @@ define([
         }
 
         // Create a new option instance and add it into the observable array
-        this.options.push(new optionClass(parent, code, icon, title, callbackFn, additionalClasses, sort));
+        this.options.push(new optionClass(this.parent, code, icon, title, callbackFn, additionalClasses, sort, template));
 
         // Sort the options to ensure they're in the correct order
         this.sort();
