@@ -128,5 +128,7 @@ define([
         this.showBorders(false);
     };
 
+
+
     return Stage;
 });

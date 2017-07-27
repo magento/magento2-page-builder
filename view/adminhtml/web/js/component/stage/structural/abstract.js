@@ -84,10 +84,10 @@ define([
      */
     AbstractStructural.prototype.buildOptions = function () {
         // Add removal & move option that is available to all structural blocks
-        this.options.addOption('move', '<i class="fa fa-arrows"></i>', $t('Move'), false, ['move-structural'], 10);
-        this.options.addOption('edit', '<i class="fa fa-pencil"></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
-        this.options.addOption('duplicate', '<i class="fa fa-files-o"></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
-        this.options.addOption('remove', '<i class="fa fa-trash"></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
+        this.options.addOption('move', '<i></i>', $t('Move'), false, ['move-structural'], 10);
+        this.options.addOption('edit', '<i></i>', $t('Edit'), this.edit.bind(this), ['edit-block'], 50);
+        this.options.addOption('duplicate', '<i></i>', $t('Duplicate'), this.duplicate.bind(this), ['duplicate-structural'], 60);
+        this.options.addOption('remove', '<i></i>', $t('Remove'), this.remove.bind(this), ['remove-structural'], 100);
     };
 
     /**

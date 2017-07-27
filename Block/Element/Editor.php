@@ -39,29 +39,6 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
-     * Include the stage container div before the text area
-     *
-     * @return string
-     */
-    protected function _getButtonsHtml()
-    {
-        $html = parent::_getButtonsHtml();
-        $html .= '<div class="gene-bluefoot-stage-container" id="' . $this->getStageHtmlId() . '" ' .
-            'style="display: none;"></div>';
-        return $html;
-    }
-
-    /**
-     * Return the HTML ID for the Gene CMS stage
-     *
-     * @return string
-     */
-    public function getStageHtmlId()
-    {
-        return 'gene-bluefoot-stage' . $this->getHtmlId();
-    }
-
-    /**
      * Is the stage aspect of the system enabled
      *
      * @return bool

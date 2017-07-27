@@ -22,10 +22,13 @@ define([
      */
     return Component.extend({
         defaults: {
-            visible: false,
+            isVisible: false,
+            isCollapsed: false,
             groups: [],
             searching: false,
-            searchResults: []
+            searchResults: [],
+            stage: false,
+            originalScrollTop: false
         },
 
         /**
@@ -45,9 +48,10 @@ define([
          */
         bindStage: function (stage) {
             var self = this;
+            this.stage = stage;
             stage.on('stageReady', function () {
                 self.populateContentBlocks();
-                self.visible(true);
+                self.isVisible(true);
             });
         },
 
@@ -67,7 +71,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('visible groups searching searchResults');
+                .observe('isVisible isCollapsed groups searching searchResults');
 
             return this;
         },
@@ -128,10 +132,35 @@ define([
                 });
 
                 // Display the panel
-                this.visible(true);
+                this.isVisible(true);
             } else {
                 console.warn('Configuration is not properly initialized, please check the Ajax response.');
             }
+        },
+
+        /**
+         * Traverse up to the WYSIWYG component and set as full screen
+         */
+        fullScreen: function () {
+            var isFullScreen = this.stage.parent.isFullScreen();
+            if (!isFullScreen) {
+                this.originalScrollTop = jQuery(window).scrollTop();
+                _.defer(function () {
+                    jQuery(window).scrollTop(0);
+                });
+            }
+
+            this.stage.parent.isFullScreen(!isFullScreen);
+            if (isFullScreen) {
+                jQuery(window).scrollTop(this.originalScrollTop);
+            }
+        },
+
+        /**
+         * Collapse the panel into the side of the UI
+         */
+        collapse: function () {
+            this.isCollapsed(!this.isCollapsed());
         }
     });
 });

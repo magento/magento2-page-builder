@@ -43,7 +43,7 @@ define([
         $super.buildOptions.apply(this, arguments);
 
         // Add column option
-        this.options.addOption('column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
+        this.options.addOption('column', '<i></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
     };
 
     /**

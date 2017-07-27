@@ -22,6 +22,8 @@
       >a, >div {
         display: block;
         padding: 10px 8px;
+        height: 38px;
+        text-decoration: none;
 
         &.block-title {
           font-size: 14px;
@@ -34,6 +36,14 @@
         i {
           font-size: 18px;
           color: @color-very-dark-grayish-orange;
+
+          -webkit-font-smoothing: antialiased;
+          font-family: 'Admin Icons';
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1;
+          speak: none;
+          text-decoration: none;
         }
         &:hover {
           i {
@@ -45,17 +55,24 @@
   }
 }
 
-.bluefoot-live-edit {
+.bluefoot-entity {
   .bluefoot-options {
-    right: 10px;
+    right: 5px;
+    top: 5px;
     left: auto;
     transform: translate(0, 0);
+  }
+
+  &.bluefoot-live-edit {
+    .bluefoot-options {
+      top: 0;
+    }
   }
 }
 
 .bluefoot-structure {
   &:hover {
-    .bluefoot-options {
+    >.bluefoot-options {
       display: inline-block;
     }
   }

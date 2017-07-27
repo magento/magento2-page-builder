@@ -28,6 +28,7 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            domNode: false,
             elementSelector: 'textarea.textarea',
             stageActive: false,
             stage: {},
@@ -37,6 +38,8 @@ define([
             loading: false,
             userSelect: true,
             panel: new Panel(),
+            isFullScreen: false,
+            originalScrollTop: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -44,7 +47,8 @@ define([
                 stageContent: [],
                 showBorders: false,
                 loading: false,
-                userSelect: true
+                userSelect: true,
+                isFullScreen: false
             }
         },
 
@@ -53,8 +57,26 @@ define([
          * @returns {exports}
          */
         initObservable: function () {
+            var self = this;
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+
+            // Modify the scroll position based on an update
+            this.isFullScreen.subscribe(function (fullScreen) {
+                if (!fullScreen) {
+                    self.originalScrollTop = jQuery(window).scrollTop();
+                    _.defer(function () {
+                        jQuery(window).scrollTop(0);
+                    });
+                }
+            }, this, "beforeChange");
+            this.isFullScreen.subscribe(function (fullScreen) {
+                if (!fullScreen) {
+                    _.defer(function () {
+                        jQuery(window).scrollTop(self.originalScrollTop);
+                    });
+                }
+            });
 
             return this;
         },
@@ -64,6 +86,7 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
+            this.domNode = node;
             $(node).bindings({
                 value: this.value
             });
