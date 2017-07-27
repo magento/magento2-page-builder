@@ -74,13 +74,13 @@
   }
 
   &.bluefoot-row {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   .element-children {
     min-height: 190px;
     font-size: 0;
-    padding: 20px;
+    padding: 30px;
     position: relative;
     z-index: 10;
 
@@ -151,27 +151,21 @@
     .bluefoot-column-add {
       display: none;
       position: absolute;
-      left: -27px;
+      left: -25px;
       top: 50%;
       transform: translateY(-50%);
       padding: 4px 8px;
-      background: @columnColor;
+      background: @color-brownie;
       color: #fff;
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
       font-size: 12px;
 
       &:hover {
-        background: darken(@columnColor, 10%);
+        background: @color-very-dark-gray-black2;
       }
     }
     .bluefoot-column-add-right {
       left: auto;
-      right: -27px;
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
+      right: -25px;
     }
   }
   &.bluefoot-entity {
@@ -262,23 +256,29 @@
   }
 }
 
+.bluefoot-entity-helper, .bluefoot-structure-helper {
+  padding: 12px 12px;
+  display: block;
+  color: @color-ivory;
+  text-decoration: none;
+  cursor: pointer;
+  background: @color-very-dark-grayish-orange;
+  white-space: nowrap;
+  width: 130px;
 
-.bluefoot-structure-helper {
-  background: @rowColor;
-  border: none;
-  color: white;
-  width: 180px;
-  text-align: center;
-  padding: 16px 0;
-
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  h3 {
+    color: @color-ivory;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+  }
 }
+
 
 .bluefoot-placeholder-sortable {
   height: 4px;
-  background: @color-phoenix-dark;
+  background: @color-very-dark-grayish-orange;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -309,42 +309,53 @@
   }
 }
 
-
-.bluefoot-column-inline-add {
-  list-style: none;
-  margin: 0;
-  width: 140px;
-  background: @columnColor;
-  color: white;
-  .border-radius;
+.column-inline-wrapper {
   position: absolute;
-  top: 20%;
-  left: -27px;
-  z-index: 30;
+  left: 0;
+  top: calc(~"100% - 1px");
+  width: 100%;
   text-align: left;
-  cursor: pointer;
+  padding: 0;
+  height: auto;
 
-  &.right {
-    left: auto;
-    right: -27px;
-  }
   &.top {
-    position: inherit;
-    width: 80px;
+    text-align: center;
+  }
+  &.right {
+    text-align: right;
   }
 
-  li {
-    display: block;
-    width: 100%;
+  .bluefoot-column-inline-add {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    width: 140px;
+    color: white;
+    cursor: pointer;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 
-    a {
-      width: 100%;
-      font-size: 14px;
-      display: block;
-      padding: 6px 10px;
-      text-decoration: none;
+    li {
+      a {
+        display: block;
+        width: 100%;
+        text-align: left;
+        color: @color-very-dark-grayish-orange;
+        font-size: 14px;
+        padding: 6px 10px;
+        text-decoration: none;
+        background: white;
+        border: 1px solid #cccccc;
+        border-bottom: none;
+
+        &:hover {
+          background: @color-lighter-gray;
+          font-weight: bold;
+        }
+      }
     }
   }
+
 }
 
 .ui-draggable-dragging {

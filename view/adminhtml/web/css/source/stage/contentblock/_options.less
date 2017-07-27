@@ -1,66 +1,73 @@
 .bluefoot-options {
-  background: white;
-  border: 1px solid #cccccc;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.30);
-  display: none;
+  text-align: center;
   position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translate(-50%, -50%);
+  left: 0;
+  width: 100%;
   z-index: 20;
+  height: 40px;
+  transform: translateY(-50%);
 
-  ul.bluefoot-options-links {
-    list-style: none;
-    display: inline-block;
-    padding: 0 8px;
-    margin: 0;
+  .bluefoot-options-wrapper {
+    background: white;
+    border: 1px solid #cccccc;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    display: none;
 
-    li.bluefoot-options-link {
+    ul.bluefoot-options-links {
+      list-style: none;
       display: inline-block;
-      vertical-align: top;
+      padding: 0 8px;
+      margin: 0;
 
-      >a, >div {
-        display: block;
-        padding: 10px 8px;
-        height: 38px;
-        text-decoration: none;
+      li.bluefoot-options-link {
+        display: inline-block;
+        vertical-align: top;
 
-        &.block-title {
-          font-size: 14px;
-          line-height: 18px;
-          color: @color-very-dark-grayish-orange;
-          cursor: default;
+        >a, >div.block-title {
+          display: block;
+          padding: 10px 8px;
+          height: 38px;
           text-decoration: none;
-        }
 
-        i {
-          font-size: 18px;
-          color: @color-very-dark-grayish-orange;
+          &.block-title {
+            font-size: 14px;
+            line-height: 18px;
+            color: @color-very-dark-grayish-orange;
+            cursor: default;
+            text-decoration: none;
+          }
 
-          -webkit-font-smoothing: antialiased;
-          font-family: 'Admin Icons';
-          font-style: normal;
-          font-weight: normal;
-          line-height: 1;
-          speak: none;
-          text-decoration: none;
-        }
-        &:hover {
           i {
-            color: @color-very-dark-gray-black;
+            font-size: 18px;
+            color: @color-very-dark-grayish-orange;
+
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Admin Icons';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            speak: none;
+            text-decoration: none;
+          }
+          &:hover {
+            i {
+              color: @color-very-dark-gray-black;
+            }
           }
         }
       }
     }
   }
+
 }
 
 .bluefoot-entity {
   .bluefoot-options {
-    right: 5px;
-    top: 5px;
+    text-align: right;
+    transform: translateY(0);
+    width: auto;
     left: auto;
-    transform: translate(0, 0);
+    right: 0;
   }
 
   &.bluefoot-live-edit {
@@ -73,7 +80,9 @@
 .bluefoot-structure {
   &:hover {
     >.bluefoot-options {
-      display: inline-block;
+      .bluefoot-options-wrapper {
+        display: inline-block;
+      }
     }
   }
 }

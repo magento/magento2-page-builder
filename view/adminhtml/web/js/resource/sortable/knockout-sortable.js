@@ -35,11 +35,13 @@
             cursor: 'move',
             connectWith: '.bluefoot-sortable',
             helper: function (event, element) {
+                var ele = jQuery('<div />');
                 if (element.children().first().hasClass('bluefoot-entity')) {
-                    return jQuery('<div />').addClass('bluefoot-entity-helper');
+                    ele.addClass('bluefoot-entity-helper').data('sorting', true);
                 } else {
-                    return jQuery('<div />').addClass('bluefoot-structure-helper');
+                    ele.addClass('bluefoot-structure-helper').data('sorting', true);
                 }
+                return ele;
             },
             appendTo: document.body,
             placeholder: {
@@ -118,7 +120,8 @@
             // Store the original parent for use in the update call
             block.originalParent = block.parent || false;
 
-            if (block && typeof block.emit === 'function' && ui.position) {
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
                 block.emit('sortStart', eventData);
                 eventData['block'] = block;
@@ -141,7 +144,8 @@
                     originalEle: ui.item
                 };
 
-            if (block && typeof block.emit === 'function' && ui.position) {
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
                 block.emit('sortStop', eventData);
                 eventData['block'] = block;

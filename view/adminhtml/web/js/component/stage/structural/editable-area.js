@@ -170,7 +170,9 @@ define([
         originalEle.addClass('bluefoot-sorting-original');
 
         // Reset the width & height of the helper
-        jQuery(params.helper).css({width: '', height: ''});
+        jQuery(params.helper)
+            .css({width: '', height: ''})
+            .html(jQuery('<h3 />').text(this.title));
     };
 
     /**

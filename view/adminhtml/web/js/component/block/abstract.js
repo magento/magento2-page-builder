@@ -117,21 +117,6 @@ define([
     };
 
     /**
-     * Event called when sorting starts on this element
-     *
-     * @param event
-     * @param params
-     * @returns {*}
-     */
-    AbstractBlock.prototype.onSortStart = function (event, params) {
-        // Copy over the column class for the width
-        params.helper.html(jQuery('<h3 />').text(this.config.name));
-
-        // Run the parent
-        return $super.onSortStart.apply(this, arguments);
-    };
-
-    /**
      * Add a child to the current element
      *
      * @param child

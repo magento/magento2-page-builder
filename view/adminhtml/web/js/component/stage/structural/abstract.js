@@ -30,7 +30,7 @@ define([
         this.parent = parent;
 
         this.id = utils.uniqueid();
-        this.title = ko.observable($t('Element'));
+        this.title = $t('Element');
         this.options = new Options(this);
         this.data = ko.observable({});
         this.children = ko.observableArray([]);
