@@ -131,9 +131,9 @@ define([
          * @param type
          * @returns {*}
          */
-        getContentTypeConfig: function (type) {
-            if (typeof _initConfig.contentTypes === 'object' && typeof _initConfig.contentTypes[type] === 'object') {
-                return _initConfig.contentTypes[type];
+        getContentBlockConfig: function (type) {
+            if (typeof _initConfig.contentBlocks === 'object' && typeof _initConfig.contentBlocks[type] === 'object') {
+                return _initConfig.contentBlocks[type];
             }
 
             return false;
@@ -236,7 +236,7 @@ define([
             }
 
             _allFields = {};
-            jQuery.each(_initConfig.contentTypes, function (index, element) {
+            jQuery.each(_initConfig.contentBlocks, function (index, element) {
                 if (typeof element.fields === 'object') {
                     jQuery.extend(_allFields, element.fields);
                 }

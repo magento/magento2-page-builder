@@ -10,8 +10,11 @@ define([
     'ko',
     'jquery',
     'bluefoot/config',
-    'bluefoot/stage/panel/group/block'
-], function (EventEmitter, _, ko, jQuery, Config, Block) {
+    'bluefoot/block/factory'
+], function (EventEmitter, _, ko, jQuery, Config, BlockFactory) {
+
+    // Setup a new instance of the block factory
+    var blockFactory = new BlockFactory();
 
     /**
      * The build class handles building the stage with any previously saved content
@@ -212,13 +215,17 @@ define([
      * @private
      */
     Build.prototype._buildEntity = function (role, data, parent) {
-        var blockConfig = Config.getContentTypeConfig(role),
-            blockInstance = new Block(blockConfig, false);
-
-        return new Promise(function (resolve) {
-            blockInstance.insert(parent, false, data, function (block) {
-                // @todo potentially handle block children
+        return new Promise(function (resolve, reject) {
+            blockFactory.create(
+                Config.getContentBlockConfig(role),
+                parent,
+                this.stage,
+                data
+            ).then(function (block) {
+                parent.addChild(block);
                 resolve(block);
+            }).catch(function (error) {
+                reject(error);
             });
         });
     };
