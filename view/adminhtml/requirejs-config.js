@@ -20,12 +20,13 @@ var config = {
         'bluefoot/config': 'Gene_BlueFoot/js/component/config',
 
         'bluefoot/hook': 'Gene_BlueFoot/js/component/hook',
+
         'bluefoot/event-emitter': 'Gene_BlueFoot/js/component/event-emitter',
 
         'bluefoot/stage': 'Gene_BlueFoot/js/component/stage',
         'bluefoot/stage/build': 'Gene_BlueFoot/js/component/stage/build',
 
-        'bluefoot/stage/panel': 'Gene_BlueFoot/js/component/stage/panel',
+        'bluefoot/stage/panel': 'Gene_BlueFoot/js/dist/component/stage/panel',
         'bluefoot/stage/panel/group': 'Gene_BlueFoot/js/component/stage/panel/group',
         'bluefoot/stage/panel/group/block': 'Gene_BlueFoot/js/component/stage/panel/group/block',
 
