@@ -68,10 +68,10 @@ export class Build extends EventEmitter {
      */
     parseAndBuildElement(element: HTMLElement, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
         if (element instanceof HTMLElement &&
-            element.getAttribute(Config.getValue('dataRoleAttributeName').toString())
+            element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
         ) {
             parent = parent || this.stage;
-            let role = element.getAttribute(Config.getValue('dataRoleAttributeName').toString()),
+            let role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName')),
                 data = Build.getElementData(element),
                 children = this.getElementChildren(element);
 
@@ -120,7 +120,7 @@ export class Build extends EventEmitter {
             _.forEach(element.childNodes, (child: HTMLElement) => {
                 // Only search elements which tagName's and not script tags
                 if (child.tagName && child.tagName != 'SCRIPT') {
-                    if (child.hasAttribute(Config.getValue('dataRoleAttributeName').toString())) {
+                    if (child.hasAttribute(Config.getValueAsString('dataRoleAttributeName'))) {
                         children.push(child);
                     } else {
                         children = this.getElementChildren(child);

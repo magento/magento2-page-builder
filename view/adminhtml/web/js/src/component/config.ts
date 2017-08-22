@@ -85,7 +85,7 @@ export class Config {
      * @param key
      * @returns {any}
      */
-    static getValue(key: string): object | string | null {
+    static getValue(key: string): object | string | void {
         if (typeof Config.config[key] !== 'undefined') {
             return Config.config[key];
         }
@@ -93,6 +93,16 @@ export class Config {
             return Config.getInitConfig(key);
         }
         return null;
+    }
+
+    /**
+     * Retrieve a value as a string
+     *
+     * @param key
+     * @returns {String}
+     */
+    static getValueAsString(key: string): string {
+        return String(Config.getValue(key));
     }
 
     /**
