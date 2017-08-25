@@ -1,7 +1,8 @@
 import { StageInterface } from 'stage.d';
 import { Structural } from './abstract.d';
+import { EventEmitterInterface } from "../../event-emitter.d";
 
-export interface EditableAreaInterface {
+export interface EditableAreaInterface extends EventEmitterInterface {
     children: KnockoutObservableArray<any>;
     stage: StageInterface;
     title: string;

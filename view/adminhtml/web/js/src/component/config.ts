@@ -1,13 +1,14 @@
 import * as _ from 'underscore';
 import * as jQuery from 'jquery';
+import * as cmsConfig from 'advanced-cms-init-config';
 
 /**
  * Config class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Config {
-    private static initConfig: any = require('advanced-cms-init-config');
+export default class Config {
+    private static initConfig: any = cmsConfig;
     private static config: any = {
         'dataRoleAttributeName': 'data-role'
     };

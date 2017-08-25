@@ -6,7 +6,7 @@ import * as $ from 'jquery';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class EventEmitter implements EventEmitterInterface {
+export default class EventEmitter implements EventEmitterInterface {
     private events: JQuery.PlainObject = $({});
 
     /**

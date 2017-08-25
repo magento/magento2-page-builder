@@ -1,6 +1,6 @@
 import { AbstractStructural } from './abstract';
 import { ColumnInterface } from './column.d';
-import { Config } from "../../config";
+import Config  from "../../config";
 import { moveArrayItemIntoArray } from "../../../utils/array";
 import { SortParams } from "./editable-area";
 import { Option } from "./options/option";

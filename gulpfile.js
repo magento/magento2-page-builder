@@ -1,5 +1,7 @@
 const gulp  = require('gulp'),
-    ts = require('gulp-typescript');
+    sourcemaps = require('gulp-sourcemaps'),
+    ts = require('gulp-typescript'),
+    babel = require('gulp-babel');
 
 /**
  * Run an initial build than watch for changes
@@ -18,8 +20,17 @@ gulp.task('build', function () {
     });
 
     return tsResult = tsProject.src()
+        .pipe(sourcemaps.init())
         .pipe(tsProject())
-        .pipe(gulp.dest('view/adminhtml/web/js/gulp/'));
+        .pipe(babel({
+            "presets": ["es2015", "stage-0"],
+            "plugins": [
+                "transform-es2015-modules-amd",
+                "magento2"
+            ]
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('view/adminhtml/web/js/dist/'));
 });
 
 /**

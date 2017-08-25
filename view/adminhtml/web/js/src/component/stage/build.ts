@@ -1,13 +1,13 @@
 import * as _ from 'underscore';
 import { StageInterface } from '../stage.d';
-import { EventEmitter } from '../event-emitter';
-import { Config } from '../config';
+import EventEmitter from '../event-emitter';
+import Config from '../config';
 import createBlock from '../block/factory';
 import { EditableAreaInterface } from './structural/editable-area.d';
 import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
 import { Block } from "../block/block";
-import {EditableArea} from "./structural/editable-area";
+import { EditableArea } from "./structural/editable-area";
 
 /**
  * Build Class

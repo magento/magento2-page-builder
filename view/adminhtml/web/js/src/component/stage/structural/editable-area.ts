@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../event-emitter';
+import EventEmitter from '../../event-emitter';
 import { Stage } from '../../stage';
 import { StageInterface } from '../../stage.d';
 import { Block as BlockInterface } from '../../block/block.d';
