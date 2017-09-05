@@ -30,7 +30,7 @@ gulp.task('build', function () {
             ]
         }))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('view/adminhtml/web/js/dist/'));
+        .pipe(gulp.dest('view/adminhtml/web/js/'));
 });
 
 /**
@@ -38,7 +38,7 @@ gulp.task('build', function () {
  */
 gulp.task('watch', function () {
     gulp.watch([
-        './view/adminhtml/web/js/src/**/*.ts',
+        './view/adminhtml/web/ts/**/*.ts',
         'node_modules/@types/**/*.d.ts'
     ], ['build']);
 });
