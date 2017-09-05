@@ -16,32 +16,6 @@ var config = {
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
 
-        /* Core Component Aliases */
-        'bluefoot/config': 'Gene_BlueFoot/js/component/config',
-
-        'bluefoot/hook': 'Gene_BlueFoot/js/component/hook',
-
-        'bluefoot/event-emitter': 'Gene_BlueFoot/js/component/event-emitter',
-
-        'bluefoot/stage': 'Gene_BlueFoot/js/component/stage',
-        'bluefoot/stage/build': 'Gene_BlueFoot/js/component/stage/build',
-
-        'bluefoot/stage/panel': 'Gene_BlueFoot/js/dist/component/stage/panel',
-
-        'bluefoot/stage/save': 'Gene_BlueFoot/js/component/stage/save',
-        'bluefoot/stage/save/renderer': 'Gene_BlueFoot/js/component/stage/save/renderer',
-        'bluefoot/stage/save/binder': 'Gene_BlueFoot/js/component/stage/save/binder',
-
-        'bluefoot/stage/structural/editable-area': 'Gene_BlueFoot/js/component/stage/structural/editable-area',
-        'bluefoot/stage/structural/abstract': 'Gene_BlueFoot/js/component/stage/structural/abstract',
-        'bluefoot/stage/structural/row': 'Gene_BlueFoot/js/component/stage/structural/row',
-        'bluefoot/stage/structural/column': 'Gene_BlueFoot/js/component/stage/structural/column',
-        'bluefoot/stage/structural/options': 'Gene_BlueFoot/js/component/stage/structural/options',
-
-        'bluefoot/stage/structural/options/option': 'Gene_BlueFoot/js/component/stage/structural/options/option',
-        'bluefoot/stage/structural/options/column': 'Gene_BlueFoot/js/component/stage/structural/options/column',
-        'bluefoot/stage/structural/column/builder': 'Gene_BlueFoot/js/component/stage/structural/column/builder',
-
         'bluefoot/block/factory': 'Gene_BlueFoot/js/component/block/factory',
         'bluefoot/block/abstract': 'Gene_BlueFoot/js/component/block/abstract',
         'bluefoot/block/inline': 'Gene_BlueFoot/js/component/block/inline',

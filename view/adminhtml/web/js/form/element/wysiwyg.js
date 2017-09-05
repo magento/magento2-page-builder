@@ -13,15 +13,15 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'bluefoot/stage',
-    'bluefoot/stage/build',
-    'bluefoot/stage/panel',
+    'Gene_BlueFoot/js/component/stage',
+    'Gene_BlueFoot/js/component/stage/build',
+    'Gene_BlueFoot/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
 ], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
 
-    window.registry = registry;
+    console.log('test');
 
     /**
      * Extend the original WYSIWYG with added BlueFoot functionality
@@ -161,7 +161,7 @@ define([
 
         /**
          * Throw a confirmation dialog in the exterior system.
-         * 
+         *
          * @param {object} options
          * @returns {null}
          */
@@ -203,4 +203,6 @@ define([
         }
 
     });
+}, function (err) {
+    alert(err);
 });

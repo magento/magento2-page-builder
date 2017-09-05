@@ -1,5 +1,5 @@
 import { StageInterface } from '../../stage.d';
-import { EditableArea } from './editable-area';
+import EditableArea from './editable-area';
 import { EditableAreaInterface } from './editable-area.d';
 import { Structural as StructuralInterface } from "./abstract.d";
 import { Options } from "./options";

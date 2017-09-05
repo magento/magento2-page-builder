@@ -1,4 +1,3 @@
-import { Stage } from './stage';
 import { EditableAreaInterface } from 'stage/structural/editable-area.d';
 import { Row } from "./stage/structural/row";
 

@@ -1,6 +1,6 @@
-import { StageInterface } from '../stage.d';
-import { EditableAreaInterface } from '../stage/structural/editable-area.d';
-import { Block } from './block';
+import {StageInterface} from '../stage.d';
+import {EditableAreaInterface} from '../stage/structural/editable-area.d';
+import {Block} from './block';
 
 interface ConfigObject {
     js_block?: string;

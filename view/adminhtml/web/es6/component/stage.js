@@ -1,52 +1,34 @@
 import EditableArea from './stage/structural/editable-area';
-import { StageInterface } from './stage.d';
-import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
 import * as _ from 'underscore';
-
 /**
  * Stage class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export default class Stage extends EditableArea implements StageInterface {
-    parent: any;
-    stage: Stage;
-    active: boolean = true;
-    showBorders: KnockoutObservable<boolean>;
-    userSelect: KnockoutObservable<boolean>;
-    loading: KnockoutObservable<boolean>;
-    serializeRole: string = 'stage';
-
+export default class Stage extends EditableArea {
     /**
      * Stage constructor
      *
      * @param parent
      * @param stageContent
      */
-    constructor(parent: any, stageContent: KnockoutObservableArray<StructuralInterface>) {
+    constructor(parent, stageContent) {
         super();
+        this.active = true;
+        this.serializeRole = 'stage';
         super.setChildren(stageContent);
         this.parent = parent;
-
         this.showBorders = parent.showBorder;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
-
-        _.bindAll(
-            this,
-            'onSortingStart',
-            'onSortingStop'
-        );
-
+        _.bindAll(this, 'onSortingStart', 'onSortingStop');
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
     }
-
     build() {
         // @todo
     }
-
     /**
      * The stage has been initiated fully and is ready
      */
@@ -55,7 +37,6 @@ export default class Stage extends EditableArea implements StageInterface {
         this.children.valueHasMutated();
         this.loading(false);
     }
-
     /**
      * Add a row to the stage
      *
@@ -63,29 +44,24 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param data
      * @returns {Row}
      */
-    addRow(self: StageInterface, data?: object): Row {
+    addRow(self, data) {
         let row = new Row(self, self);
         row.data(data);
         this.addChild(row);
-
         return row;
     }
-
     openTemplateManager() {
         // @todo
     }
-
     addComponent() {
         // @todo
     }
-
     /**
      * Event handler for any element being sorted in the stage
      */
     onSortingStart() {
         this.showBorders(true);
     }
-
     /**
      * Event handler for when sorting stops
      */

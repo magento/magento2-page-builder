@@ -10,7 +10,7 @@ import { OptionInterface } from "./options/option.d";
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Row extends AbstractStructural implements RowInterface {
+export default class Row extends AbstractStructural implements RowInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/row.html';
 
     // @todo determine how to merge with super

@@ -22,9 +22,11 @@ gulp.task('build', function () {
     return tsResult = tsProject.src()
         .pipe(sourcemaps.init())
         .pipe(tsProject())
+        .pipe(gulp.dest('view/adminhtml/web/es6'))
         .pipe(babel({
             "presets": ["es2015", "stage-0"],
             "plugins": [
+                "system-import-transformer",
                 "transform-es2015-modules-amd",
                 "magento2"
             ]
