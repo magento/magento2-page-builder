@@ -5,13 +5,16 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'bluefoot/event-emitter',
     'underscore',
     'ko',
     'jquery',
     'bluefoot/config',
-    'bluefoot/hook',
-    'bluefoot/stage/panel/group/block'
-], function (_, ko, jQuery, Config, Hook, Block) {
+    'bluefoot/block/factory'
+], function (EventEmitter, _, ko, jQuery, Config, BlockFactory) {
+
+    // Setup a new instance of the block factory
+    var blockFactory = new BlockFactory();
 
     /**
      * The build class handles building the stage with any previously saved content
@@ -19,9 +22,14 @@ define([
      * @constructor
      */
     function Build() {
-        this.structure = false;
+        /** @type {Stage|bool} */
         this.stage = false;
+        /** @type {Element|bool} */
+        this.document = false;
+
+        EventEmitter.apply(this, arguments);
     }
+    Build.prototype = EventEmitter.prototype;
 
     /**
      * Parse the potential structure
@@ -30,213 +38,196 @@ define([
      * @returns {boolean}
      */
     Build.prototype.parseStructure = function (structure) {
-        var regex = new RegExp('<!--' + Config.getInitConfig('encode_string') + '="(.*?)"-->', 'g');
+        this.document = document.createElement('div');
+        this.document.innerHTML = structure;
 
-        try {
-            // Test the expression first for performance
-            if (regex.test(structure)) {
-                regex.lastIndex = 0;
-                var matches = regex.exec(structure);
-                if (matches !== null && matches.length >= 2) {
-                    var jsonConfig = JSON.parse(matches[1]);
-                    if (typeof jsonConfig === 'object') {
-                        this.structure = jsonConfig;
-                        return jsonConfig;
-                    }
-                }
-            }
-        } catch (e) {
-            return false;
-        }
-
-        return false;
+        // Return the stage element if the structure is present, otherwise return false
+        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]') || false;
     };
 
     /**
-     * Build a stage from previous data
+     * Build a stage from a preexisting structure
      *
      * @param stage
+     * @param stageElement
+     * @returns {Build}
      */
-    Build.prototype.buildStage = function (stage) {
+    Build.prototype.buildStage = function (stage, stageElement) {
         this.stage = stage;
-
-        // Load in our entities
-        // @todo loading state, wait to see if multiple instances are to be built
-        Config.loadEntities(this.retrieveEntityIds(), false, function () {
-            this.rebuild(this.structure);
-        }.bind(this));
+        this.parseAndBuildStage(stageElement);
+        return this;
     };
 
     /**
-     * Retrieve all entity ID's in the current configuration
+     * Parse and build the stage from the stage element
      *
-     * @returns {Array}
+     * @param stageElement
+     * @returns {Promise.<*>}
      */
-    Build.prototype.retrieveEntityIds = function () {
-        var entityIds = [];
-        this._retrieveEntityIds(this.structure, entityIds);
-        return entityIds;
+    Build.prototype.parseAndBuildStage = function (stageElement) {
+        var self = this;
+
+        // Handle the building with the events system
+        return this.parseAndBuildElement(stageElement, this.stage)
+            .then(function () {
+                self.emit('buildDone');
+            }).catch(function (error) {
+                self.emit('buildError', error);
+            });
     };
 
     /**
-     * Function to recursively loop through entities
+     * Parse an element in the structure and build the required element
      *
-     * @param entities
-     * @param entityIds
-     * @private
-     */
-    Build.prototype._retrieveEntityIds = function (entities, entityIds) {
-        jQuery.each(entities, function (index, entity) {
-            if (entity.entityId) {
-                entityIds.push(entity.entityId);
-                if (entity.children) {
-                    jQuery.each(entity.children, function (name, children) {
-                        this._retrieveEntityIds(children, entityIds);
-                    }.bind(this));
-                }
-            } else {
-                if (entity.children) {
-                    this._retrieveEntityIds(entity.children, entityIds);
-                }
-            }
-        }.bind(this));
-    };
-
-    /**
-     * Rebuild the page builder contents
-     *
-     * @param structure
-     *
-     * @returns {boolean}
-     */
-    Build.prototype.rebuild = function (structure) {
-        return this._rebuild(this._cleanupStructure(structure));
-    };
-
-    /**
-     * Clean up structures
-     *
-     * @param structure
-     * @private
-     */
-    Build.prototype._cleanupStructure = function (structure) {
-        var newStructure = [];
-        jQuery.each(structure, function (index, element) {
-            // Reverse logic magic, ignore any extra data
-            if (!(typeof element.type !== 'undefined' && element.type == 'extra')) {
-                newStructure.push(element);
-            }
-        });
-        return newStructure;
-    };
-
-    /**
-     * Recursively rebuild the stage, the wait lock included within this function is to ensure that all content is built
-     * in the correct order. As the way we build entities is handled by the stage we have no reliable way of waiting
-     * for it to be finished
-     *
-     * @param entities
+     * @param element
      * @param parent
-     * @param elementBuiltFn
-     * @returns {boolean}
-     * @private
+     * @returns {*}
      */
-    Build.prototype._rebuild = function (entities, parent, elementBuiltFn) {
-        var completeTimeout;
+    Build.prototype.parseAndBuildElement = function (element, parent) {
+        if (element instanceof HTMLElement &&
+            element.getAttribute(Config.getValue('dataRoleAttributeName'))
+        ) {
+            parent = parent || this.stage;
+            var self = this,
+                role = element.getAttribute(Config.getValue('dataRoleAttributeName')),
+                data = this.getElementData(element),
+                children = this.getElementChildren(element);
 
-        // Declare a function to be used as a callback when building entities
-        var elementBuilt = function (entity, newParent) {
-            // Grab the next entity to be built
-            if (entities.length > 0) {
-                var nextEntity = entities.shift();
-                this._rebuildIndividual(nextEntity, parent, elementBuilt);
-            } else {
-                if (typeof elementBuiltFn === 'function') {
-                    elementBuiltFn();
+            // Add element to stage
+            return this.buildElement(role, data, parent).then(function (newParent) {
+                if (children.length > 0) {
+                    var childPromises = [];
+                    _.forEach(children, function (child) {
+                        childPromises.push(self.parseAndBuildElement(child, newParent));
+                    });
+                    return Promise.all(childPromises);
                 } else {
-                    clearTimeout(completeTimeout);
-                    completeTimeout = setTimeout(function () {
-                        this.stage.stageContent.valueHasMutated();
-                        this.stage.loading(false);
-                    }.bind(this), 250);
+                    return Promise.resolve(newParent);
                 }
-            }
-        }.bind(this);
-
-        // Grab the next entity to be built
-        var nextEntity = entities.shift();
-        if (!parent) {
-            parent = this.stage;
-        }
-
-        this._rebuildIndividual(nextEntity, parent, elementBuilt);
-    };
-
-    /**
-     * Rebuild an individual entry
-     *
-     * @param entity
-     * @param parent
-     * @param elementBuiltFn
-     * @returns {boolean}
-     * @private
-     */
-    Build.prototype._rebuildIndividual = function (entity, parent, elementBuiltFn) {
-        var newParent;
-        if (entity && typeof entity.contentType !== 'undefined' && entity.contentType) {
-            return this._rebuildContentType(entity, parent, elementBuiltFn);
-        } else if (entity && typeof entity.type !== 'undefined' && entity.type) {
-            if (entity.type == 'row' && typeof parent.addRow === 'function') {
-                newParent = parent.addRow(this.stage, entity.formData);
-            } else if (entity.type == 'column' && typeof parent.addColumn === 'function') {
-                newParent = parent.addColumn(entity.formData);
-            }
-
-            if (typeof elementBuiltFn === 'function') {
-                elementBuiltFn(entity, newParent);
-            }
-
-            if (entity.children && entity.children.length > 0) {
-                return this._rebuild(entity.children, newParent, elementBuiltFn);
-            }
-        }
-    };
-
-    /**
-     * Rebuild a content type
-     *
-     * @param entity
-     * @param parent
-     * @param callbackFn
-     * @param key
-     * @private
-     */
-    Build.prototype._rebuildContentType = function (entity, parent, callbackFn, key) {
-        key = key || false;
-        var blockConfig = Config.getContentTypeConfig(entity.contentType),
-            blockInstance = new Block(blockConfig, false),
-            blockData;
-
-        if (typeof entity.formData === 'object' && !Array.isArray(entity.formData)) {
-            blockData = jQuery.extend(entity.formData, Config.getEntity(entity.entityId));
+            });
         } else {
-            blockData = Config.getEntity(entity.entityId);
+            return Promise.reject(new Error('Element does not contain valid role attribute.'));
+        }
+    };
+
+    /**
+     * Retrieve the elements data
+     *
+     * @param element
+     * @returns {{}}
+     */
+    Build.prototype.getElementData = function (element) {
+        var scriptTag = element.querySelector('script[type="text/advanced-cms-data"]');
+        if (scriptTag) {
+            return scriptTag.innerHTML ? JSON.parse(scriptTag.innerHTML) : {};
         }
 
-        // Insert a block via it's instance into the parent
-        blockInstance.insert(parent, false, blockData, function (block) {
-            if (entity.children && entity.children.length > 0) {
-                jQuery.each(entity.children, function (key, children) {
-                    jQuery.each(children, function (index, child) {
-                        this._rebuildContentType(child, block, false, key);
-                    }.bind(this));
-                }.bind(this));
-            }
+        return {};
+    };
 
-            if (typeof callbackFn === 'function') {
-                callbackFn(block, parent);
+    /**
+     * Return elements children, search for direct decedents, or traverse through to find deeper children
+     *
+     * @param element {Element}
+     * @returns {[]|NodeList}
+     */
+    Build.prototype.getElementChildren = function (element) {
+        var self = this;
+        if (element.hasChildNodes()) {
+            var children = [];
+            // Find direct children of the element
+            _.forEach(element.childNodes, function (child) {
+                // Only search elements which tagName's and not script tags
+                if (child.tagName && child.tagName != 'SCRIPT') {
+                    if (child.hasAttribute(Config.getValue('dataRoleAttributeName'))) {
+                        children.push(child);
+                    } else {
+                        children = self.getElementChildren(child);
+                    }
+                }
+            });
+
+            if (children.length > 0) {
+                return children;
             }
-        }.bind(this), key);
+        }
+
+        return [];
+    };
+
+    /**
+     * Forward build instruction to necessary build function
+     *
+     * @param role
+     * @param data
+     * @param parent
+     */
+    Build.prototype.buildElement = function (role, data, parent) {
+        switch (role) {
+            case 'stage':
+                // If the stage is being built, we don't need to "build" anything, just return the stage as the
+                // new parent
+                return Promise.resolve(this.stage);
+            break;
+            case 'row':
+                return this._buildRow(data, parent);
+            break;
+            case 'column':
+                return this._buildColumn(data, parent);
+            break;
+            default:
+                return this._buildEntity(role, data, parent);
+            break;
+        }
+    };
+
+    /**
+     * Build a new row with it's associated data
+     *
+     * @param data
+     * @param parent
+     * @returns {Promise.<*>}
+     * @private
+     */
+    Build.prototype._buildRow = function (data, parent) {
+        return Promise.resolve(parent.addRow(this.stage, data));
+    };
+
+    /**
+     * Build a new column with it's associated data
+     *
+     * @param data
+     * @param parent
+     * @returns {Promise.<T>}
+     * @private
+     */
+    Build.prototype._buildColumn = function (data, parent) {
+        return Promise.resolve(parent.addColumn(data));
+    };
+
+    /**
+     * Add an entity into the system
+     *
+     * @param role
+     * @param data
+     * @param parent
+     * @returns {Promise.<T>}
+     * @private
+     */
+    Build.prototype._buildEntity = function (role, data, parent) {
+        return new Promise(function (resolve, reject) {
+            blockFactory.create(
+                Config.getContentBlockConfig(role),
+                parent,
+                this.stage,
+                data
+            ).then(function (block) {
+                parent.addChild(block);
+                resolve(block);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
     };
 
     return Build;

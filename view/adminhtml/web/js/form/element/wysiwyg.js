@@ -7,16 +7,21 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
     'Magento_Ui/js/modal/confirm',
+    'Magento_Ui/js/modal/alert',
+    'mage/translate',
     'mage/apply/main',
     'ko',
     'uiRegistry',
     'jquery',
     'bluefoot/stage',
     'bluefoot/stage/build',
+    'bluefoot/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, confirmation, applyMain, ko, registry, jQuery, Stage, Build, utils) {
+], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
+
+    window.registry = registry;
 
     /**
      * Extend the original WYSIWYG with added BlueFoot functionality
@@ -31,6 +36,7 @@ define([
             showBorders: false,
             loading: false,
             userSelect: true,
+            panel: new Panel(),
             links: {
                 stageActive: false,
                 stage: {},
@@ -38,7 +44,7 @@ define([
                 stageContent: [],
                 showBorders: false,
                 loading: false,
-                userSelect: true,
+                userSelect: true
             }
         },
 
@@ -70,20 +76,12 @@ define([
          * Check to see if the WYSIWYG already contains BlueFoot content
          */
         checkForBlueFootContent: function (node) {
-            var build = new Build();
-            if (build.parseStructure($(node).val())) {
+            var buildInstance = new Build(),
+                buildStructure;
+            if (buildStructure = buildInstance.parseStructure($(node).val())) {
                 this.loading(true);
-                return this.buildBlueFoot(false, build, node);
+                return this.buildBlueFoot(false, buildInstance, buildStructure, node);
             }
-        },
-
-        /**
-         * Retrieve the panel from the registry
-         *
-         * @returns {*}
-         */
-        getBlueFootPanel: function () {
-            return registry.get('bluefoot-panel');
         },
 
         /**
@@ -100,46 +98,33 @@ define([
          *
          * @param event
          * @param buildInstance
+         * @param buildStructure
          * @param node
          */
-        buildBlueFoot: function (event, buildInstance, node) {
-            var button,
-                panel;
+        buildBlueFoot: function (event, buildInstance, buildStructure, node) {
+            var self = this;
             if (event) {
                 event.stopPropagation();
-                button = jQuery(event.currentTarget);
             }
-            if (panel = this.getBlueFootPanel()) {
-                panel.buildPanel();
 
-                // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-                this.stage = new Stage(this, this.stageId, this.stageContent);
+            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
+            this.stage = new Stage(
+                this,
+                this.stageId,
+                this.stageContent
+            );
 
-                // Are we building from existing data?
-                if (buildInstance && node) {
-                    buildInstance.buildStage(this.stage);
-                    button = $(node).prevAll('.buttons-set').find('.init-gene-bluefoot');
-                } else {
-                    // Add an initial row to the stage
-                    this.stage.addRow(this.stage);
-                }
+            // On stage ready show the interface
+            this.stage.on('stageReady', function () {
+                self.stageActive(true); // Display the stage UI
+                self.visible(false); // Hide the original WYSIWYG editor
+            });
 
-                // Hide the WYSIWYG and display the stage
-                button.parents('[data-namespace]').hide();
-                if (button.parents('.admin__control-grouped').length > 0) {
-                    // Add bluefoot active class to transform the field area full width
-                    button.parents('.admin__control-grouped').addClass('bluefoot-active');
-                }
+            // Create a new instance of the panel
+            this.panel.bindStage(this.stage);
 
-                // Mark the stage as active bringing it into display
-                this.stageActive(true);
-
-                // Update the panel instance to realise our new stage instance
-                panel.updateStages();
-
-            } else {
-                console.warn('Unable to locate the BlueFoot panel for initialization.');
-            }
+            // Build the stage instance using any existing build data
+            this.stage.build(buildInstance, buildStructure);
         },
 
         /**
@@ -163,9 +148,27 @@ define([
                     return typeof options.actions[action] === 'function';
                 })
             )) {
-                confirmation(options);
+                confirmationPrompt(options);
             } else {
                 throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+            }
+        },
+
+        /**
+         * Throw an alert dialog in the exterior system.
+         *
+         * @param {object} options
+         * @returns {null}
+         */
+        alertDialog: function (options) {
+            if (options.content) {
+                options.content = $t(options.content);
+                if (options.title) {
+                    options.title = $t(options.title);
+                }
+                alertPrompt(options);
+            } else {
+                throw new Error('Wysiwyg.alertDialog: options.message must be provided');
             }
         },
 

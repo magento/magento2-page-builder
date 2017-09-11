@@ -1,22 +1,15 @@
 <?php
 /**
- * BlueFoot
+ * Advanced CMS row template
  *
- * Version 1.0
- *
- * @author Hob Adams <hob@gene.co.uk>
- *
- * Row default Template
- * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row
- *
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
  */
-if ($block->getBackgroundStyles()) :
-    $block->setCssClasses('with-media-background');
-endif;
+$advancedCms = $block->getAdvancedCms();
 ?>
-
-<div class="bluefoot-row <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+<div<?php echo $advancedCms->getAttributeHtml(['class' => ['bluefoot-row']]); ?>>
+    <?php echo $advancedCms->getDataHtml(); ?>
     <div class="bluefoot-wrapper">
-        <?php echo $block->getRenderedChildHtml(); ?>
+        <?php echo $block->getChildHtml(); ?>
     </div>
 </div>

@@ -29,8 +29,24 @@ define([
         };
 
         this.wrapperStyle = ko.observable({width: '100%'});
-        this.columnDefinition = Config.getInitConfig('column_definitions')[0];
-        this.widthClasses = ko.observable(this.columnDefinition['className']);
+        this.columnDefinition = ko.observable(Config.getInitConfig('column_definitions')[0]);
+        this.widthClasses = ko.computed(function () {
+            return this.columnDefinition()['className'];
+        }, this);
+
+        this.serializedWidth = ko.computed(function () {
+            return this.columnDefinition()['breakpoint'] * 100;
+        }, this);
+
+        this.serializeRole = 'column';
+        var self = this;
+        this.dataEntityData = [
+            this.data,
+            function () {
+                return {width: self.serializedWidth()};
+            }
+        ];
+        this.dataEntityDataIgnore = ['label', 'className'];
     }
 
     Column.prototype = Object.create(AbstractStructural.prototype);
@@ -108,12 +124,10 @@ define([
         if (data.width) {
             var columnDef = Config.getColumnDefinitionByBreakpoint(data.width);
             if (columnDef) {
-                this.widthClasses(columnDef.className);
-                this.columnDefinition = columnDef;
+                this.columnDefinition(columnDef);
             }
         } else if (data.className) {
-            this.widthClasses(data.className);
-            this.columnDefinition = Config.getColumnDefinitionByClassName(data.className);
+            this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
         }
 
         this.data(data);
@@ -122,31 +136,16 @@ define([
     /**
      * Event called when sorting starts on this element
      *
-     * @param sortableThis
      * @param event
-     * @param ui
-     * @param sortableInstance
+     * @param params
+     * @returns {*}
      */
-    Column.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
+    Column.prototype.onSortStart = function (event, params) {
         // Copy over the column class for the width
-        ui.placeholder.addClass(this.widthClasses());
+        jQuery(params.placeholder).addClass(this.widthClasses());
 
         // Run the parent
         return $super.onSortStart.apply(this, arguments);
-    };
-
-    /**
-     * To JSON
-     *
-     * @returns {{children, formData}|{children: Array}}
-     */
-    Column.prototype.toJSON = function () {
-        var json = $super.toJSON.apply(this, arguments);
-        json.type = 'column';
-        if (this.columnDefinition) {
-            json.formData.width = this.columnDefinition['breakpoint'];
-        }
-        return json;
     };
 
     return Column;

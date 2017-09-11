@@ -1,17 +1,14 @@
 <?php
 /**
- * BlueFoot
+ * Advanced CMS row template
  *
- * Version 1.0
- *
- * @author Hob Adams <hob@gene.co.uk>
- *
- * Column Template
- * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Column
- *
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
  */
-$block->setCssClasses('bluefoot-column-' . $block->getColumnsFromWidth());
+$advancedCms = $block->getAdvancedCms();
+// @todo determine format of storing and rendering column width
 ?>
-<div class="bluefoot-column <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
-    <?php echo $block->getRenderedChildHtml(); ?>
+<div<?php echo $advancedCms->getAttributeHtml(['class' => ['bluefoot-column']]); ?>>
+    <?php echo $advancedCms->getDataHtml(); ?>
+    <?php echo $block->getChildHtml(); ?>
 </div>

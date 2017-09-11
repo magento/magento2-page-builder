@@ -68,23 +68,6 @@ define([
             stage.addRow(stage, 'testData');
             expect(stage.stageContent()[0].data()).toEqual('testData');
         });
-
-        it("will return a valid JSON object", function () {
-            var child = {
-                toJSON: function () {
-                    return {'test': 1}
-                }
-            },
-                expected = [{'test': 1}];
-            stage.addChild(child);
-            expect(stage.toJSON()).toEqual(expected);
-        });
-
-        it("will return an empty object if no children are present", function () {
-            stage.stageContent(false);
-            expect(stage.toJSON()).toEqual({});
-        });
-
     });
 
 });

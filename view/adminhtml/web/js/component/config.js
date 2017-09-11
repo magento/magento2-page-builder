@@ -8,8 +8,9 @@ define([
     'underscore',
     'jquery',
     'bluefoot/utils/ajax',
-    'bluefoot/utils/persistence'
-], function (_, jQuery, AjaxClass, persistence) {
+    'bluefoot/utils/persistence',
+    'advanced-cms-init-config'
+], function (_, jQuery, AjaxClass, persistence, initConfig) {
 
     /**
      * The initial config before the Ajax request
@@ -17,7 +18,7 @@ define([
      * @type {{}}
      * @private
      */
-    var _initConfig = {};
+    var _initConfig = initConfig;
 
     /**
      * Cache the config within this module
@@ -25,7 +26,9 @@ define([
      * @type {{}}
      * @private
      */
-    var _config = {};
+    var _config = {
+        'dataRoleAttributeName': 'data-role'
+    };
 
     /**
      * Store all the fields in a cache so we don't have to re-generate them
@@ -128,9 +131,9 @@ define([
          * @param type
          * @returns {*}
          */
-        getContentTypeConfig: function (type) {
-            if (typeof _initConfig.contentTypes === 'object' && typeof _initConfig.contentTypes[type] === 'object') {
-                return _initConfig.contentTypes[type];
+        getContentBlockConfig: function (type) {
+            if (typeof _initConfig.contentBlocks === 'object' && typeof _initConfig.contentBlocks[type] === 'object') {
+                return _initConfig.contentBlocks[type];
             }
 
             return false;
@@ -233,7 +236,7 @@ define([
             }
 
             _allFields = {};
-            jQuery.each(_initConfig.contentTypes, function (index, element) {
+            jQuery.each(_initConfig.contentBlocks, function (index, element) {
                 if (typeof element.fields === 'object') {
                     jQuery.extend(_allFields, element.fields);
                 }

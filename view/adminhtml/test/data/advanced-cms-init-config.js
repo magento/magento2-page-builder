@@ -1,5 +1,6 @@
 define([], function () {
     return {
+        dataRoleAttributeName: 'data-role',
         config_url: '/testConfig',
         form_key: 'test-form-key',
         get_value_test: true,

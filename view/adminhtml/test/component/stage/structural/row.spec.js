@@ -27,7 +27,10 @@ define([
             };
             stage = {
                 parent: parent,
-                showBorders: ko.observable(false)
+                showBorders: ko.observable(false),
+                save: {
+                    observe: function () {}
+                }
             };
             row = new Row(parent, stage);
         });
@@ -35,13 +38,6 @@ define([
         it("can add column inside self", function () {
             var newColumn = row.addColumn();
             expect(row.children()).toContain(newColumn);
-        });
-
-        it("will return a valid JSON object", function () {
-            expect(row.toJSON()).toEqual({
-                'formData': {},
-                'type': 'row'
-            });
         });
     });
 

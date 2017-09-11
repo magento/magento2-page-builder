@@ -6,23 +6,25 @@
  */
 define([
     'ko',
-    'bluefoot/stage/panel/group/block'
-], function (ko, Block) {
+    'underscore'
+], function (ko, _) {
 
     /**
      * Groups that reside within the panel on the left side
      *
      * @param id
      * @param group
+     * @param blocks
      * @constructor
      */
-    function Group(id, group) {
+    function Group(id, group, blocks) {
+        blocks = blocks || [];
         this.id = ko.observable(id);
         this.code = ko.observable(group.code);
         this.name = ko.observable(group.name);
         this.icon = ko.observable(group.icon);
         this.sort = ko.observable(group.sort);
-        this.blocks = ko.observableArray([]);
+        this.blocks = ko.observableArray(blocks);
 
         // Active is used with mouse over events
         this.active = ko.observable(false);
@@ -32,26 +34,10 @@ define([
     }
 
     /**
-     * Add a child block into the group
-     *
-     * @param block
+     * Toggle the group open or closed
      */
-    Group.prototype.addBlock = function (block) {
-        this.blocks.push(new Block(block, this));
-    };
-
-    /**
-     * On mouse over, make the group active
-     */
-    Group.prototype.onMouseOver = function () {
-        this.active(true);
-    };
-
-    /**
-     * On mouse out remove the active state of the group
-     */
-    Group.prototype.onMouseOut = function () {
-        this.active(false);
+    Group.prototype.toggle = function () {
+        this.active(!this.active());
     };
 
     return Group;

@@ -7,6 +7,8 @@ var pathOverrides = {
     'uiRegistry': 'test/lib/registry',
     'mageUtils': 'test/lib/stub-mageUtils',
     'mage/translate': 'test/lib/stub-translate',
+    'hyperscript': 'test/lib/hyperscript',
+    'advanced-cms-init-config': 'test/data/advanced-cms-init-config',
     'bluefoot/jquery': 'test/lib/jquery',
     'bluefoot/utils/ajax': 'test/mock/ajax',
     'bluefoot/utils/persistence': 'test/mock/persistence',

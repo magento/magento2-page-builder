@@ -71,8 +71,7 @@
                         // Stop the loop once we hit a valid breakpoint
                         if (ghostWidth >= (breakpoint - 15) && ghostWidth <= (breakpoint + 15)) {
                             element.find('.bluefoot-resize-size').text(size.label);
-                            context.currentColumn.widthClasses(size.className);
-                            context.currentColumn.columnDefinition = size;
+                            context.currentColumn.columnDefinition(size);
 
                             // Force the parent to update it's children
                             context.currentColumn.parent.children.valueHasMutated();
