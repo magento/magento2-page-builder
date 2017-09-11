@@ -149,10 +149,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
             return json_decode($config, true);
         } else {
             $config = [
-                'contentTypeGroups' => $this->getContentBlockGroups(),
-                'contentTypes'      => $this->getContentBlockData(),
-                'templates'         => $this->getTemplateData(),
-                'globalFields'      => $this->getGlobalFields()
+                'groups'        => $this->getContentBlockGroups(),
+                'contentBlocks' => $this->getContentBlockData(),
+                'templates'     => $this->getTemplateData(),
+                'globalFields'  => $this->getGlobalFields()
             ];
 
             // If the cache is enabled, store the config in the cache

@@ -5,6 +5,7 @@
  * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
+    'bluefoot/stage/structural/editable-area',
     'ko',
     'underscore',
     'bluefoot/utils/array',
@@ -14,7 +15,7 @@ define([
     'bluefoot/stage/structural/column/builder',
     'bluefoot/stage/edit',
     'mageUtils'
-], function (ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, Edit, utils) {
+], function (EditableArea, ko, _, arrayUtil, Save, Options, $t, ColumnBuilder, Edit, utils) {
 
     /**
      * Abstract structural block
@@ -27,15 +28,11 @@ define([
         this.ns = 'bluefoot/stage/structural/abstract';
 
         this.parent = parent;
-        this.stage = stage || false;
 
         this.id = utils.uniqueid();
         this.options = new Options();
         this.data = ko.observable({});
         this.children = ko.observableArray([]);
-
-        // Observe the data & children of the current class within our save functionality
-        this.stage.save.observe([this.data, this.children]);
 
         this.originalParent = false;
         this.originalIndex = false;
@@ -56,7 +53,14 @@ define([
 
         // Init our subscriptions
         this.initSubscriptions();
+
+        // All structural elements are editable
+        EditableArea.call(this, this.children, stage);
+
+        // Observe the data & children of the current class within our save functionality
+        this.stage.save.observe([this.data, this.children]);
     }
+    AbstractStructural.prototype = Object.create(EditableArea.prototype);
 
     /**
      * Init subscriptions on knockout observables
@@ -187,30 +191,6 @@ define([
     };
 
     /**
-     * Add a child to the current element
-     *
-     * @param child
-     * @param index
-     */
-    AbstractStructural.prototype.addChild = function (child, index) {
-        if (index !== undefined && index !== false) {
-            // Use the arrayUtil function to add the item in the correct place within the array
-            arrayUtil.moveArrayItemIntoArray(child, this.children, index);
-        } else {
-            this.children.push(child);
-        }
-    };
-
-    /**
-     * Remove a child from the children array
-     *
-     * @param child
-     */
-    AbstractStructural.prototype.removeChild = function (child) {
-        utils.remove(this.children, child);
-    };
-
-    /**
      * Remove the current element
      *
      * @param $data
@@ -223,7 +203,9 @@ define([
             actions: {
                 confirm: function(){
                     // Call the parent to remove the child element
-                    structural.parent.removeChild(this);
+                    structural.parent.emit('blockRemoved', {
+                        block: this
+                    });
                 }.bind(this)
             }
         });
@@ -244,113 +226,6 @@ define([
         }
         var style = _.extend(this.wrapperStyle(), newStyles);
         this.wrapperStyle(style);
-    };
-
-    /**
-     * Event called when sorting starts on this element
-     *
-     * @param sortableThis
-     * @param event
-     * @param ui
-     * @param sortableInstance
-     */
-    AbstractStructural.prototype.onSortStart = function (sortableThis, event, ui, sortableInstance) {
-        ui.item.show();
-        ui.item.addClass('bluefoot-sorting-original');
-        ui.helper.css({width: '', height: ''});
-
-        this.originalParent = this.parent;
-        this.originalIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
-        if (this.stage) {
-            this.stage.showBorders(true);
-        }
-    };
-
-    /**
-     * Event called when sorting stops on this element
-     *
-     * @param sortableThis
-     * @param event
-     * @param ui
-     * @param sortableInstance
-     */
-    AbstractStructural.prototype.onSortStop = function (sortableThis, event, ui, sortableInstance) {
-        ui.item.removeClass('bluefoot-sorting-original');
-        if (this.stage) {
-            this.stage.showBorders(false);
-        }
-    };
-
-    /**
-     * Function called on sort updating
-     *
-     * @param sortableThis
-     * @param event
-     * @param ui
-     * @param sortableInstance
-     * @returns {boolean}
-     */
-    AbstractStructural.prototype.onSortUpdate = function (sortableThis, event, ui, sortableInstance) {
-        var item = ui.item,
-            parentEl = ui.item.parent()[0],
-            newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]),
-            parent,
-            childrenArray;
-
-        if (this.stage) {
-            this.stage.showBorders(false);
-        }
-
-        ui.item.removeClass('bluefoot-sorting-original');
-
-        // Only run the event once
-        if (item && (sortableThis === parentEl)) {
-
-            // Rows are a parent of the stage which stores it's data slightly differently
-            if (item.hasClass('bluefoot-row-wrapper')) {
-                var parentUiClass = ko.dataFor(item.parents('.bluefoot-canvas')[0]);
-                parent = parentUiClass.stage;
-                childrenArray = parentUiClass.stageContent;
-            } else {
-                parent = ko.dataFor(item.parents('.bluefoot-structure')[0]);
-                childrenArray = parent.children;
-            }
-
-            // Verify we have a parent element
-            if (parent) {
-                // Update the elements parent
-                this.parent = parent;
-
-                // Determine if the element has moved within the same parent, or if it's been moved into another
-                if (this.originalParent.id == this.parent.id) {
-                    // The element hasn't moved
-                    if (this.originalIndex == newIndex) {
-                        return false;
-                    }
-                    // Move the array item to that new index
-                    arrayUtil.moveArrayItem(childrenArray, this.originalIndex, newIndex);
-                } else {
-                    // Remove the item from the original parent
-                    this.originalParent.removeChild(this);
-
-                    // Move the item into a different array, removing the original instance
-                    arrayUtil.moveArrayItemIntoArray(this, childrenArray, newIndex);
-                }
-
-                // Remove the item from the UI
-                item.remove();
-            }
-
-            // If using deferred updates plugin, force updates
-            if (ko.processAllDeferredBindingUpdates) {
-                ko.processAllDeferredBindingUpdates();
-            }
-
-            // Reset and tidy up
-            this.originalParent = false;
-            this.originalIndex = false;
-
-        }
     };
 
     /**

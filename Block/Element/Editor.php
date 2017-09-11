@@ -21,14 +21,14 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     {
         $html = $this->_getButtonHtml(
             [
-                'title' => '<i class="fa fa-rocket"></i> ' . $this->translate('Activate BlueFoot'),
-                'class' => 'gene-bluefoot init-gene-bluefoot',
+                'title' => $this->translate('Enable Advanced CMS'),
+                'class' => 'gene-bluefoot init-gene-bluefoot action-default scalable action action-secondary',
                 'id' => 'gene-bluefoot' . $this->getHtmlId()
             ]
         );
         $html .= $this->_getButtonHtml(
             [
-                'title' => $this->translate('Disable BlueFoot'),
+                'title' => $this->translate('Disable Advanced CMS'),
                 'class' => 'gene-bluefoot disable-gene-bluefoot',
                 'style' => 'display: none;',
                 'id' => 'disable-gene-bluefoot' . $this->getHtmlId()
