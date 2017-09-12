@@ -1,9 +1,9 @@
 import { EditableAreaInterface } from 'stage/structural/editable-area.d';
-import { Row } from "./stage/structural/row";
+import Row from './stage/structural/row';
 
 export interface StageInterface extends EditableAreaInterface {
-    parent: any,
-    active: boolean,
+    parent: any;
+    active: boolean;
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
