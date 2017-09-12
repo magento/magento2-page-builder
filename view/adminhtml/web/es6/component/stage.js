@@ -17,7 +17,7 @@ export default class Stage extends EditableArea {
         super();
         this.active = true;
         this.serializeRole = 'stage';
-        super.setChildren(stageContent);
+        this.setChildren(stageContent);
         this.parent = parent;
         this.showBorders = parent.showBorder;
         this.userSelect = parent.userSelect;
@@ -28,6 +28,7 @@ export default class Stage extends EditableArea {
     }
     build() {
         // @todo
+        this.ready();
     }
     /**
      * The stage has been initiated fully and is ready

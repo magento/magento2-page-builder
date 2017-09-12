@@ -1,7 +1,8 @@
 import EditableArea from './editable-area';
 import { Options } from "./options";
 import { Option } from "./options/option";
-import * as $t from 'mage/translate';
+import $t from 'mage/translate';
+import * as ko from 'knockout';
 /**
  * AbstractStructural class
  *

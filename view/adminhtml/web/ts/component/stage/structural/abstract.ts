@@ -6,8 +6,8 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 
-import * as $t from 'mage/translate';
-import * as uiClass from 'uiClass';
+import $t from 'mage/translate';
+import * as ko from 'knockout';
 
 /**
  * AbstractStructural class
