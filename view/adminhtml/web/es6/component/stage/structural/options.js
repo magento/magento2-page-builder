@@ -1,4 +1,5 @@
 import * as _ from 'underscore';
+import * as ko from 'knockout';
 /**
  * Options Class
  *
@@ -15,7 +16,7 @@ export class Options {
         this.options = ko.observableArray([]);
         this.template = 'Gene_BlueFoot/component/stage/structural/options.html';
         this.parent = parent;
-        this.options = this.options.concat(options);
+        this.options(options);
         this.sort();
     }
     /**

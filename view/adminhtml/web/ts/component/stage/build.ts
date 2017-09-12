@@ -14,7 +14,7 @@ import { EditableArea } from "./structural/editable-area";
  *
  * @author Dave Macaulay <hello@davemacaulay.com>
  */
-export class Build extends EventEmitter {
+export default class Build extends EventEmitter {
     stage: StageInterface;
     document: Element;
 

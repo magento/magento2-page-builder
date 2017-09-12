@@ -1,5 +1,5 @@
 import { EventEmitterInterface } from 'event-emitter.d';
-import * as $ from 'jquery';
+import jQuery from 'jquery';
 
 /**
  * EventEmitter class
@@ -7,7 +7,7 @@ import * as $ from 'jquery';
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export default class EventEmitter implements EventEmitterInterface {
-    private events: JQuery.PlainObject = $({});
+    private events: JQuery.PlainObject = jQuery({});
 
     /**
      * Trigger / emit an event
