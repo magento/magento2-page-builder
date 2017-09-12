@@ -6,7 +6,7 @@ import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
-import {Block} from "../../block/block";
+import { Block } from '../../block/block';
 
 /**
  * Class EditableArea
@@ -45,13 +45,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @returns {StageInterface}
      */
     getStage(): StageInterface {
-        if (this.stage) {
-            return this.stage;
-        }
-
-        if (this instanceof StageInterface) {
-            return this;
-        }
+        return this.stage;
     }
 
     /**

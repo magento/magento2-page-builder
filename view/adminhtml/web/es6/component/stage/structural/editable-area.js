@@ -33,12 +33,7 @@ export default class EditableArea extends EventEmitter {
      * @returns {StageInterface}
      */
     getStage() {
-        if (this.stage) {
-            return this.stage;
-        }
-        if (this instanceof StageInterface) {
-            return this;
-        }
+        return this.stage;
     }
     /**
      * Add a child into the observable array
