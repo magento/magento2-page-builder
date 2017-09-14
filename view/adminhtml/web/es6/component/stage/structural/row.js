@@ -1,6 +1,7 @@
 import { AbstractStructural } from './abstract';
 import { Column } from "./column";
 import { Option } from "./options/option";
+import "ko-resizable";
 /**
  * Row class
  *
