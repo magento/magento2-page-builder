@@ -11,7 +11,7 @@ var config = {
         /* Include our Knockout Sortable wrapper */
         'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
         'bluefoot/ko-draggable': 'Gene_BlueFoot/js/resource/draggable/knockout-draggable',
-        'bluefoot/ko-resizable': 'Gene_BlueFoot/js/resource/resizable/knockout-resizable',
+        'ko-resizable': 'Gene_BlueFoot/ts/resource/resizable/knockout-resizable',
         'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
