@@ -23,7 +23,9 @@ var config = {
 
         'bluefoot/template': 'Gene_BlueFoot/js/component/template',
 
-        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/stage/edit'
+        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/stage/edit',
+
+        'bluefoot/config': 'Gene_Bluefoot/js/component/config'
     },
     map: {
         '*': {
