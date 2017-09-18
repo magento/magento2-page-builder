@@ -15,7 +15,7 @@
     }
 })(function (ko, jQuery, Config) {
 
-    var allowedSizes = Config.getInitConfig('column_definitions') || [],
+    var allowedSizes = Config.default.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},
         smallestColumn = {breakpoint: 1};
 
