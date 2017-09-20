@@ -6,8 +6,10 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 
-import * as $t from 'mage/translate';
-import * as uiClass from 'uiClass';
+import $t from 'mage/translate';
+import * as ko from 'knockout';
+
+import mageUtils from 'mageUtils';
 
 /**
  * AbstractStructural class
@@ -17,8 +19,9 @@ import * as uiClass from 'uiClass';
 export class AbstractStructural extends EditableArea implements StructuralInterface {
     parent: any;
     stage: any;
-    id: number;
+    id: string = mageUtils.uniqueid();
     title: string;
+    wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
     public options: Array<OptionInterface> = [
         new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
         new Option(this, 'edit', '<i></i>', $t('Edit'), this.onOptionEdit.bind(this), ['edit-block'], 50),

@@ -1,7 +1,9 @@
 import EditableArea from './editable-area';
 import { Options } from "./options";
 import { Option } from "./options/option";
-import * as $t from 'mage/translate';
+import $t from 'mage/translate';
+import * as ko from 'knockout';
+import mageUtils from 'mageUtils';
 /**
  * AbstractStructural class
  *
@@ -16,6 +18,8 @@ export class AbstractStructural extends EditableArea {
      */
     constructor(parent, stage) {
         super(stage);
+        this.id = mageUtils.uniqueid();
+        this.wrapperStyle = ko.observable({ width: '100%' });
         this.options = [
             new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
             new Option(this, 'edit', '<i></i>', $t('Edit'), this.onOptionEdit.bind(this), ['edit-block'], 50),

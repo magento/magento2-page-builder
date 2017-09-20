@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import jQuery from 'jquery';
 /**
  * EventEmitter class
  *
@@ -6,7 +6,7 @@ import * as $ from 'jquery';
  */
 export default class EventEmitter {
     constructor() {
-        this.events = $({});
+        this.events = jQuery({});
     }
     /**
      * Trigger / emit an event

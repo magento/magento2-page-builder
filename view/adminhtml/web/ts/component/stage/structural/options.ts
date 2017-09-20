@@ -1,6 +1,7 @@
 import { OptionInterface } from './options/option.d';
 import { Structural } from './abstract.d';
 import * as _ from 'underscore';
+import * as ko from 'knockout';
 
 /**
  * Options Class
@@ -20,7 +21,7 @@ export class Options {
      */
     constructor(parent: Structural, options: Array<OptionInterface>) {
         this.parent = parent;
-        this.options = this.options.concat(options);
+        this.options(options);
         this.sort();
     }
 

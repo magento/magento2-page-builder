@@ -7,7 +7,7 @@ import createBlock from '../block/factory';
  *
  * @author Dave Macaulay <hello@davemacaulay.com>
  */
-export class Build extends EventEmitter {
+export default class Build extends EventEmitter {
     /**
      * Parse the potential structure
      *

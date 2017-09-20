@@ -6,15 +6,15 @@ import createBlock from '../block/factory';
 import { EditableAreaInterface } from './structural/editable-area.d';
 import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
-import { Block } from "../block/block";
-import { EditableArea } from "./structural/editable-area";
+import { Block } from '../block/block';
+import EditableArea from './structural/editable-area';
 
 /**
  * Build Class
  *
  * @author Dave Macaulay <hello@davemacaulay.com>
  */
-export class Build extends EventEmitter {
+export default class Build extends EventEmitter {
     stage: StageInterface;
     document: Element;
 

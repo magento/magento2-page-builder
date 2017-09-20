@@ -21,8 +21,6 @@ define([
 ], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
 
-    console.log('test');
-
     /**
      * Extend the original WYSIWYG with added BlueFoot functionality
      */
@@ -99,7 +97,7 @@ define([
          * Check to see if the WYSIWYG already contains BlueFoot content
          */
         checkForBlueFootContent: function (node) {
-            var buildInstance = new Build(),
+            var buildInstance = new Build.default(),
                 buildStructure;
             if (buildStructure = buildInstance.parseStructure($(node).val())) {
                 this.loading(true);
@@ -131,9 +129,8 @@ define([
             }
 
             // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            this.stage = new Stage.default(
                 this,
-                this.stageId,
                 this.stageContent
             );
 

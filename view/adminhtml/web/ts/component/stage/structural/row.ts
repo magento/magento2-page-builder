@@ -4,6 +4,7 @@ import { RowInterface } from "./row.d";
 import { Column } from "./column";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
+import "ko-resizable";
 
 /**
  * Row class
