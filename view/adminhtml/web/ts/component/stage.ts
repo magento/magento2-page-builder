@@ -27,6 +27,7 @@ export default class Stage extends EditableArea implements StageInterface {
     constructor(parent: any, stageContent: KnockoutObservableArray<StructuralInterface>) {
         super();
         this.setChildren(stageContent);
+        this.stage = this;
         this.parent = parent;
 
         this.showBorders = parent.showBorder;

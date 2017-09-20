@@ -18,6 +18,7 @@ export default class Stage extends EditableArea {
         this.active = true;
         this.serializeRole = 'stage';
         this.setChildren(stageContent);
+        this.stage = this;
         this.parent = parent;
         this.showBorders = parent.showBorder;
         this.userSelect = parent.userSelect;

@@ -56,8 +56,19 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
 
     }
 
-    onOptionRemove() {
-
+    onOptionRemove($data: object, structural: StructuralInterface) {
+        structural.stage.parent.confirmationDialog({
+            title: 'Confirm Item Removal',
+            content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
+            actions: {
+                confirm: function(){
+                    // Call the parent to remove the child element
+                    structural.parent.emit('blockRemoved', {
+                        block: this
+                    });
+                }.bind(this)
+            }
+        });
     }
 
     /**

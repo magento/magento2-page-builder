@@ -39,7 +39,19 @@ export class AbstractStructural extends EditableArea {
     }
     onOptionDuplicate() {
     }
-    onOptionRemove() {
+    onOptionRemove($data, structural) {
+        structural.stage.parent.confirmationDialog({
+            title: 'Confirm Item Removal',
+            content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
+            actions: {
+                confirm: function () {
+                    // Call the parent to remove the child element
+                    structural.parent.emit('blockRemoved', {
+                        block: this
+                    });
+                }.bind(this)
+            }
+        });
     }
     /**
      * Retrieve the template from the class
