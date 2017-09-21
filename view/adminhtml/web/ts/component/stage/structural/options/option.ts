@@ -12,7 +12,7 @@ export class Option implements OptionInterface {
     icon: string;
     title: string;
     action: Function | false = false;
-    classes: Array<string> = [];
+    classes: string;
     sort: number;
     template?: string = null;
 
@@ -43,7 +43,7 @@ export class Option implements OptionInterface {
         this.icon = icon;
         this.title = title;
         this.action = action;
-        this.classes = classes;
+        this.classes = classes.join(' ');
         this.sort = sort;
         this.template = template;
     }

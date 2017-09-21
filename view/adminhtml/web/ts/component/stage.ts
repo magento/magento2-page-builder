@@ -30,7 +30,7 @@ export default class Stage extends EditableArea implements StageInterface {
         this.stage = this;
         this.parent = parent;
 
-        this.showBorders = parent.showBorder;
+        this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
 

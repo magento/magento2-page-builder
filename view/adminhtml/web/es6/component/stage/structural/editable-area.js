@@ -2,6 +2,7 @@ import EventEmitter from '../../event-emitter';
 import createBlock from '../../block/factory';
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import _ from 'underscore';
+import ko from 'knockout';
 /**
  * Class EditableArea
  *
