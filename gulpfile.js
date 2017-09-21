@@ -24,7 +24,7 @@ gulp.task('build', function () {
         .pipe(tsProject())
         .pipe(gulp.dest('view/adminhtml/web/es6'))
         .pipe(babel({
-            "presets": ["es2015", "stage-0"],
+            "presets": [["es2015", {"loose": true}], "stage-0"],
             "plugins": [
                 "system-import-transformer",
                 "transform-es2015-modules-amd",
