@@ -1,64 +1,89 @@
-define(['exports', '../stage/structural/abstract'], function (exports, _abstract) {
-  'use strict';
+define(['exports', '../stage/structural/abstract', '../stage/previews'], function (exports, _abstract, _previews) {
+    'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
+    Object.defineProperty(exports, "__esModule", {
+        value: true
     });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
 
-  var Block = function (_AbstractStructural) {
-    _inherits(Block, _AbstractStructural);
+    var _previews2 = _interopRequireDefault(_previews);
 
-    /**
-     * AbstractBlock constructor
-     *
-     * @param parent
-     * @param stage
-     * @param config
-     * @param formData
-     */
-    function Block(parent, stage, config, formData) {
-      _classCallCheck(this, Block);
-
-      var _this = _possibleConstructorReturn(this, _AbstractStructural.call(this, parent, stage));
-
-      _this.editOnInsert = true;
-      _this.childEntityKeys = [];
-      return _this;
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    return Block;
-  }(_abstract.AbstractStructural);
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-  exports.default = Block;
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
+
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
+
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
+
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+
+    var Block = function (_AbstractStructural) {
+        _inherits(Block, _AbstractStructural);
+
+        /**
+         * AbstractBlock constructor
+         *
+         * @param parent
+         * @param stage
+         * @param config
+         * @param formData
+         */
+        function Block(parent, stage, config, formData) {
+            _classCallCheck(this, Block);
+
+            var _this = _possibleConstructorReturn(this, _AbstractStructural.call(this, parent, stage));
+
+            _this.editOnInsert = true;
+            _this.childEntityKeys = [];
+            _this.template = 'Gene_BlueFoot/component/block/abstract.html';
+            _this.config = config;
+            _this.preview = (0, _previews2.default)(_this, config);
+            return _this;
+        }
+        /**
+         * Retrieve the template from the preview or super
+         *
+         * @returns {string}
+         */
+
+
+        Block.prototype.getTemplate = function getTemplate() {
+            if (this.preview.template) {
+                return this.preview.template;
+            }
+            // Implement preview template system here
+            return _AbstractStructural.prototype.getTemplate.call(this);
+        };
+
+        return Block;
+    }(_abstract.AbstractStructural);
+
+    exports.default = Block;
 });
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3RzL2NvbXBvbmVudC9ibG9jay9ibG9jay50cyJdLCJuYW1lcyI6WyJCbG9jayIsInBhcmVudCIsInN0YWdlIiwiY29uZmlnIiwiZm9ybURhdGEiLCJlZGl0T25JbnNlcnQiLCJjaGlsZEVudGl0eUtleXMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7TUFVY0EsSzs7O0FBT1Y7Ozs7Ozs7O0FBUUEsbUJBQVlDLE1BQVosRUFBMkNDLEtBQTNDLEVBQWtFQyxNQUFsRSxFQUErRUMsUUFBL0UsRUFBNEY7QUFBQTs7QUFBQSxtREFDeEYsK0JBQU1ILE1BQU4sRUFBY0MsS0FBZCxDQUR3Rjs7QUFaNUYsWUFBQUcsWUFBQSxHQUF3QixJQUF4QjtBQUVBLFlBQUFDLGVBQUEsR0FBaUMsRUFBakM7QUFVNEY7QUFFM0Y7Ozs7O29CQWpCU04sSyIsImZpbGUiOiJjb21wb25lbnQvYmxvY2svYmxvY2suanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBBYnN0cmFjdFN0cnVjdHVyYWwgfSBmcm9tICcuLi9zdGFnZS9zdHJ1Y3R1cmFsL2Fic3RyYWN0JztcbmltcG9ydCB7IEVkaXRhYmxlQXJlYUludGVyZmFjZSB9IGZyb20gJy4uL3N0YWdlL3N0cnVjdHVyYWwvZWRpdGFibGUtYXJlYS5kJ1xuaW1wb3J0IHsgU3RhZ2VJbnRlcmZhY2UgfSBmcm9tICcuLi9zdGFnZS5kJztcbmltcG9ydCB7IEJsb2NrIGFzIEJsb2NrSW50ZXJmYWNlIH0gZnJvbSAnLi9ibG9jay5kJztcblxuLyoqXG4gKiBBYnN0cmFjdEJsb2NrIGNsYXNzXG4gKlxuICogQGF1dGhvciBEYXZlIE1hY2F1bGF5IDxkbWFjYXVsYXlAbWFnZW50by5jb20+XG4gKi9cbmV4cG9ydCBkZWZhdWx0IGNsYXNzIEJsb2NrIGV4dGVuZHMgQWJzdHJhY3RTdHJ1Y3R1cmFsIGltcGxlbWVudHMgQmxvY2tJbnRlcmZhY2Uge1xuICAgIHRpdGxlOiBzdHJpbmc7XG4gICAgY29uZmlnOiBvYmplY3Q7XG4gICAgZWRpdE9uSW5zZXJ0OiBib29sZWFuID0gdHJ1ZTtcbiAgICBwcmV2aWV3OiBhbnk7IC8vIEB0b2RvXG4gICAgY2hpbGRFbnRpdHlLZXlzOiBBcnJheTxzdHJpbmc+ID0gW107XG5cbiAgICAvKipcbiAgICAgKiBBYnN0cmFjdEJsb2NrIGNvbnN0cnVjdG9yXG4gICAgICpcbiAgICAgKiBAcGFyYW0gcGFyZW50XG4gICAgICogQHBhcmFtIHN0YWdlXG4gICAgICogQHBhcmFtIGNvbmZpZ1xuICAgICAqIEBwYXJhbSBmb3JtRGF0YVxuICAgICAqL1xuICAgIGNvbnN0cnVjdG9yKHBhcmVudDogRWRpdGFibGVBcmVhSW50ZXJmYWNlLCBzdGFnZTogU3RhZ2VJbnRlcmZhY2UsIGNvbmZpZzogYW55LCBmb3JtRGF0YTogYW55KSB7XG4gICAgICAgIHN1cGVyKHBhcmVudCwgc3RhZ2UpO1xuICAgIH1cbn0iXX0=
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3RzL2NvbXBvbmVudC9ibG9jay9ibG9jay50cyJdLCJuYW1lcyI6WyJCbG9jayIsInBhcmVudCIsInN0YWdlIiwiY29uZmlnIiwiZm9ybURhdGEiLCJlZGl0T25JbnNlcnQiLCJjaGlsZEVudGl0eUtleXMiLCJ0ZW1wbGF0ZSIsInByZXZpZXciLCJnZXRUZW1wbGF0ZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O1FBWWNBLEs7OztBQVFWOzs7Ozs7OztBQVFBLHVCQUFZQyxNQUFaLEVBQTJDQyxLQUEzQyxFQUFrRUMsTUFBbEUsRUFBK0VDLFFBQS9FLEVBQTRGO0FBQUE7O0FBQUEseURBQ3hGLCtCQUFNSCxNQUFOLEVBQWNDLEtBQWQsQ0FEd0Y7O0FBYjVGLGtCQUFBRyxZQUFBLEdBQXdCLElBQXhCO0FBRUEsa0JBQUFDLGVBQUEsR0FBaUMsRUFBakM7QUFDQSxrQkFBQUMsUUFBQSxHQUFtQiw2Q0FBbkI7QUFhSSxrQkFBS0osTUFBTCxHQUFjQSxNQUFkO0FBQ0Esa0JBQUtLLE9BQUwsR0FBZSwrQkFBeUJMLE1BQXpCLENBQWY7QUFKd0Y7QUFLM0Y7QUFFRDs7Ozs7Ozt3QkFLQU0sVywwQkFBVztBQUNQLGdCQUFJLEtBQUtELE9BQUwsQ0FBYUQsUUFBakIsRUFBMkI7QUFDdkIsdUJBQU8sS0FBS0MsT0FBTCxDQUFhRCxRQUFwQjtBQUNIO0FBRUQ7QUFDQSxtQkFBTyw4QkFBTUUsV0FBTixXQUFQO0FBQ0gsUzs7Ozs7c0JBbkNTVCxLIiwiZmlsZSI6ImNvbXBvbmVudC9ibG9jay9ibG9jay5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEFic3RyYWN0U3RydWN0dXJhbCB9IGZyb20gJy4uL3N0YWdlL3N0cnVjdHVyYWwvYWJzdHJhY3QnO1xuaW1wb3J0IHsgRWRpdGFibGVBcmVhSW50ZXJmYWNlIH0gZnJvbSAnLi4vc3RhZ2Uvc3RydWN0dXJhbC9lZGl0YWJsZS1hcmVhLmQnXG5pbXBvcnQgeyBTdGFnZUludGVyZmFjZSB9IGZyb20gJy4uL3N0YWdlLmQnO1xuaW1wb3J0IHsgQmxvY2sgYXMgQmxvY2tJbnRlcmZhY2UgfSBmcm9tICcuL2Jsb2NrLmQnO1xuaW1wb3J0IGdldFByZXZpZXdJbnN0YW5jZSBmcm9tIFwiLi4vc3RhZ2UvcHJldmlld3NcIjtcbmltcG9ydCBQcmV2aWV3QmxvY2sgZnJvbSBcIi4vcHJldmlldy9ibG9ja1wiO1xuXG4vKipcbiAqIEFic3RyYWN0QmxvY2sgY2xhc3NcbiAqXG4gKiBAYXV0aG9yIERhdmUgTWFjYXVsYXkgPGRtYWNhdWxheUBtYWdlbnRvLmNvbT5cbiAqL1xuZXhwb3J0IGRlZmF1bHQgY2xhc3MgQmxvY2sgZXh0ZW5kcyBBYnN0cmFjdFN0cnVjdHVyYWwgaW1wbGVtZW50cyBCbG9ja0ludGVyZmFjZSB7XG4gICAgdGl0bGU6IHN0cmluZztcbiAgICBjb25maWc6IGFueTtcbiAgICBlZGl0T25JbnNlcnQ6IGJvb2xlYW4gPSB0cnVlO1xuICAgIHByZXZpZXc6IFByZXZpZXdCbG9jaztcbiAgICBjaGlsZEVudGl0eUtleXM6IEFycmF5PHN0cmluZz4gPSBbXTtcbiAgICB0ZW1wbGF0ZTogc3RyaW5nID0gJ0dlbmVfQmx1ZUZvb3QvY29tcG9uZW50L2Jsb2NrL2Fic3RyYWN0Lmh0bWwnO1xuXG4gICAgLyoqXG4gICAgICogQWJzdHJhY3RCbG9jayBjb25zdHJ1Y3RvclxuICAgICAqXG4gICAgICogQHBhcmFtIHBhcmVudFxuICAgICAqIEBwYXJhbSBzdGFnZVxuICAgICAqIEBwYXJhbSBjb25maWdcbiAgICAgKiBAcGFyYW0gZm9ybURhdGFcbiAgICAgKi9cbiAgICBjb25zdHJ1Y3RvcihwYXJlbnQ6IEVkaXRhYmxlQXJlYUludGVyZmFjZSwgc3RhZ2U6IFN0YWdlSW50ZXJmYWNlLCBjb25maWc6IGFueSwgZm9ybURhdGE6IGFueSkge1xuICAgICAgICBzdXBlcihwYXJlbnQsIHN0YWdlKTtcblxuICAgICAgICB0aGlzLmNvbmZpZyA9IGNvbmZpZztcbiAgICAgICAgdGhpcy5wcmV2aWV3ID0gZ2V0UHJldmlld0luc3RhbmNlKHRoaXMsIGNvbmZpZyk7XG4gICAgfVxuXG4gICAgLyoqXG4gICAgICogUmV0cmlldmUgdGhlIHRlbXBsYXRlIGZyb20gdGhlIHByZXZpZXcgb3Igc3VwZXJcbiAgICAgKiBcbiAgICAgKiBAcmV0dXJucyB7c3RyaW5nfVxuICAgICAqL1xuICAgIGdldFRlbXBsYXRlKCkge1xuICAgICAgICBpZiAodGhpcy5wcmV2aWV3LnRlbXBsYXRlKSB7XG4gICAgICAgICAgICByZXR1cm4gdGhpcy5wcmV2aWV3LnRlbXBsYXRlO1xuICAgICAgICB9XG5cbiAgICAgICAgLy8gSW1wbGVtZW50IHByZXZpZXcgdGVtcGxhdGUgc3lzdGVtIGhlcmVcbiAgICAgICAgcmV0dXJuIHN1cGVyLmdldFRlbXBsYXRlKCk7XG4gICAgfVxufSJdfQ==

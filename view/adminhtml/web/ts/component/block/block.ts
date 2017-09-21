@@ -2,6 +2,8 @@ import { AbstractStructural } from '../stage/structural/abstract';
 import { EditableAreaInterface } from '../stage/structural/editable-area.d'
 import { StageInterface } from '../stage.d';
 import { Block as BlockInterface } from './block.d';
+import getPreviewInstance from "../stage/previews";
+import PreviewBlock from "./preview/block";
 
 /**
  * AbstractBlock class
@@ -10,10 +12,11 @@ import { Block as BlockInterface } from './block.d';
  */
 export default class Block extends AbstractStructural implements BlockInterface {
     title: string;
-    config: object;
+    config: any;
     editOnInsert: boolean = true;
-    preview: any; // @todo
+    preview: PreviewBlock;
     childEntityKeys: Array<string> = [];
+    template: string = 'Gene_BlueFoot/component/block/abstract.html';
 
     /**
      * AbstractBlock constructor
@@ -25,5 +28,22 @@ export default class Block extends AbstractStructural implements BlockInterface 
      */
     constructor(parent: EditableAreaInterface, stage: StageInterface, config: any, formData: any) {
         super(parent, stage);
+
+        this.config = config;
+        this.preview = getPreviewInstance(this, config);
+    }
+
+    /**
+     * Retrieve the template from the preview or super
+     *
+     * @returns {string}
+     */
+    getTemplate() {
+        if (this.preview.template) {
+            return this.preview.template;
+        }
+
+        // Implement preview template system here
+        return super.getTemplate();
     }
 }

@@ -4,6 +4,7 @@ import ko from 'knockout';
 import Config from "../config";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
+import { load as loadPreviews } from "./previews";
 import "ko-draggable";
 import "ko-sortable";
 /**
@@ -28,7 +29,7 @@ export default class Panel extends uiComponent {
             stage: false,
             originalScrollTop: false
         };
-        // Previews.load
+        loadPreviews();
     }
     /**
      * Bind the stage to the panel

@@ -1,7 +1,6 @@
 import {StageInterface} from '../stage.d';
 import {EditableAreaInterface} from '../stage/structural/editable-area.d';
 import Block from './block';
-import AMDModule = KnockoutComponentTypes.AMDModule;
 
 interface ConfigObject {
     js_block?: string;

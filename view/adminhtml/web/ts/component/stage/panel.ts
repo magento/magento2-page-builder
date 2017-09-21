@@ -6,6 +6,7 @@ import Config  from "../config";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
 import { PanelInterface } from "./panel.d";
+import { load as loadPreviews } from "./previews";
 
 import "ko-draggable";
 import "ko-sortable";
@@ -39,7 +40,7 @@ export default class Panel extends uiComponent implements PanelInterface {
     constructor() {
         super();
 
-        // Previews.load
+        loadPreviews();
     }
 
     /**
