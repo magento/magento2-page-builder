@@ -2,7 +2,7 @@ import EditableArea from './editable-area';
 import { Options } from "./options";
 import { Option } from "./options/option";
 import $t from 'mage/translate';
-import * as ko from 'knockout';
+import ko from 'knockout';
 import mageUtils from 'mageUtils';
 /**
  * AbstractStructural class
@@ -37,19 +37,27 @@ export class AbstractStructural extends EditableArea {
     }
     onOptionEdit() {
     }
+    /**
+     * Handle duplicate of items
+     */
     onOptionDuplicate() {
+        let duplicate = Object.assign(Object.create(this), this);
+        this.parent.addChild(duplicate);
     }
-    onOptionRemove($data, structural) {
-        structural.stage.parent.confirmationDialog({
+    /**
+     * Handle block removal
+     */
+    onOptionRemove() {
+        this.stage.parent.confirmationDialog({
             title: 'Confirm Item Removal',
             content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
             actions: {
-                confirm: function () {
+                confirm: () => {
                     // Call the parent to remove the child element
-                    structural.parent.emit('blockRemoved', {
+                    this.parent.emit('blockRemoved', {
                         block: this
                     });
-                }.bind(this)
+                }
             }
         });
     }

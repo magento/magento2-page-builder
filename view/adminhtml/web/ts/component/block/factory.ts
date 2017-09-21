@@ -26,7 +26,18 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @param formData
  * @returns {Promise<BlockInterface>}
  */
-export default async function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
-    let c: typeof Block = await import(getBlockComponentPath(config));
-    return new c(parent, stage || parent.stage, config, formData || {});
+// export default async function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
+//     let c: typeof Block = await import(getBlockComponentPath(config));
+//     return new c(parent, stage || parent.stage, config, formData || {});
+// }
+export default function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
+    stage = stage || parent.stage;
+    formData = formData || {};
+    return new Promise(function (resolve, reject) {
+        require([getBlockComponentPath(config)], (BlockInstance: typeof Block) => {
+            return resolve(new BlockInstance(parent, stage, config, formData));
+        }, (error: string) => {
+            return reject(error);
+        });
+    });
 }

@@ -1,6 +1,6 @@
 import EditableArea from './stage/structural/editable-area';
 import Row from './stage/structural/row';
-import * as _ from 'underscore';
+import _ from 'underscore';
 /**
  * Stage class
  *

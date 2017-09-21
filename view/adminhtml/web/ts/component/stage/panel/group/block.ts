@@ -1,5 +1,5 @@
 import EventEmitter from "../../../event-emitter";
-import * as ko from 'knockout';
+import ko from 'knockout';
 
 /**
  * Block Class

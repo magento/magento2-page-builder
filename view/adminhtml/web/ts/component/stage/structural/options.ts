@@ -1,7 +1,7 @@
 import { OptionInterface } from './options/option.d';
 import { Structural } from './abstract.d';
-import * as _ from 'underscore';
-import * as ko from 'knockout';
+import _ from 'underscore';
+import ko from 'knockout';
 
 /**
  * Options Class

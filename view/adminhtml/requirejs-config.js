@@ -9,8 +9,8 @@ var config = {
         'xyperscript': 'Gene_BlueFoot/js/resource/xyperscript/xyperscript',
 
         /* Include our Knockout Sortable wrapper */
-        'bluefoot/ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
-        'bluefoot/ko-draggable': 'Gene_BlueFoot/js/resource/draggable/knockout-draggable',
+        'ko-sortable': 'Gene_BlueFoot/ts/resource/sortable/knockout-sortable',
+        'ko-draggable': 'Gene_BlueFoot/ts/resource/draggable/knockout-draggable',
         'ko-resizable': 'Gene_BlueFoot/ts/resource/resizable/knockout-resizable',
         'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',

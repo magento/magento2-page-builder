@@ -7,6 +7,7 @@ import createBlock from '../../block/factory';
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import { Block } from '../../block/block';
+import _ from 'underscore';
 
 /**
  * Class EditableArea
@@ -29,13 +30,15 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
             this.stage = stage;
         }
 
-        // Bind this context to event handlers
-        this.onBlockDropped = this.onBlockDropped.bind(this);
-        this.onBlockInstanceDropped = this.onBlockInstanceDropped.bind(this);
-        this.onBlockRemoved = this.onBlockRemoved.bind(this);
-        this.onBlockSorted = this.onBlockSorted.bind(this);
-        this.onSortStart = this.onSortStart.bind(this);
-        this.onSortStop = this.onSortStop.bind(this);
+        _.bindAll(
+            this,
+            'onBlockDropped',
+            'onBlockInstanceDropped',
+            'onBlockRemoved',
+            'onBlockSorted',
+            'onSortStart',
+            'onSortStop'
+        );
 
         // Attach events to structural elements
         // Block dropped from left hand panel

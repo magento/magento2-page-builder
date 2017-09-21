@@ -2,7 +2,7 @@ import EditableArea from './stage/structural/editable-area';
 import { StageInterface } from './stage.d';
 import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
-import * as _ from 'underscore';
+import _ from 'underscore';
 
 /**
  * Stage class

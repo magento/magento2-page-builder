@@ -1,11 +1,14 @@
-import * as uiComponent from 'uiComponent';
-import * as _ from 'underscore';
-import * as ko from 'knockout';
+import uiComponent from 'uiComponent';
+import _ from 'underscore';
+import ko from 'knockout';
 import { StageInterface } from "../stage.d";
 import Config  from "../config";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
 import { PanelInterface } from "./panel.d";
+
+import "ko-draggable";
+import "ko-sortable";
 
 /**
  * Panel Component
