@@ -41,8 +41,7 @@ export class AbstractStructural extends EditableArea {
      * Handle duplicate of items
      */
     onOptionDuplicate() {
-        let duplicate = Object.assign(Object.create(this), this);
-        this.parent.addChild(duplicate);
+        // @todo discuss how to best duplicate a block
     }
     /**
      * Handle block removal
