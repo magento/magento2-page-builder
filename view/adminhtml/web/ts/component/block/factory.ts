@@ -1,6 +1,7 @@
 import {StageInterface} from '../stage.d';
 import {EditableAreaInterface} from '../stage/structural/editable-area.d';
-import {Block} from './block';
+import Block from './block';
+import AMDModule = KnockoutComponentTypes.AMDModule;
 
 interface ConfigObject {
     js_block?: string;
@@ -34,8 +35,8 @@ export default function createBlock(config: ConfigObject, parent: EditableAreaIn
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {
-        require([getBlockComponentPath(config)], (BlockInstance: typeof Block) => {
-            return resolve(new BlockInstance(parent, stage, config, formData));
+        require([getBlockComponentPath(config)], (BlockInstance: any) => {
+            return resolve(new BlockInstance.default(parent, stage, config, formData));
         }, (error: string) => {
             return reject(error);
         });

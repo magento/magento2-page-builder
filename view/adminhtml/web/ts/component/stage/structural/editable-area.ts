@@ -6,7 +6,7 @@ import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
-import { Block } from '../../block/block';
+import Block from '../../block/block';
 import _ from 'underscore';
 
 /**

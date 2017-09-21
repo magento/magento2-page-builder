@@ -8,7 +8,7 @@ import { Block as BlockInterface } from './block.d';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Block extends AbstractStructural implements BlockInterface {
+export default class Block extends AbstractStructural implements BlockInterface {
     title: string;
     config: object;
     editOnInsert: boolean = true;

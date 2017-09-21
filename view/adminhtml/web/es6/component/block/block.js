@@ -4,7 +4,7 @@ import { AbstractStructural } from '../stage/structural/abstract';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Block extends AbstractStructural {
+export default class Block extends AbstractStructural {
     /**
      * AbstractBlock constructor
      *

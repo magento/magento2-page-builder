@@ -6,7 +6,7 @@ import createBlock from '../block/factory';
 import { EditableAreaInterface } from './structural/editable-area.d';
 import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
-import { Block } from '../block/block';
+import Block from '../block/block';
 
 /**
  * Build Class

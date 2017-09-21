@@ -25,7 +25,7 @@ export default function createBlock(config, parent, stage, formData) {
     formData = formData || {};
     return new Promise(function (resolve, reject) {
         require([getBlockComponentPath(config)], (BlockInstance) => {
-            return resolve(new BlockInstance(parent, stage, config, formData));
+            return resolve(new BlockInstance.default(parent, stage, config, formData));
         }, (error) => {
             return reject(error);
         });
