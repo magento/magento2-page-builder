@@ -8,13 +8,15 @@ import { Option } from "./options/option";
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export class Column extends AbstractStructural {
-    constructor() {
-        super(...arguments);
+    /**
+     * Abstract structural constructor
+     *
+     * @param parent
+     * @param stage
+     */
+    constructor(parent, stage) {
+        super(parent, stage);
         this.template = 'Gene_BlueFoot/component/stage/structural/column.html';
-        // @todo determine how to merge with super
-        this.options = [
-            new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10),
-        ];
         this.columnDefinition = ko.observable(Config.getInitConfig('column_definitions')[0]);
         this.widthClasses = ko.computed(function () {
             return this.columnDefinition()['className'];
@@ -22,6 +24,7 @@ export class Column extends AbstractStructural {
         this.serializedWidth = ko.computed(function () {
             return this.columnDefinition()['breakpoint'] * 100;
         }, this);
+        this.options.push(new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10));
     }
     /**
      * Add a column to self

@@ -4,6 +4,8 @@ import { RowInterface } from "./row.d";
 import { Column } from "./column";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
+import { EditableAreaInterface } from './editable-area.d';
+import { StageInterface } from '../../stage.d';
 import "ko-resizable";
 
 /**
@@ -14,10 +16,19 @@ import "ko-resizable";
 export default class Row extends AbstractStructural implements RowInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/row.html';
 
-    // @todo determine how to merge with super
-    options: Array<OptionInterface> = [
-        new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10),
-    ];
+    /**
+     * Abstract structural constructor
+     *
+     * @param parent
+     * @param stage
+     */
+    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+        super(parent, stage);
+        
+        this.options.push(
+            new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10)
+        );
+    }
 
     /**
      * Add a column to the row

@@ -18,6 +18,23 @@ export default class EditableArea extends EventEmitter {
         if (stage) {
             this.stage = stage;
         }
+        // Bind this context to event handlers
+        this.onBlockDropped = this.onBlockDropped.bind(this);
+        this.onBlockInstanceDropped = this.onBlockInstanceDropped.bind(this);
+        this.onBlockRemoved = this.onBlockRemoved.bind(this);
+        this.onBlockSorted = this.onBlockSorted.bind(this);
+        this.onSortStart = this.onSortStart.bind(this);
+        this.onSortStop = this.onSortStop.bind(this);
+        // Attach events to structural elements
+        // Block dropped from left hand panel
+        this.on('blockDropped', this.onBlockDropped);
+        // Block instance being moved between structural elements
+        this.on('blockInstanceDropped', this.onBlockInstanceDropped);
+        this.on('blockRemoved', this.onBlockRemoved);
+        // Block sorted within the same structural element
+        this.on('blockSorted', this.onBlockSorted);
+        this.on('sortStart', this.onSortStart);
+        this.on('sortStop', this.onSortStop);
     }
     /**
      * Set the children observable array into the class

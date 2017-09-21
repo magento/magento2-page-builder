@@ -5,6 +5,8 @@ import { moveArrayItemIntoArray } from "../../../utils/array";
 import { SortParams } from "./editable-area";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
+import { EditableAreaInterface } from './editable-area.d';
+import { StageInterface } from '../../stage.d';
 
 /**
  * Column class
@@ -14,11 +16,6 @@ import { OptionInterface } from "./options/option.d";
 export class Column extends AbstractStructural implements ColumnInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/column.html';
 
-    // @todo determine how to merge with super
-    options: Array<OptionInterface> = [
-        new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10),
-    ];
-
     columnDefinition: KnockoutObservable<object> = ko.observable(Config.getInitConfig('column_definitions')[0]);
     widthClasses: KnockoutComputed<string> = ko.computed(function (): string {
         return this.columnDefinition()['className'];
@@ -26,6 +23,20 @@ export class Column extends AbstractStructural implements ColumnInterface {
     serializedWidth: KnockoutComputed<number> = ko.computed(function () {
         return this.columnDefinition()['breakpoint'] * 100;
     }, this);
+
+    /**
+     * Abstract structural constructor
+     *
+     * @param parent
+     * @param stage
+     */
+    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+        super(parent, stage);
+        
+        this.options.push(
+            new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10)
+        );
+    }
 
     /**
      * Add a column to self
