@@ -10,7 +10,7 @@ interface OptionInterface {
     code: string;
     icon: string;
     title: string;
-    classes: Array<string>;
+    classes: string;
     sort: number;
     template?: string;
 }

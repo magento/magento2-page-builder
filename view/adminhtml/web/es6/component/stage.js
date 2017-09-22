@@ -1,6 +1,6 @@
 import EditableArea from './stage/structural/editable-area';
 import Row from './stage/structural/row';
-import * as _ from 'underscore';
+import _ from 'underscore';
 /**
  * Stage class
  *
@@ -20,7 +20,7 @@ export default class Stage extends EditableArea {
         this.setChildren(stageContent);
         this.stage = this;
         this.parent = parent;
-        this.showBorders = parent.showBorder;
+        this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
         _.bindAll(this, 'onSortingStart', 'onSortingStop');

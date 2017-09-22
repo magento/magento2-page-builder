@@ -7,7 +7,7 @@ import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 
 import $t from 'mage/translate';
-import * as ko from 'knockout';
+import ko from 'knockout';
 
 import mageUtils from 'mageUtils';
 
@@ -52,21 +52,27 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
 
     }
 
-    onOptionDuplicate() {
-
+    /**
+     * Handle duplicate of items
+     */
+    onOptionDuplicate(): void {
+        // @todo discuss how to best duplicate a block
     }
 
-    onOptionRemove($data: object, structural: StructuralInterface) {
-        structural.stage.parent.confirmationDialog({
+    /**
+     * Handle block removal
+     */
+    onOptionRemove(): void {
+        this.stage.parent.confirmationDialog({
             title: 'Confirm Item Removal',
             content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
             actions: {
-                confirm: function(){
+                confirm: () => {
                     // Call the parent to remove the child element
-                    structural.parent.emit('blockRemoved', {
+                    this.parent.emit('blockRemoved', {
                         block: this
                     });
-                }.bind(this)
+                }
             }
         });
     }

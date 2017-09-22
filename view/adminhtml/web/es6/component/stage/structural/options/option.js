@@ -18,14 +18,13 @@ export class Option {
      */
     constructor(parent, code, icon, title, action, classes, sort, template) {
         this.action = false;
-        this.classes = [];
         this.template = null;
         this.parent = parent;
         this.code = code;
         this.icon = icon;
         this.title = title;
         this.action = action;
-        this.classes = classes;
+        this.classes = classes.join(' ');
         this.sort = sort;
         this.template = template;
     }

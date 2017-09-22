@@ -1,6 +1,6 @@
-import * as _ from 'underscore';
-import * as jQuery from 'jquery';
-import * as cmsConfig from 'advanced-cms-init-config';
+import _ from 'underscore';
+import jQuery from 'jquery';
+import cmsConfig from 'advanced-cms-init-config';
 
 /**
  * Config class

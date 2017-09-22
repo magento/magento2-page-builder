@@ -2,7 +2,7 @@ import EditableArea from './stage/structural/editable-area';
 import { StageInterface } from './stage.d';
 import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
-import * as _ from 'underscore';
+import _ from 'underscore';
 
 /**
  * Stage class
@@ -30,7 +30,7 @@ export default class Stage extends EditableArea implements StageInterface {
         this.stage = this;
         this.parent = parent;
 
-        this.showBorders = parent.showBorder;
+        this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
 
