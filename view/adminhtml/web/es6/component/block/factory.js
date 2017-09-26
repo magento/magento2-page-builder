@@ -5,7 +5,7 @@
  * @returns {any|string}
  */
 function getBlockComponentPath(config) {
-    return config.js_block || 'bluefoot/block/abstract';
+    return config.js_block || 'Gene_BlueFoot/js/component/block/block';
 }
 /**
  * Create a new instance of a block

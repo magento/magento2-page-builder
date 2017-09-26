@@ -14,7 +14,7 @@ interface ConfigObject {
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigObject): string {
-    return config.js_block || 'bluefoot/block/abstract';
+    return config.js_block || 'Gene_BlueFoot/js/component/block/block';
 }
 
 /**
