@@ -242,11 +242,6 @@ define([
                 }
             });
 
-            // Include global fields in all fields
-            if (this.getValue('globalFields')) {
-                jQuery.extend(_allFields, this.getValue('globalFields'));
-            }
-
             return _allFields;
         },
 
