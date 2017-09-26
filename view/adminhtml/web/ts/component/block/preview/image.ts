@@ -18,9 +18,10 @@ export default class PreviewImageBlock extends PreviewBlock {
     }
 
     attachmentSuccess() {
-        return (file, response, bindKey) => {
+        return (file: any, response: any, bindKey: any) => {
             if (response.file) {
-                this.parent.data()[bindKey] = response.file;
+                let parentData = this.parent.data() as any;
+                parentData[bindKey] = response.file;
                 this.parent.data.valueHasMutated();
                 setTimeout(function () {
                     this.loading(false);
@@ -32,7 +33,7 @@ export default class PreviewImageBlock extends PreviewBlock {
     }
 
     attachmentDrop() {
-        return (event) => {
+        return (event: Event) => {
             jQuery(event.target).parents('.dz-drag-hover').removeClass('dz-drag-hover');
             this.loading(true);
         };

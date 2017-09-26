@@ -16,15 +16,7 @@ var config = {
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
 
-        'bluefoot/block/factory': 'Gene_BlueFoot/js/component/block/factory',
-        'bluefoot/block/abstract': 'Gene_BlueFoot/js/component/block/abstract',
-        'bluefoot/block/inline': 'Gene_BlueFoot/js/component/block/inline',
-        'bluefoot/block/preview/abstract': 'Gene_BlueFoot/js/component/block/preview/abstract',
-
-        'bluefoot/template': 'Gene_BlueFoot/js/component/template',
-
-        'bluefoot/stage/edit': 'Gene_BlueFoot/js/component/stage/edit',
-
+        /* BlueFoot config is required by other aspects of the system */
         'bluefoot/config': 'Gene_Bluefoot/js/component/config'
     },
     map: {

@@ -6,10 +6,7 @@ const gulp  = require('gulp'),
 /**
  * Run an initial build than watch for changes
  */
-gulp.task('default', function() {
-    gulp.start('build');
-    gulp.start('watch');
-});
+gulp.task('default', ['watch', 'build']);
 
 /**
  * Build the TypeScript files into production JS

@@ -19,7 +19,8 @@ export default class PreviewImageBlock extends PreviewBlock {
     attachmentSuccess() {
         return (file, response, bindKey) => {
             if (response.file) {
-                this.parent.data()[bindKey] = response.file;
+                let parentData = this.parent.data();
+                parentData[bindKey] = response.file;
                 this.parent.data.valueHasMutated();
                 setTimeout(function () {
                     this.loading(false);
