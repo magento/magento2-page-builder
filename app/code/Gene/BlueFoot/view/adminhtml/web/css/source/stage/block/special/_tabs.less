@@ -1,0 +1,59 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _tabs contains {less} for Tabs
+ *
+ */
+
+.gene-bluefoot-tabs {
+  margin-top:@margin;
+}
+
+.gene-bluefoot-tabs-navigation {
+  width:100%;
+  font-size:0;
+}
+
+.gene-bluefoot-navigation-tab {
+  border:1px solid @border_color;
+  border-right:0;
+  border-bottom:0;
+  background:@light_grey;
+  display:inline-block;
+  padding:@margin/2;
+  position:relative;
+  font-size:14px;
+  &:last-child {
+    border-right:1px solid @border_color;
+  }
+  &:after {
+    content:'';
+    left:0;
+    right:0;
+    bottom:-1px;
+    border-bottom:1px solid white;
+    position:absolute;
+    display:none;
+  }
+  &.active, &:hover {
+    background:white;
+  }
+  &.active:after {
+    display:block;
+  }
+}
+.gene-bluefoot-tabs-content {
+  box-sizing:border-box;
+  padding:@margin;
+  border:1px solid @border_color;
+  width:100%;
+}
+.bluefoot-tab-content {
+  display:none;
+  &.active {
+    display:block;
+  }
+}

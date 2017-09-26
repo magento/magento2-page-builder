@@ -1,0 +1,174 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Product List Template
+ *
+ * @var $block Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Category
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_entity = $block->getEntity();
+$_productCollection = $block->getProductCollection();
+$_helper = $block->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if ($_productCollection !== false && $_productCollection->count()): ?>
+    <?php
+    $viewMode = 'grid';
+    $image = 'bluefoot_page_list';
+    $showDescription = false;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div id="bluefoot-product-list-<?php echo $block->getEntity()->getId(); ?>"
+         class="products bluefoot-product-list <?php /* @escapeNotVerified */
+         echo $viewMode; ?> products-<?php /* @escapeNotVerified */
+         echo $viewMode; ?> <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+        <?php $iterator = 1; ?>
+        <ol class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php /* @escapeNotVerified */
+                echo ($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info" data-container="product-grid">
+                    <?php
+                    $productImage = $block->getImage($_product, $image);
+                    if ($pos != null) {
+                        $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                            . 'top:' . $productImage->getHeight() . 'px;"';
+                    }
+                    ?>
+                    <?php // Product Image ?>
+                    <a href="<?php /* @escapeNotVerified */
+                    echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                        <?php echo $productImage->toHtml(); ?>
+                    </a>
+
+                    <div class="product details product-item-details">
+                        <?php
+                        $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                        ?>
+                        <div class="bluefoot-full-width bluefoot-normalise-heights">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?php /* @escapeNotVerified */
+                                   echo $_product->getProductUrl() ?>">
+                                    <?php /* @escapeNotVerified */
+                                    echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </strong>
+                        </div>
+                        <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+                        <?php /* @escapeNotVerified */
+                        echo $block->getProductPrice($_product) ?>
+                        <?php echo $block->getProductDetailsHtml($_product); ?>
+
+                        <div class="product-item-inner">
+                            <div
+                                class="product actions product-item-actions"<?php echo strpos($pos, $viewMode . '-actions') ? $position : ''; ?>>
+                                <div
+                                    class="actions-primary"<?php echo strpos($pos, $viewMode . '-primary') ? $position : ''; ?>>
+                                    <?php if ($_product->isSaleable()): ?>
+                                        <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */
+                                        echo $postParams['action']; ?>" method="post">
+                                            <input type="hidden" name="product" value="<?php /* @escapeNotVerified */
+                                            echo $postParams['data']['product']; ?>">
+                                            <input type="hidden" name="<?php /* @escapeNotVerified */
+                                            echo \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED; ?>"
+                                                   value="<?php /* @escapeNotVerified */
+                                                   echo $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED]; ?>">
+                                            <?php echo $block->getBlockHtml('formkey') ?>
+
+                                            <button type="submit"
+                                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                    class="action tocart primary">
+                                                <span><?php /* @escapeNotVerified */
+                                                    echo __('Add to Cart') ?></span>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?php if ($_product->getIsSalable()): ?>
+                                            <div class="stock available"><span><?php /* @escapeNotVerified */
+                                                    echo __('In stock') ?></span></div>
+                                        <?php else: ?>
+                                            <div class="stock unavailable"><span><?php /* @escapeNotVerified */
+                                                    echo __('Out of stock') ?></span></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div data-role="add-to-links"
+                                     class="actions-secondary"<?php echo strpos($pos, $viewMode . '-secondary') ? $position : ''; ?>>
+                                    <?php if ($block->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                        <a href="#"
+                                           class="action towishlist"
+                                           title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           data-post='<?php /* @escapeNotVerified */
+                                           echo $block->getAddToWishlistParams($_product); ?>'
+                                           data-action="add-to-wishlist"
+                                           role="button">
+                                            <span><?php /* @escapeNotVerified */
+                                                echo __('Add to Wish List') ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php
+                                    $compareHelper = $block->helper('Magento\Catalog\Helper\Product\Compare');
+                                    ?>
+                                    <a href="#"
+                                       class="action tocompare"
+                                       title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+                                       aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+                                       data-post='<?php /* @escapeNotVerified */
+                                       echo $compareHelper->getPostDataParams($_product); ?>'
+                                       role="button">
+                                        <span><?php /* @escapeNotVerified */
+                                            echo __('Add to Compare') ?></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php if ($showDescription): ?>
+                                <div class="product description product-item-description">
+                                    <?php /* @escapeNotVerified */
+                                    echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                    <a href="<?php /* @escapeNotVerified */
+                                    echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */
+                                    echo $_productNameStripped ?>"
+                                       class="action more"><?php /* @escapeNotVerified */
+                                        echo __('Learn More') ?></a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo ($iterator == count($_productCollection) + 1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+
+        </script>
+    <?php endif; ?>
+
+    <script type="text/javascript">
+        require(['jquery', 'bluefoot/normalise-heights'], function (jQuery) {
+            jQuery(function () {
+                jQuery('#bluefoot-product-list-<?php echo $block->getEntity()->getId(); ?>').bluefootNormaliseHeights();
+            });
+        });
+    </script>
+<?php endif; ?>

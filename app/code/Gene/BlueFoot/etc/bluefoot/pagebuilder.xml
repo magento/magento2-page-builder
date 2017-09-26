@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="pagebuilder.xsd">
+    <content_blocks>
+        <templates>
+            <template name="core_magentowidget"
+                      file="Gene_BlueFoot::pagebuilder/blocks/core/magentowidget.phtml"
+                      preview="Gene_BlueFoot/component/block/preview/magentowidget.html"
+                      preview_block="Gene_BlueFoot/js/component/block/preview/magentowidget"
+                      block="Gene_BlueFoot/js/component/block/magentowidget" />
+            <template name="core_heading"
+                      file="Gene_BlueFoot::pagebuilder/blocks/core/basic/heading.phtml"
+                      preview="Gene_BlueFoot/component/block/preview/heading.html"
+                      block="Gene_BlueFoot/js/component/block/inline" />
+            <template name="core_textarea"
+                      file="Gene_BlueFoot::pagebuilder/blocks/core/basic/textarea.phtml"
+                      preview="Gene_BlueFoot/component/block/preview/textarea.html"
+                      preview_block="Gene_BlueFoot/js/component/block/preview/textarea"
+                      block="Gene_BlueFoot/js/component/block/inline" />
+            <template name="core_html"
+                      file="Gene_BlueFoot::pagebuilder/blocks/core/basic/html.phtml"
+                      preview="Gene_BlueFoot/component/block/preview/html.html" />
+            <template name="core_static_block" file="Gene_BlueFoot::pagebuilder/blocks/core/basic/static-block.phtml" />
+            <template name="core_button_item" file="Gene_BlueFoot::pagebuilder/blocks/core/basic/button-item.phtml" />
+            <template name="core_buttons" file="Gene_BlueFoot::pagebuilder/blocks/core/basic/buttons.phtml" />
+            <template name="core_hr" file="Gene_BlueFoot::pagebuilder/blocks/core/structural/hr.phtml" />
+            <template name="core_anchor" file="Gene_BlueFoot::pagebuilder/blocks/core/structural/anchor.phtml" />
+            <template name="core_image"
+                      file="Gene_BlueFoot::pagebuilder/blocks/core/media/image.phtml"
+                      preview="Gene_BlueFoot/component/block/preview/image.html"
+                      preview_block="Gene_BlueFoot/js/component/block/preview/image"
+                      block="Gene_BlueFoot/js/component/block/inline">
+                <asset name="fancybox_css" src="Gene_BlueFoot::js/resource/jquery/fancybox/jquery.fancybox.css" />
+                <!--<asset name="fancybox_js" src="Gene_BlueFoot::js/resource/jquery/fancybox/jquery.fancybox.pack.js" />-->
+            </template>
+            <template name="core_driver" file="Gene_BlueFoot::pagebuilder/blocks/core/media/driver.phtml" />
+            <template name="core_video" file="Gene_BlueFoot::pagebuilder/blocks/core/media/video.phtml" />
+            <template name="core_slider" file="Gene_BlueFoot::pagebuilder/blocks/core/media/slider.phtml" />
+            <template name="core_slider_item" file="Gene_BlueFoot::pagebuilder/blocks/core/media/slider-item.phtml">
+                <asset name="slick_css" src="Gene_BlueFoot::js/resource/jquery/slick/slick.css" />
+                <!--<asset name="slick_js" src="Gene_BlueFoot::js/resource/jquery/slick/slick.min.js" />-->
+            </template>
+            <template name="core_advanced_slider" file="Gene_BlueFoot::pagebuilder/blocks/core/media/advanced-slider.phtml">
+                <asset name="slick_css" src="Gene_BlueFoot::js/resource/jquery/slick/slick.css" />
+                <!--<asset name="slick_js" src="Gene_BlueFoot::js/resource/jquery/slick/slick.min.js" />-->
+            </template>
+            <template name="core_advanced_slider_item" file="Gene_BlueFoot::pagebuilder/blocks/core/media/advanced-slider-item.phtml" />
+            <template name="core_product" file="Gene_BlueFoot::pagebuilder/blocks/core/ecommerce/single.phtml" />
+            <template name="core_product_list" file="Gene_BlueFoot::pagebuilder/blocks/core/ecommerce/list.phtml" />
+            <template name="core_accordion" file="Gene_BlueFoot::pagebuilder/blocks/core/special/accordion.phtml">
+                <!--<asset name="accordion_js" src="Gene_BlueFoot::js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.js" />-->
+            </template>
+            <template name="core_accordion_item" file="Gene_BlueFoot::pagebuilder/blocks/core/special/accordion-item.phtml" />
+            <template name="core_newsletter" file="Gene_BlueFoot::pagebuilder/blocks/core/special/newsletter.phtml" />
+            <template name="core_map" file="Gene_BlueFoot::pagebuilder/blocks/core/special/map.phtml" />
+            <template name="core_search" file="Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml" />
+            <template name="core_tab" file="Gene_BlueFoot::pagebuilder/blocks/core/special/tabs.phtml">
+                <!--<asset name="tabs_js" src="Gene_BlueFoot::js/resource/jquery/bluefoot-tabs/jquery.bluefoot.tabs.min.js" />
+                <asset name="accordion_js" src="Gene_BlueFoot::js/resource/jquery/bluefoot-accordion/jquery.bluefoot.accordion.js" />-->
+            </template>
+            <template name="core_tab_item" file="Gene_BlueFoot::pagebuilder/blocks/core/special/tabs-item.phtml" />
+            <template name="core_code" file="Gene_BlueFoot::pagebuilder/blocks/core/special/code.phtml">
+                <!--<asset name="highlisht_js" src="Gene_BlueFoot::js/resource/highlight/highlight.pack" />-->
+                <asset name="highlight_css" src="Gene_BlueFoot::js/resource/highlight/styles/monokai-sublime.css" />
+            </template>
+        </templates>
+        <renderers>
+            <renderer name="core_default" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock" />
+            <renderer name="core_heading" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Heading" />
+            <renderer name="core_static_block" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\StaticBlock" />
+            <renderer name="core_video" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Video" />
+            <renderer name="core_product" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Single" />
+            <renderer name="core_product_list" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Category" />
+            <renderer name="core_newsletter" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter" />
+            <renderer name="core_map" class="Gene\BlueFoot\Block\Entity\PageBuilder\Block\Map" />
+        </renderers>
+    </content_blocks>
+
+    <structurals>
+        <structural code="row" icon="" name="Row" color="#a5a5a5">
+            <template file="Gene_BlueFoot::pagebuilder/structural/core/row.phtml" />
+            <renderer class="Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row" />
+            <fields>
+                <field code="template">
+                    <label><![CDATA[Template]]></label>
+                    <type>int</type>
+                    <data_type>select</data_type>
+                    <form_element>select</form_element>
+                    <code>template</code>
+                    <default>default.phtml</default>
+                    <source_model>Gene\BlueFoot\Model\Stage\Source\Row\Template</source_model>
+                </field>
+                <field code="background_image">
+                    <label><![CDATA[Background Image]]></label>
+                    <type>text</type>
+                    <data_type>text</data_type>
+                    <form_element>image</form_element>
+                    <code>background_image</code>
+                </field>
+                <field code="css_classes">
+                    <group><![CDATA[Advanced]]></group>
+                    <label><![CDATA[CSS Classes]]></label>
+                    <type>widget</type>
+                    <widget>tags</widget>
+                    <code>css_classes</code>
+                </field>
+            </fields>
+        </structural>
+        <structural code="column" icon="" name="Column" color="#858585">
+            <template file="Gene_BlueFoot::pagebuilder/structural/core/column.phtml" />
+            <renderer class="Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Column" />
+            <fields>
+                <field code="css_classes">
+                    <group><![CDATA[Advanced]]></group>
+                    <label><![CDATA[CSS Classes]]></label>
+                    <type>widget</type>
+                    <widget>tags</widget>
+                    <code>css_classes</code>
+                </field>
+            </fields>
+        </structural>
+    </structurals>
+
+    <global_fields>
+        <field code="align">
+            <group>Advanced</group>
+            <label><![CDATA[Alignmnent]]></label>
+            <type>widget</type>
+            <widget>align</widget>
+            <code>align</code>
+            <note><![CDATA[Default alignment will cause the element to inherit it's alignment from the parent elements.]]></note>
+        </field>
+        <field code="design_option">
+            <group>Advanced</group>
+            <label><![CDATA[Design Options]]></label>
+            <type>widget</type>
+            <widget>design_option</widget>
+            <code>design_option</code>
+        </field>
+    </global_fields>
+</config>

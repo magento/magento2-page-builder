@@ -1,0 +1,28 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Horizontal Rule Template
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $block->getEntity();
+$_styles = '';
+
+if ($_entity->getHrWidth()):
+    $_styles .= 'width:' . $_entity->getHrWidth() . ';';
+endif;
+if ($_entity->getHrHeight()):
+    $_styles .= 'border-width:' . $_entity->getHrHeight() . ';';
+endif;
+if ($_entity->getColor()):
+    $_styles .= 'border-color:#' . $_entity->getColor() . ';';
+endif;
+
+$block->setStyles($_styles);
+?>
+<hr class="bluefoot-hr <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?> />

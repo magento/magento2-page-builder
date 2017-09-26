@@ -1,0 +1,15 @@
+<?php
+/**
+ * Advanced CMS row template
+ *
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
+ */
+$advancedCms = $block->getAdvancedCms();
+?>
+<div<?php echo $advancedCms->getAttributeHtml(['class' => ['bluefoot-row']]); ?>>
+    <?php echo $advancedCms->getDataHtml(); ?>
+    <div class="bluefoot-wrapper">
+        <?php echo $block->getChildHtml(); ?>
+    </div>
+</div>
