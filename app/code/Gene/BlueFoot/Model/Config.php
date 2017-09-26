@@ -47,14 +47,4 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
     {
         return $this->get('content_blocks/' . $identifier);
     }
-
-    /**
-     * Return the defined global fields
-     *
-     * @return array|mixed|null
-     */
-    public function getGlobalFields()
-    {
-        return $this->get('global_fields');
-    }
 }
