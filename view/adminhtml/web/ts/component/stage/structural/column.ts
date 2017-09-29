@@ -1,12 +1,13 @@
-import { AbstractStructural } from './abstract';
+import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import Config  from "../../config";
 import { moveArrayItemIntoArray } from "../../../utils/array";
 import { SortParams } from "./editable-area";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
-import { EditableAreaInterface } from './editable-area.d';
-import { StageInterface } from '../../stage.d';
+import EditableArea from './editable-area';
+import Stage from '../../stage';
+import { DataObject } from "../../data-store";
 
 import ko from 'knockout';
 
@@ -15,7 +16,7 @@ import ko from 'knockout';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Column extends AbstractStructural implements ColumnInterface {
+export class Column extends Structural implements ColumnInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/column.html';
 
     columnDefinition: KnockoutObservable<object> = ko.observable(Config.getInitConfig('column_definitions')[0]);
@@ -32,7 +33,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+    constructor(parent: EditableArea, stage: Stage) {
         super(parent, stage);
         
         this.options.push(
@@ -46,7 +47,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param data
      * @returns {Column}
      */
-    addColumn(data?: object): ColumnInterface {
+    addColumn(data?: ColumnData): ColumnInterface {
         let column = new Column(this, this.stage);
         this.addChild(column);
         column.updateColumnData(data);
@@ -61,7 +62,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param data
      * @returns {Column}
      */
-    insertColumnAtIndex(direction: string, item: Column, data: object) {
+    insertColumnAtIndex(direction: string, item: Column, data: ColumnData) {
         let index = ko.utils.arrayIndexOf(item.parent.children(), item),
             column = new Column(item.parent, item.parent.stage);
 
@@ -91,7 +92,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
             this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
         }
 
-        this.data(data);
+        this.stage.store.update(this.id, data);
     }
 
     /**
@@ -109,7 +110,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
     }
 }
 
-interface ColumnData {
+export interface ColumnData extends DataObject {
     width?: number,
     className?: string
 }

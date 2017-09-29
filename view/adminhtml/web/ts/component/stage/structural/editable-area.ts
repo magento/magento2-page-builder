@@ -1,7 +1,7 @@
 import EventEmitter from '../../event-emitter';
-import { StageInterface } from '../../stage.d';
+import Stage from '../../stage';
 import { Block as BlockInterface } from '../../block/block.d';
-import { Structural as StructuralInterface } from './abstract.d';
+import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
 
@@ -10,22 +10,26 @@ import Block from '../../block/block';
 import _ from 'underscore';
 import ko from 'knockout';
 
+import mageUtils from 'mageUtils';
+import $t from 'mage/translate';
+
 /**
  * Class EditableArea
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
+    id: string = mageUtils.uniqueid();
     children: KnockoutObservableArray<any>;
-    stage: StageInterface;
-    title: string = 'Editable'; // @todo translate
+    stage: Stage;
+    title: string = $t('Editable');
 
     /**
      * EditableArea constructor
      *
      * @param stage
      */
-    constructor(stage?: StageInterface) {
+    constructor(stage?: Stage) {
         super();
         if (stage) {
             this.stage = stage;
@@ -66,11 +70,44 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     }
 
     /**
+     * Duplicate a child of the current instance 
+     * 
+     * @param child 
+     */
+    duplicateChild(child: Structural, autoAppend: boolean = true): Structural {
+        const store = this.stage.store,
+            instance = child.constructor as typeof Structural,
+            duplicate = new instance(child.parent, child.stage, child.config),
+            index = child.parent.children.indexOf(child) + 1 || null;
+
+        // Copy the data from the data store
+        store.update(
+            duplicate.id, 
+            Object.assign({}, store.get(child.id))
+        );
+
+        // Duplicate the instances children into the new duplicate
+        if (child.children().length > 0) {
+            child.children().forEach((subChild: Structural, index: number) => {
+                duplicate.addChild(
+                    duplicate.duplicateChild(subChild, false),
+                    index
+                );
+            });
+        }
+
+        if (autoAppend) {
+            this.addChild(duplicate, index);
+        }
+        return duplicate;
+    }
+
+    /**
      * Retrieve the stage instance
      *
-     * @returns {StageInterface}
+     * @returns {Stage}
      */
-    getStage(): StageInterface {
+    getStage(): Stage {
         return this.stage;
     }
 
@@ -80,7 +117,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @param child
      * @param index
      */
-    addChild(child: StructuralInterface, index?: number) :void {
+    addChild(child: Structural, index?: number) :void {
         child.parent = this;
         child.stage = this.stage;
         if (index) {
@@ -153,6 +190,9 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     onBlockRemoved(event: Event, params: BlockRemovedParams): void {
         params.block.emit('blockBeforeRemoved');
         this.removeChild(params.block);
+
+        // Remove the instance from the data store
+        this.stage.store.remove(this.id);
 
         /*
         if (ko.processAllDeferredBindingUpdates) {

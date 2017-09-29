@@ -2,31 +2,20 @@ import ko from 'knockout';
 import Config from "../../../config";
 
 /**
- * ColumnBuilder Interface
- *
+ * ColumnBuilder Class
  */
 export class ColumnBuilder {
     position: KnockoutObservable<string> = ko.observable('');
     visible: KnockoutObservable<boolean> = ko.observable(false);
     sizes: KnockoutObservableArray<object> = ko.observableArray([]);
+    template: string = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
 
     /**
      * ColumnBuilder constructor
-     *
      */
     constructor() {
-        this.position = ko.observable('');
-        // Build sizes to display
-        this.sizes = ko.observableArray([]);
-        this.buildOptions();
-    }
-
-    /**
-     * Build the sizes available for column widths
-     */
-    buildOptions = function () {
         const columnOptions = Config.getInitConfig("column_definitions");
-
+        
         for (let i = 0; i < columnOptions.length; i++) {
             if (columnOptions[i].displayed === true) {
                 this.sizes.push({
@@ -35,19 +24,12 @@ export class ColumnBuilder {
                 });
             }
         }
-    };
-
-    /**
-     * Retrieve template path
-     */
-    getTemplate = function () {
-        return 'Gene_BlueFoot/component/stage/structural/column/builder.html'
-    };
+    }
 
     /**
      * Show the builder from the column options scope
      */
-    showFromOption = function (option: any, structure: any) {
+    showFromOption() {
         this.position('top');
         this.visible(true);
     };
@@ -55,21 +37,21 @@ export class ColumnBuilder {
     /**
      * Change the visibility to visible
      */
-    show = function (option: any, structure: any) {
+    show() {
         this.visible(true);
     };
 
     /**
      * Change the visibility to hidden
      */
-    hide = function () {
+    hide() {
         this.visible(false);
     };
 
     /**
      * Proxy to the correct parent's add column function
      */
-    addColumn = function (parents: any, data: any) {
+    addColumn(parents: any, data: any) {
         // Nest a column (within a column or on a row)
         if (this.position() == 'top') {
             parents[1].addColumn(data);
@@ -78,5 +60,4 @@ export class ColumnBuilder {
             parents[1].insertColumnAtIndex(this.position(), parents[1], data);
         }
     };
-
 }

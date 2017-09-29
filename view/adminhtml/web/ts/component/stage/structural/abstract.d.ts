@@ -10,12 +10,11 @@ import { OptionInterface } from "./options/option.d";
 export interface Structural extends EditableAreaInterface {
     parent: EditableAreaInterface;
     stage: StageInterface;
-    id: string;
     title: string;
     wrapperStyle: KnockoutObservable<object>;
     options: Array<OptionInterface>;
-    data: KnockoutObservable<object>;
     children: KnockoutObservableArray<Structural>;
     template: string;
     childTemplate: string;
+    config: any;
 }

@@ -1,4 +1,4 @@
-import { StageInterface } from '../../stage.d';
+import Stage from '../../stage';
 import EditableArea from './editable-area';
 import { EditableAreaInterface } from './editable-area.d';
 import { Structural as StructuralInterface } from "./abstract.d";
@@ -10,18 +10,16 @@ import { ColumnBuilder } from "./column/builder";
 import $t from 'mage/translate';
 import ko from 'knockout';
 
-import mageUtils from 'mageUtils';
-
 /**
- * AbstractStructural class
+ * Structural class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class AbstractStructural extends EditableArea implements StructuralInterface {
-    parent: any;
-    stage: any;
-    id: string = mageUtils.uniqueid();
+export default class Structural extends EditableArea implements StructuralInterface {
+    parent: EditableArea;
+    stage: Stage;
     title: string;
+    config: any;
     wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
     public options: Array<OptionInterface> = [
         new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
@@ -30,7 +28,6 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
         new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove.bind(this), ['remove-structural'], 100)
     ];
     optionsInstance: Options = new Options(this, this.options);
-    data: KnockoutObservable<object> = ko.observable({});
     children: KnockoutObservableArray<StructuralInterface> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     childTemplate: string = 'Gene_BlueFoot/component/stage/structural/children.html';
@@ -42,12 +39,13 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+    constructor(parent: EditableArea, stage: Stage, config: any = {}) {
         super(stage);
         super.setChildren(this.children);
 
         this.parent = parent;
         this.stage = stage;
+        this.config = config;
     }
 
     onOptionEdit() {
@@ -58,7 +56,7 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
      * Handle duplicate of items
      */
     onOptionDuplicate(): void {
-        // @todo discuss how to best duplicate a block
+        this.parent.duplicateChild(this);
     }
 
     /**

@@ -3,6 +3,10 @@ import { StageInterface } from './stage.d';
 import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
 import _ from 'underscore';
+import DataStore from "./data-store";
+import {DataObject} from "./data-store";
+import Build from "./stage/build";
+import $t from "mage/translate";
 
 /**
  * Stage class
@@ -17,6 +21,7 @@ export default class Stage extends EditableArea implements StageInterface {
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
     serializeRole: string = 'stage';
+    store: DataStore;
 
     /**
      * Stage constructor
@@ -34,6 +39,9 @@ export default class Stage extends EditableArea implements StageInterface {
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
 
+        // Create our state and store objects
+        this.store = new DataStore();
+
         _.bindAll(
             this,
             'onSortingStart',
@@ -44,8 +52,12 @@ export default class Stage extends EditableArea implements StageInterface {
         this.on('sortingStop', this.onSortingStop);
     }
 
+    /**
+     * Run the build system to initiate from existing structures 
+     */
     build() {
-        // @todo
+        // @todo implement new storage format proposal build system
+        this.addRow(this);
         this.ready();
     }
 
@@ -65,9 +77,9 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param data
      * @returns {Row}
      */
-    addRow(self: StageInterface, data?: object): Row {
+    addRow(self: Stage, data?: DataObject): Row {
         let row = new Row(self, self);
-        row.data(data);
+        this.store.update(row.id, data);
         this.addChild(row);
 
         return row;
@@ -93,5 +105,21 @@ export default class Stage extends EditableArea implements StageInterface {
      */
     onSortingStop() {
         this.showBorders(false);
+    }
+
+    /**
+     * Remove a child from the observable array
+     *
+     * @param child
+     */
+    removeChild(child: any) :void {
+        if (this.children().length == 1) {
+            this.parent.alertDialog({
+                title: $t('Unable to Remove'),
+                content: $t('You are not able to remove the final row from the content.')
+            });
+            return;
+        }
+        super.removeChild(child);
     }
 }

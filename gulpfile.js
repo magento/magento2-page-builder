@@ -17,9 +17,9 @@ gulp.task('build', function () {
     });
 
     return tsResult = tsProject.src()
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(tsProject())
-        .pipe(gulp.dest('view/adminhtml/web/es6'))
+        //.pipe(gulp.dest('view/adminhtml/web/es6'))
         .pipe(babel({
             "presets": [["es2015", {"loose": true}], "stage-0"],
             "plugins": [
