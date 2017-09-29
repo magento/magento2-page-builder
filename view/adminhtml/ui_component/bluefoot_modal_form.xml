@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="label" xsi:type="string" translate="true">Edit</item>
+        <item name="template" xsi:type="string">templates/edit_form</item>
+    </argument>
+    <dataSource name="bluefoot_modal_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Cms\Model\Page\DataProvider</argument>
+            <argument name="name" xsi:type="string">bluefoot_heading_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">no_id</argument>
+            <argument name="requestFieldName" xsi:type="string">no_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="cms/page/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <modal name="modal">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="options" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Edit</item>
+                </item>
+            </item>
+        </argument>
+        <insertForm name="insert_form">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/insert-form</item>
+                    <item name="source" xsi:type="string">staging</item>
+                    <item name="ns" xsi:type="string">catalogstaging_category_update_remove_form</item>
+                    <item name="toolbarContainer" xsi:type="string">${ $.parentName }</item>
+                    <item name="externalProvider" xsi:type="string">${ $.ns }.catalogstaging_category_update_remove_form_data_source</item>
+                    <item name="formSubmitType" xsi:type="string">ajax</item>
+                    <item name="render_url" xsi:type="url" path="mui/index/render_handle">
+                        <param name="handle">cmsstaging_page_update</param>
+                        <param name="buttons">1</param>
+                    </item>
+                </item>
+            </argument>
+        </insertForm>
+    </modal>
+</container>
