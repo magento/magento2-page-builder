@@ -72,7 +72,8 @@ define(['exports', './event-emitter'], function (exports, _eventEmitter) {
             if (previousState && previousState === data) {
                 console.warn('Warning: You updated ' + id + ' with the same object as before. This will break the ability to rollback');
             }
-            this.state.set(id, data);
+            var storeData = Object.assign({}, data);
+            this.state.set(id, storeData);
             // Append the previous state into our snapshot storage
             if (previousState) {
                 var snapshots = this.snapshotStorage.get(id);
@@ -84,7 +85,7 @@ define(['exports', './event-emitter'], function (exports, _eventEmitter) {
                 }
                 this.snapshotLog.push(id);
             }
-            this.emitState(id, data);
+            this.emitState(id, storeData);
         };
 
         DataStore.prototype.updateKey = function updateKey(id, data, key) {

@@ -45,7 +45,8 @@ export default class DataStore extends EventEmitter {
             console.warn(`Warning: You updated ${id} with the same object as before. This will break the ability to rollback`);
         }
 
-        this.state.set(id, data);
+        const storeData = Object.assign({}, data);
+        this.state.set(id, storeData);
 
         // Append the previous state into our snapshot storage
         if (previousState) {
@@ -59,7 +60,7 @@ export default class DataStore extends EventEmitter {
             this.snapshotLog.push(id);
         }
 
-        this.emitState(id, data);
+        this.emitState(id, storeData);
     }
 
     /**
