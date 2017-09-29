@@ -41,7 +41,6 @@ export default class Stage extends EditableArea implements StageInterface {
 
         // Create our state and store objects
         this.store = new DataStore();
-        window.store = this.store;
 
         _.bindAll(
             this,

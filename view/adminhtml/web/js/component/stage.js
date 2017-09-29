@@ -75,7 +75,6 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _this.loading = parent.loading;
             // Create our state and store objects
             _this.store = new _dataStore2.default();
-            window.store = _this.store;
             _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
             _this.on('sortingStart', _this.onSortingStart);
             _this.on('sortingStop', _this.onSortingStop);

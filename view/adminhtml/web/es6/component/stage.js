@@ -27,7 +27,6 @@ export default class Stage extends EditableArea {
         this.loading = parent.loading;
         // Create our state and store objects
         this.store = new DataStore();
-        window.store = this.store;
         _.bindAll(this, 'onSortingStart', 'onSortingStop');
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
