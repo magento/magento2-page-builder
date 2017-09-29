@@ -8,6 +8,8 @@ import { OptionInterface } from "./options/option.d";
 import { EditableAreaInterface } from './editable-area.d';
 import { StageInterface } from '../../stage.d';
 
+import ko from 'knockout';
+
 /**
  * Column class
  *

@@ -2,6 +2,7 @@ import { AbstractStructural } from './abstract';
 import Config from "../../config";
 import { moveArrayItemIntoArray } from "../../../utils/array";
 import { Option } from "./options/option";
+import ko from 'knockout';
 /**
  * Column class
  *
