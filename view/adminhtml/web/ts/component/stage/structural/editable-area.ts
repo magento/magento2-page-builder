@@ -10,15 +10,19 @@ import Block from '../../block/block';
 import _ from 'underscore';
 import ko from 'knockout';
 
+import mageUtils from 'mageUtils';
+import $t from 'mage/translate';
+
 /**
  * Class EditableArea
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
+    id: string = mageUtils.uniqueid();
     children: KnockoutObservableArray<any>;
     stage: StageInterface;
-    title: string = 'Editable'; // @todo translate
+    title: string = $t('Editable');
 
     /**
      * EditableArea constructor
@@ -153,6 +157,9 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     onBlockRemoved(event: Event, params: BlockRemovedParams): void {
         params.block.emit('blockBeforeRemoved');
         this.removeChild(params.block);
+
+        // Remove the instance from the data store
+        this.stage.store.remove(this.id);
 
         /*
         if (ko.processAllDeferredBindingUpdates) {

@@ -1,6 +1,7 @@
 import EditableArea from './stage/structural/editable-area';
 import Row from './stage/structural/row';
 import _ from 'underscore';
+import DataStore from "./data-store";
 /**
  * Stage class
  *
@@ -23,6 +24,9 @@ export default class Stage extends EditableArea {
         this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
+        // Create our state and store objects
+        this.store = new DataStore();
+        window.store = this.store;
         _.bindAll(this, 'onSortingStart', 'onSortingStop');
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
@@ -48,7 +52,7 @@ export default class Stage extends EditableArea {
      */
     addRow(self, data) {
         let row = new Row(self, self);
-        row.data(data);
+        this.store.update(row.id, data);
         this.addChild(row);
         return row;
     }

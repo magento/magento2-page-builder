@@ -3,7 +3,6 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 import $t from 'mage/translate';
 import ko from 'knockout';
-import mageUtils from 'mageUtils';
 /**
  * AbstractStructural class
  *
@@ -18,7 +17,6 @@ export class AbstractStructural extends EditableArea {
      */
     constructor(parent, stage) {
         super(stage);
-        this.id = mageUtils.uniqueid();
         this.wrapperStyle = ko.observable({ width: '100%' });
         this.options = [
             new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
@@ -27,7 +25,6 @@ export class AbstractStructural extends EditableArea {
             new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove.bind(this), ['remove-structural'], 100)
         ];
         this.optionsInstance = new Options(this, this.options);
-        this.data = ko.observable({});
         this.children = ko.observableArray([]);
         this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
         this.childTemplate = 'Gene_BlueFoot/component/stage/structural/children.html';

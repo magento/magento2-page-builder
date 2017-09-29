@@ -71,7 +71,7 @@ export class Column extends AbstractStructural {
         else if (data.className) {
             this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
         }
-        this.data(data);
+        this.stage.store.update(this.id, data);
     }
     /**
      * Handle sort starting on column

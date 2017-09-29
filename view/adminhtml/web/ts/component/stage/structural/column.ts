@@ -7,6 +7,7 @@ import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 import { EditableAreaInterface } from './editable-area.d';
 import { StageInterface } from '../../stage.d';
+import { DataObject } from "../../data-store";
 
 /**
  * Column class
@@ -44,7 +45,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param data
      * @returns {Column}
      */
-    addColumn(data?: object): ColumnInterface {
+    addColumn(data?: ColumnData): ColumnInterface {
         let column = new Column(this, this.stage);
         this.addChild(column);
         column.updateColumnData(data);
@@ -59,7 +60,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param data
      * @returns {Column}
      */
-    insertColumnAtIndex(direction: string, item: Column, data: object) {
+    insertColumnAtIndex(direction: string, item: Column, data: ColumnData) {
         let index = ko.utils.arrayIndexOf(item.parent.children(), item),
             column = new Column(item.parent, item.parent.stage);
 
@@ -89,7 +90,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
             this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
         }
 
-        this.data(data);
+        this.stage.store.update(this.id, data);
     }
 
     /**
@@ -107,7 +108,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
     }
 }
 
-interface ColumnData {
+export interface ColumnData extends DataObject {
     width?: number,
     className?: string
 }

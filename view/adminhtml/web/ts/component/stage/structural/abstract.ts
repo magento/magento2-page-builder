@@ -9,17 +9,14 @@ import { OptionInterface } from "./options/option.d";
 import $t from 'mage/translate';
 import ko from 'knockout';
 
-import mageUtils from 'mageUtils';
-
 /**
  * AbstractStructural class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export class AbstractStructural extends EditableArea implements StructuralInterface {
-    parent: any;
-    stage: any;
-    id: string = mageUtils.uniqueid();
+    parent: EditableAreaInterface;
+    stage: StageInterface;
     title: string;
     wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
     public options: Array<OptionInterface> = [
@@ -29,7 +26,6 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
         new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove.bind(this), ['remove-structural'], 100)
     ];
     optionsInstance: Options = new Options(this, this.options);
-    data: KnockoutObservable<object> = ko.observable({});
     children: KnockoutObservableArray<StructuralInterface> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     childTemplate: string = 'Gene_BlueFoot/component/stage/structural/children.html';

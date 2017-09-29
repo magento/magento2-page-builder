@@ -3,6 +3,8 @@ import createBlock from '../../block/factory';
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import _ from 'underscore';
 import ko from 'knockout';
+import mageUtils from 'mageUtils';
+import $t from 'mage/translate';
 /**
  * Class EditableArea
  *
@@ -16,7 +18,8 @@ export default class EditableArea extends EventEmitter {
      */
     constructor(stage) {
         super();
-        this.title = 'Editable'; // @todo translate
+        this.id = mageUtils.uniqueid();
+        this.title = $t('Editable');
         if (stage) {
             this.stage = stage;
         }
@@ -122,6 +125,8 @@ export default class EditableArea extends EventEmitter {
     onBlockRemoved(event, params) {
         params.block.emit('blockBeforeRemoved');
         this.removeChild(params.block);
+        // Remove the instance from the data store
+        this.stage.store.remove(this.id);
         /*
         if (ko.processAllDeferredBindingUpdates) {
             ko.processAllDeferredBindingUpdates();

@@ -1,7 +1,7 @@
 import { AbstractStructural } from './abstract';
 import { ColumnInterface } from './column.d';
 import { RowInterface } from "./row.d";
-import { Column } from "./column";
+import { Column, ColumnData } from "./column";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 import { EditableAreaInterface } from './editable-area.d';
@@ -36,7 +36,7 @@ export default class Row extends AbstractStructural implements RowInterface {
      * @param data
      * @returns {any}
      */
-    addColumn(data?: object): ColumnInterface {
+    addColumn(data?: ColumnData): ColumnInterface {
         let column = new Column(this, this.stage);
         this.addChild(column);
         column.updateColumnData(data);

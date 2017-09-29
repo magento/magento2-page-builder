@@ -3,6 +3,8 @@ import { StageInterface } from './stage.d';
 import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
 import _ from 'underscore';
+import DataStore from "./data-store";
+import {DataObject} from "./data-store";
 
 /**
  * Stage class
@@ -17,6 +19,7 @@ export default class Stage extends EditableArea implements StageInterface {
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
     serializeRole: string = 'stage';
+    store: DataStore;
 
     /**
      * Stage constructor
@@ -33,6 +36,10 @@ export default class Stage extends EditableArea implements StageInterface {
         this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
+
+        // Create our state and store objects
+        this.store = new DataStore();
+        window.store = this.store;
 
         _.bindAll(
             this,
@@ -65,9 +72,9 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param data
      * @returns {Row}
      */
-    addRow(self: StageInterface, data?: object): Row {
+    addRow(self: StageInterface, data?: DataObject): Row {
         let row = new Row(self, self);
-        row.data(data);
+        this.store.update(row.id, data);
         this.addChild(row);
 
         return row;

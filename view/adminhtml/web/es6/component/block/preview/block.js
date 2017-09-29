@@ -8,19 +8,35 @@ import ko from "knockout";
 export default class PreviewBlock {
     constructor(parent, config) {
         this.template = '';
+        this.data = {};
         this.parent = parent;
         this.config = config;
         if (typeof this.config.preview_template !== 'undefined' && this.config.preview_template) {
             this.template = this.config.preview_template;
         }
-        this.setupFields();
+        // Subscribe to this blocks data in the store
+        this.parent.stage.store.subscribe((data) => {
+            const missingFields = _.difference(this.config.fields_list, _.keys(data));
+            missingFields.forEach((key) => {
+                this.updateDataValue(key, '');
+            });
+            _.forEach(data, (value, key) => {
+                this.updateDataValue(key, value);
+            });
+        }, this.parent.id);
     }
     /**
-     * Create each individuall field as an observable on the class
+     * Update the data value of a part of our internal Knockout data store
+     *
+     * @param {string} key
+     * @param value
      */
-    setupFields() {
-        _.forEach(this.config.fields_list, function (field) {
-            this[field] = ko.observable();
-        }.bind(this));
+    updateDataValue(key, value) {
+        if (typeof this.data[key] !== 'undefined' && ko.isObservable(this.data[key])) {
+            this.data[key](value);
+        }
+        else {
+            this.data[key] = ko.observable(value);
+        }
     }
 }
