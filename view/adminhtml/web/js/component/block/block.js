@@ -63,7 +63,7 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
         function Block(parent, stage, config, formData) {
             _classCallCheck(this, Block);
 
-            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
+            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage, config));
 
             _this.editOnInsert = true;
             _this.childEntityKeys = [];
@@ -73,7 +73,6 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
                 heading_type: 'h2',
                 title: (0, _translate2.default)('Type heading content here...')
             };
-            _this.config = config;
             _this.preview = (0, _previews2.default)(_this, config);
             _this.stage.store.update(_this.id, _underscore2.default.extend(_this.defaults, formData));
             return _this;

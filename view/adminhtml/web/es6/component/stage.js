@@ -2,6 +2,7 @@ import EditableArea from './stage/structural/editable-area';
 import Row from './stage/structural/row';
 import _ from 'underscore';
 import DataStore from "./data-store";
+import $t from "mage/translate";
 /**
  * Stage class
  *
@@ -26,6 +27,7 @@ export default class Stage extends EditableArea {
         this.loading = parent.loading;
         // Create our state and store objects
         this.store = new DataStore();
+        window.store = this.store;
         _.bindAll(this, 'onSortingStart', 'onSortingStop');
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
@@ -76,5 +78,20 @@ export default class Stage extends EditableArea {
      */
     onSortingStop() {
         this.showBorders(false);
+    }
+    /**
+     * Remove a child from the observable array
+     *
+     * @param child
+     */
+    removeChild(child) {
+        if (this.children().length == 1) {
+            this.parent.alertDialog({
+                title: $t('Unable to Remove'),
+                content: $t('You are not able to remove the final row from the content.')
+            });
+            return;
+        }
+        super.removeChild(child);
     }
 }

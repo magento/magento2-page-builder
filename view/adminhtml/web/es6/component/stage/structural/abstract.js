@@ -16,7 +16,7 @@ export default class Structural extends EditableArea {
      * @param parent
      * @param stage
      */
-    constructor(parent, stage) {
+    constructor(parent, stage, config = {}) {
         super(stage);
         this.wrapperStyle = ko.observable({ width: '100%' });
         this.options = [
@@ -33,6 +33,7 @@ export default class Structural extends EditableArea {
         super.setChildren(this.children);
         this.parent = parent;
         this.stage = stage;
+        this.config = config;
     }
     onOptionEdit() {
     }
@@ -40,6 +41,7 @@ export default class Structural extends EditableArea {
      * Handle duplicate of items
      */
     onOptionDuplicate() {
+        this.parent.duplicateChild(this);
     }
     /**
      * Handle block removal

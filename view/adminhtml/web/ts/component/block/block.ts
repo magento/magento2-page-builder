@@ -14,11 +14,11 @@ import _ from "underscore";
  */
 export default class Block extends Structural implements BlockInterface {
     title: string;
-    config: any;
     editOnInsert: boolean = true;
     preview: PreviewBlock;
     childEntityKeys: Array<string> = [];
     template: string = 'Gene_BlueFoot/component/block/abstract.html';
+    config: any;
 
     // @todo temp for testing, remove after building edit capabilities
     defaults: object = {
@@ -35,9 +35,8 @@ export default class Block extends Structural implements BlockInterface {
      * @param formData
      */
     constructor(parent: EditableArea, stage: Stage, config: any, formData: any) {
-        super(parent, stage);
+        super(parent, stage, config);
 
-        this.config = config;
         this.preview = getPreviewInstance(this, config);
 
         this.stage.store.update(

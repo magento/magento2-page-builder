@@ -19,6 +19,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     parent: EditableArea;
     stage: Stage;
     title: string;
+    config: any;
     wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
     public options: Array<OptionInterface> = [
         new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
@@ -38,12 +39,13 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableArea, stage: Stage) {
+    constructor(parent: EditableArea, stage: Stage, config: any = {}) {
         super(stage);
         super.setChildren(this.children);
 
         this.parent = parent;
         this.stage = stage;
+        this.config = config;
     }
 
     onOptionEdit() {
@@ -54,7 +56,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle duplicate of items
      */
     onOptionDuplicate(): void {
-        
+        this.parent.duplicateChild(this);
     }
 
     /**

@@ -57,6 +57,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
          * @param stage
          */
         function Structural(parent, stage) {
+            var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
             _classCallCheck(this, Structural);
 
             var _this = _possibleConstructorReturn(this, _EditableArea.call(this, stage));
@@ -71,12 +73,15 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _EditableArea.prototype.setChildren.call(_this, _this.children);
             _this.parent = parent;
             _this.stage = stage;
+            _this.config = config;
             return _this;
         }
 
         Structural.prototype.onOptionEdit = function onOptionEdit() {};
 
-        Structural.prototype.onOptionDuplicate = function onOptionDuplicate() {};
+        Structural.prototype.onOptionDuplicate = function onOptionDuplicate() {
+            this.parent.duplicateChild(this);
+        };
 
         Structural.prototype.onOptionRemove = function onOptionRemove() {
             var _this2 = this;

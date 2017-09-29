@@ -95,6 +95,27 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
             this.children = children;
         };
 
+        EditableArea.prototype.duplicateChild = function duplicateChild(child) {
+            var autoAppend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+            var store = this.stage.store,
+                instance = child.constructor,
+                duplicate = new instance(child.parent, child.stage, child.config),
+                index = child.parent.children.indexOf(child) + 1 || null;
+            // Copy the data from the data store
+            store.update(duplicate.id, Object.assign({}, store.get(child.id)));
+            // Duplicate the instances children into the new duplicate
+            if (child.children().length > 0) {
+                child.children().forEach(function (subChild, index) {
+                    duplicate.addChild(duplicate.duplicateChild(subChild, false), index);
+                });
+            }
+            if (autoAppend) {
+                this.addChild(duplicate, index);
+            }
+            return duplicate;
+        };
+
         EditableArea.prototype.getStage = function getStage() {
             return this.stage;
         };

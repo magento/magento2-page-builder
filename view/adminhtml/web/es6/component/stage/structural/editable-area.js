@@ -44,6 +44,26 @@ export default class EditableArea extends EventEmitter {
         this.children = children;
     }
     /**
+     * Duplicate a child of the current instance
+     *
+     * @param child
+     */
+    duplicateChild(child, autoAppend = true) {
+        const store = this.stage.store, instance = child.constructor, duplicate = new instance(child.parent, child.stage, child.config), index = child.parent.children.indexOf(child) + 1 || null;
+        // Copy the data from the data store
+        store.update(duplicate.id, Object.assign({}, store.get(child.id)));
+        // Duplicate the instances children into the new duplicate
+        if (child.children().length > 0) {
+            child.children().forEach((subChild, index) => {
+                duplicate.addChild(duplicate.duplicateChild(subChild, false), index);
+            });
+        }
+        if (autoAppend) {
+            this.addChild(duplicate, index);
+        }
+        return duplicate;
+    }
+    /**
      * Retrieve the stage instance
      *
      * @returns {Stage}

@@ -1,4 +1,4 @@
-define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store'], function (exports, _editableArea, _row, _underscore, _dataStore) {
+define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -12,6 +12,8 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
     var _underscore2 = _interopRequireDefault(_underscore);
 
     var _dataStore2 = _interopRequireDefault(_dataStore);
+
+    var _translate2 = _interopRequireDefault(_translate);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -73,6 +75,7 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _this.loading = parent.loading;
             // Create our state and store objects
             _this.store = new _dataStore2.default();
+            window.store = _this.store;
             _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
             _this.on('sortingStart', _this.onSortingStart);
             _this.on('sortingStop', _this.onSortingStop);
@@ -120,6 +123,17 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
 
         Stage.prototype.onSortingStop = function onSortingStop() {
             this.showBorders(false);
+        };
+
+        Stage.prototype.removeChild = function removeChild(child) {
+            if (this.children().length == 1) {
+                this.parent.alertDialog({
+                    title: (0, _translate2.default)('Unable to Remove'),
+                    content: (0, _translate2.default)('You are not able to remove the final row from the content.')
+                });
+                return;
+            }
+            _EditableArea.prototype.removeChild.call(this, child);
         };
 
         return Stage;

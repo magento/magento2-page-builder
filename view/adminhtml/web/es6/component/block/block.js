@@ -17,7 +17,7 @@ export default class Block extends Structural {
      * @param formData
      */
     constructor(parent, stage, config, formData) {
-        super(parent, stage);
+        super(parent, stage, config);
         this.editOnInsert = true;
         this.childEntityKeys = [];
         this.template = 'Gene_BlueFoot/component/block/abstract.html';
@@ -26,7 +26,6 @@ export default class Block extends Structural {
             heading_type: 'h2',
             title: $t('Type heading content here...')
         };
-        this.config = config;
         this.preview = getPreviewInstance(this, config);
         this.stage.store.update(this.id, _.extend(this.defaults, formData));
     }
