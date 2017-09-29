@@ -1,6 +1,7 @@
 import EditableArea from './editable-area';
 import { Options } from "./options";
 import { Option } from "./options/option";
+import { ColumnBuilder } from "./column/builder";
 import $t from 'mage/translate';
 import ko from 'knockout';
 /**
@@ -28,6 +29,7 @@ export class AbstractStructural extends EditableArea {
         this.children = ko.observableArray([]);
         this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
         this.childTemplate = 'Gene_BlueFoot/component/stage/structural/children.html';
+        this.columnBuilder = new ColumnBuilder();
         super.setChildren(this.children);
         this.parent = parent;
         this.stage = stage;

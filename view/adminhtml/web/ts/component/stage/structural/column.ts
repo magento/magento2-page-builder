@@ -9,6 +9,8 @@ import { EditableAreaInterface } from './editable-area.d';
 import { StageInterface } from '../../stage.d';
 import { DataObject } from "../../data-store";
 
+import ko from 'knockout';
+
 /**
  * Column class
  *
