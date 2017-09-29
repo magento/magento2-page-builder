@@ -5,6 +5,7 @@ import { Structural as StructuralInterface } from "./abstract.d";
 import { Options } from "./options";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
+import { ColumnBuilder } from "./column/builder";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
@@ -33,6 +34,7 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
     children: KnockoutObservableArray<StructuralInterface> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     childTemplate: string = 'Gene_BlueFoot/component/stage/structural/children.html';
+    columnBuilder: ColumnBuilder = new ColumnBuilder();
 
     /**
      * Abstract structural constructor

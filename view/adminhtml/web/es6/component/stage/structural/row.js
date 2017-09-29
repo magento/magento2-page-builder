@@ -17,7 +17,7 @@ export default class Row extends AbstractStructural {
     constructor(parent, stage) {
         super(parent, stage);
         this.template = 'Gene_BlueFoot/component/stage/structural/row.html';
-        this.options.push(new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10));
+        this.options.push(new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10));
     }
     /**
      * Add a column to the row
