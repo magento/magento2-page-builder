@@ -5,6 +5,14 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
     value: true
   });
 
+  var _abstract2 = _interopRequireDefault(_abstract);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -35,8 +43,8 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Row = function (_AbstractStructural) {
-    _inherits(Row, _AbstractStructural);
+  var Row = function (_Structural) {
+    _inherits(Row, _Structural);
 
     /**
      * Abstract structural constructor
@@ -47,7 +55,7 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
     function Row(parent, stage) {
       _classCallCheck(this, Row);
 
-      var _this = _possibleConstructorReturn(this, _AbstractStructural.call(this, parent, stage));
+      var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
 
       _this.template = 'Gene_BlueFoot/component/stage/structural/row.html';
       _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
@@ -69,7 +77,7 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
     };
 
     return Row;
-  }(_abstract.AbstractStructural);
+  }(_abstract2.default);
 
   exports.default = Row;
 });

@@ -1,4 +1,4 @@
-import { AbstractStructural } from '../stage/structural/abstract';
+import Structural from '../stage/structural/abstract';
 import getPreviewInstance from "../stage/previews";
 import $t from "mage/translate";
 import _ from "underscore";
@@ -7,7 +7,7 @@ import _ from "underscore";
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export default class Block extends AbstractStructural {
+export default class Block extends Structural {
     /**
      * AbstractBlock constructor
      *

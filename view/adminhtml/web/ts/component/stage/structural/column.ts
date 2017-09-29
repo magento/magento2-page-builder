@@ -1,12 +1,12 @@
-import { AbstractStructural } from './abstract';
+import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import Config  from "../../config";
 import { moveArrayItemIntoArray } from "../../../utils/array";
 import { SortParams } from "./editable-area";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
-import { EditableAreaInterface } from './editable-area.d';
-import { StageInterface } from '../../stage.d';
+import EditableArea from './editable-area';
+import Stage from '../../stage';
 import { DataObject } from "../../data-store";
 
 import ko from 'knockout';
@@ -16,7 +16,7 @@ import ko from 'knockout';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Column extends AbstractStructural implements ColumnInterface {
+export class Column extends Structural implements ColumnInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/column.html';
 
     columnDefinition: KnockoutObservable<object> = ko.observable(Config.getInitConfig('column_definitions')[0]);
@@ -33,7 +33,7 @@ export class Column extends AbstractStructural implements ColumnInterface {
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+    constructor(parent: EditableArea, stage: Stage) {
         super(parent, stage);
         
         this.options.push(

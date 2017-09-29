@@ -1,7 +1,7 @@
 import EventEmitter from '../../event-emitter';
-import { StageInterface } from '../../stage.d';
+import Stage from '../../stage';
 import { Block as BlockInterface } from '../../block/block.d';
-import { Structural as StructuralInterface } from './abstract.d';
+import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
 
@@ -21,7 +21,7 @@ import $t from 'mage/translate';
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
     id: string = mageUtils.uniqueid();
     children: KnockoutObservableArray<any>;
-    stage: StageInterface;
+    stage: Stage;
     title: string = $t('Editable');
 
     /**
@@ -29,7 +29,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      *
      * @param stage
      */
-    constructor(stage?: StageInterface) {
+    constructor(stage?: Stage) {
         super();
         if (stage) {
             this.stage = stage;
@@ -72,9 +72,9 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     /**
      * Retrieve the stage instance
      *
-     * @returns {StageInterface}
+     * @returns {Stage}
      */
-    getStage(): StageInterface {
+    getStage(): Stage {
         return this.stage;
     }
 
@@ -84,7 +84,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @param child
      * @param index
      */
-    addChild(child: StructuralInterface, index?: number) :void {
+    addChild(child: Structural, index?: number) :void {
         child.parent = this;
         child.stage = this.stage;
         if (index) {

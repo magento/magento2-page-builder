@@ -1,4 +1,4 @@
-import { AbstractStructural } from './abstract';
+import Structural from './abstract';
 import Config from "../../config";
 import { moveArrayItemIntoArray } from "../../../utils/array";
 import { Option } from "./options/option";
@@ -8,7 +8,7 @@ import ko from 'knockout';
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class Column extends AbstractStructural {
+export class Column extends Structural {
     /**
      * Abstract structural constructor
      *

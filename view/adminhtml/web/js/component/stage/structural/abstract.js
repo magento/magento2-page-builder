@@ -4,7 +4,6 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.AbstractStructural = undefined;
 
     var _editableArea2 = _interopRequireDefault(_editableArea);
 
@@ -48,8 +47,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
         if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
 
-    var AbstractStructural = exports.AbstractStructural = function (_EditableArea) {
-        _inherits(AbstractStructural, _EditableArea);
+    var Structural = function (_EditableArea) {
+        _inherits(Structural, _EditableArea);
 
         /**
          * Abstract structural constructor
@@ -57,8 +56,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
          * @param parent
          * @param stage
          */
-        function AbstractStructural(parent, stage) {
-            _classCallCheck(this, AbstractStructural);
+        function Structural(parent, stage) {
+            _classCallCheck(this, Structural);
 
             var _this = _possibleConstructorReturn(this, _EditableArea.call(this, stage));
 
@@ -75,21 +74,11 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             return _this;
         }
 
-        AbstractStructural.prototype.onOptionEdit = function onOptionEdit() {};
-        /**
-         * Handle duplicate of items
-         */
+        Structural.prototype.onOptionEdit = function onOptionEdit() {};
 
+        Structural.prototype.onOptionDuplicate = function onOptionDuplicate() {};
 
-        AbstractStructural.prototype.onOptionDuplicate = function onOptionDuplicate() {}
-        // @todo discuss how to best duplicate a block
-
-        /**
-         * Handle block removal
-         */
-        ;
-
-        AbstractStructural.prototype.onOptionRemove = function onOptionRemove() {
+        Structural.prototype.onOptionRemove = function onOptionRemove() {
             var _this2 = this;
 
             this.stage.parent.confirmationDialog({
@@ -105,29 +94,17 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
                 }
             });
         };
-        /**
-         * Retrieve the template from the class
-         *
-         * @deprecated use this.template instead
-         * @returns {string}
-         */
 
-
-        AbstractStructural.prototype.getTemplate = function getTemplate() {
+        Structural.prototype.getTemplate = function getTemplate() {
             return this.template;
         };
-        /**
-         * Retrieve the child template
-         *
-         * @deprecated
-         * @returns {string}
-         */
 
-
-        AbstractStructural.prototype.getChildTemplate = function getChildTemplate() {
+        Structural.prototype.getChildTemplate = function getChildTemplate() {
             return this.childTemplate;
         };
 
-        return AbstractStructural;
+        return Structural;
     }(_editableArea2.default);
+
+    exports.default = Structural;
 });

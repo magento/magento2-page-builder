@@ -5,11 +5,11 @@ import { ColumnBuilder } from "./column/builder";
 import $t from 'mage/translate';
 import ko from 'knockout';
 /**
- * AbstractStructural class
+ * Structural class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class AbstractStructural extends EditableArea {
+export default class Structural extends EditableArea {
     /**
      * Abstract structural constructor
      *
@@ -40,7 +40,6 @@ export class AbstractStructural extends EditableArea {
      * Handle duplicate of items
      */
     onOptionDuplicate() {
-        // @todo discuss how to best duplicate a block
     }
     /**
      * Handle block removal

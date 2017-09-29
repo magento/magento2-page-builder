@@ -5,6 +5,8 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
         value: true
     });
 
+    var _abstract2 = _interopRequireDefault(_abstract);
+
     var _previews2 = _interopRequireDefault(_previews);
 
     var _translate2 = _interopRequireDefault(_translate);
@@ -47,8 +49,8 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
         if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
 
-    var Block = function (_AbstractStructural) {
-        _inherits(Block, _AbstractStructural);
+    var Block = function (_Structural) {
+        _inherits(Block, _Structural);
 
         /**
          * AbstractBlock constructor
@@ -61,7 +63,7 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
         function Block(parent, stage, config, formData) {
             _classCallCheck(this, Block);
 
-            var _this = _possibleConstructorReturn(this, _AbstractStructural.call(this, parent, stage));
+            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
 
             _this.editOnInsert = true;
             _this.childEntityKeys = [];
@@ -88,11 +90,11 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
                 return this.preview.template;
             }
             // Implement preview template system here
-            return _AbstractStructural.prototype.getTemplate.call(this);
+            return _Structural.prototype.getTemplate.call(this);
         };
 
         return Block;
-    }(_abstract.AbstractStructural);
+    }(_abstract2.default);
 
     exports.default = Block;
 });

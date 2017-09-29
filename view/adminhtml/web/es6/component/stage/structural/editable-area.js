@@ -46,7 +46,7 @@ export default class EditableArea extends EventEmitter {
     /**
      * Retrieve the stage instance
      *
-     * @returns {StageInterface}
+     * @returns {Stage}
      */
     getStage() {
         return this.stage;

@@ -5,6 +5,7 @@ import Row from './stage/structural/row';
 import _ from 'underscore';
 import DataStore from "./data-store";
 import {DataObject} from "./data-store";
+import Build from "./stage/build";
 
 /**
  * Stage class
@@ -39,7 +40,6 @@ export default class Stage extends EditableArea implements StageInterface {
 
         // Create our state and store objects
         this.store = new DataStore();
-        window.store = this.store;
 
         _.bindAll(
             this,
@@ -51,8 +51,12 @@ export default class Stage extends EditableArea implements StageInterface {
         this.on('sortingStop', this.onSortingStop);
     }
 
+    /**
+     * Run the build system to initiate from existing structures 
+     */
     build() {
-        // @todo
+        // @todo implement new storage format proposal build system
+        this.addRow(this);
         this.ready();
     }
 
@@ -72,7 +76,7 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param data
      * @returns {Row}
      */
-    addRow(self: StageInterface, data?: DataObject): Row {
+    addRow(self: Stage, data?: DataObject): Row {
         let row = new Row(self, self);
         this.store.update(row.id, data);
         this.addChild(row);

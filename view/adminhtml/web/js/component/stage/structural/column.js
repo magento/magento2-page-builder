@@ -6,6 +6,8 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
     });
     exports.Column = undefined;
 
+    var _abstract2 = _interopRequireDefault(_abstract);
+
     var _config2 = _interopRequireDefault(_config);
 
     var _knockout2 = _interopRequireDefault(_knockout);
@@ -46,8 +48,8 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
         if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
 
-    var Column = exports.Column = function (_AbstractStructural) {
-        _inherits(Column, _AbstractStructural);
+    var Column = exports.Column = function (_Structural) {
+        _inherits(Column, _Structural);
 
         /**
          * Abstract structural constructor
@@ -58,7 +60,7 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
         function Column(parent, stage) {
             _classCallCheck(this, Column);
 
-            var _this = _possibleConstructorReturn(this, _AbstractStructural.call(this, parent, stage));
+            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
 
             _this.template = 'Gene_BlueFoot/component/stage/structural/column.html';
             _this.columnDefinition = _knockout2.default.observable(_config2.default.getInitConfig('column_definitions')[0]);
@@ -136,9 +138,9 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
         Column.prototype.onSortStart = function onSortStart(event, params) {
             // Copy over the column class for the width
             jQuery(params.placeholder).addClass(this.widthClasses());
-            return _AbstractStructural.prototype.onSortStart.call(this, event, params);
+            return _Structural.prototype.onSortStart.call(this, event, params);
         };
 
         return Column;
-    }(_abstract.AbstractStructural);
+    }(_abstract2.default);
 });

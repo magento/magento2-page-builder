@@ -1,6 +1,6 @@
-import { AbstractStructural } from '../stage/structural/abstract';
-import { EditableAreaInterface } from '../stage/structural/editable-area.d'
-import { StageInterface } from '../stage.d';
+import Structural from '../stage/structural/abstract';
+import EditableArea from '../stage/structural/editable-area'
+import Stage from '../stage';
 import { Block as BlockInterface } from './block.d';
 import getPreviewInstance from "../stage/previews";
 import PreviewBlock from "./preview/block";
@@ -12,7 +12,7 @@ import _ from "underscore";
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export default class Block extends AbstractStructural implements BlockInterface {
+export default class Block extends Structural implements BlockInterface {
     title: string;
     config: any;
     editOnInsert: boolean = true;
@@ -34,7 +34,7 @@ export default class Block extends AbstractStructural implements BlockInterface 
      * @param config
      * @param formData
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface, config: any, formData: any) {
+    constructor(parent: EditableArea, stage: Stage, config: any, formData: any) {
         super(parent, stage);
 
         this.config = config;

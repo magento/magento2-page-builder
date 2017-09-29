@@ -1,4 +1,4 @@
-import { AbstractStructural } from './abstract';
+import Structural from './abstract';
 import { Column } from "./column";
 import { Option } from "./options/option";
 import "ko-resizable";
@@ -7,7 +7,7 @@ import "ko-resizable";
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export default class Row extends AbstractStructural {
+export default class Row extends Structural {
     /**
      * Abstract structural constructor
      *

@@ -1,4 +1,4 @@
-import { StageInterface } from '../../stage.d';
+import Stage from '../../stage';
 import EditableArea from './editable-area';
 import { EditableAreaInterface } from './editable-area.d';
 import { Structural as StructuralInterface } from "./abstract.d";
@@ -11,13 +11,13 @@ import $t from 'mage/translate';
 import ko from 'knockout';
 
 /**
- * AbstractStructural class
+ * Structural class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export class AbstractStructural extends EditableArea implements StructuralInterface {
-    parent: EditableAreaInterface;
-    stage: StageInterface;
+export default class Structural extends EditableArea implements StructuralInterface {
+    parent: EditableArea;
+    stage: Stage;
     title: string;
     wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
     public options: Array<OptionInterface> = [
@@ -38,7 +38,7 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+    constructor(parent: EditableArea, stage: Stage) {
         super(stage);
         super.setChildren(this.children);
 
@@ -54,7 +54,7 @@ export class AbstractStructural extends EditableArea implements StructuralInterf
      * Handle duplicate of items
      */
     onOptionDuplicate(): void {
-        // @todo discuss how to best duplicate a block
+        
     }
 
     /**

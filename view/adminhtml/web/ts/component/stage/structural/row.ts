@@ -1,11 +1,11 @@
-import { AbstractStructural } from './abstract';
+import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import { RowInterface } from "./row.d";
 import { Column, ColumnData } from "./column";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
-import { EditableAreaInterface } from './editable-area.d';
-import { StageInterface } from '../../stage.d';
+import EditableArea from '../../stage/structural/editable-area'
+import Stage from '../../stage';
 import "ko-resizable";
 
 /**
@@ -13,7 +13,7 @@ import "ko-resizable";
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
-export default class Row extends AbstractStructural implements RowInterface {
+export default class Row extends Structural implements RowInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/row.html';
 
     /**
@@ -22,7 +22,7 @@ export default class Row extends AbstractStructural implements RowInterface {
      * @param parent
      * @param stage
      */
-    constructor(parent: EditableAreaInterface, stage: StageInterface) {
+    constructor(parent: EditableArea, stage: Stage) {
         super(parent, stage);
         
         this.options.push(
