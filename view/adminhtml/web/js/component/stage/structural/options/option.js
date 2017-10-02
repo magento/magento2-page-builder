@@ -1,49 +1,55 @@
-/**
- * - Options.js
- * A single option for a structural block or entity
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'ko'
-], function (ko) {
+define(['exports'], function (exports) {
+  'use strict';
 
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Option = exports.Option = function () {
     /**
-     * Constructor for option
+     * Option constructor
      *
      * @param parent
      * @param code
      * @param icon
      * @param title
-     * @param callbackFn
-     * @param additionalClasses
+     * @param action
+     * @param classes
      * @param sort
-     * @constructor
+     * @param template
      */
-    function Option(parent, code, icon, title, callbackFn, additionalClasses, sort) {
-        this.parent = parent;
-        this.code = code;
-        this.icon = icon;
-        this.title = title;
-        if (callbackFn) {
-            this.callback = callbackFn;
-        }
-        if (additionalClasses) {
-            this.additionalClasses = additionalClasses;
-        }
-        this.sort = sort;
+    function Option(parent, code, icon, title, action, classes, sort, template) {
+      _classCallCheck(this, Option);
 
-        this.template = null;
+      this.action = false;
+      this.template = null;
+      this.parent = parent;
+      this.code = code;
+      this.icon = icon;
+      this.title = title;
+      this.action = action;
+      this.classes = classes.join(' ');
+      this.sort = sort;
+      this.template = template;
     }
-
     /**
-     * Retrieve the template from the data, if a template is not set it will fall back to an anchor
+     * Return template for option
      *
-     * @returns {null}
+     * @deprecated
+     * @returns {string}
      */
-    Option.prototype.getTemplate = function () {
-        return this.template;
+
+
+    Option.prototype.getTemplate = function getTemplate() {
+      return this.template;
     };
 
     return Option;
+  }();
 });

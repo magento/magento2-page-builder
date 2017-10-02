@@ -1,234 +1,195 @@
-/**
- * - Build.js
- * Handles rebuilding the stage
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'bluefoot/event-emitter',
-    'underscore',
-    'ko',
-    'jquery',
-    'bluefoot/config',
-    'bluefoot/block/factory'
-], function (EventEmitter, _, ko, jQuery, Config, BlockFactory) {
+define(['exports', 'underscore', '../event-emitter', '../config', '../block/factory'], function (exports, _underscore, _eventEmitter, _config, _factory) {
+    'use strict';
 
-    // Setup a new instance of the block factory
-    var blockFactory = new BlockFactory();
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-    /**
-     * The build class handles building the stage with any previously saved content
-     *
-     * @constructor
-     */
-    function Build() {
-        /** @type {Stage|bool} */
-        this.stage = false;
-        /** @type {Element|bool} */
-        this.document = false;
+    var _ = _interopRequireWildcard(_underscore);
 
-        EventEmitter.apply(this, arguments);
+    var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+
+    var _config2 = _interopRequireDefault(_config);
+
+    var _factory2 = _interopRequireDefault(_factory);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
-    Build.prototype = EventEmitter.prototype;
 
-    /**
-     * Parse the potential structure
-     *
-     * @param structure
-     * @returns {boolean}
-     */
-    Build.prototype.parseStructure = function (structure) {
-        this.document = document.createElement('div');
-        this.document.innerHTML = structure;
-
-        // Return the stage element if the structure is present, otherwise return false
-        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]') || false;
-    };
-
-    /**
-     * Build a stage from a preexisting structure
-     *
-     * @param stage
-     * @param stageElement
-     * @returns {Build}
-     */
-    Build.prototype.buildStage = function (stage, stageElement) {
-        this.stage = stage;
-        this.parseAndBuildStage(stageElement);
-        return this;
-    };
-
-    /**
-     * Parse and build the stage from the stage element
-     *
-     * @param stageElement
-     * @returns {Promise.<*>}
-     */
-    Build.prototype.parseAndBuildStage = function (stageElement) {
-        var self = this;
-
-        // Handle the building with the events system
-        return this.parseAndBuildElement(stageElement, this.stage)
-            .then(function () {
-                self.emit('buildDone');
-            }).catch(function (error) {
-                self.emit('buildError', error);
-            });
-    };
-
-    /**
-     * Parse an element in the structure and build the required element
-     *
-     * @param element
-     * @param parent
-     * @returns {*}
-     */
-    Build.prototype.parseAndBuildElement = function (element, parent) {
-        if (element instanceof HTMLElement &&
-            element.getAttribute(Config.getValue('dataRoleAttributeName'))
-        ) {
-            parent = parent || this.stage;
-            var self = this,
-                role = element.getAttribute(Config.getValue('dataRoleAttributeName')),
-                data = this.getElementData(element),
-                children = this.getElementChildren(element);
-
-            // Add element to stage
-            return this.buildElement(role, data, parent).then(function (newParent) {
-                if (children.length > 0) {
-                    var childPromises = [];
-                    _.forEach(children, function (child) {
-                        childPromises.push(self.parseAndBuildElement(child, newParent));
-                    });
-                    return Promise.all(childPromises);
-                } else {
-                    return Promise.resolve(newParent);
-                }
-            });
+    function _interopRequireWildcard(obj) {
+        if (obj && obj.__esModule) {
+            return obj;
         } else {
-            return Promise.reject(new Error('Element does not contain valid role attribute.'));
-        }
-    };
+            var newObj = {};
 
-    /**
-     * Retrieve the elements data
-     *
-     * @param element
-     * @returns {{}}
-     */
-    Build.prototype.getElementData = function (element) {
-        var scriptTag = element.querySelector('script[type="text/advanced-cms-data"]');
-        if (scriptTag) {
-            return scriptTag.innerHTML ? JSON.parse(scriptTag.innerHTML) : {};
-        }
-
-        return {};
-    };
-
-    /**
-     * Return elements children, search for direct decedents, or traverse through to find deeper children
-     *
-     * @param element {Element}
-     * @returns {[]|NodeList}
-     */
-    Build.prototype.getElementChildren = function (element) {
-        var self = this;
-        if (element.hasChildNodes()) {
-            var children = [];
-            // Find direct children of the element
-            _.forEach(element.childNodes, function (child) {
-                // Only search elements which tagName's and not script tags
-                if (child.tagName && child.tagName != 'SCRIPT') {
-                    if (child.hasAttribute(Config.getValue('dataRoleAttributeName'))) {
-                        children.push(child);
-                    } else {
-                        children = self.getElementChildren(child);
-                    }
+            if (obj != null) {
+                for (var key in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
                 }
-            });
-
-            if (children.length > 0) {
-                return children;
             }
+
+            newObj.default = obj;
+            return newObj;
+        }
+    }
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         }
 
-        return [];
-    };
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
 
-    /**
-     * Forward build instruction to necessary build function
-     *
-     * @param role
-     * @param data
-     * @param parent
-     */
-    Build.prototype.buildElement = function (role, data, parent) {
-        switch (role) {
-            case 'stage':
-                // If the stage is being built, we don't need to "build" anything, just return the stage as the
-                // new parent
-                return Promise.resolve(this.stage);
-            break;
-            case 'row':
-                return this._buildRow(data, parent);
-            break;
-            case 'column':
-                return this._buildColumn(data, parent);
-            break;
-            default:
-                return this._buildEntity(role, data, parent);
-            break;
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
         }
-    };
 
-    /**
-     * Build a new row with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise.<*>}
-     * @private
-     */
-    Build.prototype._buildRow = function (data, parent) {
-        return Promise.resolve(parent.addRow(this.stage, data));
-    };
-
-    /**
-     * Build a new column with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise.<T>}
-     * @private
-     */
-    Build.prototype._buildColumn = function (data, parent) {
-        return Promise.resolve(parent.addColumn(data));
-    };
-
-    /**
-     * Add an entity into the system
-     *
-     * @param role
-     * @param data
-     * @param parent
-     * @returns {Promise.<T>}
-     * @private
-     */
-    Build.prototype._buildEntity = function (role, data, parent) {
-        return new Promise(function (resolve, reject) {
-            blockFactory.create(
-                Config.getContentBlockConfig(role),
-                parent,
-                this.stage,
-                data
-            ).then(function (block) {
-                parent.addChild(block);
-                resolve(block);
-            }).catch(function (error) {
-                reject(error);
-            });
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
         });
-    };
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
 
-    return Build;
+    var Build = function (_EventEmitter) {
+        _inherits(Build, _EventEmitter);
+
+        function Build() {
+            _classCallCheck(this, Build);
+
+            return _possibleConstructorReturn(this, _EventEmitter.apply(this, arguments));
+        }
+
+        Build.prototype.parseStructure = function parseStructure(structure) {
+            this.document = document.createElement('div');
+            this.document.innerHTML = structure;
+            // Return the stage element if the structure is present, otherwise return false
+            return this.document.querySelector('[' + _config2.default.getValue('dataRoleAttributeName') + '="stage"]') || false;
+        };
+
+        Build.prototype.buildStage = function buildStage(stage, stageElement) {
+            this.stage = stage;
+            this.parseAndBuildStage(stageElement);
+            return this;
+        };
+
+        Build.prototype.parseAndBuildStage = function parseAndBuildStage(stageElement) {
+            var _this2 = this;
+
+            return this.parseAndBuildElement(stageElement, this.stage).then(function () {
+                _this2.emit('buildDone');
+            }).catch(function (error) {
+                _this2.emit('buildError', error);
+            });
+        };
+
+        Build.prototype.parseAndBuildElement = function parseAndBuildElement(element, parent) {
+            var _this3 = this;
+
+            if (element instanceof HTMLElement && element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName'))) {
+                parent = parent || this.stage;
+                var role = element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName')),
+                    data = Build.getElementData(element),
+                    children = this.getElementChildren(element);
+                // Add element to stage
+                return this.buildElement(role, data, parent).then(function (newParent) {
+                    if (children.length > 0) {
+                        var childPromises = [];
+                        _.forEach(children, function (child) {
+                            childPromises.push(_this3.parseAndBuildElement(child, newParent));
+                        });
+                        return Promise.all(childPromises);
+                    } else {
+                        return Promise.resolve(newParent);
+                    }
+                });
+            } else {
+                return Promise.reject(new Error('Element does not contain valid role attribute.'));
+            }
+        };
+
+        Build.getElementData = function getElementData(element) {
+            var scriptTag = element.querySelector('script[type="text/advanced-cms-data"]');
+            if (scriptTag) {
+                return scriptTag.innerHTML ? JSON.parse(scriptTag.innerHTML) : {};
+            }
+            return {};
+        };
+
+        Build.prototype.getElementChildren = function getElementChildren(element) {
+            var _this4 = this;
+
+            if (element.hasChildNodes()) {
+                var children = [];
+                // Find direct children of the element
+                _.forEach(element.childNodes, function (child) {
+                    // Only search elements which tagName's and not script tags
+                    if (child.tagName && child.tagName != 'SCRIPT') {
+                        if (child.hasAttribute(_config2.default.getValueAsString('dataRoleAttributeName'))) {
+                            children.push(child);
+                        } else {
+                            children = _this4.getElementChildren(child);
+                        }
+                    }
+                });
+                if (children.length > 0) {
+                    return children;
+                }
+            }
+            return [];
+        };
+
+        Build.prototype.buildElement = function buildElement(role, data, parent) {
+            switch (role) {
+                case 'stage':
+                    // If the stage is being built, we don't need to "build" anything, just return the stage as the
+                    // new parent
+                    return Promise.resolve(this.stage);
+                case 'row':
+                    return this.buildRow(data, parent);
+                case 'column':
+                    return this.buildColumn(data, parent);
+                default:
+                    return this.buildEntity(role, data, parent);
+            }
+        };
+
+        Build.prototype.buildRow = function buildRow(data, parent) {
+            return Promise.resolve(parent.addRow(this.stage, data));
+        };
+
+        Build.prototype.buildColumn = function buildColumn(data, parent) {
+            return Promise.resolve(parent.addColumn(data));
+        };
+
+        Build.prototype.buildEntity = function buildEntity(role, data, parent) {
+            return new Promise(function (resolve, reject) {
+                (0, _factory2.default)(_config2.default.getContentBlockConfig(role), parent, this.stage, data).then(function (block) {
+                    parent.addChild(block);
+                    resolve(block);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        };
+
+        return Build;
+    }(_eventEmitter2.default);
+
+    exports.default = Build;
 });

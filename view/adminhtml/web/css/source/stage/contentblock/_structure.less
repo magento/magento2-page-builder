@@ -1,0 +1,413 @@
+.bluefoot-structure-wrapper {
+  position: relative;
+  box-sizing: content-box;
+
+  .bluefoot-resize-ghost {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    border: @border-size dashed darken(@columnColor, 20%);
+    margin: 4px 0 4px;
+  }
+  .bluefoot-resize-size {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 19;
+    background: darken(@columnColor, 20%);
+    opacity: 0.25;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-top: 25px;
+    font-weight: 300;
+  }
+
+  &.bluefoot-resizing {
+    .bluefoot-options {
+      display: none;
+    }
+  }
+
+  &-width-whole { width: 100%; }
+  &-width-half { width: 50%; }
+  &-width-third { width: 33.3%; }
+  &-width-quarter { width: 25%; }
+  &-width-sixth { width: 16.666666667%; }
+  &-width-two-thirds { width: 66.6%; }
+  &-width-three-quarters { width: 75%; }
+  &-width-five-sixths { width: 83.333333335%; }
+
+}
+.bluefoot-structure {
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+
+  .bluefoot-empty {
+    color: #AAA6A0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    height: 170px;
+    padding-top: 130px;
+    background: url('@{baseDir}Gene_BlueFoot/css/images/empty-row-prompt.png') no-repeat center center;
+    background-size: 505px 97px;
+    z-index: 1;
+    opacity: 0;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  &.bluefoot-row {
+    margin-bottom: 30px;
+  }
+
+  .element-children {
+    min-height: 190px;
+    font-size: 0;
+    padding: 30px;
+    position: relative;
+    z-index: 10;
+
+    .ui-draggable {
+      display: none!important;
+    }
+  }
+
+  &:hover {
+    box-sizing: border-box;
+    z-index: 15;
+
+    &.bluefoot-column {
+      >.bluefoot-column-add {
+        display: block;
+      }
+    }
+
+    &.bluefoot-entity {
+      > *:not(.bluefoot-options):not(.bluefoot-no-blur *):not(.redactor-toolbar):not(img) {
+        -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
+        filter: blur(5px);
+      }
+    }
+
+    >.bluefoot-options {
+      ul.bluefoot-options-links {
+        display: inline-block;
+      }
+    }
+  }
+
+  .redactor-toolbar {
+    display: none;
+  }
+
+  &.redactor-active {
+    >.bluefoot-live-edit-wrapper {
+      display: block;
+    }
+    >.bluefoot-options {
+      display: none;
+    }
+    >.redactor-toolbar {
+      display: block;
+    }
+  }
+
+  .bluefoot-id {
+    position: absolute;
+    bottom: -3px;
+    right: -3px;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  &.bluefoot-column {
+    .bluefoot-column-resize-handle {
+      width: 15px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -3px;
+      cursor: col-resize;
+    }
+
+    .bluefoot-column-add {
+      display: none;
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 4px 8px;
+      background: @color-brownie;
+      color: #fff;
+      font-size: 12px;
+
+      &:hover {
+        background: @color-very-dark-gray-black2;
+      }
+    }
+    .bluefoot-column-add-right {
+      left: auto;
+      right: -25px;
+    }
+  }
+  &.bluefoot-entity {
+    font-size: 0;
+
+    &.bluefoot-abstract {
+      background: @entityColor;
+      color: white;
+      text-align: center;
+
+      i {
+        font-size: 24px;
+      }
+      h3 {
+        margin: 6px 0 0 0;
+        padding: 0;
+      }
+      * {
+        color: white;
+      }
+    }
+
+    &.bluefoot-entity-preview {
+      font-size: 14px;
+    }
+
+    &.bluefoot-image {
+      &.loading {
+        img {
+          opacity: 0.5;
+        }
+      }
+      .dz-message, .dz-preview {
+        display: none;
+      }
+      &.dz-drag-hover {
+        img, .bluefoot-image-placeholder {
+          opacity: 0.6;
+          filter: blur(5px);
+          -webkit-filter: blur(5px);
+          -moz-filter: blur(5px);
+        }
+      }
+      img {
+        width: 100%;
+      }
+      .bluefoot-image-placeholder {
+        cursor: pointer;
+        background: #f8f8f8;
+        text-align: center;
+        font-size: 12px;
+        padding: 30px 0 16px 0;
+
+        i {
+          font-size: 34px;
+          margin-bottom: 8px;
+        }
+        p {
+          padding: 0 20px;
+        }
+      }
+    }
+
+    .bluefoot-loading {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    display: inline-block;
+    width: 100%;
+
+    .bluefoot-id {
+      background: @entityColor;
+      bottom: 0;
+      right: 0;
+    }
+
+    &.bluefoot-live-edit {
+      -user-select: all;
+      -webkit-user-select: all; /* Chrome/Safari */
+      -webkit-user-select: text; /* Safari only */
+      -moz-user-select: all; /* Firefox */
+      -ms-user-select: all; /* IE10+ */
+      border: none;
+    }
+  }
+}
+
+.bluefoot-entity-helper, .bluefoot-structure-helper {
+  padding: 12px 12px;
+  display: block;
+  color: @color-ivory;
+  text-decoration: none;
+  cursor: pointer;
+  background: @color-very-dark-grayish-orange;
+  white-space: nowrap;
+  width: 130px;
+
+  h3 {
+    color: @color-ivory;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+.bluefoot-placeholder-sortable {
+  height: 4px;
+  background: @color-very-dark-grayish-orange;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  width: 100%;
+  margin: 6px 0;
+  padding: 0;
+  display: inline-block;
+  border: none;
+
+  &.bluefoot-structure-wrapper {
+    position: relative;
+    box-sizing: content-box;
+    &-width-whole { width: 100% - 2; }
+    &-width-half { width: 50% - 2; }
+    &-width-third { width: 33.3% - 2; }
+    &-width-quarter { width: 25% - 2; }
+    &-width-sixth { width: 16.666666667% - 2; }
+    &-width-two-thirds { width: 66.6% - 2; }
+    &-width-three-quarters { width: 75% - 2; }
+    &-width-five-sixths { width: 83.333333335% - 2; }
+  }
+
+  &.bluefoot-placeholder-column {
+    height: 90px;
+    width: 12px;
+    margin: 10px -6px;
+    z-index: 500;
+  }
+}
+
+.column-inline-wrapper {
+  position: absolute;
+  left: 0;
+  top: calc(~"100% - 1px");
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  height: auto;
+
+  &.top {
+    text-align: center;
+  }
+  &.right {
+    text-align: right;
+  }
+
+  .bluefoot-column-inline-add {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    width: 140px;
+    color: white;
+    cursor: pointer;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
+    li {
+      a {
+        display: block;
+        width: 100%;
+        text-align: left;
+        color: @color-very-dark-grayish-orange;
+        font-size: 14px;
+        padding: 6px 10px;
+        text-decoration: none;
+        background: white;
+        border: 1px solid #cccccc;
+        border-bottom: none;
+
+        &:hover {
+          background: @color-lighter-gray;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+}
+
+.ui-draggable-dragging {
+  &.bluefoot-draggable-block {
+    display: block;
+    width: 150px;
+
+    a {
+      background: @panelColor;
+      display: block;
+      width: 100%;
+      line-height: 44px;
+      color: @iconColorHover;
+      text-decoration: none;
+      padding: 0 18px;
+      cursor: pointer;
+      min-width: 160px;
+
+      i {
+        margin-right: 6px;
+      }
+    }
+  }
+}
+
+.bluefoot-placeholder {
+  &.bluefoot-draggable-block {
+    float: left;
+    width: 100%;
+    display: block;
+
+    a {
+      height: 4px;
+      background: @color-phoenix-dark;
+      border-radius: 2px;
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      width: 100%;
+      margin: 6px 0;
+      padding: 0;
+      display: inline-block;
+      border: none;
+    };
+  }
+}
+
+.bluefoot-empty {
+  .bluefoot-placeholder {
+    &.bluefoot-draggable-block {
+      a {
+        margin: 0
+      }
+    }
+  }
+}

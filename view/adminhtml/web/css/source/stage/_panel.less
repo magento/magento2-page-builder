@@ -8,59 +8,60 @@
  *
  */
 
-.ui-draggable-dragging {
-    &.bluefoot-draggable-block {
-        display: block;
-        width: 150px;
-
-        a {
-            background: @panelColor;
-            display: block;
-            width: 100%;
-            line-height: 40px;
-            color: @iconColorHover;
-            text-decoration: none;
-            padding: 0 18px;
-            cursor: pointer;
-            min-width: 160px;
-
-            i {
-                margin-right: 6px;
-            }
-        }
-    }
-}
-
-.bluefoot-placeholder {
-    &.bluefoot-draggable-block {
-        float: left;
-        width: 100%;
-        display: block;
-        color: lighten(@panelColor, 5%);
-
-        a {
-            height: 12px;
-            background: @entityColor;
-            width: 98%;
-            margin: 10px 1%;
-            padding: 0;
-            display: inline-block;
-
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-        }
-    }
-}
-
 #bluefoot-panel-wrapper {
     width: 150px;
     display: none;
     float: left;
-    z-index: 600;
+    z-index: 400;
+    position: relative;
 
     &.visible {
         display: block;
+    }
+
+    &.collapsed {
+        width: 32px;
+
+        #bluefoot-panel {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        .collapsed-handle {
+            display: block;
+        }
+    }
+
+    .expand {
+        position: absolute;
+        top: 0;
+
+        a {
+            display: block;
+            background: @color-very-dark-grayish-orange;
+            color: @color-gray65-lighten;
+
+            padding: 4px 6px;
+            font-size: 12px;
+            font-weight: bold;
+
+            -webkit-border-top-right-radius: 2px;
+            -webkit-border-bottom-right-radius: 2px;
+            -moz-border-radius-topright: 2px;
+            -moz-border-radius-bottomright: 2px;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+
+            text-decoration: none;
+
+            &:before {
+                content: "";
+                font-family: 'Admin Icons';
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                speak: none;
+            }
+        }
     }
 
     #bluefoot-panel {
@@ -73,6 +74,10 @@
         /* Rules below not implemented in browsers yet */
         -o-user-select: none;
         user-select: none;
+
+        transition: 0.4s;
+        -webkit-transition: 0.4s;
+        -moz-transition: 0.4s;
 
         .search-results-empty {
             color: @color-ivory;
@@ -105,6 +110,48 @@
                 border-bottom: 1px solid @color-brownie-almost;
                 color: @color-ivory;
                 font-size: 12px;
+            }
+        }
+        .panel-controls {
+            padding: 14px 10px;
+            height: 42px;
+
+            a {
+                color: @color-darkie-gray;
+                font-size: 12px;
+                line-height: 16px;
+                display: inline-block;
+                vertical-align: top;
+                text-decoration: none;
+
+                &:hover {
+                    color: @color-gray65-lighten;
+                }
+
+                &.collapse {
+                    &:before {
+                        padding-right: 3px;
+                        content: "";
+                        font-family: 'Admin Icons';
+                        font-style: normal;
+                        font-weight: normal;
+                        line-height: 1;
+                        speak: none;
+                    }
+                }
+                &.full-screen {
+                    float: right;
+                    margin-right: 4px;
+
+                    &:before {
+                        content: "";
+                        font-family: 'Admin Icons';
+                        font-style: normal;
+                        font-weight: normal;
+                        line-height: 1;
+                        speak: none;
+                    }
+                }
             }
         }
     }

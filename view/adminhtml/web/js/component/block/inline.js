@@ -1,34 +1,62 @@
-/**
- * - Inline.js
- * Inline block, handles blocks which can be edited inline
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'underscore',
-    'ko',
-    'jquery',
-    'Gene_BlueFoot/js/component/block/abstract'
-], function (_, ko, $, AbstractBlock) {
+define(["exports", "./block"], function (exports, _block) {
+    "use strict";
 
-    /**
-     * Class for entity blocks being included on the page
-     *
-     * @param parent
-     * @param stage
-     * @param config
-     * @param formData
-     * @constructor
-     */
-    function InlineBlock(parent, stage, config, formData) {
-        AbstractBlock.apply(this, arguments);
-        this.ns = 'Gene_BlueFoot/js/component/block/inline';
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-        this.editOnInsert = false;
+    var _block2 = _interopRequireDefault(_block);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    InlineBlock.prototype = Object.create(AbstractBlock.prototype);
-    var $super = AbstractBlock.prototype;
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-    return InlineBlock;
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
+
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
+
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
+
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+
+    var InlineBlock = function (_Block) {
+        _inherits(InlineBlock, _Block);
+
+        function InlineBlock() {
+            _classCallCheck(this, InlineBlock);
+
+            var _this = _possibleConstructorReturn(this, _Block.apply(this, arguments));
+
+            _this.editOnInsert = false;
+            return _this;
+        }
+
+        return InlineBlock;
+    }(_block2.default);
+
+    exports.default = InlineBlock;
 });

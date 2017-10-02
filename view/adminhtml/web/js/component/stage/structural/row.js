@@ -1,68 +1,83 @@
-/**
- * - Row.js
- * Structural row elements
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'bluefoot/stage/structural/abstract',
-    'bluefoot/stage/structural/column',
-    'mage/translate',
-    'bluefoot/stage/structural/options/column',
-    'bluefoot/config',
-    'bluefoot/ko-resizable'
-], function (AbstractStructural, Column, $t, ColumnOption, Config) {
+define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"], function (exports, _abstract, _column, _option) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _abstract2 = _interopRequireDefault(_abstract);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  var Row = function (_Structural) {
+    _inherits(Row, _Structural);
 
     /**
-     * Row structural block
+     * Abstract structural constructor
      *
      * @param parent
      * @param stage
-     * @constructor
      */
     function Row(parent, stage) {
-        AbstractStructural.call(this, parent, stage);
-        this.ns = 'bluefoot/stage/structural/row';
-        this.config = {
-            code: 'row',
-            name: $t('Row')
-        };
+      _classCallCheck(this, Row);
 
-        this.serializeRole = 'row';
+      var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
+
+      _this.template = 'Gene_BlueFoot/component/stage/structural/row.html';
+      _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
+      return _this;
     }
-
-    Row.prototype = Object.create(AbstractStructural.prototype);
-    var $super = AbstractStructural.prototype;
-
     /**
-     * Build up the options available on a row
-     */
-    Row.prototype.buildOptions = function () {
-        // Run the parent
-        $super.buildOptions.apply(this, arguments);
-
-        // Add column option
-        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
-    };
-
-    /**
-     * Override template to row template
+     * Add a column to the row
      *
-     * @returns {string}
+     * @param data
+     * @returns {any}
      */
-    Row.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/stage/structural/row.html'
-    };
 
-    /**
-     * Implement function to add columns to this element
-     */
-    Row.prototype.addColumn = function (data) {
-        var column = new Column(this, this.stage);
-        this.addChild(column);
-        column.updateColumnData(data);
-        return column;
+
+    Row.prototype.addColumn = function addColumn(data) {
+      var column = new _column.Column(this, this.stage);
+      this.addChild(column);
+      column.updateColumnData(data);
+      return column;
     };
 
     return Row;
+  }(_abstract2.default);
+
+  exports.default = Row;
 });

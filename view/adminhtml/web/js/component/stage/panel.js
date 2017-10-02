@@ -1,137 +1,108 @@
-/**
- * - Panel.js
- * Handles all interactions with the panel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'uiComponent',
-    'ko',
-    'jquery',
-    'bluefoot/config',
-    'bluefoot/stage/panel/group',
-    'bluefoot/stage/panel/group/block',
-    'bluefoot/stage/previews',
-    'bluefoot/ko-sortable',
-    'bluefoot/ko-draggable',
-    'bluefoot/ko-redactor'
-], function (Component, ko, jQuery, Config, Group, GroupBlock, Previews) {
+define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', './panel/group/block', './previews', 'ko-draggable', 'ko-sortable'], function (_uiComponent, _underscore, _knockout, _config, _group, _block, _previews) {
+    'use strict';
 
-    /**
-     * Extend the component for BlueFoot panel specific functionality
-     */
-    return Component.extend({
+    var _uiComponent2 = _interopRequireDefault(_uiComponent);
+
+    var _underscore2 = _interopRequireDefault(_underscore);
+
+    var _knockout2 = _interopRequireDefault(_knockout);
+
+    var _config2 = _interopRequireDefault(_config);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
+    return _uiComponent.extend({
+        componentTemplate: 'Gene_BlueFoot/component/stage/panel.html',
+        searching: _knockout2.default.observable(false),
+        searchResults: _knockout2.default.observableArray([]),
+        groups: _knockout2.default.observableArray([]),
+        originalScrollTop: 0,
         defaults: {
-            visible: false,
+            isVisible: false,
+            isCollapsed: false,
             groups: [],
             searching: false,
-            searchResults: []
+            searchResults: [],
+            stage: false,
+            originalScrollTop: false
         },
-
-        /**
-         * Initialize the panel component
-         */
         initialize: function () {
             this._super();
 
-            // Load preview templates
-            Previews.load();
+            (0, _previews.load)();
         },
-
-        /**
-         * Bind the stage to the panel instance
-         *
-         * @param stage
-         */
         bindStage: function (stage) {
-            var self = this;
+            var _this = this;
+
+            this.stage = stage;
             stage.on('stageReady', function () {
-                self.populateContentBlocks();
-                self.visible(true);
+                _this.populateContentBlocks();
+                _this.isVisible(true);
             });
         },
-
-        /**
-         * Return the full path to the template
-         *
-         * @returns {string}
-         */
         getTemplate: function () {
-            return 'Gene_BlueFoot/component/stage/panel.html';
+            return this.componentTemplate;
         },
-
-        /**
-         * Initializes observable properties.
-         *
-         * @returns {Model} Chainable.
-         */
         initObservable: function () {
-            this._super()
-                .observe('visible groups searching searchResults');
-
+            this._super().observe('isVisible isCollapsed groups searching searchResults');
             return this;
         },
-
-        /**
-         * Conduct a search on the available content blocks
-         *
-         * @param self
-         * @param event
-         */
         search: function (self, event) {
             var searchValue = event.currentTarget.value.toLowerCase();
             if (searchValue === '') {
                 this.searching(false);
             } else {
                 this.searching(true);
-                this.searchResults(_.map(
-                    _.filter(
-                        Config.getInitConfig('contentBlocks'),
-                        function (contentBlock) {
-                            return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 &&
-                                contentBlock.visible === true;
-                        }
-                    ),
-                    function (contentBlock) {
-                        // Create a new instance of GroupBlock for each result
-                        return new GroupBlock(contentBlock);
-                    })
-                );
+                this.searchResults(_underscore2.default.map(_underscore2.default.filter(_config2.default.getInitConfig('contentBlocks'), function (contentBlock) {
+                    return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 && contentBlock.visible === true;
+                }), function (contentBlock) {
+                    // Create a new instance of GroupBlock for each result
+                    return new _block.Block(contentBlock);
+                }));
             }
         },
-
-        /**
-         * Populate the panel with the content blocks
-         */
         populateContentBlocks: function () {
-            var self = this,
-                groups = Config.getInitConfig('groups'),
-                contentBlocks = Config.getInitConfig('contentBlocks');
+            var _this2 = this;
+
+            var groups = _config2.default.getInitConfig('groups'),
+                contentBlocks = _config2.default.getInitConfig('contentBlocks');
             // Verify the configuration contains the required information
             if (groups && contentBlocks) {
                 // Iterate through the groups creating new instances with their associated content blocks
-                _.each(groups, function (group, id) {
+                _underscore2.default.each(groups, function (group, id) {
                     // Push the group instance into the observable array to update the UI
-                    self.groups.push(new Group(
-                        id,
-                        group,
-                        _.map(
-                            _.where(contentBlocks, {
-                                group: id,
-                                visible: true
-                            }), /* Retrieve content blocks with group id */
-                            function (contentBlock) {
-                                return new GroupBlock(contentBlock);
-                            }
-                        )
-                    ));
+                    _this2.groups.push(new _group.Group(id, group, _underscore2.default.map(_underscore2.default.where(contentBlocks, {
+                        group: id,
+                        visible: true
+                    }), /* Retrieve content blocks with group id */function (contentBlock) {
+                        return new _block.Block(contentBlock);
+                    })));
                 });
-
                 // Display the panel
-                this.visible(true);
+                this.isVisible(true);
             } else {
                 console.warn('Configuration is not properly initialized, please check the Ajax response.');
             }
+        },
+        fullScreen: function () {
+            var isFullScreen = this.stage.parent.isFullScreen();
+            if (!isFullScreen) {
+                this.originalScrollTop = jQuery(window).scrollTop();
+                _underscore2.default.defer(function () {
+                    jQuery(window).scrollTop(0);
+                });
+            }
+            this.stage.parent.isFullScreen(!isFullScreen);
+            if (isFullScreen) {
+                jQuery(window).scrollTop(this.originalScrollTop);
+            }
+        },
+        collapse: function () {
+            this.isCollapsed(!this.isCollapsed());
         }
     });
 });
