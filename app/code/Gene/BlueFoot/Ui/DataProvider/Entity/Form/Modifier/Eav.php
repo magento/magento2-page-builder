@@ -293,24 +293,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             }
         }
 
-        // Include global fields within all meta's
-        $meta = $this->handleGlobalFields($meta, $sortOrder);
-
         return $meta;
-    }
-
-    /**
-     * Add in any extra static global fields
-     *
-     * @param $meta
-     * @param $sortOrder
-     *
-     * @return mixed
-     */
-    public function handleGlobalFields($meta, $sortOrder)
-    {
-        $globalFields = $this->configInterface->getGlobalFields();
-        return $this->buildFieldsFromConfig($meta, $globalFields, $sortOrder);
     }
 
     /**
