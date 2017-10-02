@@ -1,2 +1,0 @@
-# bluefoot
-Bluefoot Extension

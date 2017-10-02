@@ -17,8 +17,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @var array
      */
     protected $_idAttributes = [
-        '/config/content_blocks/content_block' => 'name',
-        '/config/global_fields/field' => 'code'
+        '/config/content_blocks/content_block' => 'name'
     ];
 
     /**
