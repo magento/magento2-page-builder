@@ -1,5 +1,4 @@
-<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-heading bluefoot-no-blur bluefoot-live-edit" data-bind="liveEdit: { fields: ['heading_type'] }">
-    <!-- ko template: liveEditTemplate --><!-- /ko -->
-    <div data-bind="css: 'bluefoot-heading-' + preview.heading_type(), html: preview.title, redactor: {clickToEdit: false, toolbar: false, bind: data, bindKey: 'title', linebreaks: true, deniedTags: ['br'], enterKey: false, paragraphize: false, replaceDivs: false, stripHtml: true, placeholder: $t('Click here to edit...'), default: {heading_type: '78'}}"></div>
-    <!-- ko template: options.getTemplate() --><!-- /ko -->
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-heading bluefoot-no-blur bluefoot-live-edit">
+    <div data-bind="css: 'bluefoot-heading-' + preview.data.heading_type(), html: preview.data.title"></div>
+    <!-- ko template: optionsInstance.getTemplate() --><!-- /ko -->
 </div>

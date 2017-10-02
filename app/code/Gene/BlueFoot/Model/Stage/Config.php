@@ -151,7 +151,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             $config = [
                 'groups'        => $this->getContentBlockGroups(),
                 'contentBlocks' => $this->getContentBlockData(),
-                'templates'     => $this->getTemplateData()
+                'templates'     => $this->getTemplateData(),
+                'globalFields'  => $this->getGlobalFields()
             ];
 
             // If the cache is enabled, store the config in the cache
@@ -217,6 +218,16 @@ class Config extends \Magento\Framework\Model\AbstractModel
         }
 
         return [];
+    }
+
+    /**
+     * Return any global fields
+     *
+     * @return mixed
+     */
+    public function getGlobalFields()
+    {
+        return $this->configInterface->getGlobalFields();
     }
 
     /**

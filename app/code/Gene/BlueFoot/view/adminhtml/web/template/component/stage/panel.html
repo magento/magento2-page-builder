@@ -1,4 +1,4 @@
-<div id="bluefoot-panel-wrapper" data-bind="css: {visible: visible()}">
+<div id="bluefoot-panel-wrapper" data-bind="css: {visible: isVisible(), collapsed: isCollapsed()}">
     <div id="bluefoot-panel">
         <div class="search-blocks">
             <label for="search-blocks-input"></label>
@@ -38,5 +38,12 @@
                 </div>
             </li>
         </ul>
+        <div class="panel-controls">
+            <a href="#" data-bind="click: collapse" class="collapse">Collapse</a>
+            <a href="#" data-bind="click: fullScreen, attr: {title: $t('Full Screen')}" class="full-screen"></a>
+        </div>
+    </div>
+    <div class="expand" data-bind="visible: isCollapsed">
+        <a href="#" data-bind="click: collapse"></a>
     </div>
 </div>

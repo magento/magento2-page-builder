@@ -8,6 +8,7 @@
                 <xs:element ref='content_blocks' minOccurs="0" />
                 <xs:element ref='structurals' minOccurs="0" />
                 <xs:element ref='on_build' minOccurs="0" />
+                <xs:element ref='global_fields' minOccurs="0" />
             </xs:all>
         </xs:complexType>
     </xs:element>
@@ -94,6 +95,13 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref='widgets'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='global_fields'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='unbounded' ref='field'/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

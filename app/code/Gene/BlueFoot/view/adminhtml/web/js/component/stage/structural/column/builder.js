@@ -1,85 +1,85 @@
-/**
- * Add column based on a selected size.
- * @author Aidan Threadgold <aidan@gene.co.uk>
- */
-define([
-    'ko',
-    'bluefoot/config'
-], function (ko, Config) {
+define(['exports', 'knockout', '../../../config'], function (exports, _knockout, _config) {
+    'use strict';
 
-    /**
-     * Column builder interface
-     *
-     * @constructor
-     */
-    function Builder() {
-        this.position = ko.observable('');
-        this.visible = ko.observable(false);
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.ColumnBuilder = undefined;
 
-        // Build sizes to display
-        this.sizes = ko.observableArray([]);
-        this.buildOptions();
+    var _knockout2 = _interopRequireDefault(_knockout);
+
+    var _config2 = _interopRequireDefault(_config);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    /**
-     * Build the sizes available for column widths
-     */
-    Builder.prototype.buildOptions = function () {
-        var columnOptions = Config.getInitConfig("column_definitions"),
-            size = null;
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-        for (var i = 0; i < columnOptions.length; i++) {
-            size = columnOptions[i];
-            if (size.displayed === true) {
-                this.sizes.push({
-                    label: size.label,
-                    className: size.className
-                });
+    var ColumnBuilder = exports.ColumnBuilder = function () {
+        /**
+         * ColumnBuilder constructor
+         */
+        function ColumnBuilder() {
+            _classCallCheck(this, ColumnBuilder);
+
+            this.position = _knockout2.default.observable('');
+            this.visible = _knockout2.default.observable(false);
+            this.sizes = _knockout2.default.observableArray([]);
+            this.template = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
+            var columnOptions = _config2.default.getInitConfig("column_definitions");
+            for (var i = 0; i < columnOptions.length; i++) {
+                if (columnOptions[i].displayed === true) {
+                    this.sizes.push({
+                        label: columnOptions[i].label,
+                        className: columnOptions[i].className
+                    });
+                }
             }
         }
-    };
+        /**
+         * Show the builder from the column options scope
+         */
 
-    /**
-     * Retrieve template path
-     */
-    Builder.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/stage/structural/column/builder.html'
-    };
 
-    /**
-     * Show the builder from the column options scope
-     */
-    Builder.prototype.showFromOption = function (option, structure) {
-        this.columnBuilder.position('top');
-        this.columnBuilder.visible(true);
-    };
+        ColumnBuilder.prototype.showFromOption = function showFromOption() {
+            this.position('top');
+            this.visible(true);
+        };
 
-    /**
-     * Change the visibility to visible
-     */
-    Builder.prototype.show = function (option, structure) {
-        this.visible(true);
-    };
+        /**
+         * Change the visibility to visible
+         */
+        ColumnBuilder.prototype.show = function show() {
+            this.visible(true);
+        };
 
-    /**
-     * Change the visibility to hidden
-     */
-    Builder.prototype.hide = function () {
-        this.visible(false);
-    };
+        /**
+         * Change the visibility to hidden
+         */
+        ColumnBuilder.prototype.hide = function hide() {
+            this.visible(false);
+        };
 
-    /**
-     * Proxy to the correct parent's add column function
-     */
-    Builder.prototype.addColumn = function (parents, data) {
-        // Nest a column (within a column or on a row)
-        if (this.position() == 'top') {
-            parents[1].addColumn(data);
-        } else {
-            // Add to left or right side of current column
-            parents[1].insertColumnAtIndex(this.position(), parents[1], data);
-        }
-    };
+        /**
+         * Proxy to the correct parent's add column function
+         */
+        ColumnBuilder.prototype.addColumn = function addColumn(parents, data) {
+            // Nest a column (within a column or on a row)
+            if (this.position() == 'top') {
+                parents[1].addColumn(data);
+            } else {
+                // Add to left or right side of current column
+                parents[1].insertColumnAtIndex(this.position(), parents[1], data);
+            }
+        };
 
-    return Builder;
+        return ColumnBuilder;
+    }();
 });

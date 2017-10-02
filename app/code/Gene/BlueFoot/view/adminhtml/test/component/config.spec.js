@@ -142,11 +142,18 @@ define([
                         }
                     }
                 ]);
+                Config._setConfig('globalFields', {
+                    globalField: true
+                });
                 expect(Config.getAllFields().contentTypeField).toEqual(true);
+                expect(Config.getAllFields().globalField).toEqual(true);
             });
         });
 
         describe('getField', function () {
+            it('can retrieve field', function () {
+                expect(Config.getField('globalField')).toEqual(true);
+            });
             it('returns null when field doesn\'t exist', function () {
                 expect(Config.getField('nullField')).toBeNull();
             });

@@ -21,7 +21,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     public function convert($source)
     {
         $output = [
-            'content_blocks' => []
+            'content_blocks' => [],
+            'global_fields'  => []
         ];
 
         /** @var \DOMNodeList $contentBlocks */
@@ -41,6 +42,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             $output['content_blocks'][$identifier] = $contentBlockConfig;
         }
+
+        // Convert the global fields out from the XML
+        $output['global_fields'] = $this->convertGlobalFields($source);
 
         return $output;
     }
@@ -99,5 +103,39 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         }
 
         return $assets;
+    }
+
+    /**
+     * Convert XML into global fields
+     *
+     * @param \DOMDocument $source
+     *
+     * @return array
+     */
+    protected function convertGlobalFields(\DOMDocument $source)
+    {
+        // Pull in all of the global fields
+        $xpath = new \DOMXPath($source);
+        $globalFields = [];
+        $globalFieldsQuery = $xpath->query('/config/global_fields/*');
+        for ($i = 0; $i < $globalFieldsQuery->length; $i++) {
+            /* @var $node \DOMElement */
+            $node = $globalFieldsQuery->item($i);
+            if ($node->nodeName == 'field') {
+                $globalFields[$node->getAttribute('code')] = [];
+
+                if ($node->hasChildNodes()) {
+                    $fieldsElements = $node->childNodes;
+                    foreach ($fieldsElements as $fieldAttr) {
+                        if ($fieldAttr instanceof \DOMElement) {
+                            $globalFields[$node->getAttribute('code')][$fieldAttr->nodeName]
+                                = $fieldAttr->nodeValue;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $globalFields;
     }
 }

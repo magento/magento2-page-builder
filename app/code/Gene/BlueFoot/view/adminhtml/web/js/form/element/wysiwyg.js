@@ -13,21 +13,20 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'bluefoot/stage',
-    'bluefoot/stage/build',
-    'bluefoot/stage/panel',
+    'Gene_BlueFoot/js/component/stage',
+    'Gene_BlueFoot/js/component/stage/build',
+    'Gene_BlueFoot/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
 ], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
-
-    window.registry = registry;
 
     /**
      * Extend the original WYSIWYG with added BlueFoot functionality
      */
     return Wysiwyg.extend({
         defaults: {
+            domNode: false,
             elementSelector: 'textarea.textarea',
             stageActive: false,
             stage: {},
@@ -37,6 +36,8 @@ define([
             loading: false,
             userSelect: true,
             panel: new Panel(),
+            isFullScreen: false,
+            originalScrollTop: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -44,7 +45,8 @@ define([
                 stageContent: [],
                 showBorders: false,
                 loading: false,
-                userSelect: true
+                userSelect: true,
+                isFullScreen: false
             }
         },
 
@@ -53,8 +55,26 @@ define([
          * @returns {exports}
          */
         initObservable: function () {
+            var self = this;
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+
+            // Modify the scroll position based on an update
+            this.isFullScreen.subscribe(function (fullScreen) {
+                if (!fullScreen) {
+                    self.originalScrollTop = jQuery(window).scrollTop();
+                    _.defer(function () {
+                        jQuery(window).scrollTop(0);
+                    });
+                }
+            }, this, "beforeChange");
+            this.isFullScreen.subscribe(function (fullScreen) {
+                if (!fullScreen) {
+                    _.defer(function () {
+                        jQuery(window).scrollTop(self.originalScrollTop);
+                    });
+                }
+            });
 
             return this;
         },
@@ -64,6 +84,7 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
+            this.domNode = node;
             $(node).bindings({
                 value: this.value
             });
@@ -76,7 +97,7 @@ define([
          * Check to see if the WYSIWYG already contains BlueFoot content
          */
         checkForBlueFootContent: function (node) {
-            var buildInstance = new Build(),
+            var buildInstance = new Build.default(),
                 buildStructure;
             if (buildStructure = buildInstance.parseStructure($(node).val())) {
                 this.loading(true);
@@ -108,9 +129,8 @@ define([
             }
 
             // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            this.stage = new Stage.default(
                 this,
-                this.stageId,
                 this.stageContent
             );
 
@@ -138,7 +158,7 @@ define([
 
         /**
          * Throw a confirmation dialog in the exterior system.
-         * 
+         *
          * @param {object} options
          * @returns {null}
          */
@@ -180,4 +200,6 @@ define([
         }
 
     });
+}, function (err) {
+    alert(err);
 });

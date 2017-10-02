@@ -22,4 +22,9 @@ interface ConfigInterface
      * @return array
      */
     public function getContentBlock($identifier);
+
+    /**
+     * @return array
+     */
+    public function getGlobalFields();
 }
