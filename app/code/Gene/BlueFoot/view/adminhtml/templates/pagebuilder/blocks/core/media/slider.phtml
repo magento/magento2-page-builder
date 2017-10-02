@@ -1,0 +1,67 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Slider Block Template
+ * @var $this \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+?>
+<div id="gene-bluefoot-slider-{{entity_id}}" class="gene-bluefoot-slider gene-bluefoot-pagebuilder-block clearfix bluefoot-entity-align-{{ align }}">
+    {{#child_blocks.slider_items}}
+    {{{html}}}
+    {{/child_blocks.slider_items}}
+</div>
+
+
+<script type="text/javascript">
+    jQuery(function() {
+
+        /* [Slick JS] */
+
+        // Set default values @todo - find a way to make this work with translations
+
+        var arrows = false;
+        if ('{{show_arrows}}' == 'Yes'){ arrows = true }
+
+        var dots = false;
+        if ('{{show_dots}}' == 'Yes'){ dots = true }
+
+        var autoplay = false;
+        if ('{{autoplay}}' == 'Yes'){ autoplay = true }
+
+        var fade = false;
+        if ('{{fade}}' == 'Yes'){ fade = true }
+
+        var slidesToShow = '{{slides_to_show}}';
+        if (slidesToShow == '' || fade){ slidesToShow = 1 }
+
+        var slidesToScroll = '{{slides_to_scroll}}';
+        if (slidesToScroll == '' || fade){ slidesToScroll = 1 }
+
+
+
+        jQuery('#gene-bluefoot-slider-{{entity_id}}').on('init', function(event, slick){
+
+            jQuery('.slick-dots button, .slick-arrow').addClass('no-edit');
+
+        });
+
+        jQuery('#gene-bluefoot-slider-{{entity_id}}').slick({
+            dots:dots,
+            slidesToShow:parseInt(slidesToShow),
+            slidesToScroll:parseInt(slidesToScroll),
+            arrows: arrows,
+            autoplay: autoplay,
+            fade: fade,
+            infinite: false,
+            prevArrow:'<button type="button" class="slick-prev button"><span><span>&lt;</span></span></button>',
+            nextArrow:'<button type="button" class="slick-next button"><span><span>&gt;</span></span></button>'
+        });
+
+
+    });
+</script>

@@ -1,0 +1,13 @@
+<?php
+/**
+ * Generic block for content blocks without rendering blocks
+ *
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $advancedCms \Gene\BlueFoot\Model\Stage\Save\Renderer\Block
+ */
+$advancedCms = $block->getAdvancedCms();
+?>
+<div<?php echo $advancedCms->getAttributeHtml(); ?>>
+    <?php echo $advancedCms->getDataHtml(); ?>
+    <?php echo $block->getChildHtml(); ?>
+</div>

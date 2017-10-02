@@ -1,0 +1,211 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Dave Macaulay <davegene.co.uk>
+ *
+ * _panel contains {less} for the left panel
+ *
+ */
+
+.ui-draggable-dragging {
+    &.bluefoot-draggable-block {
+        display: block;
+        width: 150px;
+
+        a {
+            background: @panelColor;
+            display: block;
+            width: 100%;
+            line-height: 40px;
+            color: @iconColorHover;
+            text-decoration: none;
+            padding: 0 18px;
+            cursor: pointer;
+            min-width: 160px;
+
+            i {
+                margin-right: 6px;
+            }
+        }
+    }
+}
+
+.bluefoot-placeholder {
+    &.bluefoot-draggable-block {
+        float: left;
+        width: 100%;
+        display: block;
+        color: lighten(@panelColor, 5%);
+
+        a {
+            height: 12px;
+            background: @entityColor;
+            width: 98%;
+            margin: 10px 1%;
+            padding: 0;
+            display: inline-block;
+
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+    }
+}
+
+#bluefoot-panel-wrapper {
+    width: 150px;
+    display: none;
+    float: left;
+    z-index: 600;
+
+    &.visible {
+        display: block;
+    }
+
+    #bluefoot-panel {
+        background: @color-very-dark-grayish-orange;
+
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+
+        /* Rules below not implemented in browsers yet */
+        -o-user-select: none;
+        user-select: none;
+
+        .search-results-empty {
+            color: @color-ivory;
+            padding: 12px;
+            font-size: 12px;
+        }
+        .search-blocks {
+            position: relative;
+
+            label {
+                font-size: 1.6rem;
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                margin-top: -0.8rem;
+                -webkit-font-smoothing: antialiased;
+                font-family: 'Admin Icons';
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                speak: none;
+                z-index: 5;
+                color: @color-gray65-lighten;
+            }
+            input {
+                padding: 12px 12px 12px 36px;
+                width: 100%;
+                background: @color-very-dark-grayish-orange;
+                border: none;
+                border-bottom: 1px solid @color-brownie-almost;
+                color: @color-ivory;
+                font-size: 12px;
+            }
+        }
+    }
+
+    #bluefoot-panel-groups {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: block;
+            width: 100%;
+
+            .group-title {
+                padding: 12px 12px;
+                cursor: pointer;
+                border-bottom: 1px solid @color-brownie-almost;
+                position: relative;
+
+                :before {
+                    content: '';
+                    font-size: 1.6rem;
+                    position: absolute;
+                    right: 12px;
+                    top: 50%;
+                    margin-top: -0.8rem;
+                    -webkit-font-smoothing: antialiased;
+                    font-family: 'Admin Icons';
+                    font-style: normal;
+                    font-weight: normal;
+                    line-height: 1;
+                    speak: none;
+                }
+
+                h4 {
+                    font-size: 12px;
+                    color: @color-gray65-lighten;
+                    font-weight: normal;
+                    margin-bottom: 0;
+                }
+            }
+
+            .bluefoot-panel-groups-child {
+                display: none;
+
+                ul.bluefoot-panel-groups-blocks {
+                    list-style: none;
+                    width: 100%;
+                }
+            }
+
+            &.active {
+                .group-title {
+                    :before {
+                        content: "";
+                    }
+                    h4 {
+                        color: @color-ivory;
+                    }
+                }
+                .bluefoot-panel-groups-child {
+                    display: block;
+                    background: @color-brownie-almost;
+                }
+            }
+
+            &.hidden {
+                .bluefoot-panel-groups-child {
+                    display: none!important;
+                }
+            }
+        }
+    }
+}
+
+.bluefoot-draggable-block {
+    display: block;
+    width: 100%;
+
+    a {
+        padding: 12px 12px;
+        display: block;
+        color: @color-ivory;
+        text-decoration: none;
+        cursor: pointer;
+        border-bottom: 1px solid @color-very-dark-grayish-orange;
+        background: @color-brownie-almost;
+        white-space: nowrap;
+
+        i {
+            color: @color-gray65-lighten;
+            margin-right: 6px;
+        }
+
+        &:hover {
+            background: @color-very-dark-grayish-orange;
+        }
+    }
+
+    &:hover {
+        display: block;
+        background: @color-brownie-almost;
+    }
+}

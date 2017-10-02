@@ -1,0 +1,84 @@
+<div class="admin__field admin__field-design-options">
+    <input type="text"
+           ko-value="value"
+           attr="id: uid, name: inputName"/>
+
+    <div class="layout-onion">
+        <div class="layout-onion-layer layout-margin">
+            <span class="label" data-bind="text: $t('margin')"></span>
+            <input type="text" class="layout-onion-top" name="marginTop" data-bind="textInput: marginTop" />
+            <input type="text" class="layout-onion-right" name="marginRight" data-bind="textInput: marginRight" />
+            <input type="text" class="layout-onion-bottom" name="marginBottom" data-bind="textInput: marginBottom" />
+            <input type="text" class="layout-onion-left" name="marginLeft" data-bind="textInput: marginLeft" />
+            <div class="layout-onion-layer layout-border">
+                <span class="label" data-bind="text: $t('border')"></span>
+                <input type="text" class="layout-onion-top" name="borderTop" data-bind="textInput: borderTop" />
+                <input type="text" class="layout-onion-right" name="borderRight" data-bind="textInput: borderRight" />
+                <input type="text" class="layout-onion-bottom" name="borderBottom" data-bind="textInput: borderBottom" />
+                <input type="text" class="layout-onion-left" name="borderLeft" data-bind="textInput: borderLeft" />
+                <div class="layout-onion-layer layout-padding">
+                    <span class="label" data-bind="text: $t('padding')"></span>
+                    <input type="text" class="layout-onion-top" name="paddingTop" data-bind="textInput: paddingTop" />
+                    <input type="text" class="layout-onion-right" name="paddingRight" data-bind="textInput: paddingRight" />
+                    <input type="text" class="layout-onion-bottom" name="paddingBottom" data-bind="textInput: paddingBottom" />
+                    <input type="text" class="layout-onion-left" name="paddingLeft" data-bind="textInput: paddingLeft" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout-settings">
+        <div class="layout-field border-color">
+            <label class="admin__field-label" >
+                <span data-bind="text: $t('Border Color:')"></span>
+            </label>
+            <div class="color-picker">
+                <div class="color-hash" data-bind="style: {color: borderTextColor}, click: function () { jQuery('[name=\'borderColor\']').ColorPickerShow(); }">#</div>
+                <input type="text" maxlength="7" name="borderColor" data-bind="afterRender: function (ele) { renderColorPicker(ele, 'borderColor'); }, textInput: borderColor, style: {backgroundColor: '#' + borderColor(), color: borderTextColor}" class="color-picker-input" />
+                <div class="color-prompt" data-bind="click: function () { jQuery('[name=\'borderColor\']').ColorPickerShow(); }, text: $t('Select Color')"></div>
+            </div>
+        </div>
+        <div class="layout-field border-style">
+            <label class="admin__field-label" >
+                <span data-bind="text: $t('Border Style:')"></span>
+            </label>
+            <div class="border-style-select">
+                <select name="borderStyle" data-bind="value: borderStyle" class="admin__control-select">
+                    <option value="inherit">Default</option>
+                    <option value="solid">Solid</option>
+                    <option value="dotted">Dotted</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="none">None</option>
+                    <option value="hidden">Hidden</option>
+                    <option value="double">Double</option>
+                    <option value="groove">Groove</option>
+                    <option value="ridge">Ridge</option>
+                    <option value="inset">Inset</option>
+                    <option value="outset">Outset</option>
+                    <option value="initial">Initial</option>
+                </select>
+            </div>
+        </div>
+        <div class="layout-field border-style">
+            <label class="admin__field-label" >
+                <span data-bind="text: $t('Border Radius:')"></span>
+            </label>
+            <div class="border-radius-slider">
+                <div class="border-radius-slider-slider" data-bind="afterRender: renderSlider"></div>
+                <div class="border-radius-input">
+                    <input type="number" data-bind="textInput: borderRadius" />px
+                </div>
+            </div>
+        </div>
+        <div class="layout-field background-color">
+            <label class="admin__field-label" >
+                <span data-bind="text: $t('Background Color:')"></span>
+            </label>
+            <div class="color-picker">
+                <div class="color-hash" data-bind="style: {color: backgroundTextColor}, click: function () { jQuery('[name=\'backgroundColor\']').ColorPickerShow(); }">#</div>
+                <input type="text" maxlength="7" name="backgroundColor" data-bind="afterRender: function (ele) { renderColorPicker(ele, 'backgroundColor'); }, textInput: backgroundColor, style: {backgroundColor: '#' + backgroundColor(), color: backgroundTextColor}" class="color-picker-input" />
+                <div class="color-prompt" data-bind="click: function () { jQuery('[name=\'backgroundColor\']').ColorPickerShow(); }, text: $t('Select Color')"></div>
+            </div>
+        </div>
+    </div>
+</div>

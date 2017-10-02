@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="config" type="configType"/>
+    <xs:complexType name="frontendType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="block" minOccurs="0"/>
+            <xs:element type="xs:string" name="template"/>
+            <xs:element type="assetsType" name="assets" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="content_blockType">
+        <xs:sequence>
+            <xs:element type="frontendType" name="frontend"/>
+            <xs:element type="assetsType" name="assets" minOccurs="0"/>
+            <xs:element type="adminhtmlType" name="adminhtml" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="identifier" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="assetType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="assetsType">
+        <xs:sequence>
+            <xs:element type="assetType" name="asset"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="adminhtmlType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="js" minOccurs="0"/>
+            <xs:element type="xs:string" name="preview" minOccurs="0"/>
+            <xs:element type="xs:string" name="preview_block" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="content_blocksType">
+        <xs:sequence>
+            <xs:element type="content_blockType" name="content_block" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="fieldType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="group"/>
+            <xs:element type="xs:string" name="label"/>
+            <xs:element type="xs:string" name="type"/>
+            <xs:element type="xs:string" name="widget"/>
+            <xs:element type="xs:string" name="code"/>
+            <xs:element type="xs:string" name="note" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="code" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="configType">
+        <xs:sequence>
+            <xs:element type="content_blocksType" name="content_blocks"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

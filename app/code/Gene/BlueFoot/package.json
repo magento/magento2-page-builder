@@ -1,0 +1,34 @@
+{
+  "name": "@gene/bluefoot",
+  "version": "1.0.0",
+  "description": "Bluefoot Node utilities, at this point primarily for testing",
+  "scripts": {
+    "start": "npm test -S -- --no-single-run",
+    "test": "karma start view/adminhtml/test/karma.conf.js",
+    "debug": "cross-env KARMA_DEBUG=1 npm test -S -- --log-level debug --no-single-run --browsers",
+    "test:allbrowsers": "npm test -S -- --browsers Chrome,Firefox,Safari,MobileSafari",
+    "start:allbrowsers": "npm run -S test:allbrowsers -- --no-single-run"
+  },
+  "devDependencies": {
+    "cross-env": "^3.1.4",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-ios-simulator-launcher": "^0.0.4",
+    "karma-jasmine": "^1.1.0",
+    "karma-jquery": "^0.1.0",
+    "karma-mocha-reporter": "^2.2.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-requirejs": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0",
+    "requirejs": "^2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magento/bluefoot-for-m2.git"
+  },
+  "author": "Magento, Inc.",
+  "license": "SEE LICENSE IN LICENSE_EE.txt"
+}

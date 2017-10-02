@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Gene_BlueFoot::js/resource/jquery/tag-it/jquery.tagit.css"/>
+        <css src="Gene_BlueFoot::js/resource/jquery/tag-it/tagit.ui-zendesk.css"/>
+        <css src="Gene_BlueFoot::js/resource/jquery/colorpicker/css/colorpicker.css"/>
+        <css src="Gene_BlueFoot::js/resource/highlight/styles/monokai-sublime.css"/>
+        <css src="Gene_BlueFoot::js/resource/redactor/library/redactor.min.css"/>
+        <css src="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,200" src_type="url" />
+        <script type="text/javascript" src="https://use.fontawesome.com/029869c625.js" src_type="url" />
+    </head>
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Gene\BlueFoot\Block\Adminhtml\Stage\Init" name="gene.bluefoot.init" template="init.phtml" />
+            <uiComponent name="bluefoot_edit"/>
+            <uiComponent name="bluefoot_template_manager"/>
+        </referenceContainer>
+    </body>
+</page>

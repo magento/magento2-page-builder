@@ -1,0 +1,90 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * _common contains core classes used throughout the BlueFoot
+ *
+ */
+
+
+/*-- Layout Classes --*/
+
+.@{prefix}-full-width {
+  float:left;
+  width:100%;
+}
+
+.@{prefix}-wrapper {
+  width:100%;
+  max-width:@wrapper;
+  margin:0 auto;
+  box-sizing:border-box;
+  padding-left:@margin;
+  padding-right:@margin;
+}
+
+.@{prefix}-entity {
+  box-sizing:border-box;
+  margin-bottom:@margin;
+}
+
+.@{prefix}-align-left {
+  text-align:left;
+}
+.@{prefix}-align-right {
+  text-align:right;
+}
+.@{prefix}-align-center {
+  text-align:center;
+  img {
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+
+.page-layout-full-width {
+  .page-main {
+    max-width:100%;
+    width:100%;
+    padding-left:0;
+    padding-right:0;
+  }
+}
+
+@media all and (min-width: @wide) {
+  .@{prefix}-wrapper {
+    max-width: @wrapper_wide;
+  }
+}
+
+
+/*-- Responsive Classes --*/
+
+.@{prefix}-mobile-only { display:none!important; }
+
+
+
+@media all and (max-width: @mobile) {
+
+  .@{prefix}-mobile-only { display:block!important; }
+  .@{prefix}-mobile-hidden { display:none!important; }
+
+}
+
+
+/*-- Text Classes --*/
+
+.@{prefix}-icons {font-family: '@{prefix}-icons'; }
+
+
+/*-- Animation --*/
+
+.transition {
+  transition:.5s;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+}

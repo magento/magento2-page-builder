@@ -1,0 +1,45 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Newsletter Signup Block Template
+ * @var $block Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter
+ *
+ */
+$_entity = $block->getEntity();
+?>
+<div
+    class="block block-subscribe bluefoot-full-width bluefoot-newsletter <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+    <div class="block-title">
+        <strong><span><?php echo $_entity->getTitle(); ?></span></strong>
+    </div>
+    <form class="form subscribe"
+          novalidate
+          action="<?php /* @escapeNotVerified */
+          echo $block->getFormActionUrl() ?>"
+          method="post"
+          data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+          id="newsletter-validate-detail">
+        <div class="block-content">
+            <div class="form-subscribe-header">
+                <label
+                    for="bluefoot-newsletter-field-<?php echo $_entity->getId(); ?>"><?php echo $_entity->getLabel(); ?></label>
+            </div>
+            <div class="input-container">
+                <div class="input-box">
+                    <input name="email" type="email" id="newsletter"
+                           placeholder="<?php echo $_entity->getPlaceholder() ?>"
+                           data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+                <div class="actions">
+                    <button type="submit" title="<?php echo $_entity->getButtonText() ?>" class="button">
+                        <span><span><?php echo $_entity->getButtonText() ?></span></span></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
