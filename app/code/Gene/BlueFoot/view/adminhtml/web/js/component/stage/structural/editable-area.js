@@ -1,187 +1,203 @@
-/**
- * - editable-area.js
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'bluefoot/event-emitter',
-    'ko',
-    'underscore',
-    'bluefoot/utils/array',
-    'bluefoot/block/factory',
-    'bluefoot/stage',
-    'mageUtils'
-], function (EventEmitter, ko, _, arrayUtil, BlockFactory, Stage, utils) {
+define(['exports', '../../event-emitter', '../../block/factory', '../../../utils/array', 'underscore', 'knockout', 'mageUtils', 'mage/translate'], function (exports, _eventEmitter, _factory, _array, _underscore, _knockout, _mageUtils, _translate) {
+    'use strict';
 
-    /**
-     * EditableArea constructor
-     *
-     * @constructor
-     */
-    function EditableArea(childrenObservable, stage) {
-        if (!ko.isObservable(childrenObservable)) {
-            throw new Error('EditableArea must be passed the child\'s observable children array as the first argument.');
-        }
-        this.childrenObservable = childrenObservable;
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-        // Ensure the editable area is aware of it's stage
-        if (typeof stage === 'undefined') {
-            throw new Error('EditableArea must have a reference to stage as it\'s second argument.');
-        }
-        this.stage = stage;
+    var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
 
-        EventEmitter.apply(this, arguments);
+    var _factory2 = _interopRequireDefault(_factory);
 
-        // Bind this context to event handlers
-        _.bindAll(
-            this,
-            'onBlockDropped',
-            'onBlockInstanceDropped',
-            'onBlockRemoved',
-            'onBlockSorted',
-            'onSortStart',
-            'onSortStop'
-        );
+    var _underscore2 = _interopRequireDefault(_underscore);
 
-        // Attach events to structural elements
-        // Block dropped from left hand panel
-        this.on('blockDropped', this.onBlockDropped);
+    var _knockout2 = _interopRequireDefault(_knockout);
 
-        // Block instance being moved between structural elements
-        this.on('blockInstanceDropped', this.onBlockInstanceDropped);
-        this.on('blockRemoved', this.onBlockRemoved);
+    var _mageUtils2 = _interopRequireDefault(_mageUtils);
 
-        // Block sorted within the same structural element
-        this.on('blockSorted', this.onBlockSorted);
+    var _translate2 = _interopRequireDefault(_translate);
 
-        this.on('sortStart', this.onSortStart);
-        this.on('sortStop', this.onSortStop);
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
-    EditableArea.prototype = Object.create(EventEmitter.prototype);
 
-    /**
-     * Add a child to the current element
-     *
-     * @param child
-     * @param index
-     */
-    EditableArea.prototype.addChild = function (child, index) {
-        child.parent = this;
-        child.stage = this.stage;
-        if (index !== undefined && index !== false) {
-            // Use the arrayUtil function to add the item in the correct place within the array
-            arrayUtil.moveArrayItemIntoArray(child, this.childrenObservable, index);
-        } else {
-            this.childrenObservable.push(child);
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
         }
-    };
+    }
 
-    /**
-     * Remove a child from the children array
-     *
-     * @param child
-     */
-    EditableArea.prototype.removeChild = function (child) {
-        utils.remove(this.childrenObservable, child);
-    };
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
 
-    /**
-     * Handle a block being dropped into the structural element
-     *
-     * @param event
-     * @param params
-     * @returns {*}
-     */
-    EditableArea.prototype.onBlockDropped = function (event, params) {
-        var self = this,
-            index = params.index || 0;
-        return new Promise(function (resolve, reject) {
-            if (params.block) {
-                var blockFactory = new BlockFactory();
-                blockFactory.create(params.block.config, self, self.stage).then(function (block) {
-                    self.addChild(block, index);
-                    resolve(block);
-                    block.emit('blockReady');
-                }).catch(function (error) {
-                    reject(error);
-                });
-            } else {
-                reject('Parameter block missing from event.');
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
+
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
+
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
             }
-        }).catch(function (error) {
-            console.error(error);
         });
-    };
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
 
-    /**
-     * Capture a block instance being dropped onto this element
-     *
-     * @param event
-     * @param params
-     */
-    EditableArea.prototype.onBlockInstanceDropped = function (event, params) {
-        this.addChild(params.blockInstance, params.index);
+    var EditableArea = function (_EventEmitter) {
+        _inherits(EditableArea, _EventEmitter);
 
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
+        /**
+         * EditableArea constructor
+         *
+         * @param stage
+         */
+        function EditableArea(stage) {
+            _classCallCheck(this, EditableArea);
+
+            var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+            _this.id = _mageUtils2.default.uniqueid();
+            _this.title = (0, _translate2.default)('Editable');
+            if (stage) {
+                _this.stage = stage;
+            }
+            _underscore2.default.bindAll(_this, 'onBlockDropped', 'onBlockInstanceDropped', 'onBlockRemoved', 'onBlockSorted', 'onSortStart', 'onSortStop');
+            // Attach events to structural elements
+            // Block dropped from left hand panel
+            _this.on('blockDropped', _this.onBlockDropped);
+            // Block instance being moved between structural elements
+            _this.on('blockInstanceDropped', _this.onBlockInstanceDropped);
+            _this.on('blockRemoved', _this.onBlockRemoved);
+            // Block sorted within the same structural element
+            _this.on('blockSorted', _this.onBlockSorted);
+            _this.on('sortStart', _this.onSortStart);
+            _this.on('sortStop', _this.onSortStop);
+            return _this;
         }
+        /**
+         * Set the children observable array into the class
+         *
+         * @param children
+         */
 
-        params.blockInstance.emit('blockMoved');
-    };
 
-    /**
-     * Handle event to remove block
-     *
-     * @param event
-     * @param params
-     */
-    EditableArea.prototype.onBlockRemoved = function (event, params) {
-        params.block.emit('blockBeforeRemoved');
-        this.removeChild(params.block);
+        EditableArea.prototype.setChildren = function setChildren(children) {
+            this.children = children;
+        };
 
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
-        }
-    };
+        EditableArea.prototype.duplicateChild = function duplicateChild(child) {
+            var autoAppend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-    /**
-     * Handle event when a block is sorted within it's current container
-     *
-     * @param event
-     * @param params
-     */
-    EditableArea.prototype.onBlockSorted = function (event, params) {
-        var originalIndex = ko.utils.arrayIndexOf(this.childrenObservable(), params.block);
-        if (originalIndex !== params.index) {
-            arrayUtil.moveArrayItem(this.childrenObservable, originalIndex, params.index);
-        }
-        params.block.emit('blockMoved');
-    };
+            var store = this.stage.store,
+                instance = child.constructor,
+                duplicate = new instance(child.parent, child.stage, child.config),
+                index = child.parent.children.indexOf(child) + 1 || null;
+            // Copy the data from the data store
+            store.update(duplicate.id, Object.assign({}, store.get(child.id)));
+            // Duplicate the instances children into the new duplicate
+            if (child.children().length > 0) {
+                child.children().forEach(function (subChild, index) {
+                    duplicate.addChild(duplicate.duplicateChild(subChild, false), index);
+                });
+            }
+            if (autoAppend) {
+                this.addChild(duplicate, index);
+            }
+            return duplicate;
+        };
 
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param event
-     * @param params
-     */
-    EditableArea.prototype.onSortStart = function (event, params) {
-        var originalEle = jQuery(params.originalEle);
-        originalEle.show();
-        originalEle.addClass('bluefoot-sorting-original');
+        EditableArea.prototype.getStage = function getStage() {
+            return this.stage;
+        };
 
-        // Reset the width & height of the helper
-        jQuery(params.helper).css({width: '', height: ''});
-    };
+        EditableArea.prototype.addChild = function addChild(child, index) {
+            child.parent = this;
+            child.stage = this.stage;
+            if (index) {
+                // Use the arrayUtil function to add the item in the correct place within the array
+                (0, _array.moveArrayItemIntoArray)(child, this.children, index);
+            } else {
+                this.children.push(child);
+            }
+        };
 
-    /**
-     * Event called when sorting stops on this element
-     *
-     * @param event
-     * @param params
-     */
-    EditableArea.prototype.onSortStop = function (event, params) {
-        jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
-    };
+        EditableArea.prototype.removeChild = function removeChild(child) {
+            (0, _array.removeArrayItem)(this.children, child);
+        };
 
-    return EditableArea;
+        EditableArea.prototype.onBlockDropped = function onBlockDropped(event, params) {
+            var _this2 = this;
+
+            var index = params.index || 0;
+            new Promise(function (resolve, reject) {
+                if (params.block) {
+                    return (0, _factory2.default)(params.block.config, _this2, _this2.stage).then(function (block) {
+                        _this2.addChild(block, index);
+                        resolve(block);
+                        block.emit('blockReady');
+                    }).catch(function (error) {
+                        reject(error);
+                    });
+                } else {
+                    reject('Parameter block missing from event.');
+                }
+            }).catch(function (error) {
+                console.error(error);
+            });
+        };
+
+        EditableArea.prototype.onBlockInstanceDropped = function onBlockInstanceDropped(event, params) {
+            this.addChild(params.blockInstance, params.index);
+            /*
+            if (ko.processAllDeferredBindingUpdates) {
+                ko.processAllDeferredBindingUpdates();
+            }*/
+            params.blockInstance.emit('blockMoved');
+        };
+
+        EditableArea.prototype.onBlockRemoved = function onBlockRemoved(event, params) {
+            params.block.emit('blockBeforeRemoved');
+            this.removeChild(params.block);
+            // Remove the instance from the data store
+            this.stage.store.remove(this.id);
+            /*
+            if (ko.processAllDeferredBindingUpdates) {
+                ko.processAllDeferredBindingUpdates();
+            }*/
+        };
+
+        EditableArea.prototype.onBlockSorted = function onBlockSorted(event, params) {
+            var originalIndex = _knockout2.default.utils.arrayIndexOf(this.children(), params.block);
+            if (originalIndex !== params.index) {
+                (0, _array.moveArrayItem)(this.children, originalIndex, params.index);
+            }
+            params.block.emit('blockMoved');
+        };
+
+        EditableArea.prototype.onSortStart = function onSortStart(event, params) {
+            var originalEle = jQuery(params.originalEle);
+            originalEle.show();
+            originalEle.addClass('bluefoot-sorting-original');
+            // Reset the width & height of the helper
+            jQuery(params.helper).css({ width: '', height: '' }).html(jQuery('<h3 />').text(this.title).html());
+        };
+
+        EditableArea.prototype.onSortStop = function onSortStop(event, params) {
+            jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
+        };
+
+        return EditableArea;
+    }(_eventEmitter2.default);
+
+    exports.default = EditableArea;
 });

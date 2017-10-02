@@ -1,12 +1,12 @@
 <div class="bluefoot-options">
     <div class="bluefoot-options-wrapper">
-        <ul class="bluefoot-options-links" data-bind="foreach: options.options">
+        <ul class="bluefoot-options-links" data-bind="foreach: options">
             <li class="bluefoot-options-link">
                 <!-- ko if: getTemplate() -->
-                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- ko template: getTemplate()  --><!-- /ko -->
                 <!-- /ko -->
                 <!-- ko ifnot: getTemplate() -->
-                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { callback($data, $parent); }, css: additionalClasses"></a>
+                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action($data); }, css: classes"></a>
                 <!-- /ko -->
             </li>
         </ul>

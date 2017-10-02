@@ -7,7 +7,7 @@
     <!-- ko template: getTemplate() --><!-- /ko -->
 <!-- /ko -->
 
-<div class="bluefoot-stage" data-bind="attr: {id: stageId, 'data-role': stageActive() ? 'bluefoot-stage' : '' }, css: {'bluefoot-show-borders': showBorders, 'bluefoot-no-user-select': !userSelect()}">
+<div class="bluefoot-stage" data-bind="attr: {id: stageId, 'data-role': stageActive() ? 'bluefoot-stage' : '' }, css: {'bluefoot-show-borders': showBorders, 'bluefoot-no-user-select': !userSelect(), 'panel-collapsed': panel.isCollapsed}">
     <div class="bluefoot-stage-loading" data-bind="visible: loading">
         <div class="bluefoot-emblem"></div>
         <p data-bind="text: $t('Please hold! we\'re just retrieving your content...')"></p>

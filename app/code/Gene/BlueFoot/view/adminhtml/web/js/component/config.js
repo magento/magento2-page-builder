@@ -1,391 +1,190 @@
-/**
- * - Config.js
- * Handles retrieve the configuration from the server
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'underscore',
-    'jquery',
-    'bluefoot/utils/ajax',
-    'bluefoot/utils/persistence',
-    'advanced-cms-init-config'
-], function (_, jQuery, AjaxClass, persistence, initConfig) {
+define(['exports', 'underscore', 'jquery', 'advanced-cms-init-config'], function (exports, _underscore, _jquery, _advancedCmsInitConfig) {
+    'use strict';
 
-    /**
-     * The initial config before the Ajax request
-     *
-     * @type {{}}
-     * @private
-     */
-    var _initConfig = initConfig;
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-    /**
-     * Cache the config within this module
-     *
-     * @type {{}}
-     * @private
-     */
-    var _config = {
-        'dataRoleAttributeName': 'data-role'
+    var _underscore2 = _interopRequireDefault(_underscore);
+
+    var _jquery2 = _interopRequireDefault(_jquery);
+
+    var _advancedCmsInitConfig2 = _interopRequireDefault(_advancedCmsInitConfig);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
 
-    /**
-     * Store all the fields in a cache so we don't have to re-generate them
-     *
-     * @type {{}|boolean}
-     * @private
-     */
-    var _allFields = false;
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-    return {
+    var Config = function () {
+        function Config() {
+            _classCallCheck(this, Config);
+        }
 
-        /**
-         * Set config values
-         *
-         * @param key
-         * @param value
-         * @private
-         */
-        _setConfig: function (key, value) {
-            _config[key] = value;
-        },
+        Config.setInitConfig = function setInitConfig(config) {
+            Config.config = config;
+        };
 
-        /**
-         * Set specific initConfig values
-         *
-         * @param key
-         * @param value
-         * @private
-         */
-        _setInitConfig: function (key, value) {
-            _initConfig[key] = value;
-        },
-
-        /**
-         * Set the initial config
-         *
-         * @param config
-         */
-        setInitConfig: function (config) {
-            _initConfig = config;
-        },
-
-        /**
-         * Return the initial config
-         *
-         * @returns {{}}
-         */
-        getInitConfig: function (key) {
+        Config.getInitConfig = function getInitConfig(key) {
             if (key) {
-                if (typeof _initConfig[key] !== 'undefined') {
-                    return _initConfig[key];
+                if (typeof Config.initConfig[key] !== 'undefined') {
+                    return Config.initConfig[key];
                 }
                 return null;
             }
-            return _initConfig;
-        },
+            return Config.initConfig;
+        };
 
-        /**
-         * Load in entities
-         *
-         * @param entityIds
-         * @param storeId
-         * @param callback
-         */
-        loadEntities: function (entityIds, storeId, callback) {
-            if (typeof _config['entities'] === 'undefined') {
-                _config['entities'] = {};
-            }
-
-            storeId = storeId || this.getStoreId();
-
-            // Include the Ajax Class
-            var Ajax = new AjaxClass();
-            Ajax.post(this.getInitConfig('config_url'), {entityIds: entityIds, storeId: storeId}, function (data) {
-                jQuery.extend(_config['entities'], data);
-
-                if (typeof callback === 'function') {
-                    callback(_config);
-                }
-            }.bind(this), false, function () {
-                alert('can\'t load entities');
-            });
-        },
+        Config.loadEntities = function loadEntities(entityIds, storeId, callback) {}
+        // @todo
 
         /**
          * Retrieve an entity from the configuration
          *
          * @param entityId
-         * @returns {*}
+         * @returns {any}
          */
-        getEntity: function (entityId) {
-            if (typeof _config['entities'][entityId] !== 'undefined') {
-                return _config['entities'][entityId];
+        ;
+
+        Config.getEntity = function getEntity(entityId) {
+            if (typeof Config.config['entities'][entityId] !== 'undefined') {
+                return Config.config['entities'][entityId];
             }
-        },
+            return {};
+        };
 
-        /**
-         * Return a content types configuration from the config
-         *
-         * @param type
-         * @returns {*}
-         */
-        getContentBlockConfig: function (type) {
-            if (typeof _initConfig.contentBlocks === 'object' && typeof _initConfig.contentBlocks[type] === 'object') {
-                return _initConfig.contentBlocks[type];
+        Config.getContentBlockConfig = function getContentBlockConfig(type) {
+            if (_typeof(Config.initConfig.contentBlocks) === 'object' && _typeof(Config.initConfig.contentBlocks[type]) === 'object') {
+                return Config.initConfig.contentBlocks[type];
             }
+            return {};
+        };
 
-            return false;
-        },
+        Config.getConfig = function getConfig() {
+            return Config.config;
+        };
 
-        /**
-         * Retrieve the previously built configuration
-         *
-         * @returns {{}}
-         */
-        getConfig: function () {
-            return _config;
-        },
-
-        /**
-         * Return a value from the config
-         *
-         * @param key
-         * @returns {*}
-         */
-        getValue: function (key) {
-            if (typeof _config[key] !== 'undefined') {
-                return _config[key];
+        Config.getValue = function getValue(key) {
+            if (typeof Config.config[key] !== 'undefined') {
+                return Config.config[key];
             }
-            if (typeof this.getInitConfig()[key] !== 'undefined') {
-                return this.getInitConfig()[key];
+            if (Config.getInitConfig(key)) {
+                return Config.getInitConfig(key);
             }
             return null;
-        },
+        };
 
-        /**
-         * Deletes a value from the config providing you know the config key, the item key and the value to check for
-         *
-         * @param key
-         * @param valueKey
-         * @param value
-         */
-        deleteValue: function (key, valueKey, value) {
+        Config.getValueAsString = function getValueAsString(key) {
+            return String(Config.getValue(key));
+        };
+
+        Config.deleteValue = function deleteValue(key, valueKey, value) {
             var arr = [];
-            _config[key].forEach(function (item) {
+            Config.config[key].forEach(function (item) {
                 if (item[valueKey] != value) {
                     arr.push(item);
                 }
             });
-            _config[key] = arr;
-        },
+            Config.config[key] = arr;
+        };
 
-        /**
-         * Add to a config setting array without having to rebuild config.
-         * @param key
-         * @param values (array)
-         */
-        mergeValues: function (key, values) {
-            _config[key] = _config[key].concat(values);
-        },
+        Config.mergeValue = function mergeValue(key, values) {
+            Config.config[key] = Config.config[key].concat(values);
+        };
 
-        /**
-         * Update a value in the templates array
-         *
-         * @param matchKey
-         * @param matchValue
-         * @param newValueKey
-         * @param newValue
-         */
-        updateTemplateValue: function (matchKey, matchValue, newValueKey, newValue) {
+        Config.updateTemplateValue = function updateTemplateValue(matchKey, matchValue, newValueKey, newValue) {
             var arr = [];
-            _config['templates'].forEach(function (item) {
+            Config.config['templates'].forEach(function (item) {
                 if (item[matchKey] === matchValue) {
                     item[newValueKey] = newValue;
                 }
                 arr.push(item);
             });
-            _config['templates'] = arr;
-        },
+            Config.config['templates'] = arr;
+        };
 
-        /**
-         * Plugins can have config values declared inside their JSON
-         *
-         * @param plugin
-         * @param key
-         * @returns {*}
-         */
-        getPluginConfig: function (plugin, key) {
-            var config = _initConfig;
+        Config.getPluginConfig = function getPluginConfig(plugin, key) {
+            var config = Config.initConfig;
             if (typeof config.plugins[plugin] !== 'undefined' && typeof config.plugins[plugin]['config'] !== 'undefined' && typeof config.plugins[plugin]['config'][key] !== 'undefined') {
                 return config.plugins[plugin]['config'][key];
             }
-
             return null;
-        },
+        };
 
-        /**
-         * Return all fields available in the system
-         *
-         * @returns {{}}
-         */
-        getAllFields: function () {
-            if (_allFields !== false) {
-                return _allFields;
+        Config.getAllFields = function getAllFields() {
+            if (Config.allFields) {
+                return Config.allFields;
             }
-
-            _allFields = {};
-            jQuery.each(_initConfig.contentBlocks, function (index, element) {
-                if (typeof element.fields === 'object') {
-                    jQuery.extend(_allFields, element.fields);
+            Config.allFields = {};
+            _jquery2.default.each(Config.initConfig.contentBlocks, function (index, element) {
+                if (_typeof(element.fields) === 'object') {
+                    _jquery2.default.extend(Config.allFields, element.fields);
                 }
             });
-
-            return _allFields;
-        },
-
-        /**
-         * Return an individual fields data
-         *
-         * @param key
-         * @returns {*}
-         */
-        getField: function (key) {
-            var fields;
-            if (_allFields === false) {
-                fields = this.getAllFields();
-            } else {
-                fields = _allFields;
+            // Include global fields in all fields
+            if (this.getValue('globalFields')) {
+                _jquery2.default.extend(Config.allFields, this.getValue('globalFields'));
             }
+            return Config.allFields;
+        };
 
+        Config.getField = function getField(key) {
+            var fields = void 0;
+            if (!Config.allFields) {
+                fields = Config.getAllFields();
+            } else {
+                fields = Config.allFields;
+            }
             if (typeof fields[key] !== 'undefined') {
                 return fields[key];
             }
-
             return null;
-        },
+        };
 
-        /**
-         * Return the form key
-         *
-         * @returns {*}
-         */
-        getFormKey: function () {
-            return window.FORM_KEY;
-        },
+        Config.resetConfig = function resetConfig() {
+            Config.config = {};
+        };
 
-        /**
-         * Reset the configuration
-         */
-        resetConfig: function () {
-            _config = {};
-        },
-
-        /**
-         * Retrieve the store ID
-         * @returns {*}
-         */
-        getStoreId: function () {
-            if (jQuery('#store_switcher').length > 0) {
-                return jQuery('#store_switcher').val();
+        Config.getStoreId = function getStoreId() {
+            if ((0, _jquery2.default)('#store_switcher').length > 0) {
+                return (0, _jquery2.default)('#store_switcher').val();
             }
-        },
+        };
 
-        /**
-         * Add a form to the configuration
-         *
-         * @param key
-         * @param data
-         *
-         * @todo replace with client side rendering of forms
-         */
-        addForm: function (key, data) {
-            if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
-                    this.invalidateLocalStorage();
-                }
-                persistence.setItem('bluefoot-edit-' + key, data);
-            } else {
-                if (typeof _config['forms'] === 'undefined') {
-                    _config['forms'] = {};
-                }
-                _config['forms'][key] = data;
-            }
-        },
+        Config.getColumnDefinitionByClassName = function getColumnDefinitionByClassName(className) {
+            return Config.getColumnDef('className', className);
+        };
 
-        /**
-         * Try and load a form from the config
-         *
-         * @param key
-         * @returns {*}
-         *
-         * @todo replace with client side rendering of forms
-         */
-        loadForm: function (key) {
-            if (this.getInitConfig('edit_panel_cache')) {
-                if (this.getInitConfig('edit_panel_cache_key') !== persistence.getItem('bluefoot-edit-key')) {
-                    this.invalidateLocalStorage();
-                }
-                return persistence.getItem('bluefoot-edit-' + key);
-            } else {
-                if (key && typeof _config['forms'] !== 'undefined' && typeof _config['forms'][key] !== 'undefined') {
-                    return _config['forms'][key];
-                }
-            }
+        Config.getColumnDefinitionByBreakpoint = function getColumnDefinitionByBreakpoint(breakpoint) {
+            return Config.getColumnDef('breakpoint', breakpoint);
+        };
 
-            return null;
-        },
-
-        /**
-         * Invalidate the localStorage cache
-         *
-         * @todo replace with client side rendering of forms
-         */
-        invalidateLocalStorage: function () {
-            var cachePrefix = 'bluefoot-edit-';
-            persistence.keys()
-                .forEach(function(key) {
-                    if (key.substring(0, cachePrefix.length) == cachePrefix) {
-                        persistence.removeItem(key);
-                    }
-                });
-
-            persistence.setItem('bluefoot-edit-key', this.getInitConfig('edit_panel_cache_key'));
-        },
-
-        /**
-         * Return a column definition based on the class name
-         *
-         * @param className
-         * @returns {*}
-         */
-        getColumnDefinitionByClassName: function (className) {
-            return this._getColumnDef('className', className);
-        },
-
-        /**
-         * Return a column definition based on a breakpoint
-         *
-         * @param breakpoint
-         * @returns {*}
-         */
-        getColumnDefinitionByBreakpoint: function (breakpoint) {
-            return this._getColumnDef('breakpoint', breakpoint);
-        },
-
-        /**
-         * Get column definition by field & value
-         *
-         * @param field
-         * @param value
-         * @returns {*}
-         * @private
-         */
-        _getColumnDef: function (field, value) {
+        Config.getColumnDef = function getColumnDef(field, value) {
             var searchObj = {};
             searchObj[field] = value;
-            return _.findWhere(this.getInitConfig('column_definitions'), searchObj);
-        }
+            return _underscore2.default.findWhere(this.getInitConfig('column_definitions'), searchObj);
+        };
+
+        return Config;
+    }();
+
+    exports.default = Config;
+
+    Config.initConfig = _advancedCmsInitConfig2.default;
+    Config.config = {
+        'dataRoleAttributeName': 'data-role'
     };
 });

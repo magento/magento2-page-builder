@@ -1,56 +1,59 @@
-define([
-    'bluefoot/config',
-    'bluefoot/block/preview/abstract'
-], function (config, abstract) {
-    var loaded = false,
-        instances = {};
+define(['exports', '../config', '../block/preview/block'], function (exports, _config, _block) {
+    'use strict';
 
-    var previews = function () {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.load = load;
+    exports.default = get;
 
-    };
+    var _config2 = _interopRequireDefault(_config);
 
+    var _block2 = _interopRequireDefault(_block);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
+    var previews = [];
     /**
-     * Load all previews from config
+     * Load all preview instances into our cache
      */
-    previews.load = function () {
-        if (loaded === false) {
-
-            var contentBlocks = config.getInitConfig("contentBlocks"),
-                templates = [],
-                keyNames = [];
-
-            for (var key in contentBlocks) {
-                if (typeof contentBlocks[key]['preview_block'] === 'string') {
-                    templates.push(contentBlocks[key]['preview_block']);
-                    keyNames.push(key);
-                }
+    function load() {
+        var contentBlocks = _config2.default.getInitConfig("contentBlocks");
+        var blocksToLoad = [],
+            blockCodes = []; // @todo should be string, but TS complains
+        Object.keys(contentBlocks).forEach(function (blockKey) {
+            var block = contentBlocks[blockKey];
+            if (typeof block.preview_block === 'string') {
+                blockCodes.push(blockKey);
+                blocksToLoad.push(block.preview_block);
             }
-
-            require(templates, function () {
-                for (var arg = 0; arg < arguments.length; ++arg) {
-                    instances[keyNames[arg]] = arguments[arg];
-                }
-            });
-
-            loaded = true;
-        }
-    };
-
+        });
+        // @todo this could create a race condition loading these async upfront
+        require(blocksToLoad, function () {
+            for (var arg = 0; arg < arguments.length; ++arg) {
+                previews[blockCodes[arg]] = arguments[arg].default;
+            }
+        });
+    }
     /**
-     * Retrieve a preview instance
+     * Get preview instance for a specific block
      *
-     * @param block
-     * @returns {*}
+     * @param {Block} block
+     * @param blockConfig
+     * @returns {PreviewBlock}
      */
-    previews.get = function (block) {
-        block = block.code;
-
-        if (typeof instances[block] === 'undefined') {
-            return abstract;
+    function get(block, blockConfig) {
+        var code = blockConfig.code;
+        var instance = void 0;
+        if (typeof previews[code] === 'undefined') {
+            instance = _block2.default;
+        } else {
+            instance = previews[code];
         }
-
-        return instances[block];
-    };
-
-    return previews;
+        return new instance(block, blockConfig);
+    }
 });

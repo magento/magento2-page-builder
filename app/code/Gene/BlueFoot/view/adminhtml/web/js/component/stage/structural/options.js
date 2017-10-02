@@ -1,91 +1,89 @@
-/**
- * - Options.js
- * Options for various elements
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'underscore',
-    'ko',
-    'bluefoot/stage/structural/options/option'
-], function (_, ko, Option) {
+define(['exports', 'underscore', 'knockout'], function (exports, _underscore, _knockout) {
+    'use strict';
 
-    /**
-     *
-     * @constructor
-     */
-    function Options() {
-        this.options = ko.observableArray([]);
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Options = undefined;
+
+    var _underscore2 = _interopRequireDefault(_underscore);
+
+    var _knockout2 = _interopRequireDefault(_knockout);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    /**
-     * Sort the options based on their sort value
-     */
-    Options.prototype.sort = function () {
-        this.options.sort(function (a, b) {
-            return a.sort == b.sort ? 0 : (a.sort < b.sort ? -1 : 1)
-        });
-    };
-
-    /**
-     * Return the options template
-     *
-     * @returns {string}
-     */
-    Options.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/stage/structural/options.html'
-    };
-
-    /**
-     * Add an option
-     *
-     * @param parent
-     * @param code
-     * @param icon
-     * @param title
-     * @param callbackFn
-     * @param additionalClasses
-     * @param sort
-     * @param optionInstance
-     */
-    Options.prototype.addOption = function (parent, code, icon, title, callbackFn, additionalClasses, sort, optionInstance) {
-
-        // If the callbackFn isn't defined return false
-        if (!callbackFn || callbackFn && typeof callbackFn !== 'function') {
-            callbackFn = function () {
-                return false;
-            };
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
         }
+    }
 
-        // If the additional classes is an array, convert it into a string
-        if (typeof additionalClasses === 'object' && Array.isArray(additionalClasses)) {
-            additionalClasses = additionalClasses.join(' ');
+    var Options = exports.Options = function () {
+        /**
+         * Options constructor
+         *
+         * @param parent
+         * @param options
+         */
+        function Options(parent, options) {
+            _classCallCheck(this, Options);
+
+            this.options = _knockout2.default.observableArray([]);
+            this.template = 'Gene_BlueFoot/component/stage/structural/options.html';
+            this.parent = parent;
+            this.options(options);
+            this.sort();
         }
+        /**
+         * Sort the options
+         */
 
-        // If the option requires a custom option class, check the instance and use that
-        var optionClass = Option;
-        if (optionInstance && typeof optionInstance === 'function') {
-            optionClass = optionInstance
-        }
 
-        // Create a new option instance and add it into the observable array
-        this.options.push(new optionClass(parent, code, icon, title, callbackFn, additionalClasses, sort));
+        Options.prototype.sort = function sort() {
+            this.options.sort(function (a, b) {
+                return a.sort === b.sort ? 0 : a.sort < b.sort ? -1 : 1;
+            });
+        };
+        /**
+         * Add an option into the options array
+         *
+         * @param option
+         */
 
-        // Sort the options to ensure they're in the correct order
-        this.sort();
-    };
 
-    /**
-     * Remove an option
-     *
-     * @param code
-     */
-    Options.prototype.removeOption = function (code) {
-        this.options(_.without(this.options(), _.findWhere(this.options(), {
-            code: code
-        })));
-        this.sort();
-    };
+        Options.prototype.addOption = function addOption(option) {
+            this.options.push(option);
+            this.sort();
+        };
+        /**
+         * Remove an option
+         *
+         * @param code
+         */
 
-    return Options;
+
+        Options.prototype.removeOption = function removeOption(code) {
+            this.options(_underscore2.default.without(this.options(), _underscore2.default.findWhere(this.options(), {
+                code: code
+            })));
+            this.sort();
+        };
+        /**
+         * Retrieve the template
+         *
+         * @deprecated
+         * @returns {string}
+         */
+
+
+        Options.prototype.getTemplate = function getTemplate() {
+            return this.template;
+        };
+
+        return Options;
+    }();
 });

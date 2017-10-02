@@ -1,152 +1,146 @@
-/**
- * - Column.js
- * Structural column elements
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'ko',
-    'bluefoot/stage/structural/abstract',
-    'mage/translate',
-    'bluefoot/utils/array',
-    'bluefoot/stage/structural/options/column',
-    'bluefoot/config'
-], function (ko, AbstractStructural, $t, arrayUtil, ColumnOption, Config) {
+define(["exports", "./abstract", "../../config", "../../../utils/array", "./options/option", "knockout"], function (exports, _abstract, _config, _array, _option, _knockout) {
+    "use strict";
 
-    /**
-     * Column structural block
-     *
-     * @param parent
-     * @param stage
-     * @constructor
-     */
-    function Column(parent, stage) {
-        AbstractStructural.call(this, parent, stage);
-        this.ns = 'bluefoot/stage/structural/column';
-        this.config = {
-            code: 'column',
-            name: $t('Column')
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Column = undefined;
+
+    var _abstract2 = _interopRequireDefault(_abstract);
+
+    var _config2 = _interopRequireDefault(_config);
+
+    var _knockout2 = _interopRequireDefault(_knockout);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
         };
-
-        this.wrapperStyle = ko.observable({width: '100%'});
-        this.columnDefinition = ko.observable(Config.getInitConfig('column_definitions')[0]);
-        this.widthClasses = ko.computed(function () {
-            return this.columnDefinition()['className'];
-        }, this);
-
-        this.serializedWidth = ko.computed(function () {
-            return this.columnDefinition()['breakpoint'] * 100;
-        }, this);
-
-        this.serializeRole = 'column';
-        var self = this;
-        this.dataEntityData = [
-            this.data,
-            function () {
-                return {width: self.serializedWidth()};
-            }
-        ];
-        this.dataEntityDataIgnore = ['label', 'className'];
     }
 
-    Column.prototype = Object.create(AbstractStructural.prototype);
-    var $super = AbstractStructural.prototype;
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-    /**
-     * Build up the options available on a row
-     */
-    Column.prototype.buildOptions = function () {
-        // Run the parent
-        $super.buildOptions.apply(this, arguments);
-
-        // Add column option
-        this.options.addOption(this, 'column', '<i class="fa fa-columns"></i>', $t('Add Column'), this.columnBuilder.showFromOption.bind(this), ['add-column'], 50, ColumnOption);
-    };
-
-    /**
-     * Copy data across to new instance
-     *
-     * @param duplicate
-     * @returns {Column}
-     */
-    Column.prototype.duplicateData = function (duplicate) {
-        // Run the parent
-        $super.duplicateData.apply(this, arguments);
-
-        // Copy over the wrapper style on duplicate
-        duplicate.updateColumnData(this.data());
-        return this;
-    };
-
-    /**
-     * Override template to row template
-     *
-     * @returns {string}
-     */
-    Column.prototype.getTemplate = function () {
-        return 'Gene_BlueFoot/component/stage/structural/column.html'
-    };
-
-    /**
-     * Implement function to add columns to this element
-     */
-    Column.prototype.addColumn = function (data) {
-        var column = new Column(this, this.stage);
-        this.addChild(column);
-        column.updateColumnData(data);
-        return column;
-    };
-
-    /**
-     * Insert a column at the designated index within it's parent
-     */
-    Column.prototype.insertColumnAtIndex = function (direction, item, data) {
-        var index = ko.utils.arrayIndexOf(item.parent.children(), item),
-            column = new Column(item.parent, item.parent.stage);
-
-        if (direction == 'right') {
-            ++index;
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         }
 
-        arrayUtil.moveArrayItemIntoArray(column, item.parent.children, index);
-        column.updateColumnData(data);
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
 
-        return column;
-    };
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
 
-    /**
-     * Update the column data to reflect the correct width
-     *
-     * @param data
-     */
-    Column.prototype.updateColumnData = function (data) {
-        data = data || {};
-        if (data.width) {
-            var columnDef = Config.getColumnDefinitionByBreakpoint(data.width);
-            if (columnDef) {
-                this.columnDefinition(columnDef);
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
             }
-        } else if (data.className) {
-            this.columnDefinition(Config.getColumnDefinitionByClassName(data.className));
+        });
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+
+    var Column = exports.Column = function (_Structural) {
+        _inherits(Column, _Structural);
+
+        /**
+         * Abstract structural constructor
+         *
+         * @param parent
+         * @param stage
+         */
+        function Column(parent, stage) {
+            _classCallCheck(this, Column);
+
+            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
+
+            _this.template = 'Gene_BlueFoot/component/stage/structural/column.html';
+            _this.columnDefinition = _knockout2.default.observable(_config2.default.getInitConfig('column_definitions')[0]);
+            _this.widthClasses = _knockout2.default.computed(function () {
+                return this.columnDefinition()['className'];
+            }, _this);
+            _this.serializedWidth = _knockout2.default.computed(function () {
+                return this.columnDefinition()['breakpoint'] * 100;
+            }, _this);
+            _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10));
+            return _this;
         }
+        /**
+         * Add a column to self
+         *
+         * @param data
+         * @returns {Column}
+         */
 
-        this.data(data);
-    };
 
-    /**
-     * Event called when sorting starts on this element
-     *
-     * @param event
-     * @param params
-     * @returns {*}
-     */
-    Column.prototype.onSortStart = function (event, params) {
-        // Copy over the column class for the width
-        jQuery(params.placeholder).addClass(this.widthClasses());
+        Column.prototype.addColumn = function addColumn(data) {
+            var column = new Column(this, this.stage);
+            this.addChild(column);
+            column.updateColumnData(data);
+            return column;
+        };
+        /**
+         * Insert a column at a specific instance
+         *
+         * @param direction
+         * @param item
+         * @param data
+         * @returns {Column}
+         */
 
-        // Run the parent
-        return $super.onSortStart.apply(this, arguments);
-    };
 
-    return Column;
+        Column.prototype.insertColumnAtIndex = function insertColumnAtIndex(direction, item, data) {
+            var index = _knockout2.default.utils.arrayIndexOf(item.parent.children(), item),
+                column = new Column(item.parent, item.parent.stage);
+            if (direction == 'right') {
+                ++index;
+            }
+            (0, _array.moveArrayItemIntoArray)(column, item.parent.children, index);
+            column.updateColumnData(data);
+            return column;
+        };
+        /**
+         * Update the column data to reflect the correct width
+         *
+         * @param data
+         */
+
+
+        Column.prototype.updateColumnData = function updateColumnData(data) {
+            data = data || {};
+            if (data.width) {
+                var columnDef = _config2.default.getColumnDefinitionByBreakpoint(data.width);
+                if (columnDef) {
+                    this.columnDefinition(columnDef);
+                }
+            } else if (data.className) {
+                this.columnDefinition(_config2.default.getColumnDefinitionByClassName(data.className));
+            }
+            this.stage.store.update(this.id, data);
+        };
+        /**
+         * Handle sort starting on column
+         *
+         * @param event
+         * @param params
+         * @returns {any}
+         */
+
+
+        Column.prototype.onSortStart = function onSortStart(event, params) {
+            // Copy over the column class for the width
+            jQuery(params.placeholder).addClass(this.widthClasses());
+            return _Structural.prototype.onSortStart.call(this, event, params);
+        };
+
+        return Column;
+    }(_abstract2.default);
 });
