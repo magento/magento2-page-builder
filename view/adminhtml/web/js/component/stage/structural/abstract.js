@@ -1,4 +1,4 @@
-define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "mage/translate", "knockout"], function (exports, _editableArea, _options, _option, _builder, _translate, _knockout) {
+define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "mage/translate", "knockout", "uiRegistry"], function (exports, _editableArea, _options, _option, _builder, _translate, _knockout, _uiRegistry) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -10,6 +10,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
     var _translate2 = _interopRequireDefault(_translate);
 
     var _knockout2 = _interopRequireDefault(_knockout);
+
+    var _uiRegistry2 = _interopRequireDefault(_uiRegistry);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -76,8 +78,19 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _this.config = config;
             return _this;
         }
+        /**
+         * Open edit panel when user requests to edit instance
+         */
 
-        Structural.prototype.onOptionEdit = function onOptionEdit() {};
+
+        Structural.prototype.onOptionEdit = function onOptionEdit() {
+            var modal = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal'),
+                insertForm = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
+            modal.setTitle((0, _translate2.default)('Edit ' + this.config.name));
+            modal.openModal();
+            insertForm.removeActions();
+            insertForm.onRender(window.components['bluefoot_heading_form']);
+        };
 
         Structural.prototype.onOptionDuplicate = function onOptionDuplicate() {
             this.parent.duplicateChild(this);

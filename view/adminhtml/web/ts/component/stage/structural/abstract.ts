@@ -1,6 +1,5 @@
 import Stage from '../../stage';
 import EditableArea from './editable-area';
-import { EditableAreaInterface } from './editable-area.d';
 import { Structural as StructuralInterface } from "./abstract.d";
 import { Options } from "./options";
 import { Option } from "./options/option";
@@ -9,6 +8,7 @@ import { ColumnBuilder } from "./column/builder";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
+import registry from 'uiRegistry';
 
 /**
  * Structural class
@@ -28,7 +28,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove.bind(this), ['remove-structural'], 100)
     ];
     optionsInstance: Options = new Options(this, this.options);
-    children: KnockoutObservableArray<StructuralInterface> = ko.observableArray([]);
+    children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     childTemplate: string = 'Gene_BlueFoot/component/stage/structural/children.html';
     columnBuilder: ColumnBuilder = new ColumnBuilder();
@@ -48,8 +48,17 @@ export default class Structural extends EditableArea implements StructuralInterf
         this.config = config;
     }
 
-    onOptionEdit() {
+    /**
+     * Open edit panel when user requests to edit instance
+     */
+    onOptionEdit(): void {
+        let modal = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal'),
+            insertForm = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
+        modal.setTitle($t('Edit ' + this.config.name));
+        modal.openModal();
 
+        insertForm.removeActions();
+        insertForm.onRender(window.components['bluefoot_heading_form']);
     }
 
     /**
