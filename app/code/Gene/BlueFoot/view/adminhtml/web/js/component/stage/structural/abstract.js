@@ -57,6 +57,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
          *
          * @param parent
          * @param stage
+         * @param config
          */
         function Structural(parent, stage) {
             var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
