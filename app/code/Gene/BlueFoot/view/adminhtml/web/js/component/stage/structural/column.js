@@ -70,7 +70,7 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
             _this.serializedWidth = _knockout2.default.computed(function () {
                 return this.columnDefinition()['breakpoint'] * 100;
             }, _this);
-            _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10));
+            _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
             return _this;
         }
         /**

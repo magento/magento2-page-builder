@@ -38,6 +38,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @param parent
      * @param stage
+     * @param config
      */
     constructor(parent: EditableArea, stage: Stage, config: any = {}) {
         super(stage);
@@ -58,7 +59,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         modal.openModal();
 
         insertForm.removeActions();
-        insertForm.onRender(window.components['bluefoot_heading_form']);
+        insertForm.onRender((<any>window).components['bluefoot_heading_form']);
     }
 
     /**

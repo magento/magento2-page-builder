@@ -37,7 +37,7 @@ export class Column extends Structural implements ColumnInterface {
         super(parent, stage);
         
         this.options.push(
-            new Option(this, 'column', '<i></i>', 'Add Column', false, ['add-column'], 10)
+            new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10)
         );
     }
 
