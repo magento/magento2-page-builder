@@ -73,6 +73,7 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _this.showBorders = parent.showBorders;
             _this.userSelect = parent.userSelect;
             _this.loading = parent.loading;
+            _this.originalScrollTop = 0;
             // Create our state and store objects
             _this.store = new _dataStore2.default();
             _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
@@ -106,6 +107,20 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
 
         Stage.prototype.openTemplateManager = function openTemplateManager() {
             // @todo
+        };
+
+        Stage.prototype.goFullScreen = function goFullScreen() {
+            var isFullScreen = this.parent.isFullScreen();
+            if (!isFullScreen) {
+                this.originalScrollTop = jQuery(window).scrollTop();
+                _underscore2.default.defer(function () {
+                    jQuery(window).scrollTop(0);
+                });
+            }
+            this.stage.parent.isFullScreen(!isFullScreen);
+            if (isFullScreen) {
+                jQuery(window).scrollTop(this.originalScrollTop);
+            }
         };
 
         Stage.prototype.addComponent = function addComponent() {}
