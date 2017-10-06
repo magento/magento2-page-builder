@@ -20,6 +20,7 @@ export default class Stage extends EditableArea implements StageInterface {
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
+    originalScrollTop: number;
     serializeRole: string = 'stage';
     store: DataStore;
 
@@ -38,6 +39,7 @@ export default class Stage extends EditableArea implements StageInterface {
         this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
+        this.originalScrollTop = 0;
 
         // Create our state and store objects
         this.store = new DataStore();
@@ -87,6 +89,21 @@ export default class Stage extends EditableArea implements StageInterface {
 
     openTemplateManager() {
         // @todo
+    }
+
+    goFullScreen() {
+        let isFullScreen = this.parent.isFullScreen();
+        if (!isFullScreen) {
+            this.originalScrollTop = jQuery(window).scrollTop();
+            _.defer(function () {
+                jQuery(window).scrollTop(0);
+            });
+        }
+
+        this.stage.parent.isFullScreen(!isFullScreen);
+        if (isFullScreen) {
+            jQuery(window).scrollTop(this.originalScrollTop);
+        }
     }
 
     addComponent() {

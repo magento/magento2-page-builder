@@ -9,6 +9,7 @@ export interface StageInterface extends EditableAreaInterface {
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
+    originalScrollTop: number;
     serializeRole: string;
     store: DataStore;
 
@@ -16,6 +17,7 @@ export interface StageInterface extends EditableAreaInterface {
     ready(): void
     addRow(self: StageInterface, data?: object): Row
     openTemplateManager(): void
+    goFullScreen(): void
     addComponent(): void
     onSortingStart(): void
     onSortingStop(): void
