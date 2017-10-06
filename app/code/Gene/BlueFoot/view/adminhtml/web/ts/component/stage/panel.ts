@@ -19,6 +19,7 @@ import "ko-sortable";
 export default class Panel extends uiComponent implements PanelInterface {
     componentTemplate: string = 'Gene_BlueFoot/component/stage/panel.html';
     stage: StageInterface;
+    searchValue: KnockoutObservable<string> = ko.observable('');
     searching: KnockoutObservable<boolean> = ko.observable(false);
     searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -27,6 +28,7 @@ export default class Panel extends uiComponent implements PanelInterface {
         isVisible: false,
         isCollapsed: false,
         groups: [],
+        searchValue: '',
         searching: false,
         searchResults: [],
         stage: false,
@@ -71,20 +73,21 @@ export default class Panel extends uiComponent implements PanelInterface {
      * @returns {Model} Chainable.
      */
     initObservable(): this {
-        super.observe('isVisible isCollapsed groups searching searchResults');
+        super.observe('isVisible isCollapsed groups searchValue searching searchResults');
 
         return this;
     }
 
     /**
-     * Conduct a search on the available content blocks
+     * Conduct a search on the available content blocks,
+     * and find matches for beginning of words.
      *
      * @param self
      * @param event
      */
     search(self: Panel, event: any): void {
-        let searchValue = event.currentTarget.value.toLowerCase();
-        if (searchValue === '') {
+        this.searchValue(event.currentTarget.value.toLowerCase());
+        if (this.searchValue() === '') {
             this.searching(false);
         } else {
             this.searching(true);
@@ -92,7 +95,9 @@ export default class Panel extends uiComponent implements PanelInterface {
                 _.filter(
                     Config.getInitConfig('contentBlocks'),
                     function (contentBlock: ContentBlockConfig) {
-                        return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 &&
+                        const regEx = new RegExp('\\b' + self.searchValue(), 'gi');
+                        const matches = contentBlock.name.toLowerCase().match(regEx) ? true : false;
+                        return matches &&
                             contentBlock.visible === true;
                     }
                 ),
@@ -110,7 +115,6 @@ export default class Panel extends uiComponent implements PanelInterface {
     populateContentBlocks(): void {
         let groups = Config.getInitConfig('groups'),
             contentBlocks = Config.getInitConfig('contentBlocks');
-
         // Verify the configuration contains the required information
         if (groups && contentBlocks) {
             // Iterate through the groups creating new instances with their associated content blocks
@@ -161,5 +165,13 @@ export default class Panel extends uiComponent implements PanelInterface {
      */
     collapse(): void {
         this.isCollapsed(!this.isCollapsed());
+    }
+
+    /**
+     * Clear Search Results
+     */
+    clearSearch(): void {
+        this.searchValue('');
+        this.searching(false);
     }
 }

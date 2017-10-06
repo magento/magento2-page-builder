@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminSearchBlueFootPanelCest">
+        <annotations>
+            <features value="BlueFoot CMS"/>
+            <stories value="View/Search BlueFoot CMS Panel via the Admin"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <after>
+            <amOnPage url="admin/admin/auth/logout/" mergeKey="amOnLogoutPage"/>
+        </after>
+        <test name="DisplayBlueFootPanelGroups">
+            <annotations>
+                <title value="Display Existing BlueFoot Panel Content Block Groups"/>
+                <description value="The BlueFoot panel should display existing content block groups, and open the first section by default."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+                <group value="skip"/>
+            </annotations>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
+            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
+            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
+            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+            <waitForPageLoad mergeKey="waitForPageLoad1"/>
+            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+
+            <seeElement selector='//*[@id="bluefoot-panel-groups"]/li[1]' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
+            <seeElement selector='//*[@id="group-general"]' mergeKey="seeGeneralGroup"/>
+            <seeElement selector='//*[@id="group-media"]' mergeKey="seeMediaGroup"/>
+            <seeElement selector='//*[@id="group-commerce"]' mergeKey="seeCommerceGroup"/>
+            <seeElement selector='//*[@id="group-magento"]' mergeKey="seeMagentoGroup"/>
+            <seeElement selector='//*[@id="group-structural"]' mergeKey="seeStructuralGroup"/>
+        </test>
+        <test name="SearchOneCharInBlueFootPanel">
+            <annotations>
+                <title value="Search for one character in Bluefoot Panel"/>
+                <description value="When typing one letter into the panel search box, I see Content Blocks that contains words that start with letter entered."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+            </annotations>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
+            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
+            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
+            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+            <waitForPageLoad mergeKey="waitForPageLoad1"/>
+            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
+            <see userInput="Buttons" selector='//*[@id="search-results"]' mergeKey="validateBlockButtons"/>
+            <see userInput="Static Block" selector='//*[@id="search-results"]' mergeKey="validateBlockStaticBlock"/>
+        </test>
+        <test name="SearchThreeCharInBlueFootPanel">
+            <annotations>
+                <title value="Search for three characters in Bluefoot Panel"/>
+                <description value="When typing three letters into the panel search box, I see content blocks that contains words that start with letters entered."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+            </annotations>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
+            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
+            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
+            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+            <waitForPageLoad mergeKey="waitForPageLoad1"/>
+            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="sli" mergeKey="fillSearch"/>
+            <see userInput="Slider" selector='//*[@id="search-results"]' mergeKey="validateBlockButtons"/>
+            <see userInput="Advanced Slider" selector='//*[@id="search-results"]' mergeKey="validateBlockStaticBlock"/>
+        </test>
+        <test name="SearchNoMatchesInBlueFootPanel">
+            <annotations>
+                <title value="Search for no matches in BlueFoot Panel"/>
+                <description value="When there is no match on a search, display appropriate message."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+            </annotations>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
+            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
+            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
+            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+            <waitForPageLoad mergeKey="waitForPageLoad1"/>
+            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
+            <see userInput="Nothing found" selector='//*[@id="bluefoot-panel"]/div[2]/div' mergeKey="validateNothingFound"/>
+        </test>
+    </cest>
+</config>
