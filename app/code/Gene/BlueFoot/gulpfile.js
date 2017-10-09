@@ -1,6 +1,5 @@
 const gulp  = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
-    ts = require('gulp-typescript'),
     babel = require('gulp-babel');
 
 /**
@@ -12,23 +11,12 @@ gulp.task('default', ['watch', 'build']);
  * Build the TypeScript files into production JS
  */
 gulp.task('build', function () {
-    var tsProject = ts.createProject(__dirname + '/tsconfig.json', {
-        typescript: require('typescript')
-    });
-
-    return tsResult = tsProject.src()
-        //.pipe(sourcemaps.init())
-        .pipe(tsProject())
-        //.pipe(gulp.dest('view/adminhtml/web/es6'))
-        .pipe(babel({
-            "presets": [["es2015", {"loose": true}], "stage-0"],
-            "plugins": [
-                "system-import-transformer",
-                "transform-es2015-modules-amd",
-                "magento2"
-            ]
-        }))
-        .pipe(sourcemaps.write())
+    return gulp.src('view/adminhtml/web/ts/**/*.ts')
+        .pipe(sourcemaps.init())
+            .pipe(babel()) // Regular transformation
+            // browser friendly transformation
+            .pipe(babel({babelrc: false, presets: ['es2015', ['stage-0', {loose: true}]]}))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('view/adminhtml/web/js/'));
 });
 
