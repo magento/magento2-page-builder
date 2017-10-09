@@ -17,7 +17,7 @@ var config = {
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
 
         /* BlueFoot config is required by other aspects of the system */
-        'bluefoot/config': 'Gene_Bluefoot/js/component/config'
+        'bluefoot/config': 'Gene_BlueFoot/js/component/config'
     },
     map: {
         '*': {
