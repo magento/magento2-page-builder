@@ -1,0 +1,38 @@
+{
+    "name": "gene/bluefoot-metapackage",
+    "description": "Gene Bluefoot metap",
+    "type": "magento2-module",
+    "version": "100.0.0",
+    "require-dev": {
+        "phpunit/phpunit": "^5",
+        "magento/robo-dev-tasks": "dev-master@dev",
+        "codeception/codeception": "2.2|2.3",
+        "allure-framework/allure-codeception": "dev-master",
+        "consolidation/robo": "^1.0.0",
+        "henrikbjorn/lurker": "^1.2",
+        "vlucas/phpdotenv": "~2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gene\\BlueFoot\\": "app/code/Gene/BlueFoot"
+        }
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        {
+            "type": "vcs",
+            "url": "git@gitlab.corp.magento.com:magento-obsessive-owls/robo-dev-tasks.git"
+        }
+    ],
+    "scripts": {
+        "robo": "robo"
+    }
+}

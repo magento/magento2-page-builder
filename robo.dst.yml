@@ -1,0 +1,53 @@
+task:
+  global:
+    settings:
+      build_directory: %build_directory%
+      database_prefix: %mysql_database_prefix%
+      custom_mysql_client_command: %mysql_execute_command%
+      cache_directory: var/cache
+  Dev:
+    CreateBuild:
+      settings:
+        default_skeleton: ce_mainline
+        default_version: develop
+        skeletons:
+          ce_mainline:
+            strategy: monorepo
+            repository: git@github.com:magento/magento2ce.git
+          ee_mainline:
+            strategy: link
+            repository: git@github.com:magento/magento2ce.git
+            link_script: ee
+            links:
+              ee: git@github.com:magento/magento2ee.git
+          b2b_mainline:
+            strategy: link
+            repository: git@github.com:magento/magento2ce.git
+            link_script: ee
+            links:
+              ee: git@github.com:magento/magento2ee.git
+              b2b: git@github.com:magento/magento2b2b.git
+          ce_release:
+            strategy: metapackage
+            repository: https://repo.magento.com/
+            package: magento/project-community-edition
+        dependencies:
+          magento/module-jest-integration:
+            type: vcs
+            url: git@gitlab.corp.magento.com:magento-obsessive-owls/magento2-module-jest-integration.git
+            version: dev-master@dev
+        links:
+          - app/code/Gene/BlueFoot
+        install_options:
+          admin-user: %admin_username%
+          admin-password: %admin_password%
+          admin-email: admin@magento.local
+          admin-firstname: Admin
+          admin-lastname: Admin
+          base-url: http://magento.local/
+          db-host: %mysql_hostname%
+          db-user: %mysql_username%
+          db-password: %mysql_password%
+          language: en_US
+          timezone: UTC
+          currency: USD
