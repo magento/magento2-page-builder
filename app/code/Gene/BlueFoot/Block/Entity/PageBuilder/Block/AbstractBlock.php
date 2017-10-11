@@ -32,18 +32,16 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
      * AbstractBlock constructor.
      *
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Render                $render
      * @param \Magento\Framework\Data\CollectionFactory        $dataCollectionFactory
      * @param array                                            $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Gene\BlueFoot\Model\Stage\Render $render,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->render = $render;
+        //$this->render = $render;
         $this->dataCollectionFactory = $dataCollectionFactory;
     }
 

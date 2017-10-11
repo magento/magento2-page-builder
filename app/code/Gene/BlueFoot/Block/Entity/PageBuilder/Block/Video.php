@@ -18,19 +18,17 @@ class Video extends AbstractBlock
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Render                $render
      * @param \Magento\Framework\Data\CollectionFactory        $dataCollectionFactory
      * @param \Gene\BlueFoot\Helper\Widget\Video               $helper
      * @param array                                            $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Gene\BlueFoot\Model\Stage\Render $render,
         \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         \Gene\BlueFoot\Helper\Widget\Video $helper,
         array $data = []
     ) {
-        parent::__construct($context, $render, $dataCollectionFactory, $data);
+        parent::__construct($context, $dataCollectionFactory, $data);
         $this->helper = $helper;
     }
 
