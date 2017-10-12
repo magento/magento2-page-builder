@@ -39,8 +39,8 @@
         </test>
         <test name="ActivateBlueFootFullScreen">
             <annotations>
-                <title value="Activate BlueFoot CMS in FullScreen Mode"/>
-                <description value="You should be able to activate BlueFoot in Admin."/>
+                <title value="Activate BlueFoot CMS in fullscreen mode and then unactivate it."/>
+                <description value="You should be able to activate BlueFoot FullScreen in Admin."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
             </annotations>
@@ -53,8 +53,11 @@
             <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
             <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
             <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen1"/>
             <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreen"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper stage-full-screen']" mergeKey="stageWrapperFullScreen2"/>
             <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreenAgain"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen3"/>
         </test>
     </cest>
 </config>
