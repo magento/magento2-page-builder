@@ -18,32 +18,19 @@
             <env value="phantomjs"/>
         </annotations>
         <after>
-            <amOnPage url="admin/admin/auth/logout/" mergeKey="amOnLogoutPage"/>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
         </after>
         <test name="DisplayBlueFootPanelGroups">
             <annotations>
                 <title value="Display Existing BlueFoot Panel Content Block Groups"/>
                 <description value="The BlueFoot panel should display existing content block groups, and open the first section by default."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
+                <testCaseId value="MAGETWO-81826"/>
                 <group value="skip"/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-
-            <seeElement selector='//*[@id="bluefoot-panel-groups"]/li[1]' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
-            <seeElement selector='//*[@id="group-general"]' mergeKey="seeGeneralGroup"/>
-            <seeElement selector='//*[@id="group-media"]' mergeKey="seeMediaGroup"/>
-            <seeElement selector='//*[@id="group-commerce"]' mergeKey="seeCommerceGroup"/>
-            <seeElement selector='//*[@id="group-magento"]' mergeKey="seeMagentoGroup"/>
-            <seeElement selector='//*[@id="group-structural"]' mergeKey="seeStructuralGroup"/>
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
+            <seeElement selector='SearchOneCharInBlueFootPanel' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
+            <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
         </test>
         <test name="SearchOneCharInBlueFootPanel">
             <annotations>
@@ -52,19 +39,10 @@
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
-            <see userInput="Buttons" selector='//*[@id="search-results"]' mergeKey="validateBlockButtons"/>
-            <see userInput="Static Block" selector='//*[@id="search-results"]' mergeKey="validateBlockStaticBlock"/>
+            <see userInput="Buttons" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
+            <see userInput="Static Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
         </test>
         <test name="SearchThreeCharInBlueFootPanel">
             <annotations>
@@ -73,39 +51,21 @@
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="sli" mergeKey="fillSearch"/>
-            <see userInput="Slider" selector='//*[@id="search-results"]' mergeKey="validateBlockButtons"/>
-            <see userInput="Advanced Slider" selector='//*[@id="search-results"]' mergeKey="validateBlockStaticBlock"/>
+            <see userInput="Slider" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
+            <see userInput="Advanced Slider" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
         </test>
         <test name="SearchNoMatchesInBlueFootPanel">
             <annotations>
                 <title value="Search for no matches in BlueFoot Panel"/>
                 <description value="When there is no match on a search, display appropriate message."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
+                <testCaseId value="MAGETWO-81831"/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
-            <see userInput="Nothing found" selector='//*[@id="bluefoot-panel"]/div[2]/div' mergeKey="validateNothingFound"/>
+            <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" mergeKey="validateNothingFound"/>
         </test>
     </cest>
 </config>
