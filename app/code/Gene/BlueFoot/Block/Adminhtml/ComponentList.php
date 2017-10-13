@@ -33,6 +33,64 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Generate the buttons for each form
+     *
+     * @param string $name
+     * @return void
+     */
+    public function generateButtons($name)
+    {
+        $targetName = $name . '.' . $name;
+        $saveAction = json_encode([
+            'buttonAdapter' => [
+                'actions' => [
+                    [
+                        'targetName' => $targetName,
+                        'actionName' => 'save',
+                        'params' => [
+                            false,
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+        $resetAction = json_encode([
+            'buttonAdapter' => [
+                'actions' => [
+                    [
+                        'targetName' => $targetName,
+                        'actionName' => 'reset',
+                        'params' => [
+                            false,
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+        $closeAction = json_encode([
+            'buttonAdapter' => [
+                'actions' => [
+                    [
+                        'targetName' => 'bluefoot_modal_form.bluefoot_modal_form.modal',
+                        'actionName' => 'closeModal',
+                        'params' => [
+                            false,
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        return <<<EOF
+        <div data-mage-init='{"floatingHeader": {}}' class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+            <button id="save" title="Save" type="button" class="action- scalable save primary" data-mage-init='{$saveAction}' data-form-role="save" data-ui-id="save-button" > <span>Save</span> </button>
+            <button id="reset" title="Reset" type="button" class="action- scalable reset" data-ui-id="reset-button" data-mage-init='{$resetAction}'> <span>Reset</span> </button>
+            <button id="cancel" title="Cancel" type="button" class="action- scalable back" data-ui-id="cancel-button" data-role="closeBtn" data-mage-init='{$closeAction}'><span>Cancel</span></button>
+        </div>
+EOF;
+    }
+
+    /**
      * Get components [component_name => instance]
      *
      * @return array
@@ -41,17 +99,8 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     {
         $result = [];
 
-        // @todo generate instead of hard coding
-        $actionsToolbar = <<<EOF
-            <div data-mage-init='{"floatingHeader": {}}' class="page-actions" data-ui-id="page-actions-toolbar-content-header">
-                <button id="save" title="Save" type="button" class="action- scalable save primary" data-mage-init="{&quot;button&quot;:{&quot;event&quot;:&quot;save&quot;}}" data-form-role="save" data-ui-id="save-button" > <span>Save</span> </button>
-                <button id="reset" title="Reset" type="button" class="action- scalable reset" data-ui-id="reset-button"> <span>Reset</span> </button>
-                <button id="cancel" title="Cancel" type="button" class="action- scalable back" data-ui-id="cancel-button" data-role="closeBtn"><span>Cancel</span></button>
-            </div>
-EOF;
-
         foreach ($this->getChildNames() as $name) {
-            $result[$name] = $this->getChildHtml($name) . $actionsToolbar;
+            $result[$name] = $this->getChildHtml($name) . $this->generateButtons($name);
         }
         return $result;
     }
