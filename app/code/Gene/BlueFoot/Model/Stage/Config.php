@@ -92,15 +92,15 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getConfig()
     {
         // Use the cache to load and save the data
-        if ($this->cacheState->isEnabled(
-                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
-            )
-            && ($config = $this->cacheManager->load(
-                self::BLUEFOOT_CONFIG_CACHE_KEY
-            ))
-        ) {
-            return json_decode($config, true);
-        } else {
+//        if ($this->cacheState->isEnabled(
+//                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
+//            )
+//            && ($config = $this->cacheManager->load(
+//                self::BLUEFOOT_CONFIG_CACHE_KEY
+//            ))
+//        ) {
+//            return json_decode($config, true);
+//        } else {
             $config = [
                 'groups'        => $this->getGroups(),
                 'contentTypes'  => $this->getContentTypes(),
@@ -121,7 +121,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             }
 
             return $config;
-        }
+//        }
     }
 
     /**
@@ -173,9 +173,10 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $contentTypes = $this->configInterface->getContentTypes();
 
         $contentBlockData = [];
-        foreach ($contentTypes as $name => $contentBlock) {
-            $contentBlockData[$name] = $this->flattenContentBlockData(
-                $contentBlock
+        foreach ($contentTypes as $name => $contentType) {
+            $contentBlockData[$name] = $this->flattenContentTypeData(
+                $name,
+                $contentType
             );
         }
 
@@ -185,28 +186,31 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * Flatten the content block data
      *
-     * @param $contentBlock
+     * @param $name
+     * @param $contentType
      *
      * @return array
      */
-    protected function flattenContentBlockData($contentBlock)
+    protected function flattenContentTypeData($name, $contentType)
     {
         // @todo provide defaults
         return [
-            'label'            => $contentBlock['label'],
-            'icon'             => $contentBlock['icon'],
+            'name'             => $name,
+            'label'            => $contentType['label'],
+            'icon'             => $contentType['icon'],
+            'form'             => $contentType['form'],
             'contentType'      => '',
-            'group'            => (isset($contentBlock['group'])
-                ? $contentBlock['group'] : 'general'),
+            'group'            => (isset($contentType['group'])
+                ? $contentType['group'] : 'general'),
             'fields'           => [],
             'fields_list'      => [],
             'visible'          => true,
-            'preview_template' => (isset($contentBlock['preview_template'])
-                ? $contentBlock['preview_template'] : ''),
-            'preview_block'    => (isset($contentBlock['preview_block'])
-                ? $contentBlock['preview_block'] : ''),
+            'preview_template' => (isset($contentType['preview_template'])
+                ? $contentType['preview_template'] : ''),
+            'preview_block'    => (isset($contentType['preview_block'])
+                ? $contentType['preview_block'] : ''),
             'component'        => (isset($contentBlock['component'])
-                ? $contentBlock['component'] : '')
+                ? $contentType['component'] : '')
         ];
     }
 }

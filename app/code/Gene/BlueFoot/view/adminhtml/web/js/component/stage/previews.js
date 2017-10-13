@@ -22,7 +22,7 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
      * Load all preview instances into our cache
      */
     function load() {
-        var contentBlocks = _config2.default.getInitConfig("contentBlocks");
+        var contentBlocks = _config2.default.getInitConfig("contentTypes");
         var blocksToLoad = [],
             blockCodes = []; // @todo should be string, but TS complains
         Object.keys(contentBlocks).forEach(function (blockKey) {

@@ -55,9 +55,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @todo refactor, abstract, this is just a prototype
      */
     onOptionEdit(): void {
-        // @todo dynamically build from config
-        const formComponent = 'bluefoot_heading_form';
-
+        const formComponent = this.config.form;
         let modal = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal'),
             insertForm = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
 
@@ -67,7 +65,7 @@ export default class Structural extends EditableArea implements StructuralInterf
             existingComponent.destroy();
         }
 
-        modal.setTitle($t('Edit ' + (this.config.name || $t('Block'))));
+        modal.setTitle($t('Edit ' + (this.config.label || $t('Block'))));
         modal.openModal();
 
         // Reset the insert form component
@@ -75,7 +73,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         insertForm.removeActions();
 
         // Pass the UI component to the render function
-        insertForm.onRender((<any>window).components['bluefoot_heading_form']);
+        insertForm.onRender((<any>window).components[formComponent]);
 
         // Retrieve the component
         registry.get(formComponent + '.' + formComponent, (component: any) => {

@@ -200,6 +200,4 @@ define([
         }
 
     });
-}, function (err) {
-    alert(err);
 });

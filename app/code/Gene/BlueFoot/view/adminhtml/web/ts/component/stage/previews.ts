@@ -8,7 +8,7 @@ let previews: Array<any> = [];
  * Load all preview instances into our cache
  */
 export function load(): void {
-    const contentBlocks = Config.getInitConfig("contentBlocks") as ConfigContentBlocks;
+    const contentBlocks = Config.getInitConfig("contentTypes") as ConfigContentBlocks;
     let blocksToLoad: Array<string> = [],
         blockCodes: Array<any> = []; // @todo should be string, but TS complains
     Object.keys(contentBlocks).forEach((blockKey) => {

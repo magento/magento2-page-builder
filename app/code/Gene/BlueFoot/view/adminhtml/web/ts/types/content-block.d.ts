@@ -1,5 +1,5 @@
 interface ContentBlockConfig {
-    code: string;
+    label: string;
     name: string;
     visible: boolean;
     icon: string;

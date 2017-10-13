@@ -48,24 +48,6 @@ define(['exports', 'underscore', 'jquery', 'advanced-cms-init-config'], function
             return Config.initConfig;
         };
 
-        Config.loadEntities = function loadEntities(entityIds, storeId, callback) {}
-        // @todo
-
-        /**
-         * Retrieve an entity from the configuration
-         *
-         * @param entityId
-         * @returns {any}
-         */
-        ;
-
-        Config.getEntity = function getEntity(entityId) {
-            if (typeof Config.config['entities'][entityId] !== 'undefined') {
-                return Config.config['entities'][entityId];
-            }
-            return {};
-        };
-
         Config.getContentBlockConfig = function getContentBlockConfig(type) {
             if (_typeof(Config.initConfig.contentBlocks) === 'object' && _typeof(Config.initConfig.contentBlocks[type]) === 'object') {
                 return Config.initConfig.contentBlocks[type];

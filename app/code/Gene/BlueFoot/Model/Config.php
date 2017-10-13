@@ -27,6 +27,24 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
     }
 
     /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->get('groups');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function getGroup($name)
+    {
+        return $this->get('groups/' . $name);
+    }
+
+    /**
      * Return all content blocks
      *
      * @return array|mixed|null

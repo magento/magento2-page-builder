@@ -90,15 +90,15 @@ export default class Panel extends uiComponent implements PanelInterface {
             this.searching(true);
             this.searchResults(_.map(
                 _.filter(
-                    Config.getInitConfig('contentBlocks'),
+                    Config.getInitConfig('contentTypes'),
                     function (contentBlock: ContentBlockConfig) {
-                        return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 &&
+                        return contentBlock.label.toLowerCase().indexOf(searchValue) > -1 &&
                             contentBlock.visible === true;
                     }
                 ),
-                function (contentBlock) {
+                function (contentBlock, identifier: string) {
                     // Create a new instance of GroupBlock for each result
-                    return new GroupBlock(contentBlock);
+                    return new GroupBlock(identifier, contentBlock);
                 })
             );
         }
@@ -109,7 +109,7 @@ export default class Panel extends uiComponent implements PanelInterface {
      */
     populateContentBlocks(): void {
         let groups = Config.getInitConfig('groups'),
-            contentBlocks = Config.getInitConfig('contentBlocks');
+            contentBlocks = Config.getInitConfig('contentTypes');
 
         // Verify the configuration contains the required information
         if (groups && contentBlocks) {
@@ -124,8 +124,8 @@ export default class Panel extends uiComponent implements PanelInterface {
                             group: id,
                             visible: true
                         }), /* Retrieve content blocks with group id */
-                        (contentBlock: ContentBlockConfig) => {
-                            return new GroupBlock(contentBlock);
+                        (contentBlock: ContentBlockConfig, identifier: string) => {
+                            return new GroupBlock(identifier, contentBlock);
                         }
                     )
                 ));
