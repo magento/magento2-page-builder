@@ -7,6 +7,7 @@ import DataStore from "./data-store";
 import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
+import jQuery from 'jquery';
 
 /**
  * Stage class

@@ -1,4 +1,4 @@
-define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate) {
+define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate', 'jquery'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate, _jquery) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -14,6 +14,8 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
     var _dataStore2 = _interopRequireDefault(_dataStore);
 
     var _translate2 = _interopRequireDefault(_translate);
+
+    var _jquery2 = _interopRequireDefault(_jquery);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -112,14 +114,14 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
         Stage.prototype.goFullScreen = function goFullScreen() {
             var isFullScreen = this.parent.isFullScreen();
             if (!isFullScreen) {
-                this.originalScrollTop = jQuery(window).scrollTop();
+                this.originalScrollTop = (0, _jquery2.default)(window).scrollTop();
                 _underscore2.default.defer(function () {
-                    jQuery(window).scrollTop(0);
+                    (0, _jquery2.default)(window).scrollTop(0);
                 });
             }
             this.stage.parent.isFullScreen(!isFullScreen);
             if (isFullScreen) {
-                jQuery(window).scrollTop(this.originalScrollTop);
+                (0, _jquery2.default)(window).scrollTop(this.originalScrollTop);
             }
         };
 
