@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="content_types.xsd">
+    <groups>
+        <group name="general" translate="label" sortOrder="1">
+            <label>General</label>
+        </group>
+        <group name="other" translate="label" sortOrder="2">
+            <label>Other</label>
+        </group>
+    </groups>
+    <content_types>
+        <type name="row" translate="label" sortOrder="1">
+            <label>Row</label>
+            <icon>path/to/file.jpg</icon>
+            <preview_template>Gene_BlueFoot/component/block/preview/row.html</preview_template>
+            <form>row_form</form>
+            <group>general</group>
+        </type>
+        <type name="column" translate="label" sortOrder="1">
+            <label>Column</label>
+            <icon>path/to/file.jpg</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/column.html</preview_template>
+            <form>column_form</form>
+            <group>general</group>
+        </type>
+        <type name="heading" translate="label" sortOrder="1">
+            <label>Heading</label>
+            <icon>path/to/file.jpg</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/heading.html</preview_template>
+            <form>heading_form</form>
+            <group>general</group>
+            <readers>
+                <reader>Gene_BlueFoot/js/component/block/readers/heading</reader>
+            </readers>
+        </type>
+    </content_types>
+</config>

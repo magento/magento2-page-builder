@@ -10,41 +10,11 @@ use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
  *
  * @package Gene\BlueFoot\Model\Stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
+ * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Config extends \Magento\Framework\Model\AbstractModel
 {
     const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
-
-    /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory
-     */
-    protected $contentBlockCollection;
-
-    /**
-     * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
-     */
-    protected $contentBlockGroupRepository;
-
-    /**
-     * @var \Magento\Eav\Model\EntityFactory
-     */
-    protected $eavEntityFactory;
-
-    /**
-     * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory
-     */
-    protected $groupCollection;
-
-    /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory
-     */
-    protected $attributeCollection;
-
-    /**
-     * @var array
-     */
-    protected $attributeData;
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
@@ -60,11 +30,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory
      */
     protected $templateCollection;
-
-    /**
-     * @var \Magento\Framework\Api\SearchCriteriaBuilder
-     */
-    protected $searchCriteriaBuilder;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
@@ -84,35 +49,23 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * Config constructor.
      *
-     * @param \Magento\Framework\Model\Context                                            $context
-     * @param \Magento\Framework\Registry                                                 $registry
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory
-     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface                     $contentBlockGroupRepository
-     * @param \Magento\Eav\Model\EntityFactory                                            $eavEntityFactory
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory   $groupCollectionFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory              $attributeCollection
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                                 $configInterface
-     * @param \Magento\Framework\View\LayoutFactory                                       $layoutFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory         $templateCollectionFactory
-     * @param \Magento\Framework\Api\SearchCriteriaBuilder                                $searchCriteriaBuilder
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                                   $entity
-     * @param \Magento\Framework\App\Cache\StateInterface                                 $cacheState
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null                          $resourceCollection
-     * @param array                                                                       $data
+     * @param \Magento\Framework\Model\Context                                    $context
+     * @param \Magento\Framework\Registry                                         $registry
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface                         $configInterface
+     * @param \Magento\Framework\View\LayoutFactory                               $layoutFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                           $entity
+     * @param \Magento\Framework\App\Cache\StateInterface                         $cacheState
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null        $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                  $resourceCollection
+     * @param array                                                               $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory $contentBlockCollectionFactory,
-        ContentBlockGroupRepositoryInterface $contentBlockGroupRepository,
-        \Magento\Eav\Model\EntityFactory $eavEntityFactory,
-        \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory $groupCollectionFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory $attributeCollection,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
         \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
         \Magento\Framework\App\Cache\StateInterface $cacheState,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
@@ -121,18 +74,14 @@ class Config extends \Magento\Framework\Model\AbstractModel
     ) {
         $this->cacheManager = $context->getCacheManager();
         $this->cacheState = $cacheState;
-        $this->contentBlockCollection = $contentBlockCollectionFactory;
-        $this->contentBlockGroupRepository = $contentBlockGroupRepository;
-        $this->eavEntityFactory = $eavEntityFactory;
-        $this->groupCollection = $groupCollectionFactory;
-        $this->attributeCollection = $attributeCollection;
         $this->configInterface = $configInterface;
         $this->layoutFactory = $layoutFactory;
         $this->templateCollection = $templateCollectionFactory;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->entity = $entity;
 
-        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        parent::__construct(
+            $context, $registry, $resource, $resourceCollection, $data
+        );
     }
 
     /**
@@ -143,19 +92,25 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getConfig()
     {
         // Use the cache to load and save the data
-        if ($this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER) &&
-            ($config = $this->cacheManager->load(self::BLUEFOOT_CONFIG_CACHE_KEY))
+        if ($this->cacheState->isEnabled(
+                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
+            )
+            && ($config = $this->cacheManager->load(
+                self::BLUEFOOT_CONFIG_CACHE_KEY
+            ))
         ) {
             return json_decode($config, true);
         } else {
             $config = [
-                'groups'        => $this->getContentBlockGroups(),
-                'contentBlocks' => $this->getContentBlockData(),
+                'groups'        => $this->getGroups(),
+                'contentTypes'  => $this->getContentTypes(),
                 'templates'     => $this->getTemplateData()
             ];
 
             // If the cache is enabled, store the config in the cache
-            if ($this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER)) {
+            if ($this->cacheState->isEnabled(
+                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
+            )) {
                 // Store the configuration in the cache for 7 days
                 $this->cacheManager->save(
                     json_encode($config),
@@ -174,22 +129,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getContentBlockGroups()
+    public function getGroups()
     {
-        $groups = [];
-
-        /* @var $groupsSearchResults \Magento\Framework\Api\SearchResults */
-        $groupsSearchResults = $this->contentBlockGroupRepository->getList($this->searchCriteriaBuilder->create());
-        foreach ($groupsSearchResults->getItems() as $group) {
-            $groups[$group['id']] = [
-                'code' => $group['code'],
-                'icon' => $group['icon'],
-                'name' => $group['name'],
-                'sort' => $group['sort_order']
-            ];
-        }
-
-        return $groups;
+        return $this->configInterface->getGroups();
     }
 
     /**
@@ -200,17 +142,19 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function getTemplateData()
     {
         $templates = $this->templateCollection->create();
-        $templates->setOrder('pinned', \Magento\Framework\Data\Collection::SORT_ORDER_DESC);
+        $templates->setOrder(
+            'pinned', \Magento\Framework\Data\Collection::SORT_ORDER_DESC
+        );
 
         if ($templates->getSize()) {
             $templateData = array();
             foreach ($templates as $template) {
                 $templateData[] = array(
-                    'id' => $template->getId(),
-                    'name' => $template->getData('name'),
-                    'preview' => $template->getData('preview'),
+                    'id'        => $template->getId(),
+                    'name'      => $template->getData('name'),
+                    'preview'   => $template->getData('preview'),
                     'structure' => $template->getData('structure'),
-                    'pinned' => (bool) $template->getData('pinned')
+                    'pinned'    => (bool)$template->getData('pinned')
                 );
             }
             return $templateData;
@@ -224,27 +168,15 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getContentBlockData()
+    public function getContentTypes()
     {
-        // Do a single load for the attribute data
-        $this->buildAllAttributeData();
-
-        // Retrieve content blocks
-        $contentBlocks = $this->contentBlockCollection->create();
-        $contentBlocks->setOrder('entity_type.sort_order', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
-        $contentBlocks->setEntityTypeFilter(
-            $this->eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
-        );
-
-        // Don't load in the default attribute set
-        $contentBlocks->addFieldToFilter('main_table.attribute_set_id', array(
-            'neq' => $this->entity->getEntityType()->getDefaultAttributeSetId()
-        ));
+        $contentTypes = $this->configInterface->getContentTypes();
 
         $contentBlockData = [];
-        /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock */
-        foreach ($contentBlocks as $contentBlock) {
-            $contentBlockData[$contentBlock->getIdentifier()] = $this->flattenContentBlockData($contentBlock);
+        foreach ($contentTypes as $name => $contentBlock) {
+            $contentBlockData[$name] = $this->flattenContentBlockData(
+                $contentBlock
+            );
         }
 
         return $contentBlockData;
@@ -253,223 +185,28 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * Flatten the content block data
      *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
+     * @param $contentBlock
      *
      * @return array
      */
-    protected function flattenContentBlockData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
+    protected function flattenContentBlockData($contentBlock)
     {
-        $fields = $this->getContentBlockFields($contentBlock, $this->getAttributeGroupData($contentBlock));
-
+        // @todo provide defaults
         return [
-            'code'             => $contentBlock->getIdentifier(),
-            'name'             => $contentBlock->getName(),
-            'icon'             => $contentBlock->getIconClass(),
+            'label'            => $contentBlock['label'],
+            'icon'             => $contentBlock['icon'],
             'contentType'      => '',
-            'group'            => ($contentBlock->getGroupId() ? $contentBlock->getGroupId() : 'general'),
-            'fields'           => $fields,
-            'fields_list'      => array_keys($fields),
-            'visible'          => (bool) $contentBlock->getShowInPageBuilder(),
-            'preview_template' => $contentBlock->getAreaConfig(
-                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
-                'preview'
-            ),
-            'preview_block'    => $contentBlock->getAreaConfig(
-                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
-                'preview_block'
-            ),
-            'js_block'         => $contentBlock->getAreaConfig(
-                \Gene\BlueFoot\Model\Attribute\ContentBlock::AREA_ADMINHTML,
-                'js'
-            )
+            'group'            => (isset($contentBlock['group'])
+                ? $contentBlock['group'] : 'general'),
+            'fields'           => [],
+            'fields_list'      => [],
+            'visible'          => true,
+            'preview_template' => (isset($contentBlock['preview_template'])
+                ? $contentBlock['preview_template'] : ''),
+            'preview_block'    => (isset($contentBlock['preview_block'])
+                ? $contentBlock['preview_block'] : ''),
+            'component'        => (isset($contentBlock['component'])
+                ? $contentBlock['component'] : '')
         ];
-    }
-
-    /**
-     * Build all attribute data at once for efficiency
-     */
-    protected function buildAllAttributeData()
-    {
-        $attributes = $this->attributeCollection->create();
-        if ($attributes->getSize()) {
-            /* @var $attribute \Gene\BlueFoot\Model\Attribute */
-            foreach ($attributes as $attribute) {
-                $this->attributeData[$attribute->getAttributeCode()] = $this->flattenAttributeData($attribute);
-            }
-        }
-    }
-
-    /**
-     * Return the attribute group data
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     *
-     * @return array
-     */
-    protected function getAttributeGroupData(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock)
-    {
-        $groups = $this->groupCollection->create();
-        $groups->setAttributeSetFilter($contentBlock->getId());
-
-        $groupData = [];
-        /* @var $group \Magento\Eav\Model\Entity\Attribute\Group */
-        foreach ($groups as $group) {
-            $attributeCollection = $this->attributeCollection->create();
-            $attributeCollection
-                ->setAttributeGroupFilter($group->getId())
-                ->setAttributeSetFilter($contentBlock->getId());
-
-            foreach ($attributeCollection->getAllIds() as $attributeId) {
-                $groupData[$attributeId] = $group->getAttributeGroupName();
-            }
-        }
-
-        return $groupData;
-    }
-
-    /**
-     * Return all fields assigned to a content block
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     * @param                                             $groupData
-     *
-     * @return array
-     */
-    protected function getContentBlockFields(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $groupData)
-    {
-        $attributes = $contentBlock->getAllAttributes();
-        if ($attributes) {
-            $fields = [];
-            /* @var $attribute \Gene\BlueFoot\Model\Attribute */
-            foreach ($attributes as $attribute) {
-                if ($attributeData = $this->getAttributeData($attribute)) {
-                    // Assign the data from the getAttributeData call
-                    $fields[$attribute->getAttributeCode()] = $attributeData;
-                    // Assign the group from the group data
-                    $fields[$attribute->getAttributeCode()]['group'] =
-                        isset($groupData[$attribute->getId()]) ?  $groupData[$attribute->getId()] : 'General';
-                }
-            }
-
-            return $fields;
-        }
-
-        return [];
-    }
-
-    /**
-     * Retrieve attribute data from the classes built information
-     *
-     * @param \Gene\BlueFoot\Model\Attribute $attribute
-     *
-     * @return array
-     */
-    protected function getAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
-    {
-        if (isset($this->attributeData[$attribute->getAttributeCode()])) {
-            return $this->attributeData[$attribute->getAttributeCode()];
-        }
-
-        return [];
-    }
-
-    /**
-     * Flatten a single attributes data ready for the stage
-     *
-     * @param \Gene\BlueFoot\Model\Attribute $attribute
-     *
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    protected function flattenAttributeData(\Gene\BlueFoot\Model\Attribute $attribute)
-    {
-        $options = [];
-        if ($attribute->usesSource()) {
-            $options = $attribute->getSource()->getAllOptions();
-        }
-
-        // Assign the type for later manipulation
-        $type = $attribute->getFrontend()->getInputType();
-
-        $data = [
-            'attribute_id' => $attribute->getId(),
-            'code' => $attribute->getAttributeCode(),
-            'type' => $type,
-            'label' => $attribute->getFrontend()->getLabel(),
-            'is_global' => $attribute->getIsGlobal(),
-            'group' => 'General'
-        ];
-
-        // Only pass options if they aren't empty
-        if (!empty($options)) {
-            $data['options'] = $options;
-        }
-
-        if ($attribute->getNote()) {
-            $data['note'] = $attribute->getNote();
-        }
-
-        // Pass over if the attribute is required
-        if ($attribute->getIsRequired()) {
-            $data['required'] = true;
-        }
-
-        // Inform the front-end if this field has a data model
-        if ($attribute->getData('data_model')) {
-            $data['data_model'] = true;
-        }
-
-        $childType = false;
-        if ($type == 'child_entity') {
-            if ($sourceModel = $attribute->getSource()) {
-                if (method_exists($sourceModel, 'getAllowedContentBlock')) {
-                    $childTypeModel = $sourceModel->getAllowedContentBlock();
-                    if ($childTypeModel) {
-                        $childType = $childTypeModel->getIdentifier();
-                    }
-                }
-            }
-        }
-
-        // Handle different types
-        switch ($type) {
-            case 'boolean':
-                $data['type'] = 'select';
-                $data['options'] = [
-                    ['value' => 0, 'label' => __('No')],
-                    ['value' => 1, 'label' => __('Yes')]
-                ];
-                break;
-            case 'multiselect':
-                $data['type'] = 'select';
-                $data['multiple'] = true;
-                break;
-            case 'textarea':
-                if ($attribute->getIsWysiwygEnabled()) {
-                    $data['type'] = 'widget';
-                    $data['widget'] = 'wysiwyg';
-                }
-                break;
-            case 'image':
-            case 'file':
-            case 'upload':
-                $data['type'] = 'widget';
-                $data['widget'] = 'upload';
-                break;
-
-            case 'child_entity':
-                $data['type'] = 'widget';
-                $data['widget'] = 'child_block';
-                $data['child_block_type'] = $childType;
-                break;
-        }
-
-        // If the attribute has a widget assigned to it ensure it renders on the front-end
-        if ($widget = $attribute->getData('widget')) {
-            $data['type'] = 'widget';
-            $data['widget'] = $widget;
-        }
-
-        return $data;
     }
 }

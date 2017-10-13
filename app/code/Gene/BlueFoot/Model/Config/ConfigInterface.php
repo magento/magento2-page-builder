@@ -14,12 +14,24 @@ interface ConfigInterface
     /**
      * @return array
      */
-    public function getContentBlocks();
+    public function getGroups();
 
     /**
-     * @param $identifier
+     * @param string $name
+     * 
+     * @return array
+     */
+    public function getGroup($name);
+
+    /**
+     * @return array
+     */
+    public function getContentTypes();
+
+    /**
+     * @param string $name
      *
      * @return array
      */
-    public function getContentBlock($identifier);
+    public function getContentType($name);
 }
