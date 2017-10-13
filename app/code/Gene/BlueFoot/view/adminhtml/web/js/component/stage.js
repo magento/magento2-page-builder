@@ -107,9 +107,13 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             return row;
         };
 
-        Stage.prototype.openTemplateManager = function openTemplateManager() {
-            // @todo
-        };
+        Stage.prototype.openTemplateManager = function openTemplateManager() {}
+        // @todo
+
+        /**
+         * Tells the stage wrapper to expand to fullscreen
+         */
+        ;
 
         Stage.prototype.goFullScreen = function goFullScreen() {
             var isFullScreen = this.parent.isFullScreen();

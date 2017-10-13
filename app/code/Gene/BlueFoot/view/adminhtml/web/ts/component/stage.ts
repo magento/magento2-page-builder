@@ -92,6 +92,9 @@ export default class Stage extends EditableArea implements StageInterface {
         // @todo
     }
 
+    /**
+     * Tells the stage wrapper to expand to fullscreen
+     */
     goFullScreen() {
         let isFullScreen = this.parent.isFullScreen();
         if (!isFullScreen) {
@@ -107,7 +110,12 @@ export default class Stage extends EditableArea implements StageInterface {
         }
     }
 
-    isFullScreen() {
+    /**
+     * Determines if bluefoot is in fullscreen mode
+     *
+     * @returns {boolean}
+     */
+    isFullScreen(): boolean {
         return this.parent.isFullScreen();
     }
 
