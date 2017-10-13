@@ -123,6 +123,10 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             }
         };
 
+        Stage.prototype.isFullScreen = function isFullScreen() {
+            return this.parent.isFullScreen();
+        };
+
         Stage.prototype.addComponent = function addComponent() {}
         // @todo
 

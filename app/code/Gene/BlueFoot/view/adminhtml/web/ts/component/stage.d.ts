@@ -21,4 +21,5 @@ export interface StageInterface extends EditableAreaInterface {
     addComponent(): void
     onSortingStart(): void
     onSortingStop(): void
+    isFullScreen(): boolean
 }

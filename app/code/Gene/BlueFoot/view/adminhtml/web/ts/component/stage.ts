@@ -106,6 +106,10 @@ export default class Stage extends EditableArea implements StageInterface {
         }
     }
 
+    isFullScreen() {
+        return this.parent.isFullScreen();
+    }
+
     addComponent() {
         // @todo
     }
