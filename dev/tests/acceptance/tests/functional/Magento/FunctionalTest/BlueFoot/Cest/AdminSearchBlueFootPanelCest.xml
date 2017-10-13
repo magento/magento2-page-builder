@@ -29,7 +29,7 @@
                 <group value="skip"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
-            <seeElement selector='SearchOneCharInBlueFootPanel' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
+            <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
             <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
         </test>
         <test name="SearchOneCharInBlueFootPanel">
@@ -66,6 +66,22 @@
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
             <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" mergeKey="validateNothingFound"/>
+        </test>
+        <test name="ClearSearchInBlueFootPanel">
+            <annotations>
+                <title value="Clear search in Bluefoot Panel"/>
+                <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content block groups are displayed."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-81828"/>
+            </annotations>
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
+            <!--toggle clearSearch on-->
+            <dontSeeElement selector='//*[@id="bluefoot-panel"]/div[1]/a' mergeKey="dontSeeClearSearch"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearchField"/>
+            <seeElement selector='{{BlueFootActionsSection.searchField}}' mergeKey="seeClearSearch"/>
+            <!--click clear search, empty search field when framework supports this, see blocks-->
+            <click selector="{{BlueFootActionsSection.clearSearch}}" mergeKey="clickClearSearch"/>
+            <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
         </test>
     </cest>
 </config>
