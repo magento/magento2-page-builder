@@ -54,8 +54,6 @@ class AbstractCatalogBlock extends \Magento\Catalog\Block\Product\ListProduct
             $urlHelper,
             $data
         );
-        //$this->render = $render;
-        //$this->dataCollectionFactory = $dataCollectionFactory;
     }
 
     /**

@@ -41,7 +41,6 @@ class AbstractBlock extends \Magento\Framework\View\Element\Template
         array $data = []
     ) {
         parent::__construct($context, $data);
-        //$this->render = $render;
         $this->dataCollectionFactory = $dataCollectionFactory;
     }
 
