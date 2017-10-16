@@ -4,7 +4,16 @@
         <group name="general" translate="label" sortOrder="1">
             <label>General</label>
         </group>
-        <group name="other" translate="label" sortOrder="2">
+        <group name="media" translate="label" sortOrder="10">
+            <label>Media</label>
+        </group>
+        <group name="interactive" translate="label" sortOrder="20">
+            <label>Interactive</label>
+        </group>
+        <group name="magento" translate="label" sortOrder="30">
+            <label>Magento</label>
+        </group>
+        <group name="other" translate="label" sortOrder="40">
             <label>Other</label>
         </group>
     </groups>
@@ -16,7 +25,7 @@
             <form>row_form</form>
             <group>general</group>
         </type>
-        <type name="column" translate="label" sortOrder="1">
+        <type name="column" translate="label" sortOrder="10">
             <label>Column</label>
             <icon>path/to/file.jpg</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
@@ -24,16 +33,45 @@
             <form>column_form</form>
             <group>general</group>
         </type>
-        <type name="heading" translate="label" sortOrder="1">
-            <label>Heading</label>
+        <type name="text" translate="label" sortOrder="20">
+            <label>Text</label>
             <icon>path/to/file.jpg</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
-            <preview_template>Gene_BlueFoot/component/block/preview/heading.html</preview_template>
+            <preview_template>Gene_BlueFoot/component/block/preview/textarea.html</preview_template>
+            <form>text_form</form>
+            <group>general</group>
+        </type>
+        <type name="header" translate="label" sortOrder="30">
+            <label>Header</label>
+            <icon>path/to/file.jpg</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/header.html</preview_template>
             <form>heading_form</form>
             <group>general</group>
-            <readers>
-                <reader>Gene_BlueFoot/js/component/block/readers/heading</reader>
-            </readers>
+        </type>
+        <type name="button" translate="label" sortOrder="40">
+            <label>Button</label>
+            <icon>path/to/file.jpg</icon>
+            <form>button_form</form>
+            <group>general</group>
+        </type>
+        <type name="divider" translate="label" sortOrder="50">
+            <label>Divider</label>
+            <icon>path/to/file.jpg</icon>
+            <form>divider_form</form>
+            <group>general</group>
+        </type>
+        <type name="image" translate="label" sortOrder="1">
+            <label>Image</label>
+            <icon>path/to/file.jpg</icon>
+            <form>image_form</form>
+            <group>media</group>
+        </type>
+        <type name="video" translate="label" sortOrder="10">
+            <label>Video</label>
+            <icon>path/to/file.jpg</icon>
+            <form>image_form</form>
+            <group>media</group>
         </type>
     </content_types>
 </config>

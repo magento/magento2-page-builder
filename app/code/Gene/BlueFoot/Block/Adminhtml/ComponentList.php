@@ -9,13 +9,16 @@ namespace Gene\BlueFoot\Block\Adminhtml;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\View\Element\BlockFactory;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Ui\Component\Control\ActionPool;
 use Magento\Framework\View\Layout\Data\Structure as DataStructure;
-use Magento\Framework\View\LayoutInterface;
 use Magento\Framework\View\Element\UiComponent\ContextFactory as UiComponentContextFactory;
 use Magento\Framework\View\Element\UiComponent\ContainerInterface;
 use Magento\Framework\View\Element\UiComponentInterface;
 
+/**
+ * Class ComponentList
+ *
+ * @package Gene\BlueFoot\Block\Adminhtml
+ */
 class ComponentList extends \Magento\Framework\View\Element\Template
 {
     /**
@@ -45,6 +48,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
 
     /**
      * ComponentList constructor.
+     * @todo move into abstracted generator class
      *
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
      * @param Context                                     $context
@@ -91,6 +95,8 @@ class ComponentList extends \Magento\Framework\View\Element\Template
 
         /**
          * Structure is required for custom component factory like a 'htmlContent'
+         *
+         * @todo error handling required in factory, missing component throws Uncaught TypeError
          */
         $component = $this->uiComponentFactory->create(
             $elementName,
@@ -128,6 +134,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
 
     /**
      * Generate the buttons for each form
+     * @todo requires drastic refactoring
      *
      * @param string $name
      *
@@ -182,6 +189,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
             ]
         );
 
+        // @todo generate these buttons using templates correctly
         return <<<EOF
         <div data-mage-init='{"floatingHeader": {}}' class="page-actions" data-ui-id="page-actions-toolbar-content-header">
             <button id="save" title="Save" type="button" class="action- scalable save primary" data-mage-init='{$saveAction}' data-form-role="save" data-ui-id="save-button" > <span>Save</span> </button>

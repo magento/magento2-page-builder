@@ -27,9 +27,9 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
             blockCodes = []; // @todo should be string, but TS complains
         Object.keys(contentBlocks).forEach(function (blockKey) {
             var block = contentBlocks[blockKey];
-            if (typeof block.preview_block === 'string') {
+            if (typeof block.preview_component === 'string') {
                 blockCodes.push(blockKey);
-                blocksToLoad.push(block.preview_block);
+                blocksToLoad.push(block.preview_component);
             }
         });
         // @todo this could create a race condition loading these async upfront
