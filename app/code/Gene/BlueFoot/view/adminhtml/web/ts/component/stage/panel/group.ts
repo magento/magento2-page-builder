@@ -31,10 +31,6 @@ export class Group {
         this.icon(group.icon);
         this.sort(group.sort);
         this.blocks(blocks);
-
-        if (group.code === 'general') {
-            this.active(true);
-        }
     }
 
     /**

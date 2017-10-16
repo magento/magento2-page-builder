@@ -49,9 +49,6 @@ define(['exports', 'knockout'], function (exports, _knockout) {
             this.icon(group.icon);
             this.sort(group.sort);
             this.blocks(blocks);
-            if (group.code === 'general') {
-                this.active(true);
-            }
         }
         /**
          * Toggle the group

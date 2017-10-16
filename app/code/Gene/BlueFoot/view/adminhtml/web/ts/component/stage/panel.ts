@@ -137,6 +137,8 @@ export default class Panel extends uiComponent implements PanelInterface {
 
             // Display the panel
             this.isVisible(true);
+            // Open first group
+            this.groups()[0].active(true);
         } else {
             console.warn('Configuration is not properly initialized, please check the Ajax response.');
         }
