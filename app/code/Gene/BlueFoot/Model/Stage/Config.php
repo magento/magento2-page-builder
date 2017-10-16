@@ -15,6 +15,8 @@ use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 class Config extends \Magento\Framework\Model\AbstractModel
 {
     const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
+    const DEFAULT_COMPONENT = 'Gene_BlueFoot/js/component/block/block';
+    const DEFAULT_PREVIEW_COMPONENT = 'Gene_BlueFoot/js/component/block/preview/block';
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
@@ -47,6 +49,11 @@ class Config extends \Magento\Framework\Model\AbstractModel
     protected $cacheState;
 
     /**
+     * @var Config\UiComponentConfig
+     */
+    protected $uiComponentConfig;
+
+    /**
      * Config constructor.
      *
      * @param \Magento\Framework\Model\Context                                    $context
@@ -56,6 +63,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity                           $entity
      * @param \Magento\Framework\App\Cache\StateInterface                         $cacheState
+     * @param Config\UiComponentConfig                                            $uiComponentConfig
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null        $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null                  $resourceCollection
      * @param array                                                               $data
@@ -68,6 +76,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
         \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
         \Magento\Framework\App\Cache\StateInterface $cacheState,
+        Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -78,6 +87,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $this->layoutFactory = $layoutFactory;
         $this->templateCollection = $templateCollectionFactory;
         $this->entity = $entity;
+        $this->uiComponentConfig = $uiComponentConfig;
 
         parent::__construct(
             $context, $registry, $resource, $resourceCollection, $data
@@ -101,26 +111,27 @@ class Config extends \Magento\Framework\Model\AbstractModel
 //        ) {
 //            return json_decode($config, true);
 //        } else {
-            $config = [
-                'groups'        => $this->getGroups(),
-                'contentTypes'  => $this->getContentTypes(),
-                'templates'     => $this->getTemplateData()
-            ];
+        $config = [
+            'groups'       => $this->getGroups(),
+            'contentTypes' => $this->getContentTypes(),
+            'templates'    => $this->getTemplateData()
+        ];
 
-            // If the cache is enabled, store the config in the cache
-            if ($this->cacheState->isEnabled(
-                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
-            )) {
-                // Store the configuration in the cache for 7 days
-                $this->cacheManager->save(
-                    json_encode($config),
-                    self::BLUEFOOT_CONFIG_CACHE_KEY,
-                    [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
-                    (60 * 60 * 24 * 7) // Store in cache for 7 days
-                );
-            }
+        // If the cache is enabled, store the config in the cache
+        if ($this->cacheState->isEnabled(
+            \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
+        )
+        ) {
+            // Store the configuration in the cache for 7 days
+            $this->cacheManager->save(
+                json_encode($config),
+                self::BLUEFOOT_CONFIG_CACHE_KEY,
+                [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
+                (60 * 60 * 24 * 7) // Store in cache for 7 days
+            );
+        }
 
-            return $config;
+        return $config;
 //        }
     }
 
@@ -191,26 +202,25 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    protected function flattenContentTypeData($name, $contentType)
+    public function flattenContentTypeData($name, $contentType)
     {
-        // @todo provide defaults
         return [
-            'name'             => $name,
-            'label'            => $contentType['label'],
-            'icon'             => $contentType['icon'],
-            'form'             => $contentType['form'],
-            'contentType'      => '',
-            'group'            => (isset($contentType['group'])
+            'name'              => $name,
+            'label'             => __($contentType['label']),
+            'icon'              => $contentType['icon'],
+            'form'              => $contentType['form'],
+            'contentType'       => '',
+            'group'             => (isset($contentType['group'])
                 ? $contentType['group'] : 'general'),
-            'fields'           => [],
-            'fields_list'      => [],
-            'visible'          => true,
-            'preview_template' => (isset($contentType['preview_template'])
+            'fields'            => $this->uiComponentConfig->getFields($contentType['form']),
+            'visible'           => true,
+            'preview_template'  => (isset($contentType['preview_template'])
                 ? $contentType['preview_template'] : ''),
-            'preview_block'    => (isset($contentType['preview_block'])
-                ? $contentType['preview_block'] : ''),
-            'component'        => (isset($contentBlock['component'])
-                ? $contentType['component'] : '')
+            'preview_component' => (isset($contentType['preview_block'])
+                ? $contentType['preview_block']
+                : self::DEFAULT_PREVIEW_COMPONENT),
+            'component'         => (isset($contentBlock['component'])
+                ? $contentType['component'] : self::DEFAULT_COMPONENT)
         ];
     }
 }

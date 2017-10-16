@@ -7,6 +7,13 @@ import PreviewBlock from "./preview/block";
 import $t from "mage/translate";
 import _ from "underscore";
 
+interface FieldDefaults {
+    [key: string]: any;
+}
+interface FieldConfig {
+    default: null | string | number;
+}
+
 /**
  * AbstractBlock class
  *
@@ -19,12 +26,6 @@ export default class Block extends Structural implements BlockInterface {
     childEntityKeys: Array<string> = [];
     template: string = 'Gene_BlueFoot/component/block/abstract.html';
     config: any;
-
-    // @todo temp for testing, remove after building edit capabilities
-    defaults: object = {
-        heading_type: 'h2',
-        title: $t('Type heading content here...')
-    };
 
     /**
      * AbstractBlock constructor
@@ -39,9 +40,16 @@ export default class Block extends Structural implements BlockInterface {
 
         this.preview = getPreviewInstance(this, config);
 
+        let defaults: FieldDefaults = {};
+        if (config.fields) {
+            _.each(config.fields, (field: FieldConfig, key: string | number) => {
+                defaults[key] = field.default;
+            })
+        }
+
         this.stage.store.update(
             this.id,
-            _.extend(this.defaults, formData)
+            _.extend(defaults, formData)
         );
     }
 
