@@ -22,6 +22,12 @@ define(["exports", "underscore", "knockout"], function (exports, _underscore, _k
     }
 
     var PreviewBlock = function () {
+        /**
+         * PreviewBlock constructor
+         *
+         * @param {Block} parent
+         * @param {Object} config
+         */
         function PreviewBlock(parent, config) {
             var _this = this;
 

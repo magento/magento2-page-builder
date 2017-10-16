@@ -23,7 +23,7 @@
             <xs:sequence>
               <xs:element name="type" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
-                  <xs:sequence>
+                  <xs:all>
                     <xs:element type="xs:string" name="label"/>
                     <xs:element type="xs:string" name="icon"/>
                     <xs:element type="xs:string" name="component" minOccurs="0"/>
@@ -38,7 +38,7 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                  </xs:sequence>
+                  </xs:all>
                   <xs:attribute type="xs:string" name="name" use="optional"/>
                   <xs:attribute type="xs:string" name="translate" use="optional"/>
                   <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>

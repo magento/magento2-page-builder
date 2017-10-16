@@ -56,15 +56,14 @@ define(["exports", "./block", "knockout", "../../config"], function (exports, _b
             var _this = _possibleConstructorReturn(this, _PreviewBlock.apply(this, arguments));
 
             _this.loading = _knockout2.default.observable(false);
-            _this.imageUrl = _knockout2.default.computed(function () {
-                if (_this.image()) {
-                    return _config2.default.getInitConfig('media_url') + _this.image().replace('/media/', '');
-                    ;
-                }
-                return '';
-            });
             return _this;
         }
+        // imageUrl: KnockoutComputed<string> = ko.computed(() => {
+        //     if (this.data.image()) {
+        //         return Config.getInitConfig('media_url') + this.data.image().replace('/media/', '');
+        //     }
+        //     return '';
+        // });
         /**
          * Retrieve the upload URL from the configuration
          */

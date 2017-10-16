@@ -47,7 +47,7 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
      * @returns {PreviewBlock}
      */
     function get(block, blockConfig) {
-        var code = blockConfig.code;
+        var code = blockConfig.name;
         var instance = void 0;
         if (typeof previews[code] === 'undefined') {
             instance = _block2.default;

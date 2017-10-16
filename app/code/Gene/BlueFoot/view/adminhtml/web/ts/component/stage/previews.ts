@@ -35,7 +35,7 @@ export function load(): void {
  * @returns {PreviewBlock}
  */
 export default function get(block: Block, blockConfig: any): PreviewBlock {
-    const code = blockConfig.code;
+    const code = blockConfig.name;
     let instance: typeof PreviewBlock;
     if (typeof previews[code] === 'undefined') {
         instance = PreviewBlock;
