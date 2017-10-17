@@ -1,118 +1,106 @@
-/**
- * - Edit.js
- * Allows users to edit elements within the stage
- *
- * This file creates a new UI Component which is used for the actual edit panel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
-define([
-    'ko',
-    'jquery',
-    'uiRegistry',
-    'bluefoot/config',
-    'mageUtils'
-], function (ko, $, registry, Config, utils) {
+define(["exports", "uiRegistry", "mage/translate"], function (exports, _uiRegistry, _translate) {
+    "use strict";
 
-    /**
-     * Edit class constructor
-     *
-     * @constructor
-     */
-    function Edit(entity) {
-        this.parent = entity;
-        this.entity = entity.config;
-        this.modal = false;
-        this.form = false;
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-        this.initModal();
+    var _uiRegistry2 = _interopRequireDefault(_uiRegistry);
+
+    var _translate2 = _interopRequireDefault(_translate);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
 
-    /**
-     * Init a new modal
-     */
-    Edit.prototype.initModal = function () {
-        var originalForm = registry.get('bluefoot_edit.bluefoot_edit.bluefoot_edit_form'),
-            componentName = 'bluefoot_edit_' + utils.uniqueid(),
-            fullPath = componentName + '.' + componentName,
-            formPath = fullPath + '.bluefoot_edit_form';
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-        // Add the new panel to the panel thing
-        registry.get('bluefoot-edit').addPanel(fullPath);
+    var Edit = function () {
+        /**
+         * Initiate the edit class with an instance of structural
+         *
+         * @param {Structural} instance
+         */
+        function Edit(instance, store) {
+            _classCallCheck(this, Edit);
 
-        var config = {
-            "types": {
-                "container": {
-                    "extends": componentName
-                },
-                "dataSource": {
-                    "component": "Magento_Ui\/js\/form\/provider"
-                },
-                "html_content": {
-                    "component": "Magento_Ui\/js\/form\/components\/html",
-                    "extends": componentName
-                }
-            },
-            "components": {}
+            this.modal = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal');
+            this.insertForm = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
+            this.instance = instance;
+            this.store = store;
+        }
+        /**
+         * Open and render the edit component
+         */
+
+
+        Edit.prototype.openAndRender = function openAndRender() {
+            this.destroyInserted();
+            this.setTitle();
+            this.render();
+            this.open();
         };
 
-        // Add in our components
-        config.components[componentName] = {
-            children: {}
+        Edit.prototype.open = function open() {
+            this.modal.openModal();
         };
-        config.components[componentName].children[componentName] = {};
-        config.components[componentName].children[componentName] = {
-            "type": componentName,
-            "name": componentName,
-            "children": {
-                "bluefoot_edit_form": {
-                    "type": "container",
-                    "name": "bluefoot_edit_form",
-                    "config": {
-                        "component": "Gene_BlueFoot\/js\/form\/components\/insert-form",
-                        "editComponent": this,
-                        "generatedName": componentName,
-                        "formPath": formPath,
-                        "editingEntity": this.parent,
-                        "provider": componentName + '_form.contentblock_form_data_source',
-                        "update_url": originalForm.update_url,
-                        "render_url": originalForm.render_url,
-                        "autoRender": true,
-                        "dataLinks": {
-                            "imports": false,
-                            "exports": false
-                        },
-                        "realTimeLink": false,
-                        "ns": componentName,
-                        "toolbarContainer": "${ $.parentName }",
-                        "externalProvider": "${ $.ns }." + componentName,
-                        "formSubmitType": "ajax"
-                    }
-                }
-            },
-            "config": {
-                "component": "Magento_Ui\/js\/modal\/modal-component",
-                "options": {
-                    "type": "slide"
-                }
+
+        Edit.prototype.getFormComponent = function getFormComponent() {
+            return _uiRegistry2.default.get('component_' + this.instance.config.form);
+        };
+
+        Edit.prototype.render = function render() {
+            // Pass the UI component to the render function
+            this.insertForm.onRender(this.getFormComponent());
+            this.setDataProviderClient();
+        };
+
+        Edit.prototype.save = function save(data, options) {
+            this.store.update(this.instance.id, data);
+            this.modal.closeModal();
+        };
+
+        Edit.prototype.setTitle = function setTitle() {
+            this.modal.setTitle((0, _translate2.default)('Edit ' + (this.instance.config.label || (0, _translate2.default)('Block'))));
+        };
+
+        Edit.prototype.setDataProviderClient = function setDataProviderClient() {
+            var _this = this;
+
+            var formName = this.instance.config.form;
+            // Retrieve the component
+            _uiRegistry2.default.get(formName + '.' + formName, function (component) {
+                var provider = _uiRegistry2.default.get(component.provider);
+                // Set the instance to act as it's client in the data provider
+                provider.client = _this;
+                // Set the data on the provider from the data store
+                provider.set('data', _this.store.get(_this.instance.id));
+            });
+        };
+
+        Edit.prototype.getFormComponentInstance = function getFormComponentInstance() {
+            var formName = this.instance.config.form;
+            return _uiRegistry2.default.get(formName + '.' + formName);
+        };
+
+        Edit.prototype.destroyInserted = function destroyInserted() {
+            var existingComponent = void 0;
+            if (existingComponent = this.getFormComponentInstance()) {
+                existingComponent.destroy();
             }
+            // Reset the insert form component
+            this.insertForm.destroyInserted();
+            this.insertForm.removeActions();
         };
 
-        // Add in our data source
-        config.components[componentName].children[componentName + '_data_source'] = {
-            "type": "dataSource",
-            "name": componentName + '_data_source',
-            "dataScope": componentName,
-            "config": {
-                "params": {
-                    "namespace": componentName
-                }
-            }
-        };
+        return Edit;
+    }();
 
-        // Add our new sidebar UI component
-        this.parent.requestAddComponent(false, config, 'Magento_Ui/js/core/app');
-    };
-
-    return Edit;
+    exports.default = Edit;
 });

@@ -50,22 +50,23 @@ define(['exports', '../../../event-emitter', 'knockout'], function (exports, _ev
         _inherits(Block, _EventEmitter);
 
         /**
-         * Block constructor
+         * Block Constructor
          *
-         * @param config
+         * @param {string} identifier
+         * @param {ContentBlockConfig} config
          */
-        function Block(config) {
+        function Block(identifier, config) {
             _classCallCheck(this, Block);
 
             var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
 
-            _this.code = _knockout2.default.observable('');
-            _this.name = _knockout2.default.observable('');
+            _this.identifier = _knockout2.default.observable('');
+            _this.label = _knockout2.default.observable('');
             _this.icon = _knockout2.default.observable('');
             _this.droppable = true;
             _this.config = config;
-            _this.code(config.code);
-            _this.name(config.name);
+            _this.identifier(identifier);
+            _this.label(config.label);
             _this.icon(config.icon);
             return _this;
         }

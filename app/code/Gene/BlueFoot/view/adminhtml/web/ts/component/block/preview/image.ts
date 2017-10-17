@@ -1,3 +1,4 @@
+import Block from "../block";
 import PreviewBlock from "./block";
 import ko from "knockout";
 import Config from "../../config";
@@ -8,14 +9,13 @@ import Config from "../../config";
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export default class PreviewImageBlock extends PreviewBlock {
-    image: KnockoutObservable<string>;
     loading: KnockoutObservable<boolean> = ko.observable(false);
-    imageUrl: KnockoutComputed<string> = ko.computed(() => {
-        if (this.image()) {
-            return Config.getInitConfig('media_url') + this.image().replace('/media/', '');;
-        }
-        return '';
-    });
+    // imageUrl: KnockoutComputed<string> = ko.computed(() => {
+    //     if (this.data.image()) {
+    //         return Config.getInitConfig('media_url') + this.data.image().replace('/media/', '');
+    //     }
+    //     return '';
+    // });
 
     /**
      * Retrieve the upload URL from the configuration

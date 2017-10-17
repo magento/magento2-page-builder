@@ -22,14 +22,14 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
      * Load all preview instances into our cache
      */
     function load() {
-        var contentBlocks = _config2.default.getInitConfig("contentBlocks");
+        var contentBlocks = _config2.default.getInitConfig("contentTypes");
         var blocksToLoad = [],
             blockCodes = []; // @todo should be string, but TS complains
         Object.keys(contentBlocks).forEach(function (blockKey) {
             var block = contentBlocks[blockKey];
-            if (typeof block.preview_block === 'string') {
+            if (typeof block.preview_component === 'string') {
                 blockCodes.push(blockKey);
-                blocksToLoad.push(block.preview_block);
+                blocksToLoad.push(block.preview_component);
             }
         });
         // @todo this could create a race condition loading these async upfront
@@ -47,7 +47,7 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
      * @returns {PreviewBlock}
      */
     function get(block, blockConfig) {
-        var code = blockConfig.code;
+        var code = blockConfig.name;
         var instance = void 0;
         if (typeof previews[code] === 'undefined') {
             instance = _block2.default;

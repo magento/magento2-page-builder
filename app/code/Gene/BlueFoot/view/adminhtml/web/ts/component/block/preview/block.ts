@@ -17,6 +17,12 @@ export default class PreviewBlock {
     config: any;
     data: PreviewData = {};
 
+    /**
+     * PreviewBlock constructor
+     *
+     * @param {Block} parent
+     * @param {Object} config
+     */
     constructor(parent: Block, config: object) {
         this.parent = parent;
         this.config = config;

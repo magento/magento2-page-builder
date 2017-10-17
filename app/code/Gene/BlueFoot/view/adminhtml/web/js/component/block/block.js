@@ -1,4 +1,4 @@
-define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/translate", "underscore"], function (exports, _abstract, _previews, _translate, _underscore) {
+define(["exports", "../stage/structural/abstract", "../stage/previews", "underscore"], function (exports, _abstract, _previews, _underscore) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -8,8 +8,6 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
     var _abstract2 = _interopRequireDefault(_abstract);
 
     var _previews2 = _interopRequireDefault(_previews);
-
-    var _translate2 = _interopRequireDefault(_translate);
 
     var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -68,13 +66,14 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/tr
             _this.editOnInsert = true;
             _this.childEntityKeys = [];
             _this.template = 'Gene_BlueFoot/component/block/abstract.html';
-            // @todo temp for testing, remove after building edit capabilities
-            _this.defaults = {
-                heading_type: 'h2',
-                title: (0, _translate2.default)('Type heading content here...')
-            };
             _this.preview = (0, _previews2.default)(_this, config);
-            _this.stage.store.update(_this.id, _underscore2.default.extend(_this.defaults, formData));
+            var defaults = {};
+            if (config.fields) {
+                _underscore2.default.each(config.fields, function (field, key) {
+                    defaults[key] = field.default;
+                });
+            }
+            _this.stage.store.update(_this.id, _underscore2.default.extend(defaults, formData));
             return _this;
         }
         /**

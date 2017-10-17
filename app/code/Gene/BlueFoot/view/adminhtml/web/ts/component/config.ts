@@ -39,24 +39,6 @@ export default class Config {
         return Config.initConfig;
     }
 
-    static loadEntities(entityIds: Array<number>, storeId: number, callback: Function): void {
-        // @todo
-    }
-
-    /**
-     * Retrieve an entity from the configuration
-     *
-     * @param entityId
-     * @returns {any}
-     */
-    static getEntity(entityId: number): object {
-        if (typeof Config.config['entities'][entityId] !== 'undefined') {
-            return Config.config['entities'][entityId];
-        }
-
-        return {};
-    }
-
     /**
      * Return a content types configuration from the config
      *

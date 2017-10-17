@@ -8,21 +8,22 @@ import ko from 'knockout';
  */
 export class Block extends EventEmitter {
     config: ContentBlockConfig;
-    code: KnockoutObservable<string> = ko.observable('');
-    name: KnockoutObservable<string> = ko.observable('');
+    identifier: KnockoutObservable<string> = ko.observable('');
+    label: KnockoutObservable<string> = ko.observable('');
     icon: KnockoutObservable<string> = ko.observable('');
     droppable: boolean = true;
 
     /**
-     * Block constructor
+     * Block Constructor
      *
-     * @param config
+     * @param {string} identifier
+     * @param {ContentBlockConfig} config
      */
-    constructor(config: ContentBlockConfig) {
+    constructor(identifier: string, config: ContentBlockConfig) {
         super();
         this.config = config;
-        this.code(config.code);
-        this.name(config.name);
+        this.identifier(identifier);
+        this.label(config.label);
         this.icon(config.icon);
     }
 }

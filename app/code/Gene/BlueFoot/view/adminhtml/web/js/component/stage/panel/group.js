@@ -37,7 +37,7 @@ define(['exports', 'knockout'], function (exports, _knockout) {
 
             this.id = _knockout2.default.observable();
             this.code = _knockout2.default.observable('');
-            this.name = _knockout2.default.observable('');
+            this.label = _knockout2.default.observable('');
             this.icon = _knockout2.default.observable('');
             this.sort = _knockout2.default.observable();
             this.blocks = _knockout2.default.observableArray([]);
@@ -45,7 +45,7 @@ define(['exports', 'knockout'], function (exports, _knockout) {
             this.hidden = _knockout2.default.observable(false);
             this.id(id);
             this.code(group.code);
-            this.name(group.name);
+            this.label(group.label);
             this.icon(group.icon);
             this.sort(group.sort);
             this.blocks(blocks);

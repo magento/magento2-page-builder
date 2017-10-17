@@ -8,14 +8,14 @@ let previews: Array<any> = [];
  * Load all preview instances into our cache
  */
 export function load(): void {
-    const contentBlocks = Config.getInitConfig("contentBlocks") as ConfigContentBlocks;
+    const contentBlocks = Config.getInitConfig("contentTypes") as ConfigContentBlocks;
     let blocksToLoad: Array<string> = [],
         blockCodes: Array<any> = []; // @todo should be string, but TS complains
     Object.keys(contentBlocks).forEach((blockKey) => {
         const block = contentBlocks[blockKey];
-        if (typeof block.preview_block === 'string') {
+        if (typeof block.preview_component === 'string') {
             blockCodes.push(blockKey);
-            blocksToLoad.push(block.preview_block);
+            blocksToLoad.push(block.preview_component);
         }
     });
 
@@ -35,7 +35,7 @@ export function load(): void {
  * @returns {PreviewBlock}
  */
 export default function get(block: Block, blockConfig: any): PreviewBlock {
-    const code = blockConfig.code;
+    const code = blockConfig.name;
     let instance: typeof PreviewBlock;
     if (typeof previews[code] === 'undefined') {
         instance = PreviewBlock;
@@ -56,7 +56,7 @@ interface ConfigContentBlock {
     icon: string,
     js_block: string | null,
     name: string,
-    preview_block: string | null,
+    preview_component: string | null,
     preview_template: string | null,
     visible: boolean
 }

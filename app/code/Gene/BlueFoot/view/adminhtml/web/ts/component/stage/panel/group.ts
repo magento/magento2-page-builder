@@ -8,7 +8,7 @@ import ko from 'knockout';
 export class Group {
     id: KnockoutObservable<number> = ko.observable();
     code: KnockoutObservable<string> = ko.observable('');
-    name: KnockoutObservable<string> = ko.observable('');
+    label: KnockoutObservable<string> = ko.observable('');
     icon: KnockoutObservable<string> = ko.observable('');
     sort: KnockoutObservable<number> = ko.observable();
     blocks: KnockoutObservableArray<Array<any>> = ko.observableArray([]);
@@ -27,7 +27,7 @@ export class Group {
     constructor(id: number, group: any, blocks: Array<any> = []) {
         this.id(id);
         this.code(group.code);
-        this.name(group.name);
+        this.label(group.label);
         this.icon(group.icon);
         this.sort(group.sort);
         this.blocks(blocks);

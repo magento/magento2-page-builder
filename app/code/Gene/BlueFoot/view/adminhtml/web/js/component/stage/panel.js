@@ -57,11 +57,11 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
                 this.searching(false);
             } else {
                 this.searching(true);
-                this.searchResults(_underscore2.default.map(_underscore2.default.filter(_config2.default.getInitConfig('contentBlocks'), function (contentBlock) {
-                    return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 && contentBlock.visible === true;
-                }), function (contentBlock) {
+                this.searchResults(_underscore2.default.map(_underscore2.default.filter(_config2.default.getInitConfig('contentTypes'), function (contentBlock) {
+                    return contentBlock.label.toLowerCase().indexOf(searchValue) > -1 && contentBlock.visible === true;
+                }), function (contentBlock, identifier) {
                     // Create a new instance of GroupBlock for each result
-                    return new _block.Block(contentBlock);
+                    return new _block.Block(identifier, contentBlock);
                 }));
             }
         },
@@ -69,7 +69,7 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
             var _this2 = this;
 
             var groups = _config2.default.getInitConfig('groups'),
-                contentBlocks = _config2.default.getInitConfig('contentBlocks');
+                contentBlocks = _config2.default.getInitConfig('contentTypes');
             // Verify the configuration contains the required information
             if (groups && contentBlocks) {
                 // Iterate through the groups creating new instances with their associated content blocks
@@ -78,8 +78,8 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
                     _this2.groups.push(new _group.Group(id, group, _underscore2.default.map(_underscore2.default.where(contentBlocks, {
                         group: id,
                         visible: true
-                    }), /* Retrieve content blocks with group id */function (contentBlock) {
-                        return new _block.Block(contentBlock);
+                    }), /* Retrieve content blocks with group id */function (contentBlock, identifier) {
+                        return new _block.Block(identifier, contentBlock);
                     })));
                 });
                 // Display the panel
