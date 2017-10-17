@@ -2,7 +2,8 @@
     <div id="bluefoot-panel">
         <div class="search-blocks">
             <label for="search-blocks-input"></label>
-            <input type="text" id="search-blocks-input" name="search" data-bind="event: {keyup: search}" placeholder="Find items" />
+            <a href="#" data-bind="click: clearSearch, attr: {title: $t('Clear Search')}, visible: searching()" class="close"></a>
+            <input type="text" id="search-blocks-input" name="search" data-bind="value: searchValue, event: {keyup: search}" placeholder="Find items" />
         </div>
         <ul id="search-results" data-bind="visible: searching() && searchResults().length > 0, foreach: searchResults, draggable">
             <li data-bind="attr: {id: 'block-' + code }" class="bluefoot-draggable-block">
@@ -15,7 +16,7 @@
             </li>
         </ul>
         <div class="search-results-empty" data-bind="visible: searching() && searchResults().length == 0">
-            <div data-bind="text: $t('We couldn\'t locate any content blocks with your search query.');"></div>
+            <div data-bind="text: $t('Nothing found');"></div>
         </div>
         <ul id="bluefoot-panel-groups" data-bind="visible: !searching(), foreach: groups">
             <li data-bind="attr: {id: 'group-' + code() }, event: { click: toggle }, css: { active: active }">

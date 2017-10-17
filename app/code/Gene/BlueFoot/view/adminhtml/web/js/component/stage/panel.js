@@ -17,6 +17,7 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
 
     return _uiComponent.extend({
         componentTemplate: 'Gene_BlueFoot/component/stage/panel.html',
+        searchValue: _knockout2.default.observable(''),
         searching: _knockout2.default.observable(false),
         searchResults: _knockout2.default.observableArray([]),
         groups: _knockout2.default.observableArray([]),
@@ -25,6 +26,7 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
             isVisible: false,
             isCollapsed: false,
             groups: [],
+            searchValue: '',
             searching: false,
             searchResults: [],
             stage: false,
@@ -48,17 +50,19 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
             return this.componentTemplate;
         },
         initObservable: function () {
-            this._super().observe('isVisible isCollapsed groups searching searchResults');
+            this._super().observe('isVisible isCollapsed groups searchValue searching searchResults');
             return this;
         },
         search: function (self, event) {
-            var searchValue = event.currentTarget.value.toLowerCase();
-            if (searchValue === '') {
+            this.searchValue(event.currentTarget.value.toLowerCase());
+            if (this.searchValue() === '') {
                 this.searching(false);
             } else {
                 this.searching(true);
                 this.searchResults(_underscore2.default.map(_underscore2.default.filter(_config2.default.getInitConfig('contentBlocks'), function (contentBlock) {
-                    return contentBlock.name.toLowerCase().indexOf(searchValue) > -1 && contentBlock.visible === true;
+                    var regEx = new RegExp('\\b' + self.searchValue(), 'gi');
+                    var matches = contentBlock.name.toLowerCase().match(regEx) ? true : false;
+                    return matches && contentBlock.visible === true;
                 }), function (contentBlock) {
                     // Create a new instance of GroupBlock for each result
                     return new _block.Block(contentBlock);
@@ -84,6 +88,11 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
                 });
                 // Display the panel
                 this.isVisible(true);
+                // Open first group
+                var hasGroups = 0 in this.groups();
+                if (hasGroups) {
+                    this.groups()[0].active(true);
+                }
             } else {
                 console.warn('Configuration is not properly initialized, please check the Ajax response.');
             }
@@ -103,6 +112,10 @@ define(['uiComponent', 'underscore', 'knockout', '../config', './panel/group', '
         },
         collapse: function () {
             this.isCollapsed(!this.isCollapsed());
+        },
+        clearSearch: function () {
+            this.searchValue('');
+            this.searching(false);
         }
     });
 });
