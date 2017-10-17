@@ -76,6 +76,10 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
       return column;
     };
 
+    Row.prototype.getPreviewTemplate = function getPreviewTemplate() {
+      return 'Gene_BlueFoot/component/stage/structural/render/row.html';
+    };
+
     return Row;
   }(_abstract2.default);
 

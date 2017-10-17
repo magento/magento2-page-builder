@@ -81,16 +81,43 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
         }
         /**
          * Open edit panel when user requests to edit instance
+         *
+         * @todo refactor, abstract, this is just a prototype
          */
 
 
         Structural.prototype.onOptionEdit = function onOptionEdit() {
+            var _this2 = this;
+
+            // @todo dynamically build from config
+            var formComponent = 'bluefoot_heading_form';
             var modal = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal'),
                 insertForm = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
-            modal.setTitle((0, _translate2.default)('Edit ' + this.config.name));
+            // Destroy any existing components that exist for this type
+            var existingComponent = void 0;
+            if (existingComponent = _uiRegistry2.default.get(formComponent + '.' + formComponent)) {
+                existingComponent.destroy();
+            }
+            modal.setTitle((0, _translate2.default)('Edit ' + (this.config.name || (0, _translate2.default)('Block'))));
             modal.openModal();
+            // Reset the insert form component
+            insertForm.destroyInserted();
             insertForm.removeActions();
+            // Pass the UI component to the render function
             insertForm.onRender(window.components['bluefoot_heading_form']);
+            // Retrieve the component
+            _uiRegistry2.default.get(formComponent + '.' + formComponent, function (component) {
+                var provider = _uiRegistry2.default.get(component.provider);
+                // Set the instance to act as it's client in the data provider
+                provider.client = _this2;
+                // Set the data on the provider from the data store
+                provider.set('data', _this2.stage.store.get(_this2.id));
+            });
+        };
+
+        Structural.prototype.save = function save(data, options) {
+            this.stage.store.update(this.id, data);
+            _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal').closeModal();
         };
 
         Structural.prototype.onOptionDuplicate = function onOptionDuplicate() {
@@ -98,7 +125,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
         };
 
         Structural.prototype.onOptionRemove = function onOptionRemove() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.stage.parent.confirmationDialog({
                 title: 'Confirm Item Removal',
@@ -106,8 +133,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
                 actions: {
                     confirm: function confirm() {
                         // Call the parent to remove the child element
-                        _this2.parent.emit('blockRemoved', {
-                            block: _this2
+                        _this3.parent.emit('blockRemoved', {
+                            block: _this3
                         });
                     }
                 }
@@ -120,6 +147,14 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
 
         Structural.prototype.getChildTemplate = function getChildTemplate() {
             return this.childTemplate;
+        };
+
+        Structural.prototype.getChildPreviewTemplate = function getChildPreviewTemplate() {
+            return 'Gene_BlueFoot/component/stage/structural/render/children.html';
+        };
+
+        Structural.prototype.getPreviewTemplate = function getPreviewTemplate() {
+            return 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
         };
 
         return Structural;

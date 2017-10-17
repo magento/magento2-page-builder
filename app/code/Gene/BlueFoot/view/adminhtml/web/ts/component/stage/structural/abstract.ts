@@ -147,4 +147,22 @@ export default class Structural extends EditableArea implements StructuralInterf
     getChildTemplate(): string {
         return this.childTemplate;
     }
+
+    /**
+     * Get template master format children template
+     *
+     * @returns {string}
+     */
+    getChildPreviewTemplate(): string {
+        return 'Gene_BlueFoot/component/stage/structural/render/children.html';
+    }
+
+    /**
+     * Get template master format template
+     *
+     * @returns {string}
+     */
+    getPreviewTemplate(): string {
+        return 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
+    }
 }

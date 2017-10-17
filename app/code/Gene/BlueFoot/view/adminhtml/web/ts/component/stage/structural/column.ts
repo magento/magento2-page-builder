@@ -108,6 +108,15 @@ export class Column extends Structural implements ColumnInterface {
 
         return super.onSortStart(event, params);
     }
+
+    /**
+     * Get template master format template
+     *
+     * @returns {string}
+     */
+    getPreviewTemplate(): string {
+        return 'Gene_BlueFoot/component/stage/structural/render/column.html';
+    }
 }
 
 export interface ColumnData extends DataObject {

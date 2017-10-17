@@ -7,6 +7,7 @@ import DataStore from "./data-store";
 import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
+import Save from "./stage/save";
 
 /**
  * Stage class
@@ -50,15 +51,34 @@ export default class Stage extends EditableArea implements StageInterface {
 
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
+
+        new Save(stageContent, this.parent.value);
     }
 
     /**
      * Run the build system to initiate from existing structures 
      */
-    build() {
-        // @todo implement new storage format proposal build system
-        this.addRow(this);
-        this.ready();
+    build(buildInstance, buildStructure) {
+        var self = this;
+        if (buildInstance && buildStructure) {
+            buildInstance.buildStage(this, buildStructure)
+                .on('buildDone', self.ready.bind(self))
+                .on('buildError', function (event, error) {
+                    // Inform the user that an issue has occurred
+                    self.parent.alertDialog({
+                        title: 'Advanced CMS Error',
+                        content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " +
+                        "with your development team on how to resolve."
+                    });
+
+                    // self.emit('stageError', error);
+                    console.error(error);
+                });
+        } else {
+            // If no build instance is present we're initiating a new stage
+            this.addRow(this);
+            this.ready();
+        }
     }
 
     /**

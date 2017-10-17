@@ -1,4 +1,4 @@
-define(['exports', 'underscore', '../event-emitter', '../config', '../block/factory'], function (exports, _underscore, _eventEmitter, _config, _factory) {
+define(['exports', 'underscore', '../event-emitter', '../config', '../block/factory', './attribute-reader-composite'], function (exports, _underscore, _eventEmitter, _config, _factory, _attributeReaderComposite) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -12,6 +12,8 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
     var _config2 = _interopRequireDefault(_config);
 
     var _factory2 = _interopRequireDefault(_factory);
+
+    var _attributeReaderComposite2 = _interopRequireDefault(_attributeReaderComposite);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -69,15 +71,27 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
     var Build = function (_EventEmitter) {
         _inherits(Build, _EventEmitter);
 
+        /**
+         */
         function Build() {
             _classCallCheck(this, Build);
 
-            return _possibleConstructorReturn(this, _EventEmitter.apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+            _this.attributeReaderComposite = new _attributeReaderComposite2.default();
+            return _this;
         }
+        /**
+         * Parse the potential structure
+         *
+         * @param structure
+         */
+
 
         Build.prototype.parseStructure = function parseStructure(structure) {
+            structure = '<div data-role="row"><div data-role="column" style="width: 50%;"></div></div>' + '<div data-role="row"><div data-role="column" style="width: 50%;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
             this.document = document.createElement('div');
-            this.document.innerHTML = structure;
+            this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
             // Return the stage element if the structure is present, otherwise return false
             return this.document.querySelector('[' + _config2.default.getValue('dataRoleAttributeName') + '="stage"]') || false;
         };
@@ -99,40 +113,45 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
         };
 
         Build.prototype.parseAndBuildElement = function parseAndBuildElement(element, parent) {
-            var _this3 = this;
-
             if (element instanceof HTMLElement && element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName'))) {
                 parent = parent || this.stage;
-                var role = element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName')),
-                    data = Build.getElementData(element),
-                    children = this.getElementChildren(element);
-                // Add element to stage
-                return this.buildElement(role, data, parent).then(function (newParent) {
-                    if (children.length > 0) {
-                        var childPromises = [];
-                        _.forEach(children, function (child) {
-                            childPromises.push(_this3.parseAndBuildElement(child, newParent));
-                        });
-                        return Promise.all(childPromises);
-                    } else {
-                        return Promise.resolve(newParent);
-                    }
-                });
+                var self = this,
+                    role = element.getAttribute(_config2.default.getValue('dataRoleAttributeName'));
+                var getElementDataPromise = new Promise(function (resolve, error) {
+                    resolve(self.getElementData(element));
+                }.bind(this));
+                return getElementDataPromise.then(function (data) {
+                    var children = this.getElementChildren(element);
+                    // Add element to stage
+                    return this.buildElement(role, data, parent).then(function (newParent) {
+                        if (children.length > 0) {
+                            var childPromises = [];
+                            _.forEach(children, function (child) {
+                                childPromises.push(self.parseAndBuildElement(child, newParent));
+                            });
+                            return Promise.all(childPromises);
+                        } else {
+                            return Promise.resolve(newParent);
+                        }
+                    });
+                }.bind(this));
             } else {
                 return Promise.reject(new Error('Element does not contain valid role attribute.'));
             }
         };
 
-        Build.getElementData = function getElementData(element) {
-            var scriptTag = element.querySelector('script[type="text/advanced-cms-data"]');
-            if (scriptTag) {
-                return scriptTag.innerHTML ? JSON.parse(scriptTag.innerHTML) : {};
-            }
-            return {};
+        Build.prototype.getElementData = function getElementData(element) {
+            var result = {};
+            var readPromise = new Promise(function (resolve, reject) {
+                resolve(this.attributeReaderComposite.read(element));
+            }.bind(this));
+            return readPromise.then(function (data) {
+                return result ? _.extend(result, data) : {};
+            });
         };
 
         Build.prototype.getElementChildren = function getElementChildren(element) {
-            var _this4 = this;
+            var _this3 = this;
 
             if (element.hasChildNodes()) {
                 var children = [];
@@ -143,7 +162,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
                         if (child.hasAttribute(_config2.default.getValueAsString('dataRoleAttributeName'))) {
                             children.push(child);
                         } else {
-                            children = _this4.getElementChildren(child);
+                            children = _this3.getElementChildren(child);
                         }
                     }
                 });
@@ -185,7 +204,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
                 }).catch(function (error) {
                     reject(error);
                 });
-            });
+            }.bind(this));
         };
 
         return Build;
