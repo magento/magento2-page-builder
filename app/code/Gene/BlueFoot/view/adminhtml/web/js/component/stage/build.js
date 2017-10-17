@@ -89,7 +89,8 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
 
         Build.prototype.parseStructure = function parseStructure(structure) {
-            structure = '<div data-role="row"><div data-role="column" style="width: 50%;"></div></div>' + '<div data-role="row"><div data-role="column" style="width: 50%;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
+            // structure = '<div data-role="row"><div data-role="column" style="width: 50%;"></div></div>'
+            //     + '<div data-role="row"><div data-role="column" style="width: 50%;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
             this.document = document.createElement('div');
             this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
             // Return the stage element if the structure is present, otherwise return false
