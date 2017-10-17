@@ -95,7 +95,7 @@ export default class Stage extends EditableArea implements StageInterface {
     /**
      * Tells the stage wrapper to expand to fullscreen
      */
-    goFullScreen() {
+    goFullScreen(): void {
         let isFullScreen = this.parent.isFullScreen();
         if (!isFullScreen) {
             this.originalScrollTop = jQuery(window).scrollTop();
