@@ -7,6 +7,10 @@
 
 <?php $components = $block->getComponents(); if ($components): ?>
     <script type="text/javascript">
-        window.components = <?php /* noEscape */ echo json_encode($components) ?>;
+        require(['underscore', 'uiRegistry'], function (_, registry) {
+            _.each(<?php /* noEscape */ echo json_encode($components) ?>, function (component, key) {
+                registry.set('component_' + key, component);
+            });
+        });
     </script>
 <?php endif; ?>
