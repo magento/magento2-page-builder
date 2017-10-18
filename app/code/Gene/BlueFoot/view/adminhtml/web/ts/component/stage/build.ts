@@ -32,8 +32,7 @@ export default class Build extends EventEmitter {
      * @param structure
      */
     parseStructure(structure: string) {
-        // structure = '<div data-role="row"><div data-role="column" style="width: 50%;"></div></div>'
-        //     + '<div data-role="row"><div data-role="column" style="width: 50%;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
+        structure = '<div data-role="row"><div data-role="column" style="width: 50%; margin-top: 5px; background-color: #ccc;"></div></div><div data-role="row"><div data-role="column" style="width: 50%; margin-top: 10px; background-color: #fff;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
         this.document = document.createElement('div');
         this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
 
