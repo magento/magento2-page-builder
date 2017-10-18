@@ -32,6 +32,9 @@ export default class Build extends EventEmitter {
      * @param structure
      */
     parseStructure(structure: string) {
+        if (!structure) {
+            return false;
+        }
         this.document = document.createElement('div');
         this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
 

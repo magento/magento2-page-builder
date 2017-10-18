@@ -89,6 +89,9 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
 
         Build.prototype.parseStructure = function parseStructure(structure) {
+            if (!structure) {
+                return false;
+            }
             this.document = document.createElement('div');
             this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
             // Return the stage element if the structure is present, otherwise return false
