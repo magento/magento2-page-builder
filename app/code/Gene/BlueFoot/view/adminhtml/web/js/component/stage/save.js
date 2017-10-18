@@ -1,11 +1,14 @@
-define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], function (exports, _knockout, engine) {
+define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], function (exports, _knockout, _engine) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.default = renderTree;
 
     var _knockout2 = _interopRequireDefault(_knockout);
+
+    var _engine2 = _interopRequireDefault(_engine);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -13,51 +16,34 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
         };
     }
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
+    // The root template for the render tree
+    /**
+     * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+     * See COPYING.txt for license details.
+     */
+    var rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
+    /**
+     * Render the tree into a string
+     *
+     * @param {KnockoutObservableArray<Structural>} tree
+     */
+    function renderTree(tree) {
+        var _this = this;
 
-    var Save = function () {
-        /**
-         * Save constructor
-         *
-         * @param {KnockoutObservableArray<EditableArea>} stageContent
-         * @param {KnockoutObservable<string>} textarea
-         */
-        function Save(stageContent, textarea) {
-            _classCallCheck(this, Save);
-
-            this.rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
-            this.textarea = textarea;
-            stageContent.subscribe(this.updateContent.bind(this));
-        }
-        /**
-         * Update textarea with rendered content
-         *
-         * @param data
-         */
-
-
-        Save.prototype.updateContent = function updateContent(data) {
-            var temp = jQuery('<div>');
-            _knockout2.default.applyBindingsToNode(temp[0], {
-                template: {
-                    name: this.rootTemplate,
-                    data: { data: data }
-                }
-            });
-
-            engine.waitForFinishRender().then(function () {
-                console.log(temp.html());
-                this.textarea(temp.html());
+        console.log('renderTree called');
+        var temp = jQuery('<div>');
+        _knockout2.default.applyBindingsToNode(temp[0], {
+            template: {
+                name: rootTemplate,
+                data: { data: tree }
+            }
+        });
+        return new Promise(function (resolve, reject) {
+            _engine2.default.waitForFinishRender().then(function () {
+                console.log('renderTree completed', temp);
+                resolve(temp.html());
                 temp.remove();
-            }.bind(this));
-        };
-
-        return Save;
-    }();
-
-    exports.default = Save;
+            }.bind(_this));
+        });
+    }
 });

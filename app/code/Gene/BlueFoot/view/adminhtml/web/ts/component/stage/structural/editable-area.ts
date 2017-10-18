@@ -67,6 +67,9 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     protected setChildren(children: KnockoutObservableArray<Structural>) {
         this.children = children;
+
+        // Attach a subscription to the children of every editable area to fire the stageUpdated event
+        children.subscribe(() => this.stage.emit('stageUpdated'));
     }
 
     /**

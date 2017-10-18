@@ -3,45 +3,35 @@
  * See COPYING.txt for license details.
  */
 import ko from 'knockout';
-import EditableArea from "./structural/editable-area";
 import Structural from "./structural/abstract";
+import engine from "Magento_Ui/js/lib/knockout/template/engine";
 
-export default class Save {
-    rootTemplate: string = 'Gene_BlueFoot/component/stage/structural/render/root.html';
-    textarea: KnockoutObservable<string>;
+// The root template for the render tree
+const rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
 
-    /**
-     * Save constructor
-     *
-     * @param {KnockoutObservableArray<EditableArea>} stageContent
-     * @param {KnockoutObservable<string>} textarea
-     */
-    constructor(stageContent: KnockoutObservableArray<Structural>, textarea: KnockoutObservable<string>) {
-        this.textarea = textarea;
-        stageContent.subscribe(this.updateContent.bind(this));
-    }
-
-    /**
-     * Update textarea with rendered content
-     *
-     * @param data
-     */
-    updateContent(data: any) {
-        let temp = jQuery('<div>');
-        ko.applyBindingsToNode(
-            temp[0],
-            {
-                template: {
-                    name: this.rootTemplate,
-                    data: { data: data }
-                }
+/**
+ * Render the tree into a string
+ *
+ * @param {KnockoutObservableArray<Structural>} tree
+ */
+export default function renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
+    console.log('renderTree called');
+    let temp = jQuery('<div>');
+    ko.applyBindingsToNode(
+        temp[0],
+        {
+            template: {
+                name: rootTemplate,
+                data: {data: tree}
             }
-        );
-        let engine = require('Magento_Ui/js/lib/knockout/template/engine');
-        engine.waitForFinishRender().then(function() {
-            console.log(temp.html());
-            this.textarea(temp.html());
+        }
+    );
+
+    return new Promise((resolve, reject) => {
+        engine.waitForFinishRender().then(function () {
+            console.log('renderTree completed', temp);
+            resolve(temp.html());
             temp.remove();
         }.bind(this));
-    }
+    });
 }

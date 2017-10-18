@@ -92,7 +92,13 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
 
 
         EditableArea.prototype.setChildren = function setChildren(children) {
+            var _this2 = this;
+
             this.children = children;
+            // Attach a subscription to the children of every editable area to fire the stageUpdated event
+            children.subscribe(function () {
+                return _this2.stage.emit('stageUpdated');
+            });
         };
 
         EditableArea.prototype.duplicateChild = function duplicateChild(child) {
@@ -136,13 +142,13 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
         };
 
         EditableArea.prototype.onBlockDropped = function onBlockDropped(event, params) {
-            var _this2 = this;
+            var _this3 = this;
 
             var index = params.index || 0;
             new Promise(function (resolve, reject) {
                 if (params.block) {
-                    return (0, _factory2.default)(params.block.config, _this2, _this2.stage).then(function (block) {
-                        _this2.addChild(block, index);
+                    return (0, _factory2.default)(params.block.config, _this3, _this3.stage).then(function (block) {
+                        _this3.addChild(block, index);
                         resolve(block);
                         block.emit('blockReady');
                     }).catch(function (error) {

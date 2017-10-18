@@ -6,7 +6,7 @@ import DataStore from "./data-store";
 import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
-import Save from "./stage/save";
+import renderTree from "./stage/save";
 import Structural from "./stage/structural/abstract";
 
 /**
@@ -43,6 +43,9 @@ export default class Stage extends EditableArea implements StageInterface {
         // Create our state and store objects
         this.store = new DataStore();
 
+        // Any store state changes trigger a stage update event
+        this.store.subscribe(() => this.emit('stageUpdated'));
+
         _.bindAll(
             this,
             'onSortingStart',
@@ -52,7 +55,14 @@ export default class Stage extends EditableArea implements StageInterface {
         this.on('sortingStart', this.onSortingStart);
         this.on('sortingStop', this.onSortingStop);
 
-        new Save(stageContent, this.parent.value);
+        /**
+         * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
+         * can occur concurrently.
+          */
+        this.on('stageUpdated', _.debounce(() => {
+            renderTree(stageContent)
+                .then((renderedOutput) => this.parent.value(renderedOutput))
+        }, 50));
     }
 
     /**

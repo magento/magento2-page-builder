@@ -77,10 +77,22 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _this.loading = parent.loading;
             // Create our state and store objects
             _this.store = new _dataStore2.default();
+            // Any store state changes trigger a stage update event
+            _this.store.subscribe(function () {
+                return _this.emit('stageUpdated');
+            });
             _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
             _this.on('sortingStart', _this.onSortingStart);
             _this.on('sortingStop', _this.onSortingStop);
-            new _save2.default(stageContent, _this.parent.value);
+            /**
+             * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
+             * can occur concurrently.
+              */
+            _this.on('stageUpdated', _underscore2.default.debounce(function () {
+                (0, _save2.default)(stageContent).then(function (renderedOutput) {
+                    return _this.parent.value(renderedOutput);
+                });
+            }, 50));
             return _this;
         }
         /**
