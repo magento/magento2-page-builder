@@ -51,15 +51,56 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Open edit panel when user requests to edit instance
+     * 
+     * @todo refactor, abstract, this is just a prototype
      */
     onOptionEdit(): void {
+        // @todo dynamically build from config
+        const formComponent = 'bluefoot_heading_form';
+
         let modal = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal'),
             insertForm = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
-        modal.setTitle($t('Edit ' + this.config.name));
+
+        // Destroy any existing components that exist for this type
+        let existingComponent;
+        if (existingComponent = registry.get(formComponent + '.' + formComponent)) {
+            existingComponent.destroy();
+        }
+
+        modal.setTitle($t('Edit ' + (this.config.name || $t('Block'))));
         modal.openModal();
 
+        // Reset the insert form component
+        insertForm.destroyInserted();
         insertForm.removeActions();
+
+        // Pass the UI component to the render function
         insertForm.onRender((<any>window).components['bluefoot_heading_form']);
+
+        // Retrieve the component
+        registry.get(formComponent + '.' + formComponent, (component: any) => {
+            const provider = registry.get(component.provider);
+
+            // Set the instance to act as it's client in the data provider
+            provider.client = this;
+
+            // Set the data on the provider from the data store
+            provider.set('data', this.stage.store.get(this.id));
+        });
+    }
+
+    /**
+     * Save any data which has been modified in the edit panel
+     * 
+     * @todo create new dedicated client for saving
+     * 
+     * @param data 
+     * @param options 
+     */
+    save(data: any, options: any): void {
+        this.stage.store.update(this.id, data);
+
+        registry.get('bluefoot_modal_form.bluefoot_modal_form.modal').closeModal();
     }
 
     /**
