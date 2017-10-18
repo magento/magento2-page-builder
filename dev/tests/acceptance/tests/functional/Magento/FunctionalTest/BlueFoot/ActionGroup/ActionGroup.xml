@@ -50,4 +50,32 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
         <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
     </actionGroup>
+
+    <actionGroup name="navigateToAPageWithBlueFoot">
+        <loginAsAdmin mergeKey="loginAsAdmin" />
+        <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage" />
+        <wait time="10" mergeKey="waitForSomething" />
+    </actionGroup>
+
+    <actionGroup name="dragBlueFootColumnIntoStage">
+        <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
+        <wait time="3" mergeKey="waitForSomething" />
+    </actionGroup>
+
+    <actionGroup name="switchToBlueFootStage">
+        <waitForPageLoad mergeKey="waitForPageLoad"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+        <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+    </actionGroup>
+
+
+    <actionGroup name="openBluefootColumnEditPanel">
+        <arguments>
+            <argument name="column" defaultValue="" />
+        </arguments>
+    </actionGroup>
+
+    <actionGroup name="panelContainsField">
+
+    </actionGroup>
 </config>

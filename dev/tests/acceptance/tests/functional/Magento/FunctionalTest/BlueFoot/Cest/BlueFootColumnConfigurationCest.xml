@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="BlueFootColumnConfigurationCest">
+        <annotations>
+            <features value="BlueFoot CMS"/>
+            <stories value="Bluefoot Column Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot" />
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage" />
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn" />
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn" />
+        </before>
+        <test name="SlideOutPanelWithSettingsContainRequiredFields">
+            <annotations>
+                <title value="Displays requires column settings"/>
+                <description value="Slide out panel with required settings appear"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+            </annotations>
+            <wait time="30" mergeKey="drinkSomeCoffee" />
+            <!-- WIP parameterized selector
+            <actionGroup ref="openBluefootColumnEditPanel" mergeKey="openEditPanel">
+                <argument name="column" value="BlueFootFirstColumnInStage" />
+            </actionGroup>-->
+        </test>
+    </cest>
+</config>
