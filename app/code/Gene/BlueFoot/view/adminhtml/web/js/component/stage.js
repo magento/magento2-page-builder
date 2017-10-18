@@ -1,4 +1,4 @@
-define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate) {
+define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate', './stage/save'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate, _save) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -14,6 +14,8 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
     var _dataStore2 = _interopRequireDefault(_dataStore);
 
     var _translate2 = _interopRequireDefault(_translate);
+
+    var _save2 = _interopRequireDefault(_save);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -78,6 +80,7 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
             _this.on('sortingStart', _this.onSortingStart);
             _this.on('sortingStop', _this.onSortingStop);
+            new _save2.default(stageContent, _this.parent.value);
             return _this;
         }
         /**
@@ -85,10 +88,23 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
          */
 
 
-        Stage.prototype.build = function build() {
-            // @todo implement new storage format proposal build system
-            this.addRow(this);
-            this.ready();
+        Stage.prototype.build = function build(buildInstance, buildStructure) {
+            var self = this;
+            if (buildInstance && buildStructure) {
+                buildInstance.buildStage(this, buildStructure).on('buildDone', self.ready.bind(self)).on('buildError', function (event, error) {
+                    // Inform the user that an issue has occurred
+                    self.parent.alertDialog({
+                        title: 'Advanced CMS Error',
+                        content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " + "with your development team on how to resolve."
+                    });
+                    // self.emit('stageError', error);
+                    console.error(error);
+                });
+            } else {
+                // If no build instance is present we're initiating a new stage
+                this.addRow(this);
+                this.ready();
+            }
         };
 
         Stage.prototype.ready = function ready() {

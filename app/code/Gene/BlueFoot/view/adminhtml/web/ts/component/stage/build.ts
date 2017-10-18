@@ -7,6 +7,7 @@ import { EditableAreaInterface } from './structural/editable-area.d';
 import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
 import Block from '../block/block';
+import AttributeReaderComposite from './attribute-reader-composite';
 
 /**
  * Build Class
@@ -16,6 +17,14 @@ import Block from '../block/block';
 export default class Build extends EventEmitter {
     stage: StageInterface;
     document: Element;
+    attributeReaderComposite: AttributeReaderComposite;
+
+    /**
+     */
+    constructor() {
+        super();
+        this.attributeReaderComposite = new AttributeReaderComposite();
+    }
 
     /**
      * Parse the potential structure
@@ -23,8 +32,10 @@ export default class Build extends EventEmitter {
      * @param structure
      */
     parseStructure(structure: string) {
+        // structure = '<div data-role="row"><div data-role="column" style="width: 50%;"></div></div>'
+        //     + '<div data-role="row"><div data-role="column" style="width: 50%;"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
         this.document = document.createElement('div');
-        this.document.innerHTML = structure;
+        this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
 
         // Return the stage element if the structure is present, otherwise return false
         return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]') || false;
@@ -70,22 +81,29 @@ export default class Build extends EventEmitter {
             element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
         ) {
             parent = parent || this.stage;
-            let role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName')),
-                data = Build.getElementData(element),
-                children = this.getElementChildren(element);
+            let self = this,
+                role = element.getAttribute(Config.getValue('dataRoleAttributeName'));
 
-            // Add element to stage
-            return this.buildElement(role, data, parent).then((newParent: any) => {
-                if (children.length > 0) {
-                    let childPromises: Array<Promise<EditableAreaInterface>> = [];
-                    _.forEach(children, (child) => {
-                        childPromises.push(this.parseAndBuildElement(child, newParent));
-                    });
-                    return Promise.all(childPromises);
-                } else {
-                    return Promise.resolve(newParent);
-                }
-            });
+
+            let getElementDataPromise = new Promise(function (resolve, error) {
+                resolve(self.getElementData(element))
+            }.bind(this));
+
+            return getElementDataPromise.then(function (data) {
+                let children = this.getElementChildren(element);
+                // Add element to stage
+                return this.buildElement(role, data, parent).then(function (newParent) {
+                    if (children.length > 0) {
+                        let childPromises = [];
+                        _.forEach(children, function (child) {
+                            childPromises.push(self.parseAndBuildElement(child, newParent));
+                        });
+                        return Promise.all(childPromises);
+                    } else {
+                        return Promise.resolve(newParent);
+                    }
+                });
+            }.bind(this));
         } else {
             return Promise.reject(new Error('Element does not contain valid role attribute.'));
         }
@@ -97,13 +115,14 @@ export default class Build extends EventEmitter {
      * @param element
      * @returns {{}}
      */
-    static getElementData(element: HTMLElement) {
-        let scriptTag = element.querySelector('script[type="text/advanced-cms-data"]');
-        if (scriptTag) {
-            return scriptTag.innerHTML ? JSON.parse(scriptTag.innerHTML) : {};
-        }
-
-        return {};
+    getElementData(element: HTMLElement) {
+        let result = {};
+        let readPromise = new Promise(function (resolve, reject) {
+            resolve(this.attributeReaderComposite.read(element));
+        }.bind(this));
+        return readPromise.then(function (data) {
+            return result ? _.extend(result, data) : {}
+        });
     }
 
     /**
@@ -201,6 +220,6 @@ export default class Build extends EventEmitter {
             }).catch(function (error) {
                 reject(error);
             });
-        });
+        }.bind(this));
     }
 }

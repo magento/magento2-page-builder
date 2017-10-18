@@ -115,6 +115,14 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             return this.childTemplate;
         };
 
+        Structural.prototype.getChildPreviewTemplate = function getChildPreviewTemplate() {
+            return 'Gene_BlueFoot/component/stage/structural/render/children.html';
+        };
+
+        Structural.prototype.getPreviewTemplate = function getPreviewTemplate() {
+            return 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
+        };
+
         return Structural;
     }(_editableArea2.default);
 

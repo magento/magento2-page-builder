@@ -42,4 +42,13 @@ export default class Row extends Structural implements RowInterface {
         column.updateColumnData(data);
         return column;
     }
+
+    /**
+     * Get template master format template
+     *
+     * @returns {string}
+     */
+    getPreviewTemplate(): string {
+        return 'Gene_BlueFoot/component/stage/structural/render/row.html';
+    }
 }

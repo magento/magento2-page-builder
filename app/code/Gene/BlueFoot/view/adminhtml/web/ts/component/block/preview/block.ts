@@ -59,4 +59,55 @@ export default class PreviewBlock {
             this.data[key] = ko.observable(value);
         }
     }
+
+    /**
+     * @returns {object}
+     */
+    getStyle() {
+        let styleAttributes = [
+            'min_height',
+            'background_color',
+            'background_image',
+            'background_size',
+            'background_attachment',
+            'background_repeat',
+            'border_style',
+            'border_width',
+            'border_color',
+            'border_radius',
+            'margin_top',
+            'margin_right',
+            'margin_bottom',
+            'margin_left',
+            'padding_top',
+            'padding_right',
+            'padding_bottom',
+            'padding_left'
+        ];
+        let data = {};
+        Object.keys(this.data).map(
+            function (key) {
+                if (Object.values(styleAttributes).indexOf(key) > -1) {
+                    data[this.fromSnakeToCamelCase(key)] = this.data[key]
+                }
+            }.bind(this)
+        );
+        console.log(data)
+        return data;
+    }
+
+    /**
+     * Convert from snake case to camel case
+     *
+     * @param string
+     * @returns {string}
+     */
+    private fromSnakeToCamelCase(string) {
+        let parts = string.split(/[_-]/);
+        let newString = '';
+        for (let i = 1; i < parts.length; i++) {
+            newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+        }
+        return parts[0] + newString;
+    }
 }

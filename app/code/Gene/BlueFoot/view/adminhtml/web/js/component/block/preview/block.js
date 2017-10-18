@@ -67,6 +67,27 @@ define(["exports", "underscore", "knockout"], function (exports, _underscore, _k
             }
         };
 
+        PreviewBlock.prototype.getStyle = function getStyle() {
+            var styleAttributes = ['min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left'];
+            var data = {};
+            Object.keys(this.data).map(function (key) {
+                if (Object.values(styleAttributes).indexOf(key) > -1) {
+                    data[this.fromSnakeToCamelCase(key)] = this.data[key];
+                }
+            }.bind(this));
+            console.log(data);
+            return data;
+        };
+
+        PreviewBlock.prototype.fromSnakeToCamelCase = function fromSnakeToCamelCase(string) {
+            var parts = string.split(/[_-]/);
+            var newString = '';
+            for (var i = 1; i < parts.length; i++) {
+                newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+            }
+            return parts[0] + newString;
+        };
+
         return PreviewBlock;
     }();
 

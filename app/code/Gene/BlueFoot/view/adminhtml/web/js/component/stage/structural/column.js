@@ -140,6 +140,16 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
             jQuery(params.placeholder).addClass(this.widthClasses());
             return _Structural.prototype.onSortStart.call(this, event, params);
         };
+        /**
+         * Get template master format template
+         *
+         * @returns {string}
+         */
+
+
+        Column.prototype.getPreviewTemplate = function getPreviewTemplate() {
+            return 'Gene_BlueFoot/component/stage/structural/render/column.html';
+        };
 
         return Column;
     }(_abstract2.default);
