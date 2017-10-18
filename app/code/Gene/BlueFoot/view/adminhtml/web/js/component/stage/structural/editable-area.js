@@ -1,4 +1,4 @@
-define(['exports', '../../event-emitter', '../../block/factory', '../../../utils/array', 'underscore', 'knockout', 'mageUtils', 'mage/translate'], function (exports, _eventEmitter, _factory, _array, _underscore, _knockout, _mageUtils, _translate) {
+define(['exports', '../../event-emitter', '../../block/factory', '../../stage/style-attribute-filter', '../../../utils/array', 'underscore', 'knockout', 'mageUtils', 'mage/translate'], function (exports, _eventEmitter, _factory, _styleAttributeFilter, _array, _underscore, _knockout, _mageUtils, _translate) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -8,6 +8,8 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
     var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
 
     var _factory2 = _interopRequireDefault(_factory);
+
+    var _styleAttributeFilter2 = _interopRequireDefault(_styleAttributeFilter);
 
     var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -68,6 +70,7 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
 
             _this.id = _mageUtils2.default.uniqueid();
             _this.title = (0, _translate2.default)('Editable');
+            _this.styleAttributeFilter = new _styleAttributeFilter2.default();
             if (stage) {
                 _this.stage = stage;
             }
@@ -200,6 +203,24 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../../utils
 
         EditableArea.prototype.onSortStop = function onSortStop(event, params) {
             jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
+        };
+
+        EditableArea.prototype.getCss = function getCss() {
+            var cssClasses = {};
+            if ('css_classes' in this.getData()) {
+                this.getData().css_classes.map(function (value, index) {
+                    return cssClasses[value] = true;
+                });
+            }
+            return cssClasses;
+        };
+
+        EditableArea.prototype.getStyle = function getStyle() {
+            return this.styleAttributeFilter.filter(this.getData());
+        };
+
+        EditableArea.prototype.getData = function getData() {
+            return this.stage.store.get(this.id);
         };
 
         return EditableArea;

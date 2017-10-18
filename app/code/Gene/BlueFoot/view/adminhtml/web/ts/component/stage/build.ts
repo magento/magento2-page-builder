@@ -1,4 +1,5 @@
 import * as _ from 'underscore';
+import { StageInterface } from '../stage.d';
 import EventEmitter from '../event-emitter';
 import Config from '../config';
 import createBlock from '../block/factory';
@@ -7,9 +8,6 @@ import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
 import Block from '../block/block';
 import AttributeReaderComposite from './attribute-reader-composite';
-import Stage from "../stage";
-import EditableArea from "./structural/editable-area";
-import {DataObject} from "../data-store";
 
 /**
  * Build Class
@@ -17,7 +15,7 @@ import {DataObject} from "../data-store";
  * @author Dave Macaulay <hello@davemacaulay.com>
  */
 export default class Build extends EventEmitter {
-    stage: Stage;
+    stage: StageInterface;
     document: Element;
     attributeReaderComposite: AttributeReaderComposite;
 
@@ -34,6 +32,11 @@ export default class Build extends EventEmitter {
      * @param structure
      */
     parseStructure(structure: string) {
+        structure = '<div data-role="row" style="background-color: #000;">>' +
+            '<div data-role="column" style="width: 50%; margin-top: 5px; background-color: #ccc;" class="one two"><h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div>' +
+            '</div><div data-role="row">' +
+            '<div data-role="column" style="width: 50%; margin-top: 10px; background-color: #fff;">' +
+            '<h2 data-role="heading" style="margin-top: 1px;">Heading in second column</h2></div></div>';
         this.document = document.createElement('div');
         this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
 
@@ -48,7 +51,7 @@ export default class Build extends EventEmitter {
      * @param stageElement
      * @returns {Build}
      */
-    buildStage(stage: Stage, stageElement: HTMLElement) {
+    buildStage(stage: StageInterface, stageElement: HTMLElement) {
         this.stage = stage;
         this.parseAndBuildStage(stageElement);
         return this;
@@ -76,26 +79,26 @@ export default class Build extends EventEmitter {
      * @param parent
      * @returns {Promise<EditableAreaInterface>}
      */
-    parseAndBuildElement(element: HTMLElement, parent: EditableAreaInterface): Promise<{}> {
+    parseAndBuildElement(element: HTMLElement, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
         if (element instanceof HTMLElement &&
             element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
         ) {
             parent = parent || this.stage;
             let self = this,
-                role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
+                role = element.getAttribute(Config.getValue('dataRoleAttributeName'));
 
 
-            let getElementDataPromise = new Promise(function (resolve: Function, error: string) {
+            let getElementDataPromise = new Promise(function (resolve, error) {
                 resolve(self.getElementData(element))
             }.bind(this));
 
-            return getElementDataPromise.then(function (data: object) {
+            return getElementDataPromise.then(function (data) {
                 let children = this.getElementChildren(element);
                 // Add element to stage
-                return this.buildElement(role, data, parent).then(function (newParent: EditableArea) {
+                return this.buildElement(role, data, parent).then(function (newParent) {
                     if (children.length > 0) {
-                        let childPromises: Array<any> = [];
-                        _.forEach(children, function (child: HTMLElement) {
+                        let childPromises = [];
+                        _.forEach(children, function (child) {
                             childPromises.push(self.parseAndBuildElement(child, newParent));
                         });
                         return Promise.all(childPromises);
@@ -115,9 +118,9 @@ export default class Build extends EventEmitter {
      * @param element
      * @returns {{}}
      */
-    getElementData(element: HTMLElement): object {
+    getElementData(element: HTMLElement) {
         let result = {};
-        let readPromise = new Promise(function (resolve: Function, reject: Function) {
+        let readPromise = new Promise(function (resolve, reject) {
             resolve(this.attributeReaderComposite.read(element));
         }.bind(this));
         return readPromise.then(function (data) {
@@ -184,7 +187,7 @@ export default class Build extends EventEmitter {
      * @param parent
      * @returns {Promise<RowInterface>}
      */
-    private buildRow(data: object, parent: Stage): Promise<RowInterface> {
+    private buildRow(data: object, parent: StageInterface): Promise<RowInterface> {
         return Promise.resolve(parent.addRow(this.stage, data));
     }
 
@@ -207,8 +210,8 @@ export default class Build extends EventEmitter {
      * @param parent
      * @returns {Promise<T>}
      */
-    private buildEntity(role: string, data: object, parent: EditableArea): Promise<Block> {
-        return new Promise(function (resolve: Function, reject: Function) {
+    private buildEntity(role: string, data: object, parent: EditableAreaInterface): Promise<Block> {
+        return new Promise(function (resolve, reject) {
             createBlock(
                 Config.getContentBlockConfig(role),
                 parent,

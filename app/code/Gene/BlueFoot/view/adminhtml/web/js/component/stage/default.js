@@ -28,7 +28,7 @@ define(['exports'], function (exports) {
                     data[key] = element.dataset[key];
                 }
             });
-            data['css_classes'] = element.className.replace(' ', ', ');
+            data['css_classes'] = element.className.split(' ');
             return data;
         };
 

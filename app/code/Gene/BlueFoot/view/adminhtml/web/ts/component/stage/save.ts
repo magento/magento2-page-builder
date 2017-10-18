@@ -15,7 +15,6 @@ const rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html'
  * @param {KnockoutObservableArray<Structural>} tree
  */
 export default function renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
-    console.log('renderTree called');
     let temp = jQuery('<div>');
     ko.applyBindingsToNode(
         temp[0],
@@ -29,7 +28,7 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
 
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
-            console.log('renderTree completed', temp);
+            console.log('renderTree completed', temp.html());
             resolve(temp.html());
             temp.remove();
         }.bind(this));

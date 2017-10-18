@@ -1,7 +1,6 @@
 import _, {Dictionary} from "underscore";
 import ko from "knockout";
 import Block from "../block";
-import StyleAttributeFilter from "../../stage/style-attribute-filter";
 
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
@@ -17,7 +16,6 @@ export default class PreviewBlock {
     parent: Block;
     config: any;
     data: PreviewData = {};
-    styleAttributeFilter: StyleAttributeFilter;
 
     /**
      * PreviewBlock constructor
@@ -28,7 +26,6 @@ export default class PreviewBlock {
     constructor(parent: Block, config: object) {
         this.parent = parent;
         this.config = config;
-        this.styleAttributeFilter = new StyleAttributeFilter();
 
         if (typeof this.config.preview_template !== 'undefined' && this.config.preview_template) {
             this.template = this.config.preview_template;
@@ -61,12 +58,5 @@ export default class PreviewBlock {
         } else {
             this.data[key] = ko.observable(value);
         }
-    }
-
-    /**
-     * @returns {object}
-     */
-    getStyle() {
-        return this.styleAttributeFilter.filter(this.data);
     }
 }

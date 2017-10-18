@@ -30,7 +30,6 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
     function renderTree(tree) {
         var _this = this;
 
-        console.log('renderTree called');
         var temp = jQuery('<div>');
         _knockout2.default.applyBindingsToNode(temp[0], {
             template: {
@@ -40,7 +39,7 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
         });
         return new Promise(function (resolve, reject) {
             _engine2.default.waitForFinishRender().then(function () {
-                console.log('renderTree completed', temp);
+                console.log('renderTree completed', temp.html());
                 resolve(temp.html());
                 temp.remove();
             }.bind(_this));

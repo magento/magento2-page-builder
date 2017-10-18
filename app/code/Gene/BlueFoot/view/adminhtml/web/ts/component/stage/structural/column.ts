@@ -8,7 +8,6 @@ import { OptionInterface } from "./options/option.d";
 import EditableArea from './editable-area';
 import Stage from '../../stage';
 import { DataObject } from "../../data-store";
-import StyleAttributeFilter from "../style-attribute-filter";
 
 import ko from 'knockout';
 
@@ -19,7 +18,6 @@ import ko from 'knockout';
  */
 export class Column extends Structural implements ColumnInterface {
     template: string = 'Gene_BlueFoot/component/stage/structural/column.html';
-    styleAttributeFilter: StyleAttributeFilter;
 
     columnDefinition: KnockoutObservable<object> = ko.observable(Config.getInitConfig('column_definitions')[0]);
     widthClasses: KnockoutComputed<string> = ko.computed(function (): string {
@@ -37,7 +35,6 @@ export class Column extends Structural implements ColumnInterface {
      */
     constructor(parent: EditableArea, stage: Stage) {
         super(parent, stage);
-        this.styleAttributeFilter = new StyleAttributeFilter();
         this.options.push(
             new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10)
         );
@@ -95,13 +92,6 @@ export class Column extends Structural implements ColumnInterface {
         }
 
         this.stage.store.update(this.id, data);
-    }
-
-    /**
-     * {object}
-     */
-    getStyle() {
-        return this.styleAttributeFilter.filter(this.stage.store.get(this.id));
     }
 
     /**

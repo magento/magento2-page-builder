@@ -1,4 +1,4 @@
-define(["exports", "underscore", "knockout", "../../stage/style-attribute-filter"], function (exports, _underscore, _knockout, _styleAttributeFilter) {
+define(["exports", "underscore", "knockout"], function (exports, _underscore, _knockout) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -8,8 +8,6 @@ define(["exports", "underscore", "knockout", "../../stage/style-attribute-filter
     var _underscore2 = _interopRequireDefault(_underscore);
 
     var _knockout2 = _interopRequireDefault(_knockout);
-
-    var _styleAttributeFilter2 = _interopRequireDefault(_styleAttributeFilter);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -39,7 +37,6 @@ define(["exports", "underscore", "knockout", "../../stage/style-attribute-filter
             this.data = {};
             this.parent = parent;
             this.config = config;
-            this.styleAttributeFilter = new _styleAttributeFilter2.default();
             if (typeof this.config.preview_template !== 'undefined' && this.config.preview_template) {
                 this.template = this.config.preview_template;
             }
@@ -68,10 +65,6 @@ define(["exports", "underscore", "knockout", "../../stage/style-attribute-filter
             } else {
                 this.data[key] = _knockout2.default.observable(value);
             }
-        };
-
-        PreviewBlock.prototype.getStyle = function getStyle() {
-            return this.styleAttributeFilter.filter(this.data);
         };
 
         return PreviewBlock;

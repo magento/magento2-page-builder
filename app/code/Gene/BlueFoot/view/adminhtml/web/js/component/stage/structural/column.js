@@ -1,4 +1,4 @@
-define(["exports", "./abstract", "../../config", "../../../utils/array", "./options/option", "../style-attribute-filter", "knockout"], function (exports, _abstract, _config, _array, _option, _styleAttributeFilter, _knockout) {
+define(["exports", "./abstract", "../../config", "../../../utils/array", "./options/option", "knockout"], function (exports, _abstract, _config, _array, _option, _knockout) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -9,8 +9,6 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
     var _abstract2 = _interopRequireDefault(_abstract);
 
     var _config2 = _interopRequireDefault(_config);
-
-    var _styleAttributeFilter2 = _interopRequireDefault(_styleAttributeFilter);
 
     var _knockout2 = _interopRequireDefault(_knockout);
 
@@ -72,7 +70,6 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
             _this.serializedWidth = _knockout2.default.computed(function () {
                 return this.columnDefinition()['breakpoint'] * 100;
             }, _this);
-            _this.styleAttributeFilter = new _styleAttributeFilter2.default();
             _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
             return _this;
         }
@@ -128,14 +125,6 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
                 this.columnDefinition(_config2.default.getColumnDefinitionByClassName(data.className));
             }
             this.stage.store.update(this.id, data);
-        };
-        /**
-         * {object}
-         */
-
-
-        Column.prototype.getStyle = function getStyle() {
-            return this.styleAttributeFilter.filter(this.stage.store.get(this.id));
         };
         /**
          * Handle sort starting on column

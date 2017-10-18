@@ -4,6 +4,7 @@ import { Block as BlockInterface } from '../../block/block.d';
 import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
+import StyleAttributeFilter from "../../stage/style-attribute-filter";
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import Block from '../../block/block';
@@ -23,6 +24,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     children: KnockoutObservableArray<Structural>;
     stage: Stage;
     title: string = $t('Editable');
+    styleAttributeFilter: StyleAttributeFilter;
 
     /**
      * EditableArea constructor
@@ -31,6 +33,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     constructor(stage?: Stage) {
         super();
+        this.styleAttributeFilter = new StyleAttributeFilter();
         if (stage) {
             this.stage = stage;
         }
@@ -244,6 +247,31 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     onSortStop(event: Event, params: SortParams): void {
         jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
+    }
+
+    /**
+     * @returns {object}
+     */
+    getCss() {
+        let cssClasses = {};
+        if ('css_classes' in this.getData()) {
+            this.getData().css_classes.map((value, index) => cssClasses[value] = true);
+        }
+        return cssClasses;
+    }
+
+    /**
+     * @returns {object}
+     */
+    getStyle() {
+        return this.styleAttributeFilter.filter(this.getData());
+    }
+
+    /**
+     * @returns {object}
+     */
+    getData() {
+        return this.stage.store.get(this.id);
     }
 }
 

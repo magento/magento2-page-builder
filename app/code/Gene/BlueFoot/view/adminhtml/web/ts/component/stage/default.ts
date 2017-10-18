@@ -28,7 +28,7 @@ export default class Default {
             }
         );
 
-        data['css_classes'] = element.className.replace(' ', ', ');
+        data['css_classes'] = element.className.split(' ');
 
         return data;
     }
