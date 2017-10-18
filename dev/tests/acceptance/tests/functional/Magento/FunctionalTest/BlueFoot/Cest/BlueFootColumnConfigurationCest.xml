@@ -18,23 +18,23 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot" />
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage" />
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn" />
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn" />
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <!--<actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>-->
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
         </before>
         <test name="SlideOutPanelWithSettingsContainRequiredFields">
             <annotations>
                 <title value="Displays requires column settings"/>
                 <description value="Slide out panel with required settings appear"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
+                <testCaseId value="MAGETWO-82227"/>
             </annotations>
-            <wait time="30" mergeKey="drinkSomeCoffee" />
-            <!-- WIP parameterized selector
-            <actionGroup ref="openBluefootColumnEditPanel" mergeKey="openEditPanel">
-                <argument name="column" value="BlueFootFirstColumnInStage" />
-            </actionGroup>-->
+            <!-- WIP parameterized selector -->
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+                <!--<argument name="column" value="BlueFootFirstColumnInStage"/>-->
+            <actionGroup ref="validateColumnPanelFields" mergeKey="validateColumnPanelFields"/>
         </test>
     </cest>
 </config>
