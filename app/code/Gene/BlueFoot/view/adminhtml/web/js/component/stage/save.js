@@ -20,6 +20,12 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
     }
 
     var Save = function () {
+        /**
+         * Save constructor
+         *
+         * @param {KnockoutObservableArray<EditableArea>} stageContent
+         * @param {KnockoutObservable<string>} textarea
+         */
         function Save(stageContent, textarea) {
             _classCallCheck(this, Save);
 

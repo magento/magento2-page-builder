@@ -85,6 +85,9 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
         }
         /**
          * Run the build system to initiate from existing structures
+         *
+         * @param {Build} buildInstance
+         * @param {HTMLElement} buildStructure
          */
 
 

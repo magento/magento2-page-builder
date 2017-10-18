@@ -20,7 +20,7 @@ import $t from 'mage/translate';
  */
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
     id: string = mageUtils.uniqueid();
-    children: KnockoutObservableArray<any>;
+    children: KnockoutObservableArray<Structural>;
     stage: Stage;
     title: string = $t('Editable');
 
@@ -65,14 +65,16 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      *
      * @param children
      */
-    protected setChildren(children: KnockoutObservableArray<any>) {
+    protected setChildren(children: KnockoutObservableArray<Structural>) {
         this.children = children;
     }
 
     /**
-     * Duplicate a child of the current instance 
-     * 
-     * @param child 
+     * Duplicate a child of the current instance
+     *
+     * @param {Structural} child
+     * @param {boolean} autoAppend
+     * @returns {Structural}
      */
     duplicateChild(child: Structural, autoAppend: boolean = true): Structural {
         const store = this.stage.store,

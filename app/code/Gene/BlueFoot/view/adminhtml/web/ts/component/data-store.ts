@@ -11,7 +11,8 @@ interface State {
 }
 
 export interface DataObject {
-    [key: string]: undefined | null | string | number | boolean // State object can only contain primitives
+    // State object can only contain primitives
+    [key: string]: undefined | null | string | number | boolean;
 }
 
 /**

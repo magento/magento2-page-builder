@@ -115,7 +115,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
             if (element instanceof HTMLElement && element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName'))) {
                 parent = parent || this.stage;
                 var self = this,
-                    role = element.getAttribute(_config2.default.getValue('dataRoleAttributeName'));
+                    role = element.getAttribute(_config2.default.getValueAsString('dataRoleAttributeName'));
                 var getElementDataPromise = new Promise(function (resolve, error) {
                     resolve(self.getElementData(element));
                 }.bind(this));

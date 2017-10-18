@@ -1,6 +1,7 @@
-import { EditableAreaInterface } from './editable-area.d';
-import { StageInterface } from 'stage.d';
+import EditableArea from './editable-area';
+import { EditableAreaInterface } from "./editable-area.d";
 import { OptionInterface } from "./options/option.d";
+import Stage from "../../stage";
 
 /**
  * StructuralInterface
@@ -8,8 +9,8 @@ import { OptionInterface } from "./options/option.d";
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export interface Structural extends EditableAreaInterface {
-    parent: EditableAreaInterface;
-    stage: StageInterface;
+    parent: EditableArea;
+    stage: Stage;
     title: string;
     wrapperStyle: KnockoutObservable<object>;
     options: Array<OptionInterface>;

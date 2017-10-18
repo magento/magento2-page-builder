@@ -30,19 +30,21 @@ export default class AttributeReaderComposite {
      */
     read (element: HTMLElement): object {
         if (this.readers.hasOwnProperty(element.dataset.role)) {
-            let readPromise = new Promise(function(resolve, reject) {
-                require(this.readers[element.dataset.role], function (...args) {
+            let readPromise = new Promise(function(resolve: Function, reject: Function) {
+                require(this.readers[element.dataset.role], function (...args: any[]) {
                     resolve(args)
                 }, reject);
             }.bind(this));
-            return readPromise.then(function(readersArray: Array) {
+            return readPromise.then(function(readersArray: Array<any>) {
                 let result = {};
                 for (let i = 0; i < readersArray.length; i++) {
                     _.extend(result, readersArray[i].default.prototype.read(element));
                 }
                 console.log(result);
                 return result;
-            }).catch(function(e) {});
+            }).catch(function(e: PromiseRejectionEvent) {
+
+            });
         }
         return {};
     }

@@ -2,6 +2,7 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
     /**
@@ -10,7 +11,7 @@ export default class StyleAttributeFilter {
      * @param data
      * @returns {object}
      */
-    filter(data): object {
+    filter(data: DataObject): object {
         let styleAttributes = [
             'width',
             'height',
@@ -33,9 +34,9 @@ export default class StyleAttributeFilter {
             'padding_bottom',
             'padding_left'
         ];
-        let result = {};
+        let result: any = {};
         Object.keys(data).map(
-            function (key) {
+            function (key: string) {
                 if (Object.values(styleAttributes).indexOf(key) > -1) {
                     result[this.fromSnakeToCamelCase(key)] = data[key]
                 }
@@ -51,7 +52,7 @@ export default class StyleAttributeFilter {
      * @param string
      * @returns {string}
      */
-    private fromSnakeToCamelCase(string) {
+    private fromSnakeToCamelCase(string: string): string {
         let parts = string.split(/[_-]/);
         let newString = '';
         for (let i = 1; i < parts.length; i++) {

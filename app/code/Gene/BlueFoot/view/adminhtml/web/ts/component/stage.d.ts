@@ -12,7 +12,7 @@ export interface StageInterface extends EditableAreaInterface {
     serializeRole: string;
     store: DataStore;
 
-    build(): void
+    build(buildInstance: Build, buildStructure: HTMLElement): void;
     ready(): void
     addRow(self: StageInterface, data?: object): Row
     openTemplateManager(): void

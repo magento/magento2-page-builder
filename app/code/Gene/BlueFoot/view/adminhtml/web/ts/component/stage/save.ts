@@ -2,14 +2,21 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 import ko from 'knockout';
+import EditableArea from "./structural/editable-area";
+import Structural from "./structural/abstract";
 
 export default class Save {
     rootTemplate: string = 'Gene_BlueFoot/component/stage/structural/render/root.html';
-    textarea;
+    textarea: KnockoutObservable<string>;
 
-    constructor(stageContent, textarea) {
+    /**
+     * Save constructor
+     *
+     * @param {KnockoutObservableArray<EditableArea>} stageContent
+     * @param {KnockoutObservable<string>} textarea
+     */
+    constructor(stageContent: KnockoutObservableArray<Structural>, textarea: KnockoutObservable<string>) {
         this.textarea = textarea;
         stageContent.subscribe(this.updateContent.bind(this));
     }
@@ -19,7 +26,7 @@ export default class Save {
      *
      * @param data
      */
-    updateContent(data) {
+    updateContent(data: any) {
         let temp = jQuery('<div>');
         ko.applyBindingsToNode(
             temp[0],

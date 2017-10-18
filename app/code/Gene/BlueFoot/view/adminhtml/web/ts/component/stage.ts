@@ -1,6 +1,5 @@
 import EditableArea from './stage/structural/editable-area';
 import { StageInterface } from './stage.d';
-import { Structural as StructuralInterface } from './stage/structural/abstract.d';
 import Row from './stage/structural/row';
 import _ from 'underscore';
 import DataStore from "./data-store";
@@ -8,6 +7,7 @@ import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
 import Save from "./stage/save";
+import Structural from "./stage/structural/abstract";
 
 /**
  * Stage class
@@ -30,7 +30,7 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param parent
      * @param stageContent
      */
-    constructor(parent: any, stageContent: KnockoutObservableArray<StructuralInterface>) {
+    constructor(parent: any, stageContent: KnockoutObservableArray<Structural>) {
         super();
         this.setChildren(stageContent);
         this.stage = this;
@@ -56,14 +56,17 @@ export default class Stage extends EditableArea implements StageInterface {
     }
 
     /**
-     * Run the build system to initiate from existing structures 
+     * Run the build system to initiate from existing structures
+     *
+     * @param {Build} buildInstance
+     * @param {HTMLElement} buildStructure
      */
-    build(buildInstance, buildStructure) {
-        var self = this;
+    build(buildInstance: Build, buildStructure: HTMLElement) {
+        let self = this;
         if (buildInstance && buildStructure) {
             buildInstance.buildStage(this, buildStructure)
                 .on('buildDone', self.ready.bind(self))
-                .on('buildError', function (event, error) {
+                .on('buildError', function (event: Event, error: string) {
                     // Inform the user that an issue has occurred
                     self.parent.alertDialog({
                         title: 'Advanced CMS Error',

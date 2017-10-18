@@ -1,6 +1,6 @@
-import {StageInterface} from '../stage.d';
-import {EditableAreaInterface} from '../stage/structural/editable-area.d';
 import Block from './block';
+import Stage from "../stage";
+import EditableArea from "../stage/structural/editable-area";
 
 interface ConfigObject {
     js_block?: string;
@@ -30,7 +30,7 @@ function getBlockComponentPath(config: ConfigObject): string {
 //     let c: typeof Block = await import(getBlockComponentPath(config));
 //     return new c(parent, stage || parent.stage, config, formData || {});
 // }
-export default function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
+export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {

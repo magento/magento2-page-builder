@@ -11,9 +11,9 @@ export default class Default {
      * @returns {object}
      */
     public read (element: HTMLElement): object {
-        let data = {};
+        let data: any = {};
         Object.keys(element.style).map(
-            function (key) {
+            function (key: any) {
                 if (isNaN(key) && element.style[key] !== '') {
                     data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.style[key]
                 }
