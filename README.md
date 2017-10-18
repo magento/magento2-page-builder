@@ -31,7 +31,7 @@ You will then be working out of the `magento2ce` repository, this repository wil
 
 In the same directory you ran the above commands you will need to run the following:
 
-```Bash
+```bash
 git clone git@github.com:magento-obsessive-owls/bluefoot.git
 mkdir magento2ce/app/code/Gene/
 cd magento2ce/app/code/Gene/
@@ -39,6 +39,20 @@ ln -s ../../../../bluefoot/app/code/Gene/BlueFoot/ BlueFoot
 ```
 
 This will symlink the module within `bluefoot` folder to your EE.
+
+#### Linking Functional Acceptence Tests
+The tests live in the core of our module and will need to be linked into your `magento2ce` project. This assumes you've already installed the acceptence framework within your installation.
+
+> Installation of the framework is as simple as navigating to `dev/tests/acceptence` then running `composer install`
+
+To link the acceptence tests you simply need to run the following commands from the root of the `magento2ce` folder:
+
+```bash
+cd dev/tests/acceptance/tests/functional/Magento/FunctionalTest/
+ln -s ../../../../../../../../bluefoot/dev/tests/acceptance/tests/functional/Magento/FunctionalTest/BlueFoot/ BlueFoot
+```
+
+The tests will then be available your Magento installation for running with MFTF.
 
 #### Resolving Template Validation Issues
 
