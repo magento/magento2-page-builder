@@ -36,5 +36,24 @@
                 <!--<argument name="column" value="BlueFootFirstColumnInStage"/>-->
             <actionGroup ref="validateColumnPanelFields" mergeKey="validateColumnPanelFields"/>
         </test>
+        <test name="ColumnSettingsAppearOnFrontend">
+            <annotations>
+                <title value="Column settings appear on frontend"/>
+                <description value="Validate selected column settings appear on the frontend"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+            </annotations>
+            <fillField selector="//*[@name='title']" userInput="test-cms-page" mergeKey="enterPageTitle"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
+            <fillField selector="//*[@name='background_color']" userInput="#ccc" mergeKey="enterBackgroundColor"/>
+            <!--<fillField selector="//*[@name='background_position']" userInput="Centered" mergeKey="enterBackgroundPosition"/>
+            <fillField selector="//*[@name='background_size']" userInput="Cover" mergeKey="enterBackgroundSize"/>
+            <fillField selector="//*[@name='background_repeat']" userInput="Yes" mergeKey="enterBackgroundRepeat"/>
+            <fillField selector="//*[@name='background_attachment']" userInput="Repeat" mergeKey="enterBackgroundAttachment"/>-->
+            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
+            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="clickSaveCmsPage"/>
+            <amOnPage url="test-cms-page" mergeKey="amOnBlueFootPage"/>
+        </test>
     </cest>
 </config>
