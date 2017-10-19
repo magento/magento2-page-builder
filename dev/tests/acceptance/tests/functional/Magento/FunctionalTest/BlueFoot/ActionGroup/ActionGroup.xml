@@ -49,33 +49,43 @@
         <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
         <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+        <wait time="1" mergeKey="wait1"/>
     </actionGroup>
 
     <actionGroup name="navigateToAPageWithBlueFoot">
-        <loginAsAdmin mergeKey="loginAsAdmin" />
-        <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage" />
-        <wait time="10" mergeKey="waitForSomething" />
+        <loginAsAdmin mergeKey="loginAsAdmin"/>
+        <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
+        <wait time="1" mergeKey="wait2"/>
+    </actionGroup>
+
+    <actionGroup name="switchToBlueFootStage">
+        <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+        <wait time="1" mergeKey="wait6"/>
+        <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+        <wait time="1" mergeKey="wait7"/>
+    </actionGroup>
+
+    <actionGroup name="addBlueFootRowToStage">
+        <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
+        <wait time="1" mergeKey="wait8"/>
     </actionGroup>
 
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
-        <wait time="3" mergeKey="waitForSomething" />
+        <wait time="1" mergeKey="wait9"/>
     </actionGroup>
 
-    <actionGroup name="switchToBlueFootStage">
-        <waitForPageLoad mergeKey="waitForPageLoad"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-        <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-    </actionGroup>
-
-
-    <actionGroup name="openBluefootColumnEditPanel">
+    <actionGroup name="openBlueFootEditColumnPanel">
         <arguments>
             <argument name="column" defaultValue="" />
         </arguments>
+        <moveMouseOver selector="{{BlueFootColumnSection.columnInStage}}" mergeKey="onMouseOverColumn"/>
+        <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{BlueFootColumnSection.editColumn}}" mergeKey="clickEditColumn"/>
+        <wait time="1" mergeKey="wait10"/>
     </actionGroup>
 
-    <actionGroup name="panelContainsField">
-
+    <actionGroup name="validateColumnPanelFields">
+        <!--<see userInput="Background Color" selector="{{BlueFootColumnSection.backgroundColorLabel}}" mergeKey="seeBackgroundColorLabel"/>-->
     </actionGroup>
 </config>
