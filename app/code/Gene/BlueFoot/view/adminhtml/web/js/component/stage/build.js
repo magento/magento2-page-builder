@@ -94,8 +94,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
             }
             this.document = document.createElement('div');
             this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
-            // Return the stage element if the structure is present, otherwise return false
-            return this.document.querySelector('[' + _config2.default.getValue('dataRoleAttributeName') + '="stage"]') || false;
+            return this.document.querySelector('[' + _config2.default.getValue('dataRoleAttributeName') + '="stage"]');
         };
 
         Build.prototype.buildStage = function buildStage(stage, stageElement) {

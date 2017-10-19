@@ -23,7 +23,7 @@ define(['exports'], function (exports) {
                 if (Object.values(styleAttributes).indexOf(key) > -1) {
                     var value = data[key];
                     if (key === 'min_height') {
-                        value = value + 'px';
+                        value = value.replace('px', '') + 'px';
                     }
                     if (key === 'background_repeat') {
                         value = value ? 'repeat' : 'no-repeat';
