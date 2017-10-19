@@ -118,6 +118,8 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {string}
      */
     getPreviewTemplate(): string {
-        return 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
+        return this.config.name === 'column'
+            ? 'Gene_BlueFoot/component/stage/structural/render/column.html'
+            : 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
     }
 }

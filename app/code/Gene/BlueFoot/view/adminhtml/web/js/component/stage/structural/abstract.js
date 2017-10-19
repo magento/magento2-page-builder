@@ -120,7 +120,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
         };
 
         Structural.prototype.getPreviewTemplate = function getPreviewTemplate() {
-            return 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
+            return this.config.name === 'column' ? 'Gene_BlueFoot/component/stage/structural/render/column.html' : 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
         };
 
         return Structural;

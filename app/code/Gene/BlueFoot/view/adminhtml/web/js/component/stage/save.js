@@ -28,21 +28,20 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
      * @param {KnockoutObservableArray<Structural>} tree
      */
     function renderTree(tree) {
-        var _this = this;
-
         var temp = jQuery('<div>');
-        _knockout2.default.applyBindingsToNode(temp[0], {
-            template: {
-                name: rootTemplate,
-                data: { data: tree }
-            }
-        });
         return new Promise(function (resolve, reject) {
             _engine2.default.waitForFinishRender().then(function () {
                 console.log('renderTree completed', temp.html());
                 resolve(temp.html());
                 temp.remove();
-            }.bind(_this));
+            });
+            console.log('renderTree started');
+            _knockout2.default.applyBindingsToNode(temp[0], {
+                template: {
+                    name: rootTemplate,
+                    data: { data: tree }
+                }
+            });
         });
     }
 });

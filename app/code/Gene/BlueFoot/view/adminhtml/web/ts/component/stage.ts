@@ -62,7 +62,7 @@ export default class Stage extends EditableArea implements StageInterface {
         this.on('stageUpdated', _.debounce(() => {
             renderTree(stageContent)
                 .then((renderedOutput) => this.parent.value(renderedOutput))
-        }, 50));
+        }, 500));
     }
 
     /**

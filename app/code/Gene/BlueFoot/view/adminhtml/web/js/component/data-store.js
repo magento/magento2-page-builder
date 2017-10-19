@@ -86,6 +86,7 @@ define(['exports', './event-emitter'], function (exports, _eventEmitter) {
                 this.snapshotLog.push(id);
             }
             this.emitState(id, storeData);
+            console.log('data-store:update');
         };
 
         DataStore.prototype.updateKey = function updateKey(id, data, key) {
@@ -114,6 +115,7 @@ define(['exports', './event-emitter'], function (exports, _eventEmitter) {
             this.on(eventName, function (event, data) {
                 handler(data.state, event);
             });
+            console.log('data-store:subscribe');
         };
 
         DataStore.prototype.emitState = function emitState(id, data) {

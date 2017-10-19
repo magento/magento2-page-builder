@@ -37,9 +37,7 @@ export default class Build extends EventEmitter {
         }
         this.document = document.createElement('div');
         this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
-
-        // Return the stage element if the structure is present, otherwise return false
-        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]') || false;
+        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]');
     }
 
     /**

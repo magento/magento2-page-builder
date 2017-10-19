@@ -62,6 +62,7 @@ export default class DataStore extends EventEmitter {
         }
 
         this.emitState(id, storeData);
+        console.log('data-store:update')
     }
 
     /**
@@ -115,6 +116,7 @@ export default class DataStore extends EventEmitter {
         this.on(eventName, (event: Event, data: DataStoreEvent) => {
             handler(data.state, event);
         });
+        console.log('data-store:subscribe')
     }
 
     /**

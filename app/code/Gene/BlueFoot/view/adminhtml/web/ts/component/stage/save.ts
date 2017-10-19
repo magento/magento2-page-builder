@@ -2,6 +2,7 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import ko from 'knockout';
 import Structural from "./structural/abstract";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
@@ -16,21 +17,21 @@ const rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html'
  */
 export default function renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
     let temp = jQuery('<div>');
-    ko.applyBindingsToNode(
-        temp[0],
-        {
-            template: {
-                name: rootTemplate,
-                data: {data: tree}
-            }
-        }
-    );
-
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
             console.log('renderTree completed', temp.html());
             resolve(temp.html());
             temp.remove();
-        }.bind(this));
+        });
+        console.log('renderTree started');
+        ko.applyBindingsToNode(
+            temp[0],
+            {
+                template: {
+                    name: rootTemplate,
+                    data: {data: tree}
+                }
+            }
+        );
     });
 }

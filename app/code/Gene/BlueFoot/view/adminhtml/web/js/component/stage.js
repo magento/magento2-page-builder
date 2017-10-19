@@ -92,7 +92,7 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
                 (0, _save2.default)(stageContent).then(function (renderedOutput) {
                     return _this.parent.value(renderedOutput);
                 });
-            }, 50));
+            }, 500));
             return _this;
         }
         /**

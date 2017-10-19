@@ -38,7 +38,14 @@ export default class StyleAttributeFilter {
         Object.keys(data).map(
             function (key: string) {
                 if (Object.values(styleAttributes).indexOf(key) > -1) {
-                    result[this.fromSnakeToCamelCase(key)] = data[key]
+                    let value = data[key];
+                    if (key === 'min_height') {
+                        value = value + 'px';
+                    }
+                    if (key === 'background_repeat') {
+                        value = value ? 'repeat' : 'no-repeat';
+                    }
+                    result[this.fromSnakeToCamelCase(key)] = value;
                 }
             }.bind(this)
         );
