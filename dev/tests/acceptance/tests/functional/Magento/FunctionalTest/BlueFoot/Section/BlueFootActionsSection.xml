@@ -43,12 +43,29 @@
         <element name="nothingFound" type="text" selector='//*[@id="bluefoot-panel"]/div[2]/div' timeout="30"/>
     </section>
     <section name="BlueFootColumnSection">
+        <!--Stage Elements-->
         <element name="addRow" type="button" selector='//*[@class="bluefoot-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
         <element name="dropAreaInDefaultStage" type="button" selector=".bluefoot-stage .bluefoot-row .ui-sortable"/>
         <element name="columnInStage" type="button" selector='(//h3[text()="Column"]/parent::*[contains(@class, "bluefoot-abstract")])[1]'/>
         <element name="columnOptionsMenu" type="button" selector='//h3[text()="Column"]/following-sibling::*[@class="bluefoot-options"]'/>
         <element name="editColumn" type="button" selector='//h3[text()="Column"]/ancestor::*[@class="bluefoot-structure-wrapper"]/descendant::*[@class="edit-block"]'/>
-        <element name="backgroundColorLabel" type="text" selector='//*[@class="modal-content"]/div/div[1]/div/div[2]/div[2]/div[2]/fieldset/div[1]/label/span'/>
+        <!--Forms elements-->
+        <!--Labels-->
+        <element name="minHeightLabel" type="text" selector='//div[@data-index="min_height"]/label'/>
+        <element name="backgroundColorLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_color"]/label'/>
+        <element name="backgroundImageLabel" type="text" selector='//div[@data-index="background"]/descendant::*[@class="admin__field-label"]/span[text()="Background Image"]'/>
+        <element name="backgroundPositionLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_position"]/label'/>
+        <element name="backgroundSizeLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_size"]/label'/>
+        <element name="backgroundRepeatLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_repeat"]/label'/>
+        <element name="backgroundAttachmentLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_attachment"]/label'/>
+        <!--Inputs-->
+        <element name="minHeightField" type="input" selector='//div[@data-index="appearance"]/descendant::input[@name="min_height"]'/>
+        <element name="backgroundColorField" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_color"]'/>
+        <element name="backgroundImageField" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_image"]'/>
+        <element name="backgroundPositionField" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_position"]'/>
+        <element name="backgroundSizeField" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_size"]'/>
+        <element name="backgroundRepeatField" type="input" selector='//div[@data-index="background"]/descendant::input[@name="is_active"]'/>
+        <element name="backgroundAttachmentField" type="input" selector='//div[@data-index="background"]/descendant::select[@name="background_attachment"]'/>
     </section>
 </config>
