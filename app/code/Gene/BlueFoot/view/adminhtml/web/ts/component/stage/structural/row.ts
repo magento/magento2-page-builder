@@ -38,6 +38,7 @@ export default class Row extends Structural implements RowInterface {
      */
     addColumn(data?: ColumnData): ColumnInterface {
         let column = new Column(this, this.stage);
+        column = this.onBlockDropped()
         this.addChild(column);
         column.updateColumnData(data);
         return column;

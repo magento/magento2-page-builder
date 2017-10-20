@@ -169,8 +169,8 @@ export default class Build extends EventEmitter {
                 return Promise.resolve(this.stage);
             case 'row':
                 return this.buildRow(data, parent);
-            case 'column':
-                return this.buildColumn(data, parent);
+            // case 'column':
+            //     return this.buildColumn(data, parent);
             default:
                 return this.buildEntity(role, data, parent);
         }
@@ -209,7 +209,7 @@ export default class Build extends EventEmitter {
     private buildEntity(role: string, data: object, parent: EditableAreaInterface): Promise<Block> {
         return new Promise(function (resolve, reject) {
             createBlock(
-                Config.getContentBlockConfig(role),
+                Config.getInitConfig('contentTypes')[role],
                 parent,
                 this.stage,
                 data

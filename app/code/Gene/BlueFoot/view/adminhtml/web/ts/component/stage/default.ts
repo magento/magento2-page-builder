@@ -15,9 +15,21 @@ export default class Default {
         Object.keys(element.style).map(
             function (key: any) {
                 if (isNaN(key) && element.style[key] !== '') {
-                    data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.style[key]
+                    let value = element.style[key];
+                    if (key === 'minHeight') {
+                        value = value.replace('px', '');
+                    }
+                    if (key === 'backgroundRepeat') {
+                        value = value === 'repeat' ? '1' : '0';
+                    }
+                    if (key === 'backgroundColor') {
+                        const regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/
+                        let matches = regexp.exec(value)
+                        value = '#'+ this.toHex(parseInt(matches[1])) + this.toHex(parseInt(matches[2])) + this.toHex(parseInt(matches[1]));
+                    }
+                    data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = value;
                 }
-            }
+            }.bind(this)
         );
 
         Object.keys(element.dataset).map(
@@ -31,5 +43,10 @@ export default class Default {
         data['css_classes'] = element.className.split(' ');
 
         return data;
+    }
+
+    toHex(c) {
+        let hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
 }

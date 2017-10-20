@@ -21,6 +21,7 @@ export default class StyleAttributeFilter {
             'background_size',
             'background_attachment',
             'background_repeat',
+            'background_position',
             'border_style',
             'border_width',
             'border_color',

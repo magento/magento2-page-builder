@@ -182,8 +182,8 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
                     return Promise.resolve(this.stage);
                 case 'row':
                     return this.buildRow(data, parent);
-                case 'column':
-                    return this.buildColumn(data, parent);
+                // case 'column':
+                //     return this.buildColumn(data, parent);
                 default:
                     return this.buildEntity(role, data, parent);
             }
@@ -199,7 +199,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
         Build.prototype.buildEntity = function buildEntity(role, data, parent) {
             return new Promise(function (resolve, reject) {
-                (0, _factory2.default)(_config2.default.getContentBlockConfig(role), parent, this.stage, data).then(function (block) {
+                (0, _factory2.default)(_config2.default.getInitConfig('contentTypes')[role], parent, this.stage, data).then(function (block) {
                     parent.addChild(block);
                     resolve(block);
                 }).catch(function (error) {

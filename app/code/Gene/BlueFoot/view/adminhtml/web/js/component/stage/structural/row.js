@@ -71,6 +71,7 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
 
     Row.prototype.addColumn = function addColumn(data) {
       var column = new _column.Column(this, this.stage);
+      column = this.onBlockDropped();
       this.addChild(column);
       column.updateColumnData(data);
       return column;
