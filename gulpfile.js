@@ -18,7 +18,7 @@ const buildTask = function (inputStream) {
             .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.init()))
                 .pipe(plugins.babel())
                 // browser friendly transformation
-                .pipe(plugins.babel({babelrc: false, presets: ['es2015', ['stage-0', {loose: true}]]}))
+                .pipe(plugins.babel({babelrc: false, presets: [['es2015', {loose: true}], ['stage-0', {loose: true}]]}))
             .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.write('./', {
                 includeContent: false,
                 sourceRoot: '../ts'
