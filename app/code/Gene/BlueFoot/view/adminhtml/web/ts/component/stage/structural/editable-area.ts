@@ -5,6 +5,7 @@ import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
 import StyleAttributeFilter from "../../stage/style-attribute-filter";
+import DomAttributeMapper from "../../../utils/dom-attribute-mapper";
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import Block from '../../block/block';
@@ -25,6 +26,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     stage: Stage;
     title: string = $t('Editable');
     styleAttributeFilter: StyleAttributeFilter;
+    domAttributeMapper: DomAttributeMapper;
 
     /**
      * EditableArea constructor
@@ -34,6 +36,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     constructor(stage?: Stage) {
         super();
         this.styleAttributeFilter = new StyleAttributeFilter();
+        this.domAttributeMapper = new DomAttributeMapper();
         if (stage) {
             this.stage = stage;
         }
@@ -266,6 +269,22 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     getStyle() {
         return this.styleAttributeFilter.filter(this.getData());
     }
+
+    // /**
+    //  * @returns {object}
+    //  */
+    // getAttributes() {
+    //     let attributes: any = {};
+    //     let data = this.getData();
+    //     Object.keys(data).map(
+    //         function (key: any) {
+    //             if (['role', 'appearance'].includes(key)) {
+    //                 attributes[key] = data[key];
+    //             }
+    //         }
+    //     );
+    //     return this.domAttributeMapper.toDom(attributes);
+    // }
 
     /**
      * @returns {object}

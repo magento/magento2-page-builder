@@ -4,6 +4,7 @@
  */
 
 import ko from 'knockout';
+import $ from 'jquery';
 import Structural from "./structural/abstract";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 
@@ -16,10 +17,19 @@ const rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html'
  * @param {KnockoutObservableArray<Structural>} tree
  */
 export default function renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
-    let temp = jQuery('<div>');
+    let temp = $('<div>');
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
-            console.log('renderTree completed', temp.html());
+            temp.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
+            temp.contents().filter(function() { return this.nodeType == 8; }).remove();
+            temp.find('*').each(
+                function (index, value) {
+                    $(value).contents().filter(function() { return this.nodeType == 8; }).remove();
+                }
+            );
+            let content = temp.html();
+            content = content.replace(/\r?\n|\r/g, '');
+            console.log('renderTree completed', content);
             resolve(temp.html());
             temp.remove();
         });

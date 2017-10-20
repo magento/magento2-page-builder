@@ -1,4 +1,4 @@
-define(['exports', '../../event-emitter', '../../block/factory', '../../stage/style-attribute-filter', '../../../utils/array', 'underscore', 'knockout', 'mageUtils', 'mage/translate'], function (exports, _eventEmitter, _factory, _styleAttributeFilter, _array, _underscore, _knockout, _mageUtils, _translate) {
+define(['exports', '../../event-emitter', '../../block/factory', '../../stage/style-attribute-filter', '../../../utils/dom-attribute-mapper', '../../../utils/array', 'underscore', 'knockout', 'mageUtils', 'mage/translate'], function (exports, _eventEmitter, _factory, _styleAttributeFilter, _domAttributeMapper, _array, _underscore, _knockout, _mageUtils, _translate) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -10,6 +10,8 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
     var _factory2 = _interopRequireDefault(_factory);
 
     var _styleAttributeFilter2 = _interopRequireDefault(_styleAttributeFilter);
+
+    var _domAttributeMapper2 = _interopRequireDefault(_domAttributeMapper);
 
     var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -71,6 +73,7 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
             _this.id = _mageUtils2.default.uniqueid();
             _this.title = (0, _translate2.default)('Editable');
             _this.styleAttributeFilter = new _styleAttributeFilter2.default();
+            _this.domAttributeMapper = new _domAttributeMapper2.default();
             if (stage) {
                 _this.stage = stage;
             }

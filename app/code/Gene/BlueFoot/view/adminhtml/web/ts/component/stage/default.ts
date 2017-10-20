@@ -3,7 +3,16 @@
  * See COPYING.txt for license details.
  */
 
+import _ from 'underscore';
+import DomAttributeMapper from "../../utils/dom-attribute-mapper";
+
 export default class Default {
+    domAttributeMapper: DomAttributeMapper;
+
+    constructor() {
+        this.domAttributeMapper = new DomAttributeMapper();
+    }
+
     /**
      * Read data, style and css properties from the element
      *
@@ -12,25 +21,16 @@ export default class Default {
      */
     public read (element: HTMLElement): object {
         let data: any = {};
+        let styleAttributes: any = {};
         Object.keys(element.style).map(
             function (key: any) {
                 if (isNaN(key) && element.style[key] !== '') {
-                    let value = element.style[key];
-                    if (key === 'minHeight') {
-                        value = value.replace('px', '');
-                    }
-                    if (key === 'backgroundRepeat') {
-                        value = value === 'repeat' ? '1' : '0';
-                    }
-                    if (key === 'backgroundColor') {
-                        const regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/
-                        let matches = regexp.exec(value)
-                        value = '#'+ this.toHex(parseInt(matches[1])) + this.toHex(parseInt(matches[2])) + this.toHex(parseInt(matches[1]));
-                    }
-                    data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = value;
+                    styleAttributes[key] = element.style[key];
                 }
-            }.bind(this)
+            }
         );
+
+        _.extend(data, this.domAttributeMapper.fromDom(styleAttributes));
 
         Object.keys(element.dataset).map(
             function (key) {
@@ -43,10 +43,5 @@ export default class Default {
         data['css_classes'] = element.className.split(' ');
 
         return data;
-    }
-
-    toHex(c) {
-        let hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
     }
 }

@@ -59,6 +59,7 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
 
       _this.template = 'Gene_BlueFoot/component/stage/structural/row.html';
       _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
+      _this.config.role = 'row';
       return _this;
     }
     /**

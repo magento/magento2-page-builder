@@ -52,7 +52,8 @@ define(['exports', 'underscore'], function (exports, _underscore) {
                 return readPromise.then(function (readersArray) {
                     var result = {};
                     for (var i = 0; i < readersArray.length; i++) {
-                        _underscore2.default.extend(result, readersArray[i].default.prototype.read(element));
+                        var reader = new readersArray[i].default();
+                        _underscore2.default.extend(result, reader.read(element));
                     }
                     console.log(result);
                     return result;

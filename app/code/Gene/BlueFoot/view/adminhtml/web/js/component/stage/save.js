@@ -1,4 +1,4 @@
-define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], function (exports, _knockout, _engine) {
+define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/engine'], function (exports, _knockout, _jquery, _engine) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -7,6 +7,8 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
     exports.default = renderTree;
 
     var _knockout2 = _interopRequireDefault(_knockout);
+
+    var _jquery2 = _interopRequireDefault(_jquery);
 
     var _engine2 = _interopRequireDefault(_engine);
 
@@ -17,21 +19,34 @@ define(['exports', 'knockout', 'Magento_Ui/js/lib/knockout/template/engine'], fu
     }
 
     // The root template for the render tree
-    /**
-     * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-     * See COPYING.txt for license details.
-     */
     var rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
     /**
      * Render the tree into a string
      *
      * @param {KnockoutObservableArray<Structural>} tree
      */
+    /**
+     * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+     * See COPYING.txt for license details.
+     */
     function renderTree(tree) {
-        var temp = jQuery('<div>');
+        var temp = (0, _jquery2.default)('<div>');
         return new Promise(function (resolve, reject) {
             _engine2.default.waitForFinishRender().then(function () {
-                console.log('renderTree completed', temp.html());
+                temp.find('[data-bind]').each(function (index, value) {
+                    (0, _jquery2.default)(value).removeAttr('data-bind');
+                });
+                temp.contents().filter(function () {
+                    return this.nodeType == 8;
+                }).remove();
+                temp.find('*').each(function (index, value) {
+                    (0, _jquery2.default)(value).contents().filter(function () {
+                        return this.nodeType == 8;
+                    }).remove();
+                });
+                var content = temp.html();
+                content = content.replace(/\r?\n|\r/g, '');
+                console.log('renderTree completed', content);
                 resolve(temp.html());
                 temp.remove();
             });

@@ -38,7 +38,8 @@ export default class AttributeReaderComposite {
             return readPromise.then(function(readersArray: Array<any>) {
                 let result = {};
                 for (let i = 0; i < readersArray.length; i++) {
-                    _.extend(result, readersArray[i].default.prototype.read(element));
+                    let reader = new readersArray[i].default();
+                    _.extend(result, reader.read(element));
                 }
                 console.log(result);
                 return result;
