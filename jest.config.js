@@ -10,12 +10,13 @@ module.exports = jestMagento2.configure(
         ],
         modulePaths: [
             "<rootDir>/app/code/Gene/BlueFoot/view/adminhtml/web/ts",
-            "<rootDir>/dev/tests/js/unit/stubs"
+            "<rootDir>/dev/tests/js/stubs"
         ],
         moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
         transform: {
             "^.+\\.ts$": "<rootDir>/jest.transform.js"
-        }
+        },
+        testEnvironment: "jsdom-latest"
     },
     {
         rootDir: __dirname,

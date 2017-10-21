@@ -4,6 +4,7 @@
  */
 
 import _ from 'underscore';
+import requireJs from 'require';
 
 export default class AttributeReaderComposite {
     private readers = {
@@ -31,7 +32,7 @@ export default class AttributeReaderComposite {
     read (element: HTMLElement): object {
         if (this.readers.hasOwnProperty(element.dataset.role)) {
             let readPromise = new Promise(function(resolve: Function, reject: Function) {
-                require(this.readers[element.dataset.role], function (...args: any[]) {
+                requireJs(this.readers[element.dataset.role], function (...args: any[]) {
                     resolve(args)
                 }, reject);
             }.bind(this));
