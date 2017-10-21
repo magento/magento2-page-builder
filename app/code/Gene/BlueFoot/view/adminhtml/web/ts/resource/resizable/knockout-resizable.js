@@ -1,21 +1,6 @@
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
-        // AMD anonymous module
-        define(["ko", "jquery", 'bluefoot/config'], factory);
-    } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-        // CommonJS module
-        var ko = require("ko"),
-            jQuery = require("jquery"),
-            Config = require('bluefoot/config');
+define(["ko", "jquery", 'bluefoot/config'], function (ko, jQuery, Config) {
 
-        factory(ko, jQuery, Config);
-    } else {
-        // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery, window.Config);
-    }
-})(function (ko, jQuery, Config) {
-
-    var allowedSizes = Config.default.getInitConfig('column_definitions') || [],
+    var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},
         smallestColumn = {breakpoint: 1};
 

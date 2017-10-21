@@ -1,6 +1,8 @@
 import Block from './block';
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
+import requireJs from 'moduleLoader';
+
 
 interface ConfigObject {
     js_block?: string;
@@ -34,7 +36,7 @@ export default function createBlock(config: ConfigObject, parent: EditableArea, 
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {
-        require([getBlockComponentPath(config)], (BlockInstance: any) => {
+        requireJs([getBlockComponentPath(config)], (BlockInstance: any) => {
             return resolve(new BlockInstance.default(parent, stage, config, formData));
         }, (error: string) => {
             return reject(error);
