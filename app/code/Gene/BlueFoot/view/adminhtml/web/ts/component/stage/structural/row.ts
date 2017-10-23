@@ -12,9 +12,12 @@ import "ko-resizable";
  * Row class
  *
  * @author Dave Macaulay <dmacaulay@magento.com>
+ *
+ * @deprecated use component/block/row.
  */
 export default class Row extends Structural implements RowInterface {
-    template: string = 'Gene_BlueFoot/component/stage/structural/row.html';
+    previewTemplate: string = 'Gene_BlueFoot/component/block/preview/row.html';
+    renderTemplate: string = 'Gene_BlueFoot/component/block/render/row.html';
 
     /**
      * Abstract structural constructor
@@ -43,14 +46,5 @@ export default class Row extends Structural implements RowInterface {
         this.addChild(column);
         column.updateColumnData(data);
         return column;
-    }
-
-    /**
-     * Get template master format template
-     *
-     * @returns {string}
-     */
-    getPreviewTemplate(): string {
-        return 'Gene_BlueFoot/component/stage/structural/render/row.html';
     }
 }

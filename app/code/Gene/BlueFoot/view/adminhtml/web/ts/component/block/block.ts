@@ -6,12 +6,10 @@ import getPreviewInstance from "../stage/previews";
 import PreviewBlock from "./preview/block";
 import $t from "mage/translate";
 import _ from "underscore";
+import {ConfigContentBlock, ConfigFieldConfig} from "../config";
 
 interface FieldDefaults {
     [key: string]: any;
-}
-interface FieldConfig {
-    default: null | string | number;
 }
 
 /**
@@ -24,7 +22,8 @@ export default class Block extends Structural implements BlockInterface {
     editOnInsert: boolean = true;
     preview: PreviewBlock;
     childEntityKeys: Array<string> = [];
-    template: string = 'Gene_BlueFoot/component/block/abstract.html';
+    previewTemplate: string = 'Gene_BlueFoot/component/block/preview/abstract.html';
+    renderTemplate: string = 'Gene_BlueFoot/component/block/render/abstract.html';
     config: any;
 
     /**
@@ -35,14 +34,21 @@ export default class Block extends Structural implements BlockInterface {
      * @param config
      * @param formData
      */
-    constructor(parent: EditableArea, stage: Stage, config: any, formData: any) {
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
         super(parent, stage, config);
 
         this.preview = getPreviewInstance(this, config);
 
+        if (config.preview_template) {
+            this.previewTemplate = config.preview_template;
+        }
+        if (config.render_template) {
+            this.renderTemplate = config.render_template;
+        }
+
         let defaults: FieldDefaults = {};
         if (config.fields) {
-            _.each(config.fields, (field: FieldConfig, key: string | number) => {
+            _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
                 defaults[key] = field.default;
             })
         }
@@ -51,19 +57,5 @@ export default class Block extends Structural implements BlockInterface {
             this.id,
             _.extend(defaults, formData)
         );
-    }
-
-    /**
-     * Retrieve the template from the preview or super
-     *
-     * @returns {string}
-     */
-    getTemplate() {
-        if (this.preview.template) {
-            return this.preview.template;
-        }
-
-        // Implement preview template system here
-        return super.getTemplate();
     }
 }

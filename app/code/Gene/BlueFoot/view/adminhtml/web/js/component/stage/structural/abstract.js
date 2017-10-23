@@ -71,8 +71,9 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _this.optionsInstance = new _options.Options(_this, _this.options);
             _this.children = _knockout2.default.observableArray([]);
             _this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
-            _this.childTemplate = 'Gene_BlueFoot/component/stage/structural/children.html';
             _this.columnBuilder = new _builder.ColumnBuilder();
+            _this.previewChildTemplate = 'Gene_BlueFoot/component/block/preview/children.html';
+            _this.renderChildTemplate = 'Gene_BlueFoot/component/block/render/children.html';
             _EditableArea.prototype.setChildren.call(_this, _this.children);
             // Create a new instance of edit for our editing needs
             _this.edit = new _edit2.default(_this, _this.stage.store);
@@ -105,22 +106,6 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
                     }
                 }
             });
-        };
-
-        Structural.prototype.getTemplate = function getTemplate() {
-            return this.template;
-        };
-
-        Structural.prototype.getChildTemplate = function getChildTemplate() {
-            return this.childTemplate;
-        };
-
-        Structural.prototype.getChildPreviewTemplate = function getChildPreviewTemplate() {
-            return 'Gene_BlueFoot/component/stage/structural/render/children.html';
-        };
-
-        Structural.prototype.getPreviewTemplate = function getPreviewTemplate() {
-            return this.config.name === 'column' ? 'Gene_BlueFoot/component/stage/structural/render/column.html' : 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
         };
 
         return Structural;

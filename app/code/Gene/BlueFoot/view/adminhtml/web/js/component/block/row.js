@@ -1,11 +1,11 @@
-define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"], function (exports, _abstract, _column, _option) {
+define(["exports", "./block"], function (exports, _block) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  var _abstract2 = _interopRequireDefault(_abstract);
+  var _block2 = _interopRequireDefault(_block);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,44 +43,17 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Row = function (_Structural) {
-    _inherits(Row, _Structural);
+  var Row = function (_Block) {
+    _inherits(Row, _Block);
 
-    /**
-     * Abstract structural constructor
-     *
-     * @param parent
-     * @param stage
-     */
-    function Row(parent, stage) {
+    function Row() {
       _classCallCheck(this, Row);
 
-      var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
-
-      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/row.html';
-      _this.renderTemplate = 'Gene_BlueFoot/component/block/render/row.html';
-      _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
-      _this.config.role = 'row';
-      return _this;
+      return _possibleConstructorReturn(this, _Block.apply(this, arguments));
     }
-    /**
-     * Add a column to the row
-     *
-     * @param data
-     * @returns {any}
-     */
-
-
-    Row.prototype.addColumn = function addColumn(data) {
-      var column = new _column.Column(this, this.stage);
-      column = this.onBlockDropped();
-      this.addChild(column);
-      column.updateColumnData(data);
-      return column;
-    };
 
     return Row;
-  }(_abstract2.default);
+  }(_block2.default);
 
   exports.default = Row;
 });

@@ -56,4 +56,5 @@ define(['exports', '../config', '../block/preview/block'], function (exports, _c
         }
         return new instance(block, blockConfig);
     }
+    // @todo move these into Config class
 });

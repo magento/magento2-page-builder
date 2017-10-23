@@ -17,7 +17,7 @@ import ko from 'knockout';
  * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export class Column extends Structural implements ColumnInterface {
-    template: string = 'Gene_BlueFoot/component/stage/structural/column.html';
+    previewTemplate: string = 'Gene_BlueFoot/component/block/preview/column.html';
 
     columnDefinition: KnockoutObservable<object> = ko.observable(Config.getInitConfig('column_definitions')[0]);
     widthClasses: KnockoutComputed<string> = ko.computed(function (): string {

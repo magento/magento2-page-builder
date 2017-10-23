@@ -65,8 +65,15 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "undersc
 
             _this.editOnInsert = true;
             _this.childEntityKeys = [];
-            _this.template = 'Gene_BlueFoot/component/block/abstract.html';
+            _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/abstract.html';
+            _this.renderTemplate = 'Gene_BlueFoot/component/block/render/abstract.html';
             _this.preview = (0, _previews2.default)(_this, config);
+            if (config.preview_template) {
+                _this.previewTemplate = config.preview_template;
+            }
+            if (config.render_template) {
+                _this.renderTemplate = config.render_template;
+            }
             var defaults = {};
             if (config.fields) {
                 _underscore2.default.each(config.fields, function (field, key) {
@@ -76,20 +83,6 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "undersc
             _this.stage.store.update(_this.id, _underscore2.default.extend(defaults, formData));
             return _this;
         }
-        /**
-         * Retrieve the template from the preview or super
-         *
-         * @returns {string}
-         */
-
-
-        Block.prototype.getTemplate = function getTemplate() {
-            if (this.preview.template) {
-                return this.preview.template;
-            }
-            // Implement preview template system here
-            return _Structural.prototype.getTemplate.call(this);
-        };
 
         return Block;
     }(_abstract2.default);

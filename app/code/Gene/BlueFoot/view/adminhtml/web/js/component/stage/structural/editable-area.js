@@ -74,6 +74,8 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
             _this.title = (0, _translate2.default)('Editable');
             _this.styleAttributeFilter = new _styleAttributeFilter2.default();
             _this.domAttributeMapper = new _domAttributeMapper2.default();
+            // @todo populate from config
+            _this.childTemplate = 'Gene_BlueFoot/component/stage/structural/render/children.html';
             if (stage) {
                 _this.stage = stage;
             }
@@ -105,6 +107,10 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
             children.subscribe(function () {
                 return _this2.stage.emit('stageUpdated');
             });
+        };
+
+        EditableArea.prototype.getChildren = function getChildren() {
+            return this.children;
         };
 
         EditableArea.prototype.duplicateChild = function duplicateChild(child) {

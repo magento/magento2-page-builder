@@ -47,19 +47,3 @@ export default function get(block: Block, blockConfig: any): PreviewBlock {
 }
 
 // @todo move these into Config class
-interface ConfigContentBlock {
-    code: string,
-    contentType: string,
-    fields: object,
-    fields_list: Array<string>,
-    group: string,
-    icon: string,
-    js_block: string | null,
-    name: string,
-    preview_component: string | null,
-    preview_template: string | null,
-    visible: boolean
-}
-interface ConfigContentBlocks {
-    [key: string]: ConfigContentBlock
-}

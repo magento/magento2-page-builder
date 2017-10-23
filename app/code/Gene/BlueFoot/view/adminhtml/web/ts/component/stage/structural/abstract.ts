@@ -32,8 +32,10 @@ export default class Structural extends EditableArea implements StructuralInterf
     optionsInstance: Options = new Options(this, this.options);
     children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
-    childTemplate: string = 'Gene_BlueFoot/component/stage/structural/children.html';
     columnBuilder: ColumnBuilder = new ColumnBuilder();
+
+    previewChildTemplate: string = 'Gene_BlueFoot/component/block/preview/children.html';
+    renderChildTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
 
     /**
      * Abstract structural constructor
@@ -81,45 +83,5 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
             }
         });
-    }
-
-    /**
-     * Retrieve the template from the class
-     *
-     * @deprecated use this.template instead
-     * @returns {string}
-     */
-    getTemplate(): string {
-        return this.template;
-    }
-
-    /**
-     * Retrieve the child template
-     *
-     * @deprecated
-     * @returns {string}
-     */
-    getChildTemplate(): string {
-        return this.childTemplate;
-    }
-
-    /**
-     * Get template master format children template
-     *
-     * @returns {string}
-     */
-    getChildPreviewTemplate(): string {
-        return 'Gene_BlueFoot/component/stage/structural/render/children.html';
-    }
-
-    /**
-     * Get template master format template
-     *
-     * @returns {string}
-     */
-    getPreviewTemplate(): string {
-        return this.config.name === 'column'
-            ? 'Gene_BlueFoot/component/stage/structural/render/column.html'
-            : 'Gene_BlueFoot/component/stage/structural/render/abstract.html';
     }
 }

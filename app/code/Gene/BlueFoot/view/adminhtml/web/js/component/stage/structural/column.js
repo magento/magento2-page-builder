@@ -62,7 +62,7 @@ define(["exports", "./abstract", "../../config", "../../../utils/array", "./opti
 
             var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
 
-            _this.template = 'Gene_BlueFoot/component/stage/structural/column.html';
+            _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/column.html';
             _this.columnDefinition = _knockout2.default.observable(_config2.default.getInitConfig('column_definitions')[0]);
             _this.widthClasses = _knockout2.default.computed(function () {
                 return this.columnDefinition()['className'];

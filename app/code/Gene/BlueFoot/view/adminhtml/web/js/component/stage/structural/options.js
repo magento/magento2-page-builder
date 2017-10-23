@@ -72,17 +72,6 @@ define(['exports', 'underscore', 'knockout'], function (exports, _underscore, _k
             })));
             this.sort();
         };
-        /**
-         * Retrieve the template
-         *
-         * @deprecated
-         * @returns {string}
-         */
-
-
-        Options.prototype.getTemplate = function getTemplate() {
-            return this.template;
-        };
 
         return Options;
     }();

@@ -9,7 +9,7 @@ import Structural from "./structural/abstract";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 
 // The root template for the render tree
-const rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
+const rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
 
 /**
  * Render the tree into a string
@@ -27,6 +27,11 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
                     $(value).contents().filter(function() { return this.nodeType == 8; }).remove();
                 }
             );
+            // Strip all is wrapper elements
+            temp.find('[data-is-wrapper]').each((index, element) => {
+                $(element).parent().append($(element).children());
+                $(element).remove();
+            });
             let content = temp.html();
             content = content.replace(/\r?\n|\r/g, '');
             console.log('renderTree completed', content);
@@ -39,7 +44,7 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
             {
                 template: {
                     name: rootTemplate,
-                    data: {data: tree}
+                    data: {getChildren: () => tree}
                 }
             }
         );

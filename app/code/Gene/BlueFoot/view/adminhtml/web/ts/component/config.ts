@@ -247,3 +247,24 @@ export default class Config {
         return _.findWhere(this.getInitConfig('column_definitions'), searchObj);
     }
 }
+
+export interface ConfigFieldConfig {
+    default: null | string | number;
+}
+export interface ConfigContentBlock {
+    name: string;
+    label: string;
+    icon: string;
+    form: string;
+    contentType: string;
+    group: string;
+    fields: Array<ConfigFieldConfig>;
+    visible: boolean;
+    preview_template: string;
+    render_template: string;
+    preview_component: string;
+    component: string;
+}
+export interface ConfigContentBlocks {
+    [key: string]: ConfigContentBlock
+}

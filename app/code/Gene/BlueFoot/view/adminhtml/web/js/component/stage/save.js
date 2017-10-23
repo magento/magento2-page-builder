@@ -19,7 +19,7 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
     }
 
     // The root template for the render tree
-    var rootTemplate = 'Gene_BlueFoot/component/stage/structural/render/root.html';
+    var rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
     /**
      * Render the tree into a string
      *
@@ -44,6 +44,11 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
                         return this.nodeType == 8;
                     }).remove();
                 });
+                // Strip all is wrapper elements
+                temp.find('[data-is-wrapper]').each(function (index, element) {
+                    (0, _jquery2.default)(element).parent().append((0, _jquery2.default)(element).children());
+                    (0, _jquery2.default)(element).remove();
+                });
                 var content = temp.html();
                 content = content.replace(/\r?\n|\r/g, '');
                 console.log('renderTree completed', content);
@@ -54,7 +59,9 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
             _knockout2.default.applyBindingsToNode(temp[0], {
                 template: {
                     name: rootTemplate,
-                    data: { data: tree }
+                    data: { getChildren: function getChildren() {
+                            return tree;
+                        } }
                 }
             });
         });

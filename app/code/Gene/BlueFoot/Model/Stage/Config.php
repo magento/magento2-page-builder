@@ -216,6 +216,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'visible'           => true,
             'preview_template'  => (isset($contentType['preview_template'])
                 ? $contentType['preview_template'] : ''),
+            'render_template'   => (isset($contentType['render_template'])
+                ? $contentType['render_template'] : ''),
             'preview_component' => (isset($contentType['preview_component'])
                 ? $contentType['preview_component']
                 : self::DEFAULT_PREVIEW_COMPONENT),

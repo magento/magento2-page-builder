@@ -25,8 +25,11 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     children: KnockoutObservableArray<Structural>;
     stage: Stage;
     title: string = $t('Editable');
-    styleAttributeFilter: StyleAttributeFilter;
-    domAttributeMapper: DomAttributeMapper;
+    styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    domAttributeMapper: DomAttributeMapper = new DomAttributeMapper();
+
+    // @todo populate from config
+    childTemplate: string = 'Gene_BlueFoot/component/stage/structural/render/children.html';
 
     /**
      * EditableArea constructor
@@ -35,8 +38,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     constructor(stage?: Stage) {
         super();
-        this.styleAttributeFilter = new StyleAttributeFilter();
-        this.domAttributeMapper = new DomAttributeMapper();
         if (stage) {
             this.stage = stage;
         }
@@ -76,6 +77,15 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
 
         // Attach a subscription to the children of every editable area to fire the stageUpdated event
         children.subscribe(() => this.stage.emit('stageUpdated'));
+    }
+
+    /**
+     * Return the children of the current element
+     *
+     * @returns {KnockoutObservableArray<Structural>}
+     */
+    getChildren(): KnockoutObservableArray<Structural> {
+        return this.children;
     }
 
     /**

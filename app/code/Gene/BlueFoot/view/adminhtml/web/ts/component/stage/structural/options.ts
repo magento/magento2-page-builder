@@ -55,14 +55,4 @@ export class Options {
         })));
         this.sort();
     }
-
-    /**
-     * Retrieve the template
-     *
-     * @deprecated
-     * @returns {string}
-     */
-    getTemplate(): string {
-        return this.template;
-    }
 }
