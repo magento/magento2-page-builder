@@ -82,7 +82,7 @@
         <moveMouseOver selector="{{BlueFootColumnSection.columnInStage}}" mergeKey="onMouseOverColumn"/>
         <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
         <click selector="{{BlueFootColumnSection.editColumn}}" mergeKey="clickEditColumn"/>
-        <wait time="1" mergeKey="wait10"/>
+        <wait time="2" mergeKey="wait10"/>
     </actionGroup>
 
     <actionGroup name="validateColumnPanelFields">
@@ -95,12 +95,18 @@
         <see userInput="Background Repeat" selector="{{BlueFootColumnSection.backgroundRepeatLabel}}" mergeKey="seeBackgroundRepeatLabel"/>
         <see userInput="Background Attachment" selector="{{BlueFootColumnSection.backgroundAttachmentLabel}}" mergeKey="seeBackgroundAttachmentLabel"/>
         <!--Inputs-->
-        <seeElement selector="{{BlueFootColumnSection.minHeightField}}" mergeKey="seeMinHeightField"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundColorField}}" mergeKey="seeBackgroundColorField"/>
-        <seeElementInDOM selector="{{BlueFootColumnSection.backgroundImageField}}" mergeKey="seeBackgroundImageField"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundPositionField}}" mergeKey="seeBackgroundPositionField"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundSizeField}}" mergeKey="seeBackgroundSizeField"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundRepeatField}}" mergeKey="seeBackgroundRepeatField"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundAttachmentField}}" mergeKey="seeBackgroundAttachmentField"/>
+        <seeElement selector="{{BlueFootColumnSection.minHeightControl}}" mergeKey="seeMinHeightControl"/>
+        <seeElement selector="{{BlueFootColumnSection.backgroundColorControl}}" mergeKey="seeBackgroundColorControl"/>
+        <seeElementInDOM selector="{{BlueFootColumnSection.backgroundImageControl}}" mergeKey="seeBackgroundImageControl"/>
+        <seeElement selector="{{BlueFootColumnSection.backgroundPositionControl}}" mergeKey="seeBackgroundPositionControl"/>
+        <seeElement selector="{{BlueFootColumnSection.backgroundSizeControl}}" mergeKey="seeBackgroundSizeControl"/>
+        <seeElement selector="{{BlueFootColumnSection.backgroundRepeatControl}}" mergeKey="seeBackgroundRepeatControl"/>
+        <seeElement selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" mergeKey="seeBackgroundAttachmentControl"/>
+        <!--Required Fields-->
+        <seeElement selector='{{BlueFootColumnSection.minHeightField}}' mergeKey="minHeightIsRequired"/>
+        <seeElement selector='{{BlueFootColumnSection.backgroundPositionField}}' mergeKey="backgroundPositionIsRequired"/>
+        <seeElement selector='{{BlueFootColumnSection.backgroundSizeField}}' mergeKey="backgroundSizeIsRequired"/>
+        <seeElement selector='{{BlueFootColumnSection.backgroundRepeatField}}' mergeKey="backgroundRepeatIsRequired"/>
+        <seeElement selector='{{BlueFootColumnSection.backgroundAttachmentField}}' mergeKey="backgroundAttachmentIsRequired"/>
     </actionGroup>
 </config>

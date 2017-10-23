@@ -44,9 +44,17 @@
             <opened>true</opened>
         </settings>
         <field name="min_height" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Minimum Height</label>
                 <addAfter>px</addAfter>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>
@@ -89,6 +97,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Position</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -120,6 +131,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Size</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -152,6 +166,9 @@
                 <dataType>boolean</dataType>
                 <label translate="true">Background Repeat</label>
                 <dataScope>background_repeat</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <checkbox>
@@ -168,24 +185,27 @@
         <field name="background_attachment" sortOrder="50" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">scroll</item>
+                    <item name="default" xsi:type="string">fixed</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Attachment</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">scroll</item>
-                                <item name="label" xsi:type="string" translate="true">Scroll</item>
-                            </option>
-                            <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">fixed</item>
                                 <item name="label" xsi:type="string" translate="true">Fixed</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">scroll</item>
+                                <item name="label" xsi:type="string" translate="true">Scroll</item>
                             </option>
                         </options>
                     </settings>

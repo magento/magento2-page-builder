@@ -67,7 +67,9 @@
 
             <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]" mergeKey="seeColumn1BackgroundSizeApplied"/>
             <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: repeat;')]" mergeKey="seeColumn1BackgroundREpeatApplied"/>
-            <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: scroll;')]" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>
         <test name="ColumnChangesPreserved">
             <annotations>
@@ -84,7 +86,7 @@
             <selectOption selector="//*[@name='background_position']" userInput="Centered" mergeKey="enterBackgroundPosition"/>
             <selectOption selector="//*[@name='background_size']" userInput="Cover" mergeKey="enterBackgroundSize"/>
             <click selector="//*[@name='background_repeat']/parent::*/label" mergeKey="clickBackgroundRepeat"/>
-            <selectOption selector="//*[@name='background_attachment']" userInput="Fixed" mergeKey="enterBackgroundAttachment"/>
+            <selectOption selector="//*[@name='background_attachment']" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
 
             <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
             <!--<waitForElement selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="waitForPageSaveButton"/>-->
@@ -108,7 +110,7 @@
             <seeOptionIsSelected selector="//*[@name='background_position']" userInput="Centered" mergeKey="seeBackgroundPosition"/>
             <seeOptionIsSelected selector="//*[@name='background_size']" userInput="Cover" mergeKey="seeBackgroundSize"/>
             <seeCheckboxIsChecked selector="//*[@name='background_repeat']" mergeKey="seeBackgroundRepeat"/>
-            <seeOptionIsSelected selector="//*[@name='background_attachment']" userInput="Fixed" mergeKey="seeBackgroundAttachment"/>
+            <seeOptionIsSelected selector="//*[@name='background_attachment']" userInput="Scroll" mergeKey="seeBackgroundAttachment"/>
         </test>
     </cest>
 </config>
