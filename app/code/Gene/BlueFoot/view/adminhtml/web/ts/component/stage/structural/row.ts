@@ -32,6 +32,7 @@ export default class Row extends Structural implements RowInterface {
             new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10)
         );
         this.config.role = 'row';
+        this.config.name = 'row';
     }
 
     /**

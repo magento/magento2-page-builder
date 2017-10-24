@@ -26,4 +26,8 @@ export class Block extends EventEmitter {
         this.label(config.label);
         this.icon(config.icon);
     }
+
+    getDraggableConfig() {
+        return this.config.allowed_children.map(function(value, index) {return '.' + value + '-container'}).join(', ');
+    }
 }

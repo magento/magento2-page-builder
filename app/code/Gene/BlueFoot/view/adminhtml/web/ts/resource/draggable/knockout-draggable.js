@@ -95,7 +95,7 @@
          */
         init: function (element, valueAccessor, allBindingsAccessor, data, context) {
             // Initialize draggable on all children of the element
-            Draggable.init(jQuery(element).children(), valueAccessor);
+            Draggable.init(jQuery(element), valueAccessor);
 
             // Does the element contain a foreach element that could change overtime?
             if (allBindingsAccessor().foreach) {

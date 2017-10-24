@@ -1,4 +1,4 @@
-define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "mage/translate", "knockout", "../edit"], function (exports, _editableArea, _options, _option, _builder, _translate, _knockout, _edit) {
+define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "mage/translate", "knockout", "underscore"], function (exports, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _translate, _knockout, _underscore) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -7,11 +7,21 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
 
     var _editableArea2 = _interopRequireDefault(_editableArea);
 
+    var _edit2 = _interopRequireDefault(_edit);
+
+    var _styleAttributeFilter2 = _interopRequireDefault(_styleAttributeFilter);
+
+    var _styleAttributeMapper2 = _interopRequireDefault(_styleAttributeMapper);
+
+    var _attributeFilter2 = _interopRequireDefault(_attributeFilter);
+
+    var _attributeMapper2 = _interopRequireDefault(_attributeMapper);
+
     var _translate2 = _interopRequireDefault(_translate);
 
     var _knockout2 = _interopRequireDefault(_knockout);
 
-    var _edit2 = _interopRequireDefault(_edit);
+    var _underscore2 = _interopRequireDefault(_underscore);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -77,6 +87,10 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _EditableArea.prototype.setChildren.call(_this, _this.children);
             // Create a new instance of edit for our editing needs
             _this.edit = new _edit2.default(_this, _this.stage.store);
+            _this.styleAttributeFilter = new _styleAttributeFilter2.default();
+            _this.styleAttributeMapper = new _styleAttributeMapper2.default();
+            _this.attributeFilter = new _attributeFilter2.default();
+            _this.attributeMapper = new _attributeMapper2.default();
             _this.parent = parent;
             _this.stage = stage;
             _this.config = config;
@@ -106,6 +120,30 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
                     }
                 }
             });
+        };
+
+        Structural.prototype.getCss = function getCss() {
+            var cssClasses = {};
+            if ('css_classes' in this.getData()) {
+                this.getData().css_classes.map(function (value, index) {
+                    return cssClasses[value] = true;
+                });
+            }
+            return cssClasses;
+        };
+
+        Structural.prototype.getStyle = function getStyle() {
+            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+        };
+
+        Structural.prototype.getAttributes = function getAttributes() {
+            var data = this.getData();
+            _underscore2.default.extend(data, this.config);
+            return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+        };
+
+        Structural.prototype.getData = function getData() {
+            return this.stage.store.get(this.id);
         };
 
         return Structural;

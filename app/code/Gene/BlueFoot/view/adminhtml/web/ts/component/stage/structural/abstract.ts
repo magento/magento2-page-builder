@@ -5,11 +5,16 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 import { ColumnBuilder } from "./column/builder";
+import Edit from "../edit";
+import StyleAttributeFilter from "../../../utils/style-attribute-filter";
+import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
+import AttributeFilter from "../../../utils/attribute-filter";
+import AttributeMapper from "../../../utils/attribute-mapper";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
 import registry from 'uiRegistry';
-import Edit from "../edit";
+import _ from 'underscore';
 
 /**
  * Structural class
@@ -33,6 +38,10 @@ export default class Structural extends EditableArea implements StructuralInterf
     children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     columnBuilder: ColumnBuilder = new ColumnBuilder();
+    styleAttributeFilter: StyleAttributeFilter;
+    styleAttributeMapper: StyleAttributeMapper;
+    attributeFilter: AttributeFilter;
+    attributeMapper: AttributeMapper;
 
     previewChildTemplate: string = 'Gene_BlueFoot/component/block/preview/children.html';
     renderChildTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
@@ -50,6 +59,10 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
+        this.styleAttributeFilter = new StyleAttributeFilter();
+        this.styleAttributeMapper = new StyleAttributeMapper();
+        this.attributeFilter = new AttributeFilter();
+        this.attributeMapper = new AttributeMapper();
 
         this.parent = parent;
         this.stage = stage;
@@ -83,5 +96,39 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
             }
         });
+    }
+
+    /**
+     * @returns {object}
+     */
+    getCss() {
+        let cssClasses = {};
+        if ('css_classes' in this.getData()) {
+            this.getData().css_classes.map((value, index) => cssClasses[value] = true);
+        }
+        return cssClasses;
+    }
+
+    /**
+     * @returns {object}
+     */
+    getStyle() {
+        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+    }
+
+    /**
+     * @returns {object}
+     */
+    getAttributes() {
+        let data = this.getData();
+        _.extend(data, this.config);
+        return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+    }
+
+    /**
+     * @returns {object}
+     */
+    getData() {
+        return this.stage.store.get(this.id);
     }
 }

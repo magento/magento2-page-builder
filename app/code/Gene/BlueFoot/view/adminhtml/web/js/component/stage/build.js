@@ -1,4 +1,4 @@
-define(['exports', 'underscore', '../event-emitter', '../config', '../block/factory', './attribute-reader-composite'], function (exports, _underscore, _eventEmitter, _config, _factory, _attributeReaderComposite) {
+define(['exports', 'underscore', '../event-emitter', '../config', '../block/factory', '../format/read/composite'], function (exports, _underscore, _eventEmitter, _config, _factory, _composite) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -13,7 +13,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
     var _factory2 = _interopRequireDefault(_factory);
 
-    var _attributeReaderComposite2 = _interopRequireDefault(_attributeReaderComposite);
+    var _composite2 = _interopRequireDefault(_composite);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -78,7 +78,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
             var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
 
-            _this.attributeReaderComposite = new _attributeReaderComposite2.default();
+            _this.attributeReaderComposite = new _composite2.default();
             return _this;
         }
         /**
@@ -180,8 +180,8 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
                     // If the stage is being built, we don't need to "build" anything, just return the stage as the
                     // new parent
                     return Promise.resolve(this.stage);
-                case 'row':
-                    return this.buildRow(data, parent);
+                // case 'row':
+                //     return this.buildRow(data, parent);
                 // case 'column':
                 //     return this.buildColumn(data, parent);
                 default:

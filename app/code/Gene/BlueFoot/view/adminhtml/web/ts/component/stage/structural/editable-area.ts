@@ -29,7 +29,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     domAttributeMapper: DomAttributeMapper = new DomAttributeMapper();
 
     // @todo populate from config
-    childTemplate: string = 'Gene_BlueFoot/component/stage/structural/render/children.html';
+    childTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
 
     /**
      * EditableArea constructor
@@ -260,47 +260,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     onSortStop(event: Event, params: SortParams): void {
         jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
-    }
-
-    /**
-     * @returns {object}
-     */
-    getCss() {
-        let cssClasses = {};
-        if ('css_classes' in this.getData()) {
-            this.getData().css_classes.map((value, index) => cssClasses[value] = true);
-        }
-        return cssClasses;
-    }
-
-    /**
-     * @returns {object}
-     */
-    getStyle() {
-        return this.styleAttributeFilter.filter(this.getData());
-    }
-
-    // /**
-    //  * @returns {object}
-    //  */
-    // getAttributes() {
-    //     let attributes: any = {};
-    //     let data = this.getData();
-    //     Object.keys(data).map(
-    //         function (key: any) {
-    //             if (['role', 'appearance'].includes(key)) {
-    //                 attributes[key] = data[key];
-    //             }
-    //         }
-    //     );
-    //     return this.domAttributeMapper.toDom(attributes);
-    // }
-
-    /**
-     * @returns {object}
-     */
-    getData() {
-        return this.stage.store.get(this.id);
     }
 }
 

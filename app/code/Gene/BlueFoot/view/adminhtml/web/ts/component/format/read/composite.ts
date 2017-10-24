@@ -8,17 +8,17 @@ import _ from 'underscore';
 export default class AttributeReaderComposite {
     private readers = {
         'stage': [
-            'Gene_BlueFoot/js/component/stage/default'
+            'Gene_BlueFoot/js/component/format/read/default'
         ],
         'row': [
-            'Gene_BlueFoot/js/component/stage/default'
+            'Gene_BlueFoot/js/component/format/read/default'
         ],
         'column': [
-            'Gene_BlueFoot/js/component/stage/default'
+            'Gene_BlueFoot/js/component/format/read/default'
         ],
         'heading': [
-            'Gene_BlueFoot/js/component/stage/default',
-            'Gene_BlueFoot/js/component/stage/heading'
+            'Gene_BlueFoot/js/component/format/read/default',
+            'Gene_BlueFoot/js/component/format/read/heading'
         ]
     };
 
@@ -41,7 +41,7 @@ export default class AttributeReaderComposite {
                     let reader = new readersArray[i].default();
                     _.extend(result, reader.read(element));
                 }
-                console.log(result);
+                // console.log(result);
                 return result;
             }).catch(function(e: PromiseRejectionEvent) {
 

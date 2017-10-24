@@ -7,7 +7,7 @@ import { EditableAreaInterface } from './structural/editable-area.d';
 import { RowInterface } from './structural/row.d';
 import { ColumnInterface } from './structural/column.d';
 import Block from '../block/block';
-import AttributeReaderComposite from './attribute-reader-composite';
+import AttributeReaderComposite from '../format/read/composite';
 
 /**
  * Build Class
@@ -167,8 +167,8 @@ export default class Build extends EventEmitter {
                 // If the stage is being built, we don't need to "build" anything, just return the stage as the
                 // new parent
                 return Promise.resolve(this.stage);
-            case 'row':
-                return this.buildRow(data, parent);
+            // case 'row':
+            //     return this.buildRow(data, parent);
             // case 'column':
             //     return this.buildColumn(data, parent);
             default:

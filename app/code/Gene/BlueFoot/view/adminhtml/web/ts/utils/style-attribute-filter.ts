@@ -2,11 +2,11 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../data-store";
+import {DataObject} from "../component/data-store";
 
 export default class StyleAttributeFilter {
     /**
-     * Filter style properties from array and format object keys
+     * Filter allowed style properties from object
      *
      * @param data
      * @returns {object}
@@ -39,33 +39,10 @@ export default class StyleAttributeFilter {
         Object.keys(data).map(
             function (key: string) {
                 if (Object.values(styleAttributes).indexOf(key) > -1) {
-                    let value = data[key];
-                    if (key === 'min_height') {
-                        value = value.replace('px', '') + 'px';
-                    }
-                    if (key === 'background_repeat') {
-                        value = value ? 'repeat' : 'no-repeat';
-                    }
-                    result[this.fromSnakeToCamelCase(key)] = value;
+                    result[key] = data[key];
                 }
             }.bind(this)
         );
-        console.log(result);
         return result;
-    }
-
-    /**
-     * Convert from snake case to camel case
-     *
-     * @param string
-     * @returns {string}
-     */
-    private fromSnakeToCamelCase(string: string): string {
-        let parts = string.split(/[_-]/);
-        let newString = '';
-        for (let i = 1; i < parts.length; i++) {
-            newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-        }
-        return parts[0] + newString;
     }
 }

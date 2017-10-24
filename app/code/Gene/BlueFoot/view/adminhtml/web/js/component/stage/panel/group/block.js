@@ -71,6 +71,12 @@ define(['exports', '../../../event-emitter', 'knockout'], function (exports, _ev
             return _this;
         }
 
+        Block.prototype.getDraggableConfig = function getDraggableConfig() {
+            return this.config.allowed_children.map(function (value, index) {
+                return '.' + value + '-container';
+            }).join(', ');
+        };
+
         return Block;
     }(_eventEmitter2.default);
 });

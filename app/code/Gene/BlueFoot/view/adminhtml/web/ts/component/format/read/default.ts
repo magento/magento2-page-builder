@@ -4,13 +4,13 @@
  */
 
 import _ from 'underscore';
-import DomAttributeMapper from "../../utils/dom-attribute-mapper";
+import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
 
 export default class Default {
-    domAttributeMapper: DomAttributeMapper;
+    styleAttributeMapper: StyleAttributeMapper;
 
     constructor() {
-        this.domAttributeMapper = new DomAttributeMapper();
+        this.styleAttributeMapper = new StyleAttributeMapper();
     }
 
     /**
@@ -30,7 +30,7 @@ export default class Default {
             }
         );
 
-        _.extend(data, this.domAttributeMapper.fromDom(styleAttributes));
+        _.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
 
         Object.keys(element.dataset).map(
             function (key) {

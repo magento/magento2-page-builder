@@ -75,7 +75,7 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
             _this.styleAttributeFilter = new _styleAttributeFilter2.default();
             _this.domAttributeMapper = new _domAttributeMapper2.default();
             // @todo populate from config
-            _this.childTemplate = 'Gene_BlueFoot/component/stage/structural/render/children.html';
+            _this.childTemplate = 'Gene_BlueFoot/component/block/render/children.html';
             if (stage) {
                 _this.stage = stage;
             }
@@ -212,24 +212,6 @@ define(['exports', '../../event-emitter', '../../block/factory', '../../stage/st
 
         EditableArea.prototype.onSortStop = function onSortStop(event, params) {
             jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
-        };
-
-        EditableArea.prototype.getCss = function getCss() {
-            var cssClasses = {};
-            if ('css_classes' in this.getData()) {
-                this.getData().css_classes.map(function (value, index) {
-                    return cssClasses[value] = true;
-                });
-            }
-            return cssClasses;
-        };
-
-        EditableArea.prototype.getStyle = function getStyle() {
-            return this.styleAttributeFilter.filter(this.getData());
-        };
-
-        EditableArea.prototype.getData = function getData() {
-            return this.stage.store.get(this.id);
         };
 
         return EditableArea;
