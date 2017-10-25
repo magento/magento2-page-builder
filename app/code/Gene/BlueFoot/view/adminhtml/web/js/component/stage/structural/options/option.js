@@ -1,17 +1,18 @@
-define(['exports'], function (exports) {
-  'use strict';
+define([], function () {
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var Option = exports.Option = function () {
+  /**
+   * Option Class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Option =
+  /*#__PURE__*/
+  function () {
     /**
      * Option constructor
      *
@@ -27,8 +28,54 @@ define(['exports'], function (exports) {
     function Option(parent, code, icon, title, action, classes, sort, template) {
       _classCallCheck(this, Option);
 
-      this.action = false;
-      this.template = null;
+      Object.defineProperty(this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "code", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "icon", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "title", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "action", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: false
+      });
+      Object.defineProperty(this, "classes", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "sort", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "template", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: null
+      });
       this.parent = parent;
       this.code = code;
       this.icon = icon;
@@ -46,10 +93,18 @@ define(['exports'], function (exports) {
      */
 
 
-    Option.prototype.getTemplate = function getTemplate() {
-      return this.template;
-    };
+    _createClass(Option, [{
+      key: "getTemplate",
+      value: function getTemplate() {
+        return this.template;
+      }
+    }]);
 
     return Option;
   }();
+
+  return {
+    Option: Option
+  };
 });
+//# sourceMappingURL=option.js.map

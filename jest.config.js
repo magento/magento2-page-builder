@@ -3,23 +3,31 @@ const path = require('path');
 
 const buildDir = path.join(__dirname, 'dev/build/dev');
 
-module.exports = jestMagento2.configure(
+const jestConfig = jestMagento2.configure(
     {
         testMatch: [
             "<rootDir>/dev/tests/js/**/*.test.js"
         ],
         modulePaths: [
-            "<rootDir>/app/code/Gene/BlueFoot/view/adminhtml/web/ts",
-            "<rootDir>/dev/tests/js/stubs"
+            "<rootDir>/dev/tests/js/fakes",
+            "<rootDir>/dev/tests/js/wrapper",
+            "<rootDir>/app/code/Gene/BlueFoot/view/adminhtml/ts",
+            "<rootDir>/node_modules"
         ],
-        moduleFileExtensions: ["js", "jsx", "json", "ts", "tsx"],
+        moduleFileExtensions: ["ts", "js", "json"],
         transform: {
-            "^.+\\.ts$": "<rootDir>/jest.transform.js"
+            "^.+\\.ts$": "<rootDir>/jest.transform.js",
+            "^.+\\.html": "<rootDir>/jest.transform-html.js"
         },
         testEnvironment: "jsdom-latest"
     },
     {
         rootDir: __dirname,
-        buildDir: buildDir
+        buildDir: buildDir,
+        pathMapping: {
+            Gene_BlueFoot: path.join(__dirname, 'app/code/Gene/BlueFoot/view/adminhtml/ts')
+        }
     }
 );
+
+module.exports = Object.assign(jestConfig);

@@ -1,85 +1,109 @@
-define(['exports', 'knockout', '../../../config'], function (exports, _knockout, _config) {
-    'use strict';
+define(["knockout", "../../../config"], function (_knockout, _config) {
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.ColumnBuilder = undefined;
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    var _knockout2 = _interopRequireDefault(_knockout);
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    var _config2 = _interopRequireDefault(_config);
+  /**
+   * ColumnBuilder Class
+   */
+  var ColumnBuilder =
+  /*#__PURE__*/
+  function () {
+    /**
+     * ColumnBuilder constructor
+     */
+    function ColumnBuilder() {
+      _classCallCheck(this, ColumnBuilder);
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
-    }
+      Object.defineProperty(this, "position", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(this, "visible", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(this, "sizes", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
+      Object.defineProperty(this, "template", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: 'Gene_BlueFoot/component/stage/structural/column/builder.html'
+      });
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
+      var columnOptions = _config.getInitConfig("column_definitions");
+
+      for (var i = 0; i < columnOptions.length; i++) {
+        if (columnOptions[i].displayed === true) {
+          this.sizes.push({
+            label: columnOptions[i].label,
+            className: columnOptions[i].className
+          });
         }
+      }
     }
+    /**
+     * Show the builder from the column options scope
+     */
 
-    var ColumnBuilder = exports.ColumnBuilder = function () {
-        /**
-         * ColumnBuilder constructor
-         */
-        function ColumnBuilder() {
-            _classCallCheck(this, ColumnBuilder);
 
-            this.position = _knockout2.default.observable('');
-            this.visible = _knockout2.default.observable(false);
-            this.sizes = _knockout2.default.observableArray([]);
-            this.template = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
-            var columnOptions = _config2.default.getInitConfig("column_definitions");
-            for (var i = 0; i < columnOptions.length; i++) {
-                if (columnOptions[i].displayed === true) {
-                    this.sizes.push({
-                        label: columnOptions[i].label,
-                        className: columnOptions[i].className
-                    });
-                }
-            }
+    _createClass(ColumnBuilder, [{
+      key: "showFromOption",
+      value: function showFromOption() {
+        this.position('top');
+        this.visible(true);
+      }
+    }, {
+      key: "show",
+
+      /**
+       * Change the visibility to visible
+       */
+      value: function show() {
+        this.visible(true);
+      }
+    }, {
+      key: "hide",
+
+      /**
+       * Change the visibility to hidden
+       */
+      value: function hide() {
+        this.visible(false);
+      }
+    }, {
+      key: "addColumn",
+
+      /**
+       * Proxy to the correct parent's add column function
+       */
+      value: function addColumn(parents, data) {
+        // Nest a column (within a column or on a row)
+        if (this.position() == 'top') {
+          parents[1].addColumn(data);
+        } else {
+          // Add to left or right side of current column
+          parents[1].insertColumnAtIndex(this.position(), parents[1], data);
         }
-        /**
-         * Show the builder from the column options scope
-         */
+      }
+    }]);
 
+    return ColumnBuilder;
+  }();
 
-        ColumnBuilder.prototype.showFromOption = function showFromOption() {
-            this.position('top');
-            this.visible(true);
-        };
-
-        /**
-         * Change the visibility to visible
-         */
-        ColumnBuilder.prototype.show = function show() {
-            this.visible(true);
-        };
-
-        /**
-         * Change the visibility to hidden
-         */
-        ColumnBuilder.prototype.hide = function hide() {
-            this.visible(false);
-        };
-
-        /**
-         * Proxy to the correct parent's add column function
-         */
-        ColumnBuilder.prototype.addColumn = function addColumn(parents, data) {
-            // Nest a column (within a column or on a row)
-            if (this.position() == 'top') {
-                parents[1].addColumn(data);
-            } else {
-                // Add to left or right side of current column
-                parents[1].insertColumnAtIndex(this.position(), parents[1], data);
-            }
-        };
-
-        return ColumnBuilder;
-    }();
+  return {
+    ColumnBuilder: ColumnBuilder
+  };
 });
+//# sourceMappingURL=builder.js.map

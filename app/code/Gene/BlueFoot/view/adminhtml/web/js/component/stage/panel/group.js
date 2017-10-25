@@ -1,64 +1,104 @@
-define(['exports', 'knockout'], function (exports, _knockout) {
-    'use strict';
+define(["knockout"], function (_knockout) {
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.Group = undefined;
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    var _knockout2 = _interopRequireDefault(_knockout);
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+  /**
+   * Group Class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Group =
+  /*#__PURE__*/
+  function () {
+    /**
+     * Group constructor
+     *
+     * @param id
+     * @param group
+     * @param blocks
+     *
+     * @todo change group type
+     */
+    function Group(id, group) {
+      var blocks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+      _classCallCheck(this, Group);
+
+      Object.defineProperty(this, "id", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(this, "code", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(this, "label", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(this, "icon", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(this, "sort", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(this, "blocks", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
+      Object.defineProperty(this, "active", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(this, "hidden", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      this.id(id);
+      this.code(group.code);
+      this.label(group.label);
+      this.icon(group.icon);
+      this.sort(group.sort);
+      this.blocks(blocks);
     }
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var Group = exports.Group = function () {
-        /**
-         * Group constructor
-         *
-         * @param id
-         * @param group
-         * @param blocks
-         *
-         * @todo change group type
-         */
-        function Group(id, group) {
-            var blocks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-            _classCallCheck(this, Group);
-
-            this.id = _knockout2.default.observable();
-            this.code = _knockout2.default.observable('');
-            this.label = _knockout2.default.observable('');
-            this.icon = _knockout2.default.observable('');
-            this.sort = _knockout2.default.observable();
-            this.blocks = _knockout2.default.observableArray([]);
-            this.active = _knockout2.default.observable(false);
-            this.hidden = _knockout2.default.observable(false);
-            this.id(id);
-            this.code(group.code);
-            this.label(group.label);
-            this.icon(group.icon);
-            this.sort(group.sort);
-            this.blocks(blocks);
-        }
-        /**
-         * Toggle the group
-         */
+    /**
+     * Toggle the group
+     */
 
 
-        Group.prototype.toggle = function toggle() {
-            this.active(!this.active());
-        };
+    _createClass(Group, [{
+      key: "toggle",
+      value: function toggle() {
+        this.active(!this.active());
+      }
+    }]);
 
-        return Group;
-    }();
+    return Group;
+  }();
+
+  return {
+    Group: Group
+  };
 });
+//# sourceMappingURL=group.js.map

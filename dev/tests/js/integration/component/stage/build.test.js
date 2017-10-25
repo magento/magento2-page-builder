@@ -1,68 +1,22 @@
-jest.mock(
-    '::advanced-cms-init-config',
-    () => {
-        return {
-            column: 6,
-            column_options: [],
-            column_definitions: [],
-            contentTypes: {
-                row: {role: 'row'},
-                column: {role: 'column'}
-            }
-        };
-    },
-    {virtual: true}
-);
+const stageFactory = require('stage');
 
-jest.mock(
-    '::mage/translate',
-    () => { return (t) => t },
-    {virtual: true}
-);
+describe('Stage', () => {
+    const stage = stageFactory(jest);
 
-jest.mock(
-    '::moduleLoader',
-    () => { return function (dependency) {
-        return require('::' + dependency);
-    } },
-    {virtual: true}
-);
+    it('is loading data', () => {
+        stage.setupWithContent('<div data-role="row"><div data-role="column"><span></span></div> <div data-role="column"></div></div>');
 
-const config = require('component/config');
-const Stage = require('component/stage');
-const Build = require('component/stage/build');
-const ko = require('::ko');
-
-const wysiwyg = require('../../../stubs/wysiwyg');
-
-/**
- * @jest-environment jsdom
- */
-describe('Build', () => {
-    it('set configuration', (done) => {
-        jest.useFakeTimers();
-        const build = new Build();
-        const structure = build.parseStructure('<div data-role="row">\n        <div data-role="column"></div>\n    </div>');
-
-        const stageContent = ko.observableArray([]);
-
-        const stage = new Stage(wysiwyg(), stageContent);
-
-        stage.build(build, structure);
-        stage.on('stageReady', () => {
-            expect(stageContent()).toEqual(undefined);
-            done();
-        });
-
-        jest.runAllTimers();
-
-        //build.buildStage(stage, stageContent);
-
-
+        return expect(stage.dataTree()).resolves.toEqual([{
+            role: "row",
+            _children: [
+                {role: 'column', _children: []},
+                {role: 'column', _children: []},
+            ]
+        }]);
     });
 
-    it('dataset works', () => {
-        const div = document.createElement('div');
-        expect(div.dataset).toEqual({});
-    })
+    it('is rendering data', () => {
+        stage.setupWithContent('<div data-role="row"><div data-role="column"><span></span></div><div data-role="column"></div></div>');
+        expect(stage.renderOutput()).resolves.toEqual('<div data-role="row"><div data-role="column"></div><div data-role="column"></div></div>');
+    });
 });

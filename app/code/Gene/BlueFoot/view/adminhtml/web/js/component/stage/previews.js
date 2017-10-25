@@ -1,60 +1,59 @@
-define(['exports', '../config', '../block/preview/block'], function (exports, _config, _block) {
-    'use strict';
+define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loader"], function (_config, _block, _loader) {
+  var previews = [];
+  /**
+   * Load all preview instances into our cache
+   */
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
+  function load() {
+    var contentBlocks = _config.getInitConfig("contentTypes");
+
+    var blocksToLoad = [],
+        blockCodes = []; // @todo should be string, but TS complains
+
+    Object.keys(contentBlocks).forEach(function (blockKey) {
+      var block = contentBlocks[blockKey];
+
+      if (typeof block.preview_component === 'string') {
+        blockCodes.push(blockKey);
+        blocksToLoad.push(block.preview_component);
+      }
+    }); // @todo this could create a race condition loading these async upfront
+
+    (0, _loader)(blocksToLoad, function () {
+      for (var _len = arguments.length, blocks = new Array(_len), _key = 0; _key < _len; _key++) {
+        blocks[_key] = arguments[_key];
+      }
+
+      for (var arg = 0; arg < blocks.length; ++arg) {
+        previews[blockCodes[arg]] = blocks[arg];
+      }
     });
-    exports.load = load;
-    exports.default = get;
+  }
+  /**
+   * Get preview instance for a specific block
+   *
+   * @param {Block} block
+   * @param blockConfig
+   * @returns {PreviewBlock}
+   */
 
-    var _config2 = _interopRequireDefault(_config);
 
-    var _block2 = _interopRequireDefault(_block);
+  function get(block, blockConfig) {
+    var code = blockConfig.name;
+    var instance;
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+    if (typeof previews[code] === 'undefined') {
+      instance = _block;
+    } else {
+      instance = previews[code];
     }
 
-    var previews = [];
-    /**
-     * Load all preview instances into our cache
-     */
-    function load() {
-        var contentBlocks = _config2.default.getInitConfig("contentTypes");
-        var blocksToLoad = [],
-            blockCodes = []; // @todo should be string, but TS complains
-        Object.keys(contentBlocks).forEach(function (blockKey) {
-            var block = contentBlocks[blockKey];
-            if (typeof block.preview_component === 'string') {
-                blockCodes.push(blockKey);
-                blocksToLoad.push(block.preview_component);
-            }
-        });
-        // @todo this could create a race condition loading these async upfront
-        require(blocksToLoad, function () {
-            for (var arg = 0; arg < arguments.length; ++arg) {
-                previews[blockCodes[arg]] = arguments[arg].default;
-            }
-        });
-    }
-    /**
-     * Get preview instance for a specific block
-     *
-     * @param {Block} block
-     * @param blockConfig
-     * @returns {PreviewBlock}
-     */
-    function get(block, blockConfig) {
-        var code = blockConfig.name;
-        var instance = void 0;
-        if (typeof previews[code] === 'undefined') {
-            instance = _block2.default;
-        } else {
-            instance = previews[code];
-        }
-        return new instance(block, blockConfig);
-    }
-    // @todo move these into Config class
+    return new instance(block, blockConfig);
+  } // @todo move these into Config class
+
+
+  return Object.assign(get, {
+    load: load
+  });
 });
+//# sourceMappingURL=previews.js.map

@@ -3,8 +3,10 @@ task:
     settings:
       build_directory: %build_directory%
       database_prefix: %mysql_database_prefix%
-      custom_mysql_client_command: %mysql_execute_command%
       cache_directory: var/cache
+      db_host: %mysql_hostname%
+      db_user: %mysql_username%
+      db_password: %mysql_password%
   Dev:
     CreateBuild:
       settings:
@@ -13,20 +15,20 @@ task:
         skeletons:
           ce_mainline:
             strategy: monorepo
-            repository: git@github.com:magento/magento2ce.git
+            repository: git@github.com:magento-obsessive-owls/magento2ce.git
           ee_mainline:
             strategy: link
-            repository: git@github.com:magento/magento2ce.git
+            repository: git@github.com:magento-obsessive-owls/magento2ce.git
             link_script: ee
             links:
-              ee: git@github.com:magento/magento2ee.git
+              ee: git@github.com:magento-obsessive-owls/magento2ee.git
           b2b_mainline:
             strategy: link
-            repository: git@github.com:magento/magento2ce.git
+            repository: git@github.com:magento-obsessive-owls/magento2ce.git
             link_script: ee
             links:
-              ee: git@github.com:magento/magento2ee.git
-              b2b: git@github.com:magento/magento2b2b.git
+              ee: git@github.com:magento-obsessive-owls/magento2ee.git
+              b2b: git@github.com:magento-obsessive-owls/magento2b2b.git
           ce_release:
             strategy: metapackage
             repository: https://repo.magento.com/
@@ -48,6 +50,16 @@ task:
           db-host: %mysql_hostname%
           db-user: %mysql_username%
           db-password: %mysql_password%
+          backend-frontname: admin
+          admin-use-security-key: '0'
           language: en_US
           timezone: UTC
           currency: USD
+    AcceptanceTest:
+      settings:
+        deploy_directory: var/acceptance
+        admin_user: %admin_username%
+        admin_password: %admin_password%
+        skeletons:
+          bluefoot:
+            - dev/tests/acceptance/tests/functional/Magento/FunctionalTest

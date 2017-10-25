@@ -4,7 +4,7 @@ import { Block as BlockInterface } from '../../block/block.d';
 import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
-import StyleAttributeFilter from "../../stage/style-attribute-filter";
+import StyleAttributeFilter from "../../../utils/style-attribute-filter";
 import DomAttributeMapper from "../../../utils/dom-attribute-mapper";
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
