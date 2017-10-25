@@ -1,7 +1,7 @@
 import Block from './block';
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
-import requireJs from 'moduleLoader';
+import loadModule from 'Gene_BlueFoot/js/component/loader';
 
 
 interface ConfigObject {
@@ -36,8 +36,9 @@ export default function createBlock(config: ConfigObject, parent: EditableArea, 
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {
-        requireJs([getBlockComponentPath(config)], (BlockInstance: any) => {
-            return resolve(new BlockInstance.default(parent, stage, config, formData));
+        const componentPath = getBlockComponentPath(config);
+        loadModule([componentPath], (factory: any) => {
+            return resolve(new factory(parent, stage, config, formData));
         }, (error: string) => {
             return reject(error);
         });

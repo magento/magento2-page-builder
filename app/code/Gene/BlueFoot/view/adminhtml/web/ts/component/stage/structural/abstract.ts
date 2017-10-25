@@ -23,7 +23,6 @@ import _ from 'underscore';
  */
 export default class Structural extends EditableArea implements StructuralInterface {
     parent: EditableArea;
-    stage: Stage;
     title: string;
     config: any;
     wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
@@ -65,7 +64,6 @@ export default class Structural extends EditableArea implements StructuralInterf
         this.attributeMapper = new AttributeMapper();
 
         this.parent = parent;
-        this.stage = stage;
         this.config = config;
     }
 
