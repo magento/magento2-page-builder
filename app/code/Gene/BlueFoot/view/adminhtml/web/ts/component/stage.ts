@@ -7,7 +7,7 @@ import DataStore from "./data-store";
 import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
-import jQuery from 'jquery';
+import $ from 'jquery';
 
 /**
  * Stage class
@@ -98,15 +98,15 @@ export default class Stage extends EditableArea implements StageInterface {
     goFullScreen(): void {
         let isFullScreen = this.parent.isFullScreen();
         if (!isFullScreen) {
-            this.originalScrollTop = jQuery(window).scrollTop();
+            this.originalScrollTop = $(window).scrollTop();
             _.defer(function () {
-                jQuery(window).scrollTop(0);
+                $(window).scrollTop(0);
             });
         }
 
         this.stage.parent.isFullScreen(!isFullScreen);
         if (isFullScreen) {
-            jQuery(window).scrollTop(this.originalScrollTop);
+            $(window).scrollTop(this.originalScrollTop);
         }
     }
 
