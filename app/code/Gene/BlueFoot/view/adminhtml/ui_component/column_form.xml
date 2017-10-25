@@ -11,7 +11,6 @@
             <item name="provider" xsi:type="string">column_form.column_form_data_source</item>
             <item name="deps" xsi:type="string">column_form.column_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Heading</item>
         <item name="config" xsi:type="array">
             <item name="dataScope" xsi:type="string">data</item>
             <item name="namespace" xsi:type="string">column_form</item>
@@ -23,12 +22,7 @@
             <argument name="class" xsi:type="string">Magento\Cms\Model\Page\DataProvider</argument>
             <argument name="name" xsi:type="string">column_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">page_id</argument>
-            <argument name="requestFieldName" xsi:type="string">no_id</argument>
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="cms/page/save"/>
-                </item>
-            </argument>
+            <argument name="requestFieldName" xsi:type="string">page_id</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -36,7 +30,6 @@
             </item>
         </argument>
     </dataSource>
-
     <fieldset name="appearance">
         <settings>
             <label translate="true">Appearance</label>
@@ -54,11 +47,11 @@
                 <addAfter>px</addAfter>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
         </field>
     </fieldset>
-
     <fieldset name="background">
         <settings>
             <label translate="true">Background</label>
