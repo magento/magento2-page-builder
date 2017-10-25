@@ -4,7 +4,7 @@
  */
 
 import _ from 'underscore';
-import requireJs from 'require';
+import loadComponent from 'Gene_BlueFoot/js/component/loader';
 
 export default class AttributeReaderComposite {
     private readers = {
@@ -32,7 +32,7 @@ export default class AttributeReaderComposite {
     read (element: HTMLElement): object {
         if (this.readers.hasOwnProperty(element.dataset.role)) {
             let readPromise = new Promise(function(resolve: Function, reject: Function) {
-                requireJs(this.readers[element.dataset.role], function (...args: any[]) {
+                loadComponent(this.readers[element.dataset.role], function (...args: any[]) {
                     resolve(args)
                 }, reject);
             }.bind(this));

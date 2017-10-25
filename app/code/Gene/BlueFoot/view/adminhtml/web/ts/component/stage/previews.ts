@@ -1,6 +1,7 @@
 import Config from '../config';
 import PreviewBlock from '../block/preview/block';
 import Block from "../block/block";
+import loadModule from 'Gene_BlueFoot/js/component/loader';
 
 let previews: Array<any> = [];
 
@@ -20,9 +21,9 @@ export function load(): void {
     });
 
     // @todo this could create a race condition loading these async upfront
-    require(blocksToLoad, function () {
-        for (let arg: number = 0; arg < arguments.length; ++arg) {
-            previews[blockCodes[arg]] = arguments[arg].default;
+    loadModule(blocksToLoad, function (...blocks: any[]) {
+        for (let arg: number = 0; arg < blocks.length; ++arg) {
+            previews[blockCodes[arg]] = blocks[arg];
         }
     });
 }
