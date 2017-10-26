@@ -125,4 +125,3 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
 
   return Panel;
 });
-//# sourceMappingURL=panel.js.map

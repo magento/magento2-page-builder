@@ -54,7 +54,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     constructor(parent: EditableArea, stage: Stage, config: any = {}) {
         super(stage);
-        super.setChildren(this.children);
+        this.setChildren(this.children);
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);

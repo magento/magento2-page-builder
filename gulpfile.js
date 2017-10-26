@@ -53,7 +53,7 @@ gulp.task('buildChanged', function () {
  */
 gulp.task('watch', function () {
     gulp.watch([
-        path.join(config.basePath, config.tsPath)
+        path.join(config.basePath, config.tsPath, '**/*.ts')
     ], ['buildChanged']);
 });
 

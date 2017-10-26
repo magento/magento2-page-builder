@@ -1,6 +1,7 @@
 task:
   global:
     settings:
+      test_directory: var/acceptance
       build_directory: %build_directory%
       database_prefix: %mysql_database_prefix%
       cache_directory: var/cache
@@ -52,14 +53,25 @@ task:
           db-password: %mysql_password%
           backend-frontname: admin
           admin-use-security-key: '0'
+          use-rewrites: '1'
+          magento-init-params: MAGE_MODE=developer
           language: en_US
           timezone: UTC
           currency: USD
-    AcceptanceTest:
+    RunAcceptanceTest:
       settings:
-        deploy_directory: var/acceptance
+        groups:
+          - bluefoot
+    GenerateAcceptanceTest:
+      settings:
         admin_user: %admin_username%
         admin_password: %admin_password%
         skeletons:
-          bluefoot:
-            - dev/tests/acceptance/tests/functional/Magento/FunctionalTest
+          default:
+            - dev/tests/acceptance/tests/functional/Magento/FunctionalTest/*
+            - <buildDir>/dev/tests/acceptance/tests/functional/Magento/FunctionalTest/Backend
+            - <buildDir>/dev/tests/acceptance/tests/functional/Magento/FunctionalTest/Cms
+    SeleniumServer:
+      settings:
+        server_url: https://selenium-release.storage.googleapis.com/3.6/selenium-server-standalone-3.6.0.jar
+        chrome_driver_url: https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip

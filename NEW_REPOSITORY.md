@@ -1,29 +1,71 @@
-# BlueFoot Magento 2 module
-The BlueFoot module provides drag & drop content building functionality to Magento 2. Originally produced by Gene Commerce and acquired at the start of 2017 by Magento.
+# Development in new repository structure
 
 ### Development Installation
 
-1. Install all composer dependencies
+1. Install all dependencies
     ```bash
-    composer install
-    yarn install
+    composer install && yarn install
     ```
         
-
 2. Configure robo (docker or local mysql):
 
     **Docker mysql** (make sure container has either port or ip address accessible to host)
     ```bash
-    composer robo build:configuration-from-docker-container [name of mysql container]
+    vendor/bin/robo build:configuration-from-docker-container [name of mysql container]
     ```
     
-    ***Local mysql***
+    **Local mysql**
     ```bash
-    composer robo build:configuration [mysql host] [mysql username] [mysql password]
+    vendor/bin/robo build:configuration [mysql host] [mysql username] [mysql password]
     ```
     
-3. Create development build
+    
+### Running Tests
 
-    ```bash
-    composer robo build:create dev [your prefered url]
-    ```
+Before running any tests, you need to create a development build
+
+```bash
+vendor/bin/robo build:create dev [your prefered url] [magento branch of current story]
+```
+
+#### JavaScript Tests
+
+##### Command Line
+To run a complete suite you can just execute this simple command
+
+```bash
+npx jest
+```
+
+If you want to execute a separate test file, just specify its path
+
+```bash
+npx jest [path-to-file]
+```
+
+##### PHPStorm Integration
+
+1. Enable Node & NPM integration in **PHPStorm > Preferences > Language & Frameworks > NodeJs & NPM > Enable**
+
+2. Before you can run any javascript tests you need to export jest configuration file for PHPStorm.
+```
+npx gulp jestConfiguration
+```
+
+3. Then you have specify jest.config.json in **PHPStorm > Run > Edit Configurations > Defaults -> Jest:**
+    
+    - Select your jest.config.json into **Configuration File** file
+    
+    - Specify your repo directory in **Working directory** field
+         
+    - Node runtime & jest executable should be automatically pre-filled
+
+Now you can just right click on any JS test file and run them in your IDE.
+
+#### Functional Tests
+
+As soon as your build is accessible via specified url in `build:create` command
+
+```bash
+vendor/bin/robo run:functional-test dev [your prefered url] [magento branch of current story]
+```

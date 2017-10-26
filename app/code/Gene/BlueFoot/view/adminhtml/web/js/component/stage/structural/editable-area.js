@@ -1,15 +1,5 @@
 define(["../../event-emitter", "../../block/factory", "../../../utils/style-attribute-filter", "../../../utils/dom-attribute-mapper", "../../../utils/array", "underscore", "knockout", "mageUtils", "mage/translate"], function (_eventEmitter, _factory, _styleAttributeFilter, _domAttributeMapper, _array, _underscore, _knockout, _mageUtils, _translate) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
    * Class EditableArea
@@ -19,7 +9,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
   var EditableArea =
   /*#__PURE__*/
   function (_EventEmitter) {
-    _inherits(EditableArea, _EventEmitter);
+    _inheritsLoose(EditableArea, _EventEmitter);
 
     // @todo populate from config
 
@@ -31,9 +21,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
     function EditableArea(stage) {
       var _this;
 
-      _classCallCheck(this, EditableArea);
-
-      _this = _possibleConstructorReturn(this, (EditableArea.__proto__ || Object.getPrototypeOf(EditableArea)).call(this));
+      _this = _EventEmitter.call(this) || this;
       Object.defineProperty(_this, "id", {
         configurable: true,
         enumerable: true,
@@ -108,223 +96,213 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
      */
 
 
-    _createClass(EditableArea, [{
-      key: "setChildren",
-      value: function setChildren(children) {
-        var _this2 = this;
+    var _proto = EditableArea.prototype;
 
-        this.children = children; // Attach a subscription to the children of every editable area to fire the stageUpdated event
+    _proto.setChildren = function setChildren(children) {
+      var _this2 = this;
 
-        children.subscribe(function () {
-          return _this2.stage.emit('stageUpdated');
+      this.children = children; // Attach a subscription to the children of every editable area to fire the stageUpdated event
+
+      children.subscribe(function () {
+        return _this2.stage.emit('stageUpdated');
+      });
+    };
+    /**
+     * Return the children of the current element
+     *
+     * @returns {KnockoutObservableArray<Structural>}
+     */
+
+
+    _proto.getChildren = function getChildren() {
+      return this.children;
+    };
+    /**
+     * Duplicate a child of the current instance
+     *
+     * @param {Structural} child
+     * @param {boolean} autoAppend
+     * @returns {Structural}
+     */
+
+
+    _proto.duplicateChild = function duplicateChild(child, autoAppend) {
+      if (autoAppend === void 0) {
+        autoAppend = true;
+      }
+
+      var store = this.stage.store,
+          instance = child.constructor,
+          duplicate = new instance(child.parent, child.stage, child.config),
+          index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
+
+      store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate
+
+      if (child.children().length > 0) {
+        child.children().forEach(function (subChild, index) {
+          duplicate.addChild(duplicate.duplicateChild(subChild, false), index);
         });
       }
-      /**
-       * Return the children of the current element
-       *
-       * @returns {KnockoutObservableArray<Structural>}
-       */
 
-    }, {
-      key: "getChildren",
-      value: function getChildren() {
-        return this.children;
+      if (autoAppend) {
+        this.addChild(duplicate, index);
       }
-      /**
-       * Duplicate a child of the current instance
-       *
-       * @param {Structural} child
-       * @param {boolean} autoAppend
-       * @returns {Structural}
-       */
 
-    }, {
-      key: "duplicateChild",
-      value: function duplicateChild(child) {
-        var autoAppend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-        var store = this.stage.store,
-            instance = child.constructor,
-            duplicate = new instance(child.parent, child.stage, child.config),
-            index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
+      return duplicate;
+    };
+    /**
+     * Retrieve the stage instance
+     *
+     * @returns {Stage}
+     */
 
-        store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate
 
-        if (child.children().length > 0) {
-          child.children().forEach(function (subChild, index) {
-            duplicate.addChild(duplicate.duplicateChild(subChild, false), index);
+    _proto.getStage = function getStage() {
+      return this.stage;
+    };
+    /**
+     * Add a child into the observable array
+     *
+     * @param child
+     * @param index
+     */
+
+
+    _proto.addChild = function addChild(child, index) {
+      child.parent = this;
+      child.stage = this.stage;
+
+      if (index) {
+        // Use the arrayUtil function to add the item in the correct place within the array
+        (0, _array.moveArrayItemIntoArray)(child, this.children, index);
+      } else {
+        this.children.push(child);
+      }
+    };
+    /**
+     * Remove a child from the observable array
+     *
+     * @param child
+     */
+
+
+    _proto.removeChild = function removeChild(child) {
+      (0, _array.removeArrayItem)(this.children, child);
+    };
+    /**
+     * Handle a block being dropped into the structural element
+     *
+     * @param event
+     * @param params
+     * @returns {Promise<Block|T>}
+     */
+
+
+    _proto.onBlockDropped = function onBlockDropped(event, params) {
+      var _this3 = this;
+
+      var index = params.index || 0;
+      new Promise(function (resolve, reject) {
+        if (params.block) {
+          return (0, _factory)(params.block.config, _this3, _this3.stage).then(function (block) {
+            _this3.addChild(block, index);
+
+            resolve(block);
+            block.emit('blockReady');
+          }).catch(function (error) {
+            reject(error);
           });
-        }
-
-        if (autoAppend) {
-          this.addChild(duplicate, index);
-        }
-
-        return duplicate;
-      }
-      /**
-       * Retrieve the stage instance
-       *
-       * @returns {Stage}
-       */
-
-    }, {
-      key: "getStage",
-      value: function getStage() {
-        return this.stage;
-      }
-      /**
-       * Add a child into the observable array
-       *
-       * @param child
-       * @param index
-       */
-
-    }, {
-      key: "addChild",
-      value: function addChild(child, index) {
-        child.parent = this;
-        child.stage = this.stage;
-
-        if (index) {
-          // Use the arrayUtil function to add the item in the correct place within the array
-          (0, _array.moveArrayItemIntoArray)(child, this.children, index);
         } else {
-          this.children.push(child);
+          reject('Parameter block missing from event.');
         }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+    /**
+     * Capture a block instance being dropped onto this element
+     *
+     * @param event
+     * @param params
+     */
+
+
+    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(event, params) {
+      this.addChild(params.blockInstance, params.index);
+      /*
+      if (ko.processAllDeferredBindingUpdates) {
+          ko.processAllDeferredBindingUpdates();
+      }*/
+
+      params.blockInstance.emit('blockMoved');
+    };
+    /**
+     * Handle event to remove block
+     *
+     * @param event
+     * @param params
+     */
+
+
+    _proto.onBlockRemoved = function onBlockRemoved(event, params) {
+      params.block.emit('blockBeforeRemoved');
+      this.removeChild(params.block); // Remove the instance from the data store
+
+      this.stage.store.remove(this.id);
+      /*
+      if (ko.processAllDeferredBindingUpdates) {
+          ko.processAllDeferredBindingUpdates();
+      }*/
+    };
+    /**
+     * Handle event when a block is sorted within it's current container
+     *
+     * @param event
+     * @param params
+     */
+
+
+    _proto.onBlockSorted = function onBlockSorted(event, params) {
+      var originalIndex = _knockout.utils.arrayIndexOf(this.children(), params.block);
+
+      if (originalIndex !== params.index) {
+        (0, _array.moveArrayItem)(this.children, originalIndex, params.index);
       }
-      /**
-       * Remove a child from the observable array
-       *
-       * @param child
-       */
 
-    }, {
-      key: "removeChild",
-      value: function removeChild(child) {
-        (0, _array.removeArrayItem)(this.children, child);
-      }
-      /**
-       * Handle a block being dropped into the structural element
-       *
-       * @param event
-       * @param params
-       * @returns {Promise<Block|T>}
-       */
+      params.block.emit('blockMoved');
+    };
+    /**
+     * Event called when starting starts on this element
+     *
+     * @param event
+     * @param params
+     */
 
-    }, {
-      key: "onBlockDropped",
-      value: function onBlockDropped(event, params) {
-        var _this3 = this;
 
-        var index = params.index || 0;
-        new Promise(function (resolve, reject) {
-          if (params.block) {
-            return (0, _factory)(params.block.config, _this3, _this3.stage).then(function (block) {
-              _this3.addChild(block, index);
+    _proto.onSortStart = function onSortStart(event, params) {
+      var originalEle = jQuery(params.originalEle);
+      originalEle.show();
+      originalEle.addClass('bluefoot-sorting-original'); // Reset the width & height of the helper
 
-              resolve(block);
-              block.emit('blockReady');
-            }).catch(function (error) {
-              reject(error);
-            });
-          } else {
-            reject('Parameter block missing from event.');
-          }
-        }).catch(function (error) {
-          console.error(error);
-        });
-      }
-      /**
-       * Capture a block instance being dropped onto this element
-       *
-       * @param event
-       * @param params
-       */
+      jQuery(params.helper).css({
+        width: '',
+        height: ''
+      }).html(jQuery('<h3 />').text(this.title).html());
+    };
+    /**
+     * Event called when sorting stops on this element
+     *
+     * @param event
+     * @param params
+     */
 
-    }, {
-      key: "onBlockInstanceDropped",
-      value: function onBlockInstanceDropped(event, params) {
-        this.addChild(params.blockInstance, params.index);
-        /*
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
-        }*/
 
-        params.blockInstance.emit('blockMoved');
-      }
-      /**
-       * Handle event to remove block
-       *
-       * @param event
-       * @param params
-       */
-
-    }, {
-      key: "onBlockRemoved",
-      value: function onBlockRemoved(event, params) {
-        params.block.emit('blockBeforeRemoved');
-        this.removeChild(params.block); // Remove the instance from the data store
-
-        this.stage.store.remove(this.id);
-        /*
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
-        }*/
-      }
-      /**
-       * Handle event when a block is sorted within it's current container
-       *
-       * @param event
-       * @param params
-       */
-
-    }, {
-      key: "onBlockSorted",
-      value: function onBlockSorted(event, params) {
-        var originalIndex = _knockout.utils.arrayIndexOf(this.children(), params.block);
-
-        if (originalIndex !== params.index) {
-          (0, _array.moveArrayItem)(this.children, originalIndex, params.index);
-        }
-
-        params.block.emit('blockMoved');
-      }
-      /**
-       * Event called when starting starts on this element
-       *
-       * @param event
-       * @param params
-       */
-
-    }, {
-      key: "onSortStart",
-      value: function onSortStart(event, params) {
-        var originalEle = jQuery(params.originalEle);
-        originalEle.show();
-        originalEle.addClass('bluefoot-sorting-original'); // Reset the width & height of the helper
-
-        jQuery(params.helper).css({
-          width: '',
-          height: ''
-        }).html(jQuery('<h3 />').text(this.title).html());
-      }
-      /**
-       * Event called when sorting stops on this element
-       *
-       * @param event
-       * @param params
-       */
-
-    }, {
-      key: "onSortStop",
-      value: function onSortStop(event, params) {
-        jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
-      }
-    }]);
+    _proto.onSortStop = function onSortStop(event, params) {
+      jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
+    };
 
     return EditableArea;
   }(_eventEmitter);
 
   return EditableArea;
 });
-//# sourceMappingURL=editable-area.js.map

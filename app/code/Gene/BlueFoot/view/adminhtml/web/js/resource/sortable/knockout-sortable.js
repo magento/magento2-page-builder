@@ -1,19 +1,4 @@
-;(function(factory) {
-    if (typeof define === "function" && define.amd) {
-        // AMD anonymous module
-        define(["knockout", "jquery", "underscore", "jquery/ui"], factory);
-    } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-        // CommonJS module
-        var ko = require("knockout"),
-            jQuery = require("jquery"),
-            _ = require("underscore");
-        require("jquery/ui");
-        factory(ko, jQuery, _);
-    } else {
-        // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery, window._);
-    }
-})(function(ko, jQuery, _) {
+define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _) {
 
     /**
      * Retrieve the view model for an element

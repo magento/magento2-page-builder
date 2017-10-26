@@ -17,7 +17,7 @@ const jestConfig = jestMagento2.configure(
         moduleFileExtensions: ["ts", "js", "json"],
         transform: {
             "^.+\\.ts$": "<rootDir>/jest.transform.js",
-            "^.+\\.html": "<rootDir>/jest.transform-html.js"
+            "^.+\\.html$": "<rootDir>/jest.transform-html.js"
         },
         testEnvironment: "jsdom-latest"
     },

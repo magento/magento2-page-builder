@@ -38,4 +38,3 @@ define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
 
   return createBlock;
 });
-//# sourceMappingURL=factory.js.map
