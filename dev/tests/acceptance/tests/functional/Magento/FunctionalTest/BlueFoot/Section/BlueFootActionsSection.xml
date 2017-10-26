@@ -44,6 +44,16 @@
         <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
         <element name="nothingFound" type="text" selector='//*[@id="bluefoot-panel"]/div[2]/div' timeout="30"/>
     </section>
+    <section name="CmsPageSection">
+        <element name="cmsPageSaveButton" type="button" selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']"/>
+        <element name="pageTitle" type="input" selector="//*[@name='title']"/>
+    </section>
+    <section name="CmsPageGrid">
+        <element name="cmsPageSearchInput" type="input" selector="//*[@id='fulltext']"/>
+        <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
+        <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
+        <element name="firstItemEditButton" type="button" selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']"/>
+    </section>
     <section name="BlueFootColumnSection">
         <element name="addRow" type="button" selector='//*[@class="bluefoot-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
@@ -66,6 +76,7 @@
         <element name="backgroundPositionControl" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_position"]'/>
         <element name="backgroundSizeControl" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_size"]'/>
         <element name="backgroundRepeatControl" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_repeat"]'/>
+        <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundAttachmentControl" type="input" selector='//div[@data-index="background"]/descendant::select[@name="background_attachment"]'/>
 
         <element name="minHeightField" type="input" selector='//div[@data-index="appearance"]/descendant::div[@data-index="min_height" and contains(@class, "_required")]'/>
@@ -73,5 +84,17 @@
         <element name="backgroundSizeField" type="select" selector='//div[@data-index="background"]/descendant::div[@data-index="background_size" and contains(@class, "_required")]'/>
         <element name="backgroundRepeatField" type="input" selector='//div[@data-index="background"]/descendant::div[@data-index="background_repeat" and contains(@class, "_required")]'/>
         <element name="backgroundAttachmentField" type="select" selector='//div[@data-index="background"]/descendant::div[@data-index="background_attachment" and contains(@class, "_required")]'/>
+        <element name="columnSaveButton" type="button" selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']"/>
+    </section>
+    <section name="TwoColumnsOnFrontend">
+        <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 100px;')]"/>
+        <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
+        <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: cover;')]"/>
+        <element name="column1BackgroundRepeat" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: scroll;')]"/>
+
+        <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
+        <element name="column2BackgroundRepeat" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]"/>
     </section>
 </config>
