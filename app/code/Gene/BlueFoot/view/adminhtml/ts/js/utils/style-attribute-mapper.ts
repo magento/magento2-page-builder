@@ -16,6 +16,9 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             function (key: string) {
                 let value = data[key];
+                if (!value) {
+                    return;
+                }
                 if (key === 'min_height') {
                     value = value.replace('px', '') + 'px';
                 }
@@ -39,13 +42,13 @@ export default class StyleAttributeMapper {
         Object.keys(object).map(
             function (key: any) {
                 let value = object[key];
-                if (key === 'minHeight') {
+                if (key === 'min-height') {
                     value = value.replace('px', '');
                 }
-                if (key === 'backgroundRepeat') {
+                if (key === 'background-repeat') {
                     value = value === 'repeat' ? '1' : '0';
                 }
-                if (key === 'backgroundColor') {
+                if (key === 'background-color') {
                     const regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/
                     let matches = regexp.exec(value)
                     value = '#'
@@ -53,7 +56,7 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[2]))
                         + this.fromIntToHex(parseInt(matches[1]));
                 }
-                result[this.fromCamelToSnakeCase(key)] = value;
+                result[key.replace('-', '_')] = value;
             }.bind(this)
         );
         return result;
@@ -72,16 +75,6 @@ export default class StyleAttributeMapper {
             newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
         }
         return parts[0] + newString;
-    }
-
-    /**
-     * Convert from camel to snake case
-     *
-     * @param string
-     * @returns {string}
-     */
-    private fromCamelToSnakeCase(string: string): string {
-        return string.split(/(?=[A-Z])/).join('_').toLowerCase();
     }
 
     /**

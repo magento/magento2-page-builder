@@ -48,7 +48,7 @@ define(["underscore", "Gene_BlueFoot/js/component/loader"], function (_underscor
             var result = {};
 
             for (var i = 0; i < readersArray.length; i++) {
-              var reader = new readersArray[i].default();
+              var reader = new readersArray[i]();
 
               _underscore.extend(result, reader.read(element));
             } // console.log(result);

@@ -62,6 +62,7 @@ module.exports = {
             "fields": {"heading_type": {"default": ""}},
             "visible": true,
             "preview_template": "",
+            "render_template": "Gene_BlueFoot/component/block/render/row.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
             "component": "Gene_BlueFoot/js/component/block/block"
         },
@@ -73,7 +74,7 @@ module.exports = {
             "contentType": "",
             "group": "general",
             "fields": {
-                "min_height": {"default": "0"},
+                "min_height": {"default": ""},
                 "background_color": {"default": ""},
                 "background_image": {"default": ""},
                 "background_position": {"default": "top_aligned"},
@@ -83,6 +84,7 @@ module.exports = {
             },
             "visible": true,
             "preview_template": "",
+            "render_template": "Gene_BlueFoot/component/block/render/column.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
             "component": "Gene_BlueFoot/js/component/block/block"
         },

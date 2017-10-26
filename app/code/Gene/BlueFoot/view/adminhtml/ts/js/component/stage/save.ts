@@ -20,11 +20,14 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
     let temp = $('<div>');
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
+            const isWhiteSpaceOrComment = function() {
+                return this.nodeType == 8 || (this.nodeType == 3 && this.data.match(/^\s+$/));
+            };
             temp.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
-            temp.contents().filter(function() { return this.nodeType == 8; }).remove();
+            temp.contents().filter(isWhiteSpaceOrComment).remove();
             temp.find('*').each(
                 function (index, value) {
-                    $(value).contents().filter(function() { return this.nodeType == 8; }).remove();
+                    $(value).contents().filter(isWhiteSpaceOrComment).remove();
                 }
             );
             // Strip all is wrapper elements
@@ -32,13 +35,9 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
                 $(element).parent().append($(element).children());
                 $(element).remove();
             });
-            let content = temp.html();
-            content = content.replace(/\r?\n|\r/g, '');
-            console.log('renderTree completed', content);
             resolve(temp.html());
             temp.remove();
         });
-        console.log('renderTree started');
         ko.applyBindingsToNode(
             temp[0],
             {

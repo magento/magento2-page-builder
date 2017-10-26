@@ -32,11 +32,14 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
       value: function read(element) {
         var data = {};
         var styleAttributes = {};
-        Object.keys(element.style).map(function (key) {
-          if (isNaN(key) && element.style[key] !== '') {
-            styleAttributes[key] = element.style[key];
+
+        for (var i = 0; i < element.style.length; i++) {
+          var property = element.style.item(i);
+
+          if (element.style[property] !== '') {
+            styleAttributes[property] = element.style[property];
           }
-        });
+        }
 
         _underscore.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
 
@@ -45,7 +48,9 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
             data[key] = element.dataset[key];
           }
         });
-        data['css_classes'] = element.className.split(' ');
+        data['css_classes'] = element.className.split(' ').filter(function (v) {
+          return v.length > 0;
+        });
         return data;
       }
     }]);

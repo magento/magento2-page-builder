@@ -41,7 +41,7 @@ module.exports = (jest, configuration) => {
 
     const fakeWysiwyg = new (require('wysiwyg'))();
 
-    let build, stage, stageContent = ko.observableArray();
+    let build, stage, stageContent;
 
     function dataItem(element) {
         const data = stage.store.get(element.id);
@@ -58,12 +58,12 @@ module.exports = (jest, configuration) => {
     return {
         setupWithContent(content) {
             build = new Build();
-            stage = new Stage(fakeWysiwyg, stageContent);
+            stage = new Stage(fakeWysiwyg, stageContent = ko.observableArray());
             build.on('buildError', fakeWysiwyg.createErrorHandler());
             stage.build(build, build.parseStructure(content));
         },
         setupEmpty() {
-            stage = new Stage(fakeWysiwyg, stageContent);
+            stage = new Stage(fakeWysiwyg, stageContent = ko.observableArray());
             stage.build();
         },
         dataTree() {
@@ -78,7 +78,7 @@ module.exports = (jest, configuration) => {
         },
         renderOutput() {
             return new Promise((resolve, reject) => {
-                wysiwyg.waitForRender(resolve, reject);
+                fakeWysiwyg.waitForRender(resolve, reject);
             });
         }
     }

@@ -30,6 +30,10 @@ define([], function () {
         Object.keys(data).map(function (key) {
           var value = data[key];
 
+          if (!value) {
+            return;
+          }
+
           if (key === 'min_height') {
             value = value.replace('px', '') + 'px';
           }
@@ -56,21 +60,21 @@ define([], function () {
         Object.keys(object).map(function (key) {
           var value = object[key];
 
-          if (key === 'minHeight') {
+          if (key === 'min-height') {
             value = value.replace('px', '');
           }
 
-          if (key === 'backgroundRepeat') {
+          if (key === 'background-repeat') {
             value = value === 'repeat' ? '1' : '0';
           }
 
-          if (key === 'backgroundColor') {
+          if (key === 'background-color') {
             var regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/;
             var matches = regexp.exec(value);
             value = '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[1]));
           }
 
-          result[this.fromCamelToSnakeCase(key)] = value;
+          result[key.replace('-', '_')] = value;
         }.bind(this));
         return result;
       }
@@ -92,18 +96,6 @@ define([], function () {
         }
 
         return parts[0] + newString;
-      }
-      /**
-       * Convert from camel to snake case
-       *
-       * @param string
-       * @returns {string}
-       */
-
-    }, {
-      key: "fromCamelToSnakeCase",
-      value: function fromCamelToSnakeCase(string) {
-        return string.split(/(?=[A-Z])/).join('_').toLowerCase();
       }
       /**
        * Convert from int to hex

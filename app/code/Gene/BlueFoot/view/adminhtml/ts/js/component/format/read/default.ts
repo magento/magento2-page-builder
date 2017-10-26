@@ -22,13 +22,13 @@ export default class Default {
     public read (element: HTMLElement): object {
         let data: any = {};
         let styleAttributes: any = {};
-        Object.keys(element.style).map(
-            function (key: any) {
-                if (isNaN(key) && element.style[key] !== '') {
-                    styleAttributes[key] = element.style[key];
-                }
+        for (let i = 0; i < element.style.length; i ++) {
+            const property = element.style.item(i);
+
+            if (element.style[property] !== '') {
+                styleAttributes[property] = element.style[property];
             }
-        );
+        }
 
         _.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
 
@@ -40,7 +40,7 @@ export default class Default {
             }
         );
 
-        data['css_classes'] = element.className.split(' ');
+        data['css_classes'] = element.className.split(' ').filter(v => v.length > 0);
 
         return data;
     }
