@@ -34,7 +34,7 @@ gulp.task('default', ['build', 'watch']);
  */
 gulp.task('build', function () {
     return buildTask(
-        gulp.src(path.join(config.basePath, config.tsPath, '**/*.ts'))
+        gulp.src([path.join(config.basePath, config.tsPath, '**/*.ts'), '!' + path.join(config.basePath, config.tsPath, '**/*.d.ts')])
     );
 });
 
@@ -43,7 +43,7 @@ gulp.task('build', function () {
  */
 gulp.task('buildChanged', function () {
     return buildTask(
-        gulp.src(path.join(config.basePath, config.tsPath, '**/*.ts'))
+        gulp.src([path.join(config.basePath, config.tsPath, '**/*.ts'), '!' + path.join(config.basePath, config.tsPath, '**/*.d.ts')])
             .pipe(plugins.changed(path.join(config.basePath, config.buildPath), {extension: '.js'}))
     );
 });
