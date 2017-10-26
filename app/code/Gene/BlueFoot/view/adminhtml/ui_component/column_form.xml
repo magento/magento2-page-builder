@@ -32,10 +32,90 @@
     </dataSource>
     <fieldset name="appearance">
         <settings>
-            <label translate="true">Appearance</label>
+            <label translate="true">Width</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
+        <field name="width" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">16.66</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Width</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">16.66</item>
+                                <item name="label" xsi:type="string" translate="true">16.66</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">33.32</item>
+                                <item name="label" xsi:type="string" translate="true">33.32</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">49.98</item>
+                                <item name="label" xsi:type="string" translate="true">49.98</item>
+                            </option>
+                            <option name="3" xsi:type="array">
+                                <item name="value" xsi:type="string">66.64</item>
+                                <item name="label" xsi:type="string" translate="true">66.64</item>
+                            </option>
+                            <option name="4" xsi:type="array">
+                                <item name="value" xsi:type="string">83.3</item>
+                                <item name="label" xsi:type="string" translate="true">83.3</item>
+                            </option>
+                            <option name="5" xsi:type="array">
+                                <item name="value" xsi:type="string">100</item>
+                                <item name="label" xsi:type="string" translate="true">100</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="appearance" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">top</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Appearance</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">top</item>
+                                <item name="label" xsi:type="string" translate="true">Top</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">middle</item>
+                                <item name="label" xsi:type="string" translate="true">Middle</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">bottom</item>
+                                <item name="label" xsi:type="string" translate="true">Bottom</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
         <field name="min_height" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

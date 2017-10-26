@@ -10,6 +10,7 @@ import StyleAttributeFilter from "../../../utils/style-attribute-filter";
 import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
 import AttributeFilter from "../../../utils/attribute-filter";
 import AttributeMapper from "../../../utils/attribute-mapper";
+import AppearanceApplier from "../../../utils/appearance-applier";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
@@ -42,6 +43,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     styleAttributeMapper: StyleAttributeMapper;
     attributeFilter: AttributeFilter;
     attributeMapper: AttributeMapper;
+    appearanceApplier: AppearanceApplier;
 
     previewChildTemplate: string = 'Gene_BlueFoot/component/block/preview/children.html';
     renderChildTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
@@ -63,6 +65,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         this.styleAttributeMapper = new StyleAttributeMapper();
         this.attributeFilter = new AttributeFilter();
         this.attributeMapper = new AttributeMapper();
+        this.appearanceApplier = new AppearanceApplier();
 
         this.parent = parent;
         this.stage = stage;
@@ -113,7 +116,9 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {object}
      */
     getStyle() {
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+        let styleAttributes = this.getData();
+        _.extend(styleAttributes, this.appearanceApplier.getAppearanceData(this.getData()));
+        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     }
 
     /**

@@ -23,6 +23,9 @@ define(['exports'], function (exports) {
                 if (key === 'min_height') {
                     value = value.replace('px', '') + 'px';
                 }
+                if (key === 'width') {
+                    value = value.replace('%', '') + '%';
+                }
                 if (key === 'background_repeat') {
                     value = value ? 'repeat' : 'no-repeat';
                 }
@@ -37,6 +40,9 @@ define(['exports'], function (exports) {
                 var value = object[key];
                 if (key === 'minHeight') {
                     value = value.replace('px', '');
+                }
+                if (key === 'width') {
+                    value = value.replace('%', '');
                 }
                 if (key === 'backgroundRepeat') {
                     value = value === 'repeat' ? '1' : '0';

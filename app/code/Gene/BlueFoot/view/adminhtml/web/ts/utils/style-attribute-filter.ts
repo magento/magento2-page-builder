@@ -33,7 +33,10 @@ export default class StyleAttributeFilter {
             'padding_top',
             'padding_right',
             'padding_bottom',
-            'padding_left'
+            'padding_left',
+            'display',
+            'flex_grow',
+            'align_self'
         ];
         let result: any = {};
         Object.keys(data).map(

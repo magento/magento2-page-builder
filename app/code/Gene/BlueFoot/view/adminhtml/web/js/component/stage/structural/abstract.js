@@ -1,4 +1,4 @@
-define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "mage/translate", "knockout", "underscore"], function (exports, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _translate, _knockout, _underscore) {
+define(["exports", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "../../../utils/appearance-applier", "mage/translate", "knockout", "underscore"], function (exports, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearanceApplier, _translate, _knockout, _underscore) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -16,6 +16,8 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
     var _attributeFilter2 = _interopRequireDefault(_attributeFilter);
 
     var _attributeMapper2 = _interopRequireDefault(_attributeMapper);
+
+    var _appearanceApplier2 = _interopRequireDefault(_appearanceApplier);
 
     var _translate2 = _interopRequireDefault(_translate);
 
@@ -91,6 +93,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _this.styleAttributeMapper = new _styleAttributeMapper2.default();
             _this.attributeFilter = new _attributeFilter2.default();
             _this.attributeMapper = new _attributeMapper2.default();
+            _this.appearanceApplier = new _appearanceApplier2.default();
             _this.parent = parent;
             _this.stage = stage;
             _this.config = config;
@@ -133,7 +136,9 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
         };
 
         Structural.prototype.getStyle = function getStyle() {
-            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+            var styleAttributes = this.getData();
+            _underscore2.default.extend(styleAttributes, this.appearanceApplier.getAppearanceData(this.getData()));
+            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
         };
 
         Structural.prototype.getAttributes = function getAttributes() {
