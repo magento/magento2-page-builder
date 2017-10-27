@@ -32,3 +32,4 @@ define([], function () {
 
   return StyleAttributeFilter;
 });
+//# sourceMappingURL=style-attribute-filter.js.map

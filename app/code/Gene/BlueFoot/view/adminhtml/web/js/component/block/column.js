@@ -20,3 +20,4 @@ define(["./block"], function (_block) {
 
   return Column;
 });
+//# sourceMappingURL=column.js.map

@@ -13,30 +13,8 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
      * @param {Structural} instance
      */
     function Edit(instance, store) {
-      Object.defineProperty(this, "modal", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal')
-      });
-      Object.defineProperty(this, "insertForm", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form')
-      });
-      Object.defineProperty(this, "instance", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "store", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
+      this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
       this.instance = instance;
       this.store = store;
     }
@@ -153,3 +131,4 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
 
   return Edit;
 });
+//# sourceMappingURL=edit.js.map

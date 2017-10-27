@@ -22,48 +22,11 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
       var _this;
 
       _this = _EventEmitter.call(this) || this;
-      Object.defineProperty(_this, "id", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _mageUtils.uniqueid()
-      });
-      Object.defineProperty(_this, "children", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "title", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)('Editable')
-      });
-      Object.defineProperty(_this, "styleAttributeFilter", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _styleAttributeFilter()
-      });
-      Object.defineProperty(_this, "domAttributeMapper", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _domAttributeMapper()
-      });
-      Object.defineProperty(_this, "childTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/render/children.html'
-      });
+      _this.id = _mageUtils.uniqueid();
+      _this.title = (0, _translate)('Editable');
+      _this.styleAttributeFilter = new _styleAttributeFilter();
+      _this.domAttributeMapper = new _domAttributeMapper();
+      _this.childTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 
       if (stage) {
         _this.stage = stage;
@@ -306,3 +269,4 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
 
   return EditableArea;
 });
+//# sourceMappingURL=editable-area.js.map

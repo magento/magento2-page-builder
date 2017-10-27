@@ -73,3 +73,4 @@ define([], function () {
 
   return DomAttributeMapper;
 });
+//# sourceMappingURL=dom-attribute-mapper.js.map

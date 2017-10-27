@@ -28,3 +28,4 @@ define([], function () {
 
   return Heading;
 });
+//# sourceMappingURL=heading.js.map

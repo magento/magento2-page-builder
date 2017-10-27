@@ -17,24 +17,6 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       var _this;
 
       _this = _EventEmitter.call(this) || this;
-      Object.defineProperty(_this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "document", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "attributeReaderComposite", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
       _this.attributeReaderComposite = new _composite();
       return _this;
     }
@@ -249,3 +231,4 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
   return Build;
 });
+//# sourceMappingURL=build.js.map

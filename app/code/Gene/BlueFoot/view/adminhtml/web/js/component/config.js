@@ -271,25 +271,10 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
     return Config;
   }();
 
-  Object.defineProperty(Config, "initConfig", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: _advancedCmsInitConfig
-  });
-  Object.defineProperty(Config, "config", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: {
-      'dataRoleAttributeName': 'data-role'
-    }
-  });
-  Object.defineProperty(Config, "allFields", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: void 0
-  });
+  Config.initConfig = _advancedCmsInitConfig;
+  Config.config = {
+    'dataRoleAttributeName': 'data-role'
+  };
   return Config;
 });
+//# sourceMappingURL=config.js.map

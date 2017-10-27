@@ -7,12 +7,6 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
   /*#__PURE__*/
   function () {
     function Default() {
-      Object.defineProperty(this, "styleAttributeMapper", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
       this.styleAttributeMapper = new _styleAttributeMapper();
     }
     /**
@@ -55,3 +49,4 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
 
   return Default;
 });
+//# sourceMappingURL=default.js.map

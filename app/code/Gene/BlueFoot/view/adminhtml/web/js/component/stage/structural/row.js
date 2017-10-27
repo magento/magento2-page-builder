@@ -23,18 +23,8 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       var _this;
 
       _this = _Structural.call(this, parent, stage) || this;
-      Object.defineProperty(_this, "previewTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/preview/row.html'
-      });
-      Object.defineProperty(_this, "renderTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/render/row.html'
-      });
+      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/row.html';
+      _this.renderTemplate = 'Gene_BlueFoot/component/block/render/row.html';
 
       _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
 
@@ -65,3 +55,4 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
 
   return Row;
 });
+//# sourceMappingURL=row.js.map

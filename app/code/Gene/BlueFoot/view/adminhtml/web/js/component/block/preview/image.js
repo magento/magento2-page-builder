@@ -18,12 +18,7 @@ define(["./block", "knockout", "../../config"], function (_block, _knockout, _co
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, Object.defineProperty(_this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      }), _temp) || _this;
+      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.loading = _knockout.observable(false), _temp) || _this;
     }
 
     var _proto = PreviewImageBlock.prototype;
@@ -90,3 +85,4 @@ define(["./block", "knockout", "../../config"], function (_block, _knockout, _co
 
   return PreviewImageBlock;
 });
+//# sourceMappingURL=image.js.map

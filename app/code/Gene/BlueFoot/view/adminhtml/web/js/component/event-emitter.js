@@ -8,12 +8,7 @@ define(["jquery"], function (_jquery) {
   /*#__PURE__*/
   function () {
     function EventEmitter() {
-      Object.defineProperty(this, "events", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _jquery)({})
-      });
+      this.events = (0, _jquery)({});
     }
 
     var _proto = EventEmitter.prototype;
@@ -82,3 +77,4 @@ define(["jquery"], function (_jquery) {
 
   return EventEmitter;
 });
+//# sourceMappingURL=event-emitter.js.map

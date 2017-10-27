@@ -18,22 +18,7 @@ define(["./event-emitter"], function (_eventEmitter) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _EventEmitter.call.apply(_EventEmitter, [this].concat(args)) || this, Object.defineProperty(_this, "state", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new Map()
-      }), Object.defineProperty(_this, "snapshotStorage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new Map()
-      }), Object.defineProperty(_this, "snapshotLog", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: []
-      }), _temp) || _this;
+      return (_temp = _this = _EventEmitter.call.apply(_EventEmitter, [this].concat(args)) || this, _this.state = new Map(), _this.snapshotStorage = new Map(), _this.snapshotLog = [], _temp) || _this;
     }
 
     var _proto = DataStore.prototype;
@@ -162,3 +147,4 @@ define(["./event-emitter"], function (_eventEmitter) {
 
   return DataStore;
 });
+//# sourceMappingURL=data-store.js.map

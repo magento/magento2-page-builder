@@ -56,3 +56,4 @@ define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loade
     load: load
   });
 });
+//# sourceMappingURL=previews.js.map

@@ -104,3 +104,4 @@ define([], function () {
 
   return StyleAttributeMapper;
 });
+//# sourceMappingURL=style-attribute-mapper.js.map

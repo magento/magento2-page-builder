@@ -32,3 +32,4 @@ define([], function () {
 
   return AttributeFilter;
 });
+//# sourceMappingURL=attribute-filter.js.map

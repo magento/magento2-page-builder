@@ -16,30 +16,8 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
     function PreviewBlock(parent, config) {
       var _this = this;
 
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: ''
-      });
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "data", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
+      this.template = '';
+      this.data = {};
       this.parent = parent;
       this.config = config;
 
@@ -83,3 +61,4 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
 
   return PreviewBlock;
 });
+//# sourceMappingURL=block.js.map

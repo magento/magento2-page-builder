@@ -9,30 +9,10 @@ define(["knockout", "../../../config"], function (_knockout, _config) {
      * ColumnBuilder constructor
      */
     function ColumnBuilder() {
-      Object.defineProperty(this, "position", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable('')
-      });
-      Object.defineProperty(this, "visible", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "sizes", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observableArray([])
-      });
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/stage/structural/column/builder.html'
-      });
+      this.position = _knockout.observable('');
+      this.visible = _knockout.observable(false);
+      this.sizes = _knockout.observableArray([]);
+      this.template = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
 
       var columnOptions = _config.getInitConfig("column_definitions");
 
@@ -91,3 +71,4 @@ define(["knockout", "../../../config"], function (_knockout, _config) {
     ColumnBuilder: ColumnBuilder
   };
 });
+//# sourceMappingURL=builder.js.map

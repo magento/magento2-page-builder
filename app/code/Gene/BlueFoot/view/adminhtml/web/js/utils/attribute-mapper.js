@@ -39,3 +39,4 @@ define([], function () {
 
   return AttributeMapper;
 });
+//# sourceMappingURL=attribute-mapper.js.map

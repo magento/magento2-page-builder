@@ -18,12 +18,7 @@ define(["./block"], function (_block) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, Object.defineProperty(_this, "editOnInsert", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      }), _temp) || _this;
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
     }
 
     var _proto = InlineBlock.prototype;
@@ -42,3 +37,4 @@ define(["./block"], function (_block) {
 
   return InlineBlock;
 });
+//# sourceMappingURL=inline.js.map

@@ -7,17 +7,12 @@ define(["underscore", "Gene_BlueFoot/js/component/loader"], function (_underscor
   /*#__PURE__*/
   function () {
     function AttributeReaderComposite() {
-      Object.defineProperty(this, "readers", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          'stage': ['Gene_BlueFoot/js/component/format/read/default'],
-          'row': ['Gene_BlueFoot/js/component/format/read/default'],
-          'column': ['Gene_BlueFoot/js/component/format/read/default'],
-          'heading': ['Gene_BlueFoot/js/component/format/read/default', 'Gene_BlueFoot/js/component/format/read/heading']
-        }
-      });
+      this.readers = {
+        'stage': ['Gene_BlueFoot/js/component/format/read/default'],
+        'row': ['Gene_BlueFoot/js/component/format/read/default'],
+        'column': ['Gene_BlueFoot/js/component/format/read/default'],
+        'heading': ['Gene_BlueFoot/js/component/format/read/default', 'Gene_BlueFoot/js/component/format/read/heading']
+      };
     }
 
     var _proto = AttributeReaderComposite.prototype;
@@ -61,3 +56,4 @@ define(["underscore", "Gene_BlueFoot/js/component/loader"], function (_underscor
 
   return AttributeReaderComposite;
 });
+//# sourceMappingURL=composite.js.map

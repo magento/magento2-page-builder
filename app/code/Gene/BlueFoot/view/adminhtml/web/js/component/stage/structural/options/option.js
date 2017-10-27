@@ -20,54 +20,8 @@ define([], function () {
      * @param template
      */
     function Option(parent, code, icon, title, action, classes, sort, template) {
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "code", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "icon", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "title", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "action", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(this, "classes", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "sort", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: null
-      });
+      this.action = false;
+      this.template = null;
       this.parent = parent;
       this.code = code;
       this.icon = icon;
@@ -98,3 +52,4 @@ define([], function () {
     Option: Option
   };
 });
+//# sourceMappingURL=option.js.map

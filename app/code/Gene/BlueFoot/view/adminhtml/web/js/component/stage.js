@@ -1,4 +1,4 @@
-define(["./stage/structural/editable-area", "./stage/structural/row", "underscore", "./data-store", "mage/translate", "./stage/save"], function (_editableArea, _row, _underscore, _dataStore, _translate, _save) {
+define(["./stage/structural/editable-area", "./stage/structural/row", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery"], function (_editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -21,54 +21,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      Object.defineProperty(_this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "active", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: true
-      });
-      Object.defineProperty(_this, "showBorders", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "userSelect", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "serializeRole", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'stage'
-      });
-      Object.defineProperty(_this, "store", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      _this.active = true;
+      _this.serializeRole = 'stage';
 
       _this.setChildren(stageContent);
 
@@ -76,7 +30,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       _this.parent = parent;
       _this.showBorders = parent.showBorders;
       _this.userSelect = parent.userSelect;
-      _this.loading = parent.loading; // Create our state and store objects
+      _this.loading = parent.loading;
+      _this.originalScrollTop = 0; // Create our state and store objects
 
       _this.store = new _dataStore(); // Any store state changes trigger a stage update event
 
@@ -158,7 +113,39 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       return row;
     };
 
-    _proto.openTemplateManager = function openTemplateManager() {// @todo
+    _proto.openTemplateManager = function openTemplateManager() {} // @todo
+
+    /**
+     * Tells the stage wrapper to expand to fullscreen
+     */
+    ;
+
+    _proto.goFullScreen = function goFullScreen() {
+      var isFullScreen = this.parent.isFullScreen();
+
+      if (!isFullScreen) {
+        this.originalScrollTop = (0, _jquery)(window).scrollTop();
+
+        _underscore.defer(function () {
+          (0, _jquery)(window).scrollTop(0);
+        });
+      }
+
+      this.stage.parent.isFullScreen(!isFullScreen);
+
+      if (isFullScreen) {
+        (0, _jquery)(window).scrollTop(this.originalScrollTop);
+      }
+    };
+    /**
+     * Determines if bluefoot is in fullscreen mode
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.isFullScreen = function isFullScreen() {
+      return this.parent.isFullScreen();
     };
 
     _proto.addComponent = function addComponent() {} // @todo
@@ -203,3 +190,4 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
 
   return Stage;
 });
+//# sourceMappingURL=stage.js.map
