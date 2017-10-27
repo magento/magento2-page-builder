@@ -32,22 +32,7 @@ define(["./event-emitter"], function (_eventEmitter) {
         args[_key] = arguments[_key];
       }
 
-      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = DataStore.__proto__ || Object.getPrototypeOf(DataStore)).call.apply(_ref, [this].concat(args))), Object.defineProperty(_this, "state", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new Map()
-      }), Object.defineProperty(_this, "snapshotStorage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new Map()
-      }), Object.defineProperty(_this, "snapshotLog", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: []
-      }), _temp));
+      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = DataStore.__proto__ || Object.getPrototypeOf(DataStore)).call.apply(_ref, [this].concat(args))), _this.state = new Map(), _this.snapshotStorage = new Map(), _this.snapshotLog = [], _temp));
     }
 
     _createClass(DataStore, [{

@@ -21,30 +21,8 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
     function Edit(instance, store) {
       _classCallCheck(this, Edit);
 
-      Object.defineProperty(this, "modal", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal')
-      });
-      Object.defineProperty(this, "insertForm", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form')
-      });
-      Object.defineProperty(this, "instance", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "store", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
+      this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
       this.instance = instance;
       this.store = store;
     }

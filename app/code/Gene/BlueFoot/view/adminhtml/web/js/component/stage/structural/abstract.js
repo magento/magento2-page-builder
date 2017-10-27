@@ -11,8 +11,6 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
 
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  function _get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return _get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } }
-
   /**
    * Structural class
    *
@@ -38,106 +36,18 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
       _classCallCheck(this, Structural);
 
       _this = _possibleConstructorReturn(this, (Structural.__proto__ || Object.getPrototypeOf(Structural)).call(this, stage));
-      Object.defineProperty(_this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
+      _this.wrapperStyle = _knockout.observable({
+        width: '100%'
       });
-      Object.defineProperty(_this, "title", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "wrapperStyle", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable({
-          width: '100%'
-        })
-      });
-      Object.defineProperty(_this, "edit", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "options", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: [new _option.Option(_this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(_this, 'edit', '<i></i>', (0, _translate)('Edit'), _this.onOptionEdit.bind(_this), ['edit-block'], 50), new _option.Option(_this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), _this.onOptionDuplicate.bind(_this), ['duplicate-structural'], 60), new _option.Option(_this, 'remove', '<i></i>', (0, _translate)('Remove'), _this.onOptionRemove.bind(_this), ['remove-structural'], 100)]
-      });
-      Object.defineProperty(_this, "optionsInstance", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _options.Options(_this, _this.options)
-      });
-      Object.defineProperty(_this, "children", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observableArray([])
-      });
-      Object.defineProperty(_this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/stage/structural/abstract.html'
-      });
-      Object.defineProperty(_this, "columnBuilder", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _builder.ColumnBuilder()
-      });
-      Object.defineProperty(_this, "styleAttributeFilter", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "styleAttributeMapper", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "attributeFilter", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "attributeMapper", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "previewChildTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/preview/children.html'
-      });
-      Object.defineProperty(_this, "renderChildTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/render/children.html'
-      });
+      _this.options = [new _option.Option(_this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(_this, 'edit', '<i></i>', (0, _translate)('Edit'), _this.onOptionEdit.bind(_this), ['edit-block'], 50), new _option.Option(_this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), _this.onOptionDuplicate.bind(_this), ['duplicate-structural'], 60), new _option.Option(_this, 'remove', '<i></i>', (0, _translate)('Remove'), _this.onOptionRemove.bind(_this), ['remove-structural'], 100)];
+      _this.optionsInstance = new _options.Options(_this, _this.options);
+      _this.children = _knockout.observableArray([]);
+      _this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
+      _this.columnBuilder = new _builder.ColumnBuilder();
+      _this.previewChildTemplate = 'Gene_BlueFoot/component/block/preview/children.html';
+      _this.renderChildTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 
-      _get(Structural.prototype.__proto__ || Object.getPrototypeOf(Structural.prototype), "setChildren", _this).call(_this, _this.children); // Create a new instance of edit for our editing needs
+      _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 
 
       _this.edit = new _edit(_this, _this.stage.store);

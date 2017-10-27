@@ -1,4 +1,4 @@
-define(["ko", "jquery", 'bluefoot/config'], function (ko, jQuery, Config) {
+define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQuery, Config) {
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},

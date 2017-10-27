@@ -35,34 +35,14 @@ define(["./abstract", "../../config", "../../../utils/array", "./options/option"
       _classCallCheck(this, Column);
 
       _this = _possibleConstructorReturn(this, (Column.__proto__ || Object.getPrototypeOf(Column)).call(this, parent, stage));
-      Object.defineProperty(_this, "previewTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/preview/column.html'
-      });
-      Object.defineProperty(_this, "columnDefinition", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(_config.getInitConfig('column_definitions')[0])
-      });
-      Object.defineProperty(_this, "widthClasses", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.computed(function () {
-          return this.columnDefinition()['className'];
-        }, _this)
-      });
-      Object.defineProperty(_this, "serializedWidth", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.computed(function () {
-          return this.columnDefinition()['breakpoint'] * 100;
-        }, _this)
-      });
+      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/column.html';
+      _this.columnDefinition = _knockout.observable(_config.getInitConfig('column_definitions')[0]);
+      _this.widthClasses = _knockout.computed(function () {
+        return this.columnDefinition()['className'];
+      }, _this);
+      _this.serializedWidth = _knockout.computed(function () {
+        return this.columnDefinition()['breakpoint'] * 100;
+      }, _this);
 
       _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
 

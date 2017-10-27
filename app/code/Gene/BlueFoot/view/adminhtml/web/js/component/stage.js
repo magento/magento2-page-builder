@@ -35,54 +35,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       _classCallCheck(this, Stage);
 
       _this = _possibleConstructorReturn(this, (Stage.__proto__ || Object.getPrototypeOf(Stage)).call(this));
-      Object.defineProperty(_this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "active", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: true
-      });
-      Object.defineProperty(_this, "showBorders", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "userSelect", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "serializeRole", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'stage'
-      });
-      Object.defineProperty(_this, "store", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      _this.active = true;
+      _this.serializeRole = 'stage';
 
       _this.setChildren(stageContent);
 

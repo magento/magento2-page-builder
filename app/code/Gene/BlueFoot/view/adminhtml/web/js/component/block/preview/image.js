@@ -32,12 +32,7 @@ define(["./block", "knockout", "../../config"], function (_block, _knockout, _co
         args[_key] = arguments[_key];
       }
 
-      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = PreviewImageBlock.__proto__ || Object.getPrototypeOf(PreviewImageBlock)).call.apply(_ref, [this].concat(args))), Object.defineProperty(_this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      }), _temp));
+      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = PreviewImageBlock.__proto__ || Object.getPrototypeOf(PreviewImageBlock)).call.apply(_ref, [this].concat(args))), _this.loading = _knockout.observable(false), _temp));
     }
 
     _createClass(PreviewImageBlock, [{

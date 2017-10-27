@@ -33,36 +33,10 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
       _classCallCheck(this, Block);
 
       _this = _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this));
-      Object.defineProperty(_this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "identifier", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable('')
-      });
-      Object.defineProperty(_this, "label", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable('')
-      });
-      Object.defineProperty(_this, "icon", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable('')
-      });
-      Object.defineProperty(_this, "droppable", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: true
-      });
+      _this.identifier = _knockout.observable('');
+      _this.label = _knockout.observable('');
+      _this.icon = _knockout.observable('');
+      _this.droppable = true;
       _this.config = config;
 
       _this.identifier(identifier);

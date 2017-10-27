@@ -25,7 +25,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
     isVisible: null,
     isCollapsed: null,
     initialize: function initialize() {
-      _super();
+      this._super();
 
       (0, _previews.load)();
     },
@@ -43,7 +43,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
       return this.componentTemplate;
     },
     initObservable: function initObservable() {
-      _super().observe('isVisible isCollapsed groups searchValue searching searchResults');
+      this._super().observe('isVisible isCollapsed groups searchValue searching searchResults');
 
       return this;
     },

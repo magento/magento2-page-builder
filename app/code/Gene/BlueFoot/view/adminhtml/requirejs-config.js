@@ -14,10 +14,9 @@ var config = {
         'ko-resizable': 'Gene_BlueFoot/js/resource/resizable/knockout-resizable',
         'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
-        'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit',
+        'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit'
 
         /* BlueFoot config is required by other aspects of the system */
-        'bluefoot/config': 'Gene_BlueFoot/js/component/config'
     },
     map: {
         '*': {
@@ -26,7 +25,7 @@ var config = {
 
             /* Utilities */
             'bluefoot/utils': 'Gene_BlueFoot/js/utils',
-            'moduleLoader': 'require'
+            'bluefoot/config': 'Gene_BlueFoot/js/component/config'
         }
     },
     shim: {

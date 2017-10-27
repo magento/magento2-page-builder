@@ -31,48 +31,10 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
       _classCallCheck(this, Block);
 
       _this = _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this, parent, stage, config));
-      Object.defineProperty(_this, "title", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "editOnInsert", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: true
-      });
-      Object.defineProperty(_this, "preview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "childEntityKeys", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: []
-      });
-      Object.defineProperty(_this, "previewTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/preview/abstract.html'
-      });
-      Object.defineProperty(_this, "renderTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/block/render/abstract.html'
-      });
-      Object.defineProperty(_this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      _this.editOnInsert = true;
+      _this.childEntityKeys = [];
+      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/abstract.html';
+      _this.renderTemplate = 'Gene_BlueFoot/component/block/render/abstract.html';
       _this.preview = (0, _previews)(_this, config);
 
       if (config.preview_template) {

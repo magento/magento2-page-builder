@@ -29,24 +29,6 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       _classCallCheck(this, Build);
 
       _this = _possibleConstructorReturn(this, (Build.__proto__ || Object.getPrototypeOf(Build)).call(this));
-      Object.defineProperty(_this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "document", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "attributeReaderComposite", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
       _this.attributeReaderComposite = new _composite();
       return _this;
     }

@@ -11,17 +11,12 @@ define(["underscore", "Gene_BlueFoot/js/component/loader"], function (_underscor
     function AttributeReaderComposite() {
       _classCallCheck(this, AttributeReaderComposite);
 
-      Object.defineProperty(this, "readers", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          'stage': ['Gene_BlueFoot/js/component/format/read/default'],
-          'row': ['Gene_BlueFoot/js/component/format/read/default'],
-          'column': ['Gene_BlueFoot/js/component/format/read/default'],
-          'heading': ['Gene_BlueFoot/js/component/format/read/default', 'Gene_BlueFoot/js/component/format/read/heading']
-        }
-      });
+      this.readers = {
+        'stage': ['Gene_BlueFoot/js/component/format/read/default'],
+        'row': ['Gene_BlueFoot/js/component/format/read/default'],
+        'column': ['Gene_BlueFoot/js/component/format/read/default'],
+        'heading': ['Gene_BlueFoot/js/component/format/read/default', 'Gene_BlueFoot/js/component/format/read/heading']
+      };
     }
 
     _createClass(AttributeReaderComposite, [{

@@ -1,18 +1,4 @@
-;(function(factory) {
-    if (typeof define === "function" && define.amd) {
-        // AMD anonymous module
-        define(["knockout", "jquery", "jquery/ui"], factory);
-    } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
-        // CommonJS module
-        var ko = require("knockout"),
-            jQuery = require("jquery");
-        require("jquery/ui");
-        factory(ko, jQuery);
-    } else {
-        // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko, window.jQuery);
-    }
-})(function(ko, jQuery) {
+define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
     /**
      * Retrieve the view model for an element
@@ -95,7 +81,7 @@
          */
         init: function (element, valueAccessor, allBindingsAccessor, data, context) {
             // Initialize draggable on all children of the element
-            Draggable.init(jQuery(element).children(), valueAccessor);
+            Draggable.init(jQuery(element), valueAccessor);
 
             // Does the element contain a foreach element that could change overtime?
             if (allBindingsAccessor().foreach) {
@@ -106,5 +92,4 @@
         }
 
     };
-
 });

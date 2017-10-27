@@ -32,12 +32,7 @@ define(["./block"], function (_block) {
         args[_key] = arguments[_key];
       }
 
-      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = InlineBlock.__proto__ || Object.getPrototypeOf(InlineBlock)).call.apply(_ref, [this].concat(args))), Object.defineProperty(_this, "editOnInsert", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      }), _temp));
+      return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_ref = InlineBlock.__proto__ || Object.getPrototypeOf(InlineBlock)).call.apply(_ref, [this].concat(args))), _this.editOnInsert = false, _temp));
     }
 
     _createClass(InlineBlock, [{

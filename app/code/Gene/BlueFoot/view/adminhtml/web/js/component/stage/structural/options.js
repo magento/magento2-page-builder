@@ -22,24 +22,8 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
     function Options(parent, options) {
       _classCallCheck(this, Options);
 
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "options", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observableArray([])
-      });
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 'Gene_BlueFoot/component/stage/structural/options.html'
-      });
+      this.options = _knockout.observableArray([]);
+      this.template = 'Gene_BlueFoot/component/stage/structural/options.html';
       this.parent = parent;
       this.options(options);
       this.sort();

@@ -11,12 +11,6 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
     function Default() {
       _classCallCheck(this, Default);
 
-      Object.defineProperty(this, "styleAttributeMapper", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
       this.styleAttributeMapper = new _styleAttributeMapper();
     }
     /**

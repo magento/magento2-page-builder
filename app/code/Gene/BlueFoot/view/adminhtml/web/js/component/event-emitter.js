@@ -16,12 +16,7 @@ define(["jquery"], function (_jquery) {
     function EventEmitter() {
       _classCallCheck(this, EventEmitter);
 
-      Object.defineProperty(this, "events", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _jquery)({})
-      });
+      this.events = (0, _jquery)({});
     }
 
     _createClass(EventEmitter, [{
