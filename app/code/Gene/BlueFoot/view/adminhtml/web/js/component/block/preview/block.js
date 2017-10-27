@@ -1,10 +1,4 @@
 define(["underscore", "knockout"], function (_underscore, _knockout) {
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
   /**
    * PreviewBlock class
    *
@@ -22,10 +16,30 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
     function PreviewBlock(parent, config) {
       var _this = this;
 
-      _classCallCheck(this, PreviewBlock);
-
-      this.template = '';
-      this.data = {};
+      Object.defineProperty(this, "template", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ''
+      });
+      Object.defineProperty(this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "data", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
       this.parent = parent;
       this.config = config;
 
@@ -54,20 +68,18 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
      */
 
 
-    _createClass(PreviewBlock, [{
-      key: "updateDataValue",
-      value: function updateDataValue(key, value) {
-        if (typeof this.data[key] !== 'undefined' && _knockout.isObservable(this.data[key])) {
-          this.data[key](value);
-        } else {
-          this.data[key] = _knockout.observable(value);
-        }
+    var _proto = PreviewBlock.prototype;
+
+    _proto.updateDataValue = function updateDataValue(key, value) {
+      if (typeof this.data[key] !== 'undefined' && _knockout.isObservable(this.data[key])) {
+        this.data[key](value);
+      } else {
+        this.data[key] = _knockout.observable(value);
       }
-    }]);
+    };
 
     return PreviewBlock;
   }();
 
   return PreviewBlock;
 });
-//# sourceMappingURL=block.js.map

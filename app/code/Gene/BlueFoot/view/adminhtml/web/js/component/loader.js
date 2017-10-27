@@ -5,4 +5,3 @@ define(["require"], function (_require) {
 
   return load;
 });
-//# sourceMappingURL=loader.js.map
