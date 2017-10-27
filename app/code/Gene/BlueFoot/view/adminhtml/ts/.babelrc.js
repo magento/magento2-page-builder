@@ -11,8 +11,10 @@ module.exports = {
                 ["transform-class-properties", {loose: true}]
             ]
         },
-        ['es6-to-magento-amd', {magentoClasses: magentoClasses}],
-        'typescript'
+        ['es6-to-magento-amd', {magentoClasses: magentoClasses}]
+    ],
+    plugins: [
+        'transform-typescript'
     ],
     ignore: [
         "/**/*.d.ts"
