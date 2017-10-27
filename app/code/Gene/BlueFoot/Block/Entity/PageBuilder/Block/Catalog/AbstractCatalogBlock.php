@@ -44,8 +44,6 @@ class AbstractCatalogBlock extends \Magento\Catalog\Block\Product\ListProduct
         \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         CategoryRepositoryInterface $categoryRepository,
         \Magento\Framework\Url\Helper\Data $urlHelper,
-        \Gene\BlueFoot\Model\Stage\Render $render,
-        \Magento\Framework\Data\CollectionFactory $dataCollectionFactory,
         array $data = []
     ) {
         parent::__construct(
@@ -56,8 +54,6 @@ class AbstractCatalogBlock extends \Magento\Catalog\Block\Product\ListProduct
             $urlHelper,
             $data
         );
-        $this->render = $render;
-        $this->dataCollectionFactory = $dataCollectionFactory;
     }
 
     /**

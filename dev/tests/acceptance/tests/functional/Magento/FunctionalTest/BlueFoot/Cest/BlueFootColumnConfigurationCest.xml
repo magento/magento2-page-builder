@@ -76,75 +76,69 @@
                 <description value="Validate selected column settings appear on the frontend"/>
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
-                <group value="bluefoot2"/>
+                <group value="bluefoot"/>
             </annotations>
-            <fillField selector="//*[@name='title']" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
-            <fillField selector="//*[@name='background_color']" userInput="#ccc" mergeKey="enterBackgroundColor"/>
-            <selectOption selector="//*[@name='background_position']" userInput="Centered" mergeKey="enterBackgroundPosition"/>
-            <selectOption selector="//*[@name='background_size']" userInput="Cover" mergeKey="enterBackgroundSize"/>
-            <click selector="//*[@name='background_repeat']/parent::*/label" mergeKey="clickBackgroundRepeat"/>
-            <selectOption selector="//*[@name='background_attachment']" userInput="Fixed" mergeKey="enterBackgroundAttachment"/>
-
-            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
+            <fillField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="enterMinHeight"/>
+            <fillField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="enterBackgroundColor"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="enterBackgroundPosition"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="enterBackgroundSize"/>
+            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundRepeat"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
+            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+            <wait time="1" mergeKey="wait1"/>
+            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait2"/>
-            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="clickSaveCmsPage"/>
-            <wait time="1" mergeKey="wait2"/>
-
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
-
-            <seeElement selector="//*[@data-role='column'][1][contains(@style, 'min-height: 100px;')]" mergeKey="seeColumn1HeightApplied"/>
-            <seeElement selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]" mergeKey="seeColumn1BackgroundColorApplied"/>
-            <seeElement selector="//*[@data-role='column'][1][contains(@style, 'background-size: cover;')]" mergeKey="seeColumn1BackgroundSizeApplied"/>
-            <seeElement selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]" mergeKey="seeColumn1BackgroundRepeatApplied"/>
-            <seeElement selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: scroll;')]" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
-
-            <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]" mergeKey="seeColumn1BackgroundSizeApplied"/>
-            <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: repeat;')]" mergeKey="seeColumn1BackgroundREpeatApplied"/>
-            <seeElement selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1HeightApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundColor}}" mergeKey="seeColumn1BackgroundColorApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundSize}}" mergeKey="seeColumn1BackgroundSizeApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundRepeat}}" mergeKey="seeColumn1BackgroundRepeatApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundAttachment}}" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundRepeat}}" mergeKey="seeColumn2BackgroundREpeatApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundAttachment}}" mergeKey="seeColumn2BackgroundAttachmentApplied"/>
             <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>
         <test name="ColumnChangesPreserved">
             <annotations>
-                <title value="Column settings appear on frontend"/>
-                <description value="Validate selected column settings appear on the frontend"/>
+                <title value="Column settings appear on the column form after page save"/>
+                <description value="Validate selected column settings appear on the form after page save"/>
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
-                <group value="bluefoot3"/>
+                <group value="bluefoot"/>
             </annotations>
-            <fillField selector="//*[@name='title']" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
-            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
-            <fillField selector="//*[@name='background_color']" userInput="#cccccc" mergeKey="enterBackgroundColor"/>
-            <selectOption selector="//*[@name='background_position']" userInput="Centered" mergeKey="enterBackgroundPosition"/>
-            <selectOption selector="//*[@name='background_size']" userInput="Cover" mergeKey="enterBackgroundSize"/>
-            <click selector="//*[@name='background_repeat']/parent::*/label" mergeKey="clickBackgroundRepeat"/>
-            <selectOption selector="//*[@name='background_attachment']" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
-
-            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel1"/>
+            <fillField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="enterMinHeight"/>
+            <fillField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="enterBackgroundColor"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="enterBackgroundPosition"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="enterBackgroundSize"/>
+            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundRepeat"/>
+            <selectOption selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
+            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+            <wait time="1" mergeKey="wait1"/>
+            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait2"/>
-            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="clickSaveCmsPage"/>
             <waitForPageLoad mergeKey="waitForCmsPagesGridLoad"/>
-
-            <fillField selector="//*[@id='fulltext']" userInput='"{{BlueFootFirstColumnInStage.pageName}}"' mergeKey="enterPageNameInSearch"/>
-            <click selector="//*[@id='fulltext']/parent::*/button" mergeKey="clickSearchButton"/>
+            <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{BlueFootFirstColumnInStage.pageName}}"' mergeKey="enterPageNameInSearch"/>
+            <click selector="{{CmsPageGrid.searchButton}}" mergeKey="clickSearchButton"/>
+            <wait time="3" mergeKey="wait3"/>
+            <click selector="{{CmsPageGrid.firstItemSelectButton}}" mergeKey="clickSelectButtonOnFirstItem"/>
+            <click selector="{{CmsPageGrid.firstItemEditButton}}" mergeKey="clickSelectEditOnFirstItem"/>
             <wait time="3" mergeKey="wait4"/>
-            <click selector=".data-grid .action-select-wrap button.action-select" mergeKey="clickSelectButtonOnFirstItem"/>
-            <click selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']" mergeKey="clickSelectEditOnFirstItem"/>
-            <wait time="3" mergeKey="wait5"/>
             <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <wait time="1" mergeKey="wait6"/>
+            <wait time="1" mergeKey="wait5"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel2"/>
-            <wait time="5" mergeKey="wait7"/>
-
-            <seeInField selector="//*[@name='min_height']" userInput="100" mergeKey="seeMinHeight"/>
-            <seeInField selector="//*[@name='background_color']" userInput="#cccccc" mergeKey="seeBackgroundColor"/>
-            <seeOptionIsSelected selector="//*[@name='background_position']" userInput="Centered" mergeKey="seeBackgroundPosition"/>
-            <seeOptionIsSelected selector="//*[@name='background_size']" userInput="Cover" mergeKey="seeBackgroundSize"/>
-            <seeCheckboxIsChecked selector="//*[@name='background_repeat']" mergeKey="seeBackgroundRepeat"/>
-            <seeOptionIsSelected selector="//*[@name='background_attachment']" userInput="Scroll" mergeKey="seeBackgroundAttachment"/>
+            <wait time="3" mergeKey="wait6"/>
+            <seeInField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="seeMinHeight"/>
+            <seeInField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="seeBackgroundColor"/>
+            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="seeBackgroundPosition"/>
+            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="seeBackgroundSize"/>
+            <seeCheckboxIsChecked selector="{{BlueFootColumnSection.backgroundRepeatControl}}" mergeKey="seeBackgroundRepeat"/>
+            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="seeBackgroundAttachment"/>
         </test>
     </cest>
 </config>

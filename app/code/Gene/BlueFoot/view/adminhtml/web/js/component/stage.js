@@ -1,4 +1,4 @@
-define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate', './stage/save'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate, _save) {
+define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate', './stage/save', 'jquery'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -16,6 +16,8 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
     var _translate2 = _interopRequireDefault(_translate);
 
     var _save2 = _interopRequireDefault(_save);
+
+    var _jquery2 = _interopRequireDefault(_jquery);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -75,6 +77,7 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             _this.showBorders = parent.showBorders;
             _this.userSelect = parent.userSelect;
             _this.loading = parent.loading;
+            _this.originalScrollTop = 0;
             // Create our state and store objects
             _this.store = new _dataStore2.default();
             // Any store state changes trigger a stage update event
@@ -135,8 +138,30 @@ define(['exports', './stage/structural/editable-area', './stage/structural/row',
             return row;
         };
 
-        Stage.prototype.openTemplateManager = function openTemplateManager() {
-            // @todo
+        Stage.prototype.openTemplateManager = function openTemplateManager() {}
+        // @todo
+
+        /**
+         * Tells the stage wrapper to expand to fullscreen
+         */
+        ;
+
+        Stage.prototype.goFullScreen = function goFullScreen() {
+            var isFullScreen = this.parent.isFullScreen();
+            if (!isFullScreen) {
+                this.originalScrollTop = (0, _jquery2.default)(window).scrollTop();
+                _underscore2.default.defer(function () {
+                    (0, _jquery2.default)(window).scrollTop(0);
+                });
+            }
+            this.stage.parent.isFullScreen(!isFullScreen);
+            if (isFullScreen) {
+                (0, _jquery2.default)(window).scrollTop(this.originalScrollTop);
+            }
+        };
+
+        Stage.prototype.isFullScreen = function isFullScreen() {
+            return this.parent.isFullScreen();
         };
 
         Stage.prototype.addComponent = function addComponent() {}

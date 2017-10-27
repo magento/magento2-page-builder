@@ -8,6 +8,7 @@ import Build from "./stage/build";
 import $t from "mage/translate";
 import renderTree from "./stage/save";
 import Structural from "./stage/structural/abstract";
+import $ from 'jquery';
 
 /**
  * Stage class
@@ -21,6 +22,7 @@ export default class Stage extends EditableArea implements StageInterface {
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
+    originalScrollTop: number;
     serializeRole: string = 'stage';
     store: DataStore;
 
@@ -39,6 +41,7 @@ export default class Stage extends EditableArea implements StageInterface {
         this.showBorders = parent.showBorders;
         this.userSelect = parent.userSelect;
         this.loading = parent.loading;
+        this.originalScrollTop = 0;
 
         // Create our state and store objects
         this.store = new DataStore();
@@ -120,6 +123,33 @@ export default class Stage extends EditableArea implements StageInterface {
 
     openTemplateManager() {
         // @todo
+    }
+
+    /**
+     * Tells the stage wrapper to expand to fullscreen
+     */
+    goFullScreen(): void {
+        let isFullScreen = this.parent.isFullScreen();
+        if (!isFullScreen) {
+            this.originalScrollTop = $(window).scrollTop();
+            _.defer(function () {
+                $(window).scrollTop(0);
+            });
+        }
+
+        this.stage.parent.isFullScreen(!isFullScreen);
+        if (isFullScreen) {
+            $(window).scrollTop(this.originalScrollTop);
+        }
+    }
+
+    /**
+     * Determines if bluefoot is in fullscreen mode
+     *
+     * @returns {boolean}
+     */
+    isFullScreen(): boolean {
+        return this.parent.isFullScreen();
     }
 
     addComponent() {

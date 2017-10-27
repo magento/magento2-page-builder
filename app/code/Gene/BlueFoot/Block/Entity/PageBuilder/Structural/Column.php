@@ -9,7 +9,7 @@ namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
  *
  * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Column extends AbstractStructural
+class Column
 {
     /**
      * Return the column width
