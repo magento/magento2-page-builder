@@ -70,7 +70,6 @@ class Renderer
      * @param \Magento\Framework\View\LayoutInterface               $layoutInterface
      * @param \Magento\Store\Model\App\Emulation                    $emulation
      * @param \Magento\Framework\App\State                          $appState
-     * @param \Gajus\Dindent\Indenter                               $indenter
      * @param \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsBlockFactory
      * @param int                                                   $storeId
      * @param bool                                                  $object
@@ -81,7 +80,6 @@ class Renderer
         \Magento\Framework\View\LayoutInterface $layoutInterface,
         \Magento\Store\Model\App\Emulation $emulation,
         \Magento\Framework\App\State $appState,
-        \Gajus\Dindent\Indenter $indenter,
         \Gene\BlueFoot\Model\Stage\Save\Renderer\BlockFactory $advancedCmsBlockFactory,
         $storeId = 0,
         $object = false,
