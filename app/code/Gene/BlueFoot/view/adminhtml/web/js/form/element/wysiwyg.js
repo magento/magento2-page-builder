@@ -97,7 +97,7 @@ define([
          * Check to see if the WYSIWYG already contains BlueFoot content
          */
         checkForBlueFootContent: function (node) {
-            var buildInstance = new Build.default(),
+            var buildInstance = new Build(),
                 buildStructure;
             if (buildStructure = buildInstance.parseStructure($(node).val())) {
                 this.loading(true);
@@ -129,7 +129,7 @@ define([
             }
 
             // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage.default(
+            this.stage = new Stage(
                 this,
                 this.stageContent
             );
