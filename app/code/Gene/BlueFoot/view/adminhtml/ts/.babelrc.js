@@ -3,7 +3,7 @@ const magentoClasses = require('./magentoClasses');
 module.exports = {
     presets: [
         ['env', {
-            loose: false,
+            loose: true,
             browsers: ["last 2 versions", "ie >= 11"]
         }],
         {
