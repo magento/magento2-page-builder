@@ -85,28 +85,18 @@
         <wait time="2" mergeKey="wait10"/>
     </actionGroup>
 
-    <actionGroup name="validateColumnPanelFields">
-        <!--Labels-->
-        <see userInput="Minimum Height" selector="{{BlueFootColumnSection.minHeightLabel}}" mergeKey="seeminHeightLabel"/>
-        <see userInput="Background Color" selector="{{BlueFootColumnSection.backgroundColorLabel}}" mergeKey="seeBackgroundColorLabel"/>
-        <see userInput="Background Image" selector="{{BlueFootColumnSection.backgroundImageLabel}}" mergeKey="seeBackgroundImageLabel"/>
-        <see userInput="Background Position" selector="{{BlueFootColumnSection.backgroundPositionLabel}}" mergeKey="seeBackgroundPositionLabel"/>
-        <see userInput="Background Size" selector="{{BlueFootColumnSection.backgroundSizeLabel}}" mergeKey="seeBackgroundSizeLabel"/>
-        <see userInput="Background Repeat" selector="{{BlueFootColumnSection.backgroundRepeatLabel}}" mergeKey="seeBackgroundRepeatLabel"/>
-        <see userInput="Background Attachment" selector="{{BlueFootColumnSection.backgroundAttachmentLabel}}" mergeKey="seeBackgroundAttachmentLabel"/>
-        <!--Inputs-->
-        <seeElement selector="{{BlueFootColumnSection.minHeightControl}}" mergeKey="seeMinHeightControl"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundColorControl}}" mergeKey="seeBackgroundColorControl"/>
-        <seeElementInDOM selector="{{BlueFootColumnSection.backgroundImageControl}}" mergeKey="seeBackgroundImageControl"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundPositionControl}}" mergeKey="seeBackgroundPositionControl"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundSizeControl}}" mergeKey="seeBackgroundSizeControl"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundRepeatControl}}" mergeKey="seeBackgroundRepeatControl"/>
-        <seeElement selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" mergeKey="seeBackgroundAttachmentControl"/>
-        <!--Required Fields-->
-        <seeElement selector='{{BlueFootColumnSection.minHeightField}}' mergeKey="minHeightIsRequired"/>
-        <seeElement selector='{{BlueFootColumnSection.backgroundPositionField}}' mergeKey="backgroundPositionIsRequired"/>
-        <seeElement selector='{{BlueFootColumnSection.backgroundSizeField}}' mergeKey="backgroundSizeIsRequired"/>
-        <seeElement selector='{{BlueFootColumnSection.backgroundRepeatField}}' mergeKey="backgroundRepeatIsRequired"/>
-        <seeElement selector='{{BlueFootColumnSection.backgroundAttachmentField}}' mergeKey="backgroundAttachmentIsRequired"/>
+    <actionGroup name="validateSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <see userInput="{{property.name}}" selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="seePropertyLabel"/>
+        <seeElementInDOM selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seePropertyControl"/>
+    </actionGroup>
+
+    <actionGroup name="validateSlideOutPanelFieldIsRequired">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeElement selector='{{BlueFootColumnSection.panelFieldRequired(property.section, property.fieldName)}}' mergeKey="seePropertyIsRequired"/>
     </actionGroup>
 </config>
