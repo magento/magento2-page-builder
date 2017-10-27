@@ -2,10 +2,17 @@ const magentoClasses = require('./magentoClasses');
 
 module.exports = {
     presets: [
+        ['env', {
+            loose: false,
+            browsers: ["last 2 versions", "ie >= 11"]
+        }],
         {
             plugins: ['transform-class-properties']
         },
         ['es6-to-magento-amd', {magentoClasses: magentoClasses}]
     ],
-    plugins: ['transform-typescript']
+    plugins: ['transform-typescript'],
+    ignore: [
+        "/**/*.d.ts"
+    ]
 };

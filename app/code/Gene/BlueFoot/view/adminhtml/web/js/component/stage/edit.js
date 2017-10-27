@@ -1,106 +1,173 @@
-define(["exports", "uiRegistry", "mage/translate"], function (exports, _uiRegistry, _translate) {
-    "use strict";
+define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    var _uiRegistry2 = _interopRequireDefault(_uiRegistry);
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    var _translate2 = _interopRequireDefault(_translate);
+  /**
+   * Edit Class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Edit =
+  /*#__PURE__*/
+  function () {
+    /**
+     * Initiate the edit class with an instance of structural
+     *
+     * @param {Structural} instance
+     */
+    function Edit(instance, store) {
+      _classCallCheck(this, Edit);
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+      Object.defineProperty(this, "modal", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal')
+      });
+      Object.defineProperty(this, "insertForm", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form')
+      });
+      Object.defineProperty(this, "instance", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "store", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      this.instance = instance;
+      this.store = store;
     }
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var Edit = function () {
-        /**
-         * Initiate the edit class with an instance of structural
-         *
-         * @param {Structural} instance
-         */
-        function Edit(instance, store) {
-            _classCallCheck(this, Edit);
-
-            this.modal = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal');
-            this.insertForm = _uiRegistry2.default.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
-            this.instance = instance;
-            this.store = store;
-        }
-        /**
-         * Open and render the edit component
-         */
+    /**
+     * Open and render the edit component
+     */
 
 
-        Edit.prototype.openAndRender = function openAndRender() {
-            this.destroyInserted();
-            this.setTitle();
-            this.render();
-            this.open();
-        };
+    _createClass(Edit, [{
+      key: "openAndRender",
+      value: function openAndRender() {
+        this.destroyInserted();
+        this.setTitle();
+        this.render();
+        this.open();
+      }
+      /**
+       * Open the modal
+       */
 
-        Edit.prototype.open = function open() {
-            this.modal.openModal();
-        };
+    }, {
+      key: "open",
+      value: function open() {
+        this.modal.openModal();
+      }
+      /**
+       * Retrieve the content types form component text from the registry
+       *
+       * @returns {string}
+       */
 
-        Edit.prototype.getFormComponent = function getFormComponent() {
-            return _uiRegistry2.default.get('component_' + this.instance.config.form);
-        };
+    }, {
+      key: "getFormComponent",
+      value: function getFormComponent() {
+        return _uiRegistry.get('component_' + this.instance.config.form);
+      }
+      /**
+       * Render the form
+       */
 
-        Edit.prototype.render = function render() {
-            // Pass the UI component to the render function
-            this.insertForm.onRender(this.getFormComponent());
-            this.setDataProviderClient();
-        };
+    }, {
+      key: "render",
+      value: function render() {
+        // Pass the UI component to the render function
+        this.insertForm.onRender(this.getFormComponent());
+        this.setDataProviderClient();
+      }
+      /**
+       * Save any data which has been modified in the edit panel
+       *
+       * @param data
+       * @param options
+       */
 
-        Edit.prototype.save = function save(data, options) {
-            this.store.update(this.instance.id, data);
-            this.modal.closeModal();
-        };
+    }, {
+      key: "save",
+      value: function save(data, options) {
+        this.store.update(this.instance.id, data);
+        this.modal.closeModal();
+      }
+      /**
+       * Set the title on the modal
+       */
 
-        Edit.prototype.setTitle = function setTitle() {
-            this.modal.setTitle((0, _translate2.default)('Edit ' + (this.instance.config.label || (0, _translate2.default)('Block'))));
-        };
+    }, {
+      key: "setTitle",
+      value: function setTitle() {
+        this.modal.setTitle((0, _translate)('Edit ' + (this.instance.config.label || (0, _translate)('Block'))));
+      }
+      /**
+       * Set the data provider client to be the current instance
+       */
 
-        Edit.prototype.setDataProviderClient = function setDataProviderClient() {
-            var _this = this;
+    }, {
+      key: "setDataProviderClient",
+      value: function setDataProviderClient() {
+        var _this = this;
 
-            var formName = this.instance.config.form;
-            // Retrieve the component
-            _uiRegistry2.default.get(formName + '.' + formName, function (component) {
-                var provider = _uiRegistry2.default.get(component.provider);
-                // Set the instance to act as it's client in the data provider
-                provider.client = _this;
-                // Set the data on the provider from the data store
-                provider.set('data', _this.store.get(_this.instance.id));
-            });
-        };
+        var formName = this.instance.config.form; // Retrieve the component
 
-        Edit.prototype.getFormComponentInstance = function getFormComponentInstance() {
-            var formName = this.instance.config.form;
-            return _uiRegistry2.default.get(formName + '.' + formName);
-        };
+        _uiRegistry.get(formName + '.' + formName, function (component) {
+          var provider = _uiRegistry.get(component.provider); // Set the instance to act as it's client in the data provider
 
-        Edit.prototype.destroyInserted = function destroyInserted() {
-            var existingComponent = void 0;
-            if (existingComponent = this.getFormComponentInstance()) {
-                existingComponent.destroy();
-            }
-            // Reset the insert form component
-            this.insertForm.destroyInserted();
-            this.insertForm.removeActions();
-        };
 
-        return Edit;
-    }();
+          provider.client = _this; // Set the data on the provider from the data store
 
-    exports.default = Edit;
+          provider.set('data', _this.store.get(_this.instance.id));
+        });
+      }
+      /**
+       * Retrieve the form component
+       *
+       * @returns {any}
+       */
+
+    }, {
+      key: "getFormComponentInstance",
+      value: function getFormComponentInstance() {
+        var formName = this.instance.config.form;
+        return _uiRegistry.get(formName + '.' + formName);
+      }
+      /**
+       * Destroy the inserted component
+       */
+
+    }, {
+      key: "destroyInserted",
+      value: function destroyInserted() {
+        var existingComponent;
+
+        if (existingComponent = this.getFormComponentInstance()) {
+          existingComponent.destroy();
+        } // Reset the insert form component
+
+
+        this.insertForm.destroyInserted();
+        this.insertForm.removeActions();
+      }
+    }]);
+
+    return Edit;
+  }();
+
+  return Edit;
 });
+//# sourceMappingURL=edit.js.map

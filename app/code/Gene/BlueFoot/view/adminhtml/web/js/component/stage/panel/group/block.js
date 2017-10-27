@@ -1,82 +1,93 @@
-define(['exports', '../../../event-emitter', 'knockout'], function (exports, _eventEmitter, _knockout) {
-    'use strict';
+define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockout) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-    Object.defineProperty(exports, "__esModule", {
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  /**
+   * Block Class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Block =
+  /*#__PURE__*/
+  function (_EventEmitter) {
+    _inherits(Block, _EventEmitter);
+
+    /**
+     * Block Constructor
+     *
+     * @param {string} identifier
+     * @param {ContentBlockConfig} config
+     */
+    function Block(identifier, config) {
+      var _this;
+
+      _classCallCheck(this, Block);
+
+      _this = _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this));
+      Object.defineProperty(_this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "identifier", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(_this, "label", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(_this, "icon", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable('')
+      });
+      Object.defineProperty(_this, "droppable", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
         value: true
-    });
-    exports.Block = undefined;
+      });
+      _this.config = config;
 
-    var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+      _this.identifier(identifier);
 
-    var _knockout2 = _interopRequireDefault(_knockout);
+      _this.label(config.label);
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+      _this.icon(config.icon);
+
+      return _this;
     }
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
+    _createClass(Block, [{
+      key: "getDraggableConfig",
+      value: function getDraggableConfig() {
+        return this.config.allowed_children.map(function (value, index) {
+          return '.' + value + '-container';
+        }).join(', ');
+      }
+    }]);
 
-    function _possibleConstructorReturn(self, call) {
-        if (!self) {
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
+    return Block;
+  }(_eventEmitter);
 
-        return call && (typeof call === "object" || typeof call === "function") ? call : self;
-    }
-
-    function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-        }
-
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
-        });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-
-    var Block = exports.Block = function (_EventEmitter) {
-        _inherits(Block, _EventEmitter);
-
-        /**
-         * Block Constructor
-         *
-         * @param {string} identifier
-         * @param {ContentBlockConfig} config
-         */
-        function Block(identifier, config) {
-            _classCallCheck(this, Block);
-
-            var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-            _this.identifier = _knockout2.default.observable('');
-            _this.label = _knockout2.default.observable('');
-            _this.icon = _knockout2.default.observable('');
-            _this.droppable = true;
-            _this.config = config;
-            _this.identifier(identifier);
-            _this.label(config.label);
-            _this.icon(config.icon);
-            return _this;
-        }
-
-        Block.prototype.getDraggableConfig = function getDraggableConfig() {
-            return this.config.allowed_children.map(function (value, index) {
-                return '.' + value + '-container';
-            }).join(', ');
-        };
-
-        return Block;
-    }(_eventEmitter2.default);
+  return {
+    Block: Block
+  };
 });
+//# sourceMappingURL=block.js.map

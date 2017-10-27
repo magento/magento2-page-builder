@@ -7,8 +7,8 @@ const gulp  = require('gulp'),
 
 const config = {
     basePath: 'app/code/Gene/BlueFoot',
-    tsPath: 'view/adminhtml/web/ts/',
-    buildPath: 'view/adminhtml/web/js/',
+    tsPath: 'view/adminhtml/ts/',
+    buildPath: 'view/adminhtml/web/',
     testsPath: 'dev/tests/js/',
     sourceMaps: !plugins.util.env.production
 };
@@ -16,9 +16,7 @@ const config = {
 const buildTask = function (inputStream) {
     return inputStream
             .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.init()))
-                .pipe(plugins.babel())
-                // browser friendly transformation
-                .pipe(plugins.babel({babelrc: false, presets: [['es2015', {loose: true}], ['stage-0', {loose: true}]]}))
+            .pipe(plugins.babel())
             .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.write('./', {
                 includeContent: false,
                 sourceRoot: '../ts'
@@ -29,14 +27,14 @@ const buildTask = function (inputStream) {
 /**
  * Run an initial build than watch for changes
  */
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'watch']);
 
 /**
  * Build the TypeScript files into production JS
  */
 gulp.task('build', function () {
     return buildTask(
-        gulp.src(path.join(config.basePath, config.tsPath, '**/*.ts'))
+        gulp.src([path.join(config.basePath, config.tsPath, '**/*.ts'), '!' + path.join(config.basePath, config.tsPath, '**/*.d.ts')])
     );
 });
 
@@ -45,7 +43,7 @@ gulp.task('build', function () {
  */
 gulp.task('buildChanged', function () {
     return buildTask(
-        gulp.src(path.join(config.basePath, config.tsPath, '**/*.ts'))
+        gulp.src([path.join(config.basePath, config.tsPath, '**/*.ts'), '!' + path.join(config.basePath, config.tsPath, '**/*.d.ts')])
             .pipe(plugins.changed(path.join(config.basePath, config.buildPath), {extension: '.js'}))
     );
 });

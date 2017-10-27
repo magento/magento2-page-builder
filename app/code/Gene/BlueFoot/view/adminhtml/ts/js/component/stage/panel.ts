@@ -73,7 +73,7 @@ export default class Panel extends uiComponent implements PanelInterface {
      * @returns {Model} Chainable.
      */
     initObservable(): this {
-        super().observe('isVisible isCollapsed groups searchValue searching searchResults');
+        super.initObservable().observe('isVisible isCollapsed groups searchValue searching searchResults');
 
         return this;
     }

@@ -1,156 +1,168 @@
-define(["exports", "./abstract", "../../config", "../../../utils/array", "./options/option", "knockout"], function (exports, _abstract, _config, _array, _option, _knockout) {
-    "use strict";
+define(["./abstract", "../../config", "../../../utils/array", "./options/option", "knockout"], function (_abstract, _config, _array, _option, _knockout) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.Column = undefined;
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    var _abstract2 = _interopRequireDefault(_abstract);
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    var _config2 = _interopRequireDefault(_config);
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    var _knockout2 = _interopRequireDefault(_knockout);
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+  function _get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return _get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  /**
+   * Column class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Column =
+  /*#__PURE__*/
+  function (_Structural) {
+    _inherits(Column, _Structural);
+
+    /**
+     * Abstract structural constructor
+     *
+     * @param parent
+     * @param stage
+     */
+    function Column(parent, stage) {
+      var _this;
+
+      _classCallCheck(this, Column);
+
+      _this = _possibleConstructorReturn(this, (Column.__proto__ || Object.getPrototypeOf(Column)).call(this, parent, stage));
+      Object.defineProperty(_this, "previewTemplate", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: 'Gene_BlueFoot/component/block/preview/column.html'
+      });
+      Object.defineProperty(_this, "columnDefinition", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(_config.getInitConfig('column_definitions')[0])
+      });
+      Object.defineProperty(_this, "widthClasses", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.computed(function () {
+          return this.columnDefinition()['className'];
+        }, _this)
+      });
+      Object.defineProperty(_this, "serializedWidth", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.computed(function () {
+          return this.columnDefinition()['breakpoint'] * 100;
+        }, _this)
+      });
+
+      _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
+
+      return _this;
     }
+    /**
+     * Add a column to self
+     *
+     * @param data
+     * @returns {Column}
+     */
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
+
+    _createClass(Column, [{
+      key: "addColumn",
+      value: function addColumn(data) {
+        var column = new Column(this, this.stage);
+        this.addChild(column);
+        column.updateColumnData(data);
+        return column;
+      }
+      /**
+       * Insert a column at a specific instance
+       *
+       * @param direction
+       * @param item
+       * @param data
+       * @returns {Column}
+       */
+
+    }, {
+      key: "insertColumnAtIndex",
+      value: function insertColumnAtIndex(direction, item, data) {
+        var index = _knockout.utils.arrayIndexOf(item.parent.children(), item),
+            column = new Column(item.parent, item.parent.stage);
+
+        if (direction == 'right') {
+          ++index;
         }
-    }
 
-    function _possibleConstructorReturn(self, call) {
-        if (!self) {
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        (0, _array.moveArrayItemIntoArray)(column, item.parent.children, index);
+        column.updateColumnData(data);
+        return column;
+      }
+      /**
+       * Update the column data to reflect the correct width
+       *
+       * @param data
+       */
+
+    }, {
+      key: "updateColumnData",
+      value: function updateColumnData(data) {
+        data = data || {};
+
+        if (data.width) {
+          var columnDef = _config.getColumnDefinitionByBreakpoint(data.width);
+
+          if (columnDef) {
+            this.columnDefinition(columnDef);
+          }
+        } else if (data.className) {
+          this.columnDefinition(_config.getColumnDefinitionByClassName(data.className));
         }
 
-        return call && (typeof call === "object" || typeof call === "function") ? call : self;
-    }
+        this.stage.store.update(this.id, data);
+      }
+      /**
+       * Handle sort starting on column
+       *
+       * @param event
+       * @param params
+       * @returns {any}
+       */
 
-    function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-        }
+    }, {
+      key: "onSortStart",
+      value: function onSortStart(event, params) {
+        // Copy over the column class for the width
+        jQuery(params.placeholder).addClass(this.widthClasses());
+        return _get(Column.prototype.__proto__ || Object.getPrototypeOf(Column.prototype), "onSortStart", this).call(this, event, params);
+      }
+      /**
+       * Get template master format template
+       *
+       * @returns {string}
+       */
 
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
-        });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
+    }, {
+      key: "getPreviewTemplate",
+      value: function getPreviewTemplate() {
+        return 'Gene_BlueFoot/component/stage/structural/render/column.html';
+      }
+    }]);
 
-    var Column = exports.Column = function (_Structural) {
-        _inherits(Column, _Structural);
+    return Column;
+  }(_abstract);
 
-        /**
-         * Abstract structural constructor
-         *
-         * @param parent
-         * @param stage
-         */
-        function Column(parent, stage) {
-            _classCallCheck(this, Column);
-
-            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage));
-
-            _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/column.html';
-            _this.columnDefinition = _knockout2.default.observable(_config2.default.getInitConfig('column_definitions')[0]);
-            _this.widthClasses = _knockout2.default.computed(function () {
-                return this.columnDefinition()['className'];
-            }, _this);
-            _this.serializedWidth = _knockout2.default.computed(function () {
-                return this.columnDefinition()['breakpoint'] * 100;
-            }, _this);
-            _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
-            return _this;
-        }
-        /**
-         * Add a column to self
-         *
-         * @param data
-         * @returns {Column}
-         */
-
-
-        Column.prototype.addColumn = function addColumn(data) {
-            var column = new Column(this, this.stage);
-            this.addChild(column);
-            column.updateColumnData(data);
-            return column;
-        };
-        /**
-         * Insert a column at a specific instance
-         *
-         * @param direction
-         * @param item
-         * @param data
-         * @returns {Column}
-         */
-
-
-        Column.prototype.insertColumnAtIndex = function insertColumnAtIndex(direction, item, data) {
-            var index = _knockout2.default.utils.arrayIndexOf(item.parent.children(), item),
-                column = new Column(item.parent, item.parent.stage);
-            if (direction == 'right') {
-                ++index;
-            }
-            (0, _array.moveArrayItemIntoArray)(column, item.parent.children, index);
-            column.updateColumnData(data);
-            return column;
-        };
-        /**
-         * Update the column data to reflect the correct width
-         *
-         * @param data
-         */
-
-
-        Column.prototype.updateColumnData = function updateColumnData(data) {
-            data = data || {};
-            if (data.width) {
-                var columnDef = _config2.default.getColumnDefinitionByBreakpoint(data.width);
-                if (columnDef) {
-                    this.columnDefinition(columnDef);
-                }
-            } else if (data.className) {
-                this.columnDefinition(_config2.default.getColumnDefinitionByClassName(data.className));
-            }
-            this.stage.store.update(this.id, data);
-        };
-        /**
-         * Handle sort starting on column
-         *
-         * @param event
-         * @param params
-         * @returns {any}
-         */
-
-
-        Column.prototype.onSortStart = function onSortStart(event, params) {
-            // Copy over the column class for the width
-            jQuery(params.placeholder).addClass(this.widthClasses());
-            return _Structural.prototype.onSortStart.call(this, event, params);
-        };
-        /**
-         * Get template master format template
-         *
-         * @returns {string}
-         */
-
-
-        Column.prototype.getPreviewTemplate = function getPreviewTemplate() {
-            return 'Gene_BlueFoot/component/stage/structural/render/column.html';
-        };
-
-        return Column;
-    }(_abstract2.default);
+  return {
+    Column: Column
+  };
 });
+//# sourceMappingURL=column.js.map
