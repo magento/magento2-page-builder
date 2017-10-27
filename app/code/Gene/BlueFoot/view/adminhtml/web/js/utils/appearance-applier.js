@@ -1,9 +1,21 @@
-define(['exports'], function (exports) {
-    'use strict';
+define(["exports", "../component/appearance/column/align-top", "../component/appearance/column/align-middle", "../component/appearance/column/align-bottom"], function (exports, _alignTop, _alignMiddle, _alignBottom) {
+    "use strict";
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+
+    var _alignTop2 = _interopRequireDefault(_alignTop);
+
+    var _alignMiddle2 = _interopRequireDefault(_alignMiddle);
+
+    var _alignBottom2 = _interopRequireDefault(_alignBottom);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -14,24 +26,24 @@ define(['exports'], function (exports) {
     var AppearanceApplier = function () {
         function AppearanceApplier() {
             _classCallCheck(this, AppearanceApplier);
+
+            this.appearances = {
+                column: {
+                    top: new _alignTop2.default(),
+                    middle: new _alignMiddle2.default(),
+                    bottom: new _alignBottom2.default()
+                }
+            };
         }
+        /**
+         * @param data
+         * @returns {object}
+         */
+
 
         AppearanceApplier.prototype.getAppearanceData = function getAppearanceData(data) {
-            var attributes = {};
             var role = data['name'] !== 'undefined' ? data['name'] : data['role'];
-            if (role === 'column') {
-                attributes['flex_grow'] = 1;
-                if (data['appearance'] === 'top') {
-                    attributes['align_self'] = 'flex-start';
-                }
-                if (data['appearance'] === 'middle') {
-                    attributes['align_self'] = 'center';
-                }
-                if (data['appearance'] === 'bottom') {
-                    attributes['align_self'] = 'flex-end';
-                }
-            }
-            return attributes;
+            return this.appearances[role] !== undefined && this.appearances[role][data['appearance']] !== undefined ? this.appearances[role][data['appearance']].getData() : {};
         };
 
         return AppearanceApplier;
