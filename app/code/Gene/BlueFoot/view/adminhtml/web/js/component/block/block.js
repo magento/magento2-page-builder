@@ -23,7 +23,9 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
       var _this;
 
       _this = _Structural.call(this, parent, stage, config) || this;
+      _this.title = void 0;
       _this.editOnInsert = true;
+      _this.preview = void 0;
       _this.childEntityKeys = [];
       _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/abstract.html';
       _this.renderTemplate = 'Gene_BlueFoot/component/block/render/abstract.html';

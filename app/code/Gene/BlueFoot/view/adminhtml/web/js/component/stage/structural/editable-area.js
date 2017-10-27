@@ -23,6 +23,8 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/style-attr
 
       _this = _EventEmitter.call(this) || this;
       _this.id = _mageUtils.uniqueid();
+      _this.children = void 0;
+      _this.stage = void 0;
       _this.title = (0, _translate)('Editable');
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.domAttributeMapper = new _domAttributeMapper();
