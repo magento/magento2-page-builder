@@ -28,7 +28,7 @@ describe('Column Configuration Parser', () => {
                 ]
             })
         ])
-    })
+    });
 
     it('parses background from style tag', () => {
         stage.setupWithContent('<div data-role="row"><div data-role="column" style="background-attachment: scroll; background-color: rgb(204,204,204);"></div></div>');
@@ -43,5 +43,5 @@ describe('Column Configuration Parser', () => {
                 ]
             })
         ])
-    })
+    });
 });

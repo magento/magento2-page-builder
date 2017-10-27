@@ -34,7 +34,7 @@ vendor/bin/robo build:create dev [your prefered url] [magento branch of current 
 To run a complete suite you can just execute this simple command
 
 ```bash
-npx jest
+npx jest --no-cache
 ```
 
 If you want to execute a separate test file, just specify its path
@@ -49,7 +49,7 @@ npx jest [path-to-file]
 
 2. Before you can run any javascript tests you need to export jest configuration file for PHPStorm.
 ```
-npx gulp jestConfiguration
+npx gulp jestConfig
 ```
 
 3. Then you have specify jest.config.json in **PHPStorm > Run > Edit Configurations > Defaults -> Jest:**
@@ -57,6 +57,8 @@ npx gulp jestConfiguration
     - Select your jest.config.json into **Configuration File** file
     
     - Specify your repo directory in **Working directory** field
+    
+    - Specify your "--no-cache" into **Jest options** field
          
     - Node runtime & jest executable should be automatically pre-filled
 

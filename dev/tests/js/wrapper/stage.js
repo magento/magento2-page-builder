@@ -1,10 +1,15 @@
 module.exports = (jest, configuration) => {
-    jest.setMock(
+    jest.mock(
         '::advanced-cms-init-config',
-        Object.assign({}, require('advanced-cms-init-config'), configuration || {})
+        () => require('init-config'),
+        {virtual: true}
     );
 
-    jest.setMock('::mage/translate', (text) => text);
+    jest.mock(
+        '::mage/translate',
+        () => (text) => text,
+        {virtual: true}
+    );
 
     const fakeRequire = require('fake-require');
 
@@ -23,13 +28,9 @@ module.exports = (jest, configuration) => {
 
     jest.mock('::mage/calendar', () => {}, {virtual: true});
 
-
-    require('mutationobserver-shim');
-
-
-
     (require('./setup-jquery'))(jest);
 
+    require('mutationobserver-shim');
 
 
     const ko = (require('knockout-bootstrap'))();
