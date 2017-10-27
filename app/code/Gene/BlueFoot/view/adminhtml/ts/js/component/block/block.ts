@@ -24,7 +24,6 @@ export default class Block extends Structural implements BlockInterface {
     childEntityKeys: Array<string> = [];
     previewTemplate: string = 'Gene_BlueFoot/component/block/preview/abstract.html';
     renderTemplate: string = 'Gene_BlueFoot/component/block/render/abstract.html';
-    config: any;
 
     /**
      * AbstractBlock constructor

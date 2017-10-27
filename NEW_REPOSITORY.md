@@ -67,5 +67,11 @@ Now you can just right click on any JS test file and run them in your IDE.
 As soon as your build is accessible via specified url in `build:create` command
 
 ```bash
-vendor/bin/robo run:functional-test dev [your prefered url] [magento branch of current story]
+vendor/bin/robo run:functional-test --build [buildname]
+```
+
+You can also execute tests byt name
+
+```bash
+vendor/bin/robo run:functional-test --build [buildname] --test-name [NameOfTestCest]
 ```
