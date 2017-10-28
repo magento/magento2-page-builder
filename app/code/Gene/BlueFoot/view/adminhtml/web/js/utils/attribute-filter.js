@@ -32,7 +32,7 @@ define(['exports'], function (exports) {
                 if (this.allowAttributes.includes(key)) {
                     attributes[key] = data[key];
                 }
-            });
+            }.bind(this));
             return attributes;
         };
 

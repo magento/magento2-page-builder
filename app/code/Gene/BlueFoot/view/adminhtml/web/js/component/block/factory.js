@@ -31,11 +31,24 @@ define(['exports'], function (exports) {
         stage = stage || parent.stage;
         formData = formData || {};
         return new Promise(function (resolve, reject) {
-            require([getBlockComponentPath(config)], function (BlockInstance) {
-                return resolve(new BlockInstance.default(parent, stage, config, formData));
-            }, function (error) {
-                return reject(error);
-            });
+            require(config['appearances'], function () {
+                for (var _len = arguments.length, components = Array(_len), _key = 0; _key < _len; _key++) {
+                    components[_key] = arguments[_key];
+                }
+
+                var appearanceComponents = {};
+                Object.keys(components).map(function (key) {
+                    var component = components[key].default;
+                    var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                    appearanceComponents[componentName] = new component();
+                });
+                config['appearance_components'] = appearanceComponents;
+                require([getBlockComponentPath(config)], function (BlockInstance) {
+                    return resolve(new BlockInstance.default(parent, stage, config, formData));
+                }, function (error) {
+                    return reject(error);
+                });
+            }.bind(this));
         });
     }
 });

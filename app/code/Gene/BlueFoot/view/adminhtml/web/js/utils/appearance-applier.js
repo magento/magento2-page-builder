@@ -36,9 +36,9 @@ define(['exports', 'underscore', '../component/config'], function (exports, _und
 
         AppearanceApplier.prototype.apply = function apply(data) {
             var appearanceData = {};
-            var role = data['name'] !== 'undefined' ? data['name'] : data['role'];
-            if (data['appearance'] !== undefined && this.contentTypesConfig[role]['loaded_appearances'] !== undefined) {
-                appearanceData = this.contentTypesConfig[role]['loaded_appearances'][data['appearance']].getData();
+            var role = data['name'];
+            if (data['appearance'] !== undefined && this.contentTypesConfig[role]['appearance_components'] !== undefined) {
+                appearanceData = this.contentTypesConfig[role]['appearance_components'][data['appearance']].getData();
             }
             _underscore2.default.extend(data, appearanceData);
             return data;

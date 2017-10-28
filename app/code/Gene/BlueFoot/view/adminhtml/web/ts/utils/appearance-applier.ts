@@ -18,10 +18,9 @@ export default class AppearanceApplier {
      */
     apply(data: DataObject): object {
         let appearanceData = {};
-        const role: string =  data['name'] !== 'undefined' ? data['name'] : data['role'];
-
-        if (data['appearance'] !== undefined && this.contentTypesConfig[role]['loaded_appearances'] !== undefined) {
-            appearanceData = this.contentTypesConfig[role]['loaded_appearances'][data['appearance']].getData();
+        const role: string =  data['name'];
+        if (data['appearance'] !== undefined && this.contentTypesConfig[role]['appearance_components'] !== undefined) {
+            appearanceData = this.contentTypesConfig[role]['appearance_components'][data['appearance']].getData();
         }
         _.extend(data, appearanceData);
         return data;

@@ -222,7 +222,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'allowed_children'         => isset($contentType['allowed_children'])
                 ? explode(',', $contentType['allowed_children']) : [],
             'readers'           => isset($contentType['readers']) ? $contentType['readers'] : [],
-            'appearance_components' => ['Gene_BlueFoot/js/component/appearance/column/align-top', 'Gene_BlueFoot/js/component/appearance/column/align-middle', 'Gene_BlueFoot/js/component/appearance/column/align-bottom']
+            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : []
         ];
     }
 }

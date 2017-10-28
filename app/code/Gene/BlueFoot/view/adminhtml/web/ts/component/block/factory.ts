@@ -34,10 +34,22 @@ export default function createBlock(config: ConfigObject, parent: EditableArea, 
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {
-        require([getBlockComponentPath(config)], (BlockInstance: any) => {
-            return resolve(new BlockInstance.default(parent, stage, config, formData));
-        }, (error: string) => {
-            return reject(error);
-        });
+        require(config['appearances'], function(...components) {
+            let appearanceComponents: any = {};
+            Object.keys(components).map(
+                function (key: string) {
+                    let component = components[key].default;
+                    let componentName: string = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                    appearanceComponents[componentName] = new component();
+                }
+            );
+            config['appearance_components'] = appearanceComponents;
+
+            require([getBlockComponentPath(config)], (BlockInstance: any) => {
+                return resolve(new BlockInstance.default(parent, stage, config, formData));
+            }, (error: string) => {
+                return reject(error);
+            });
+        }.bind(this));
     });
 }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
  * Copyright © Magento, Inc. All rights reserved.
@@ -46,6 +47,13 @@
                                                </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
+                                        <xs:element name="appearances" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="appearance" type="reader" maxOccurs="unbounded" minOccurs="1"/>
+                                               </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:all>
                                     <xs:attribute type="xs:string" name="name" use="optional"/>
                                     <xs:attribute type="xs:string" name="translate" use="optional"/>
@@ -59,6 +67,10 @@
         </xs:complexType>
     </xs:element>
     <xs:complexType name="reader">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="component" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="appearance">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="component" use="required"/>
     </xs:complexType>

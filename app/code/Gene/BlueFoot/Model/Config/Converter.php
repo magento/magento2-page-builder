@@ -41,6 +41,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             $component = $reader->attributes->getNamedItem('component')->nodeValue;
                             $output['types'][$name][$childNode->nodeName][] = $component;
                         }
+                    } elseif ('appearances' === $childNode->nodeName) {
+                        foreach ($childNode->getElementsByTagName('appearance') as $reader) {
+                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
+                            $output['types'][$name][$childNode->nodeName][] = $component;
+                        }
                     } else {
                         $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
