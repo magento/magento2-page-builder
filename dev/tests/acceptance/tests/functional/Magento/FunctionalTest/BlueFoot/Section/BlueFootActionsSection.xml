@@ -44,6 +44,16 @@
         <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
         <element name="nothingFound" type="text" selector='//*[@id="bluefoot-panel"]/div[2]/div' timeout="30"/>
     </section>
+    <section name="CmsPageSection">
+        <element name="cmsPageSaveButton" type="button" selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']"/>
+        <element name="pageTitle" type="input" selector="//*[@name='title']"/>
+    </section>
+    <section name="CmsPageGrid">
+        <element name="cmsPageSearchInput" type="input" selector="//*[@id='fulltext']"/>
+        <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
+        <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
+        <element name="firstItemEditButton" type="button" selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']"/>
+    </section>
     <section name="BlueFootColumnSection">
         <element name="addRow" type="button" selector='//*[@class="bluefoot-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
@@ -51,27 +61,20 @@
         <element name="columnInStage" type="button" selector='//div[contains(@class, "bluefoot-column")][1]'/>
         <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "bluefoot-column")][1]/div[@class="bluefoot-options"]'/>
         <element name="editColumn" type="button" selector='//div[contains(@class, "bluefoot-column")][1]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
+        <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
+        <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
+        <element name="columnSaveButton" type="button" selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']"/>
+    </section>
+    <section name="TwoColumnsOnFrontend">
+        <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 100px;')]"/>
+        <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
+        <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: cover;')]"/>
+        <element name="column1BackgroundRepeat" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: scroll;')]"/>
 
-        <element name="minHeightLabel" type="text" selector='//div[@data-index="min_height"]/label'/>
-        <element name="backgroundColorLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_color"]/label'/>
-        <element name="backgroundImageLabel" type="text" selector='//div[@data-index="background"]/descendant::*[@class="admin__field-label"]/span[text()="Background Image"]'/>
-        <element name="backgroundPositionLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_position"]/label'/>
-        <element name="backgroundSizeLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_size"]/label'/>
-        <element name="backgroundRepeatLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_repeat"]/label'/>
-        <element name="backgroundAttachmentLabel" type="text" selector='//div[@data-index="background"]/descendant::div[@data-index="background_attachment"]/label'/>
-
-        <element name="minHeightControl" type="input" selector='//div[@data-index="appearance"]/descendant::input[@name="min_height"]'/>
-        <element name="backgroundColorControl" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_color"]'/>
-        <element name="backgroundImageControl" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_image"]'/>
-        <element name="backgroundPositionControl" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_position"]'/>
-        <element name="backgroundSizeControl" type="select" selector='//div[@data-index="background"]/descendant::select[@name="background_size"]'/>
-        <element name="backgroundRepeatControl" type="input" selector='//div[@data-index="background"]/descendant::input[@name="background_repeat"]'/>
-        <element name="backgroundAttachmentControl" type="input" selector='//div[@data-index="background"]/descendant::select[@name="background_attachment"]'/>
-
-        <element name="minHeightField" type="input" selector='//div[@data-index="appearance"]/descendant::div[@data-index="min_height" and contains(@class, "_required")]'/>
-        <element name="backgroundPositionField" type="select" selector='//div[@data-index="background"]/descendant::div[@data-index="background_position" and contains(@class, "_required")]'/>
-        <element name="backgroundSizeField" type="select" selector='//div[@data-index="background"]/descendant::div[@data-index="background_size" and contains(@class, "_required")]'/>
-        <element name="backgroundRepeatField" type="input" selector='//div[@data-index="background"]/descendant::div[@data-index="background_repeat" and contains(@class, "_required")]'/>
-        <element name="backgroundAttachmentField" type="select" selector='//div[@data-index="background"]/descendant::div[@data-index="background_attachment" and contains(@class, "_required")]'/>
+        <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
+        <element name="column2BackgroundRepeat" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]"/>
     </section>
 </config>

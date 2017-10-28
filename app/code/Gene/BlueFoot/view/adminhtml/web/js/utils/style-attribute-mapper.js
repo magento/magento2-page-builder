@@ -34,10 +34,10 @@ define(['exports'], function (exports) {
             return result;
         };
 
-        StyleAttributeMapper.prototype.fromDom = function fromDom(object) {
+        StyleAttributeMapper.prototype.fromDom = function fromDom(data) {
             var result = {};
-            Object.keys(object).map(function (key) {
-                var value = object[key];
+            Object.keys(data).map(function (key) {
+                var value = data[key];
                 if (key === 'minHeight') {
                     value = value.replace('px', '');
                 }
@@ -66,8 +66,8 @@ define(['exports'], function (exports) {
             return parts[0] + newString;
         };
 
-        StyleAttributeMapper.prototype.fromCamelToSnakeCase = function fromCamelToSnakeCase(string) {
-            return string.split(/(?=[A-Z])/).join('_').toLowerCase();
+        StyleAttributeMapper.prototype.fromCamelToSnakeCase = function fromCamelToSnakeCase(key) {
+            return key.split(/(?=[A-Z])/).join('_').toLowerCase();
         };
 
         StyleAttributeMapper.prototype.fromIntToHex = function fromIntToHex(value) {

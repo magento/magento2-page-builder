@@ -14,17 +14,24 @@ define(['exports'], function (exports) {
     var AttributeMapper = function () {
         function AttributeMapper() {
             _classCallCheck(this, AttributeMapper);
-        }
 
-        AttributeMapper.prototype.toDom = function toDom(object) {
+            // Attribute name mapping
+            this.attributeNameMapping = { name: 'data-role', appearance: 'data-appearance' };
+        }
+        /**
+         * Map attribute keys to DOM key names and normalize values
+         *
+         * @param {DataObject} data
+         * @returns {DataObject}
+         */
+
+
+        AttributeMapper.prototype.toDom = function toDom(data) {
             var result = {};
-            Object.keys(object).map(function (key) {
-                var value = object[key];
-                if (key === 'role' || key === 'name') {
-                    key = 'data-role';
-                }
-                if (key === 'appearance') {
-                    key = 'data-appearance';
+            Object.keys(data).map(function (key) {
+                var value = data[key];
+                if (key in this.attributeNameMapping) {
+                    key = this.attributeNameMapping[key];
                 }
                 result[key.replace('_', '-')] = value;
             }.bind(this));

@@ -1,17 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Stage;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 
-/**
- * Class Plugin
- *
- * @package Gene\BlueFoot\Model\Stage
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
- */
 class Config extends \Magento\Framework\Model\AbstractModel
 {
     const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
@@ -225,7 +221,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 ? $contentType['component'] : self::DEFAULT_COMPONENT),
             'allowed_children'         => isset($contentType['allowed_children'])
                 ? explode(',', $contentType['allowed_children']) : [],
-            'appearance_components'         => ['Gene_BlueFoot/js/component/appearance/column/align-top', 'Gene_BlueFoot/js/component/appearance/column/align-middle', 'Gene_BlueFoot/js/component/appearance/column/align-bottom']
+            'readers'           => isset($contentType['readers']) ? $contentType['readers'] : [],
+            'appearance_components' => ['Gene_BlueFoot/js/component/appearance/column/align-top', 'Gene_BlueFoot/js/component/appearance/column/align-middle', 'Gene_BlueFoot/js/component/appearance/column/align-bottom']
         ];
     }
 }

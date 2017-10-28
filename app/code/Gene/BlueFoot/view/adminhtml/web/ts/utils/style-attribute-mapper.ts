@@ -8,11 +8,11 @@ export default class StyleAttributeMapper {
     /**
      * Map style attribute keys to DOM key names and normalize values
      *
-     * @param data
-     * @returns {object}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    toDom(data: DataObject): object {
-        let result: any = {};
+    toDom(data: DataObject): DataObject {
+        let result: DataObject = {};
         Object.keys(data).map(
             function (key: string) {
                 let value = data[key];
@@ -34,14 +34,14 @@ export default class StyleAttributeMapper {
     /**
      * Map DOM key names and values to internal format
      *
-     * @param object
-     * @returns {{}}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    public fromDom(object) {
-        let result = {};
-        Object.keys(object).map(
-            function (key: any) {
-                let value = object[key];
+    public fromDom(data: DataObject): DataObject {
+        let result: DataObject = {};
+        Object.keys(data).map(
+            function (key: string) {
+                let value = data[key];
                 if (key === 'minHeight') {
                     value = value.replace('px', '');
                 }
@@ -52,8 +52,8 @@ export default class StyleAttributeMapper {
                     value = value === 'repeat' ? '1' : '0';
                 }
                 if (key === 'backgroundColor') {
-                    const regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/
-                    let matches = regexp.exec(value)
+                    const regexp: string = /(\d{3}),\s(\d{3}),\s(\d{3})/
+                    let matches = regexp.exec(value);
                     value = '#'
                         + this.fromIntToHex(parseInt(matches[1]))
                         + this.fromIntToHex(parseInt(matches[2]))
@@ -72,8 +72,8 @@ export default class StyleAttributeMapper {
      * @returns {string}
      */
     private fromSnakeToCamelCase(string: string): string {
-        let parts = string.split(/[_-]/);
-        let newString = '';
+        let parts: Array<string> = string.split(/[_-]/);
+        let newString: string = '';
         for (let i = 1; i < parts.length; i++) {
             newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
         }
@@ -83,11 +83,11 @@ export default class StyleAttributeMapper {
     /**
      * Convert from camel to snake case
      *
-     * @param string
+     * @param string key
      * @returns {string}
      */
-    private fromCamelToSnakeCase(string: string): string {
-        return string.split(/(?=[A-Z])/).join('_').toLowerCase();
+    private fromCamelToSnakeCase(key: string): string {
+        return key.split(/(?=[A-Z])/).join('_').toLowerCase();
     }
 
     /**
@@ -96,7 +96,7 @@ export default class StyleAttributeMapper {
      * @param value
      * @returns {string}
      */
-    private fromIntToHex(value) {
+    private fromIntToHex(value): string {
         let hex = value.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
     }
