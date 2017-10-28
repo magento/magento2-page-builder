@@ -14,13 +14,22 @@ define(['exports'], function (exports) {
     var AttributeFilter = function () {
         function AttributeFilter() {
             _classCallCheck(this, AttributeFilter);
+
+            // Allowed attributes
+            this.allowAttributes = ['name', 'appearance'];
         }
+        /**
+         * Filter allowed attributes from object
+         *
+         * @param {DataObject} data
+         * @returns {DataObject}
+         */
+
 
         AttributeFilter.prototype.filter = function filter(data) {
             var attributes = {};
-            var allowAttributes = ['role', 'name', 'appearance'];
             Object.keys(data).map(function (key) {
-                if (allowAttributes.includes(key)) {
+                if (this.allowAttributes.includes(key)) {
                     attributes[key] = data[key];
                 }
             });

@@ -3,14 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-export default class Heading {
+import ReadInterface from "../read-interface";
+import {DataObject} from "../../data-store";
+
+export default class Heading implements ReadInterface {
     /**
      * Read heading type and title from the element
      *
-     * @param element
-     * @returns {object}
+     * @param element HTMLElement
+     * @returns {DataObject | Promise<any>}
      */
-    public read (element: HTMLElement): object {
+    public read(element: HTMLElement): DataObject | Promise<any> {
         return {
             'heading_type': element.nodeName,
             'title': element.innerText

@@ -1,24 +1,17 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Config;
 
-/**
- * Class Converter
- *
- * @package Gene\BlueFoot\Model\Config
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
- */
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     /**
      * Convert XML structure into output array
      *
      * @param \DOMDocument $source
-     *
      * @return array
-     *
-     * @todo add translation
      */
     public function convert($source)
     {
@@ -43,7 +36,14 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             $childNode->nodeValue
                         ) != '')
                 ) {
-                    $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
+                    if ('readers' === $childNode->nodeName) {
+                        foreach ($childNode->getElementsByTagName('reader') as $reader) {
+                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
+                            $output['types'][$name][$childNode->nodeName][] = $component;
+                        }
+                    } else {
+                        $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
+                    }
                 }
             }
         }

@@ -30,8 +30,8 @@ define(['exports', 'underscore', '../../../utils/style-attribute-mapper'], funct
         /**
          * Read data, style and css properties from the element
          *
-         * @param element
-         * @returns {object}
+         * @param element HTMLElement
+         * @returns {DataObject | Promise<any>}
          */
 
 
