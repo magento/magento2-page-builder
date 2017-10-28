@@ -224,7 +224,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'component'         => (isset($contentBlock['component'])
                 ? $contentType['component'] : self::DEFAULT_COMPONENT),
             'allowed_children'         => isset($contentType['allowed_children'])
-                ? explode(',', $contentType['allowed_children']) : []
+                ? explode(',', $contentType['allowed_children']) : [],
+            'appearance_components'         => ['Gene_BlueFoot/js/component/appearance/column/align-top', 'Gene_BlueFoot/js/component/appearance/column/align-middle', 'Gene_BlueFoot/js/component/appearance/column/align-bottom']
         ];
     }
 }

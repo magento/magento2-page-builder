@@ -3,32 +3,27 @@
  * See COPYING.txt for license details.
  */
 
+import _ from 'underscore';
+
 import {DataObject} from "../component/data-store";
-import ColumnAlignTop from "../component/appearance/column/align-top";
-import ColumnAlignMiddle from "../component/appearance/column/align-middle";
-import ColumnAlignBottom from "../component/appearance/column/align-bottom";
+import Config from "../component/config";
 
 export default class AppearanceApplier {
-    appearances: any;
-
-    constructor() {
-        this.appearances = {
-            column: {
-                top: new ColumnAlignTop(),
-                middle: new ColumnAlignMiddle(),
-                bottom: new ColumnAlignBottom()
-            }
-        }
-    }
+    // Content types config
+    contentTypesConfig: any = Config.getInitConfig('contentTypes');
 
     /**
      * @param data
      * @returns {object}
      */
-    getAppearanceData(data: DataObject): object {
-        const role =  data['name'] !== 'undefined' ? data['name'] : data['role'];
-        return (this.appearances[role] !== undefined && this.appearances[role][data['appearance']] !== undefined)
-            ? this.appearances[role][data['appearance']].getData()
-            : {};
+    apply(data: DataObject): object {
+        let appearanceData = {};
+        const role: string =  data['name'] !== 'undefined' ? data['name'] : data['role'];
+
+        if (data['appearance'] !== undefined && this.contentTypesConfig[role]['loaded_appearances'] !== undefined) {
+            appearanceData = this.contentTypesConfig[role]['loaded_appearances'][data['appearance']].getData();
+        }
+        _.extend(data, appearanceData);
+        return data;
     }
 }

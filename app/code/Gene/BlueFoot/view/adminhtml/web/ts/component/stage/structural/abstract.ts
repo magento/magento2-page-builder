@@ -117,7 +117,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     getStyle() {
         let styleAttributes = this.getData();
-        _.extend(styleAttributes, this.appearanceApplier.getAppearanceData(this.getData()));
+        styleAttributes = this.appearanceApplier.apply(styleAttributes);
         return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     }
 

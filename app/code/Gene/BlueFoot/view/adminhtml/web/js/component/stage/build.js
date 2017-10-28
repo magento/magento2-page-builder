@@ -199,12 +199,24 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
         Build.prototype.buildEntity = function buildEntity(role, data, parent) {
             return new Promise(function (resolve, reject) {
-                (0, _factory2.default)(_config2.default.getInitConfig('contentTypes')[role], parent, this.stage, data).then(function (block) {
-                    parent.addChild(block);
-                    resolve(block);
-                }).catch(function (error) {
-                    reject(error);
-                });
+                require(_config2.default.getInitConfig('contentTypes')[role]['appearance_components'], function () {
+                    for (var _len = arguments.length, components = Array(_len), _key = 0; _key < _len; _key++) {
+                        components[_key] = arguments[_key];
+                    }
+
+                    var loadedAppearances = {};
+                    Object.keys(components).map(function (key) {
+                        var componentName = components[key].default.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                        loadedAppearances[componentName] = new components[key].default();
+                    });
+                    _config2.default.getInitConfig('contentTypes')[role]['loaded_appearances'] = loadedAppearances;
+                    (0, _factory2.default)(_config2.default.getInitConfig('contentTypes')[role], parent, this.stage, data).then(function (block) {
+                        parent.addChild(block);
+                        resolve(block);
+                    }).catch(function (error) {
+                        reject(error);
+                    });
+                }.bind(this));
             }.bind(this));
         };
 

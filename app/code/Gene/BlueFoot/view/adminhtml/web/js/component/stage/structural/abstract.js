@@ -137,7 +137,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
 
         Structural.prototype.getStyle = function getStyle() {
             var styleAttributes = this.getData();
-            _underscore2.default.extend(styleAttributes, this.appearanceApplier.getAppearanceData(this.getData()));
+            styleAttributes = this.appearanceApplier.apply(styleAttributes);
             return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
         };
 

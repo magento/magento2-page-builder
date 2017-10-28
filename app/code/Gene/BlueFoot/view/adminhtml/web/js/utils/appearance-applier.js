@@ -1,15 +1,13 @@
-define(["exports", "../component/appearance/column/align-top", "../component/appearance/column/align-middle", "../component/appearance/column/align-bottom"], function (exports, _alignTop, _alignMiddle, _alignBottom) {
-    "use strict";
+define(['exports', 'underscore', '../component/config'], function (exports, _underscore, _config) {
+    'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
 
-    var _alignTop2 = _interopRequireDefault(_alignTop);
+    var _underscore2 = _interopRequireDefault(_underscore);
 
-    var _alignMiddle2 = _interopRequireDefault(_alignMiddle);
-
-    var _alignBottom2 = _interopRequireDefault(_alignBottom);
+    var _config2 = _interopRequireDefault(_config);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -27,13 +25,8 @@ define(["exports", "../component/appearance/column/align-top", "../component/app
         function AppearanceApplier() {
             _classCallCheck(this, AppearanceApplier);
 
-            this.appearances = {
-                column: {
-                    top: new _alignTop2.default(),
-                    middle: new _alignMiddle2.default(),
-                    bottom: new _alignBottom2.default()
-                }
-            };
+            // Content types config
+            this.contentTypesConfig = _config2.default.getInitConfig('contentTypes');
         }
         /**
          * @param data
@@ -41,9 +34,14 @@ define(["exports", "../component/appearance/column/align-top", "../component/app
          */
 
 
-        AppearanceApplier.prototype.getAppearanceData = function getAppearanceData(data) {
+        AppearanceApplier.prototype.apply = function apply(data) {
+            var appearanceData = {};
             var role = data['name'] !== 'undefined' ? data['name'] : data['role'];
-            return this.appearances[role] !== undefined && this.appearances[role][data['appearance']] !== undefined ? this.appearances[role][data['appearance']].getData() : {};
+            if (data['appearance'] !== undefined && this.contentTypesConfig[role]['loaded_appearances'] !== undefined) {
+                appearanceData = this.contentTypesConfig[role]['loaded_appearances'][data['appearance']].getData();
+            }
+            _underscore2.default.extend(data, appearanceData);
+            return data;
         };
 
         return AppearanceApplier;

@@ -208,17 +208,28 @@ export default class Build extends EventEmitter {
      */
     private buildEntity(role: string, data: object, parent: EditableAreaInterface): Promise<Block> {
         return new Promise(function (resolve, reject) {
-            createBlock(
-                Config.getInitConfig('contentTypes')[role],
-                parent,
-                this.stage,
-                data
-            ).then(function (block) {
-                parent.addChild(block);
-                resolve(block);
-            }).catch(function (error) {
-                reject(error);
-            });
+            require(Config.getInitConfig('contentTypes')[role]['appearance_components'], function(...components) {
+                let loadedAppearances: any = {};
+                Object.keys(components).map(
+                    function (key: string) {
+                        let componentName: string = components[key].default.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                        loadedAppearances[componentName] = new components[key].default();
+                    }
+                );
+                Config.getInitConfig('contentTypes')[role]['loaded_appearances'] = loadedAppearances;
+
+                createBlock(
+                    Config.getInitConfig('contentTypes')[role],
+                    parent,
+                    this.stage,
+                    data
+                ).then(function (block) {
+                    parent.addChild(block);
+                    resolve(block);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            }.bind(this));
         }.bind(this));
     }
 }
