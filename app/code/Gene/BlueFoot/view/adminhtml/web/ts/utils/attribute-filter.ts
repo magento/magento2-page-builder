@@ -5,22 +5,20 @@
 import {DataObject} from "../component/data-store";
 
 export default class AttributeFilter {
+    // Allowed attributes
+    allowAttributes: Array<string> = ['name', 'appearance'];
+
     /**
      * Filter allowed attributes from object
      *
-     * @param data
-     * @returns {object}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    filter(data: DataObject): object {
-        let attributes: any = {};
-        const allowAttributes = [
-            'role',
-            'name',
-            'appearance'
-        ];
+    filter(data: DataObject): DataObject {
+        let attributes: DataObject = {};
         Object.keys(data).map(
-            function (key: any) {
-                if (allowAttributes.includes(key)) {
+            function (key: string) {
+                if (this.allowAttributes.includes(key)) {
                     attributes[key] = data[key];
                 }
             }
