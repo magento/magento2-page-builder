@@ -99,4 +99,41 @@
         </arguments>
         <seeElement selector='{{BlueFootColumnSection.panelFieldRequired(property.section, property.fieldName)}}' mergeKey="seePropertyIsRequired"/>
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <fillField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
+    </actionGroup>
+    <actionGroup name="selectSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <selectOption selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <click selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="clickProperty"/>
+        <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+    </actionGroup>
+    <actionGroup name="seeInFieldSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeInFieldProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsSelectedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeOptionIsSelectedProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsCheckedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeCheckboxIsChecked selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seeOptionIsCheckedProperty"/>
+    </actionGroup>
 </config>

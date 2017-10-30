@@ -80,12 +80,26 @@
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <fillField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="enterMinHeight"/>
-            <fillField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="enterBackgroundColor"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="enterBackgroundPosition"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="enterBackgroundSize"/>
-            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundRepeat"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty">
+                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizeProperty">
+                <argument name="property" value="BlueFootBackgroundSizeProperty"/>
+            </actionGroup>
+            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundProperty"/>
+            <wait time="1" mergeKey="waitForClick10"/>
+            <!--<actionGroup ref="clickSlideOutPanelField" mergeKey="clickBackgroundRepeatProperty">-->
+                <!--<argument name="property" value="BlueFootBackgroundRepeatProperty"/>-->
+            <!--</actionGroup>-->
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty">
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait1"/>
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
@@ -112,12 +126,26 @@
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel1"/>
-            <fillField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="enterMinHeight"/>
-            <fillField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="enterBackgroundColor"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="enterBackgroundPosition"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="enterBackgroundSize"/>
-            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundRepeat"/>
-            <selectOption selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="enterBackgroundAttachment"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty">
+                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizeProperty">
+                <argument name="property" value="BlueFootBackgroundSizeProperty"/>
+            </actionGroup>
+            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundProperty"/>
+            <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty">
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait1"/>
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
@@ -133,12 +161,24 @@
             <wait time="1" mergeKey="wait5"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel2"/>
             <wait time="3" mergeKey="wait6"/>
-            <seeInField selector="{{BlueFootColumnSection.minHeightControl}}" userInput="100" mergeKey="seeMinHeight"/>
-            <seeInField selector="{{BlueFootColumnSection.backgroundColorControl}}" userInput="#cccccc" mergeKey="seeBackgroundColor"/>
-            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundPositionControl}}" userInput="Centered" mergeKey="seeBackgroundPosition"/>
-            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundSizeControl}}" userInput="Cover" mergeKey="seeBackgroundSize"/>
-            <seeCheckboxIsChecked selector="{{BlueFootColumnSection.backgroundRepeatControl}}" mergeKey="seeBackgroundRepeat"/>
-            <seeOptionIsSelected selector="{{BlueFootColumnSection.backgroundAttachmentControl}}" userInput="Scroll" mergeKey="seeBackgroundAttachment"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="BlueFootAppearanceMinHeightProperty">
+                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBackgroundColorProperty">
+                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" mergeKey="seeBackgroundPositionProperty">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" mergeKey="seeBackgroundSizeProperty">
+                <argument name="property" value="BlueFootBackgroundSizeProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsCheckedSlideOutProperty" mergeKey="seeBackgroundRepeatProperty">
+                <argument name="property" value="BlueFootBackgroundRepeatProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" mergeKey="seeBackgroundAttachmentProperty">
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
         </test>
     </cest>
 </config>
