@@ -37,13 +37,16 @@
             <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
             <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
             <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+            <wait time="1" mergeKey="wait1"/>
             <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen1"/>
             <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreen"/>
+            <wait time="1" mergeKey="wait2"/>
             <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper stage-full-screen']" mergeKey="stageWrapperFullScreen2"/>
             <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreenAgain"/>
+            <wait time="1" mergeKey="wait3"/>
             <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen3"/>
         </test>
-        <test name="DisplayBlueFootPanelGroups">
+        <test name="ShowPanelGroups">
             <annotations>
                 <title value="Display Existing BlueFoot Panel Content Block Groups"/>
                 <description value="The BlueFoot panel should display existing content block groups, and open the first section by default."/>
@@ -55,7 +58,7 @@
             <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
             <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
         </test>
-        <test name="SearchOneCharInBlueFootPanel">
+        <test name="SearchOneCharInPanel">
             <annotations>
                 <title value="Search for one character in Bluefoot Panel"/>
                 <description value="When typing one letter into the panel search box, I see Content Blocks that contains words that start with letter entered."/>
@@ -65,10 +68,10 @@
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
-            <see userInput="Buttons" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
-            <see userInput="Static Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
+            <see userInput="Button" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
+            <see userInput="Segmented Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
         </test>
-        <test name="SearchThreeCharInBlueFootPanel">
+        <test name="SearchThreeCharInPanel">
             <annotations>
                 <title value="Search for three characters in Bluefoot Panel"/>
                 <description value="When typing three letters into the panel search box, I see content blocks that contains words that start with letters entered."/>
@@ -77,11 +80,11 @@
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="sli" mergeKey="fillSearch"/>
-            <see userInput="Slider" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
-            <see userInput="Advanced Slider" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="blo" mergeKey="fillSearch"/>
+            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
+            <see userInput="Segmented Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
         </test>
-        <test name="SearchNoMatchesInBlueFootPanel">
+        <test name="SearchNoMatchesInPanel">
             <annotations>
                 <title value="Search for no matches in BlueFoot Panel"/>
                 <description value="When there is no match on a search, display appropriate message."/>
@@ -93,13 +96,14 @@
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
             <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" mergeKey="validateNothingFound"/>
         </test>
-        <test name="ClearSearchInBlueFootPanel">
+        <test name="ClearSearchInPanel">
             <annotations>
                 <title value="Clear search in Bluefoot Panel"/>
                 <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content block groups are displayed."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81828"/>
                 <group value="bluefoot"/>
+                <group value="skip"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <!--toggle clearSearch on-->
