@@ -143,9 +143,7 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
 
         Build.prototype.getElementData = function getElementData(element) {
             var result = {};
-            var readPromise = new Promise(function (resolve, reject) {
-                resolve(this.attributeReaderComposite.read(element));
-            }.bind(this));
+            var readPromise = this.attributeReaderComposite.read(element);
             return readPromise.then(function (data) {
                 return result ? _.extend(result, data) : {};
             });
@@ -180,10 +178,6 @@ define(['exports', 'underscore', '../event-emitter', '../config', '../block/fact
                     // If the stage is being built, we don't need to "build" anything, just return the stage as the
                     // new parent
                     return Promise.resolve(this.stage);
-                // case 'row':
-                //     return this.buildRow(data, parent);
-                // case 'column':
-                //     return this.buildColumn(data, parent);
                 default:
                     return this.buildEntity(role, data, parent);
             }

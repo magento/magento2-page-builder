@@ -31,7 +31,7 @@ define(['exports', 'underscore', '../../../utils/style-attribute-mapper'], funct
          * Read data, style and css properties from the element
          *
          * @param element HTMLElement
-         * @returns {DataObject | Promise<any>}
+         * @returns {Promise<any>}
          */
 
 
@@ -50,7 +50,9 @@ define(['exports', 'underscore', '../../../utils/style-attribute-mapper'], funct
                 }
             });
             data['css_classes'] = element.className.split(' ');
-            return data;
+            return new Promise(function (resolve) {
+                resolve(data);
+            });
         };
 
         return Default;

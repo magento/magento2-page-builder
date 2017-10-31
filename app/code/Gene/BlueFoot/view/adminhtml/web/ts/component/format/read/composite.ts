@@ -4,6 +4,7 @@
  */
 
 import _ from 'underscore';
+import requireJs from 'require';
 import Config from "../../config";
 import ReadInterface from "../read-interface";
 import {DataObject} from "../../data-store";
@@ -20,26 +21,34 @@ export default class AttributeReaderComposite implements ReadInterface {
      * Read data from the element
      *
      * @param element
-     * @returns {DataObject | Promise<any>}
+     * @returns {Promise<any>}
      */
-    read (element: HTMLElement): DataObject | Promise<any> {
-        let result: DataObject = {};
-        if (this.contentTypeConfig.hasOwnProperty(element.dataset.role)) {
-            let readPromise = new Promise(function(resolve: Function, reject: Function) {
-                require(this.contentTypeConfig[element.dataset.role]['readers'], function (...args: any[]) {
-                    resolve(args)
-                }, reject);
-            }.bind(this));
-            return readPromise.then(function(readersArray: Array<any>) {
-                for (let i = 0; i < readersArray.length; i++) {
-                    let reader = new readersArray[i].default();
-                    _.extend(result, reader.read(element));
-                }
-                return result;
-            }).catch(function(e: PromiseRejectionEvent) {
-
-            });
-        }
-        return result;
+    read (element: HTMLElement): Promise<any> {
+        return new Promise((resolve: Function) => {
+            const role = element.dataset.role;
+            if (!this.contentTypeConfig.hasOwnProperty(role)) {
+                resolve({});
+            } else {
+                let result: DataObject = {};
+                const readPromise = new Promise((resolve: Function, reject: Function) => {
+                    try {
+                        requireJs(this.contentTypeConfig[role]['readers'], (...readers: any[]) => {
+                            resolve(readers);
+                        });
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
+                return readPromise.then((readers: Array<any>) => {
+                    for (let i = 0; i < readers.length; i++) {
+                        let reader = new readers[i].default();
+                        _.extend(result, reader.read(element));
+                    }
+                    resolve(result);
+                }).catch(function(e: PromiseRejectionEvent) {
+                    console.error('Error reading data from the element.');
+                });
+            }
+        });
     }
 }

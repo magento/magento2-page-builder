@@ -4,19 +4,22 @@
  */
 
 import ReadInterface from "../read-interface";
-import {DataObject} from "../../data-store";
 
 export default class Heading implements ReadInterface {
     /**
      * Read heading type and title from the element
      *
      * @param element HTMLElement
-     * @returns {DataObject | Promise<any>}
+     * @returns {Promise<any>}
      */
-    public read(element: HTMLElement): DataObject | Promise<any> {
-        return {
-            'heading_type': element.nodeName,
-            'title': element.innerText
-        };
+    public read(element: HTMLElement): Promise<any> {
+        return new Promise((resolve: Function) => {
+            resolve(
+                {
+                    'heading_type': element.nodeName,
+                    'title': element.innerText
+                }
+            );
+        });
     }
 }

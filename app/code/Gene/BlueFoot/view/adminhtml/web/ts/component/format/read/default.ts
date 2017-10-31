@@ -19,9 +19,9 @@ export default class Default implements ReadInterface {
      * Read data, style and css properties from the element
      *
      * @param element HTMLElement
-     * @returns {DataObject | Promise<any>}
+     * @returns {Promise<any>}
      */
-    public read (element: HTMLElement): DataObject | Promise<any> {
+    public read (element: HTMLElement): Promise<any> {
         let data: DataObject = {};
         let styleAttributes: DataObject = {};
         Object.keys(element.style).map(
@@ -44,6 +44,8 @@ export default class Default implements ReadInterface {
 
         data['css_classes'] = element.className.split(' ');
 
-        return data;
+        return new Promise((resolve: Function) => {
+            resolve(data);
+        });
     }
 }

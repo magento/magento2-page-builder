@@ -82,15 +82,15 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _this.children = _knockout2.default.observableArray([]);
             _this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
             _this.columnBuilder = new _builder.ColumnBuilder();
+            _this.styleAttributeFilter = new _styleAttributeFilter2.default();
+            _this.styleAttributeMapper = new _styleAttributeMapper2.default();
+            _this.attributeFilter = new _attributeFilter2.default();
+            _this.attributeMapper = new _attributeMapper2.default();
             _this.previewChildTemplate = 'Gene_BlueFoot/component/block/preview/children.html';
             _this.renderChildTemplate = 'Gene_BlueFoot/component/block/render/children.html';
             _EditableArea.prototype.setChildren.call(_this, _this.children);
             // Create a new instance of edit for our editing needs
             _this.edit = new _edit2.default(_this, _this.stage.store);
-            _this.styleAttributeFilter = new _styleAttributeFilter2.default();
-            _this.styleAttributeMapper = new _styleAttributeMapper2.default();
-            _this.attributeFilter = new _attributeFilter2.default();
-            _this.attributeMapper = new _attributeMapper2.default();
             _this.parent = parent;
             _this.stage = stage;
             _this.config = config;

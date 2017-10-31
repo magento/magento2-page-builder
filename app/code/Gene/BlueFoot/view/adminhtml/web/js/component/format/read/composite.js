@@ -1,4 +1,4 @@
-define(['exports', 'underscore', '../../config'], function (exports, _underscore, _config) {
+define(['exports', 'underscore', 'require', '../../config'], function (exports, _underscore, _require, _config) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -6,6 +6,8 @@ define(['exports', 'underscore', '../../config'], function (exports, _underscore
     });
 
     var _underscore2 = _interopRequireDefault(_underscore);
+
+    var _require2 = _interopRequireDefault(_require);
 
     var _config2 = _interopRequireDefault(_config);
 
@@ -31,31 +33,43 @@ define(['exports', 'underscore', '../../config'], function (exports, _underscore
          * Read data from the element
          *
          * @param element
-         * @returns {DataObject | Promise<any>}
+         * @returns {Promise<any>}
          */
 
 
         AttributeReaderComposite.prototype.read = function read(element) {
-            var result = {};
-            if (this.contentTypeConfig.hasOwnProperty(element.dataset.role)) {
-                var readPromise = new Promise(function (resolve, reject) {
-                    require(this.contentTypeConfig[element.dataset.role]['readers'], function () {
-                        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                            args[_key] = arguments[_key];
-                        }
+            var _this = this;
 
-                        resolve(args);
-                    }, reject);
-                }.bind(this));
-                return readPromise.then(function (readersArray) {
-                    for (var i = 0; i < readersArray.length; i++) {
-                        var reader = new readersArray[i].default();
-                        _underscore2.default.extend(result, reader.read(element));
-                    }
-                    return result;
-                }).catch(function (e) {});
-            }
-            return result;
+            return new Promise(function (resolve) {
+                var role = element.dataset.role;
+                if (!_this.contentTypeConfig.hasOwnProperty(role)) {
+                    resolve({});
+                } else {
+                    var result = {};
+                    var readPromise = new Promise(function (resolve, reject) {
+                        try {
+                            (0, _require2.default)(_this.contentTypeConfig[role]['readers'], function () {
+                                for (var _len = arguments.length, readers = Array(_len), _key = 0; _key < _len; _key++) {
+                                    readers[_key] = arguments[_key];
+                                }
+
+                                resolve(readers);
+                            });
+                        } catch (e) {
+                            reject(e);
+                        }
+                    });
+                    return readPromise.then(function (readers) {
+                        for (var i = 0; i < readers.length; i++) {
+                            var reader = new readers[i].default();
+                            _underscore2.default.extend(result, reader.read(element));
+                        }
+                        resolve(result);
+                    }).catch(function (e) {
+                        console.error('Error reading data from the element.');
+                    });
+                }
+            });
         };
 
         return AttributeReaderComposite;

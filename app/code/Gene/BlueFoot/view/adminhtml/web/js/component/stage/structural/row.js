@@ -60,6 +60,7 @@ define(["exports", "./abstract", "./column", "./options/option", "ko-resizable"]
       _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/row.html';
       _this.renderTemplate = 'Gene_BlueFoot/component/block/render/row.html';
       _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10));
+      // todo: refactor in scope of MAGETWO-66349
       _this.config.name = 'row';
       return _this;
     }

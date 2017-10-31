@@ -54,16 +54,6 @@ define(["exports", "./block"], function (exports, _block) {
             _this.editOnInsert = false;
             return _this;
         }
-        /**
-         * Get template master format template
-         *
-         * @returns {string}
-         */
-
-
-        InlineBlock.prototype.getPreviewTemplate = function getPreviewTemplate() {
-            return 'Gene_BlueFoot/component/stage/structural/render/heading.html';
-        };
 
         return InlineBlock;
     }(_block2.default);

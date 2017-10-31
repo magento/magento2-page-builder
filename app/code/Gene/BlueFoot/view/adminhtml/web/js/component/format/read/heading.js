@@ -17,10 +17,12 @@ define(['exports'], function (exports) {
         }
 
         Heading.prototype.read = function read(element) {
-            return {
-                'heading_type': element.nodeName,
-                'title': element.innerText
-            };
+            return new Promise(function (resolve) {
+                resolve({
+                    'heading_type': element.nodeName,
+                    'title': element.innerText
+                });
+            });
         };
 
         return Heading;

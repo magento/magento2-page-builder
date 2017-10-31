@@ -10,6 +10,7 @@ import StyleAttributeFilter from "../../../utils/style-attribute-filter";
 import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
 import AttributeFilter from "../../../utils/attribute-filter";
 import AttributeMapper from "../../../utils/attribute-mapper";
+import {DataObject} from "../../data-store";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
@@ -38,10 +39,10 @@ export default class Structural extends EditableArea implements StructuralInterf
     children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     template: string = 'Gene_BlueFoot/component/stage/structural/abstract.html';
     columnBuilder: ColumnBuilder = new ColumnBuilder();
-    styleAttributeFilter: StyleAttributeFilter;
-    styleAttributeMapper: StyleAttributeMapper;
-    attributeFilter: AttributeFilter;
-    attributeMapper: AttributeMapper;
+    styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
+    attributeFilter: AttributeFilter = new AttributeFilter();
+    attributeMapper: AttributeMapper =  new AttributeMapper();
 
     previewChildTemplate: string = 'Gene_BlueFoot/component/block/preview/children.html';
     renderChildTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
@@ -59,10 +60,6 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
-        this.styleAttributeFilter = new StyleAttributeFilter();
-        this.styleAttributeMapper = new StyleAttributeMapper();
-        this.attributeFilter = new AttributeFilter();
-        this.attributeMapper = new AttributeMapper();
 
         this.parent = parent;
         this.stage = stage;
@@ -99,7 +96,9 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * @returns {object}
+     * Get css classes for an block
+     *
+     * @returns {DataObject}
      */
     getCss() {
         let cssClasses = {};
@@ -110,14 +109,18 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * @returns {object}
+     * Get stype properties for an block
+     *
+     * @returns {DataObject}
      */
     getStyle() {
         return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
     }
 
     /**
-     * @returns {object}
+     * Get attributes for an block
+     *
+     * @returns {DataObject}
      */
     getAttributes() {
         let data = this.getData();
@@ -126,7 +129,9 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * @returns {object}
+     * Get block data
+     *
+     * @returns {DataObject}
      */
     getData() {
         return this.stage.store.get(this.id);

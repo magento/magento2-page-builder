@@ -116,9 +116,7 @@ export default class Build extends EventEmitter {
      */
     getElementData(element: HTMLElement) {
         let result = {};
-        let readPromise = new Promise(function (resolve, reject) {
-            resolve(this.attributeReaderComposite.read(element));
-        }.bind(this));
+        const readPromise = this.attributeReaderComposite.read(element);
         return readPromise.then(function (data) {
             return result ? _.extend(result, data) : {}
         });
@@ -167,10 +165,6 @@ export default class Build extends EventEmitter {
                 // If the stage is being built, we don't need to "build" anything, just return the stage as the
                 // new parent
                 return Promise.resolve(this.stage);
-            // case 'row':
-            //     return this.buildRow(data, parent);
-            // case 'column':
-            //     return this.buildColumn(data, parent);
             default:
                 return this.buildEntity(role, data, parent);
         }

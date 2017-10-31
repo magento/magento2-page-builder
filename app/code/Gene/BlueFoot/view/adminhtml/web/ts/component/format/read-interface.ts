@@ -8,7 +8,7 @@
      * Read data from the element
      *
      * @param element HTMLElement
-     * @returns {DataObject | Promise<any>}
+     * @returns {Promise<any>}
      */
-    read(element: HTMLElement): object | Promise<any>;
+    read(element: HTMLElement): Promise<any>;
 }
