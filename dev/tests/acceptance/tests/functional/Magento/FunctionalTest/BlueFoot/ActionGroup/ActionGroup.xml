@@ -55,6 +55,7 @@
     <actionGroup name="navigateToAPageWithBlueFoot">
         <loginAsAdmin mergeKey="loginAsAdmin"/>
         <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
+        <waitForPageLoad mergeKey="waitForPageLoad1"/>
         <wait time="1" mergeKey="wait2"/>
     </actionGroup>
 
@@ -67,12 +68,14 @@
 
     <actionGroup name="addBlueFootRowToStage">
         <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
+        <seeElement selector="{{BlueFootRowSection.row}}" mergeKey="seeElementRow"/>
         <wait time="1" mergeKey="wait8"/>
     </actionGroup>
 
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
         <wait time="1" mergeKey="wait9"/>
+        <seeElement selector="{{BlueFootColumnSection.column}}" mergeKey="seeElementColumn"/>
     </actionGroup>
 
     <actionGroup name="openBlueFootEditColumnPanel">
@@ -83,6 +86,38 @@
         <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
         <click selector="{{BlueFootColumnSection.editColumn}}" mergeKey="clickEditColumn"/>
         <wait time="2" mergeKey="wait10"/>
+    </actionGroup>
+
+    <actionGroup name="openBlueFootEditPanel">
+        <arguments>
+            <argument name="typeInstance" defaultValue="" />
+            <argument name="optionsMenu" defaultValue="" />
+            <argument name="editAction" defaultValue="" />
+        </arguments>
+        <moveMouseOver selector="{{typeInstance}}" mergeKey="onMouseOverColumn"/>
+        <seeElement selector="{{optionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{editAction}}" mergeKey="clickEditColumn"/>
+        <wait time="2" mergeKey="wait10"/>
+    </actionGroup>
+
+    <actionGroup name="removeBlueFootRow">
+        <moveMouseOver selector="{{BlueFootRowSection.row}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootRowSection.rowOptionsMenu}}" mergeKey="seeRowOptionsMenu"/>
+        <click selector="{{BlueFootRowSection.removeRow}}" mergeKey="clickRemoveRow"/>
+        <wait time="1" mergeKey="wait1"/>
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <wait time="1" mergeKey="wait2"/>
+    </actionGroup>
+
+    <actionGroup name="removeBlueFootColumn">
+        <moveMouseOver selector="{{BlueFootColumnSection.column}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{BlueFootColumnSection.removeColumn}}" mergeKey="clickRemoveColumn"/>
+        <wait time="1" mergeKey="wait1"/>
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <wait time="1" mergeKey="wait2"/>
     </actionGroup>
 
     <actionGroup name="validateSlideOutPanelField">

@@ -8,7 +8,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminSearchBlueFootPanelCest">
+    <cest name="AdminBlueFootPanelCest">
         <annotations>
             <features value="BlueFoot CMS"/>
             <stories value="View/Search BlueFoot CMS Panel via the Admin"/>
@@ -20,13 +20,36 @@
         <after>
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
         </after>
+        <test name="ActivateBlueFootFullScreen">
+            <annotations>
+                <title value="Activate BlueFoot CMS in fullscreen mode and then unactivate it."/>
+                <description value="You should be able to activate BlueFoot FullScreen in Admin."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-81951"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
+            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
+            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
+            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+            <waitForPageLoad mergeKey="waitForPageLoad1"/>
+            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen1"/>
+            <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreen"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper stage-full-screen']" mergeKey="stageWrapperFullScreen2"/>
+            <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreenAgain"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen3"/>
+        </test>
         <test name="DisplayBlueFootPanelGroups">
             <annotations>
                 <title value="Display Existing BlueFoot Panel Content Block Groups"/>
                 <description value="The BlueFoot panel should display existing content block groups, and open the first section by default."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81826"/>
-                <group value="skip"/>
+                <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
@@ -38,6 +61,7 @@
                 <description value="When typing one letter into the panel search box, I see Content Blocks that contains words that start with letter entered."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81827"/>
+                <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
@@ -50,6 +74,7 @@
                 <description value="When typing three letters into the panel search box, I see content blocks that contains words that start with letters entered."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81827"/>
+                <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="sli" mergeKey="fillSearch"/>
@@ -62,6 +87,7 @@
                 <description value="When there is no match on a search, display appropriate message."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81831"/>
+                <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
@@ -73,6 +99,7 @@
                 <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content block groups are displayed."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-81828"/>
+                <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <!--toggle clearSearch on-->

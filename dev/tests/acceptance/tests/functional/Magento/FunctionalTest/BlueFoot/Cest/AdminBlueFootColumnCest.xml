@@ -8,7 +8,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="BlueFootColumnConfigurationCest">
+    <cest name="AdminBlueFootColumnCest">
         <annotations>
             <features value="BlueFoot CMS"/>
             <stories value="Bluefoot Column Configuration"/>
@@ -20,16 +20,41 @@
         <before>
             <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
         </before>
+        <test name="CanAddColumn">
+            <annotations>
+                <title value="Add a column into a row"/>
+                <description value="A user should be able to add a column into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82860"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragColumnIntoStage"/>
+        </test>
+        <test name="CanRemoveColumn">
+            <annotations>
+                <title value="Remove a column from a row"/>
+                <description value="A user should be able to remove columns from rows."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82861"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragColumnIntoStage"/>
+            <actionGroup ref="removeBlueFootColumn" mergeKey="removeColumn"/>
+            <dontSeeElement selector="{{BlueFootColumnSection.column}}" mergeKey="dontSeeColumn"/>
+        </test>
         <test name="SlideOutPanelWithSettingsContainRequiredFields">
             <annotations>
                 <title value="Displays requires column settings"/>
                 <description value="Slide out panel with required settings appear"/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-82227"/>
+                <group value="bluefoot"/>
             </annotations>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
 
             <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAppearanceMinHeightProperty">
@@ -70,6 +95,23 @@
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
         </test>
+        <test name="ColumnCanInteractEditPanel">
+            <annotations>
+                <title value="Can close the edit panel"/>
+                <description value="A user should be able to open the edit form on an added column."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82862"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <wait time="2" mergeKey="waitOpen"/>
+            <seeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="seeEditForm"/>
+            <click selector="{{BlueFootActionsSection.editFormCancel}}" mergeKey="clickEditFormCancel"/>
+            <wait time="2" mergeKey="waitClose"/>
+            <dontSeeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="dontSeeEditForm"/>
+        </test>
         <test name="ColumnSettingsAppearOnFrontend">
             <annotations>
                 <title value="Column settings appear on frontend"/>
@@ -79,6 +121,8 @@
                 <group value="bluefoot"/>
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
@@ -122,6 +166,8 @@
                 <group value="bluefoot"/>
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel1"/>
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
@@ -148,6 +194,7 @@
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait2"/>
             <waitForPageLoad mergeKey="waitForCmsPagesGridLoad"/>
+            <wait time="3" mergeKey="wait2"/>
             <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{BlueFootFirstColumnInStage.pageName}}"' mergeKey="enterPageNameInSearch"/>
             <click selector="{{CmsPageGrid.searchButton}}" mergeKey="clickSearchButton"/>
             <wait time="3" mergeKey="wait3"/>
