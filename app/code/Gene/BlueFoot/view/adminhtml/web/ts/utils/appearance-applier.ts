@@ -3,26 +3,28 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
-
 import {DataObject} from "../component/data-store";
-import Config from "../component/config";
 
 export default class AppearanceApplier {
     // Content types config
-    contentTypesConfig: any = Config.getInitConfig('contentTypes');
+    appearances: any;
+
+    constructor(appearances: any) {
+        this.appearances = appearances;
+    }
 
     /**
      * @param data
      * @returns {object}
      */
     apply(data: DataObject): object {
-        let appearanceData = {};
         const role: string =  data['name'];
-        if (data['appearance'] !== undefined && this.contentTypesConfig[role]['appearance_components'] !== undefined) {
-            appearanceData = this.contentTypesConfig[role]['appearance_components'][data['appearance']].getData();
+        if (data['appearance'] !== undefined) {
+            if (this.appearances[data['appearance']] === undefined) {
+                console.log('No appearances specified for content type.');
+            }
+            return this.appearances[data['appearance']].apply(data);
         }
-        _.extend(data, appearanceData);
         return data;
     }
 }

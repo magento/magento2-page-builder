@@ -3,11 +3,19 @@
  * See COPYING.txt for license details.
  */
 
-export default class AlignBottom {
+import _ from 'underscore';
+import {DataObject} from "../../data-store";
+import AppearancesInterface from "../appearance-interface";
+
+export default class AlignBottom implements AppearancesInterface {
     /**
-     * @returns {object}
+     * Apply align bottom appearance
+     *
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    getData(): object {
-        return {flex_grow: 1, align_self: 'flex-end'};
+    apply(data: DataObject): DataObject {
+        _.extend(data, {flex_grow: 1, align_self: 'flex-end'});
+        return data;
     }
 }

@@ -28,27 +28,29 @@ define(['exports'], function (exports) {
     //     return new c(parent, stage || parent.stage, config, formData || {});
     // }
     function createBlock(config, parent, stage, formData) {
+        var appearanceApplierComponentName = 'Gene_BlueFoot/js/utils/appearance-applier';
         stage = stage || parent.stage;
         formData = formData || {};
         return new Promise(function (resolve, reject) {
-            require(config['appearances'], function () {
-                for (var _len = arguments.length, components = Array(_len), _key = 0; _key < _len; _key++) {
-                    components[_key] = arguments[_key];
-                }
+            require([appearanceApplierComponentName], function (appearanceApplier) {
+                require(config['appearances'], function () {
+                    for (var _len = arguments.length, components = Array(_len), _key = 0; _key < _len; _key++) {
+                        components[_key] = arguments[_key];
+                    }
 
-                var appearanceComponents = {};
-                Object.keys(components).map(function (key) {
-                    var component = components[key].default;
-                    var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
-                    appearanceComponents[componentName] = new component();
+                    var appearanceComponents = {};
+                    Object.keys(components).map(function (key) {
+                        var component = components[key].default;
+                        var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                        appearanceComponents[componentName] = new component();
+                    });
+                    require([getBlockComponentPath(config)], function (BlockInstance) {
+                        return resolve(new BlockInstance.default(parent, stage, config, formData, new appearanceApplier.default(appearanceComponents)));
+                    }, function (error) {
+                        return reject(error);
+                    });
                 });
-                config['appearance_components'] = appearanceComponents;
-                require([getBlockComponentPath(config)], function (BlockInstance) {
-                    return resolve(new BlockInstance.default(parent, stage, config, formData));
-                }, function (error) {
-                    return reject(error);
-                });
-            }.bind(this));
+            });
         });
     }
 });

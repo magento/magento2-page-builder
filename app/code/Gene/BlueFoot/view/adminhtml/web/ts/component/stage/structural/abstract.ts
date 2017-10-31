@@ -54,8 +54,9 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
+     * @param appearanceApplier
      */
-    constructor(parent: EditableArea, stage: Stage, config: any = {}) {
+    constructor(parent: EditableArea, stage: Stage, config: any = {}, appearanceApplier: AppearanceApplier) {
         super(stage);
         super.setChildren(this.children);
 
@@ -65,7 +66,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         this.styleAttributeMapper = new StyleAttributeMapper();
         this.attributeFilter = new AttributeFilter();
         this.attributeMapper = new AttributeMapper();
-        this.appearanceApplier = new AppearanceApplier();
+        this.appearanceApplier = appearanceApplier ? appearanceApplier : new AppearanceApplier({});
 
         this.parent = parent;
         this.stage = stage;

@@ -57,11 +57,12 @@ define(["exports", "../stage/structural/abstract", "../stage/previews", "undersc
          * @param stage
          * @param config
          * @param formData
+         * @param appearanceApplier
          */
-        function Block(parent, stage, config, formData) {
+        function Block(parent, stage, config, formData, appearanceApplier) {
             _classCallCheck(this, Block);
 
-            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage, config));
+            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage, config, appearanceApplier));
 
             _this.editOnInsert = true;
             _this.childEntityKeys = [];

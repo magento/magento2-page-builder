@@ -70,9 +70,11 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
          * @param parent
          * @param stage
          * @param config
+         * @param appearanceApplier
          */
         function Structural(parent, stage) {
             var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+            var appearanceApplier = arguments[3];
 
             _classCallCheck(this, Structural);
 
@@ -93,7 +95,7 @@ define(["exports", "./editable-area", "./options", "./options/option", "./column
             _this.styleAttributeMapper = new _styleAttributeMapper2.default();
             _this.attributeFilter = new _attributeFilter2.default();
             _this.attributeMapper = new _attributeMapper2.default();
-            _this.appearanceApplier = new _appearanceApplier2.default();
+            _this.appearanceApplier = appearanceApplier ? appearanceApplier : new _appearanceApplier2.default({});
             _this.parent = parent;
             _this.stage = stage;
             _this.config = config;
