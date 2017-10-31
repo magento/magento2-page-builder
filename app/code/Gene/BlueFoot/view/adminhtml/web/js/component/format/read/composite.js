@@ -40,34 +40,36 @@ define(['exports', 'underscore', 'require', '../../config'], function (exports, 
         AttributeReaderComposite.prototype.read = function read(element) {
             var _this = this;
 
-            return new Promise(function (resolve) {
+            var result = {};
+            return new Promise(function (resolve, reject) {
                 var role = element.dataset.role;
                 if (!_this.contentTypeConfig.hasOwnProperty(role)) {
-                    resolve({});
+                    resolve(result);
                 } else {
-                    var result = {};
-                    var readPromise = new Promise(function (resolve, reject) {
-                        try {
-                            (0, _require2.default)(_this.contentTypeConfig[role]['readers'], function () {
-                                for (var _len = arguments.length, readers = Array(_len), _key = 0; _key < _len; _key++) {
-                                    readers[_key] = arguments[_key];
-                                }
+                    try {
+                        (0, _require2.default)(_this.contentTypeConfig[role]['readers'], function () {
+                            for (var _len = arguments.length, readers = Array(_len), _key = 0; _key < _len; _key++) {
+                                readers[_key] = arguments[_key];
+                            }
 
-                                resolve(readers);
+                            var readerPromises = [];
+                            for (var i = 0; i < readers.length; i++) {
+                                var reader = new readers[i].default();
+                                readerPromises.push(reader.read(element));
+                            }
+                            Promise.all(readerPromises).then(function (readersData) {
+                                readersData.forEach(function (data) {
+                                    _underscore2.default.extend(result, data);
+                                });
+                                console.log(result);
+                                resolve(result);
+                            }).catch(function (error) {
+                                console.error(error);
                             });
-                        } catch (e) {
-                            reject(e);
-                        }
-                    });
-                    return readPromise.then(function (readers) {
-                        for (var i = 0; i < readers.length; i++) {
-                            var reader = new readers[i].default();
-                            _underscore2.default.extend(result, reader.read(element));
-                        }
-                        resolve(result);
-                    }).catch(function (e) {
-                        console.error('Error reading data from the element.');
-                    });
+                        });
+                    } catch (e) {
+                        reject(e);
+                    }
                 }
             });
         };

@@ -12,7 +12,7 @@ interface State {
 
 export interface DataObject {
     // State object can only contain primitives
-    [key: string]: undefined | null | string | number | boolean;
+    [key: string]: undefined | null | string | number | boolean | Array<any>;
 }
 
 /**
@@ -62,7 +62,6 @@ export default class DataStore extends EventEmitter {
         }
 
         this.emitState(id, storeData);
-        console.log('data-store:update')
     }
 
     /**
@@ -116,7 +115,6 @@ export default class DataStore extends EventEmitter {
         this.on(eventName, (event: Event, data: DataStoreEvent) => {
             handler(data.state, event);
         });
-        console.log('data-store:subscribe')
     }
 
     /**

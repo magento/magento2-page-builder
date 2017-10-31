@@ -24,30 +24,32 @@ export default class AttributeReaderComposite implements ReadInterface {
      * @returns {Promise<any>}
      */
     read (element: HTMLElement): Promise<any> {
-        return new Promise((resolve: Function) => {
+        let result: DataObject = {};
+        return new Promise((resolve: Function, reject: Function) => {
             const role = element.dataset.role;
             if (!this.contentTypeConfig.hasOwnProperty(role)) {
-                resolve({});
+                resolve(result);
             } else {
-                let result: DataObject = {};
-                const readPromise = new Promise((resolve: Function, reject: Function) => {
-                    try {
-                        requireJs(this.contentTypeConfig[role]['readers'], (...readers: any[]) => {
-                            resolve(readers);
+                try {
+                    requireJs(this.contentTypeConfig[role]['readers'], (...readers: any[]) => {
+                        let readerPromises: Array<Promise<any>> = [];
+                        for (let i = 0; i < readers.length; i++) {
+                            let reader = new readers[i].default();
+                            readerPromises.push(reader.read(element));
+                        }
+                        Promise.all(readerPromises).then(readersData => {
+                            readersData.forEach((data) => {
+                                _.extend(result, data);
+                            });
+                            console.log(result);
+                            resolve(result);
+                        }).catch((error) => {
+                            console.error(error);
                         });
-                    } catch (e) {
-                        reject(e);
-                    }
-                });
-                return readPromise.then((readers: Array<any>) => {
-                    for (let i = 0; i < readers.length; i++) {
-                        let reader = new readers[i].default();
-                        _.extend(result, reader.read(element));
-                    }
-                    resolve(result);
-                }).catch(function(e: PromiseRejectionEvent) {
-                    console.error('Error reading data from the element.');
-                });
+                    });
+                } catch (e) {
+                    reject(e);
+                }
             }
         });
     }

@@ -18,18 +18,14 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
         };
     }
 
-    // The root template for the render tree
-    var rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
     /**
      * Render the tree into a string
      *
      * @param {KnockoutObservableArray<Structural>} tree
      */
-    /**
-     * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-     * See COPYING.txt for license details.
-     */
     function renderTree(tree) {
+        var rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
+        var commentNodeType = 8;
         var temp = (0, _jquery2.default)('<div>');
         return new Promise(function (resolve, reject) {
             _engine2.default.waitForFinishRender().then(function () {
@@ -37,25 +33,24 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
                     (0, _jquery2.default)(value).removeAttr('data-bind');
                 });
                 temp.contents().filter(function () {
-                    return this.nodeType == 8;
+                    return this.nodeType == commentNodeType;
                 }).remove();
                 temp.find('*').each(function (index, value) {
                     (0, _jquery2.default)(value).contents().filter(function () {
-                        return this.nodeType == 8;
+                        return this.nodeType == commentNodeType;
                     }).remove();
                 });
                 // Strip all is wrapper elements
-                temp.find('[data-is-wrapper]').each(function (index, element) {
+                temp.find('[data-wrapper]').each(function (index, element) {
                     (0, _jquery2.default)(element).parent().append((0, _jquery2.default)(element).children());
                     (0, _jquery2.default)(element).remove();
                 });
                 var content = temp.html();
                 content = content.replace(/\r?\n|\r/g, '');
-                console.log('renderTree completed', content);
-                resolve(temp.html());
+                console.log(content);
+                resolve(content);
                 temp.remove();
             });
-            console.log('renderTree started');
             _knockout2.default.applyBindingsToNode(temp[0], {
                 template: {
                     name: rootTemplate,
@@ -65,5 +60,8 @@ define(['exports', 'knockout', 'jquery', 'Magento_Ui/js/lib/knockout/template/en
                 }
             });
         });
-    }
+    } /**
+       * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+       * See COPYING.txt for license details.
+       */
 });
