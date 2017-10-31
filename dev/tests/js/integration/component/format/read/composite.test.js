@@ -1,4 +1,10 @@
 describe('Composite reader of attributes', () => {
+    jest.mock(
+        '::advanced-cms-init-config',
+        () => require('init-config'),
+        {virtual: true}
+    );
+
     const compositeReader = new (require('js/component/format/read/composite'))();
 
     it('Can read data-role attribute', () => {
