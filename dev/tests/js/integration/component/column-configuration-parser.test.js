@@ -16,9 +16,12 @@ const columnConfiguration = (columnConfig) => {
 };
 
 describe('Column Configuration Parser', () => {
-    const stage = stageFactory(jest);
+    beforeEach(() => {
+        (require('setup-stage'))(jest);
+    });
 
     it('defaults to standard configuration if no properties provided', () => {
+        const stage = stageFactory();
         stage.setupWithContent('<div data-role="row"><div data-role="column"></div></div>');
         return expect(stage.dataTree()).resolves.toEqual([
             expect.objectContaining({
@@ -31,6 +34,7 @@ describe('Column Configuration Parser', () => {
     });
 
     it('parses background from style tag', () => {
+        const stage = stageFactory();
         stage.setupWithContent('<div data-role="row"><div data-role="column" style="background-attachment: scroll; background-color: rgb(204,204,204);"></div></div>');
         return expect(stage.dataTree()).resolves.toEqual([
             expect.objectContaining({

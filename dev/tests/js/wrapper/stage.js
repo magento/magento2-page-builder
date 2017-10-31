@@ -1,46 +1,9 @@
-module.exports = (jest, configuration) => {
-    jest.mock(
-        '::advanced-cms-init-config',
-        () => require('init-config'),
-        {virtual: true}
-    );
-
-    jest.mock(
-        '::mage/translate',
-        () => (text) => text,
-        {virtual: true}
-    );
-
-    const fakeRequire = require('fake-require');
-
-    fakeRequire.set('Gene_BlueFoot/js/component/block/block', require('js/component/block/block'));
-    fakeRequire.set('Gene_BlueFoot/js/component/format/read/default', require('js/component/format/read/default'));
-
-    jest.mock(
-        '::Gene_BlueFoot/js/component/loader',
-        () => require('fake-require'),
-        {virtual: true}
-    );
-
-    jest.mock(
-        '::domReady!', () => true, {virtual: true}
-    );
-
-    jest.mock('::mage/calendar', () => {}, {virtual: true});
-
-    (require('./setup-jquery'))(jest);
-
-    require('mutationobserver-shim');
-
-
-    const ko = (require('knockout-bootstrap'))();
-
+module.exports = () => {
     const Build = require('js/component/stage/build');
     const Stage = require('js/component/stage');
 
-    jest.mock('knockout', () => require('::ko'), {virtual: true});
-
     const fakeWysiwyg = new (require('wysiwyg'))();
+    const ko = require('::ko');
 
     let build, stage, stageContent;
 
