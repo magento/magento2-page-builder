@@ -4,17 +4,46 @@ beforeEach(() => {
     (require('setup-stage'))(jest);
 });
 
-describe('Column Configuration Renderer', () => {
-    it('defaults to standard configuration if no properties provided', () => {
-        const stage = stageFactory();
-        stage.setupWithContent('<div data-role="row"><div data-role="column"></div></div>');
-        return expect(stage.renderOutput()).resolves.toEqual('<div data-role="row"><div data-role="column"></div></div>');
+const givenContent = (content) => {
+    const stage = stageFactory();
+    stage.setupWithContent(content);
+    let renderPromise = stage.renderOutput();
+    return Object.assign(
+        {},
+        stage,
+        {
+            updateItem(path, data) {
+                renderPromise = stage.updateItem(path, data)
+                    .then(stage.renderOutput);
+                return this;
+            },
+            thenRenders(expectedContent) {
+                return expect(renderPromise).resolves.toEqual(expectedContent);
+            }
+        }
+    );
+};
+
+describe('Column Configuration', () => {
+    it('leaves as is if no properties provided', () => {
+        const initialContent = '<div data-role="row"><div data-role="column"></div></div>';
+        return givenContent(initialContent).thenRenders(initialContent);
     });
 
-    it('adds background position and background attachment if background color is set', () => {
-        const stage = stageFactory();
-        stage.setupWithContent('<div data-role="row"><div data-role="column" style="background-color: rgb(204,204,204);"></div></div>');
-        return expect(stage.renderOutput()).resolves.toEqual('<div data-role="row"><div data-role="column" style="background-color: rgb(204, 204, 204); background-size: auto; background-repeat: repeat; background-attachment: fixed;"></div></div>');
+    it('preserves background color', () => {
+        const initialContent = '<div data-role="row"><div data-role="column" style="background-color: rgb(204, 204, 204);"></div></div>';
+        return givenContent(initialContent).thenRenders(initialContent);
     });
 
+    it('adds background color on data modification', () => {
+        return givenContent('<div data-role="row"><div data-role="column"></div></div>')
+            .updateItem('', {background_color: '#000000'})
+            .thenRenders('<div data-role="row"><div data-role="column" style="background-color: rgb(0, 0, 0);"></div></div>');
+    });
+
+    it('removes background color on data modification', () => {
+        return givenContent('<div data-role="row"><div data-role="column" style="background-color: rgb(0, 0, 0);"></div></div>')
+            .updateItem('', {background_color: ''})
+            .thenRenders('<div data-role="row"><div data-role="column"></div></div>');
+    });
 });

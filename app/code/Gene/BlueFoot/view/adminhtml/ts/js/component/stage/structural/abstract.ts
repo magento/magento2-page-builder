@@ -111,7 +111,11 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {object}
      */
     getStyle() {
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+
+        const styleAttributes = this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
+        return {
+            backgroundColor: styleAttributes.backgroundColor
+        };
     }
 
     /**

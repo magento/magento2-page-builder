@@ -1,6 +1,6 @@
 module.exports = () => {
-    const Build = require('js/component/stage/build');
-    const Stage = require('js/component/stage');
+    const Build = require('::Gene_BlueFoot/js/component/stage/build');
+    const Stage = require('::Gene_BlueFoot/js/component/stage');
 
     const fakeWysiwyg = new (require('wysiwyg'))();
     const ko = require('::ko');
@@ -11,6 +11,7 @@ module.exports = () => {
         const data = stage.store.get(element.id);
 
         data.role = element.config ? element.config.name : data.role;
+        data.id = element.id;
 
         if (element.children) {
             data._children = ko.utils.arrayMap(element.children(), dataItem);
@@ -38,6 +39,11 @@ module.exports = () => {
                     },
                     reject
                 );
+            });
+        },
+        updateItem(path, data) {
+            return this.dataTree().then((dataTree) => {
+                stage.store.update(dataTree[0]._children[0].id, data);
             });
         },
         renderOutput() {
