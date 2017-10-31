@@ -1,200 +1,197 @@
-define(["./stage/structural/editable-area", "./stage/structural/row", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery"], function (_editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+define(['exports', './stage/structural/editable-area', './stage/structural/row', 'underscore', './data-store', 'mage/translate', './stage/save', 'jquery'], function (exports, _editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
+    'use strict';
 
-  /**
-   * Stage class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
-  var Stage =
-  /*#__PURE__*/
-  function (_EditableArea) {
-    _inheritsLoose(Stage, _EditableArea);
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-    /**
-     * Stage constructor
-     *
-     * @param parent
-     * @param stageContent
-     */
-    function Stage(parent, stageContent) {
-      var _this;
+    var _editableArea2 = _interopRequireDefault(_editableArea);
 
-      _this = _EditableArea.call(this) || this;
-      _this.parent = void 0;
-      _this.stage = void 0;
-      _this.active = true;
-      _this.showBorders = void 0;
-      _this.userSelect = void 0;
-      _this.loading = void 0;
-      _this.originalScrollTop = void 0;
-      _this.serializeRole = 'stage';
-      _this.store = void 0;
+    var _row2 = _interopRequireDefault(_row);
 
-      _this.setChildren(stageContent);
+    var _underscore2 = _interopRequireDefault(_underscore);
 
-      _this.stage = _this;
-      _this.parent = parent;
-      _this.showBorders = parent.showBorders;
-      _this.userSelect = parent.userSelect;
-      _this.loading = parent.loading;
-      _this.originalScrollTop = 0; // Create our state and store objects
+    var _dataStore2 = _interopRequireDefault(_dataStore);
 
-      _this.store = new _dataStore(); // Any store state changes trigger a stage update event
+    var _translate2 = _interopRequireDefault(_translate);
 
-      _this.store.subscribe(function () {
-        return _this.emit('stageUpdated');
-      });
+    var _save2 = _interopRequireDefault(_save);
 
-      _underscore.bindAll(_this, 'onSortingStart', 'onSortingStop');
+    var _jquery2 = _interopRequireDefault(_jquery);
 
-      _this.on('sortingStart', _this.onSortingStart);
-
-      _this.on('sortingStop', _this.onSortingStop);
-      /**
-       * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
-       * can occur concurrently.
-        */
-
-
-      _this.on('stageUpdated', _underscore.debounce(function () {
-        (0, _save)(stageContent).then(function (renderedOutput) {
-          return _this.parent.value(renderedOutput);
-        });
-      }, 500));
-
-      return _this;
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
-    /**
-     * Run the build system to initiate from existing structures
-     *
-     * @param {Build} buildInstance
-     * @param {HTMLElement} buildStructure
-     */
 
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
 
-    var _proto = Stage.prototype;
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
 
-    _proto.build = function build(buildInstance, buildStructure) {
-      var self = this;
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
 
-      if (buildInstance && buildStructure) {
-        buildInstance.buildStage(this, buildStructure).on('buildDone', self.ready.bind(self)).on('buildError', function (event, error) {
-          // Inform the user that an issue has occurred
-          self.parent.alertDialog({
-            title: 'Advanced CMS Error',
-            content: "An error has occurred whilst initiating the Advanced CMS content area.\n\n Please consult " + "with your development team on how to resolve."
-          }); // self.emit('stageError', error);
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
 
-          console.error(error);
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
         });
-      } else {
-        // If no build instance is present we're initiating a new stage
-        this.addRow(this);
-        this.ready();
-      }
-    };
-    /**
-     * The stage has been initiated fully and is ready
-     */
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+
+    var Stage = function (_EditableArea) {
+        _inherits(Stage, _EditableArea);
+
+        /**
+         * Stage constructor
+         *
+         * @param parent
+         * @param stageContent
+         */
+        function Stage(parent, stageContent) {
+            _classCallCheck(this, Stage);
+
+            var _this = _possibleConstructorReturn(this, _EditableArea.call(this));
+
+            _this.active = true;
+            _this.serializeRole = 'stage';
+            _this.setChildren(stageContent);
+            _this.stage = _this;
+            _this.parent = parent;
+            _this.showBorders = parent.showBorders;
+            _this.userSelect = parent.userSelect;
+            _this.loading = parent.loading;
+            _this.originalScrollTop = 0;
+            // Create our state and store objects
+            _this.store = new _dataStore2.default();
+            // Any store state changes trigger a stage update event
+            _this.store.subscribe(function () {
+                return _this.emit('stageUpdated');
+            });
+            _underscore2.default.bindAll(_this, 'onSortingStart', 'onSortingStop');
+            _this.on('sortingStart', _this.onSortingStart);
+            _this.on('sortingStop', _this.onSortingStop);
+            /**
+             * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
+             * can occur concurrently.
+              */
+            _this.on('stageUpdated', _underscore2.default.debounce(function () {
+                (0, _save2.default)(stageContent).then(function (renderedOutput) {
+                    return _this.parent.value(renderedOutput);
+                });
+            }, 500));
+            return _this;
+        }
+        /**
+         * Run the build system to initiate from existing structures
+         *
+         * @param {Build} buildInstance
+         * @param {HTMLElement} buildStructure
+         */
 
 
-    _proto.ready = function ready() {
-      this.emit('stageReady');
-      this.children.valueHasMutated();
-      this.loading(false);
-    };
-    /**
-     * Add a row to the stage
-     *
-     * @param self
-     * @param data
-     * @returns {Row}
-     */
+        Stage.prototype.build = function build(buildInstance, buildStructure) {
+            var self = this;
+            if (buildInstance && buildStructure) {
+                buildInstance.buildStage(this, buildStructure).on('buildDone', self.ready.bind(self)).on('buildError', function (event, error) {
+                    // Inform the user that an issue has occurred
+                    self.parent.alertDialog({
+                        title: 'Advanced CMS Error',
+                        content: "An error has occurred while initiating the content area."
+                    });
+                    self.emit('stageError', error);
+                    console.error(error);
+                });
+            } else {
+                this.addRow(this);
+                this.ready();
+            }
+        };
 
+        Stage.prototype.ready = function ready() {
+            this.emit('stageReady');
+            this.children.valueHasMutated();
+            this.loading(false);
+        };
 
-    _proto.addRow = function addRow(self, data) {
-      var row = new _row(self, self);
-      this.store.update(row.id, data);
-      this.addChild(row);
-      return row;
-    };
+        Stage.prototype.addRow = function addRow(self, data) {
+            var row = new _row2.default(self, self);
+            this.store.update(row.id, data);
+            this.addChild(row);
+            return row;
+        };
 
-    _proto.openTemplateManager = function openTemplateManager() {} // @todo
+        Stage.prototype.openTemplateManager = function openTemplateManager() {}
+        // @todo
 
-    /**
-     * Tells the stage wrapper to expand to fullscreen
-     */
-    ;
+        /**
+         * Tells the stage wrapper to expand to fullscreen
+         */
+        ;
 
-    _proto.goFullScreen = function goFullScreen() {
-      var isFullScreen = this.parent.isFullScreen();
+        Stage.prototype.goFullScreen = function goFullScreen() {
+            var isFullScreen = this.parent.isFullScreen();
+            if (!isFullScreen) {
+                this.originalScrollTop = (0, _jquery2.default)(window).scrollTop();
+                _underscore2.default.defer(function () {
+                    (0, _jquery2.default)(window).scrollTop(0);
+                });
+            }
+            this.stage.parent.isFullScreen(!isFullScreen);
+            if (isFullScreen) {
+                (0, _jquery2.default)(window).scrollTop(this.originalScrollTop);
+            }
+        };
 
-      if (!isFullScreen) {
-        this.originalScrollTop = (0, _jquery)(window).scrollTop();
+        Stage.prototype.isFullScreen = function isFullScreen() {
+            return this.parent.isFullScreen();
+        };
 
-        _underscore.defer(function () {
-          (0, _jquery)(window).scrollTop(0);
-        });
-      }
+        Stage.prototype.addComponent = function addComponent() {}
+        // @todo
 
-      this.stage.parent.isFullScreen(!isFullScreen);
+        /**
+         * Event handler for any element being sorted in the stage
+         */
+        ;
 
-      if (isFullScreen) {
-        (0, _jquery)(window).scrollTop(this.originalScrollTop);
-      }
-    };
-    /**
-     * Determines if bluefoot is in fullscreen mode
-     *
-     * @returns {boolean}
-     */
+        Stage.prototype.onSortingStart = function onSortingStart() {
+            this.showBorders(true);
+        };
 
+        Stage.prototype.onSortingStop = function onSortingStop() {
+            this.showBorders(false);
+        };
 
-    _proto.isFullScreen = function isFullScreen() {
-      return this.parent.isFullScreen();
-    };
+        Stage.prototype.removeChild = function removeChild(child) {
+            if (this.children().length == 1) {
+                this.parent.alertDialog({
+                    title: (0, _translate2.default)('Unable to Remove'),
+                    content: (0, _translate2.default)('You are not able to remove the final row from the content.')
+                });
+                return;
+            }
+            _EditableArea.prototype.removeChild.call(this, child);
+        };
 
-    _proto.addComponent = function addComponent() {} // @todo
+        return Stage;
+    }(_editableArea2.default);
 
-    /**
-     * Event handler for any element being sorted in the stage
-     */
-    ;
-
-    _proto.onSortingStart = function onSortingStart() {
-      this.showBorders(true);
-    };
-    /**
-     * Event handler for when sorting stops
-     */
-
-
-    _proto.onSortingStop = function onSortingStop() {
-      this.showBorders(false);
-    };
-    /**
-     * Remove a child from the observable array
-     *
-     * @param child
-     */
-
-
-    _proto.removeChild = function removeChild(child) {
-      if (this.children().length == 1) {
-        this.parent.alertDialog({
-          title: (0, _translate)('Unable to Remove'),
-          content: (0, _translate)('You are not able to remove the final row from the content.')
-        });
-        return;
-      }
-
-      _EditableArea.prototype.removeChild.call(this, child);
-    };
-
-    return Stage;
-  }(_editableArea);
-
-  return Stage;
+    exports.default = Stage;
 });
-//# sourceMappingURL=stage.js.map

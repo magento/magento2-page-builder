@@ -10,34 +10,35 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <actionGroup name="validateGroupsAndContentTypes">
         <see userInput="General" selector="{{BlueFootActionsSection.generalGroup}}" mergeKey="seeGeneralGroup"/>
-        <see userInput="Buttons" selector="{{BlueFootActionsSection.generalGroupButtons}}" mergeKey="seeGeneralGroupButtons"/>
-        <see userInput="Heading" selector="{{BlueFootActionsSection.generalGroupHeading}}" mergeKey="seeGeneralGroupHeading"/>
-        <see userInput="HTML" selector="{{BlueFootActionsSection.generalGroupHtml}}" mergeKey="seeGeneralGroupHtml"/>
-        <see userInput="Textarea" selector="{{BlueFootActionsSection.generalGroupTextarea}}" mergeKey="seeGeneralGroupTextarea"/>
+        <see userInput="Row" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupRow"/>
+        <see userInput="Column" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupColumn"/>
+        <see userInput="Text" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupText"/>
+        <see userInput="Header" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupHeader"/>
+        <see userInput="Button" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupButton"/>
+        <see userInput="Divider" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupDivider"/>
+
         <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
         <see userInput="Media" selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="seeMediaGroup"/>
-        <see userInput="Image" selector="{{BlueFootActionsSection.mediaGroupImage}}" mergeKey="seeMediaGroupImage"/>
-        <see userInput="Driver" selector="{{BlueFootActionsSection.mediaGroupDriver}}" mergeKey="seeMediaGroupDriver"/>
-        <see userInput="Video" selector="{{BlueFootActionsSection.mediaGroupVideo}}" mergeKey="seeMediaGroupVideo"/>
-        <see userInput="Slider" selector="{{BlueFootActionsSection.mediaGroupSlider}}" mergeKey="seeMediaGroupSlider"/>
-        <see userInput="Advanced Slider" selector="{{BlueFootActionsSection.mediaGroupAdvancedSlider}}" mergeKey="seeMediaGroupAdvancedSlider"/>
-        <click selector="{{BlueFootActionsSection.structuralGroup}}" mergeKey="clickStructuralGroup"/> <!-- Complains if ran after clickCommerceGroup and clickMagentoGroup. Applying <wait> after <click> does not seem to matter. -->
-        <see userInput="Structural" selector="{{BlueFootActionsSection.structuralGroup}}" mergeKey="seeStructuralGroup"/>
-        <see userInput="Anchor" selector="{{BlueFootActionsSection.structuralGroupAnchor}}" mergeKey="seeStructuralGroupAnchor"/>
-        <see userInput="Horizontal Rule" selector="{{BlueFootActionsSection.structuralGroupHorizontalRule}}" mergeKey="seeStructuralGroupHorizontalRule"/>
-        <click selector="{{BlueFootActionsSection.commerceGroup}}" mergeKey="clickCommerceGroup"/>
-        <see userInput="Commerce" selector="{{BlueFootActionsSection.commerceGroup}}" mergeKey="seeCommerceGroup"/>
-        <see userInput="Product" selector="{{BlueFootActionsSection.commerceGroupProduct}}" mergeKey="seeCommerceGroupProduct"/>
-        <see userInput="Product List" selector="{{BlueFootActionsSection.commerceGroupProductList}}" mergeKey="seeCommerceGroupProductList"/>
+        <see userInput="Image" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupImage"/>
+        <see userInput="Video" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupVideo"/>
+        <see userInput="Banner" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupBanner"/>
+        <see userInput="Slider" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupSlider"/>
+
+        <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractivelGroup"/>
+        <see userInput="Interactive" selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="seeInteractiveGroup"/>
+        <see userInput="Tabs" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupTabs"/>
+        <see userInput="Accordion" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupAccordion"/>
+        <see userInput="Map" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupMap"/>
+        <see userInput="Newsletter" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupNewsletter"/>
+
         <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
         <see userInput="Magento" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="seeMagentoGroup"/>
-        <see userInput="Accordion" selector="{{BlueFootActionsSection.magentoGroupAccordion}}" mergeKey="seeMagentoGroupAccordion"/>
-        <see userInput="Tabs" selector="{{BlueFootActionsSection.magentoGroupTabs}}" mergeKey="seeMagentoGroupTabs"/>
-        <see userInput="Static Block" selector="{{BlueFootActionsSection.magentoGroupStaticBlock}}" mergeKey="seeMagentoGroupStaticBlock"/>
-        <see userInput="Search" selector="{{BlueFootActionsSection.magentoGroupSearch}}" mergeKey="seeMagentoGroupSearch"/>
-        <see userInput="Newsletter" selector="{{BlueFootActionsSection.magentoGroupNewsletter}}" mergeKey="seeMagentoGroupNewsletter"/>
-        <see userInput="Map" selector="{{BlueFootActionsSection.magentoGroupMap}}" mergeKey="seeMagentoGroupMap"/>
-        <see userInput="Code" selector="{{BlueFootActionsSection.magentoGroupCode}}" mergeKey="seeMagentoGroupCode"/>
+        <see userInput="Block" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupBlock"/>
+        <see userInput="Segmented Block" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupSegmentedBlock"/>
+
+        <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
+        <see userInput="Anchor" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupAnchor"/>
+        <see userInput="Code" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupCode"/>
     </actionGroup>
     <actionGroup name="enableBlueFoot">
         <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
@@ -55,6 +56,7 @@
     <actionGroup name="navigateToAPageWithBlueFoot">
         <loginAsAdmin mergeKey="loginAsAdmin"/>
         <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
+        <waitForPageLoad mergeKey="waitForPageLoad1"/>
         <wait time="1" mergeKey="wait2"/>
     </actionGroup>
 
@@ -67,12 +69,14 @@
 
     <actionGroup name="addBlueFootRowToStage">
         <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
+        <seeElement selector="{{BlueFootRowSection.row}}" mergeKey="seeElementRow"/>
         <wait time="1" mergeKey="wait8"/>
     </actionGroup>
 
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
         <wait time="1" mergeKey="wait9"/>
+        <seeElement selector="{{BlueFootColumnSection.column}}" mergeKey="seeElementColumn"/>
     </actionGroup>
 
     <actionGroup name="openBlueFootEditColumnPanel">
@@ -83,6 +87,38 @@
         <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
         <click selector="{{BlueFootColumnSection.editColumn}}" mergeKey="clickEditColumn"/>
         <wait time="2" mergeKey="wait10"/>
+    </actionGroup>
+
+    <actionGroup name="openBlueFootEditPanel">
+        <arguments>
+            <argument name="typeInstance" defaultValue="" />
+            <argument name="optionsMenu" defaultValue="" />
+            <argument name="editAction" defaultValue="" />
+        </arguments>
+        <moveMouseOver selector="{{typeInstance}}" mergeKey="onMouseOverColumn"/>
+        <seeElement selector="{{optionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{editAction}}" mergeKey="clickEditColumn"/>
+        <wait time="2" mergeKey="wait10"/>
+    </actionGroup>
+
+    <actionGroup name="removeBlueFootRow">
+        <moveMouseOver selector="{{BlueFootRowSection.row}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootRowSection.rowOptionsMenu}}" mergeKey="seeRowOptionsMenu"/>
+        <click selector="{{BlueFootRowSection.removeRow}}" mergeKey="clickRemoveRow"/>
+        <wait time="1" mergeKey="wait1"/>
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <wait time="1" mergeKey="wait2"/>
+    </actionGroup>
+
+    <actionGroup name="removeBlueFootColumn">
+        <moveMouseOver selector="{{BlueFootColumnSection.column}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{BlueFootColumnSection.removeColumn}}" mergeKey="clickRemoveColumn"/>
+        <wait time="1" mergeKey="wait1"/>
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <wait time="1" mergeKey="wait2"/>
     </actionGroup>
 
     <actionGroup name="validateSlideOutPanelField">
@@ -98,5 +134,42 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <seeElement selector='{{BlueFootColumnSection.panelFieldRequired(property.section, property.fieldName)}}' mergeKey="seePropertyIsRequired"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <fillField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
+    </actionGroup>
+    <actionGroup name="selectSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <selectOption selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <click selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="clickProperty"/>
+        <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+    </actionGroup>
+    <actionGroup name="seeInFieldSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeInFieldProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsSelectedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeOptionIsSelectedProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsCheckedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <seeCheckboxIsChecked selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seeOptionIsCheckedProperty"/>
     </actionGroup>
 </config>

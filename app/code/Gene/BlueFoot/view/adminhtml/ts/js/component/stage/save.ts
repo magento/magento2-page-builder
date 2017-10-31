@@ -8,20 +8,20 @@ import $ from 'jquery';
 import Structural from "./structural/abstract";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 
-// The root template for the render tree
-const rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
-
 /**
  * Render the tree into a string
  *
  * @param {KnockoutObservableArray<Structural>} tree
  */
 export default function renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
-    let temp = $('<div>');
+    const rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
+    const commentNodeType = 8;
+    const whitespaceNodeType = 3;
+    const temp = $('<div>');
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
             const isWhiteSpaceOrComment = function() {
-                return this.nodeType == 8 || (this.nodeType == 3 && this.data.match(/^\s+$/));
+                return this.nodeType == commentNodeType || (this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/));
             };
             temp.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
             temp.contents().filter(isWhiteSpaceOrComment).remove();
@@ -31,13 +31,14 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
                 }
             );
             // Strip all is wrapper elements
-            temp.find('[data-is-wrapper]').each((index, element) => {
+            temp.find('[data-wrapper]').each((index, element) => {
                 $(element).parent().append($(element).children());
                 $(element).remove();
             });
             resolve(temp.html());
             temp.remove();
         });
+        console.log('renderTree started');
         ko.applyBindingsToNode(
             temp[0],
             {

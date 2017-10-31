@@ -1,35 +1,43 @@
-define([], function () {
-  /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
-  var StyleAttributeFilter =
-  /*#__PURE__*/
-  function () {
-    function StyleAttributeFilter() {}
+define(['exports'], function (exports) {
+    'use strict';
 
-    var _proto = StyleAttributeFilter.prototype;
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-    /**
-     * Filter allowed style properties from object
-     *
-     * @param data
-     * @returns {object}
-     */
-    _proto.filter = function filter(data) {
-      var styleAttributes = ['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left'];
-      var result = {};
-      Object.keys(data).map(function (key) {
-        if (Object.values(styleAttributes).indexOf(key) > -1) {
-          result[key] = data[key];
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
         }
-      }.bind(this));
-      return result;
-    };
+    }
 
-    return StyleAttributeFilter;
-  }();
+    var StyleAttributeFilter = function () {
+        function StyleAttributeFilter() {
+            _classCallCheck(this, StyleAttributeFilter);
 
-  return StyleAttributeFilter;
+            // Allowed style attributes
+            this.styleAttributes = ['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left'];
+        }
+        /**
+         * Filter allowed style properties from object
+         *
+         * @param {DataObject} data
+         * @returns {DataObject}
+         */
+
+
+        StyleAttributeFilter.prototype.filter = function filter(data) {
+            var result = {};
+            Object.keys(data).map(function (key) {
+                if (Object.values(this.styleAttributes).indexOf(key) > -1) {
+                    result[key] = data[key];
+                }
+            }.bind(this));
+            return result;
+        };
+
+        return StyleAttributeFilter;
+    }();
+
+    exports.default = StyleAttributeFilter;
 });
-//# sourceMappingURL=style-attribute-filter.js.map

@@ -8,11 +8,11 @@ export default class StyleAttributeMapper {
     /**
      * Map style attribute keys to DOM key names and normalize values
      *
-     * @param data
-     * @returns {object}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    toDom(data: DataObject): object {
-        let result: any = {};
+    toDom(data: DataObject): DataObject {
+        let result: DataObject = {};
         Object.keys(data).map(
             function (key: string) {
                 let value = data[key];
@@ -34,14 +34,13 @@ export default class StyleAttributeMapper {
     /**
      * Map DOM key names and values to internal format
      *
-     * @param object
-     * @returns {{}}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
     public fromDom(object) {
         let result = {};
         Object.keys(object).map(
             function (key: any) {
-                let value = object[key];
                 if (key === 'min-height') {
                     value = value.replace('px', '');
                 }
@@ -69,8 +68,8 @@ export default class StyleAttributeMapper {
      * @returns {string}
      */
     private fromSnakeToCamelCase(string: string): string {
-        let parts = string.split(/[_-]/);
-        let newString = '';
+        let parts: Array<string> = string.split(/[_-]/);
+        let newString: string = '';
         for (let i = 1; i < parts.length; i++) {
             newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
         }
@@ -83,7 +82,7 @@ export default class StyleAttributeMapper {
      * @param value
      * @returns {string}
      */
-    private fromIntToHex(value) {
+    private fromIntToHex(value): string {
         let hex = value.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
     }

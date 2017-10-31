@@ -1,53 +1,62 @@
-define(["underscore", "../../../utils/style-attribute-mapper"], function (_underscore, _styleAttributeMapper) {
-  /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
-  var Default =
-  /*#__PURE__*/
-  function () {
-    function Default() {
-      this.styleAttributeMapper = void 0;
-      this.styleAttributeMapper = new _styleAttributeMapper();
+define(['exports', 'underscore', '../../../utils/style-attribute-mapper'], function (exports, _underscore, _styleAttributeMapper) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _underscore2 = _interopRequireDefault(_underscore);
+
+    var _styleAttributeMapper2 = _interopRequireDefault(_styleAttributeMapper);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
     }
-    /**
-     * Read data, style and css properties from the element
-     *
-     * @param element
-     * @returns {object}
-     */
 
-
-    var _proto = Default.prototype;
-
-    _proto.read = function read(element) {
-      var data = {};
-      var styleAttributes = {};
-
-      for (var i = 0; i < element.style.length; i++) {
-        var property = element.style.item(i);
-
-        if (element.style[property] !== '') {
-          styleAttributes[property] = element.style[property];
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
         }
-      }
+    }
 
-      _underscore.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
+    var Default = function () {
+        function Default() {
+            _classCallCheck(this, Default);
 
-      Object.keys(element.dataset).map(function (key) {
-        if (element.dataset[key] !== '') {
-          data[key] = element.dataset[key];
+            this.styleAttributeMapper = new _styleAttributeMapper2.default();
         }
-      });
-      data['css_classes'] = element.className.split(' ').filter(function (v) {
-        return v.length > 0;
-      });
-      return data;
-    };
+        /**
+         * Read data, style and css properties from the element
+         *
+         * @param element HTMLElement
+         * @returns {Promise<any>}
+         */
 
-    return Default;
-  }();
 
-  return Default;
+        Default.prototype.read = function read(element) {
+            var data = {};
+            var styleAttributes = {};
+            Object.keys(element.style).map(function (key) {
+                if (isNaN(key) && element.style[key] !== '') {
+                    styleAttributes[key] = element.style[key];
+                }
+            });
+            _underscore2.default.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
+            Object.keys(element.dataset).map(function (key) {
+                if (element.dataset[key] !== '') {
+                    data[key] = element.dataset[key];
+                }
+            });
+            data['css_classes'] = element.className.split(' ');
+            return new Promise(function (resolve) {
+                resolve(data);
+            });
+        };
+
+        return Default;
+    }();
+
+    exports.default = Default;
 });
-//# sourceMappingURL=default.js.map

@@ -4,9 +4,11 @@
  */
 
 import _ from 'underscore';
+import ReadInterface from "../read-interface";
+import {DataObject} from "../../data-store";
 import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
 
-export default class Default {
+export default class Default implements ReadInterface {
     styleAttributeMapper: StyleAttributeMapper;
 
     constructor() {
@@ -16,12 +18,12 @@ export default class Default {
     /**
      * Read data, style and css properties from the element
      *
-     * @param element
-     * @returns {object}
+     * @param element HTMLElement
+     * @returns {Promise<any>}
      */
-    public read (element: HTMLElement): object {
-        let data: any = {};
-        let styleAttributes: any = {};
+    public read (element: HTMLElement): Promise<any> {
+        let data: DataObject = {};
+        let styleAttributes: DataObject = {};
         for (let i = 0; i < element.style.length; i ++) {
             const property = element.style.item(i);
 
@@ -40,8 +42,10 @@ export default class Default {
             }
         );
 
-        data['css_classes'] = element.className.split(' ').filter(v => v.length > 0);
+        data['css_classes'] = element.className.split(' ').filter(value => value.length > 0);
 
-        return data;
+        return new Promise((resolve: Function) => {
+            resolve(data);
+        });
     }
 }

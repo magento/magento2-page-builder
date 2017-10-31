@@ -4,8 +4,6 @@ import { Block as BlockInterface } from '../../block/block.d';
 import Structural from './abstract';
 import { EditableAreaInterface } from './editable-area.d';
 import createBlock from '../../block/factory';
-import StyleAttributeFilter from "../../../utils/style-attribute-filter";
-import DomAttributeMapper from "../../../utils/dom-attribute-mapper";
 
 import { moveArrayItemIntoArray, moveArrayItem, removeArrayItem } from '../../../utils/array';
 import Block from '../../block/block';
@@ -25,8 +23,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     children: KnockoutObservableArray<Structural>;
     stage: Stage;
     title: string = $t('Editable');
-    styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
-    domAttributeMapper: DomAttributeMapper = new DomAttributeMapper();
 
     // @todo populate from config
     childTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';

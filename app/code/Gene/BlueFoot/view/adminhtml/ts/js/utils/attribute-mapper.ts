@@ -2,24 +2,25 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import {DataObject} from "../component/data-store";
 
 export default class AttributeMapper {
+    // Attribute name mapping
+    attributeNameMapping: DataObject = {name: 'data-role', appearance: 'data-appearance'};
+
     /**
      * Map attribute keys to DOM key names and normalize values
      *
-     * @param object
-     * @returns {any}
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
-    toDom(object) {
-        let result: any = {};
-        Object.keys(object).map(
+    toDom(data: DataObject): DataObject {
+        let result: DataObject = {};
+        Object.keys(data).map(
             function (key: string) {
-                let value = object[key];
-                if (key === 'role' || key === 'name') {
-                    key = 'data-role';
-                }
-                if (key === 'appearance') {
-                    key = 'data-appearance';
+                let value = data[key];
+                if (key in this.attributeNameMapping) {
+                    key = this.attributeNameMapping[key];
                 }
                 result[key.replace('_', '-')] = value;
             }.bind(this)

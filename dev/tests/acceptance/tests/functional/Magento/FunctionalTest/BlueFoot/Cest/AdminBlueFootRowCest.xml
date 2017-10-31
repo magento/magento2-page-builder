@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminBlueFootRowCest">
+        <annotations>
+            <features value="BlueFoot CMS"/>
+            <stories value="Bluefoot Column Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <test name="InitializeWithRow">
+            <annotations>
+                <title value="Row exists on initialise"/>
+                <description value="The stage should contain a row on initialise."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82841"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <wait time="1" mergeKey="wait"/>
+            <seeElement selector="{{BlueFootRowSection.row}}" mergeKey="seeElementRow"/>
+        </test>
+        <test name="CanAddAdditionalRow">
+            <annotations>
+                <title value="Can add an additional row"/>
+                <description value="The user should be able to add additional rows."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82857"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" mergeKey="seeElementRow"/>
+        </test>
+        <test name="CanRemoveRow">
+            <annotations>
+                <title value="Can remove a row"/>
+                <description value="A user should be able to remove a row from the stage"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82858"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" mergeKey="seeTwoRows"/>
+            <actionGroup ref="removeBlueFootRow" mergeKey="removeRow"/>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" mergeKey="seeOneRow"/>
+        </test>
+        <test name="CantRemoveLastRow">
+            <annotations>
+                <title value="Can't remove last row"/>
+                <description value="A user shouldn't be able to remove the final row from the stage"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82859"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" mergeKey="seeOneRow"/>
+            <actionGroup ref="removeBlueFootRow" mergeKey="removeRow"/>
+            <seeElement selector="{{BlueFootActionsSection.unableToRemoveTitle}}" mergeKey="seeUnableToRemoveTitle" />
+            <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+            <wait time="1" mergeKey="wait2"/>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" mergeKey="seeOneRow1"/>
+        </test>
+    </cest>
+</config>

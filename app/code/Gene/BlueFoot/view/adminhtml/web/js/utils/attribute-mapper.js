@@ -1,42 +1,45 @@
-define([], function () {
-  /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
-  var AttributeMapper =
-  /*#__PURE__*/
-  function () {
-    function AttributeMapper() {}
+define(['exports'], function (exports) {
+    'use strict';
 
-    var _proto = AttributeMapper.prototype;
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
 
-    /**
-     * Map attribute keys to DOM key names and normalize values
-     *
-     * @param object
-     * @returns {any}
-     */
-    _proto.toDom = function toDom(object) {
-      var result = {};
-      Object.keys(object).map(function (key) {
-        var value = object[key];
-
-        if (key === 'role' || key === 'name') {
-          key = 'data-role';
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
         }
+    }
 
-        if (key === 'appearance') {
-          key = 'data-appearance';
+    var AttributeMapper = function () {
+        function AttributeMapper() {
+            _classCallCheck(this, AttributeMapper);
+
+            // Attribute name mapping
+            this.attributeNameMapping = { name: 'data-role', appearance: 'data-appearance' };
         }
+        /**
+         * Map attribute keys to DOM key names and normalize values
+         *
+         * @param {DataObject} data
+         * @returns {DataObject}
+         */
 
-        result[key.replace('_', '-')] = value;
-      }.bind(this));
-      return result;
-    };
 
-    return AttributeMapper;
-  }();
+        AttributeMapper.prototype.toDom = function toDom(data) {
+            var result = {};
+            Object.keys(data).map(function (key) {
+                var value = data[key];
+                if (key in this.attributeNameMapping) {
+                    key = this.attributeNameMapping[key];
+                }
+                result[key.replace('_', '-')] = value;
+            }.bind(this));
+            return result;
+        };
 
-  return AttributeMapper;
+        return AttributeMapper;
+    }();
+
+    exports.default = AttributeMapper;
 });
-//# sourceMappingURL=attribute-mapper.js.map
