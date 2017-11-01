@@ -46,12 +46,17 @@
             return jQuery(elements)
                 .draggable(this._getConfig(extendedConfig))
                 .on('dragstart', function (event, ui) {
+                    // @todo remove Magento specific code from bindings
+                    require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
+                    // Attach the view model to the element for knockout sortable
                     getViewModelFromEvent(event).emit('dragStart', {
                         event: event,
                         ui: ui
                     });
                 })
                 .on('dragstop', function (event, ui) {
+                    // @todo remove Magento specific code from bindings
+                    require("uiRegistry").remove('dragElementViewModel');
                     getViewModelFromEvent(event).emit('dragStop', {
                         event: event,
                         ui: ui
