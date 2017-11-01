@@ -250,5 +250,19 @@
             <dragAndDrop selector1="{{BlueFootColumnSection.dragColumn}}" selector2="{{BlueFootColumnSection.columnInStage2DropArea}}" mergeKey="dropColumnOntoColumn"/>
             <seeNumberOfElements selector="{{BlueFootColumnSection.columnInStage2Children}}" userInput="0" mergeKey="seeNoChildren"/>
         </test>
+        <test name="PreviewBackgroundImage">
+            <annotations>
+                <title value="Upload and preview an image for column background style"/>
+                <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
+                <argument name="property" value="BlueFootBackgroundImageProperty"/>
+            </actionGroup>
+        </test>
     </cest>
 </config>
