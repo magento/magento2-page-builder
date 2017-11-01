@@ -34,14 +34,13 @@ export default class AttributeReaderComposite implements ReadInterface {
                     loadComponent(this.contentTypeConfig[role]['readers'], (...readers: any[]) => {
                         let readerPromises: Array<Promise<any>> = [];
                         for (let i = 0; i < readers.length; i++) {
-                            let reader = new readers[i].default();
+                            let reader = new readers[i]();
                             readerPromises.push(reader.read(element));
                         }
                         Promise.all(readerPromises).then(readersData => {
                             readersData.forEach((data) => {
                                 _.extend(result, data);
                             });
-                            console.log(result);
                             resolve(result);
                         }).catch((error) => {
                             console.error(error);

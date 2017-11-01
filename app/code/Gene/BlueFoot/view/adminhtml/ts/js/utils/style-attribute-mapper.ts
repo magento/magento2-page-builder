@@ -41,6 +41,7 @@ export default class StyleAttributeMapper {
         let result = {};
         Object.keys(object).map(
             function (key: any) {
+                let value = object[key];
                 if (key === 'min-height') {
                     value = value.replace('px', '');
                 }
@@ -48,7 +49,7 @@ export default class StyleAttributeMapper {
                     value = value === 'repeat' ? '1' : '0';
                 }
                 if (key === 'background-color') {
-                    const regexp = /(\d{3}),\s(\d{3}),\s(\d{3})/
+                    const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/
                     let matches = regexp.exec(value)
                     value = '#'
                         + this.fromIntToHex(parseInt(matches[1]))

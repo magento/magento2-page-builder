@@ -64,7 +64,8 @@ module.exports = {
             "preview_template": "",
             "render_template": "Gene_BlueFoot/component/block/render/row.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
-            "component": "Gene_BlueFoot/js/component/block/block"
+            "component": "Gene_BlueFoot/js/component/block/block",
+            "readers": ["Gene_BlueFoot/js/component/format/read/default"]
         },
         "column": {
             "name": "column",
@@ -86,7 +87,8 @@ module.exports = {
             "preview_template": "",
             "render_template": "Gene_BlueFoot/component/block/render/column.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
-            "component": "Gene_BlueFoot/js/component/block/block"
+            "component": "Gene_BlueFoot/js/component/block/block",
+            "readers": ["Gene_BlueFoot/js/component/format/read/default"]
         },
         "text": {
             "name": "text",
@@ -101,8 +103,8 @@ module.exports = {
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
             "component": "Gene_BlueFoot/js/component/block/block"
         },
-        "header": {
-            "name": "header",
+        "heading": {
+            "name": "heading",
             "label": "Header",
             "icon": "icon-bluefoot-heading",
             "form": "heading_form",
@@ -112,7 +114,11 @@ module.exports = {
             "visible": true,
             "preview_template": "Gene_BlueFoot/component/block/preview/header.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
-            "component": "Gene_BlueFoot/js/component/block/block"
+            "component": "Gene_BlueFoot/js/component/block/block",
+            "readers": [
+                "Gene_BlueFoot/js/component/format/read/default",
+                "Gene_BlueFoot/js/component/format/read/heading"
+            ]
         },
         "button": {
             "name": "button",
