@@ -19,15 +19,14 @@ define(['exports'], function (exports) {
         }
         /**
          * @param data
-         * @returns {object}
+         * @returns {DataObject}
          */
 
 
         AppearanceApplier.prototype.apply = function apply(data) {
-            var role = data['name'];
             if (data['appearance'] !== undefined) {
                 if (this.appearances[data['appearance']] === undefined) {
-                    console.log('No appearances specified for content type.');
+                    console.error('No appearances specified for content type.');
                 }
                 return this.appearances[data['appearance']].apply(data);
             }

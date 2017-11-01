@@ -11,18 +11,18 @@ define(['exports'], function (exports) {
     }
   }
 
-  var AlignTop = function () {
-    function AlignTop() {
-      _classCallCheck(this, AlignTop);
+  var AlignCenter = function () {
+    function AlignCenter() {
+      _classCallCheck(this, AlignCenter);
     }
 
-    AlignTop.prototype.apply = function apply(data) {
-      data['align_self'] = 'flex-start';
+    AlignCenter.prototype.apply = function apply(data) {
+      data['align_self'] = 'center';
       return data;
     };
 
-    return AlignTop;
+    return AlignCenter;
   }();
 
-  exports.default = AlignTop;
+  exports.default = AlignCenter;
 });

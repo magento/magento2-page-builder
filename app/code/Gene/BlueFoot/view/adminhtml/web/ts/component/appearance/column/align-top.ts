@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
 import {DataObject} from "../../data-store";
 import AppearancesInterface from "../appearance-interface";
 
@@ -15,7 +14,7 @@ export default class AlignTop implements AppearancesInterface {
      * @returns {DataObject}
      */
     apply(data: DataObject): DataObject {
-        _.extend(data, {flex_grow: 1, align_self: 'flex-start'});
+        data['align_self'] = 'flex-start';
         return data;
     }
 }

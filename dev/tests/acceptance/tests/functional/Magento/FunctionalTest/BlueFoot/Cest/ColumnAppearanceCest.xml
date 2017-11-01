@@ -8,7 +8,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="BlueFootColumnConfigurationCest">
+    <cest name="ColumnAppearanceCest">
         <annotations>
             <features value="BlueFoot CMS"/>
             <stories value="Bluefoot Column Configuration"/>
@@ -28,14 +28,13 @@
                 <title value="Column settings appear on frontend"/>
                 <description value="Validate selected column settings appear on the frontend"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
-                <group value="bluefoot2"/>
+                <group value="bluefoot"/>
             </annotations>
             <fillField selector="//*[@name='title']" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
             <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
             <selectOption selector="//*[@name='width']" userInput="49.98" mergeKey="enterWidth"/>
-            <selectOption selector="//*[@name='appearance']" userInput="Bottom" mergeKey="enterAppearance"/>
+            <selectOption selector="//*[@name='appearance']" userInput="Align Bottom" mergeKey="enterAppearance"/>
             <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait2"/>
             <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="clickSaveCmsPage"/>
@@ -44,11 +43,9 @@
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'min-height: 100px;')]" mergeKey="seeColumn1MinHeightApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'width: 49.98%;')]" mergeKey="seeColumn1WidthApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'align-self: flex-end;')]" mergeKey="seeColumn1AppearanceApplied1"/>
-            <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'flex-grow: 1;')]" mergeKey="seeColumn1AppearanceApplied2"/>
             <!--<seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'min-height: 200px;')]" mergeKey="seeColumn2MinHeightApplied"/>-->
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'width: 16.66%;')]" mergeKey="seeColumn2WidthApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'align-self: flex-start;')]" mergeKey="seeColumn2AppearanceApplied1"/>
-            <seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'flex-grow: 1;')]" mergeKey="seeColumn2AppearanceApplied2"/>
             <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>

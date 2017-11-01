@@ -29,7 +29,6 @@ export default class StyleAttributeFilter {
         'padding_bottom',
         'padding_left',
         'display',
-        'flex_grow',
         'align_self'
     ];
 

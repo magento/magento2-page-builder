@@ -1,17 +1,9 @@
-define(['exports', 'underscore'], function (exports, _underscore) {
+define(['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-
-  var _underscore2 = _interopRequireDefault(_underscore);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -25,7 +17,7 @@ define(['exports', 'underscore'], function (exports, _underscore) {
     }
 
     AlignBottom.prototype.apply = function apply(data) {
-      _underscore2.default.extend(data, { flex_grow: 1, align_self: 'flex-end' });
+      data['align_self'] = 'flex-end';
       return data;
     };
 
