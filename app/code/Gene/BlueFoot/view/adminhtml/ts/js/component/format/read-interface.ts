@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-  export default interface ReadInterface {
+export interface ReadInterface {
     /**
      * Read data from the element
      *

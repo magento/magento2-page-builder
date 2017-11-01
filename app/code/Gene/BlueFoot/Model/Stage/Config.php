@@ -221,7 +221,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
                 ? $contentType['component'] : self::DEFAULT_COMPONENT),
             'allowed_children'         => isset($contentType['allowed_children'])
                 ? explode(',', $contentType['allowed_children']) : [],
-            'readers'           => isset($contentType['readers']) ? $contentType['readers'] : []
+            'readers'           => isset($contentType['readers']) ? $contentType['readers'] : [],
+            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : []
         ];
     }
 }

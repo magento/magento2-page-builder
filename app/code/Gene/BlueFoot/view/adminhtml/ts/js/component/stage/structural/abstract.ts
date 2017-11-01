@@ -11,6 +11,7 @@ import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
 import AttributeFilter from "../../../utils/attribute-filter";
 import AttributeMapper from "../../../utils/attribute-mapper";
 import {DataObject} from "../../data-store";
+import AppearanceApplier from "../../../utils/appearance-applier";
 
 import $t from 'mage/translate';
 import ko from 'knockout';
@@ -42,6 +43,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
     attributeFilter: AttributeFilter = new AttributeFilter();
     attributeMapper: AttributeMapper =  new AttributeMapper();
+    appearanceApplier: AppearanceApplier;
 
     previewChildTemplate: string = 'Gene_BlueFoot/component/block/preview/children.html';
     renderChildTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
@@ -52,13 +54,15 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
+     * @param appearanceApplier
      */
-    constructor(parent: EditableArea, stage: Stage, config: any = {}) {
+    constructor(parent: EditableArea, stage: Stage, config: any = {}, appearanceApplier: AppearanceApplier) {
         super(stage);
         this.setChildren(this.children);
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
+        this.appearanceApplier = appearanceApplier ? appearanceApplier : new AppearanceApplier({});
 
         this.parent = parent;
         this.config = config;
@@ -112,11 +116,9 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     getStyle() {
-
-        const styleAttributes = this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
-        return {
-            backgroundColor: styleAttributes.backgroundColor
-        };
+        let styleAttributes = this.getData();
+        styleAttributes = this.appearanceApplier.apply(styleAttributes);
+        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     }
 
     /**

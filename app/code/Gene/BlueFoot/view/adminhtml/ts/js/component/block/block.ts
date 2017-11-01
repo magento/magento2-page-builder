@@ -1,3 +1,4 @@
+
 import Structural from '../stage/structural/abstract';
 import EditableArea from '../stage/structural/editable-area'
 import Stage from '../stage';
@@ -7,6 +8,7 @@ import PreviewBlock from "./preview/block";
 import $t from "mage/translate";
 import _ from "underscore";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
+import AppearanceApplier from "../../utils/appearance-applier";
 
 interface FieldDefaults {
     [key: string]: any;
@@ -32,9 +34,10 @@ export default class Block extends Structural implements BlockInterface {
      * @param stage
      * @param config
      * @param formData
+     * @param appearanceApplier
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
-        super(parent, stage, config);
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearanceApplier: AppearanceApplier) {
+        super(parent, stage, config, appearanceApplier);
 
         this.preview = getPreviewInstance(this, config);
 

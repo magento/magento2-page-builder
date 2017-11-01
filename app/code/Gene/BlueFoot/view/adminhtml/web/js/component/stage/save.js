@@ -36,8 +36,6 @@ define(["knockout", "jquery", "Magento_Ui/js/lib/knockout/template/engine"], fun
         temp.remove();
       });
 
-      console.log('renderTree started');
-
       _knockout.applyBindingsToNode(temp[0], {
         template: {
           name: rootTemplate,

@@ -18,11 +18,12 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
      * @param stage
      * @param config
      * @param formData
+     * @param appearanceApplier
      */
-    function Block(parent, stage, config, formData) {
+    function Block(parent, stage, config, formData, appearanceApplier) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config) || this;
+      _this = _Structural.call(this, parent, stage, config, appearanceApplier) || this;
       _this.editOnInsert = true;
       _this.childEntityKeys = [];
       _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/abstract.html';

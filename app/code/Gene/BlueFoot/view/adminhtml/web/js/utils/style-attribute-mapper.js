@@ -29,6 +29,10 @@ define([], function () {
           value = value.replace('px', '') + 'px';
         }
 
+        if (key === 'width') {
+          value = value.replace('%', '') + '%';
+        }
+
         if (key === 'background_repeat') {
           value = value ? 'repeat' : 'no-repeat';
         }
@@ -52,6 +56,10 @@ define([], function () {
 
         if (key === 'min-height') {
           value = value.replace('px', '');
+        }
+
+        if (key === 'width') {
+          value = value.replace('%', '');
         }
 
         if (key === 'background-repeat') {

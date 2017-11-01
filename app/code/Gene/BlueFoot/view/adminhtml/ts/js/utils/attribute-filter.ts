@@ -21,7 +21,7 @@ export default class AttributeFilter {
                 if (this.allowAttributes.includes(key)) {
                     attributes[key] = data[key];
                 }
-            }
+            }.bind(this)
         );
         return attributes;
     }

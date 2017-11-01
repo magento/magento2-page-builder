@@ -38,7 +38,6 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
             resolve(temp.html());
             temp.remove();
         });
-        console.log('renderTree started');
         ko.applyBindingsToNode(
             temp[0],
             {

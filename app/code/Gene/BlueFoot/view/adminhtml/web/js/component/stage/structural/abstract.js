@@ -1,4 +1,4 @@
-define(["./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "mage/translate", "knockout", "underscore"], function (_editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _translate, _knockout, _underscore) {
+define(["./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "../../../utils/appearance-applier", "mage/translate", "knockout", "underscore"], function (_editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearanceApplier, _translate, _knockout, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,8 +17,9 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
      * @param parent
      * @param stage
      * @param config
+     * @param appearanceApplier
      */
-    function Structural(parent, stage, config) {
+    function Structural(parent, stage, config, appearanceApplier) {
       var _this;
 
       if (config === void 0) {
@@ -45,6 +46,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
 
 
       _this.edit = new _edit(_this, _this.stage.store);
+      _this.appearanceApplier = appearanceApplier ? appearanceApplier : new _appearanceApplier({});
       _this.parent = parent;
       _this.config = config;
       return _this;
@@ -110,10 +112,9 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
 
 
     _proto.getStyle = function getStyle() {
-      var styleAttributes = this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(this.getData()));
-      return {
-        backgroundColor: styleAttributes.backgroundColor
-      };
+      var styleAttributes = this.getData();
+      styleAttributes = this.appearanceApplier.apply(styleAttributes);
+      return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     };
     /**
      * Get attributes for an block
