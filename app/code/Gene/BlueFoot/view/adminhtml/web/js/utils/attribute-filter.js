@@ -1,43 +1,36 @@
-define(['exports'], function (exports) {
-    'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
+define([], function () {
+  /**
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var AttributeFilter =
+  /*#__PURE__*/
+  function () {
+    function AttributeFilter() {
+      this.allowAttributes = ['name', 'appearance'];
     }
 
-    var AttributeFilter = function () {
-        function AttributeFilter() {
-            _classCallCheck(this, AttributeFilter);
+    var _proto = AttributeFilter.prototype;
 
-            // Allowed attributes
-            this.allowAttributes = ['name', 'appearance'];
+    /**
+     * Filter allowed attributes from object
+     *
+     * @param {DataObject} data
+     * @returns {DataObject}
+     */
+    _proto.filter = function filter(data) {
+      var attributes = {};
+      Object.keys(data).map(function (key) {
+        if (this.allowAttributes.includes(key)) {
+          attributes[key] = data[key];
         }
-        /**
-         * Filter allowed attributes from object
-         *
-         * @param {DataObject} data
-         * @returns {DataObject}
-         */
+      });
+      return attributes;
+    };
 
+    return AttributeFilter;
+  }();
 
-        AttributeFilter.prototype.filter = function filter(data) {
-            var attributes = {};
-            Object.keys(data).map(function (key) {
-                if (this.allowAttributes.includes(key)) {
-                    attributes[key] = data[key];
-                }
-            });
-            return attributes;
-        };
-
-        return AttributeFilter;
-    }();
-
-    exports.default = AttributeFilter;
+  return AttributeFilter;
 });
+//# sourceMappingURL=attribute-filter.js.map

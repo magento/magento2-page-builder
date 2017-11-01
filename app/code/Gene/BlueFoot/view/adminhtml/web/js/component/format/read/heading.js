@@ -1,32 +1,33 @@
-define(['exports'], function (exports) {
-    'use strict';
+define([], function () {
+  /**
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var Heading =
+  /*#__PURE__*/
+  function () {
+    function Heading() {}
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
+    var _proto = Heading.prototype;
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
+    /**
+     * Read heading type and title from the element
+     *
+     * @param element HTMLElement
+     * @returns {Promise<any>}
+     */
+    _proto.read = function read(element) {
+      return new Promise(function (resolve) {
+        resolve({
+          'heading_type': element.nodeName,
+          'title': element.innerText
+        });
+      });
+    };
 
-    var Heading = function () {
-        function Heading() {
-            _classCallCheck(this, Heading);
-        }
+    return Heading;
+  }();
 
-        Heading.prototype.read = function read(element) {
-            return new Promise(function (resolve) {
-                resolve({
-                    'heading_type': element.nodeName,
-                    'title': element.innerText
-                });
-            });
-        };
-
-        return Heading;
-    }();
-
-    exports.default = Heading;
+  return Heading;
 });
+//# sourceMappingURL=heading.js.map

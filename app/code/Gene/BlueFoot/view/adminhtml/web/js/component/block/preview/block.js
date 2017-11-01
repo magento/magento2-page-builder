@@ -17,8 +17,6 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
       var _this = this;
 
       this.template = '';
-      this.parent = void 0;
-      this.config = void 0;
       this.data = {};
       this.parent = parent;
       this.config = config;
