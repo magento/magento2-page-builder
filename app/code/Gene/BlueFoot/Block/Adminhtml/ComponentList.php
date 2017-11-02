@@ -48,9 +48,12 @@ class ComponentList extends \Magento\Framework\View\Element\Template
 
     /**
      * ComponentList constructor.
-     * @todo move into abstracted generator class
      *
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param DataStructure                               $structure
+     * @param BlockFactory                                $blockFactory
+     * @param UiComponentFactory                          $uiComponentFactory
+     * @param UiComponentContextFactory                   $contextFactory
      * @param Context                                     $context
      * @param array                                       $data
      */
@@ -77,7 +80,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
      *
      * @return ContainerInterface
      */
-    protected function generateComponent($elementName, $data)
+    private function generateComponent($elementName, $data)
     {
         $attributes = $data['attributes'];
         if (!empty($attributes['group'])) {
@@ -121,7 +124,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
      *
      * @return void
      */
-    protected function prepareComponent(UiComponentInterface $component)
+    private function prepareComponent(UiComponentInterface $component)
     {
         $childComponents = $component->getChildComponents();
         if (!empty($childComponents)) {
@@ -140,7 +143,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
      *
      * @return void
      */
-    public function generateButtons($name)
+    private function generateButtons($name)
     {
         $targetName = $name . '.' . $name;
         $saveAction = json_encode(

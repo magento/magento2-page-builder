@@ -10,44 +10,44 @@ use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 
 class Config extends \Magento\Framework\Model\AbstractModel
 {
-    const BLUEFOOT_CONFIG_CACHE_KEY = 'bluefoot_config_cache';
+    const CONFIG_CACHE_KEY = 'bluefoot_config_cache';
     const DEFAULT_COMPONENT = 'Gene_BlueFoot/js/component/block/block';
     const DEFAULT_PREVIEW_COMPONENT = 'Gene_BlueFoot/js/component/block/preview/block';
 
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $configInterface;
+    private $configInterface;
 
     /**
      * @var \Magento\Framework\View\LayoutFactory
      */
-    protected $layoutFactory;
+    private $layoutFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory
      */
-    protected $templateCollection;
+    private $templateCollection;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Entity
      */
-    protected $entity;
+    private $entity;
 
     /**
      * @var \Magento\Framework\App\CacheInterface
      */
-    protected $cacheManager;
+    private $cacheManager;
 
     /**
      * @var \Magento\Framework\App\Cache\StateInterface
      */
-    protected $cacheState;
+    private $cacheState;
 
     /**
      * @var Config\UiComponentConfig
      */
-    protected $uiComponentConfig;
+    private $uiComponentConfig;
 
     /**
      * Config constructor.
@@ -97,38 +97,12 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getConfig()
     {
-        // Use the cache to load and save the data
-//        if ($this->cacheState->isEnabled(
-//                \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
-//            )
-//            && ($config = $this->cacheManager->load(
-//                self::BLUEFOOT_CONFIG_CACHE_KEY
-//            ))
-//        ) {
-//            return json_decode($config, true);
-//        } else {
         $config = [
             'groups'       => $this->getGroups(),
             'contentTypes' => $this->getContentTypes(),
             'templates'    => $this->getTemplateData()
         ];
-
-        // If the cache is enabled, store the config in the cache
-        if ($this->cacheState->isEnabled(
-            \Gene\BlueFoot\Model\Cache\Config::TYPE_IDENTIFIER
-        )
-        ) {
-            // Store the configuration in the cache for 7 days
-            $this->cacheManager->save(
-                json_encode($config),
-                self::BLUEFOOT_CONFIG_CACHE_KEY,
-                [\Gene\BlueFoot\Model\Cache\Config::CACHE_TAG],
-                (60 * 60 * 24 * 7) // Store in cache for 7 days
-            );
-        }
-
         return $config;
-//        }
     }
 
     /**

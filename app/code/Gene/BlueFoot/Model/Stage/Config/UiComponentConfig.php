@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 namespace Gene\BlueFoot\Model\Stage\Config;
 
@@ -15,7 +19,7 @@ class UiComponentConfig
     /**
      * @var DataInterfaceFactory
      */
-    protected $configFactory;
+    private $configFactory;
 
     /**
      * UiComponentConfig constructor.
@@ -58,13 +62,15 @@ class UiComponentConfig
     }
 
     /**
+     * Iterate over components within the configuration and run a defined callback function
+     *
      * @param      $config
      * @param      $callback
      * @param bool $key
      *
      * @return array
      */
-    protected function iterateComponents($config, $callback, $key = false)
+    private function iterateComponents($config, $callback, $key = false)
     {
         $values = $callback($config, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY]) && sizeof($config[Converter::DATA_COMPONENTS_KEY]) > 0) {

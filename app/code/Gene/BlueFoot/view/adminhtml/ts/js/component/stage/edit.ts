@@ -32,6 +32,7 @@ export default class Edit {
      * Initiate the edit class with an instance of structural
      *
      * @param {Structural} instance
+     * @param {DataStore} store
      */
     constructor(instance: Structural, store: DataStore) {
         this.instance = instance;
@@ -39,19 +40,12 @@ export default class Edit {
     }
 
     /**
-     * Open and render the edit component
-     */
-    openAndRender(): void {
-        this.destroyInserted();
-        this.setTitle();
-        this.render();
-        this.open();
-    }
-
-    /**
      * Open the modal
      */
     open(): void {
+        this.destroyInserted();
+        this.setTitle();
+        this.render();
         this.modal.openModal();
     }
 

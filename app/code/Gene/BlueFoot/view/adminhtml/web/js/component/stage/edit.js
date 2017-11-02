@@ -10,6 +10,7 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
      * Initiate the edit class with an instance of structural
      *
      * @param {Structural} instance
+     * @param {DataStore} store
      */
     function Edit(instance, store) {
       this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
@@ -18,24 +19,16 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
       this.store = store;
     }
     /**
-     * Open and render the edit component
+     * Open the modal
      */
 
 
     var _proto = Edit.prototype;
 
-    _proto.openAndRender = function openAndRender() {
+    _proto.open = function open() {
       this.destroyInserted();
       this.setTitle();
       this.render();
-      this.open();
-    };
-    /**
-     * Open the modal
-     */
-
-
-    _proto.open = function open() {
       this.modal.openModal();
     };
     /**

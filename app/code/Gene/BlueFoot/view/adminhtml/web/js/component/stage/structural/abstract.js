@@ -63,7 +63,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
      * Handle user editing an instance
      */
     _proto.onOptionEdit = function onOptionEdit() {
-      this.edit.openAndRender();
+      this.edit.open();
     };
     /**
      * Handle duplicate of items

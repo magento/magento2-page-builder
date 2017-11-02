@@ -106,7 +106,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle user editing an instance
      */
     onOptionEdit(): void {
-        this.edit.openAndRender();
+        this.edit.open();
     }
 
     /**
