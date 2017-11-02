@@ -1,4 +1,8 @@
 define(["./abstract", "./column", "./options/option", "ko-resizable"], function (_abstract, _column, _option, _koResizable) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -21,23 +25,24 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       _this = _Structural.call(this, parent, stage) || this;
       _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/row.html';
       _this.renderTemplate = 'Gene_BlueFoot/component/block/render/row.html';
-
-      _this.options.push(new _option.Option(_this, 'column', '<i></i>', 'Add Column', _this.addColumn.bind(_this), ['add-column'], 10)); // todo: refactor in scope of MAGETWO-66349
-
-
       _this.config.name = 'row';
       return _this;
     }
+    /**
+     * Append an add column option
+     *
+     * @returns {Array<Option>}
+     */
+
+
+    var _proto = Row.prototype;
+
     /**
      * Add a column to the row
      *
      * @param data
      * @returns {any}
      */
-
-
-    var _proto = Row.prototype;
-
     _proto.addColumn = function addColumn(data) {
       var column = new _column.Column(this, this.stage);
       column = this.onBlockDropped();
@@ -45,6 +50,15 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       column.updateColumnData(data);
       return column;
     };
+
+    _createClass(Row, [{
+      key: "options",
+      get: function get() {
+        var options = _Structural.prototype.options;
+        options.push(new _option.Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10));
+        return options;
+      }
+    }]);
 
     return Row;
   }(_abstract);

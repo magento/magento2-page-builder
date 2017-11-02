@@ -14,7 +14,7 @@ export class Option implements OptionInterface {
     action: Function | false = false;
     classes: string;
     sort: number;
-    template?: string = null;
+    _template: string;
 
     /**
      * Option constructor
@@ -45,16 +45,10 @@ export class Option implements OptionInterface {
         this.action = action;
         this.classes = classes.join(' ');
         this.sort = sort;
-        this.template = template;
+        this._template = template;
     }
 
-    /**
-     * Return template for option
-     *
-     * @deprecated
-     * @returns {string}
-     */
-    getTemplate(): string {
-        return this.template;
+    get template(): string {
+        return this._template || null;
     }
 }

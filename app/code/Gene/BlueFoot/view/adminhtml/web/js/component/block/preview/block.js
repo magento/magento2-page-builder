@@ -1,8 +1,8 @@
 define(["underscore", "knockout"], function (_underscore, _knockout) {
-  /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   var PreviewBlock =
   /*#__PURE__*/
   function () {
@@ -15,15 +15,9 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
     function PreviewBlock(parent, config) {
       var _this = this;
 
-      this.template = '';
       this.data = {};
       this.parent = parent;
-      this.config = config;
-
-      if (typeof this.config.preview_template !== 'undefined' && this.config.preview_template) {
-        this.template = this.config.preview_template;
-      } // Subscribe to this blocks data in the store
-
+      this.config = config; // Subscribe to this blocks data in the store
 
       this.parent.stage.store.subscribe(function (data) {
         var missingFields = _underscore.difference(_this.config.fields_list, _underscore.keys(data));
@@ -38,15 +32,20 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
       }, this.parent.id);
     }
     /**
-     * Update the data value of a part of our internal Knockout data store
+     * Retrieve the template for the preview block
      *
-     * @param {string} key
-     * @param value
+     * @returns {string}
      */
 
 
     var _proto = PreviewBlock.prototype;
 
+    /**
+     * Update the data value of a part of our internal Knockout data store
+     *
+     * @param {string} key
+     * @param value
+     */
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.data[key] !== 'undefined' && _knockout.isObservable(this.data[key])) {
         this.data[key](value);
@@ -54,6 +53,17 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
         this.data[key] = _knockout.observable(value);
       }
     };
+
+    _createClass(PreviewBlock, [{
+      key: "template",
+      get: function get() {
+        if (this.config.preview_template) {
+          return this.config.preview_template;
+        }
+
+        return '';
+      }
+    }]);
 
     return PreviewBlock;
   }();

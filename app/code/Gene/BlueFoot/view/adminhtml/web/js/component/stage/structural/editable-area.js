@@ -1,12 +1,14 @@
 define(["../../event-emitter", "../../block/factory", "../../../utils/array", "underscore", "knockout", "mageUtils", "mage/translate"], function (_eventEmitter, _factory, _array, _underscore, _knockout, _mageUtils, _translate) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var EditableArea =
   /*#__PURE__*/
   function (_EventEmitter) {
     _inheritsLoose(EditableArea, _EventEmitter);
-
-    // @todo populate from config
 
     /**
      * EditableArea constructor
@@ -19,7 +21,6 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
       _this = _EventEmitter.call(this) || this;
       _this.id = _mageUtils.uniqueid();
       _this.title = (0, _translate)('Editable');
-      _this.childTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 
       if (stage) {
         _this.stage = stage;
@@ -46,14 +47,19 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
       return _this;
     }
     /**
-     * Set the children observable array into the class
+     * Retrieve the child template
      *
-     * @param children
+     * @returns {string}
      */
 
 
     var _proto = EditableArea.prototype;
 
+    /**
+     * Set the children observable array into the class
+     *
+     * @param children
+     */
     _proto.setChildren = function setChildren(children) {
       var _this2 = this;
 
@@ -256,6 +262,13 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
     _proto.onSortStop = function onSortStop(event, params) {
       jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
     };
+
+    _createClass(EditableArea, [{
+      key: "childTemplate",
+      get: function get() {
+        return 'Gene_BlueFoot/component/block/render/children.html';
+      }
+    }]);
 
     return EditableArea;
   }(_eventEmitter);

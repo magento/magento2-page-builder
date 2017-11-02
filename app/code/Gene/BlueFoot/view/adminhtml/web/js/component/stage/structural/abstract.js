@@ -1,4 +1,8 @@
 define(["./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "../../../utils/appearance-applier", "mage/translate", "knockout", "underscore"], function (_editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearanceApplier, _translate, _knockout, _underscore) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Structural =
@@ -21,34 +25,43 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
         config = {};
       }
 
+      if (appearanceApplier === void 0) {
+        appearanceApplier = new _appearanceApplier({});
+      }
+
       _this = _EditableArea.call(this, stage) || this;
       _this.wrapperStyle = _knockout.observable({
         width: '100%'
       });
-      _this.options = [new _option.Option(_this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(_this, 'edit', '<i></i>', (0, _translate)('Edit'), _this.onOptionEdit.bind(_this), ['edit-block'], 50), new _option.Option(_this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), _this.onOptionDuplicate.bind(_this), ['duplicate-structural'], 60), new _option.Option(_this, 'remove', '<i></i>', (0, _translate)('Remove'), _this.onOptionRemove.bind(_this), ['remove-structural'], 100)];
       _this.optionsInstance = new _options.Options(_this, _this.options);
       _this.children = _knockout.observableArray([]);
-      _this.template = 'Gene_BlueFoot/component/stage/structural/abstract.html';
       _this.columnBuilder = new _builder.ColumnBuilder();
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
-      _this.previewChildTemplate = 'Gene_BlueFoot/component/block/preview/children.html';
-      _this.renderChildTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 
       _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 
 
       _this.edit = new _edit(_this, _this.stage.store);
-      _this.appearanceApplier = appearanceApplier ? appearanceApplier : new _appearanceApplier({});
+      _this.appearanceApplier = appearanceApplier;
       _this.parent = parent;
       _this.config = config;
       return _this;
     }
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
 
     var _proto = Structural.prototype;
 
+    /**
+     * Handle user editing an instance
+     */
     _proto.onOptionEdit = function onOptionEdit() {
       this.edit.openAndRender();
     };
@@ -138,6 +151,46 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
     _proto.getData = function getData() {
       return this.stage.store.get(this.id);
     };
+
+    _createClass(Structural, [{
+      key: "options",
+      get: function get() {
+        return [new _option.Option(this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(this, 'edit', '<i></i>', (0, _translate)('Edit'), this.onOptionEdit.bind(this), ['edit-block'], 50), new _option.Option(this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), this.onOptionDuplicate.bind(this), ['duplicate-structural'], 60), new _option.Option(this, 'remove', '<i></i>', (0, _translate)('Remove'), this.onOptionRemove.bind(this), ['remove-structural'], 100)];
+      }
+      /**
+       * Retrieve the template for the structural
+       *
+       * @returns {string}
+       */
+
+    }, {
+      key: "template",
+      get: function get() {
+        return 'Gene_BlueFoot/component/stage/structural/abstract.html';
+      }
+      /**
+       * Retrieve the preview child template
+       *
+       * @returns {string}
+       */
+
+    }, {
+      key: "previewChildTemplate",
+      get: function get() {
+        return 'Gene_BlueFoot/component/block/preview/children.html';
+      }
+      /**
+       * Retrieve the child template
+       *
+       * @returns {string}
+       */
+
+    }, {
+      key: "renderChildTemplate",
+      get: function get() {
+        return 'Gene_BlueFoot/component/block/render/children.html';
+      }
+    }]);
 
     return Structural;
   }(_editableArea);

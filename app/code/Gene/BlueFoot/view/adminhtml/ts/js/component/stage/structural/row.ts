@@ -28,12 +28,21 @@ export default class Row extends Structural implements RowInterface {
      */
     constructor(parent: EditableArea, stage: Stage) {
         super(parent, stage);
-        
-        this.options.push(
+
+        this.config.name = 'row';
+    }
+
+    /**
+     * Append an add column option
+     *
+     * @returns {Array<Option>}
+     */
+    get options(): Array<Option> {
+        let options = super.options;
+        options.push(
             new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10)
         );
-        // todo: refactor in scope of MAGETWO-66349
-        this.config.name = 'row';
+        return options;
     }
 
     /**

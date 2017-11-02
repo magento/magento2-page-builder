@@ -35,6 +35,12 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
 
       return _this;
     }
+    /**
+     * Return the draggable config to the element
+     *
+     * @returns {string}
+     */
+
 
     var _proto = Block.prototype;
 

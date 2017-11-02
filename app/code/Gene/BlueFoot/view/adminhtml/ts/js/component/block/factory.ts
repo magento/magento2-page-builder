@@ -8,7 +8,6 @@ import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import loadModule from 'Gene_BlueFoot/js/component/loader';
 
-
 interface ConfigObject {
     js_block?: string;
     [key: string]: any

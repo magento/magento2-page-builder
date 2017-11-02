@@ -23,8 +23,6 @@ export default class Block extends Structural implements BlockInterface {
     editOnInsert: boolean = true;
     preview: PreviewBlock;
     childEntityKeys: Array<string> = [];
-    previewTemplate: string = 'Gene_BlueFoot/component/block/preview/abstract.html';
-    renderTemplate: string = 'Gene_BlueFoot/component/block/render/abstract.html';
 
     /**
      * AbstractBlock constructor
@@ -40,13 +38,6 @@ export default class Block extends Structural implements BlockInterface {
 
         this.preview = getPreviewInstance(this, config);
 
-        if (config.preview_template) {
-            this.previewTemplate = config.preview_template;
-        }
-        if (config.render_template) {
-            this.renderTemplate = config.render_template;
-        }
-
         let defaults: FieldDefaults = {};
         if (config.fields) {
             _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
@@ -58,5 +49,29 @@ export default class Block extends Structural implements BlockInterface {
             this.id,
             _.extend(defaults, formData)
         );
+    }
+
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+    get previewTemplate(): string {
+        if (this.config.preview_template) {
+            return this.config.preview_template;
+        }
+        return 'Gene_BlueFoot/component/block/preview/abstract.html';
+    }
+
+    /**
+     * Retrieve the render template
+     *
+     * @returns {string}
+     */
+    get renderTemplate(): string {
+        if (this.config.render_template) {
+            return this.config.render_template;
+        }
+        return 'Gene_BlueFoot/component/block/render/abstract.html';
     }
 }

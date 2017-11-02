@@ -1,4 +1,8 @@
 define(["../stage/structural/abstract", "../stage/previews", "underscore"], function (_abstract, _previews, _underscore) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Block =
@@ -21,18 +25,7 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
       _this = _Structural.call(this, parent, stage, config, appearanceApplier) || this;
       _this.editOnInsert = true;
       _this.childEntityKeys = [];
-      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/abstract.html';
-      _this.renderTemplate = 'Gene_BlueFoot/component/block/render/abstract.html';
       _this.preview = (0, _previews)(_this, config);
-
-      if (config.preview_template) {
-        _this.previewTemplate = config.preview_template;
-      }
-
-      if (config.render_template) {
-        _this.renderTemplate = config.render_template;
-      }
-
       var defaults = {};
 
       if (config.fields) {
@@ -45,6 +38,38 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
 
       return _this;
     }
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+
+
+    _createClass(Block, [{
+      key: "previewTemplate",
+      get: function get() {
+        if (this.config.preview_template) {
+          return this.config.preview_template;
+        }
+
+        return 'Gene_BlueFoot/component/block/preview/abstract.html';
+      }
+      /**
+       * Retrieve the render template
+       *
+       * @returns {string}
+       */
+
+    }, {
+      key: "renderTemplate",
+      get: function get() {
+        if (this.config.render_template) {
+          return this.config.render_template;
+        }
+
+        return 'Gene_BlueFoot/component/block/render/abstract.html';
+      }
+    }]);
 
     return Block;
   }(_abstract);

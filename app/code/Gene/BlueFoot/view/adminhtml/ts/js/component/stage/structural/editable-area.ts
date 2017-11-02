@@ -24,9 +24,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     stage: Stage;
     title: string = $t('Editable');
 
-    // @todo populate from config
-    childTemplate: string = 'Gene_BlueFoot/component/block/render/children.html';
-
     /**
      * EditableArea constructor
      *
@@ -61,6 +58,15 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
 
         this.on('sortStart', this.onSortStart);
         this.on('sortStop', this.onSortStop);
+    }
+
+    /**
+     * Retrieve the child template
+     *
+     * @returns {string}
+     */
+    get childTemplate(): string {
+        return 'Gene_BlueFoot/component/block/render/children.html';
     }
 
     /**

@@ -12,7 +12,6 @@ interface PreviewData {
 }
 
 export default class PreviewBlock {
-    template: string = '';
     parent: Block;
     config: any;
     data: PreviewData = {};
@@ -27,10 +26,6 @@ export default class PreviewBlock {
         this.parent = parent;
         this.config = config;
 
-        if (typeof this.config.preview_template !== 'undefined' && this.config.preview_template) {
-            this.template = this.config.preview_template;
-        }
-
         // Subscribe to this blocks data in the store
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
@@ -44,6 +39,19 @@ export default class PreviewBlock {
             },
             this.parent.id
         );
+    }
+
+    /**
+     * Retrieve the template for the preview block
+     *
+     * @returns {string}
+     */
+    get template(): string {
+        if (this.config.preview_template) {
+            return this.config.preview_template;
+        }
+
+        return '';
     }
 
     /**
