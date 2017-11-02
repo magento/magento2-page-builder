@@ -7,7 +7,6 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
   /*#__PURE__*/
   function () {
     function Default() {
-      this.styleAttributeMapper = void 0;
       this.styleAttributeMapper = new _styleAttributeMapper();
     }
     /**

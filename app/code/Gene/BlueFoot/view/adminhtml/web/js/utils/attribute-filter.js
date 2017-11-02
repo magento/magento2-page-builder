@@ -19,12 +19,14 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.filter = function filter(data) {
+      var _this = this;
+
       var attributes = {};
       Object.keys(data).map(function (key) {
-        if (this.allowAttributes.includes(key)) {
+        if (_this.allowAttributes.includes(key)) {
           attributes[key] = data[key];
         }
-      }.bind(this));
+      });
       return attributes;
     };
 

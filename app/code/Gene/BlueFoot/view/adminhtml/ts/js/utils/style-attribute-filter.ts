@@ -41,11 +41,11 @@ export default class StyleAttributeFilter {
     filter(data: DataObject): DataObject {
         let result: DataObject = {};
         Object.keys(data).map(
-            function (key: string) {
+            (key: string) => {
                 if (Object.values(this.styleAttributes).indexOf(key) > -1) {
                     result[key] = data[key];
                 }
-            }.bind(this)
+            }
         );
         return result;
     }

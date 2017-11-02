@@ -6,9 +6,8 @@ define([], function () {
   var AppearanceApplier =
   /*#__PURE__*/
   function () {
-    // Content type appearances
+    // List of type appearances
     function AppearanceApplier(appearances) {
-      this.appearances = void 0;
       this.appearances = appearances;
     }
     /**

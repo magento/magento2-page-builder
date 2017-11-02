@@ -6,11 +6,15 @@
 import {DataObject} from "../component/data-store";
 import AppearanceInterface from "../component/appearance/appearance-interface";
 
-export default class AppearanceApplier {
-    // Content type appearances
-    appearances: { [key: string]: AppearanceInterface; };
+interface AppearanceList {
+    [key: string]: AppearanceInterface;
+}
 
-    constructor(appearances: any) {
+export default class AppearanceApplier {
+    // List of type appearances
+    appearances: AppearanceList;
+
+    constructor(appearances: AppearanceList) {
         this.appearances = appearances;
     }
 

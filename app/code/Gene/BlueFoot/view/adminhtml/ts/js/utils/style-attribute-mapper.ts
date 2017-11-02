@@ -82,7 +82,7 @@ export default class StyleAttributeMapper {
     /**
      * Convert from snake case to camel case
      *
-     * @param string
+     * @param {string} string
      * @returns {string}
      */
     private fromSnakeToCamelCase(string: string): string {
@@ -97,10 +97,10 @@ export default class StyleAttributeMapper {
     /**
      * Convert from int to hex
      *
-     * @param value
+     * @param {number} value
      * @returns {string}
      */
-    private fromIntToHex(value): string {
+    private fromIntToHex(value: number): string {
         let hex = value.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
     }

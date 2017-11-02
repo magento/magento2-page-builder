@@ -91,7 +91,7 @@ define([], function () {
     /**
      * Convert from snake case to camel case
      *
-     * @param string
+     * @param {string} string
      * @returns {string}
      */
 
@@ -109,7 +109,7 @@ define([], function () {
     /**
      * Convert from int to hex
      *
-     * @param value
+     * @param {number} value
      * @returns {string}
      */
 

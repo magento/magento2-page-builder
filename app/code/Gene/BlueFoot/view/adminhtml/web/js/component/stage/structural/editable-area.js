@@ -23,8 +23,6 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
 
       _this = _EventEmitter.call(this) || this;
       _this.id = _mageUtils.uniqueid();
-      _this.children = void 0;
-      _this.stage = void 0;
       _this.title = (0, _translate)('Editable');
       _this.childTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 
