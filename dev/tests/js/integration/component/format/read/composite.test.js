@@ -4,6 +4,7 @@ describe('Composite reader of attributes', () => {
         () => require('init-config'),
         {virtual: true}
     );
+    jest.mock('::Gene_BlueFoot/js/component/loader', () => require('jest-magento2/fake-require'));
 
     const fakeRequire = require('fake-require');
 
