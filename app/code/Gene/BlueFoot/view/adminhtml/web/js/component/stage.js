@@ -30,6 +30,7 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       _this.originalScrollTop = void 0;
       _this.serializeRole = 'stage';
       _this.store = void 0;
+      _this.save = new _save();
 
       _this.setChildren(stageContent);
 
@@ -58,7 +59,7 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
 
 
       _this.on('stageUpdated', _underscore.debounce(function () {
-        (0, _save)(stageContent).then(function (renderedOutput) {
+        _this.save.renderTree(stageContent).then(function (renderedOutput) {
           return _this.parent.value(renderedOutput);
         });
       }, 500));

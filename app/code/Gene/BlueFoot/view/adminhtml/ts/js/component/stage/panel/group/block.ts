@@ -28,6 +28,6 @@ export class Block extends EventEmitter {
     }
 
     getDraggableConfig() {
-        return this.config.allowed_children.map(function(value, index) {return '.' + value + '-container'}).join(', ');
+        return this.config.allowed_parents.map(function(value, index) {return '.' + value + '-container'}).join(', ');
     }
 }

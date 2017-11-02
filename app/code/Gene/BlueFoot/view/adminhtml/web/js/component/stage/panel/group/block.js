@@ -40,7 +40,7 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
     var _proto = Block.prototype;
 
     _proto.getDraggableConfig = function getDraggableConfig() {
-      return this.config.allowed_children.map(function (value, index) {
+      return this.config.allowed_parents.map(function (value, index) {
         return '.' + value + '-container';
       }).join(', ');
     };

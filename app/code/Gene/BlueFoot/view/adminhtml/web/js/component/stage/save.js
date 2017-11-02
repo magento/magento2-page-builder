@@ -1,4 +1,4 @@
-define(["knockout", "jquery", "Magento_Ui/js/lib/knockout/template/engine"], function (_knockout, _jquery, _engine) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../utils/filter-html"], function (_jquery, _knockout, _engine, _filterHtml) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,48 +9,43 @@ define(["knockout", "jquery", "Magento_Ui/js/lib/knockout/template/engine"], fun
    *
    * @param {KnockoutObservableArray<Structural>} tree
    */
-  function renderTree(tree) {
-    var rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
-    var commentNodeType = 8;
-    var whitespaceNodeType = 3;
-    var temp = (0, _jquery)('<div>');
-    return new Promise(function (resolve, reject) {
-      _engine.waitForFinishRender().then(function () {
-        var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-          return this.nodeType == commentNodeType
-          /* || (this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/))*/
-          ;
-        };
+  var Save =
+  /*#__PURE__*/
+  function () {
+    function Save() {
+      this.rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
+      this.filterHtml = new _filterHtml();
+    }
 
-        temp.find('[data-bind]').each(function (index, value) {
-          (0, _jquery)(value).removeAttr('data-bind');
+    var _proto = Save.prototype;
+
+    _proto.renderTree = function renderTree(tree) {
+      var _this = this;
+
+      var element = (0, _jquery)('<div>');
+      return new Promise(function (resolve, reject) {
+        _engine.waitForFinishRender().then(function () {
+          element = _this.filterHtml.filter(element);
+          resolve(element.html());
+          element.remove();
         });
-        temp.contents().filter(isWhiteSpaceOrComment).remove();
-        temp.find('*').each(function (index, value) {
-          (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
-        }); // Strip all is wrapper elements
 
-        temp.find('[data-wrapper]').each(function (index, element) {
-          (0, _jquery)(element).parent().append((0, _jquery)(element).children());
-          (0, _jquery)(element).remove();
-        });
-        resolve(temp.html());
-        temp.remove();
-      });
-
-      _knockout.applyBindingsToNode(temp[0], {
-        template: {
-          name: rootTemplate,
-          data: {
-            getChildren: function getChildren() {
-              return tree;
+        _knockout.applyBindingsToNode(element[0], {
+          template: {
+            name: _this.rootTemplate,
+            data: {
+              getChildren: function getChildren() {
+                return tree;
+              }
             }
           }
-        }
+        });
       });
-    });
-  }
+    };
 
-  return renderTree;
+    return Save;
+  }();
+
+  return Save;
 });
 //# sourceMappingURL=save.js.map

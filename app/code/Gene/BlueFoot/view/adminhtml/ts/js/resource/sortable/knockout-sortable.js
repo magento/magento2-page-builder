@@ -154,7 +154,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                     newParent = ko.dataFor(newParentEl);
 
                 var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
-                    allowedParents = getViewModelFromUi(ui).config.allowed_children; // @todo rename allowed_children
+                    allowedParents = getViewModelFromUi(ui).config.allowed_parents;
     
                 if (parentContainerName && Array.isArray(allowedParents)) {  
                     if (allowedParents.indexOf(parentContainerName) === -1) {
@@ -214,7 +214,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 currentInstance = require("uiRegistry").get('dragElementViewModel');
             }
             
-            var allowedParents = currentInstance.config.allowed_children; // @todo rename allowed_children
+            var allowedParents = currentInstance.config.allowed_parents;
 
             // Verify if the currently dragged block is accepted by the hovered parent
             if (parentContainerName && Array.isArray(allowedParents)) {  

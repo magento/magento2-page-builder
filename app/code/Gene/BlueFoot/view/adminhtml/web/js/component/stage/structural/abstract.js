@@ -93,6 +93,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
     };
     /**
      * Get css classes for an block
+     * Example {'class-name': true}
      *
      * @returns {DataObject}
      */
@@ -111,6 +112,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
     };
     /**
      * Get stype properties for an block
+     * Example {'backgroundColor': '#cccccc'}
      *
      * @returns {DataObject}
      */
@@ -123,6 +125,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
     };
     /**
      * Get attributes for an block
+     * Example {'data-role': 'element'}
      *
      * @returns {DataObject}
      */

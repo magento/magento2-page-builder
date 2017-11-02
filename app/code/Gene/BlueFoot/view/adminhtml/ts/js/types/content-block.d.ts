@@ -3,4 +3,5 @@ interface ContentBlockConfig {
     name: string;
     visible: boolean;
     icon: string;
+    allowed_parents: Array<any>;
 }

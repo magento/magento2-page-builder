@@ -6,7 +6,7 @@ import DataStore from "./data-store";
 import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
-import renderTree from "./stage/save";
+import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
 import $ from 'jquery';
 
@@ -25,6 +25,7 @@ export default class Stage extends EditableArea implements StageInterface {
     originalScrollTop: number;
     serializeRole: string = 'stage';
     store: DataStore;
+    save: Save = new Save();
 
     /**
      * Stage constructor
@@ -63,7 +64,7 @@ export default class Stage extends EditableArea implements StageInterface {
          * can occur concurrently.
           */
         this.on('stageUpdated', _.debounce(() => {
-            renderTree(stageContent)
+            this.save.renderTree(stageContent)
                 .then((renderedOutput) => this.parent.value(renderedOutput))
         }, 500));
     }

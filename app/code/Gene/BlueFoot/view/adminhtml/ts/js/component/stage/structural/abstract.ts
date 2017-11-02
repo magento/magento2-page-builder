@@ -99,6 +99,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Get css classes for an block
+     * Example {'class-name': true}
      *
      * @returns {DataObject}
      */
@@ -112,6 +113,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Get stype properties for an block
+     * Example {'backgroundColor': '#cccccc'}
      *
      * @returns {DataObject}
      */
@@ -123,6 +125,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Get attributes for an block
+     * Example {'data-role': 'element'}
      *
      * @returns {DataObject}
      */
