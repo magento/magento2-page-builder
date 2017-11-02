@@ -17,7 +17,9 @@ define(["knockout", "jquery", "Magento_Ui/js/lib/knockout/template/engine"], fun
     return new Promise(function (resolve, reject) {
       _engine.waitForFinishRender().then(function () {
         var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-          return this.nodeType == commentNodeType || this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/);
+          return this.nodeType == commentNodeType
+          /* || (this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/))*/
+          ;
         };
 
         temp.find('[data-bind]').each(function (index, value) {

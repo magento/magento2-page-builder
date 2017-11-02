@@ -8,6 +8,7 @@ define([], function () {
   function () {
     // Content type appearances
     function AppearanceApplier(appearances) {
+      this.appearances = void 0;
       this.appearances = appearances;
     }
     /**

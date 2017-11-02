@@ -27,9 +27,13 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
       }
 
       _this = _EditableArea.call(this, stage) || this;
+      _this.parent = void 0;
+      _this.title = void 0;
+      _this.config = void 0;
       _this.wrapperStyle = _knockout.observable({
         width: '100%'
       });
+      _this.edit = void 0;
       _this.options = [new _option.Option(_this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(_this, 'edit', '<i></i>', (0, _translate)('Edit'), _this.onOptionEdit.bind(_this), ['edit-block'], 50), new _option.Option(_this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), _this.onOptionDuplicate.bind(_this), ['duplicate-structural'], 60), new _option.Option(_this, 'remove', '<i></i>', (0, _translate)('Remove'), _this.onOptionRemove.bind(_this), ['remove-structural'], 100)];
       _this.optionsInstance = new _options.Options(_this, _this.options);
       _this.children = _knockout.observableArray([]);
@@ -39,6 +43,7 @@ define(["./editable-area", "./options", "./options/option", "./column/builder", 
       _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
+      _this.appearanceApplier = void 0;
       _this.previewChildTemplate = 'Gene_BlueFoot/component/block/preview/children.html';
       _this.renderChildTemplate = 'Gene_BlueFoot/component/block/render/children.html';
 

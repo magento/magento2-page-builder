@@ -224,31 +224,5 @@
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
         </test>
-        <test name="CantDragColumnIntoColumn">
-            <annotations>
-                <title value="Columns cannot be dragged into other columns"/>
-                <description value="Validate that a user cannot drag one column into another"/>
-                <severity value="CRITICAL"/>
-                <group value="bluefoot"/>
-            </annotations>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
-            <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.columnInStage2DropArea}}" mergeKey="dropColumnIntoStage"/>
-            <seeNumberOfElements selector="{{BlueFootColumnSection.columnInStage2Children}}" userInput="0" mergeKey="seeNoChildren"/>
-        </test>
-        <test name="CantSortColumnIntoColumn">
-            <annotations>
-                <title value="Columns cannot be sorted into other columns"/>
-                <description value="Validate that a user cannot drag one column into another"/>
-                <severity value="CRITICAL"/>
-                <group value="bluefoot"/>
-            </annotations>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
-            <moveMouseOver selector="{{BlueFootColumnSection.columnInStage}}" mergeKey="onMouseOverColumn"/>
-            <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
-            <dragAndDrop selector1="{{BlueFootColumnSection.dragColumn}}" selector2="{{BlueFootColumnSection.columnInStage2DropArea}}" mergeKey="dropColumnOntoColumn"/>
-            <seeNumberOfElements selector="{{BlueFootColumnSection.columnInStage2Children}}" userInput="0" mergeKey="seeNoChildren"/>
-        </test>
     </cest>
 </config>

@@ -21,7 +21,7 @@ export default function renderTree(tree: KnockoutObservableArray<Structural>): P
     return new Promise((resolve, reject) => {
         engine.waitForFinishRender().then(function () {
             const isWhiteSpaceOrComment = function() {
-                return this.nodeType == commentNodeType || (this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/));
+                return this.nodeType == commentNodeType/* || (this.nodeType == whitespaceNodeType && this.data.match(/^\s+$/))*/;
             };
             temp.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
             temp.contents().filter(isWhiteSpaceOrComment).remove();
