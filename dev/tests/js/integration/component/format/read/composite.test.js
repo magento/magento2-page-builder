@@ -5,6 +5,16 @@ describe('Composite reader of attributes', () => {
         {virtual: true}
     );
 
+    const fakeRequire = require('fake-require');
+
+    fakeRequire.set('Gene_BlueFoot/js/component/format/read/default', require('js/component/format/read/default'));
+
+    jest.mock(
+        '::Gene_BlueFoot/js/component/loader',
+        () => require('fake-require'),
+        {virtual: true}
+    );
+
     const compositeReader = new (require('js/component/format/read/composite'))();
 
     it('Can read data-role attribute', () => {
