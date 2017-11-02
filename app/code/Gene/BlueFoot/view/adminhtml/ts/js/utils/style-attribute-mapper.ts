@@ -16,8 +16,8 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             function (key: string) {
                 let value = data[key];
-                if (!value) {
-                    return;
+                if (value === '' || value === 0 || value === '0') {
+                    //return;
                 }
                 if (key === 'min_height') {
                     value = value.replace('px', '') + 'px';
@@ -51,8 +51,19 @@ export default class StyleAttributeMapper {
                 if (key === 'width') {
                     value = value.replace('%', '');
                 }
-                if (key === 'background-repeat') {
+                if (key === 'background-repeat-y') {
+                    key = 'background-repeat';
                     value = value === 'repeat' ? '1' : '0';
+                }
+                if (key === 'background-position-y') {
+                    key = 'background-position';
+                    if (value === 'top') {
+                        value = 'left top';
+                    } else if (value === 'bottom') {
+                        value = 'left bottom'
+                    } else {
+                        value = 'center center';
+                    }
                 }
                 if (key === 'background-color') {
                     const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/

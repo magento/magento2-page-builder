@@ -21,8 +21,7 @@ define([], function () {
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (!value) {
-          return;
+        if (value === '' || value === 0 || value === '0') {//return;
         }
 
         if (key === 'min_height') {
@@ -62,8 +61,21 @@ define([], function () {
           value = value.replace('%', '');
         }
 
-        if (key === 'background-repeat') {
+        if (key === 'background-repeat-y') {
+          key = 'background-repeat';
           value = value === 'repeat' ? '1' : '0';
+        }
+
+        if (key === 'background-position-y') {
+          key = 'background-position';
+
+          if (value === 'top') {
+            value = 'left top';
+          } else if (value === 'bottom') {
+            value = 'left bottom';
+          } else {
+            value = 'center center';
+          }
         }
 
         if (key === 'background-color') {

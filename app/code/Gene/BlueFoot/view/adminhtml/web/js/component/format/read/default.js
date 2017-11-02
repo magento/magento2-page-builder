@@ -42,6 +42,7 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
         return value.length > 0;
       });
       return new Promise(function (resolve) {
+        console.log(data);
         resolve(data);
       });
     };
