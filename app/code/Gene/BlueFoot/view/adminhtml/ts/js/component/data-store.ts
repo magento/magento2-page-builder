@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import EventEmitter from "./event-emitter";
 import EditableArea from "./stage/structural/editable-area";
 import _ from "underscore";
@@ -15,11 +20,6 @@ export interface DataObject {
     [key: string]: undefined | null | string | number | boolean | Array<any>;
 }
 
-/**
- * DataStore Class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class DataStore extends EventEmitter {
     state: Map<string, DataObject> = new Map;
     snapshotStorage: Map<string, Array<DataObject>> = new Map;

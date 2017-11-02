@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import EventEmitter from '../../event-emitter';
 import Stage from '../../stage';
 import { Block as BlockInterface } from '../../block/block.d';
@@ -13,11 +18,6 @@ import ko from 'knockout';
 import mageUtils from 'mageUtils';
 import $t from 'mage/translate';
 
-/**
- * Class EditableArea
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
     id: string = mageUtils.uniqueid();
     children: KnockoutObservableArray<Structural>;

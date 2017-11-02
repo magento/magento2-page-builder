@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import uiComponent from 'uiComponent';
 import _ from 'underscore';
 import ko from 'knockout';
@@ -11,11 +16,6 @@ import { load as loadPreviews } from "./previews";
 import "ko-draggable";
 import "ko-sortable";
 
-/**
- * Panel Component
- *
- * @author Dave Macaulay <hello@davemacalay.com>
- */
 export default class Panel extends uiComponent implements PanelInterface {
     componentTemplate: string = 'Gene_BlueFoot/component/stage/panel.html';
     stage: StageInterface;

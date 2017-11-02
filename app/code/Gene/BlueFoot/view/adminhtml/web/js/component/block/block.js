@@ -1,11 +1,6 @@
 define(["../stage/structural/abstract", "../stage/previews", "underscore"], function (_abstract, _previews, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * AbstractBlock class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var Block =
   /*#__PURE__*/
   function (_Structural) {

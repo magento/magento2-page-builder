@@ -1,11 +1,6 @@
 define(["./stage/structural/editable-area", "./stage/structural/row", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery"], function (_editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * Stage class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var Stage =
   /*#__PURE__*/
   function (_EditableArea) {

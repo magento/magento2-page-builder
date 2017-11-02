@@ -1,11 +1,6 @@
 define(["./event-emitter"], function (_eventEmitter) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * DataStore Class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var DataStore =
   /*#__PURE__*/
   function (_EventEmitter) {

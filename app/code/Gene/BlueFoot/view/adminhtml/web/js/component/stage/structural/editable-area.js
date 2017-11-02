@@ -1,11 +1,6 @@
 define(["../../event-emitter", "../../block/factory", "../../../utils/array", "underscore", "knockout", "mageUtils", "mage/translate"], function (_eventEmitter, _factory, _array, _underscore, _knockout, _mageUtils, _translate) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * Class EditableArea
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var EditableArea =
   /*#__PURE__*/
   function (_EventEmitter) {

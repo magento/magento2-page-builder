@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import { RowInterface } from "./row.d";
@@ -9,10 +14,6 @@ import Stage from '../../stage';
 import "ko-resizable";
 
 /**
- * Row class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- *
  * @deprecated use component/block/row.
  */
 export default class Row extends Structural implements RowInterface {

@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 import Structural from '../stage/structural/abstract';
 import EditableArea from '../stage/structural/editable-area'
@@ -14,11 +18,6 @@ interface FieldDefaults {
     [key: string]: any;
 }
 
-/**
- * AbstractBlock class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class Block extends Structural implements BlockInterface {
     title: string;
     editOnInsert: boolean = true;

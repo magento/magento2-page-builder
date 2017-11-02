@@ -1,13 +1,13 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import { OptionInterface } from './options/option.d';
 import { Structural } from './abstract.d';
 import _ from 'underscore';
 import ko from 'knockout';
 
-/**
- * Options Class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export class Options {
     parent: Structural;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);

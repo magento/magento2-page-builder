@@ -4,7 +4,6 @@ beforeEach(() => {
     jest.mock('::advanced-cms-init-config', () => require('init-config'), {virtual: true});
     jest.mock('::Gene_BlueFoot/js/component/loader', () => require('jest-magento2/fake-require'));
 });
-
 describe('Composite reader of attributes', () => {
 
     it('Can read data-role attribute', () => {

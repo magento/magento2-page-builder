@@ -1,11 +1,6 @@
 define(["./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../../utils/style-attribute-filter", "../../../utils/style-attribute-mapper", "../../../utils/attribute-filter", "../../../utils/attribute-mapper", "../../../utils/appearance-applier", "mage/translate", "knockout", "underscore"], function (_editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearanceApplier, _translate, _knockout, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * Structural class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var Structural =
   /*#__PURE__*/
   function (_EditableArea) {

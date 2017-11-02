@@ -2,10 +2,6 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
-   * Row class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   *
    * @deprecated use component/block/row.
    */
   var Row =

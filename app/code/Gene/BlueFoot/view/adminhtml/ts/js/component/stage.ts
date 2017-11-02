@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import EditableArea from './stage/structural/editable-area';
 import { StageInterface } from './stage.d';
 import Row from './stage/structural/row';
@@ -10,11 +15,6 @@ import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
 import $ from 'jquery';
 
-/**
- * Stage class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class Stage extends EditableArea implements StageInterface {
     parent: any;
     stage: Stage;

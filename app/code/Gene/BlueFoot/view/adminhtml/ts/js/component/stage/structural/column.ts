@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import Config  from "../../config";
@@ -11,11 +16,6 @@ import { DataObject } from "../../data-store";
 
 import ko from 'knockout';
 
-/**
- * Column class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export class Column extends Structural implements ColumnInterface {
     previewTemplate: string = 'Gene_BlueFoot/component/block/preview/column.html';
 
