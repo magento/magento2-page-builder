@@ -33,7 +33,7 @@ module.exports = () => {
         },
         dataTree() {
             return new Promise((resolve, reject) => {
-                fakeWysiwyg.waitForReady(
+                fakeWysiwyg.waitForRender(
                     () => {
                         resolve(ko.utils.arrayMap(stageContent(), dataItem));
                     },

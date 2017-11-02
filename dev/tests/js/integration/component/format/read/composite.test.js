@@ -1,28 +1,16 @@
-describe('Composite reader of attributes', () => {
-    jest.mock(
-        '::advanced-cms-init-config',
-        () => require('init-config'),
-        {virtual: true}
-    );
+const compositeReader = () => new (require('js/component/format/read/composite'))();
+
+beforeEach(() => {
+    jest.mock('::advanced-cms-init-config', () => require('init-config'), {virtual: true});
     jest.mock('::Gene_BlueFoot/js/component/loader', () => require('jest-magento2/fake-require'));
-
-    const fakeRequire = require('fake-require');
-
-    fakeRequire.set('Gene_BlueFoot/js/component/format/read/default', require('js/component/format/read/default'));
-
-    jest.mock(
-        '::Gene_BlueFoot/js/component/loader',
-        () => require('fake-require'),
-        {virtual: true}
-    );
-
-    const compositeReader = new (require('js/component/format/read/composite'))();
+});
+describe('Composite reader of attributes', () => {
 
     it('Can read data-role attribute', () => {
         const element = document.createElement('div');
         element.setAttribute('data-role', 'column');
 
-        const elementData = compositeReader.read(element);
+        const elementData = compositeReader().read(element);
         expect(elementData).resolves.toEqual(
             expect.objectContaining(
                 {role: 'column'}
@@ -35,7 +23,7 @@ describe('Composite reader of attributes', () => {
         element.setAttribute('data-appearance', 'align-top');
         element.setAttribute('style', 'margin-top: 1px; min-height: 100px;');
 
-        const elementData = compositeReader.read(element);
+        const elementData = compositeReader().read(element);
         expect(elementData).resolves.toEqual(
             expect.objectContaining(
                 {
@@ -51,7 +39,7 @@ describe('Composite reader of attributes', () => {
         const element = document.createElement('h2');
         element.setAttribute('data-role', 'heading');
 
-        const elementData = compositeReader.read(element);
+        const elementData = compositeReader().read(element);
         expect(elementData).resolves.toEqual(
             {
                 role: 'heading',

@@ -13,15 +13,9 @@ module.exports = function (jest) {
         {virtual: true}
     );
 
-    const fakeRequire = require('fake-require');
-
-    fakeRequire.set('Gene_BlueFoot/js/component/block/block', require('js/component/block/block'));
-    fakeRequire.set('Gene_BlueFoot/js/component/format/read/default', require('js/component/format/read/default'));
-    fakeRequire.set('Gene_BlueFoot/js/utils/appearance-applier', require('js/utils/appearance-applier'));
-
     jest.mock(
         '::Gene_BlueFoot/js/component/loader',
-        () => require('fake-require'),
+        () => require('jest-magento2/fake-require'),
         {virtual: true}
     );
 
