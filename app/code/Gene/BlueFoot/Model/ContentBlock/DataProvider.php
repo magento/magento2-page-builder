@@ -9,31 +9,11 @@ namespace Gene\BlueFoot\Model\ContentBlock;
  * Class DataProvider
  *
  * We populate our forms in the browser using JavaScript
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
  */
-class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
     /**
-     * @return AbstractCollection
-     */
-    public function getCollection()
-    {
-        return $this->collection;
-    }
-
-    /**
-     * Get meta
-     *
-     * @return array
-     */
-    public function getMeta()
-    {
-        return [];
-    }
-
-    /**
-     * Get data
+     * Return an empty array as data as we populate through the browser
      *
      * @return array
      */
