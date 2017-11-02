@@ -1,13 +1,13 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Block from "../block";
 import PreviewBlock from "./block";
 import ko from "knockout";
 import Config from "../../config";
 
-/**
- * PreviewImageBlock Class
- * 
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class PreviewImageBlock extends PreviewBlock {
     loading: KnockoutObservable<boolean> = ko.observable(false);
     // imageUrl: KnockoutComputed<string> = ko.computed(() => {

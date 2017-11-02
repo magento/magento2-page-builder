@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Stage from '../../stage';
 import EditableArea from './editable-area';
 import { Structural as StructuralInterface } from "./abstract.d";
@@ -18,11 +23,6 @@ import ko from 'knockout';
 import registry from 'uiRegistry';
 import _ from 'underscore';
 
-/**
- * Structural class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class Structural extends EditableArea implements StructuralInterface {
     parent: EditableArea;
     title: string;

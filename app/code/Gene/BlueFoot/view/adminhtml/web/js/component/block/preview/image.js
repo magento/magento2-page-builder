@@ -1,11 +1,6 @@
 define(["./block", "knockout", "../../config"], function (_block, _knockout, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * PreviewImageBlock Class
-   * 
-   * @author Dave Macaulay <dmacaulay@magento.com>
-   */
   var PreviewImageBlock =
   /*#__PURE__*/
   function (_PreviewBlock) {

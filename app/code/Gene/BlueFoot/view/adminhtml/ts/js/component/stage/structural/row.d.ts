@@ -1,11 +1,11 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import { Structural } from './abstract.d';
 import { ColumnInterface } from './column.d';
 
-/**
- * RowInterface Interface
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 interface RowInterface extends Structural {
     addColumn(data?: object): ColumnInterface
 }

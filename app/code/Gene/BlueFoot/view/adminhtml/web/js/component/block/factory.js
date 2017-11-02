@@ -1,5 +1,10 @@
 define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
   /**
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
    * Retrieve the block instance from the config object
    *
    * @param config
@@ -17,10 +22,6 @@ define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
    * @param formData
    * @returns {Promise<BlockInterface>}
    */
-  // export default async function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
-  //     let c: typeof Block = await import(getBlockComponentPath(config));
-  //     return new c(parent, stage || parent.stage, config, formData || {});
-  // }
 
 
   function createBlock(config, parent, stage, formData) {

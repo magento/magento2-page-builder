@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import * as _ from 'underscore';
 import { StageInterface } from '../stage.d';
 import EventEmitter from '../event-emitter';
@@ -9,11 +14,6 @@ import { ColumnInterface } from './structural/column.d';
 import Block from '../block/block';
 import AttributeReaderComposite from '../format/read/composite';
 
-/**
- * Build Class
- *
- * @author Dave Macaulay <hello@davemacaulay.com>
- */
 export default class Build extends EventEmitter {
     stage: StageInterface;
     document: Element;

@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQuery, Config) {
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],

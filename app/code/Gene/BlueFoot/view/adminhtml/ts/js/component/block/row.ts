@@ -1,10 +1,10 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Block from "./block";
 
-/**
- * Row class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class Row extends Block {
 
 }

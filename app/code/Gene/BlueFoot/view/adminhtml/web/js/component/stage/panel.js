@@ -1,8 +1,7 @@
 define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "./panel/group/block", "./previews", "ko-draggable", "ko-sortable"], function (_uiComponent, _underscore, _knockout, _config, _group, _block, _previews, _koDraggable, _koSortable) {
   /**
-   * Panel Component
-   *
-   * @author Dave Macaulay <hello@davemacalay.com>
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
    */
   var Panel = _uiComponent.extend({
     componentTemplate: 'Gene_BlueFoot/component/stage/panel.html',

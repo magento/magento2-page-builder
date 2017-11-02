@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import _, {Dictionary} from "underscore";
 import ko from "knockout";
 import Block from "../block";
@@ -6,11 +11,6 @@ interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
 
-/**
- * PreviewBlock class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class PreviewBlock {
     template: string = '';
     parent: Block;

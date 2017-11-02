@@ -1,8 +1,7 @@
 define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
   /**
-   * Edit Class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
    */
   var Edit =
   /*#__PURE__*/

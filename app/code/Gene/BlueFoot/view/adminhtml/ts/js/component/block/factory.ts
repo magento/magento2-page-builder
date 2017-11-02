@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Block from './block';
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
@@ -28,10 +33,6 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @param formData
  * @returns {Promise<BlockInterface>}
  */
-// export default async function createBlock(config: ConfigObject, parent: EditableAreaInterface, stage: StageInterface, formData?: object): Promise<Block> {
-//     let c: typeof Block = await import(getBlockComponentPath(config));
-//     return new c(parent, stage || parent.stage, config, formData || {});
-// }
 export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
     const appearanceApplierComponentName: string = 'Gene_BlueFoot/js/utils/appearance-applier';
     const createAppearanceComponents = (components) => {

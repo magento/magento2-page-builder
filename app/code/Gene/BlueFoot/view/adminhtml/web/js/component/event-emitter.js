@@ -1,8 +1,7 @@
 define(["jquery"], function (_jquery) {
   /**
-   * EventEmitter class
-   *
-   * @author Dave Macaulay <dmacaulay@magento.com>
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
    */
   var EventEmitter =
   /*#__PURE__*/

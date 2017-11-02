@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import Structural from "./structural/abstract";
 import registry from "uiRegistry";
 import DataStore from "../data-store";
@@ -17,11 +22,6 @@ interface InsertFormComponent {
     onRender(data: string): void;
 }
 
-/**
- * Edit Class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
- */
 export default class Edit {
     modal: ModalComponent = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
     insertForm: InsertFormComponent = registry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
