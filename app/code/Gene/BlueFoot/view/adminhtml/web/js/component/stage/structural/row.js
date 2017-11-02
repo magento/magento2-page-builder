@@ -55,7 +55,7 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       key: "options",
       get: function get() {
         var options = _Structural.prototype.options;
-        options.push(new _option.Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10));
+        options.push(new _option.Option(this, 'column', '<i></i>', 'Add Column', this.addColumn, ['add-column'], 10));
         return options;
       }
     }]);

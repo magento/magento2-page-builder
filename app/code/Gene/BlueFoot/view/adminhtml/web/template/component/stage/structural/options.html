@@ -6,7 +6,7 @@
                     <!-- ko template: template --><!-- /ko -->
                 <!-- /ko -->
                 <!-- ko ifnot: template -->
-                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action($data); }, css: classes"></a>
+                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action.call($parent, $data); }, css: classes"></a>
                 <!-- /ko -->
             </li>
         </ul>

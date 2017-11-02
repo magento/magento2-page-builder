@@ -40,7 +40,7 @@ export default class Row extends Structural implements RowInterface {
     get options(): Array<Option> {
         let options = super.options;
         options.push(
-            new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn.bind(this), ['add-column'], 10)
+            new Option(this, 'column', '<i></i>', 'Add Column', this.addColumn, ['add-column'], 10)
         );
         return options;
     }
