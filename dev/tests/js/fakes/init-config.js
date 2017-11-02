@@ -65,7 +65,8 @@ module.exports = {
             "render_template": "Gene_BlueFoot/component/block/render/row.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
             "component": "Gene_BlueFoot/js/component/block/block",
-            "readers": ["Gene_BlueFoot/js/component/format/read/default"]
+            "readers": ["Gene_BlueFoot/js/component/format/read/default"],
+            "appearances": {}
         },
         "column": {
             "name": "column",
@@ -88,7 +89,12 @@ module.exports = {
             "render_template": "Gene_BlueFoot/component/block/render/column.html",
             "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
             "component": "Gene_BlueFoot/js/component/block/block",
-            "readers": ["Gene_BlueFoot/js/component/format/read/default"]
+            "readers": ["Gene_BlueFoot/js/component/format/read/default"],
+            "appearances": {
+                "align-top": "Gene_BlueFoot/js/component/appearance/column/align-top",
+                "align-center": "Gene_BlueFoot/js/component/appearance/column/align-center",
+                "align-bottom": "Gene_BlueFoot/js/component/appearance/column/align-bottom"
+            }
         },
         "text": {
             "name": "text",
@@ -118,7 +124,8 @@ module.exports = {
             "readers": [
                 "Gene_BlueFoot/js/component/format/read/default",
                 "Gene_BlueFoot/js/component/format/read/heading"
-            ]
+            ],
+            "appearances": {}
         },
         "button": {
             "name": "button",

@@ -34,27 +34,33 @@ function getBlockComponentPath(config: ConfigObject): string {
 // }
 export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
     const appearanceApplierComponentName: string = 'Gene_BlueFoot/js/utils/appearance-applier';
-
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise(function (resolve, reject) {
         loadModule([appearanceApplierComponentName], function(appearanceApplier) {
-            loadModule(config['appearances'], function(...components) {
-                let appearanceComponents: any = {};
-                Object.keys(components).map(
-                    function (key: string) {
-                        let component = components[key];
-                        let componentName: string = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
-                        appearanceComponents[componentName] = new component();
-                    }
-                );
-
+            if (config['appearances'].length) {
+                loadModule(config['appearances'], function(...components) {
+                    let appearanceComponents: any = {};
+                    Object.keys(components).map(
+                        function (key: string) {
+                            let component = components[key];
+                            let componentName: string = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                            appearanceComponents[componentName] = new component();
+                        }
+                    );
+                    loadModule([getBlockComponentPath(config)], (BlockInstance: any) => {
+                        return resolve(new BlockInstance(parent, stage, config, formData, new appearanceApplier(appearanceComponents)));
+                    }, (error: string) => {
+                        return reject(error);
+                    });
+                });
+            } else {
                 loadModule([getBlockComponentPath(config)], (BlockInstance: any) => {
-                    return resolve(new BlockInstance(parent, stage, config, formData, new appearanceApplier(appearanceComponents)));
+                    return resolve(new BlockInstance(parent, stage, config, formData, new appearanceApplier({})));
                 }, (error: string) => {
                     return reject(error);
                 });
-            });
+            }
         });
     });
 }

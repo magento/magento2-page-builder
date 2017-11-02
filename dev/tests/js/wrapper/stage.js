@@ -11,7 +11,7 @@ module.exports = () => {
         const data = stage.store.get(element.id);
 
         data.role = element.config ? element.config.name : data.role;
-        data.id = element.id;
+        //data.id = element.id;
 
         if (element.children) {
             data._children = ko.utils.arrayMap(element.children(), dataItem);

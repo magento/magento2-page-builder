@@ -4,11 +4,11 @@
  */
 
 import {DataObject} from "../component/data-store";
-import AppearancesInterface from "../component/appearance/appearance-interface";
+import AppearanceInterface from "../component/appearance/appearance-interface";
 
 export default class AppearanceApplier {
     // Content type appearances
-    appearances: { [key: string]: AppearancesInterface; };
+    appearances: { [key: string]: AppearanceInterface; };
 
     constructor(appearances: any) {
         this.appearances = appearances;
