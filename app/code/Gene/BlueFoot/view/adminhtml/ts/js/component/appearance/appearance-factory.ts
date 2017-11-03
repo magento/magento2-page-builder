@@ -5,24 +5,24 @@
 
 import loadModule from 'Gene_BlueFoot/js/component/loader';
 import {DataObject} from "../data-store";
-import AppearanceApplier from "./appearance-applier";
+import Appearance from "./appearance";
 
-export default class AppearanceApplierFactory {
+export default class AppearanceFactory {
     /**
      * Create appearance applier
      *
      * @param data {DataObject}
-     * @returns {Promise<AppearanceApplier>}
+     * @returns {Promise<Appearance>}
      */
-    create(data: DataObject): Promise<AppearanceApplier> {
+    create(data: DataObject): Promise<Appearance> {
         return new Promise((resolve: Function, reject: Function) => {
             try {
                 if (data['appearances'].length) {
                     loadModule(data['appearances'], (...components) => {
-                        resolve(new AppearanceApplier(this.createAppearanceComponents(components)));
+                        resolve(new Appearance(this.createAppearanceComponents(components)));
                     });
                 } else {
-                    resolve(new AppearanceApplier({}));
+                    resolve(new Appearance({}));
                 }
             } catch (e) {
                 reject(e);

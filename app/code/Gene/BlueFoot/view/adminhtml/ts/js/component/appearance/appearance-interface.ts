@@ -12,5 +12,5 @@ export interface AppearanceInterface {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    apply(data: DataObject): DataObject;
+    add(data: DataObject): DataObject;
 }

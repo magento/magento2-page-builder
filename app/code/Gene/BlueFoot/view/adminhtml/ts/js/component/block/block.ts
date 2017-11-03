@@ -12,7 +12,7 @@ import PreviewBlock from "./preview/block";
 import $t from "mage/translate";
 import _ from "underscore";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
-import AppearanceApplier from "../../component/appearance/appearance-applier";
+import Appearance from "../../component/appearance/appearance";
 
 interface FieldDefaults {
     [key: string]: any;
@@ -31,10 +31,10 @@ export default class Block extends Structural implements BlockInterface {
      * @param stage
      * @param config
      * @param formData
-     * @param appearanceApplier
+     * @param appearance
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearanceApplier: AppearanceApplier) {
-        super(parent, stage, config, appearanceApplier);
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
+        super(parent, stage, config, appearance);
 
         this.preview = getPreviewInstance(this, config);
 

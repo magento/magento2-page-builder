@@ -10,7 +10,7 @@ interface AppearanceList {
     [key: string]: AppearanceInterface;
 }
 
-export default class AppearanceApplier {
+export default class Appearance {
     // List of type appearances
     appearances: AppearanceList;
 
@@ -22,12 +22,12 @@ export default class AppearanceApplier {
      * @param data
      * @returns {DataObject}
      */
-    apply(data: DataObject): DataObject {
+    add(data: DataObject): DataObject {
         if (data['appearance'] !== undefined) {
             if (this.appearances[data['appearance']] === undefined) {
                 console.error('No appearances specified for content type.');
             }
-            return this.appearances[data['appearance']].apply(data);
+            return this.appearances[data['appearance']].add(data);
         }
         return data;
     }

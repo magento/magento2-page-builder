@@ -16,7 +16,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    _proto.apply = function apply(data) {
+    _proto.add = function add(data) {
       data['align_self'] = 'flex-start';
       return data;
     };

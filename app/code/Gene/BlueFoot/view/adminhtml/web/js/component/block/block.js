@@ -17,12 +17,12 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
      * @param stage
      * @param config
      * @param formData
-     * @param appearanceApplier
+     * @param appearance
      */
-    function Block(parent, stage, config, formData, appearanceApplier) {
+    function Block(parent, stage, config, formData, appearance) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config, appearanceApplier) || this;
+      _this = _Structural.call(this, parent, stage, config, appearance) || this;
       _this.title = void 0;
       _this.editOnInsert = true;
       _this.preview = void 0;

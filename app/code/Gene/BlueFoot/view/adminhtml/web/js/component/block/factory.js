@@ -1,4 +1,4 @@
-define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-applier-factory"], function (_loader, _appearanceApplierFactory) {
+define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"], function (_loader, _appearanceFactory) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -27,12 +27,12 @@ define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-applier-f
   function createBlock(config, parent, stage, formData) {
     stage = stage || parent.stage;
     formData = formData || {};
-    var appearanceApplierFactory = new _appearanceApplierFactory();
+    var appearanceFactory = new _appearanceFactory();
     return new Promise(function (resolve, reject) {
-      appearanceApplierFactory.create(config).then(function (appearanceApplier) {
+      appearanceFactory.create(config).then(function (appearance) {
         (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
           try {
-            resolve(new blockComponent(parent, stage, config, formData, appearanceApplier));
+            resolve(new blockComponent(parent, stage, config, formData, appearance));
           } catch (e) {
             reject(e);
           }
