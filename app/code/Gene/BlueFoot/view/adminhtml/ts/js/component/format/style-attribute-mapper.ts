@@ -14,10 +14,10 @@ export default class StyleAttributeMapper {
     toDom(data: DataObject): DataObject {
         let result: DataObject = {};
         Object.keys(data).map(
-            function (key: string) {
+            (key: string) => {
                 let value = data[key];
-                if (value === '' || value === 0 || value === '0') {
-                    //return;
+                if (value === '') {
+                    return;
                 }
                 if (key === 'min_height') {
                     value = value.replace('px', '') + 'px';
@@ -29,7 +29,7 @@ export default class StyleAttributeMapper {
                     value = value ? 'repeat' : 'no-repeat';
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
-            }.bind(this)
+            }
         );
         return result;
     }
@@ -40,11 +40,11 @@ export default class StyleAttributeMapper {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    public fromDom(object) {
+    public fromDom(data: DataObject): DataObject {
         let result = {};
-        Object.keys(object).map(
-            function (key: any) {
-                let value = object[key];
+        Object.keys(data).map(
+            (key: any) => {
+                let value = data[key];
                 if (key === 'min-height') {
                     value = value.replace('px', '');
                 }
@@ -66,15 +66,15 @@ export default class StyleAttributeMapper {
                     }
                 }
                 if (key === 'background-color') {
-                    const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/
-                    let matches = regexp.exec(value)
+                    const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
+                    let matches = regexp.exec(value);
                     value = '#'
                         + this.fromIntToHex(parseInt(matches[1]))
                         + this.fromIntToHex(parseInt(matches[2]))
                         + this.fromIntToHex(parseInt(matches[1]));
                 }
                 result[key.replace('-', '_')] = value;
-            }.bind(this)
+            }
         );
         return result;
     }

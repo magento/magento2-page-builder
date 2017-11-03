@@ -16,14 +16,15 @@ export default class FilterHtml {
      * @returns {any}
      */
     filter(element: any): any {
-        const isWhiteSpaceOrComment = function() {
-            return this.nodeType == this.commentNodeType/* || (this.nodeType == this.whitespaceNodeType && this.data.match(/^\s+$/))*/;
+        const self = this;
+        const isWhiteSpace = function() {
+            return this.nodeType == self.commentNodeType;
         };
         element.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
-        element.contents().filter(isWhiteSpaceOrComment).remove();
+        element.contents().filter(isWhiteSpace).remove();
         element.find('*').each(
             function (index, value) {
-                $(value).contents().filter(isWhiteSpaceOrComment).remove();
+                $(value).contents().filter(isWhiteSpace).remove();
             }
         );
         element.find('[data-wrapper]').each((index, value) => {
