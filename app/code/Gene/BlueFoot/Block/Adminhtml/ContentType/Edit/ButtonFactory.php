@@ -6,11 +6,6 @@
 
 namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
 
-/**
- * Class ButtonFactory
- *
- * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
- */
 class ButtonFactory
 {
     /**
@@ -34,7 +29,7 @@ class ButtonFactory
     /**
      * Create an instance of a model
      *
-     * @param       $className
+     * @param $className
      * @param array $data
      *
      * @return \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
@@ -47,9 +42,9 @@ class ButtonFactory
         if (!$model instanceof
             \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
         ) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __('%1 doesn\'t implement \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface',
-                    $className)
+            throw new \InvalidArgumentException(
+                $className . ' doesn\'t implement 
+                \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface'
             );
         }
         return $model;

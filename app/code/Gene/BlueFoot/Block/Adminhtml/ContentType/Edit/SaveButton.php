@@ -8,11 +8,6 @@ namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class SaveButton
- *
- * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
- */
 class SaveButton implements ButtonProviderInterface
 {
     /**
@@ -31,14 +26,16 @@ class SaveButton implements ButtonProviderInterface
     }
 
     /**
+     * Retrieve button data
+     *
      * @return array
      */
     public function getButtonData()
     {
         return [
-            'label'          => __('Save'),
-            'class'          => 'save primary',
-            'on_click'       => '',
+            'label' => __('Save'),
+            'class' => 'save primary',
+            'on_click' => '',
             'data_attribute' => [
                 'mage-init' => [
                     'buttonAdapter' => [
@@ -46,7 +43,7 @@ class SaveButton implements ButtonProviderInterface
                             [
                                 'targetName' => $this->targetName,
                                 'actionName' => 'save',
-                                'params'     => [
+                                'params' => [
                                     false,
                                 ]
                             ]
@@ -55,7 +52,7 @@ class SaveButton implements ButtonProviderInterface
                 ],
                 'form-role' => 'save',
             ],
-            'sort_order'     => 90,
+            'sort_order' => 90,
         ];
     }
 }
