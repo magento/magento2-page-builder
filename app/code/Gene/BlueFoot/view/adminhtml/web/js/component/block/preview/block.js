@@ -15,6 +15,8 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
     function PreviewBlock(parent, config) {
       var _this = this;
 
+      this.parent = void 0;
+      this.config = void 0;
       this.data = {};
       this.parent = parent;
       this.config = config; // Subscribe to this blocks data in the store
