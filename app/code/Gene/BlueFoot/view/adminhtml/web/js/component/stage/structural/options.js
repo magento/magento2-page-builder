@@ -13,6 +13,7 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
      * @param options
      */
     function Options(parent, options) {
+      this.parent = void 0;
       this.options = _knockout.observableArray([]);
       this.template = 'Gene_BlueFoot/component/stage/structural/options.html';
       this.parent = parent;
