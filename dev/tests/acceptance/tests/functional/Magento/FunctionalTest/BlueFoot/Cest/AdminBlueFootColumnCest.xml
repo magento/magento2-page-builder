@@ -79,9 +79,6 @@
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
 
-            <actionGroup ref="validateSlideOutPanelFieldIsRequired" mergeKey="seeAppearanceMinHeightPropertyIsRequired">
-                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
-            </actionGroup>
             <actionGroup ref="validateSlideOutPanelFieldIsRequired" mergeKey="seeBackgroundPositionPropertyIsRequired">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
@@ -143,14 +140,21 @@
             </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait1"/>
-            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+            <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty2">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn2"/>
             <wait time="1" mergeKey="wait2"/>
+            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+            <wait time="1" mergeKey="wait3"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1HeightApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundColor}}" mergeKey="seeColumn1BackgroundColorApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundSize}}" mergeKey="seeColumn1BackgroundSizeApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundRepeat}}" mergeKey="seeColumn1BackgroundRepeatApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column1BackgroundAttachment}}" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="{{TwoColumnsOnFrontend.column2Height}}" mergeKey="seeColumn2HeightApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundRepeat}}" mergeKey="seeColumn2BackgroundREpeatApplied"/>
             <seeElement selector="{{TwoColumnsOnFrontend.column2BackgroundAttachment}}" mergeKey="seeColumn2BackgroundAttachmentApplied"/>
