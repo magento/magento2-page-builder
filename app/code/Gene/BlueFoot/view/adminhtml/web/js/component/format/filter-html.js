@@ -20,18 +20,18 @@ define(["jquery"], function (_jquery) {
      * @returns {any}
      */
     _proto.filter = function filter(element) {
-      var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-        return this.nodeType == this.commentNodeType
-        /* || (this.nodeType == this.whitespaceNodeType && this.data.match(/^\s+$/))*/
-        ;
+      var self = this;
+
+      var isWhiteSpace = function isWhiteSpace() {
+        return this.nodeType == self.commentNodeType;
       };
 
       element.find('[data-bind]').each(function (index, value) {
         (0, _jquery)(value).removeAttr('data-bind');
       });
-      element.contents().filter(isWhiteSpaceOrComment).remove();
+      element.contents().filter(isWhiteSpace).remove();
       element.find('*').each(function (index, value) {
-        (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
+        (0, _jquery)(value).contents().filter(isWhiteSpace).remove();
       });
       element.find('[data-wrapper]').each(function (index, value) {
         (0, _jquery)(value).parent().append((0, _jquery)(value).children());

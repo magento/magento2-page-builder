@@ -17,11 +17,14 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.toDom = function toDom(data) {
+      var _this = this;
+
       var result = {};
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (value === '' || value === 0 || value === '0') {//return;
+        if (value === '') {
+          return;
         }
 
         if (key === 'min_height') {
@@ -36,8 +39,8 @@ define([], function () {
           value = value ? 'repeat' : 'no-repeat';
         }
 
-        result[this.fromSnakeToCamelCase(key)] = value;
-      }.bind(this));
+        result[_this.fromSnakeToCamelCase(key)] = value;
+      });
       return result;
     };
     /**
@@ -48,10 +51,12 @@ define([], function () {
      */
 
 
-    _proto.fromDom = function fromDom(object) {
+    _proto.fromDom = function fromDom(data) {
+      var _this2 = this;
+
       var result = {};
-      Object.keys(object).map(function (key) {
-        var value = object[key];
+      Object.keys(data).map(function (key) {
+        var value = data[key];
 
         if (key === 'min-height') {
           value = value.replace('px', '');
@@ -81,11 +86,11 @@ define([], function () {
         if (key === 'background-color') {
           var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
           var matches = regexp.exec(value);
-          value = '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[1]));
+          value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[1]));
         }
 
         result[key.replace('-', '_')] = value;
-      }.bind(this));
+      });
       return result;
     };
     /**
