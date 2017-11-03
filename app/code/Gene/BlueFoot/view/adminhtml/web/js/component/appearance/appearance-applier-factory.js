@@ -17,15 +17,7 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance-applier"], function (
      * @returns {Promise<AppearanceApplier>}
      */
     _proto.create = function create(data) {
-      var createAppearanceComponents = function createAppearanceComponents(components) {
-        var appearanceComponents = {};
-        Object.keys(components).map(function (key) {
-          var component = components[key];
-          var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
-          appearanceComponents[componentName] = new component();
-        });
-        return appearanceComponents;
-      };
+      var _this = this;
 
       return new Promise(function (resolve, reject) {
         try {
@@ -35,7 +27,7 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance-applier"], function (
                 components[_key] = arguments[_key];
               }
 
-              resolve(new _appearanceApplier(createAppearanceComponents(components)));
+              resolve(new _appearanceApplier(_this.createAppearanceComponents(components)));
             });
           } else {
             resolve(new _appearanceApplier({}));
@@ -44,6 +36,23 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance-applier"], function (
           reject(e);
         }
       });
+    };
+    /**
+     * Create loaded component modules
+     *
+     * @param components
+     * @returns {any}
+     */
+
+
+    _proto.createAppearanceComponents = function createAppearanceComponents(components) {
+      var appearanceComponents = {};
+      Object.keys(components).map(function (key) {
+        var component = components[key];
+        var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+        appearanceComponents[componentName] = new component();
+      });
+      return appearanceComponents;
     };
 
     return AppearanceApplierFactory;

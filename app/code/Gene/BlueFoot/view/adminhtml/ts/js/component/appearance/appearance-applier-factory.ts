@@ -15,22 +15,11 @@ export default class AppearanceApplierFactory {
      * @returns {Promise<AppearanceApplier>}
      */
     create(data: DataObject): Promise<AppearanceApplier> {
-        const createAppearanceComponents = (components: any) => {
-            let appearanceComponents: any = {};
-            Object.keys(components).map(
-                (key: string) => {
-                    const component = components[key];
-                    const componentName: string = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
-                    appearanceComponents[componentName] = new component();
-                }
-            );
-            return appearanceComponents;
-        };
         return new Promise((resolve: Function, reject: Function) => {
             try {
                 if (data['appearances'].length) {
                     loadModule(data['appearances'], (...components) => {
-                        resolve(new AppearanceApplier(createAppearanceComponents(components)));
+                        resolve(new AppearanceApplier(this.createAppearanceComponents(components)));
                     });
                 } else {
                     resolve(new AppearanceApplier({}));
@@ -40,4 +29,22 @@ export default class AppearanceApplierFactory {
             }
         });
     }
+
+    /**
+     * Create loaded component modules
+     *
+     * @param components
+     * @returns {any}
+     */
+    private createAppearanceComponents(components: any) {
+        let appearanceComponents: any = {};
+        Object.keys(components).map(
+            (key: string) => {
+                const component = components[key];
+                const componentName: string = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+                appearanceComponents[componentName] = new component();
+            }
+        );
+        return appearanceComponents;
+    };
 }
