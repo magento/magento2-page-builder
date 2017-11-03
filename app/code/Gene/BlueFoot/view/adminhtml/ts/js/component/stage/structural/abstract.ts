@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import _ from 'underscore';
+import ko from 'knockout';
+import $t from 'mage/translate';
 import Stage from '../../stage';
 import EditableArea from './editable-area';
 import { Structural as StructuralInterface } from "./abstract.d";
@@ -10,16 +13,12 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 import { ColumnBuilder } from "./column/builder";
 import Edit from "../edit";
-import StyleAttributeFilter from "../../../utils/style-attribute-filter";
-import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
-import AttributeFilter from "../../../utils/attribute-filter";
-import AttributeMapper from "../../../utils/attribute-mapper";
+import StyleAttributeFilter from "../../format/style-attribute-filter";
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import AttributeFilter from "../../format/attribute-filter";
+import AttributeMapper from "../../format/attribute-mapper";
 import {DataObject} from "../../data-store";
-import AppearanceApplier from "../../../utils/appearance-applier";
-
-import $t from 'mage/translate';
-import ko from 'knockout';
-import _ from 'underscore';
+import AppearanceApplier from "../../appearance/appearance-applier";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     parent: EditableArea;

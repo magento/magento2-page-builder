@@ -1,4 +1,4 @@
-define(["underscore", "../../../utils/style-attribute-mapper"], function (_underscore, _styleAttributeMapper) {
+define(["underscore", "../style-attribute-mapper"], function (_underscore, _styleAttributeMapper) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,6 +7,7 @@ define(["underscore", "../../../utils/style-attribute-mapper"], function (_under
   /*#__PURE__*/
   function () {
     function Default() {
+      this.styleAttributeMapper = void 0;
       this.styleAttributeMapper = new _styleAttributeMapper();
     }
     /**

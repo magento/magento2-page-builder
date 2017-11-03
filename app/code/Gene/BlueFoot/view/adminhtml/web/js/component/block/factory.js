@@ -1,4 +1,4 @@
-define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
+define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-applier-factory"], function (_loader, _appearanceApplierFactory) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -25,43 +25,20 @@ define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
 
 
   function createBlock(config, parent, stage, formData) {
-    var appearanceApplierComponentName = 'Gene_BlueFoot/js/utils/appearance-applier';
-
-    var createAppearanceComponents = function createAppearanceComponents(components) {
-      var appearanceComponents = {};
-      Object.keys(components).map(function (key) {
-        var component = components[key];
-        var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
-        appearanceComponents[componentName] = new component();
-      });
-      return appearanceComponents;
-    };
-
     stage = stage || parent.stage;
     formData = formData || {};
+    var appearanceApplierFactory = new _appearanceApplierFactory();
     return new Promise(function (resolve, reject) {
-      (0, _loader)([appearanceApplierComponentName], function (appearanceApplier) {
-        var loadTypeComponent = function loadTypeComponent(appearanceComponents) {
-          (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
-            try {
-              resolve(new blockComponent(parent, stage, config, formData, new appearanceApplier(appearanceComponents)));
-            } catch (e) {
-              reject(e);
-            }
-          });
-        };
-
-        if (config['appearances'].length) {
-          (0, _loader)(config['appearances'], function () {
-            for (var _len = arguments.length, components = new Array(_len), _key = 0; _key < _len; _key++) {
-              components[_key] = arguments[_key];
-            }
-
-            loadTypeComponent(createAppearanceComponents(components));
-          });
-        } else {
-          loadTypeComponent({});
-        }
+      appearanceApplierFactory.create(config).then(function (appearanceApplier) {
+        (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
+          try {
+            resolve(new blockComponent(parent, stage, config, formData, appearanceApplier));
+          } catch (e) {
+            reject(e);
+          }
+        });
+      }).catch(function (e) {
+        reject(e);
       });
     });
   }

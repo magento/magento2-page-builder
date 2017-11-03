@@ -6,7 +6,7 @@
 import _ from 'underscore';
 import ReadInterface from "../read-interface";
 import {DataObject} from "../../data-store";
-import StyleAttributeMapper from "../../../utils/style-attribute-mapper";
+import StyleAttributeMapper from "../style-attribute-mapper";
 
 export default class Default implements ReadInterface {
     styleAttributeMapper: StyleAttributeMapper;

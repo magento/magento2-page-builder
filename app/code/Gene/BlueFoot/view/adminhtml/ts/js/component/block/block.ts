@@ -12,7 +12,7 @@ import PreviewBlock from "./preview/block";
 import $t from "mage/translate";
 import _ from "underscore";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
-import AppearanceApplier from "../../utils/appearance-applier";
+import AppearanceApplier from "../../component/appearance/appearance-applier";
 
 interface FieldDefaults {
     [key: string]: any;

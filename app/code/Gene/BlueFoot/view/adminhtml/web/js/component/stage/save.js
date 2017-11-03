@@ -1,4 +1,4 @@
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../utils/filter-html"], function (_jquery, _knockout, _engine, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../component/format/filter-html"], function (_jquery, _knockout, _engine, _filterHtml) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
