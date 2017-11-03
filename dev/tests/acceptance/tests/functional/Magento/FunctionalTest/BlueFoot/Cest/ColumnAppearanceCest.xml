@@ -35,9 +35,9 @@
             <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
             <selectOption selector="//*[@name='width']" userInput="1/2" mergeKey="enterWidth"/>
             <selectOption selector="//*[@name='appearance']" userInput="Bottom Aligned" mergeKey="enterAppearance"/>
-            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@id='save']" mergeKey="clickSaveColumn"/>
+            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@data-form-role='save']" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait2"/>
-            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']" mergeKey="clickSaveCmsPage"/>
+            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@data-form-role='save']" mergeKey="clickSaveCmsPage"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
             <seeElement selector="//*[@data-role='row'][1][contains(@style, 'display: flex;')]" mergeKey="seeRow1DisplayApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'min-height: 100px;')]" mergeKey="seeColumn1MinHeightApplied"/>

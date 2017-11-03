@@ -45,20 +45,45 @@ class UiComponentConfig
             ['componentName' => $componentName]
         )->get($componentName);
 
-        $fields = $this->iterateComponents($componentConfig, function ($item, $key) {
-            // Determine if this item has a formElement key
-            // @todo improve form element detection
-            if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
-                $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
-                return [
-                    $key => [
-                        'default' => (isset($elementConfig['default']) ? $elementConfig['default']: '')
-                    ]
-                ];
+        $fields = $this->iterateComponents(
+            $componentConfig,
+            function ($item, $key) {
+                // Determine if this item has a formElement key
+                if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
+                    $elementConfig
+                        = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
+                    return [
+                        $key => [
+                            'default' => (isset($elementConfig['default'])
+                                ? $elementConfig['default'] : '')
+                        ]
+                    ];
+                }
             }
-        });
+        );
 
         return $fields;
+    }
+
+    /**
+     * Retrieve buttons associated with a UI component
+     *
+     * @param $componentName
+     *
+     * @return array
+     */
+    public function getButtons($componentName)
+    {
+        $componentConfig = $this->configFactory->create(
+            ['componentName' => $componentName]
+        )->get($componentName);
+
+        // Does the component have any buttons assigned?
+        if (isset($componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'])) {
+            return $componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'];
+        }
+
+        return [];
     }
 
     /**
@@ -73,11 +98,17 @@ class UiComponentConfig
     private function iterateComponents($config, $callback, $key = false)
     {
         $values = $callback($config, $key) ?: [];
-        if (isset($config[Converter::DATA_COMPONENTS_KEY]) && sizeof($config[Converter::DATA_COMPONENTS_KEY]) > 0) {
+        if (isset($config[Converter::DATA_COMPONENTS_KEY])
+            && !empty($config[Converter::DATA_COMPONENTS_KEY])
+        ) {
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
-                $values = array_merge($values, $this->iterateComponents($child, $callback, $key) ?: []);
+                $values = array_merge(
+                    $values,
+                    $this->iterateComponents($child, $callback, $key) ?: []
+                );
             }
         }
+
         return $values;
     }
 }
