@@ -8,22 +8,19 @@ namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class CloseButton
- *
- * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
- */
 class CloseButton implements ButtonProviderInterface
 {
     /**
+     * Retrieve button data
+     *
      * @return array
      */
     public function getButtonData()
     {
         return [
-            'label'          => __('Close'),
-            'class'          => 'reset',
-            'on_click'       => '',
+            'label' => __('Close'),
+            'class' => 'reset',
+            'on_click' => '',
             'data_attribute' => [
                 'mage-init' => [
                     'buttonAdapter' => [
@@ -31,7 +28,7 @@ class CloseButton implements ButtonProviderInterface
                             [
                                 'targetName' => 'bluefoot_modal_form.bluefoot_modal_form.modal',
                                 'actionName' => 'closeModal',
-                                'params'     => [
+                                'params' => [
                                     false,
                                 ]
                             ]
@@ -40,7 +37,7 @@ class CloseButton implements ButtonProviderInterface
                 ],
                 'form-role' => 'close',
             ],
-            'sort_order'     => 30
+            'sort_order' => 30
         ];
     }
 }

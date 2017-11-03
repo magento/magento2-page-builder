@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Gene\BlueFoot\Model;
+namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
 
 use Magento\Framework\View\Layout\Data\Structure;
 use Magento\Framework\View\Element\Template\Context;
@@ -18,11 +18,6 @@ use Gene\BlueFoot\Model\Stage\Config\UiComponentConfig;
 use Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ButtonFactory;
 use Magento\Framework\View\Layout;
 
-/**
- * Class ComponentRenderer
- *
- * @package Gene\BlueFoot\Model
- */
 class ComponentRenderer
 {
     /**
@@ -63,13 +58,13 @@ class ComponentRenderer
     /**
      * ComponentRenderer constructor.
      *
-     * @param DataStructure             $structure
-     * @param BlockFactory              $blockFactory
-     * @param UiComponentFactory        $uiComponentFactory
+     * @param DataStructure $structure
+     * @param BlockFactory $blockFactory
+     * @param UiComponentFactory $uiComponentFactory
      * @param UiComponentContextFactory $contextFactory
-     * @param Context                   $context
-     * @param UiComponentConfig         $uiComponentConfig
-     * @param ButtonFactory             $buttonFactory
+     * @param Context $context
+     * @param UiComponentConfig $uiComponentConfig
+     * @param ButtonFactory $buttonFactory
      */
     public function __construct(
         Structure $structure,
@@ -103,9 +98,9 @@ class ComponentRenderer
         if ($data === null) {
             $data = [
                 'attributes' => [
-                    'group'                => '',
-                    'component'            => '',
-                    'aclResource'          => '',
+                    'group' => '',
+                    'component' => '',
+                    'aclResource' => '',
                     'visibilityConditions' => []
                 ]
             ];
@@ -121,7 +116,7 @@ class ComponentRenderer
 
         $context = $this->contextFactory->create(
             [
-                'namespace'  => $componentName,
+                'namespace' => $componentName,
                 'pageLayout' => $this->layout
             ]
         );
@@ -195,5 +190,4 @@ class ComponentRenderer
         }
         $component->prepare();
     }
-
 }

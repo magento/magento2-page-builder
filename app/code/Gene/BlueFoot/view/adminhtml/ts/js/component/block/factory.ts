@@ -7,7 +7,7 @@ import loadModule from 'Gene_BlueFoot/js/component/loader';
 import Block from './block';
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
-import AppearanceApplierFactory from "../appearance/appearance-applier-factory";
+import AppearanceFactory from "../appearance/appearance-factory";
 
 interface ConfigObject {
     js_block?: string;
@@ -36,13 +36,13 @@ function getBlockComponentPath(config: ConfigObject): string {
 export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
-    const appearanceApplierFactory: AppearanceApplierFactory = new AppearanceApplierFactory();
+    const appearanceFactory: AppearanceFactory = new AppearanceFactory();
     return new Promise((resolve: Function, reject: Function) => {
-        appearanceApplierFactory.create(config)
-            .then((appearanceApplier) => {
+        appearanceFactory.create(config)
+            .then((appearance) => {
                 loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
                     try {
-                        resolve(new blockComponent(parent, stage, config, formData, appearanceApplier));
+                        resolve(new blockComponent(parent, stage, config, formData, appearance));
                     } catch (e) {
                         reject(e);
                     }

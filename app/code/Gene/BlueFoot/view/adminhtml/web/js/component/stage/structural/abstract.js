@@ -1,4 +1,4 @@
-define(["underscore", "knockout", "mage/translate", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../../format/attribute-filter", "../../format/attribute-mapper", "../../appearance/appearance-applier"], function (_underscore, _knockout, _translate, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearanceApplier) {
+define(["underscore", "knockout", "mage/translate", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../../format/attribute-filter", "../../format/attribute-mapper", "../../appearance/appearance"], function (_underscore, _knockout, _translate, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearance) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -16,17 +16,17 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
      * @param parent
      * @param stage
      * @param config
-     * @param appearanceApplier
+     * @param appearance
      */
-    function Structural(parent, stage, config, appearanceApplier) {
+    function Structural(parent, stage, config, appearance) {
       var _this;
 
       if (config === void 0) {
         config = {};
       }
 
-      if (appearanceApplier === void 0) {
-        appearanceApplier = new _appearanceApplier({});
+      if (appearance === void 0) {
+        appearance = new _appearance({});
       }
 
       _this = _EditableArea.call(this, stage) || this;
@@ -44,13 +44,13 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
       _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
-      _this.appearanceApplier = void 0;
+      _this.appearance = void 0;
 
       _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 
 
       _this.edit = new _edit(_this, _this.stage.store);
-      _this.appearanceApplier = appearanceApplier;
+      _this.appearance = appearance;
       _this.parent = parent;
       _this.config = config;
       return _this;
@@ -128,7 +128,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
 
     _proto.getStyle = function getStyle() {
       var styleAttributes = this.getData();
-      styleAttributes = this.appearanceApplier.apply(styleAttributes);
+      styleAttributes = this.appearance.add(styleAttributes);
       return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     };
     /**
