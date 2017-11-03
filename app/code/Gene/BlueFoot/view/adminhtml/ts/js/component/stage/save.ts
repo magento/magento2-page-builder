@@ -7,7 +7,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import Structural from "./structural/abstract";
-import FilterHtml from '../../utils/filter-html';
+import FilterHtml from '../../component/format/filter-html';
 
 /**
  * Render the tree into a string

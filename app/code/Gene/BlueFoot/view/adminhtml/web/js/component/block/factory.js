@@ -25,7 +25,7 @@ define(["Gene_BlueFoot/js/component/loader"], function (_loader) {
 
 
   function createBlock(config, parent, stage, formData) {
-    var appearanceApplierComponentName = 'Gene_BlueFoot/js/utils/appearance-applier';
+    var appearanceApplierComponentName = 'Gene_BlueFoot/js/component/appearance/appearance-applier';
 
     var createAppearanceComponents = function createAppearanceComponents(components) {
       var appearanceComponents = {};
