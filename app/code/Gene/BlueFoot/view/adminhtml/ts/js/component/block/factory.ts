@@ -33,7 +33,7 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @returns {Promise<BlockInterface>}
  */
 export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
-    const appearanceApplierComponentName: string = 'Gene_BlueFoot/js/utils/appearance-applier';
+    const appearanceApplierComponentName: string = 'Gene_BlueFoot/js/component/appearance/appearance-applier';
     const createAppearanceComponents = (components) => {
         let appearanceComponents: any = {};
         Object.keys(components).map(
