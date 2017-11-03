@@ -8,19 +8,13 @@ namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
 
 use Gene\BlueFoot\Model\Config\ConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
-use Gene\BlueFoot\Model\ComponentRenderer;
 
-/**
- * Class ComponentList
- *
- * @package Gene\BlueFoot\Block\Adminhtml
- */
 class ComponentList extends \Magento\Framework\View\Element\Template
 {
     /**
      * @var ConfigInterface
      */
-    private $configInterface;
+    private $config;
 
     /**
      * @var ComponentRenderer
@@ -30,10 +24,10 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     /**
      * ComponentList constructor.
      *
-     * @param ConfigInterface   $configInterface
+     * @param ConfigInterface $configInterface
      * @param ComponentRenderer $componentRenderer
-     * @param Context           $context
-     * @param array             $data
+     * @param Context $context
+     * @param array $data
      */
     public function __construct(
         ConfigInterface $configInterface,
@@ -42,7 +36,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->configInterface = $configInterface;
+        $this->config = $configInterface;
         $this->componentRenderer = $componentRenderer;
     }
 
@@ -55,7 +49,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     {
         $result = [];
 
-        foreach ($this->configInterface->getContentTypes() as $key => $contentType) {
+        foreach ($this->config->getContentTypes() as $contentType) {
             $result[$contentType['form']] = $this->componentRenderer->renderComponent(
                 $contentType['form']
             );

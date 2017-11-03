@@ -8,11 +8,6 @@ namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class ResetButton
- *
- * @package Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button
- */
 class ResetButton implements ButtonProviderInterface
 {
     /**
@@ -31,14 +26,16 @@ class ResetButton implements ButtonProviderInterface
     }
 
     /**
+     * Retrieve button data
+     *
      * @return array
      */
     public function getButtonData()
     {
         return [
-            'label'          => __('Reset'),
-            'class'          => 'reset',
-            'on_click'       => '',
+            'label' => __('Reset'),
+            'class' => 'reset',
+            'on_click' => '',
             'data_attribute' => [
                 'mage-init' => [
                     'buttonAdapter' => [
@@ -46,7 +43,7 @@ class ResetButton implements ButtonProviderInterface
                             [
                                 'targetName' => $this->targetName,
                                 'actionName' => 'reset',
-                                'params'     => [
+                                'params' => [
                                     false,
                                 ]
                             ]
@@ -55,7 +52,7 @@ class ResetButton implements ButtonProviderInterface
                 ],
                 'form-role' => 'reset',
             ],
-            'sort_order'     => 30
+            'sort_order' => 30
         ];
     }
 }

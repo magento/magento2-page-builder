@@ -9,11 +9,6 @@ namespace Gene\BlueFoot\Model\Stage\Config;
 use Magento\Framework\Config\DataInterfaceFactory;
 use Magento\Ui\Config\Converter;
 
-/**
- * Class UiComponentConfig
- *
- * @package Gene\BlueFoot\Model\Stage\Config
- */
 class UiComponentConfig
 {
     /**
