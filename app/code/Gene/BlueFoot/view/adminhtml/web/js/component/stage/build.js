@@ -77,17 +77,20 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.parseAndBuildElement = function parseAndBuildElement(element, parent) {
+      var _this3 = this;
+
       if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
         parent = parent || this.stage;
         var self = this,
-            role = element.getAttribute(_config.getValue('dataRoleAttributeName'));
+            role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
         var getElementDataPromise = new Promise(function (resolve, error) {
           resolve(self.getElementData(element));
-        }.bind(this));
+        });
         return getElementDataPromise.then(function (data) {
-          var children = this.getElementChildren(element); // Add element to stage
+          var children = _this3.getElementChildren(element); // Add element to stage
 
-          return this.buildElement(role, data, parent).then(function (newParent) {
+
+          return _this3.buildElement(role, data, parent).then(function (newParent) {
             if (children.length > 0) {
               var childPromises = [];
 
@@ -97,10 +100,10 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
               return Promise.all(childPromises);
             } else {
-              return Promise.resolve(newParent);
+              return newParent;
             }
           });
-        }.bind(this));
+        });
       } else {
         return Promise.reject(new Error('Element does not contain valid role attribute.'));
       }
@@ -129,7 +132,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.getElementChildren = function getElementChildren(element) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (element.hasChildNodes()) {
         var children = []; // Find direct children of the element
@@ -140,7 +143,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
             if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
               children.push(child);
             } else {
-              children = _this3.getElementChildren(child);
+              children = _this4.getElementChildren(child);
             }
           }
         });
@@ -172,30 +175,6 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
         default:
           return this.buildEntity(role, data, parent);
       }
-    };
-    /**
-     * Build a new row with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise<RowInterface>}
-     */
-
-
-    _proto.buildRow = function buildRow(data, parent) {
-      return Promise.resolve(parent.addRow(this.stage, data));
-    };
-    /**
-     * Build a new column with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise<ColumnInterface>}
-     */
-
-
-    _proto.buildColumn = function buildColumn(data, parent) {
-      return Promise.resolve(parent.addColumn(data));
     };
     /**
      * Add an entity into the system

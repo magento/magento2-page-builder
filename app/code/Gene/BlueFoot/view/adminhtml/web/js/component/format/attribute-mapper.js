@@ -22,16 +22,18 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.toDom = function toDom(data) {
+      var _this = this;
+
       var result = {};
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (key in this.attributeNameMapping) {
-          key = this.attributeNameMapping[key];
+        if (key in _this.attributeNameMapping) {
+          key = _this.attributeNameMapping[key];
         }
 
         result[key.replace('_', '-')] = value;
-      }.bind(this));
+      });
       return result;
     };
 

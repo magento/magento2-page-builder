@@ -76,33 +76,32 @@ export default class Build extends EventEmitter {
      * @returns {Promise<EditableAreaInterface>}
      */
     parseAndBuildElement(element: HTMLElement, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
-        if (element instanceof HTMLElement &&
-            element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
+        if (element instanceof HTMLElement
+            && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
         ) {
             parent = parent || this.stage;
             let self = this,
-                role = element.getAttribute(Config.getValue('dataRoleAttributeName'));
+                role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
 
+            let getElementDataPromise = new Promise((resolve: Function, error: Function) => {
+                resolve(self.getElementData(element));
+            });
 
-            let getElementDataPromise = new Promise(function (resolve, error) {
-                resolve(self.getElementData(element))
-            }.bind(this));
-
-            return getElementDataPromise.then(function (data) {
+            return getElementDataPromise.then((data) => {
                 let children = this.getElementChildren(element);
                 // Add element to stage
-                return this.buildElement(role, data, parent).then(function (newParent) {
+                return this.buildElement(role, data, parent).then((newParent) => {
                     if (children.length > 0) {
-                        let childPromises = [];
+                        let childPromises: Array<Promise<EditableAreaInterface>> = [];
                         _.forEach(children, function (child) {
                             childPromises.push(self.parseAndBuildElement(child, newParent));
                         });
                         return Promise.all(childPromises);
                     } else {
-                        return Promise.resolve(newParent);
+                        return newParent;
                     }
                 });
-            }.bind(this));
+            });
         } else {
             return Promise.reject(new Error('Element does not contain valid role attribute.'));
         }
@@ -117,7 +116,7 @@ export default class Build extends EventEmitter {
     getElementData(element: HTMLElement) {
         let result = {};
         const readPromise = this.attributeReaderComposite.read(element);
-        return readPromise.then(function (data) {
+        return readPromise.then((data) => {
             return result ? _.extend(result, data) : {}
         });
     }
@@ -168,28 +167,6 @@ export default class Build extends EventEmitter {
             default:
                 return this.buildEntity(role, data, parent);
         }
-    }
-
-    /**
-     * Build a new row with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise<RowInterface>}
-     */
-    private buildRow(data: object, parent: StageInterface): Promise<RowInterface> {
-        return Promise.resolve(parent.addRow(this.stage, data));
-    }
-
-    /**
-     * Build a new column with it's associated data
-     *
-     * @param data
-     * @param parent
-     * @returns {Promise<ColumnInterface>}
-     */
-    private buildColumn(data: object, parent: RowInterface | ColumnInterface): Promise<ColumnInterface> {
-        return Promise.resolve(parent.addColumn(data));
     }
 
     /**

@@ -17,13 +17,13 @@ export default class AttributeMapper {
     toDom(data: DataObject): DataObject {
         let result: DataObject = {};
         Object.keys(data).map(
-            function (key: string) {
+            (key: string) => {
                 let value = data[key];
                 if (key in this.attributeNameMapping) {
                     key = this.attributeNameMapping[key];
                 }
                 result[key.replace('_', '-')] = value;
-            }.bind(this)
+            }
         );
         return result;
     }
