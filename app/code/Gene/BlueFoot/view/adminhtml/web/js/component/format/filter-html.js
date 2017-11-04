@@ -20,8 +20,10 @@ define(["jquery"], function (_jquery) {
      * @returns {any}
      */
     _proto.filter = function filter(element) {
+      var _this = this;
+
       var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-        return this.nodeType == this.commentNodeType || this.nodeType == this.whitespaceNodeType && this.data.match(/^\s+$/);
+        return _this.nodeType == _this.commentNodeType || _this.nodeType == _this.whitespaceNodeType && _this.data.match(/^\s+$/);
       };
 
       element.find('[data-bind]').each(function (index, value) {

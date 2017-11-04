@@ -16,7 +16,7 @@ export default class FilterHtml {
      * @returns {any}
      */
     filter(element: any): any {
-        const isWhiteSpaceOrComment = function() {
+        const isWhiteSpaceOrComment = () => {
             return this.nodeType == this.commentNodeType
                 || (this.nodeType == this.whitespaceNodeType && this.data.match(/^\s+$/));
         };
