@@ -75,16 +75,24 @@
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@data-form-role='save']"/>
     </section>
-    <section name="TwoColumnsOnFrontend">
+    <section name="RowsOnFrontend">
+        <element name="row1Display" type="button" selector="//*[@data-role='row'][1][contains(@style, 'display: flex;')]"/>
+    </section>
+    <section name="ColumnsOnFrontend">
         <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 100px;')]"/>
         <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
         <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: cover;')]"/>
         <element name="column1BackgroundRepeat" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
         <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: scroll;')]"/>
-
         <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 100px;')]"/>
+        <element name="column1BackgroundWidth" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 50%;')]"/>
+        <!-- <element name="column1Appearance" type="button" selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'align-self: flex-end;')]"/> -->
+        <element name="column1Position" type="button" selector="//*[@data-role='column'][1][contains(@style, 'align-self: flex-end;')]"/>
         <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
         <element name="column2BackgroundRepeat" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: repeat;')]"/>
         <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]"/>
+        <element name="column2BackgroundWidth" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 16.7%;')]"/>
+        <!-- <element name="column2Appearance" type="button" selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'align-self: flex-start;')]"/> -->
+        <element name="column2Position" type="button" selector="//*[@data-role='column'][2][contains(@style, 'align-self: flex-start;')]"/>
     </section>
 </config>

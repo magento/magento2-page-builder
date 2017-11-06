@@ -23,28 +23,34 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
         </before>
-        <test name="ColumnAppearance">
+        <test name="ColumnAppearanceSettingsAppearOnFrontend">
             <annotations>
-                <title value="Column settings appear on frontend"/>
+                <title value="Column appearance settings appear on frontend"/>
                 <description value="Validate selected column settings appear on the frontend"/>
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="//*[@name='title']" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <fillField selector="//*[@name='min_height']" userInput="100" mergeKey="enterMinHeight"/>
-            <selectOption selector="//*[@name='width']" userInput="1/2" mergeKey="enterWidth"/>
-            <selectOption selector="//*[@name='appearance']" userInput="Bottom Aligned" mergeKey="enterAppearance"/>
-            <click selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@data-form-role='save']" mergeKey="clickSaveColumn"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty">
+                <argument name="property" value="BlueFootBackgroundWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearanceProperty">
+                <argument name="property" value="BlueFootBackgroundAppearanceProperty"/>
+            </actionGroup>
+            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+            <wait time="1" mergeKey="wait1"/>
+            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait2"/>
-            <click selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@data-form-role='save']" mergeKey="clickSaveCmsPage"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="//*[@data-role='row'][1][contains(@style, 'display: flex;')]" mergeKey="seeRow1DisplayApplied"/>
-            <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'min-height: 100px;')]" mergeKey="seeColumn1MinHeightApplied"/>
-            <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'width: 50%;')]" mergeKey="seeColumn1WidthApplied"/>
+            <seeElement selector="{{RowsOnFrontend.row1Display}}" mergeKey="seeRow1DisplayApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" mergeKey="seeColumn1WidthApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'align-self: flex-end;')]" mergeKey="seeColumn1AppearanceApplied1"/>
-            <!--<seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'min-height: 200px;')]" mergeKey="seeColumn2MinHeightApplied"/>-->
-            <seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'width: 16.7%;')]" mergeKey="seeColumn2WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" mergeKey="seeColumn2WidthApplied"/>
             <seeElement selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'align-self: flex-start;')]" mergeKey="seeColumn2AppearanceApplied1"/>
             <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
