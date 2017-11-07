@@ -34,18 +34,16 @@ export default class Default implements ReadInterface {
 
         _.extend(data, this.styleAttributeMapper.fromDom(styleAttributes));
 
-        Object.keys(element.dataset).map(
-            function (key) {
-                if (element.dataset[key] !== '') {
-                    data[key] = element.dataset[key]
-                }
+        Object.keys(element.dataset).map(key => {
+            if (element.dataset[key] !== '') {
+                data[key] = element.dataset[key];
             }
-        );
+        });
 
         data['css_classes'] = element.className.split(' ').filter(value => value.length > 0);
 
         return new Promise((resolve: Function) => {
-            console.log(data)
+            console.log(data);
             resolve(data);
         });
     }

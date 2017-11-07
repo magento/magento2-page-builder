@@ -6,8 +6,8 @@
 import $ from 'jquery';
 
 export default class FilterHtml {
-    commentNodeType: number = 8;
-    whitespaceNodeType: number = 3;
+    commentNodeType: number = Node.COMMENT_NODE;
+    whitespaceNodeType: number = Node.TEXT_NODE;
 
     /**
      * Remove comments, whitespaces and line breaks from the markup
