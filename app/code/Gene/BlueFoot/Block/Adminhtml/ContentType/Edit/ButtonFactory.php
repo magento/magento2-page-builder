@@ -33,7 +33,7 @@ class ButtonFactory
      * @param array $data
      *
      * @return \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \InvalidArgumentException
      */
     public function create($className, array $data = [])
     {
