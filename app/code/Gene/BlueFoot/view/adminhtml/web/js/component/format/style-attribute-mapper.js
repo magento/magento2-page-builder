@@ -1,4 +1,4 @@
-define([], function () {
+define(["../../component/config"], function (_config) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,6 +37,17 @@ define([], function () {
 
         if (key === 'background_repeat') {
           value = value ? 'repeat' : 'no-repeat';
+        }
+
+        if (key === 'background_image' && value[0] != undefined) {
+          // convert to media directive
+          var imageUrl = value[0]['url'];
+
+          var mediaUrl = _config.getInitConfig('media_url'),
+              mediaPath = imageUrl.split(mediaUrl),
+              directive = '{{media url=' + mediaPath[1] + '}}';
+
+          value = 'url(\'' + directive + '\')';
         }
 
         result[_this.fromSnakeToCamelCase(key)] = value;
@@ -87,6 +98,21 @@ define([], function () {
           var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
           var matches = regexp.exec(value);
           value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[1]));
+        }
+
+        if (key === 'background-image') {
+          var mediaUrl = _config.getInitConfig('media_url');
+
+          var imageUrl = value.match(/url=(.*)}}/)[1];
+          var imageType = imageUrl.match(/\.([^)]+)/)[1];
+          var imageName = imageUrl.split('/').last();
+          var image = {
+            "name": imageName,
+            "size": 0,
+            "type": "image" + '/' + imageType,
+            "url": mediaUrl + imageUrl
+          };
+          value = [image];
         }
 
         result[key.replace('-', '_')] = value;
