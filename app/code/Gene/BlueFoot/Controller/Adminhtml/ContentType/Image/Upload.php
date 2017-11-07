@@ -6,7 +6,6 @@
 namespace Gene\BlueFoot\Controller\Adminhtml\ContentType\Image;
 
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\File\Uploader;
 
 /**
  * Class Upload
@@ -16,17 +15,22 @@ class Upload extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $resultJsonFactory;
+    private $resultJsonFactory;
+
+    /**
+     * @var \Magento\Framework\File\UploaderFactory
+     */
+    private $uploaderFactory;
 
     /**
      * @var \Gene\BlueFoot\Helper\Config
      */
-    protected $configHelper;
+    private $configHelper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    private $storeManager;
 
     /**
      * Upload constructor.
@@ -34,18 +38,22 @@ class Upload extends \Magento\Backend\App\Action
      * @param \Magento\Backend\App\Action\Context              $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Gene\BlueFoot\Helper\Config                     $configHelper
+     * @param \Magento\Store\Model\StoreManagerInterface       $storeManager
+     * @param \Magento\Framework\File\UploaderFactory          $uploaderFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Gene\BlueFoot\Helper\Config $configHelper,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\File\UploaderFactory $uploaderFactory
     ) {
         parent::__construct($context);
 
         $this->resultJsonFactory = $resultJsonFactory;
         $this->configHelper = $configHelper;
         $this->storeManager = $storeManager;
+        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**
@@ -64,14 +72,13 @@ class Upload extends \Magento\Backend\App\Action
     /**
      * Allow users to upload images to the folder structure
      *
-     * @return $this|\Magento\Framework\Controller\Result\Json
+     * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        // Error handling at it's best
         try {
             $fieldName = $this->getRequest()->getParam('param_name');
-            $fileUploader = new Uploader($fieldName);
+            $fileUploader = $this->uploaderFactory->create(['fileId' => $fieldName]);
 
             // Set our parameters
             $fileUploader->setFilesDispersion(true);
@@ -81,11 +88,9 @@ class Upload extends \Magento\Backend\App\Action
 
             $result = $fileUploader->save($this->configHelper->getUploadDir());
 
-            $result['url'] = $this->storeManager
-                    ->getStore()
-                    ->getBaseUrl(
-                        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                    ) . $this->getFilePath(\Gene\BlueFoot\Helper\Config::UPLOAD_DIR, $result['file']);
+            $result['url'] = $this->storeManager->getStore()
+                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .
+                $this->getFilePath(\Gene\BlueFoot\Helper\Config::UPLOAD_DIR, $result['file']);
 
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
