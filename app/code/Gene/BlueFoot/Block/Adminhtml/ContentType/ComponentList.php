@@ -24,19 +24,19 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     /**
      * ComponentList constructor.
      *
-     * @param ConfigInterface $configInterface
-     * @param ComponentRenderer $componentRenderer
      * @param Context $context
+     * @param ConfigInterface $config
+     * @param ComponentRenderer $componentRenderer
      * @param array $data
      */
     public function __construct(
-        ConfigInterface $configInterface,
-        ComponentRenderer $componentRenderer,
         Context $context,
+        ConfigInterface $config,
+        ComponentRenderer $componentRenderer,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->config = $configInterface;
+        $this->config = $config;
         $this->componentRenderer = $componentRenderer;
     }
 

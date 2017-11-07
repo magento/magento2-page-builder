@@ -188,6 +188,8 @@ class ComponentRenderer
                 $this->prepareComponent($child);
             }
         }
+        // Remove any buttons from the main component to stop duplicate rendering
+        $component->setData('buttons', []);
         $component->prepare();
     }
 }

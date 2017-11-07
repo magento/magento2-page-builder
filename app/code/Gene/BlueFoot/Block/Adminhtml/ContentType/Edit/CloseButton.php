@@ -19,7 +19,7 @@ class CloseButton implements ButtonProviderInterface
     {
         return [
             'label' => __('Close'),
-            'class' => 'reset',
+            'class' => 'close',
             'on_click' => '',
             'data_attribute' => [
                 'mage-init' => [

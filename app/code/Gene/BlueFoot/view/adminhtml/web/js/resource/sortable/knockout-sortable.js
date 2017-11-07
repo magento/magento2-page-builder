@@ -1,3 +1,8 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _) {
 
     /**
@@ -153,6 +158,22 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
+                var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
+                    allowedParents = getViewModelFromUi(ui).config.allowed_parents;
+
+                if (parentContainerName && Array.isArray(allowedParents)) {
+                    if (allowedParents.indexOf(parentContainerName) === -1) {
+                        jQuery(this).sortable("cancel");
+                        jQuery(ui.item).remove();
+
+                        // Force refresh of the parent
+                        var data = getViewModelFromUi(ui).parent.children().slice(0);
+                        getViewModelFromUi(ui).parent.children([]);
+                        getViewModelFromUi(ui).parent.children(data);
+                        return;
+                    }
+                }
+
                 // Detect if we're sorting items within the stage
                 if (typeof newParent.stageId === 'function' && newParent.stageId()) {
                     newParent = block.stage;
@@ -183,30 +204,29 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
         },
 
         /**
-         * Attach an event for when sorting stops
+         * Hide or show the placeholder based on the elements allowed parents
          *
          * @param event
          * @param ui
          * @returns {*}
          */
         onSortChange: function (event, ui) {
-            if (!ui.item.hasClass('bluefoot-draggable-block')) {
-                if (
-                    (ui.placeholder.prev().is(ui.item) || ui.placeholder.next().is(ui.item))
-                ) {
+            var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name;
+            currentInstance = getViewModelFromUi(ui);
+
+            // If the registry contains a reference to the drag element view model use that instead
+            if (require("uiRegistry").get('dragElementViewModel')) {
+                currentInstance = require("uiRegistry").get('dragElementViewModel');
+            }
+
+            var allowedParents = currentInstance.config.allowed_parents;
+
+            // Verify if the currently dragged block is accepted by the hovered parent
+            if (parentContainerName && Array.isArray(allowedParents)) {
+                if (allowedParents.indexOf(parentContainerName) === -1) {
                     ui.placeholder.hide();
                 } else {
                     ui.placeholder.show();
-
-                    // If the next and previous items are columns add a class to the placeholder
-                    if (ui.item.hasClass('bluefoot-column') &&
-                        (ui.placeholder.prev().children().first().hasClass('bluefoot-column') ||
-                        ui.placeholder.next().children().first().hasClass('bluefoot-column'))
-                    ) {
-                        ui.placeholder.addClass('bluefoot-placeholder-column');
-                    } else {
-                        ui.placeholder.removeClass('bluefoot-placeholder-column');
-                    }
                 }
             }
         },

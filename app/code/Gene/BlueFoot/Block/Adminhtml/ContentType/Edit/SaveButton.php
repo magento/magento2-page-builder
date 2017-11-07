@@ -20,7 +20,7 @@ class SaveButton implements ButtonProviderInterface
      *
      * @param $targetName
      */
-    public function __construct($targetName = '')
+    public function __construct($targetName)
     {
         $this->targetName = $targetName;
     }

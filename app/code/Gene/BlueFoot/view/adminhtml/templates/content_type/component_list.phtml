@@ -12,7 +12,7 @@
 $components = $block->getComponents(); if ($components): ?>
     <script type="text/javascript">
         require(['underscore', 'uiRegistry'], function (_, registry) {
-            _.each(<?php /* noEscape */ echo json_encode($components) ?>, function (component, key) {
+            _.each(<?php /* @noEscape */ echo json_encode($components) ?>, function (component, key) {
                 registry.set('component_' + key, component);
             });
         });
