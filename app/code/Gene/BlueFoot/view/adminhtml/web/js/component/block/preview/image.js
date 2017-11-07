@@ -18,13 +18,6 @@ define(["./block", "knockout", "../../config"], function (_block, _knockout, _co
 
     var _proto = PreviewImageBlock.prototype;
 
-    // imageUrl: KnockoutComputed<string> = ko.computed(() => {
-    //     if (this.data.image()) {
-    //         return Config.getInitConfig('media_url') + this.data.image().replace('/media/', '');
-    //     }
-    //     return '';
-    // });
-
     /**
      * Retrieve the upload URL from the configuration
      */

@@ -6,15 +6,10 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
   function (_EventEmitter) {
     _inheritsLoose(Build, _EventEmitter);
 
-    /**
-     */
     function Build() {
       var _this;
 
       _this = _EventEmitter.call(this) || this;
-      _this.stage = void 0;
-      _this.document = void 0;
-      _this.attributeReaderComposite = void 0;
       _this.attributeReaderComposite = new _composite();
       return _this;
     }

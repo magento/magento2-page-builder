@@ -18,6 +18,12 @@ export default class Save {
     rootTemplate: string = 'Gene_BlueFoot/component/block/render/root.html';
     filterHtml: FilterHtml = new FilterHtml();
 
+    /**
+     * Render a tree of content types instances stored in knockout
+     *
+     * @param {KnockoutObservableArray<Structural>} tree
+     * @returns {Promise<string>}
+     */
     renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
         let element = $('<div>');
         return new Promise((resolve, reject) => {

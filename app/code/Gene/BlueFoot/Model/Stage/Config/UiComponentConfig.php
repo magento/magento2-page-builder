@@ -84,8 +84,8 @@ class UiComponentConfig
     /**
      * Iterate over components within the configuration and run a defined callback function
      *
-     * @param      $config
-     * @param      $callback
+     * @param $config
+     * @param $callback
      * @param bool $key
      *
      * @return array

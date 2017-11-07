@@ -83,8 +83,8 @@ export default class Stage extends EditableArea implements StageInterface {
                 .on('buildError', function (event: Event, error: string) {
                     // Inform the user that an issue has occurred
                     self.parent.alertDialog({
-                        title: 'Advanced CMS Error',
-                        content: "An error has occurred while initiating the content area."
+                        title: $t('Advanced CMS Error'),
+                        content: $t("An error has occurred while initiating the content area.")
                     });
                     self.emit('stageError', error);
                     console.error(error);

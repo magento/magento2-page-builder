@@ -10,12 +10,6 @@ import Config from "../../config";
 
 export default class PreviewImageBlock extends PreviewBlock {
     loading: KnockoutObservable<boolean> = ko.observable(false);
-    // imageUrl: KnockoutComputed<string> = ko.computed(() => {
-    //     if (this.data.image()) {
-    //         return Config.getInitConfig('media_url') + this.data.image().replace('/media/', '');
-    //     }
-    //     return '';
-    // });
 
     /**
      * Retrieve the upload URL from the configuration

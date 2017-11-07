@@ -15,8 +15,6 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
     function Edit(instance, store) {
       this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
       this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
-      this.instance = void 0;
-      this.store = void 0;
       this.instance = instance;
       this.store = store;
     }
@@ -109,9 +107,9 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
 
 
     _proto.destroyInserted = function destroyInserted() {
-      var existingComponent;
+      var existingComponent = this.getFormComponentInstance();
 
-      if (existingComponent = this.getFormComponentInstance()) {
+      if (existingComponent) {
         existingComponent.destroy();
       } // Reset the insert form component
 

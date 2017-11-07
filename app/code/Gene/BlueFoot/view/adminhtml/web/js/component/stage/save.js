@@ -19,6 +19,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
 
     var _proto = Save.prototype;
 
+    /**
+     * Render a tree of content types instances stored in knockout
+     *
+     * @param {KnockoutObservableArray<Structural>} tree
+     * @returns {Promise<string>}
+     */
     _proto.renderTree = function renderTree(tree) {
       var _this = this;
 

@@ -120,8 +120,8 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     onOptionRemove(): void {
         this.stage.parent.confirmationDialog({
-            title: 'Confirm Item Removal',
-            content: 'Are you sure you want to remove this item? The data within this item is not recoverable once removed.',
+            title: $t('Confirm Item Removal'),
+            content: $t('Are you sure you want to remove this item? The data within this item is not recoverable once removed.'),
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element

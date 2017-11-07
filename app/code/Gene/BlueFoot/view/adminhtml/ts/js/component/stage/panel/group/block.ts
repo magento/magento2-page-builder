@@ -3,8 +3,6 @@ import ko from 'knockout';
 
 /**
  * Block Class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export class Block extends EventEmitter {
     config: ContentBlockConfig;

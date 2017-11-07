@@ -116,8 +116,8 @@ export default class Edit {
      * Destroy the inserted component
      */
     destroyInserted(): void {
-        let existingComponent;
-        if (existingComponent = this.getFormComponentInstance()) {
+        let existingComponent = this.getFormComponentInstance();
+        if (existingComponent) {
             existingComponent.destroy();
         }
 

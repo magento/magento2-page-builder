@@ -16,15 +16,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      _this.parent = void 0;
-      _this.stage = void 0;
       _this.active = true;
-      _this.showBorders = void 0;
-      _this.userSelect = void 0;
-      _this.loading = void 0;
-      _this.originalScrollTop = void 0;
       _this.serializeRole = 'stage';
-      _this.store = void 0;
       _this.save = new _save();
 
       _this.setChildren(stageContent);
@@ -78,8 +71,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
         buildInstance.buildStage(this, buildStructure).on('buildDone', self.ready.bind(self)).on('buildError', function (event, error) {
           // Inform the user that an issue has occurred
           self.parent.alertDialog({
-            title: 'Advanced CMS Error',
-            content: "An error has occurred while initiating the content area."
+            title: (0, _translate)('Advanced CMS Error'),
+            content: (0, _translate)("An error has occurred while initiating the content area.")
           });
           self.emit('stageError', error);
           console.error(error);

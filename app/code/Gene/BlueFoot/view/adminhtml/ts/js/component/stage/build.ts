@@ -18,9 +18,7 @@ export default class Build extends EventEmitter {
     stage: StageInterface;
     document: Element;
     attributeReaderComposite: AttributeReaderComposite;
-
-    /**
-     */
+    
     constructor() {
         super();
         this.attributeReaderComposite = new AttributeReaderComposite();
