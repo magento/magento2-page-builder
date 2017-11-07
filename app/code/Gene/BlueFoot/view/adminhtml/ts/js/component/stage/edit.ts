@@ -82,7 +82,7 @@ export default class Edit {
      * Set the title on the modal
      */
     setTitle(): void {
-        this.modal.setTitle($t('Edit ' + (this.instance.config.label || $t('Block'))));
+        this.modal.setTitle($t('Edit ' + this.instance.config.label));
     }
 
     /**

@@ -43,8 +43,8 @@ class ButtonFactory
             \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
         ) {
             throw new \InvalidArgumentException(
-                $className . ' doesn\'t implement ' .
-                '\Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface'
+                $className . ' doesn\'t implement '
+                . '\Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface'
             );
         }
         return $model;

@@ -69,7 +69,7 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
 
 
     _proto.setTitle = function setTitle() {
-      this.modal.setTitle((0, _translate)('Edit ' + (this.instance.config.label || (0, _translate)('Block'))));
+      this.modal.setTitle((0, _translate)('Edit ' + this.instance.config.label));
     };
     /**
      * Set the data provider client to be the current instance

@@ -53,8 +53,7 @@ define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loade
     }
 
     return new instance(block, blockConfig);
-  } // @todo move these into Config class
-
+  }
 
   return Object.assign(get, {
     load: load

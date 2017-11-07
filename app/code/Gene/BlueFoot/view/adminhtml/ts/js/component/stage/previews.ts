@@ -51,5 +51,3 @@ export default function get(block: Block, blockConfig: any): PreviewBlock {
 
     return new instance(block, blockConfig);
 }
-
-// @todo move these into Config class
