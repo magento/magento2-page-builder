@@ -31,8 +31,8 @@ export default class StyleAttributeMapper {
                 }
                 if (key === 'background_image' && value[0] != undefined) {
                     // convert to media directive
-                    let imageUrl = value[0]['url'];
-                    let mediaUrl = Config.getInitConfig('media_url'),
+                    let imageUrl = value[0]['url'],
+                        mediaUrl = Config.getInitConfig('media_url'),
                         mediaPath = imageUrl.split(mediaUrl),
                         directive = '{{media url=' + mediaPath[1] + '}}';
                     value = 'url(\'' + directive + '\')';
@@ -83,16 +83,16 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[1]));
                 }
                 if (key === 'background-image') {
-                    let mediaUrl = Config.getInitConfig('media_url');
-                    let imageUrl = value.match(/url=(.*)}}/)[1];
-                    let imageType = imageUrl.match(/\.([^)]+)/)[1];
-                    let imageName = imageUrl.split('/').last();
-                    let image = {
-                        "name": imageName,
-                        "size": 0,
-                        "type": "image" + '/' + imageType,
-                        "url": mediaUrl + imageUrl
-                    };
+                    let mediaUrl = Config.getInitConfig('media_url'),
+                        imageUrl = value.match(/url=(.*)}}/)[1],
+                        imageType = imageUrl.match(/\.([^)]+)/)[1],
+                        imageName = imageUrl.split('/').last(),
+                        image = {
+                            "name": imageName,
+                            "size": 0,
+                            "type": "image" + '/' + imageType,
+                            "url": mediaUrl + imageUrl
+                        };
                     value = [image];
                 }
                 result[key.replace('-', '_')] = value;

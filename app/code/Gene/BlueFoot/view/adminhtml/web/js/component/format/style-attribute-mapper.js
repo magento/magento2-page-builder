@@ -41,9 +41,8 @@ define(["../../component/config"], function (_config) {
 
         if (key === 'background_image' && value[0] != undefined) {
           // convert to media directive
-          var imageUrl = value[0]['url'];
-
-          var mediaUrl = _config.getInitConfig('media_url'),
+          var imageUrl = value[0]['url'],
+              mediaUrl = _config.getInitConfig('media_url'),
               mediaPath = imageUrl.split(mediaUrl),
               directive = '{{media url=' + mediaPath[1] + '}}';
 
@@ -101,17 +100,17 @@ define(["../../component/config"], function (_config) {
         }
 
         if (key === 'background-image') {
-          var mediaUrl = _config.getInitConfig('media_url');
-
-          var imageUrl = value.match(/url=(.*)}}/)[1];
-          var imageType = imageUrl.match(/\.([^)]+)/)[1];
-          var imageName = imageUrl.split('/').last();
-          var image = {
+          var mediaUrl = _config.getInitConfig('media_url'),
+              imageUrl = value.match(/url=(.*)}}/)[1],
+              imageType = imageUrl.match(/\.([^)]+)/)[1],
+              imageName = imageUrl.split('/').last(),
+              image = {
             "name": imageName,
             "size": 0,
             "type": "image" + '/' + imageType,
             "url": mediaUrl + imageUrl
           };
+
           value = [image];
         }
 
