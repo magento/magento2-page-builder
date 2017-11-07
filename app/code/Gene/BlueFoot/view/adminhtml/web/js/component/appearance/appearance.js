@@ -8,6 +8,7 @@ define([], function () {
   function () {
     // List of type appearances
     function Appearance(appearances) {
+      this.appearances = void 0;
       this.appearances = appearances;
     }
     /**

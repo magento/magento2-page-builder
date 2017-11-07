@@ -7,8 +7,8 @@ define(["jquery"], function (_jquery) {
   /*#__PURE__*/
   function () {
     function FilterHtml() {
-      this.commentNodeType = 8;
-      this.whitespaceNodeType = 3;
+      this.commentNodeType = Node.COMMENT_NODE;
+      this.whitespaceNodeType = Node.TEXT_NODE;
     }
 
     var _proto = FilterHtml.prototype;
