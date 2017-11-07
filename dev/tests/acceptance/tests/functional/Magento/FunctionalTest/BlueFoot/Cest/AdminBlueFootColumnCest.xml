@@ -91,6 +91,9 @@
             <actionGroup ref="validateSlideOutPanelFieldIsRequired" mergeKey="seeBackgroundAttachmentPropertyIsRequired">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" mergeKey="seeBackgroundAttachmentPropertyIsRequired">
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
         </test>
         <test name="ColumnCanInteractEditPanel">
             <annotations>
@@ -138,6 +141,9 @@
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
+                <argument name="property" value="BlueFootBackgroundImageProperty"/>
+            </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait1"/>
             <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2"/>
@@ -154,6 +160,7 @@
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundSize}}" mergeKey="seeColumn1BackgroundSizeApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundRepeat}}" mergeKey="seeColumn1BackgroundRepeatApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundAttachment}}" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundImage}}" mergeKey="seeColumn1BackgroundImageApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2Height}}" mergeKey="seeColumn2HeightApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeat}}" mergeKey="seeColumn2BackgroundREpeatApplied"/>
@@ -188,6 +195,9 @@
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizeProperty">
                 <argument name="property" value="BlueFootBackgroundSizeProperty"/>
             </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
+                <argument name="property" value="BlueFootBackgroundImageProperty"/>
+            </actionGroup>
             <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundProperty"/>
             <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty">
@@ -215,6 +225,7 @@
             <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBackgroundColorProperty">
                 <argument name="property" value="BlueFootBackgroundColorProperty"/>
             </actionGroup>
+            <seeElement selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
             <actionGroup ref="seeOptionIsSelectedSlideOutProperty" mergeKey="seeBackgroundPositionProperty">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
@@ -267,6 +278,7 @@
             <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
+            <seeElement selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
         </test>
     </cest>
 </config>

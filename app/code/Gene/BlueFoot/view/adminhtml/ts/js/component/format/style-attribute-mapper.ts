@@ -2,7 +2,8 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../component/data-store";
+import {DataObject} from "../../component/data-store";
+import Config from "../../component/config";
 
 export default class StyleAttributeMapper {
     /**
@@ -27,6 +28,14 @@ export default class StyleAttributeMapper {
                 }
                 if (key === 'background_repeat') {
                     value = value ? 'repeat' : 'no-repeat';
+                }
+                if (key === 'background_image' && value[0] != undefined) {
+                    // convert to media directive
+                    let imageUrl = value[0]['url'];
+                    let mediaUrl = Config.getInitConfig('media_url'),
+                        mediaPath = imageUrl.split(mediaUrl),
+                        directive = '{{media url=' + mediaPath[1] + '}}';
+                    value = 'url(\'' + directive + '\')';
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
             }
@@ -72,6 +81,19 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[1]))
                         + this.fromIntToHex(parseInt(matches[2]))
                         + this.fromIntToHex(parseInt(matches[1]));
+                }
+                if (key === 'background-image') {
+                    let mediaUrl = Config.getInitConfig('media_url');
+                    let imageUrl = value.match(/url=(.*)}}/)[1];
+                    let imageType = imageUrl.match(/\.([^)]+)/)[1];
+                    let imageName = imageUrl.split('/').last();
+                    let image = {
+                        "name": imageName,
+                        "size": 0,
+                        "type": "image" + '/' + imageType,
+                        "url": mediaUrl + imageUrl
+                    };
+                    value = [image];
                 }
                 result[key.replace('-', '_')] = value;
             }

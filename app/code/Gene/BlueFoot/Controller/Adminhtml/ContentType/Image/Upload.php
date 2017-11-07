@@ -70,7 +70,8 @@ class Upload extends \Magento\Backend\App\Action
     {
         // Error handling at it's best
         try {
-            $fileUploader = new Uploader('image');
+            $fieldName = $this->getRequest()->getParam('param_name');
+            $fileUploader = new Uploader($fieldName);
 
             // Set our parameters
             $fileUploader->setFilesDispersion(true);
