@@ -15,6 +15,8 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
     function Edit(instance, store) {
       this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
       this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
+      this.instance = void 0;
+      this.store = void 0;
       this.instance = instance;
       this.store = store;
     }

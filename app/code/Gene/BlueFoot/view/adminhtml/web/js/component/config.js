@@ -270,6 +270,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
   Config.config = {
     'dataRoleAttributeName': 'data-role'
   };
+  Config.allFields = void 0;
   return Config;
 });
 //# sourceMappingURL=config.js.map

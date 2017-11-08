@@ -6,10 +6,7 @@ define(["jquery"], function (_jquery) {
   var FilterHtml =
   /*#__PURE__*/
   function () {
-    function FilterHtml() {
-      this.commentNodeType = Node.COMMENT_NODE;
-      this.whitespaceNodeType = Node.TEXT_NODE;
-    }
+    function FilterHtml() {}
 
     var _proto = FilterHtml.prototype;
 
@@ -20,10 +17,8 @@ define(["jquery"], function (_jquery) {
      * @returns {any}
      */
     _proto.filter = function filter(element) {
-      var _this = this;
-
       var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-        return _this.nodeType == _this.commentNodeType || _this.nodeType == _this.whitespaceNodeType && _this.data.match(/^\s+$/);
+        return this.nodeType == Node.COMMENT_NODE || this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/);
       };
 
       element.find('[data-bind]').each(function (index, value) {

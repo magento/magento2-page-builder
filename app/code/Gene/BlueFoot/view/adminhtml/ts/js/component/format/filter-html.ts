@@ -6,9 +6,6 @@
 import $ from 'jquery';
 
 export default class FilterHtml {
-    commentNodeType: number = Node.COMMENT_NODE;
-    whitespaceNodeType: number = Node.TEXT_NODE;
-
     /**
      * Remove comments, whitespaces and line breaks from the markup
      *
@@ -16,9 +13,9 @@ export default class FilterHtml {
      * @returns {any}
      */
     filter(element: any): any {
-        const isWhiteSpaceOrComment = () => {
-            return this.nodeType == this.commentNodeType
-                || (this.nodeType == this.whitespaceNodeType && this.data.match(/^\s+$/));
+        const isWhiteSpaceOrComment = function() {
+            return this.nodeType == Node.COMMENT_NODE
+                || (this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/));
         };
         element.find('[data-bind]').each(function (index, value) { $(value).removeAttr('data-bind') });
         element.contents().filter(isWhiteSpaceOrComment).remove();
