@@ -17,6 +17,9 @@
             <env value="firefox"/>
             <env value="phantomjs"/>
         </annotations>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+        </after>
         <before>
             <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
@@ -106,10 +109,10 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <wait time="2" mergeKey="waitOpen"/>
             <seeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="seeEditForm"/>
+            <waitForElementNotVisible time="2" selector="{{BlueFootColumnSection.editFormSpinner}}" mergeKey="waitForSpinner" />
             <click selector="{{BlueFootActionsSection.editFormCancel}}" mergeKey="clickEditFormCancel"/>
-            <wait time="2" mergeKey="waitClose"/>
+            <waitForElementNotVisible time="2" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitClose" />
             <dontSeeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="dontSeeEditForm"/>
         </test>
         <test name="ColumnSettingsAppearOnFrontend">
@@ -151,7 +154,8 @@
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn2"/>
-            <wait time="1" mergeKey="wait2"/>
+            <wait time="1" mergeKey="waitForDataStoreUpdate" />
+            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForSavePage" />
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait3"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
@@ -165,8 +169,6 @@
             <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeat}}" mergeKey="seeColumn2BackgroundREpeatApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2BackgroundAttachment}}" mergeKey="seeColumn2BackgroundAttachmentApplied"/>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>
         <test name="ColumnChangesPreserved">
             <annotations>
@@ -204,21 +206,29 @@
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
-            <wait time="1" mergeKey="wait1"/>
+            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForSavePage" />
+            <wait time="1" mergeKey="waitForDataStoreUpdate" />
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
-            <wait time="1" mergeKey="wait2"/>
             <waitForPageLoad mergeKey="waitForCmsPagesGridLoad"/>
-            <wait time="3" mergeKey="wait3"/>
+            <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" mergeKey="waitForSearchField" />
+            <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" mergeKey="waitForButton" />
             <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{BlueFootFirstColumnInStage.pageName}}"' mergeKey="enterPageNameInSearch"/>
+            <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" mergeKey="waitForSpinnerNotVisible" />
             <click selector="{{CmsPageGrid.searchButton}}" mergeKey="clickSearchButton"/>
-            <wait time="10" mergeKey="wait4"/>
+            <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" mergeKey="waitForFirstItemButton" />
+            <waitForPageLoad mergeKey="waitForSpinner" />
+            <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" mergeKey="waitForFirstItemButton" />
+            <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" mergeKey="waitForSpinnerNotVisible1" />
             <click selector="{{CmsPageGrid.firstItemSelectButton}}" mergeKey="clickSelectButtonOnFirstItem"/>
+            <waitForPageLoad mergeKey="waitForSpinner2" />
+            <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" mergeKey="waitForFirstItemEditButton" />
+            <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" mergeKey="waitForSpinnerNotVisible2" />
             <click selector="{{CmsPageGrid.firstItemEditButton}}" mergeKey="clickSelectEditOnFirstItem"/>
-            <wait time="3" mergeKey="wait5"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <wait time="1" mergeKey="wait6"/>
+            <waitForElementVisible time="10" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel2"/>
-            <wait time="10" mergeKey="wait7"/>
             <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="BlueFootAppearanceMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
