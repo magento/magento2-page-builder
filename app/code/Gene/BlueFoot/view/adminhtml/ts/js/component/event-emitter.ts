@@ -4,10 +4,10 @@
  */
 
 import { EventEmitterInterface } from 'event-emitter.d';
-import JQuery from 'jquery';
+import $ from 'jquery';
 
 export default class EventEmitter implements EventEmitterInterface {
-    private events: JQuery.PlainObject = JQuery({});
+    private events: JQuery.PlainObject = $({});
 
     /**
      * Trigger / emit an event

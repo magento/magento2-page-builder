@@ -4,7 +4,7 @@
  */
 
 import _ from 'underscore';
-import jQuery from 'jquery';
+import $ from 'jquery';
 import cmsConfig from 'advanced-cms-init-config';
 
 export default class Config {
@@ -161,15 +161,15 @@ export default class Config {
         }
 
         Config.allFields = {};
-        jQuery.each(Config.initConfig.contentBlocks, function (index, element) {
+        $.each(Config.initConfig.contentBlocks, function (index, element) {
             if (typeof element.fields === 'object') {
-                jQuery.extend(Config.allFields, element.fields);
+                $.extend(Config.allFields, element.fields);
             }
         });
 
         // Include global fields in all fields
         if (this.getValue('globalFields')) {
-            jQuery.extend(Config.allFields, this.getValue('globalFields'));
+            $.extend(Config.allFields, this.getValue('globalFields'));
         }
 
         return Config.allFields;
@@ -209,8 +209,8 @@ export default class Config {
      * @returns {any}
      */
     static getStoreId() {
-        if (jQuery('#store_switcher').length > 0) {
-            return jQuery('#store_switcher').val();
+        if ($('#store_switcher').length > 0) {
+            return $('#store_switcher').val();
         }
     }
 
