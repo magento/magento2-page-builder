@@ -7,16 +7,17 @@ import Structural from "./structural/abstract";
 import registry from "uiRegistry";
 import DataStore from "../data-store";
 import $t from "mage/translate";
+import PersistenceClient from "./edit/persistence-client";
 
-interface FormComponent {
+export interface FormComponent {
     destroy(): void;
 }
-interface ModalComponent {
+export interface ModalComponent {
     setTitle(title: string): void;
     openModal(): void;
     closeModal(): void;
 }
-interface InsertFormComponent {
+export interface InsertFormComponent {
     destroyInserted(): void;
     removeActions(): void;
     onRender(data: string): void;
@@ -68,17 +69,6 @@ export default class Edit {
     }
 
     /**
-     * Save any data which has been modified in the edit panel
-     *
-     * @param data
-     * @param options
-     */
-    save(data: any, options: any): void {
-        this.store.update(this.instance.id, data);
-        this.modal.closeModal();
-    }
-
-    /**
      * Set the title on the modal
      */
     setTitle(): void {
@@ -94,8 +84,8 @@ export default class Edit {
         registry.get(formName + '.' + formName, (component: any) => {
             const provider = registry.get(component.provider);
 
-            // Set the instance to act as it's client in the data provider
-            provider.client = this;
+            // Set the data provider client to our persistence client
+            provider.client = new PersistenceClient(this.modal, this.store, this.instance.id);
 
             // Set the data on the provider from the data store
             provider.set('data', this.store.get(this.instance.id));

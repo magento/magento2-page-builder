@@ -1,4 +1,4 @@
-define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
+define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (_uiRegistry, _translate, _persistenceClient) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -15,8 +15,6 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
     function Edit(instance, store) {
       this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
       this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
-      this.instance = void 0;
-      this.store = void 0;
       this.instance = instance;
       this.store = store;
     }
@@ -54,18 +52,6 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
       this.setDataProviderClient();
     };
     /**
-     * Save any data which has been modified in the edit panel
-     *
-     * @param data
-     * @param options
-     */
-
-
-    _proto.save = function save(data, options) {
-      this.store.update(this.instance.id, data);
-      this.modal.closeModal();
-    };
-    /**
      * Set the title on the modal
      */
 
@@ -84,10 +70,10 @@ define(["uiRegistry", "mage/translate"], function (_uiRegistry, _translate) {
       var formName = this.instance.config.form; // Retrieve the component
 
       _uiRegistry.get(formName + '.' + formName, function (component) {
-        var provider = _uiRegistry.get(component.provider); // Set the instance to act as it's client in the data provider
+        var provider = _uiRegistry.get(component.provider); // Set the data provider client to our persistence client
 
 
-        provider.client = _this; // Set the data on the provider from the data store
+        provider.client = new _persistenceClient(_this.modal, _this.store, _this.instance.id); // Set the data on the provider from the data store
 
         provider.set('data', _this.store.get(_this.instance.id));
       });
