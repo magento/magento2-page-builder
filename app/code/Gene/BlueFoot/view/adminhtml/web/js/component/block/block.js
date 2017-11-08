@@ -11,21 +11,19 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
     _inheritsLoose(Block, _Structural);
 
     /**
-     * AbstractBlock constructor
+     * Block constructor
      *
-     * @param parent
-     * @param stage
-     * @param config
+     * @param {EditableArea} parent
+     * @param {Stage} stage
+     * @param {ConfigContentBlock} config
      * @param formData
-     * @param appearance
+     * @param {Appearance} appearance
      */
     function Block(parent, stage, config, formData, appearance) {
       var _this;
 
       _this = _Structural.call(this, parent, stage, config, appearance) || this;
-      _this.title = void 0;
       _this.editOnInsert = true;
-      _this.preview = void 0;
       _this.childEntityKeys = [];
       _this.preview = (0, _previews)(_this, config);
       var defaults = {};

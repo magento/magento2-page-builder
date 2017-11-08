@@ -25,13 +25,13 @@ export default class Block extends Structural implements BlockInterface {
     childEntityKeys: Array<string> = [];
 
     /**
-     * AbstractBlock constructor
+     * Block constructor
      *
-     * @param parent
-     * @param stage
-     * @param config
+     * @param {EditableArea} parent
+     * @param {Stage} stage
+     * @param {ConfigContentBlock} config
      * @param formData
-     * @param appearance
+     * @param {Appearance} appearance
      */
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, appearance);
