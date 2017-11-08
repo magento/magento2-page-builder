@@ -37,10 +37,12 @@
         <element name="editFormCancel" type="button" selector='//aside[contains(@class, "bluefoot_modal_form_bluefoot_modal_form_modal")]/div[@class="modal-inner-wrap"]/header/div[@class="page-main-actions"]/div/button[@data-form-role="close"]'/>
     </section>
     <section name="CmsPageSection">
+        <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
         <element name="cmsPageSaveButton" type="button" selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']"/>
         <element name="pageTitle" type="input" selector="//*[@name='title']"/>
     </section>
     <section name="CmsPageGrid">
+        <element name="spinner" type="input" selector='//div[@data-component="cms_page_listing.cms_page_listing.cms_page_columns"]'/>
         <element name="cmsPageSearchInput" type="input" selector="//*[@id='fulltext']"/>
         <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
         <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
@@ -48,11 +50,13 @@
     </section>
     <section name="BlueFootRowSection">
         <element name="row" type="text" selector='(//div[@class="bluefoot-structure bluefoot-row"])[1]'/>
+        <element name="row2" type="text" selector='(//div[@class="bluefoot-structure bluefoot-row"])[2]'/>
         <element name="allRows" type="text" selector='//div[@class="bluefoot-structure bluefoot-row"]'/>
         <element name="rowOptionsMenu" type="button" selector='(//div[1][@class="bluefoot-structure bluefoot-row"])[1]/div[@class="bluefoot-options"]'/>
         <element name="removeRow" type="button" selector='(//div[@class="bluefoot-structure bluefoot-row"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
     <section name="BlueFootColumnSection">
+        <element name="editFormSpinner" type="input" selector='//div[@data-component="column_form.column_form"]' />
         <element name="column" type="text" selector="(//div[@class='bluefoot-structure bluefoot-column'])[1]"/>
         <element name="allColumns" type="text" selector='//div[@class="bluefoot-structure bluefoot-column"]'/>
         <element name="addRow" type="button" selector='//*[@class="bluefoot-stage"]/div[3]/button'/>
@@ -72,6 +76,7 @@
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
+        <element name="panelFieldUploadSummary" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/../../div[@class="file-uploader-summary"]' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@data-form-role='save']"/>
     </section>
