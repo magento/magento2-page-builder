@@ -36,7 +36,11 @@ define(["../../component/config"], function (_config) {
         }
 
         if (key === 'background_repeat') {
-          value = value ? 'repeat' : 'no-repeat';
+          value = value === "1" ? 'repeat' : 'no-repeat';
+        }
+
+        if (key === 'background_repeat-x' || key === 'background_repeat-y') {
+          value = '';
         }
 
         if (key === 'background_image' && value[0] != undefined) {
