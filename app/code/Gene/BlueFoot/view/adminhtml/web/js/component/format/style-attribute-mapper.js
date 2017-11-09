@@ -43,12 +43,17 @@ define(["../../component/config"], function (_config) {
           value = '';
         }
 
-        if (key === 'background_image' && value[0] != undefined) {
+        if (key === 'background_image' && Array.isArray(value) && value[0]) {
           // convert to media directive
           var imageUrl = value[0]['url'],
               mediaUrl = _config.getInitConfig('media_url'),
               mediaPath = imageUrl.split(mediaUrl),
-              directive = '{{media url=' + mediaPath[1] + '}}';
+
+          /**
+           * Slash in front of the directive is required so Safari only appends the base URL to the
+           * URL. This is then removed later in the process.
+           */
+          directive = '/{{media url=' + mediaPath[1] + '}}';
 
           value = 'url(\'' + directive + '\')';
         }
@@ -104,6 +109,8 @@ define(["../../component/config"], function (_config) {
         }
 
         if (key === 'background-image') {
+          console.log(value);
+
           var mediaUrl = _config.getInitConfig('media_url'),
               imageUrl = value.match(/url=(.*)}}/)[1],
               imageType = imageUrl.match(/\.([^)]+)/)[1],

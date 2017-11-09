@@ -28,8 +28,7 @@ export default class Save {
         let element = $('<div>');
         return new Promise((resolve, reject) => {
             engine.waitForFinishRender().then(() => {
-                element = this.filterHtml.filter(element);
-                resolve(element.html());
+                resolve(this.filterHtml.filter(element));
                 element.remove();
             });
             ko.applyBindingsToNode(

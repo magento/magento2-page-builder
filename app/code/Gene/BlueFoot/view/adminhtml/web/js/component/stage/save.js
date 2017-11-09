@@ -31,8 +31,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
       var element = (0, _jquery)('<div>');
       return new Promise(function (resolve, reject) {
         _engine.waitForFinishRender().then(function () {
-          element = _this.filterHtml.filter(element);
-          resolve(element.html());
+          resolve(_this.filterHtml.filter(element));
           element.remove();
         });
 

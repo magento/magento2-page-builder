@@ -6,13 +6,18 @@
 import $ from 'jquery';
 
 export default class FilterHtml {
+    replaceStrings = {
+        [window.location.origin + '/']: '',
+        [window.location.origin]: ''
+    };
+
     /**
-     * Remove comments, whitespaces and line breaks from the markup
+     * Remove comments, whitespaces and line breaks from the markup, return as string
      *
-     * @param {any} element
-     * @returns {any}
+     * @param {JQuery} element
+     * @returns {string}
      */
-    filter(element: any): any {
+    filter(element: JQuery): string {
         const isWhiteSpaceOrComment = function() {
             return this.nodeType == Node.COMMENT_NODE
                 || (this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/));
@@ -28,6 +33,13 @@ export default class FilterHtml {
             $(value).parent().append($(value).children());
             $(value).remove();
         });
-        return element;
+
+        // Filter any string replacement entries
+        let html = element.html();
+        for (const match in this.replaceStrings) {
+            html = html.replace(match, this.replaceStrings[match]);
+        }
+
+        return html;
     }
 }

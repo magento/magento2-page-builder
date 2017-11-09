@@ -5,6 +5,10 @@
 import {DataObject} from "../../component/data-store";
 import Config from "../../component/config";
 
+interface FromDomResult {
+    [key: string]: any;
+}
+
 export default class StyleAttributeMapper {
     /**
      * Map style attribute keys to DOM key names and normalize values
@@ -21,10 +25,10 @@ export default class StyleAttributeMapper {
                     return;
                 }
                 if (key === 'min_height') {
-                    value = value.replace('px', '') + 'px';
+                    value = (value as string).replace('px', '') + 'px';
                 }
                 if (key === 'width') {
-                    value = value.replace('%', '') + '%';
+                    value = (value as string).replace('%', '') + '%';
                 }
                 if (key === 'background_repeat') {
                     value = value === "1" ? 'repeat' : 'no-repeat';
@@ -32,12 +36,16 @@ export default class StyleAttributeMapper {
                 if (key === 'background_repeat-x' || key === 'background_repeat-y') {
                     value = '';
                 }
-                if (key === 'background_image' && value[0] != undefined) {
+                if (key === 'background_image' && Array.isArray(value) && value[0]) {
                     // convert to media directive
                     let imageUrl = value[0]['url'],
                         mediaUrl = Config.getInitConfig('media_url'),
                         mediaPath = imageUrl.split(mediaUrl),
-                        directive = '{{media url=' + mediaPath[1] + '}}';
+                        /**
+                         * Slash in front of the directive is required so Safari only appends the base URL to the
+                         * URL. This is then removed later in the process.
+                         */
+                        directive = '/{{media url=' + mediaPath[1] + '}}';
                     value = 'url(\'' + directive + '\')';
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
@@ -53,15 +61,15 @@ export default class StyleAttributeMapper {
      * @returns {DataObject}
      */
     public fromDom(data: DataObject): DataObject {
-        let result = {};
+        let result: FromDomResult = {};
         Object.keys(data).map(
             (key: any) => {
                 let value = data[key];
                 if (key === 'min-height') {
-                    value = value.replace('px', '');
+                    value = (value as string).replace('px', '');
                 }
                 if (key === 'width') {
-                    value = value.replace('%', '');
+                    value = (value as string).replace('%', '');
                 }
                 if (key === 'background-repeat-y') {
                     key = 'background-repeat';
@@ -86,8 +94,9 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[1]));
                 }
                 if (key === 'background-image') {
+                    console.log(value);
                     let mediaUrl = Config.getInitConfig('media_url'),
-                        imageUrl = value.match(/url=(.*)}}/)[1],
+                        imageUrl = (value as string).match(/url=(.*)}}/)[1],
                         imageType = imageUrl.match(/\.([^)]+)/)[1],
                         imageName = imageUrl.split('/').last(),
                         image = {

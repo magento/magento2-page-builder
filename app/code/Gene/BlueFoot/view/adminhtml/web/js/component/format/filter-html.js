@@ -6,15 +6,19 @@ define(["jquery"], function (_jquery) {
   var FilterHtml =
   /*#__PURE__*/
   function () {
-    function FilterHtml() {}
+    function FilterHtml() {
+      var _replaceStrings;
+
+      this.replaceStrings = (_replaceStrings = {}, _replaceStrings[window.location.origin + '/'] = '', _replaceStrings[window.location.origin] = '', _replaceStrings);
+    }
 
     var _proto = FilterHtml.prototype;
 
     /**
-     * Remove comments, whitespaces and line breaks from the markup
+     * Remove comments, whitespaces and line breaks from the markup, return as string
      *
-     * @param {any} element
-     * @returns {any}
+     * @param {JQuery} element
+     * @returns {string}
      */
     _proto.filter = function filter(element) {
       var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
@@ -31,8 +35,15 @@ define(["jquery"], function (_jquery) {
       element.find('[data-wrapper]').each(function (index, value) {
         (0, _jquery)(value).parent().append((0, _jquery)(value).children());
         (0, _jquery)(value).remove();
-      });
-      return element;
+      }); // Filter any string replacement entries
+
+      var html = element.html();
+
+      for (var match in this.replaceStrings) {
+        html = html.replace(match, this.replaceStrings[match]);
+      }
+
+      return html;
     };
 
     return FilterHtml;

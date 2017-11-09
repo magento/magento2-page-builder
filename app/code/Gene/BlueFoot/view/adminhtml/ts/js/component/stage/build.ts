@@ -15,27 +15,28 @@ import Block from '../block/block';
 import AttributeReaderComposite from '../format/read/composite';
 
 export default class Build extends EventEmitter {
+    fieldValue: string;
     stage: StageInterface;
+    stageElement: Element;
     document: Element;
     attributeReaderComposite: AttributeReaderComposite;
     
-    constructor() {
+    constructor(fieldValue: string) {
         super();
         this.attributeReaderComposite = new AttributeReaderComposite();
+        this.fieldValue = fieldValue;
     }
 
     /**
-     * Parse the potential structure
+     * Can we build BlueFoot from the fields value?
      *
-     * @param structure
+     * @returns {boolean}
      */
-    parseStructure(structure: string) {
-        if (!structure) {
-            return false;
-        }
+    canBuild() {
         this.document = document.createElement('div');
-        this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
-        return this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]');
+        this.document.innerHTML = '<div data-role="stage">' + this.fieldValue + '</div>';
+        this.stageElement = this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]');
+        return !!this.stageElement;
     }
 
     /**
@@ -45,25 +46,10 @@ export default class Build extends EventEmitter {
      * @param stageElement
      * @returns {Build}
      */
-    buildStage(stage: StageInterface, stageElement: HTMLElement) {
+    buildStage(stage: StageInterface) {
         this.stage = stage;
-        this.parseAndBuildStage(stageElement);
-        return this;
-    }
 
-    /**
-     * Parse and build the stage from the stage element
-     *
-     * @param stageElement
-     * @returns {Promise<T>}
-     */
-    parseAndBuildStage(stageElement: HTMLElement) {
-        return this.parseAndBuildElement(stageElement, this.stage)
-            .then(() => {
-                this.emit('buildDone');
-            }).catch((error: string) => {
-                this.emit('buildError', error);
-            });
+        return this.parseAndBuildElement(this.stageElement, this.stage);
     }
 
     /**
@@ -73,7 +59,7 @@ export default class Build extends EventEmitter {
      * @param parent
      * @returns {Promise<EditableAreaInterface>}
      */
-    parseAndBuildElement(element: HTMLElement, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
+    parseAndBuildElement(element: Element, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
         if (element instanceof HTMLElement
             && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
         ) {
