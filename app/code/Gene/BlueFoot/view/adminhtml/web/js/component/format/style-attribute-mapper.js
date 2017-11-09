@@ -1,4 +1,4 @@
-define(["../../component/config"], function (_config) {
+define(["../../component/config", "../../utils/directives"], function (_config, _directives) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,19 +43,14 @@ define(["../../component/config"], function (_config) {
           value = '';
         }
 
-        if (key === 'background_image' && Array.isArray(value) && value[0]) {
+        if (key === 'background_image' && Array.isArray(value) && value[0] != undefined) {
           // convert to media directive
           var imageUrl = value[0]['url'],
               mediaUrl = _config.getInitConfig('media_url'),
               mediaPath = imageUrl.split(mediaUrl),
+              directive = '{{media url=' + mediaPath[1] + '}}';
 
-          /**
-           * Slash in front of the directive is required so Safari only appends the base URL to the
-           * URL. This is then removed later in the process.
-           */
-          directive = '/{{media url=' + mediaPath[1] + '}}';
-
-          value = 'url(\'' + directive + '\')';
+          value = 'url(\'' + (0, _directives.toDataUrl)(directive) + '\')';
         }
 
         result[_this.fromSnakeToCamelCase(key)] = value;
@@ -109,17 +104,17 @@ define(["../../component/config"], function (_config) {
         }
 
         if (key === 'background-image') {
-          console.log(value);
+          // Replace the location.href if it exists and decode the value
+          value = decodeURIComponent(value.replace(window.location.href, ''));
 
-          var mediaUrl = _config.getInitConfig('media_url'),
-              imageUrl = value.match(/url=(.*)}}/)[1],
-              imageType = imageUrl.match(/\.([^)]+)/)[1],
-              imageName = imageUrl.split('/').last(),
+          var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
+              url = _$exec[1],
+              type = _$exec[2],
               image = {
-            "name": imageName,
+            "name": url.split('/').pop(),
             "size": 0,
-            "type": "image" + '/' + imageType,
-            "url": mediaUrl + imageUrl
+            "type": "image" + '/' + type,
+            "url": _config.getInitConfig('media_url') + url
           };
 
           value = [image];

@@ -13,7 +13,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       _this.fieldValue = void 0;
       _this.stage = void 0;
       _this.stageElement = void 0;
-      _this.document = void 0;
+      _this.stageDocument = void 0;
       _this.attributeReaderComposite = void 0;
       _this.attributeReaderComposite = new _composite();
       _this.fieldValue = fieldValue;
@@ -29,23 +29,24 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
     var _proto = Build.prototype;
 
     _proto.canBuild = function canBuild() {
-      this.document = document.createElement('div');
-      this.document.innerHTML = '<div data-role="stage">' + this.fieldValue + '</div>';
-      this.stageElement = this.document.querySelector('[' + _config.getValue('dataRoleAttributeName') + '="stage"]');
-      return !!this.stageElement;
+      // Create a document with a role of stage to wrap the contents
+      this.stageDocument = document.createElement('div');
+      this.stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
+      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
+
+      return !!this.stageDocument.querySelector('[' + _config.getValueAsString('dataRoleAttributeName') + '="row"]');
     };
     /**
      * Build the stage
      *
      * @param stage
-     * @param stageElement
      * @returns {Build}
      */
 
 
     _proto.buildStage = function buildStage(stage) {
       this.stage = stage;
-      return this.parseAndBuildElement(this.stageElement, this.stage);
+      return this.parseAndBuildElement(this.stageDocument, this.stage);
     };
     /**
      * Parse an element in the structure and build the required element

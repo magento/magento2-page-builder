@@ -87,15 +87,15 @@ define([
             this.domNode = node;
             this.bindBlueFootButton(node);
 
-            var buildInstance = new Build(this.value());
+            var buildInstance = new Build(this.initialValue);
             if (buildInstance.canBuild()) {
                 this.loading(true);
                 return this.buildBlueFoot(false, buildInstance);
-            } else {
-                $(node).bindings({
-                    value: this.value
-                });
             }
+
+            $(node).bindings({
+                value: this.value
+            });
         },
 
         /**

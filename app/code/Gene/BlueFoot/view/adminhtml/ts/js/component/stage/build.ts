@@ -18,7 +18,7 @@ export default class Build extends EventEmitter {
     fieldValue: string;
     stage: StageInterface;
     stageElement: Element;
-    document: Element;
+    stageDocument: Element;
     attributeReaderComposite: AttributeReaderComposite;
     
     constructor(fieldValue: string) {
@@ -33,23 +33,25 @@ export default class Build extends EventEmitter {
      * @returns {boolean}
      */
     canBuild() {
-        this.document = document.createElement('div');
-        this.document.innerHTML = '<div data-role="stage">' + this.fieldValue + '</div>';
-        this.stageElement = this.document.querySelector('[' + Config.getValue('dataRoleAttributeName') + '="stage"]');
-        return !!this.stageElement;
+        // Create a document with a role of stage to wrap the contents
+        this.stageDocument = document.createElement('div');
+        this.stageDocument.setAttribute(Config.getValueAsString('dataRoleAttributeName'), 'stage');
+        this.stageDocument.innerHTML = this.fieldValue;
+
+        // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
+        return !!this.stageDocument.querySelector('[' + Config.getValueAsString('dataRoleAttributeName') + '="row"]');
     }
 
     /**
      * Build the stage
      *
      * @param stage
-     * @param stageElement
      * @returns {Build}
      */
     buildStage(stage: StageInterface) {
         this.stage = stage;
 
-        return this.parseAndBuildElement(this.stageElement, this.stage);
+        return this.parseAndBuildElement(this.stageDocument, this.stage);
     }
 
     /**

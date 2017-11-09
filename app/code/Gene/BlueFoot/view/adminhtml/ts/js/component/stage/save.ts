@@ -7,7 +7,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import Structural from "./structural/abstract";
-import FilterHtml from '../../component/format/filter-html';
+import filterHtml from '../../component/format/filter-html';
+import decodeAllDataUrlsInString from "../../utils/directives";
 
 /**
  * Render the tree into a string
@@ -16,7 +17,6 @@ import FilterHtml from '../../component/format/filter-html';
  */
 export default class Save {
     rootTemplate: string = 'Gene_BlueFoot/component/block/render/root.html';
-    filterHtml: FilterHtml = new FilterHtml();
 
     /**
      * Render a tree of content types instances stored in knockout
@@ -28,7 +28,9 @@ export default class Save {
         let element = $('<div>');
         return new Promise((resolve, reject) => {
             engine.waitForFinishRender().then(() => {
-                resolve(this.filterHtml.filter(element));
+                const filtered: JQuery = filterHtml(element),
+                    output = decodeAllDataUrlsInString(filtered.html());
+                resolve(output);
                 element.remove();
             });
             ko.applyBindingsToNode(

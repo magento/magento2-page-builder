@@ -4,6 +4,7 @@
  */
 import {DataObject} from "../../component/data-store";
 import Config from "../../component/config";
+import {toDataUrl} from "../../utils/directives";
 
 interface FromDomResult {
     [key: string]: any;
@@ -25,10 +26,10 @@ export default class StyleAttributeMapper {
                     return;
                 }
                 if (key === 'min_height') {
-                    value = (value as string).replace('px', '') + 'px';
+                    value = value.replace('px', '') + 'px';
                 }
                 if (key === 'width') {
-                    value = (value as string).replace('%', '') + '%';
+                    value = value.replace('%', '') + '%';
                 }
                 if (key === 'background_repeat') {
                     value = value === "1" ? 'repeat' : 'no-repeat';
@@ -36,17 +37,13 @@ export default class StyleAttributeMapper {
                 if (key === 'background_repeat-x' || key === 'background_repeat-y') {
                     value = '';
                 }
-                if (key === 'background_image' && Array.isArray(value) && value[0]) {
+                if (key === 'background_image' && Array.isArray(value) && value[0] != undefined) {
                     // convert to media directive
                     let imageUrl = value[0]['url'],
                         mediaUrl = Config.getInitConfig('media_url'),
                         mediaPath = imageUrl.split(mediaUrl),
-                        /**
-                         * Slash in front of the directive is required so Safari only appends the base URL to the
-                         * URL. This is then removed later in the process.
-                         */
-                        directive = '/{{media url=' + mediaPath[1] + '}}';
-                    value = 'url(\'' + directive + '\')';
+                        directive = '{{media url=' + mediaPath[1] + '}}';
+                    value = 'url(\'' + toDataUrl(directive) + '\')';
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
             }
@@ -66,10 +63,10 @@ export default class StyleAttributeMapper {
             (key: any) => {
                 let value = data[key];
                 if (key === 'min-height') {
-                    value = (value as string).replace('px', '');
+                    value = value.replace('px', '');
                 }
                 if (key === 'width') {
-                    value = (value as string).replace('%', '');
+                    value = value.replace('%', '');
                 }
                 if (key === 'background-repeat-y') {
                     key = 'background-repeat';
@@ -94,16 +91,14 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[1]));
                 }
                 if (key === 'background-image') {
-                    console.log(value);
-                    let mediaUrl = Config.getInitConfig('media_url'),
-                        imageUrl = (value as string).match(/url=(.*)}}/)[1],
-                        imageType = imageUrl.match(/\.([^)]+)/)[1],
-                        imageName = imageUrl.split('/').last(),
+                    // Replace the location.href if it exists and decode the value
+                    value = decodeURIComponent((value as string).replace(window.location.href, ''));
+                    const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
                         image = {
-                            "name": imageName,
+                            "name": url.split('/').pop(),
                             "size": 0,
-                            "type": "image" + '/' + imageType,
-                            "url": mediaUrl + imageUrl
+                            "type": "image" + '/' + type,
+                            "url": Config.getInitConfig('media_url') + url
                         };
                     value = [image];
                 }
