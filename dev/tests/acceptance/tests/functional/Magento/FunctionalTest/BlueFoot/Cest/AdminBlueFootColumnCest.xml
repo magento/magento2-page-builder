@@ -290,5 +290,35 @@
             </actionGroup>
             <seeElement selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
         </test>
+        <test name="ValidateBackgroundImageUrl">
+            <annotations>
+                <title value="Column settings appear on frontend"/>
+                <description value="Validate selected column settings appear on the frontend"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value=""/>
+                <group value="bluefoot"/>
+                <group value="skip"/> <!-- https://jira.corp.magento.com/browse/MQE-235 -->
+            </annotations>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty"> <!--Will fail without selecting Background Attachment -->
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
+                <argument name="property" value="BlueFootBackgroundImageProperty"/>
+            </actionGroup>
+            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+            <wait time="1" mergeKey="waitForDataStoreUpdate"/>
+            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForSavePage" />
+            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+            <wait time="1" mergeKey="wait3"/>
+            <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <wait time="5" mergeKey="wait3"/>
+            <!--<grabAttributeFrom returnVariable="title" selector="#target" userInput="title" mergeKey="grabAttributeFrom"/>-->
+            <!--<amOnUrl url="http://www.google.com/" mergeKey="amOnUrl"/>-->
+            <!--<seeCurrentUrlMatches url="{{BlueFootBackgroundImageProperty.url}}" mergeKey="seeCurrentUrlMatches"/>-->
+        </test>
     </cest>
 </config>
