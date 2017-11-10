@@ -19,6 +19,7 @@
         </annotations>
         <after>
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
         <before>
             <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
@@ -46,6 +47,7 @@
             <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragColumnIntoStage"/>
             <actionGroup ref="removeBlueFootColumn" mergeKey="removeColumn"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
             <dontSeeElement selector="{{BlueFootColumnSection.column}}" mergeKey="dontSeeColumn"/>
         </test>
         <test name="SlideOutPanelWithSettingsContainRequiredFields">
@@ -59,7 +61,6 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-
             <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAppearanceMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
@@ -81,7 +82,6 @@
             <actionGroup ref="validateSlideOutPanelField" mergeKey="seeBackgroundAttachmentProperty">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
-
             <actionGroup ref="validateSlideOutPanelFieldIsRequired" mergeKey="seeBackgroundPositionPropertyIsRequired">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
@@ -110,7 +110,9 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
             <seeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="seeEditForm"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
             <waitForElementNotVisible time="2" selector="{{BlueFootColumnSection.editFormSpinner}}" mergeKey="waitForSpinner" />
+            <waitForElementVisible time="2" selector="{{BlueFootActionsSection.editFormCancel}}" mergeKey="waitForEditFormCancel"/>
             <click selector="{{BlueFootActionsSection.editFormCancel}}" mergeKey="clickEditFormCancel"/>
             <waitForElementNotVisible time="2" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitClose" />
             <dontSeeElement selector="{{BlueFootActionsSection.editForm}}" mergeKey="dontSeeEditForm"/>
@@ -127,7 +129,7 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
-            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty1">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty">
@@ -136,8 +138,14 @@
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizeProperty">
-                <argument name="property" value="BlueFootBackgroundSizeProperty"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizePropertyContain">
+                <argument name="property" value="BlueFootBackgroundSizePropertyContain"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty">
+                <argument name="property" value="BlueFootBackgroundWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearancePropertyBottom">
+                <argument name="property" value="BlueFootBackgroundAppearanceProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" mergeKey="clickBackgroundProperty"/>
             <wait time="1" mergeKey="waitForClick10"/>
@@ -148,28 +156,78 @@
             <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
-            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
             <wait time="1" mergeKey="wait6"/>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings"/>
             <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2"/>
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty2">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
-            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn2"/>
-            <wait time="1" mergeKey="waitForDataStoreUpdate" />
-            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForSavePage" />
-            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
             <wait time="1" mergeKey="wait7"/>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings2"/>
+            <actionGroup ref="saveCmsPage" mergeKey="saveCmsPage"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1HeightApplied"/>
+            <seeElement selector="{{RowsOnFrontend.row1Display}}" mergeKey="seeDefaultRow1DisplayApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1MinHeightApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColor}}" mergeKey="seeColumn1BackgroundColorApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundSize}}" mergeKey="seeColumn1BackgroundSizeApplied"/>
-            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundRepeat}}" mergeKey="seeColumn1BackgroundRepeatApplied"/>
-            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundAttachment}}" mergeKey="seeColumn1BackgroundAttachmentApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundRepeatApplied}}" mergeKey="seeColumn1BackgroundRepeatApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundAttachment}}" mergeKey="seeColumn1BackgroundAttachmentFixedApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column1BackgroundImage}}" mergeKey="seeColumn1BackgroundImageApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" mergeKey="seeColumn1WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  mergeKey="seeColumn1AppearanceBottomApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" mergeKey="seeColumn2DefaultWidthApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column2Height}}" mergeKey="seeColumn2HeightApplied"/>
-            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeApplied"/>
-            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeat}}" mergeKey="seeColumn2BackgroundREpeatApplied"/>
-            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundAttachment}}" mergeKey="seeColumn2BackgroundAttachmentApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" mergeKey="seeColumn2BackgroundSizeAutoApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeatNotApplied}}" mergeKey="seeColumn2BackgroundRepeatNotApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundAttachment}}" mergeKey="seeColumn2BackgroundAttachmentScrollApplied"/>
+        </test>
+        <test name="ColumnAppearanceSettingsShowOnFrontend">
+            <annotations>
+                <title value="Column appearance settings show on frontend"/>
+                <description value="Validate column appearance settings appear on the frontend"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragThirdColumn"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty">
+                <argument name="property" value="BlueFootBackgroundWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearancePropertyBottom">
+                <argument name="property" value="BlueFootBackgroundAppearanceProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings"/>
+            <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty2">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearancePropertyCentered">
+                <argument name="property" value="BlueFootBackgroundAppearancePropertyCentered"/>
+            </actionGroup>
+            <wait time="1" mergeKey="wait1"/>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings2"/>
+            <actionGroup ref="openBlueFootEditColumnPanel3" mergeKey="openEditPanel3"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty3">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings3"/>
+            <actionGroup ref="saveCmsPage" mergeKey="saveCmsPage"/>
+            <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{RowsOnFrontend.row1Display}}" mergeKey="seeRow1DisplayApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" mergeKey="seeColumn1WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  mergeKey="seeColumn1AppearanceBottomApplied"/>
+            <seeElementInDOM selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" mergeKey="seeColumn2DefaultWidthApplied"/>
+            <seeElementInDOM selector="{{ColumnsOnFrontend.column2Appearance}}"  mergeKey="seeColumn2AppearanceCenteredApplied"/>
+            <seeElementInDOM selector="{{ColumnsOnFrontend.column3Appearance}}"  mergeKey="seeColumn3AppearanceTopDefaultApplied"/>
+            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>
         <test name="ColumnChangesPreserved">
             <annotations>
@@ -189,13 +247,10 @@
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty">
                 <argument name="property" value="BlueFootBackgroundColorProperty"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
-                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
-            </actionGroup>
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizeProperty">
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundSizePropertyCover">
                 <argument name="property" value="BlueFootBackgroundSizeProperty"/>
             </actionGroup>
             <wait time="1" mergeKey="wait3"/>
@@ -207,10 +262,8 @@
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAttachmentProperty">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
-            <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
-            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForSavePage" />
-            <wait time="1" mergeKey="waitForDataStoreUpdate" />
-            <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings"/>
+            <actionGroup ref="saveCmsPage" mergeKey="saveCmsPage2"/>
             <waitForPageLoad mergeKey="waitForCmsPagesGridLoad"/>
             <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" mergeKey="waitForSearchField" />
             <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" mergeKey="waitForButton" />
@@ -291,7 +344,7 @@
             <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
-            <seeElement selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
+            <seeElementInDOM selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
         </test>
         <test name="ValidateBackgroundImageUrl">
             <annotations>
