@@ -31,22 +31,26 @@
         <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
         <element name="nothingFound" type="text" selector='//*[@id="bluefoot-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='//aside[contains(@class, "modal-popup")]'/>
-        <element name="modalOk" type="button" selector='//button[@class="action-primary action-accept"]'/>
+        <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "bluefoot_modal_form_bluefoot_modal_form_modal")]'/>
-        <element name="editFormCancel" type="button" selector='//aside[contains(@class, "bluefoot_modal_form_bluefoot_modal_form_modal")]/div[@class="modal-inner-wrap"]/header/div[@class="page-main-actions"]/div/button[@data-form-role="close"]'/>
+        <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
-        <element name="cmsPageSaveButton" type="button" selector="//div[contains(@class, 'page-actions-buttons')][1]/button[@id='save']"/>
+        <element name="cmsPageSaveButton" type="button" selector=".action-.scalable.save.primary"/>
         <element name="pageTitle" type="input" selector="//*[@name='title']"/>
     </section>
     <section name="CmsPageGrid">
+        <element name="addNewPageButton" type="button" selector="#add"/>
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_listing.cms_page_listing.cms_page_columns"]'/>
         <element name="cmsPageSearchInput" type="input" selector="//*[@id='fulltext']"/>
         <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
         <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
         <element name="firstItemEditButton" type="button" selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']"/>
+    </section>
+    <section name="CmsMessagesSection">
+        <element name="savePageSuccessMessage" type="text" selector=".message-success"/>
     </section>
     <section name="BlueFootRowSection">
         <element name="row" type="text" selector='(//div[@class="bluefoot-structure bluefoot-row"])[1]'/>
@@ -56,7 +60,7 @@
         <element name="removeRow" type="button" selector='(//div[@class="bluefoot-structure bluefoot-row"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
     <section name="BlueFootColumnSection">
-        <element name="editFormSpinner" type="input" selector='//div[@data-component="column_form.column_form"]' />
+        <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
         <element name="column" type="text" selector="(//div[@class='bluefoot-structure bluefoot-column'])[1]"/>
         <element name="allColumns" type="text" selector='//div[@class="bluefoot-structure bluefoot-column"]'/>
         <element name="addRow" type="button" selector='//*[@class="bluefoot-stage"]/div[3]/button'/>
@@ -66,39 +70,43 @@
         <element name="columnInStage2" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[2]'/>
         <element name="columnInStage2Children" type="text" selector='(//div[@class="bluefoot-structure bluefoot-column"])[2]/div[contains(@class, "column-container")]/div'/>
         <element name="columnInStage2DropArea" type="text" selector='(//div[@class="bluefoot-structure bluefoot-column"])[2]/div[contains(@class, "column-container")]'/>
+        <element name="columnInStage3" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[3]'/>
         <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "bluefoot-column")][1]/div[@class="bluefoot-options"]'/>
         <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "bluefoot-column")][2]/div[@class="bluefoot-options"]'/>
         <element name="editColumn" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
         <element name="editColumn2" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[2]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn3" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[3]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
         <element name="dragColumn" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="move-structural"]'/>
         <element name="removeColumn" type="button" selector='(//div[contains(@class, "bluefoot-column")])[1]/div[@class="bluefoot-options"]/descendant::*[@class="remove-structural"]'/>
         <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
-        <element name="panelFieldUploadSummary" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/../../div[@class="file-uploader-summary"]' parameterized="true"/>
+        <element name="fileUploadButton" type="button" selector='.file-uploader-button'/>
+        <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
+        <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
-        <element name="columnSaveButton" type="button" selector="//header[contains(@class, 'modal-header')]/div[1]/div[1]/button[@data-form-role='save']"/>
+        <element name="columnSaveButton" type="button" selector="button.primary.action-.scalable.save[data-form-role='save'][type='button'][data-ui-id='column-form-page-actions-save']"/>
     </section>
     <section name="RowsOnFrontend">
-        <element name="row1Display" type="button" selector="//*[@data-role='row'][1][contains(@style, 'display: flex;')]"/>
+        <element name="row1Display" type="button" selector="[data-role='row'][style='display: flex;']"/>
     </section>
     <section name="ColumnsOnFrontend">
-        <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 100px;')]"/>
+        <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
-        <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: cover;')]"/>
-        <element name="column1BackgroundRepeat" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
-        <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: scroll;')]"/>
-        <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 100px;')]"/>
+        <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: contain;')]"/>
+        <element name="column1BackgroundRepeatApplied" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: fixed;')]"/>
+        <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1BackgroundWidth" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 50%;')]"/>
-        <!-- <element name="column1Appearance" type="button" selector="//*[@data-role='column' and @data-appearance='align-bottom'][1][contains(@style, 'align-self: flex-end;')]"/> -->
-        <element name="column1Position" type="button" selector="//*[@data-role='column'][1][contains(@style, 'align-self: flex-end;')]"/>
+        <element name="column1Appearance" type="button" selector="//*[@data-role='column'][1][contains(@style, 'align-self: flex-end;')]"/>
         <element name="column1BackgroundImage" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-image: url(')]"/>
         <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
-        <element name="column2BackgroundRepeat" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: no-repeat;')]"/>
-        <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: fixed;')]"/>
+        <element name="column2BackgroundRepeatNotApplied" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: no-repeat;')]"/>
+        <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: scroll;')]"/>
         <element name="column2BackgroundWidth" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 16.7%;')]"/>
-        <!-- <element name="column2Appearance" type="button" selector="//*[@data-role='column' and @data-appearance='align-top'][1][contains(@style, 'align-self: flex-start;')]"/> -->
-        <element name="column2Position" type="button" selector="//*[@data-role='column'][2][contains(@style, 'align-self: flex-start;')]"/>
+        <element name="column2Appearance" type="button" selector="//*[@data-role='column'][2][contains(@style, 'align-self: center;')]"/>
+        <element name="column3Appearance" type="button" selector="//*[@data-role='column'][3][contains(@style, 'align-self: flex-start;')]"/>
+        <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
     </section>
 </config>

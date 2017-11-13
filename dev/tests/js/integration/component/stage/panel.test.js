@@ -50,7 +50,9 @@ describe('searching in panel', () => {
     });
 
     it('returns only visible blocks', () => {
-        expect(searchInPanel('Invisible Block')).toEqual([]);
+        expect(searchInPanel('Block')).toEqual(
+            ['Block', 'Segmented Block']
+        );
     });
 
     it('returns results matching full phrase', () => {
@@ -59,19 +61,19 @@ describe('searching in panel', () => {
         );
     });
 
-    it('returns matches for one character', () => {
+    it('returns matches for one character in beginning of word', () => {
         expect(searchInPanel('b')).toEqual(
             ['Block', 'Segmented Block']
         );
     });
 
-    it('returns matches for two characters', () => {
+    it('returns matches for two characters in beginning of word', () => {
         expect(searchInPanel('co')).toEqual(
             ['Column', 'Code']
         );
     });
 
-    it('returns matches for three characters', () => {
+    it('returns matches for three characters in beginning of word', () => {
         expect(searchInPanel('blo')).toEqual(
             ['Block', 'Segmented Block']
         );

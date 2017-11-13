@@ -55,6 +55,7 @@
 
     <actionGroup name="navigateToAPageWithBlueFoot">
         <loginAsAdmin mergeKey="loginAsAdmin"/>
+        <waitForPageLoad mergeKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
         <waitForPageLoad mergeKey="waitForPageLoad"/>
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForElementVisible" />
@@ -90,10 +91,18 @@
         <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" mergeKey="waitForAnimation" />
+        <waitForElementNotVisible time="5" selector="{{BlueFootColumnSection.editFormSpinner}}" mergeKey="waitForSpinner"/>
     </actionGroup>
     <actionGroup name="openBlueFootEditColumnPanel2">
         <moveMouseOver selector="{{BlueFootColumnSection.columnInStage2}}" mergeKey="onMouseOverColumn2"/>
         <click selector="{{BlueFootColumnSection.editColumn2}}" mergeKey="clickEditColumn2"/>
+        <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" mergeKey="waitForAnimation" />
+    </actionGroup>
+    <actionGroup name="openBlueFootEditColumnPanel3">
+        <moveMouseOver selector="{{BlueFootColumnSection.columnInStage3}}" mergeKey="onMouseOverColumn2"/>
+        <click selector="{{BlueFootColumnSection.editColumn3}}" mergeKey="clickEditColumn2"/>
         <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" mergeKey="waitForAnimation" />
@@ -130,7 +139,7 @@
         <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modal}}" mergeKey="waitForModal" />
         <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
         <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
-        <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modal}}" mergeKey="waitForModalHide" />
+        <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalHide" />
     </actionGroup>
 
     <actionGroup name="validateSlideOutPanelField">
@@ -197,6 +206,18 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}' mergeKey="attachBackgroundImageFile"/>
-        <waitForElementVisible time="10" selector="{{BlueFootColumnSection.panelFieldUploadSummary(property.section, property.fieldName)}}" mergeKey="waitForSummary" />
+        <waitForElementVisible time="10" selector="{{BlueFootColumnSection.panelFieldUploadSummary(property.value)}}" mergeKey="waitForImageUploadSummary" />
+    </actionGroup>
+    <actionGroup name="saveColumnSettings">
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="waitForColumnSaveButton" />
+        <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
+    <actionGroup name="saveCmsPage">
+        <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+        <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" mergeKey="waitForCmsPageSaveButton" />
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>
     </actionGroup>
 </config>
