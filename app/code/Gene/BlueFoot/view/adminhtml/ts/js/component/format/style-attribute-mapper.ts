@@ -83,7 +83,7 @@ export default class StyleAttributeMapper {
                     value = '#'
                         + this.fromIntToHex(parseInt(matches[1]))
                         + this.fromIntToHex(parseInt(matches[2]))
-                        + this.fromIntToHex(parseInt(matches[1]));
+                        + this.fromIntToHex(parseInt(matches[3]));
                 }
                 if (key === 'background-image') {
                     let mediaUrl = Config.getInitConfig('media_url'),
