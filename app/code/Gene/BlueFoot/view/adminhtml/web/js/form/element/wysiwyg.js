@@ -85,24 +85,17 @@ define([
          */
         setElementNode: function (node) {
             this.domNode = node;
+            this.bindBlueFootButton(node);
+
+            var buildInstance = new Build(this.initialValue);
+            if (buildInstance.canBuild()) {
+                this.loading(true);
+                return this.buildBlueFoot(false, buildInstance);
+            }
+
             $(node).bindings({
                 value: this.value
             });
-
-            this.bindBlueFootButton(node);
-            this.checkForBlueFootContent(node);
-        },
-
-        /**
-         * Check to see if the WYSIWYG already contains BlueFoot content
-         */
-        checkForBlueFootContent: function (node) {
-            var buildInstance = new Build(),
-                buildStructure;
-            if (buildStructure = buildInstance.parseStructure($(node).val())) {
-                this.loading(true);
-                return this.buildBlueFoot(false, buildInstance, buildStructure, node);
-            }
         },
 
         /**
@@ -119,10 +112,8 @@ define([
          *
          * @param event
          * @param buildInstance
-         * @param buildStructure
-         * @param node
          */
-        buildBlueFoot: function (event, buildInstance, buildStructure, node) {
+        buildBlueFoot: function (event, buildInstance) {
             var self = this;
             if (event) {
                 event.stopPropagation();
@@ -144,7 +135,7 @@ define([
             this.panel.bindStage(this.stage);
 
             // Build the stage instance using any existing build data
-            this.stage.build(buildInstance, buildStructure);
+            this.stage.build(buildInstance);
         },
 
         /**

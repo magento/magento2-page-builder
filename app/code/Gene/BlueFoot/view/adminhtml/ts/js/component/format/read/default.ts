@@ -43,7 +43,6 @@ export default class Default implements ReadInterface {
         data['css_classes'] = element.className.split(' ').filter(value => value.length > 0);
 
         return new Promise((resolve: Function) => {
-            console.log(data);
             resolve(data);
         });
     }

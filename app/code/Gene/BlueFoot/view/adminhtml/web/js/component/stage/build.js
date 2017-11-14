@@ -6,64 +6,47 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
   function (_EventEmitter) {
     _inheritsLoose(Build, _EventEmitter);
 
-    function Build() {
+    function Build(fieldValue) {
       var _this;
 
       _this = _EventEmitter.call(this) || this;
+      _this.fieldValue = void 0;
       _this.stage = void 0;
-      _this.document = void 0;
+      _this.stageElement = void 0;
+      _this.stageDocument = void 0;
       _this.attributeReaderComposite = void 0;
       _this.attributeReaderComposite = new _composite();
+      _this.fieldValue = fieldValue;
       return _this;
     }
     /**
-     * Parse the potential structure
+     * Can we build Page Builder from the fields value?
      *
-     * @param structure
+     * @returns {boolean}
      */
 
 
     var _proto = Build.prototype;
 
-    _proto.parseStructure = function parseStructure(structure) {
-      if (!structure) {
-        return false;
-      }
+    _proto.canBuild = function canBuild() {
+      // Create a document with a role of stage to wrap the contents
+      this.stageDocument = document.createElement('div');
+      this.stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
+      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
 
-      this.document = document.createElement('div');
-      this.document.innerHTML = '<div data-role="stage">' + structure + '</div>';
-      return this.document.querySelector('[' + _config.getValue('dataRoleAttributeName') + '="stage"]');
+      return !!this.stageDocument.querySelector('[' + _config.getValueAsString('dataRoleAttributeName') + '="row"]');
     };
     /**
      * Build the stage
      *
      * @param stage
-     * @param stageElement
      * @returns {Build}
      */
 
 
-    _proto.buildStage = function buildStage(stage, stageElement) {
+    _proto.buildStage = function buildStage(stage) {
       this.stage = stage;
-      this.parseAndBuildStage(stageElement);
-      return this;
-    };
-    /**
-     * Parse and build the stage from the stage element
-     *
-     * @param stageElement
-     * @returns {Promise<T>}
-     */
-
-
-    _proto.parseAndBuildStage = function parseAndBuildStage(stageElement) {
-      var _this2 = this;
-
-      return this.parseAndBuildElement(stageElement, this.stage).then(function () {
-        _this2.emit('buildDone');
-      }).catch(function (error) {
-        _this2.emit('buildError', error);
-      });
+      return this.parseAndBuildElement(this.stageDocument, this.stage);
     };
     /**
      * Parse an element in the structure and build the required element
@@ -75,7 +58,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.parseAndBuildElement = function parseAndBuildElement(element, parent) {
-      var _this3 = this;
+      var _this2 = this;
 
       if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
         parent = parent || this.stage;
@@ -85,10 +68,10 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
           resolve(self.getElementData(element));
         });
         return getElementDataPromise.then(function (data) {
-          var children = _this3.getElementChildren(element); // Add element to stage
+          var children = _this2.getElementChildren(element); // Add element to stage
 
 
-          return _this3.buildElement(role, data, parent).then(function (newParent) {
+          return _this2.buildElement(role, data, parent).then(function (newParent) {
             if (children.length > 0) {
               var childPromises = [];
 
@@ -130,7 +113,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.getElementChildren = function getElementChildren(element) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (element.hasChildNodes()) {
         var children = []; // Find direct children of the element
@@ -141,7 +124,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
             if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
               children.push(child);
             } else {
-              children = _this4.getElementChildren(child);
+              children = _this3.getElementChildren(child);
             }
           }
         });

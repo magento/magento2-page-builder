@@ -1,4 +1,4 @@
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../component/format/filter-html"], function (_jquery, _knockout, _engine, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../component/format/filter-html", "../../utils/directives"], function (_jquery, _knockout, _engine, _filterHtml, _directives) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,7 +14,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
   function () {
     function Save() {
       this.rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
-      this.filterHtml = new _filterHtml();
     }
 
     var _proto = Save.prototype;
@@ -31,8 +30,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
       var element = (0, _jquery)('<div>');
       return new Promise(function (resolve, reject) {
         _engine.waitForFinishRender().then(function () {
-          element = _this.filterHtml.filter(element);
-          resolve(element.html());
+          var filtered = (0, _filterHtml)(element),
+              output = (0, _directives)(filtered.html());
+          resolve(output);
           element.remove();
         });
 

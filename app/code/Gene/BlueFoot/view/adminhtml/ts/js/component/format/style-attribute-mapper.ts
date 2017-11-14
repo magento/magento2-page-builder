@@ -4,6 +4,11 @@
  */
 import {DataObject} from "../../component/data-store";
 import Config from "../../component/config";
+import {toDataUrl} from "../../utils/directives";
+
+interface FromDomResult {
+    [key: string]: any;
+}
 
 export default class StyleAttributeMapper {
     /**
@@ -32,13 +37,13 @@ export default class StyleAttributeMapper {
                 if (key === 'background_repeat-x' || key === 'background_repeat-y') {
                     value = '';
                 }
-                if (key === 'background_image' && value[0] != undefined) {
+                if (key === 'background_image' && Array.isArray(value) && value[0] != undefined) {
                     // convert to media directive
                     let imageUrl = value[0]['url'],
                         mediaUrl = Config.getInitConfig('media_url'),
                         mediaPath = imageUrl.split(mediaUrl),
                         directive = '{{media url=' + mediaPath[1] + '}}';
-                    value = 'url(\'' + directive + '\')';
+                    value = 'url(\'' + toDataUrl(directive) + '\')';
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
             }
@@ -53,7 +58,7 @@ export default class StyleAttributeMapper {
      * @returns {DataObject}
      */
     public fromDom(data: DataObject): DataObject {
-        let result = {};
+        let result: FromDomResult = {};
         Object.keys(data).map(
             (key: any) => {
                 let value = data[key];
@@ -86,15 +91,14 @@ export default class StyleAttributeMapper {
                         + this.fromIntToHex(parseInt(matches[3]));
                 }
                 if (key === 'background-image') {
-                    let mediaUrl = Config.getInitConfig('media_url'),
-                        imageUrl = value.match(/url=(.*)}}/)[1],
-                        imageType = imageUrl.match(/\.([^)]+)/)[1],
-                        imageName = imageUrl.split('/').last(),
+                    // Replace the location.href if it exists and decode the value
+                    value = decodeURIComponent((value as string).replace(window.location.href, ''));
+                    const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
                         image = {
-                            "name": imageName,
+                            "name": url.split('/').pop(),
                             "size": 0,
-                            "type": "image" + '/' + imageType,
-                            "url": mediaUrl + imageUrl
+                            "type": "image/" + type,
+                            "url": Config.getInitConfig('media_url') + url
                         };
                     value = [image];
                 }

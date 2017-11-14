@@ -65,17 +65,16 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
      * Run the build system to initiate from existing structures
      *
      * @param {Build} buildInstance
-     * @param {HTMLElement} buildStructure
      */
 
 
     var _proto = Stage.prototype;
 
-    _proto.build = function build(buildInstance, buildStructure) {
+    _proto.build = function build(buildInstance) {
       var self = this;
 
-      if (buildInstance && buildStructure) {
-        buildInstance.buildStage(this, buildStructure).on('buildDone', self.ready.bind(self)).on('buildError', function (event, error) {
+      if (buildInstance) {
+        buildInstance.buildStage(this).then(self.ready.bind(self)).catch(function (error) {
           // Inform the user that an issue has occurred
           self.parent.alertDialog({
             title: (0, _translate)('Advanced CMS Error'),

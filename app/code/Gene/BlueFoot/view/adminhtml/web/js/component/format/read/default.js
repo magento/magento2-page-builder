@@ -43,7 +43,6 @@ define(["underscore", "../style-attribute-mapper"], function (_underscore, _styl
         return value.length > 0;
       });
       return new Promise(function (resolve) {
-        console.log(data);
         resolve(data);
       });
     };

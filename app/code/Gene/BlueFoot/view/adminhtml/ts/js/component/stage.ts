@@ -73,14 +73,13 @@ export default class Stage extends EditableArea implements StageInterface {
      * Run the build system to initiate from existing structures
      *
      * @param {Build} buildInstance
-     * @param {HTMLElement} buildStructure
      */
-    build(buildInstance: Build, buildStructure: HTMLElement) {
+    build(buildInstance: Build) {
         let self = this;
-        if (buildInstance && buildStructure) {
-            buildInstance.buildStage(this, buildStructure)
-                .on('buildDone', self.ready.bind(self))
-                .on('buildError', function (event: Event, error: string) {
+        if (buildInstance) {
+            buildInstance.buildStage(this)
+                .then(self.ready.bind(self))
+                .catch((error) => {
                     // Inform the user that an issue has occurred
                     self.parent.alertDialog({
                         title: $t('Advanced CMS Error'),
