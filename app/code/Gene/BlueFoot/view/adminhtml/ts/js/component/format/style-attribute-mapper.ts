@@ -88,7 +88,7 @@ export default class StyleAttributeMapper {
                     value = '#'
                         + this.fromIntToHex(parseInt(matches[1]))
                         + this.fromIntToHex(parseInt(matches[2]))
-                        + this.fromIntToHex(parseInt(matches[1]));
+                        + this.fromIntToHex(parseInt(matches[3]));
                 }
                 if (key === 'background-image') {
                     // Replace the location.href if it exists and decode the value
