@@ -32,9 +32,7 @@ export function fromDataUrl(url: string): string {
     if (!isDirectiveDataUrl(url)) {
         throw Error(url + ' is not a magento directive data url');
     }
-    let parser = document.createElement('a');
-    parser.href = url;
-    return decodeURIComponent(parser.pathname.slice(mimeType.length + 1));
+    return decodeURIComponent(url.split(mimeType + ",")[1]);
 }
 
 /**
@@ -44,7 +42,7 @@ export function fromDataUrl(url: string): string {
  * @returns {string}
  */
 export default function decodeAllDataUrlsInString(str: string) {
-    return str.replace(new RegExp('url\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+)(?:&quot;|"|\')?\\s*\\)', 'g'), function(match, url) {
+    return str.replace(new RegExp('url\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+?)(?:&quot;|\'|")?\\s*\\)', 'g'), function(match, url) {
         return 'url(\'' + fromDataUrl(url) +'\')';
     });
 }

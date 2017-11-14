@@ -113,7 +113,7 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
               image = {
             "name": url.split('/').pop(),
             "size": 0,
-            "type": "image" + '/' + type,
+            "type": "image/" + type,
             "url": _config.getInitConfig('media_url') + url
           };
 

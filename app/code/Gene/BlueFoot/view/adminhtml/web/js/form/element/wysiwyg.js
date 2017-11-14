@@ -112,7 +112,6 @@ define([
          *
          * @param event
          * @param buildInstance
-         * @param buildStructure
          */
         buildBlueFoot: function (event, buildInstance) {
             var self = this;

@@ -28,7 +28,7 @@ export default class Build extends EventEmitter {
     }
 
     /**
-     * Can we build BlueFoot from the fields value?
+     * Can we build Page Builder from the fields value?
      *
      * @returns {boolean}
      */

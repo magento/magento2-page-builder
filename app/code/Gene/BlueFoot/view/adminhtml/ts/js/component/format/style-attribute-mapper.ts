@@ -97,7 +97,7 @@ export default class StyleAttributeMapper {
                         image = {
                             "name": url.split('/').pop(),
                             "size": 0,
-                            "type": "image" + '/' + type,
+                            "type": "image/" + type,
                             "url": Config.getInitConfig('media_url') + url
                         };
                     value = [image];

@@ -36,9 +36,7 @@ define([], function () {
       throw Error(url + ' is not a magento directive data url');
     }
 
-    var parser = document.createElement('a');
-    parser.href = url;
-    return decodeURIComponent(parser.pathname.slice(mimeType.length + 1));
+    return decodeURIComponent(url.split(mimeType + ",")[1]);
   }
   /**
    * Decode all data URIs present in a string
@@ -49,7 +47,7 @@ define([], function () {
 
 
   function decodeAllDataUrlsInString(str) {
-    return str.replace(new RegExp('url\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+)(?:&quot;|"|\')?\\s*\\)', 'g'), function (match, url) {
+    return str.replace(new RegExp('url\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+?)(?:&quot;|\'|")?\\s*\\)', 'g'), function (match, url) {
       return 'url(\'' + fromDataUrl(url) + '\')';
     });
   }
