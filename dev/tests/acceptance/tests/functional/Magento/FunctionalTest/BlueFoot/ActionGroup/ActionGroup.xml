@@ -138,6 +138,7 @@
         <click selector="{{BlueFootColumnSection.removeColumn}}" mergeKey="clickRemoveColumn"/>
         <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modal}}" mergeKey="waitForModal" />
         <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalOk" />
         <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalHide" />
     </actionGroup>
@@ -162,8 +163,12 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
         <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
         <fillField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="selectSlideOutPanelField">
         <arguments>
@@ -171,6 +176,9 @@
         </arguments>
         <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
         <selectOption selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelField">
         <arguments>
@@ -179,6 +187,9 @@
         <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
         <click selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="clickProperty"/>
         <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutProperty">
         <arguments>
@@ -214,6 +225,12 @@
         <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
+    <actionGroup name="saveAndContinueEditCmsPage">
+        <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" mergeKey="clickSaveAndContinueEditCmsPage"/>
+        <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="waitForCmsPageSaveButton" />
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>

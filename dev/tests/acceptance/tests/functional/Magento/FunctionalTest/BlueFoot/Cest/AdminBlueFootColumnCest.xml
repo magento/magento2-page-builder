@@ -226,8 +226,6 @@
             <seeElementInDOM selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" mergeKey="seeColumn2DefaultWidthApplied"/>
             <seeElementInDOM selector="{{ColumnsOnFrontend.column2Appearance}}"  mergeKey="seeColumn2AppearanceCenteredApplied"/>
             <seeElementInDOM selector="{{ColumnsOnFrontend.column3Appearance}}"  mergeKey="seeColumn3AppearanceTopDefaultApplied"/>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </test>
         <test name="ColumnChangesPreserved">
             <annotations>
@@ -245,7 +243,7 @@
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
             <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty">
-                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+                <argument name="property" value="BlueFootBackgroundColorProperty_087E8B"/>
             </actionGroup>
             <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundPositionProperty">
                 <argument name="property" value="BlueFootBackgroundPositionProperty"/>
@@ -288,7 +286,7 @@
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
             <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBackgroundColorProperty">
-                <argument name="property" value="BlueFootBackgroundColorProperty"/>
+                <argument name="property" value="BlueFootBackgroundColorProperty_087E8B"/>
             </actionGroup>
             <seeElementInDOM selector="{{BlueFootColumnSection.backgroundImagePreview}}" mergeKey="backgroundImagePreview"/>
             <actionGroup ref="seeOptionIsSelectedSlideOutProperty" mergeKey="seeBackgroundPositionProperty">
@@ -348,8 +346,8 @@
         </test>
         <test name="ValidateBackgroundImageUrl">
             <annotations>
-                <title value="Column settings appear on frontend"/>
-                <description value="Validate selected column settings appear on the frontend"/>
+                <title value="Background Image Url is displayed on front end"/>
+                <description value="Validate background image appears on the frontend"/>
                 <severity value="CRITICAL"/>
                 <testCaseId value=""/>
                 <group value="bluefoot"/>
@@ -370,9 +368,116 @@
             <wait time="1" mergeKey="wait3"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
             <wait time="5" mergeKey="wait5"/>
+            <dontSeeInPageSource userInput=".png%22" mergeKey="dontSeeEscapedQuoteInPageSource"/>
             <!--<grabAttributeFrom returnVariable="title" selector="#target" userInput="title" mergeKey="grabAttributeFrom"/>-->
             <!--<amOnUrl url="http://www.google.com/" mergeKey="amOnUrl"/>-->
             <!--<seeCurrentUrlMatches url="{{BlueFootBackgroundImageProperty.url}}" mergeKey="seeCurrentUrlMatches"/>-->
+        </test>
+        <test name="ColumnBackgroundColorPreserved">
+            <annotations>
+                <title value="Column background color is preserved on edit"/>
+                <description value="Validate column background color is preserved on edit"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
+            <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragThirdColumn"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty1">
+                <argument name="property" value="BlueFootBackgroundWidthProperty_Third"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearanceProperty1">
+                <argument name="property" value="BlueFootBackgroundAppearanceProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty1">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty1">
+                <argument name="property" value="BlueFootBackgroundColorProperty_087E8B"/>
+            </actionGroup>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings1"/>
+            <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty2">
+                <argument name="property" value="BlueFootBackgroundWidthProperty_Third"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundAppearanceProperty2">
+                <argument name="property" value="BlueFootBackgroundAppearancePropertyCentered"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty2">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty_300"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty2">
+                <argument name="property" value="BlueFootBackgroundColorProperty_FF5A5F"/>
+            </actionGroup>
+            <wait time="1" mergeKey="wait1"/>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings2"/>
+            <actionGroup ref="openBlueFootEditColumnPanel3" mergeKey="openEditPanel3"/>
+            <actionGroup ref="selectSlideOutPanelField" mergeKey="enterBackgroundWidthProperty3">
+                <argument name="property" value="BlueFootBackgroundWidthProperty_Third"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty3">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty_200"/>
+            </actionGroup>
+
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterBackgroundColorProperty3">
+                <argument name="property" value="BlueFootBackgroundColorProperty_3C3C3C"/>
+            </actionGroup>
+
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettings3"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootFirstColumnInStage.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
+
+            <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{RowsOnFrontend.row1Display}}" mergeKey="seeRow1DisplayApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" mergeKey="seeColumn1WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  mergeKey="seeColumn1AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  mergeKey="seeColumn1BackgroundColorApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" mergeKey="seeColumn2MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" mergeKey="seeColumn2WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  mergeKey="seeColumn2AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  mergeKey="seeColumn2BackgroundColorApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" mergeKey="seeColumn3MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" mergeKey="seeColumn3WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  mergeKey="seeColumn3AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  mergeKey="seeColumn3BackgroundColorApplied"/>
+            <amOnPage variable="cmsPageUri" mergeKey="navigateBackToEditPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <waitForElementVisible time="10" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
+            <actionGroup ref="openBlueFootEditColumnPanel2" mergeKey="openEditPanel2AfterSave"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBackgroundWidthProperty">
+                <argument name="property" value="BlueFootBackgroundWidthProperty_Third"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBlueFootAppearanceProperty">
+                <argument name="property" value="BlueFootBackgroundAppearancePropertyCentered"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBlueFootAppearanceMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty_300"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeBackgroundColorProperty">
+                <argument name="property" value="BlueFootBackgroundColorProperty_FF5A5F"/>
+            </actionGroup>
+            <actionGroup ref="saveColumnSettings" mergeKey="saveColumnSettingsWithoutModifying"/>
+            <actionGroup ref="saveCmsPage" mergeKey="saveCmsPage"/>
+            <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{RowsOnFrontend.row1Display}}" mergeKey="seeRow1DisplayApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Height}}" mergeKey="seeColumn1MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" mergeKey="seeColumn1WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  mergeKey="seeColumn1AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  mergeKey="seeColumn1BackgroundColorApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" mergeKey="seeColumn2MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" mergeKey="seeColumn2WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  mergeKey="seeColumn2AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  mergeKey="seeColumn2BackgroundColorApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" mergeKey="seeColumn3MinHeightApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" mergeKey="seeColumn3WidthApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  mergeKey="seeColumn3AppearanceApplied"/>
+            <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  mergeKey="seeColumn3BackgroundColorApplied"/>
         </test>
     </cest>
 </config>

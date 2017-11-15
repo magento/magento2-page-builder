@@ -38,7 +38,9 @@
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
-        <element name="cmsPageSaveButton" type="button" selector=".action-.scalable.save.primary"/>
+        <element name="cmsPageSaveButton" type="button" selector=".action-.scalable.save.primary" timeout="30"/>
+        <element name="cmsPageSaveAndContinueEditButton" type="button" selector="#save_and_continue" timeout="30"/>
+        <element name="cmsPageTitle" type="text" selector=".page-header .page-title"/>
         <element name="pageTitle" type="input" selector="//*[@name='title']"/>
     </section>
     <section name="CmsPageGrid">
@@ -79,6 +81,7 @@
         <element name="dragColumn" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="move-structural"]'/>
         <element name="removeColumn" type="button" selector='(//div[contains(@class, "bluefoot-column")])[1]/div[@class="bluefoot-options"]/descendant::*[@class="remove-structural"]'/>
         <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
+        <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
@@ -86,7 +89,7 @@
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
-        <element name="columnSaveButton" type="button" selector="button.primary.action-.scalable.save[data-form-role='save'][type='button'][data-ui-id='column-form-page-actions-save']"/>
+        <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
     </section>
     <section name="RowsOnFrontend">
         <element name="row1Display" type="button" selector="[data-role='row'][style='display: flex;']"/>
@@ -94,19 +97,27 @@
     <section name="ColumnsOnFrontend">
         <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
+        <element name="column1BackgroundColorPeacock" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(8, 126, 139);')]"/>
         <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: contain;')]"/>
         <element name="column1BackgroundRepeatApplied" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
         <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: fixed;')]"/>
-        <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1BackgroundWidth" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 50%;')]"/>
+        <element name="column1BackgroundWidthThird" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 33%;')]"/>
         <element name="column1Appearance" type="button" selector="//*[@data-role='column'][1][contains(@style, 'align-self: flex-end;')]"/>
         <element name="column1BackgroundImage" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-image: url(')]"/>
+        <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 500px;')]"/>
+        <element name="column2Height300" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 300px;')]"/>
         <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
         <element name="column2BackgroundRepeatNotApplied" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: no-repeat;')]"/>
         <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: scroll;')]"/>
         <element name="column2BackgroundWidth" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 16.7%;')]"/>
+        <element name="column2BackgroundWidthThird" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 33%;')]"/>
+        <element name="column2BackgroundColorSalmon" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-color: rgb(255, 90, 95);')]"/>
         <element name="column2Appearance" type="button" selector="//*[@data-role='column'][2][contains(@style, 'align-self: center;')]"/>
         <element name="column3Appearance" type="button" selector="//*[@data-role='column'][3][contains(@style, 'align-self: flex-start;')]"/>
+        <element name="column3Height200" type="button" selector="//*[@data-role='column'][3][contains(@style, 'min-height: 200px;')]"/>
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
+        <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
+        <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
     </section>
 </config>
