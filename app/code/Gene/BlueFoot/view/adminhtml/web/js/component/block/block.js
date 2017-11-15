@@ -1,99 +1,81 @@
-define(["exports", "../stage/structural/abstract", "../stage/previews", "mage/translate", "underscore"], function (exports, _abstract, _previews, _translate, _underscore) {
-    "use strict";
+define(["../stage/structural/abstract", "../stage/previews", "underscore"], function (_abstract, _previews, _underscore) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    var _abstract2 = _interopRequireDefault(_abstract);
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-    var _previews2 = _interopRequireDefault(_previews);
+  var Block =
+  /*#__PURE__*/
+  function (_Structural) {
+    _inheritsLoose(Block, _Structural);
 
-    var _translate2 = _interopRequireDefault(_translate);
+    /**
+     * Block constructor
+     *
+     * @param {EditableArea} parent
+     * @param {Stage} stage
+     * @param {ConfigContentBlock} config
+     * @param formData
+     * @param {Appearance} appearance
+     */
+    function Block(parent, stage, config, formData, appearance) {
+      var _this;
 
-    var _underscore2 = _interopRequireDefault(_underscore);
+      _this = _Structural.call(this, parent, stage, config, appearance) || this;
+      _this.title = void 0;
+      _this.editOnInsert = true;
+      _this.preview = void 0;
+      _this.childEntityKeys = [];
+      _this.preview = (0, _previews)(_this, config);
+      var defaults = {};
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
-    }
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    function _possibleConstructorReturn(self, call) {
-        if (!self) {
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-
-        return call && (typeof call === "object" || typeof call === "function") ? call : self;
-    }
-
-    function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-        }
-
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
+      if (config.fields) {
+        _underscore.each(config.fields, function (field, key) {
+          defaults[key] = field.default;
         });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+      }
+
+      _this.stage.store.update(_this.id, _underscore.extend(defaults, formData));
+
+      return _this;
     }
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
 
-    var Block = function (_Structural) {
-        _inherits(Block, _Structural);
 
-        /**
-         * AbstractBlock constructor
-         *
-         * @param parent
-         * @param stage
-         * @param config
-         * @param formData
-         */
-        function Block(parent, stage, config, formData) {
-            _classCallCheck(this, Block);
-
-            var _this = _possibleConstructorReturn(this, _Structural.call(this, parent, stage, config));
-
-            _this.editOnInsert = true;
-            _this.childEntityKeys = [];
-            _this.template = 'Gene_BlueFoot/component/block/abstract.html';
-            // @todo temp for testing, remove after building edit capabilities
-            _this.defaults = {
-                heading_type: 'h2',
-                title: (0, _translate2.default)('Type heading content here...')
-            };
-            _this.preview = (0, _previews2.default)(_this, config);
-            _this.stage.store.update(_this.id, _underscore2.default.extend(_this.defaults, formData));
-            return _this;
+    _createClass(Block, [{
+      key: "previewTemplate",
+      get: function get() {
+        if (this.config.preview_template) {
+          return this.config.preview_template;
         }
-        /**
-         * Retrieve the template from the preview or super
-         *
-         * @returns {string}
-         */
 
+        return 'Gene_BlueFoot/component/block/preview/abstract.html';
+      }
+      /**
+       * Retrieve the render template
+       *
+       * @returns {string}
+       */
 
-        Block.prototype.getTemplate = function getTemplate() {
-            if (this.preview.template) {
-                return this.preview.template;
-            }
-            // Implement preview template system here
-            return _Structural.prototype.getTemplate.call(this);
-        };
+    }, {
+      key: "renderTemplate",
+      get: function get() {
+        if (this.config.render_template) {
+          return this.config.render_template;
+        }
 
-        return Block;
-    }(_abstract2.default);
+        return 'Gene_BlueFoot/component/block/render/abstract.html';
+      }
+    }]);
 
-    exports.default = Block;
+    return Block;
+  }(_abstract);
+
+  return Block;
 });
+//# sourceMappingURL=block.js.map

@@ -17,7 +17,8 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @var array
      */
     protected $_idAttributes = [
-        '/config/content_blocks/content_block' => 'name'
+        '/config/groups/group' => 'name',
+        '/config/content_types/types' => 'name'
     ];
 
     /**
@@ -37,7 +38,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Gene\BlueFoot\Model\Config\Converter $converter,
         \Gene\BlueFoot\Model\Config\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        $fileName = 'advanced_cms.xml',
+        $fileName = 'content_types.xml',
         $idAttributes = [],
         $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global'

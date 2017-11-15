@@ -1,62 +1,24 @@
-define(["exports", "./block"], function (exports, _block) {
-    "use strict";
+define(["./block"], function (_block) {
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
+  var InlineBlock =
+  /*#__PURE__*/
+  function (_Block) {
+    _inheritsLoose(InlineBlock, _Block);
 
-    var _block2 = _interopRequireDefault(_block);
+    function InlineBlock() {
+      var _temp, _this;
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
     }
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
+    return InlineBlock;
+  }(_block);
 
-    function _possibleConstructorReturn(self, call) {
-        if (!self) {
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-
-        return call && (typeof call === "object" || typeof call === "function") ? call : self;
-    }
-
-    function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-        }
-
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
-        });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-
-    var InlineBlock = function (_Block) {
-        _inherits(InlineBlock, _Block);
-
-        function InlineBlock() {
-            _classCallCheck(this, InlineBlock);
-
-            var _this = _possibleConstructorReturn(this, _Block.apply(this, arguments));
-
-            _this.editOnInsert = false;
-            return _this;
-        }
-
-        return InlineBlock;
-    }(_block2.default);
-
-    exports.default = InlineBlock;
+  return InlineBlock;
 });
+//# sourceMappingURL=inline.js.map

@@ -1,17 +1,15 @@
-define(['exports'], function (exports) {
-  'use strict';
+define([], function () {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Option = exports.Option = function () {
+  /**
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var Option =
+  /*#__PURE__*/
+  function () {
     /**
      * Option constructor
      *
@@ -25,10 +23,14 @@ define(['exports'], function (exports) {
      * @param template
      */
     function Option(parent, code, icon, title, action, classes, sort, template) {
-      _classCallCheck(this, Option);
-
+      this.parent = void 0;
+      this.code = void 0;
+      this.icon = void 0;
+      this.title = void 0;
       this.action = false;
-      this.template = null;
+      this.classes = void 0;
+      this.sort = void 0;
+      this._template = void 0;
       this.parent = parent;
       this.code = code;
       this.icon = icon;
@@ -36,20 +38,21 @@ define(['exports'], function (exports) {
       this.action = action;
       this.classes = classes.join(' ');
       this.sort = sort;
-      this.template = template;
+      this._template = template;
     }
-    /**
-     * Return template for option
-     *
-     * @deprecated
-     * @returns {string}
-     */
 
-
-    Option.prototype.getTemplate = function getTemplate() {
-      return this.template;
-    };
+    _createClass(Option, [{
+      key: "template",
+      get: function get() {
+        return this._template || null;
+      }
+    }]);
 
     return Option;
   }();
+
+  return {
+    Option: Option
+  };
 });
+//# sourceMappingURL=option.js.map

@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Gene_BlueFoot:etc/content_types.xsd">
+    <groups>
+        <group name="general" translate="label" sortOrder="1">
+            <label>General</label>
+        </group>
+        <group name="media" translate="label" sortOrder="10">
+            <label>Media</label>
+        </group>
+        <group name="interactive" translate="label" sortOrder="20">
+            <label>Interactive</label>
+        </group>
+        <group name="magento" translate="label" sortOrder="30">
+            <label>Magento</label>
+        </group>
+        <group name="other" translate="label" sortOrder="40">
+            <label>Other</label>
+        </group>
+    </groups>
+    <content_types>
+        <type name="row" translate="label" sortOrder="1">
+            <label>Row</label>
+            <icon>icon-bluefoot-row</icon>
+            <component>Gene_BlueFoot/js/component/block/row</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/row.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/row.html</render_template>
+            <form>row_form</form>
+            <group>general</group>
+            <allowed_parents>stage</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="column" translate="label" sortOrder="10">
+            <label>Column</label>
+            <icon>icon-bluefoot-column</icon>
+            <component>Gene_BlueFoot/js/component/block/column</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/column.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/column.html</render_template>
+            <form>column_form</form>
+            <group>general</group>
+            <allowed_parents>row</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+            <appearances>
+                <appearance name="align-top" component="Gene_BlueFoot/js/component/appearance/column/align-top"/>
+                <appearance name="align-center" component="Gene_BlueFoot/js/component/appearance/column/align-center"/>
+                <appearance name="align-bottom" component="Gene_BlueFoot/js/component/appearance/column/align-bottom"/>
+            </appearances>
+        </type>
+        <type name="text" translate="label" sortOrder="20">
+            <label>Text</label>
+            <icon>icon-bluefoot-text</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/text.html</preview_template>
+            <form>text_form</form>
+            <group>general</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="heading" translate="label" sortOrder="30">
+            <label>Header</label>
+            <icon>icon-bluefoot-heading</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/header.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/header.html</render_template>
+            <form>heading_form</form>
+            <group>general</group>
+            <allowed_parents>row,column</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="heading" component="Gene_BlueFoot/js/component/format/read/heading"/>
+            </readers>
+        </type>
+        <type name="button" translate="label" sortOrder="40">
+            <label>Button</label>
+            <icon>icon-bluefoot-button</icon>
+            <form>button_form</form>
+            <group>general</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="divider" translate="label" sortOrder="50">
+            <label>Divider</label>
+            <icon>icon-bluefoot-divider</icon>
+            <form>divider_form</form>
+            <group>general</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="image" translate="label" sortOrder="1">
+            <label>Image</label>
+            <icon>icon-bluefoot-image</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/image</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/image.html</preview_template>
+            <form>image_form</form>
+            <group>media</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="video" translate="label" sortOrder="10">
+            <label>Video</label>
+            <icon>icon-bluefoot-video</icon>
+            <form>video_form</form>
+            <group>media</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="banner" translate="label" sortOrder="20">
+            <label>Banner</label>
+            <icon>icon-bluefoot-block</icon>
+            <form>banner_form</form>
+            <group>media</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="slider" translate="label" sortOrder="30">
+            <label>Slider</label>
+            <icon>icon-bluefoot-slider</icon>
+            <form>slider_form</form>
+            <group>media</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="tabs" translate="label" sortOrder="1">
+            <label>Tabs</label>
+            <icon>icon-bluefoot-tabs</icon>
+            <form>tabs_form</form>
+            <group>interactive</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="accordion" translate="label" sortOrder="10">
+            <label>Accordion</label>
+            <icon>icon-bluefoot-accordian</icon>
+            <form>accordion_form</form>
+            <group>interactive</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="map" translate="label" sortOrder="20">
+            <label>Map</label>
+            <icon>icon-bluefoot-map</icon>
+            <form>map_form</form>
+            <group>interactive</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="newsletter" translate="label" sortOrder="30">
+            <label>Newsletter</label>
+            <icon>icon-bluefoot-newsletter</icon>
+            <form>newsletter_form</form>
+            <group>interactive</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="block" translate="label" sortOrder="1">
+            <label>Block</label>
+            <icon>icon-bluefoot-block</icon>
+            <form>block_form</form>
+            <group>magento</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="segmented_block" translate="label" sortOrder="10">
+            <label>Segmented Block</label>
+            <icon>icon-bluefoot-block</icon>
+            <form>segmented_block_form</form>
+            <group>magento</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="products" translate="label" sortOrder="20">
+            <label>Products</label>
+            <icon>icon-bluefoot-products</icon>
+            <form>products_form</form>
+            <group>magento</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="anchor" translate="label" sortOrder="1">
+            <label>Anchor</label>
+            <icon>icon-bluefoot-anchor</icon>
+            <form>anchor_form</form>
+            <group>other</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="code" translate="label" sortOrder="10">
+            <label>Code</label>
+            <icon>icon-bluefoot-code</icon>
+            <form>code_form</form>
+            <group>other</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+    </content_types>
+</config>

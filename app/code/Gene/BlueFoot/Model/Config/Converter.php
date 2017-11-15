@@ -1,103 +1,83 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Config;
 
-/**
- * Class Converter
- *
- * @package Gene\BlueFoot\Model\Config
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
- */
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     /**
      * Convert XML structure into output array
      *
      * @param \DOMDocument $source
-     *
      * @return array
      */
     public function convert($source)
     {
         $output = [
-            'content_blocks' => []
+            'groups' => [],
+            'types' => []
         ];
 
-        /** @var \DOMNodeList $contentBlocks */
-        $contentBlocks = $source->getElementsByTagName('content_block');
-        /** @var \DOMNode $contentBlock */
-        foreach ($contentBlocks as $contentBlock) {
-            $identifier = $contentBlock->attributes->getNamedItem('identifier')->nodeValue;
-            $contentBlockConfig = [];
-            if (!$identifier) {
-                throw new \InvalidArgumentException('Identifier is missing from content_block node');
+        /** @var \DOMNodeList $contentTypes */
+        $contentTypes = $source->getElementsByTagName('type');
+        /** @var \DOMNode $contentType */
+        foreach ($contentTypes as $contentType) {
+            $name = $contentType->attributes->getNamedItem('name')->nodeValue;
+            if (!$name) {
+                throw new \InvalidArgumentException('Name is missing from content_types/type node');
             }
             /** @var \DOMElement $childNode */
-            foreach ($contentBlock->childNodes as $childNode) {
-                if ($childNode->nodeName == 'frontend' || $childNode->nodeName == 'adminhtml') {
-                    $contentBlockConfig[$childNode->nodeName] = $this->convertArea($childNode);
+            foreach ($contentType->childNodes as $childNode) {
+                if ($childNode->nodeType == XML_ELEMENT_NODE ||
+                    ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
+                        $childNode->nodeType == XML_TEXT_NODE && trim(
+                            $childNode->nodeValue
+                        ) != '')
+                ) {
+                    if ('readers' === $childNode->nodeName) {
+                        foreach ($childNode->getElementsByTagName('reader') as $reader) {
+                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
+                            $output['types'][$name][$childNode->nodeName][] = $component;
+                        }
+                    } elseif ('appearances' === $childNode->nodeName) {
+                        foreach ($childNode->getElementsByTagName('appearance') as $reader) {
+                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
+                            $output['types'][$name][$childNode->nodeName][] = $component;
+                        }
+                    } else {
+                        $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
+                    }
                 }
             }
-            $output['content_blocks'][$identifier] = $contentBlockConfig;
+        }
+
+        /** @var \DOMNodeList $contentTypes */
+        $groups = $source->getElementsByTagName('groups');
+        /** @var \DOMNode $contentType */
+        foreach ($groups->item(0)->childNodes as $group) {
+            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
+                $name = $group->attributes->getNamedItem('name')->nodeValue;
+                if (!$name) {
+                    throw new \InvalidArgumentException('Name is missing from groups/group node');
+                }
+                /** @var \DOMElement $childNode */
+                foreach ($group->childNodes as $childNode) {
+                    if ($childNode->nodeType == XML_ELEMENT_NODE ||
+                        ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
+                            $childNode->nodeType == XML_TEXT_NODE && trim(
+                                $childNode->nodeValue
+                            ) != '')
+                    ) {
+                        $output['groups'][$name][$childNode->nodeName] = $childNode->nodeValue;
+                    }
+                }
+                $output['groups'][$name]['sortOrder'] =
+                    $group->attributes->getNamedItem('sortOrder')->nodeValue;
+            }
         }
 
         return $output;
-    }
-
-    /**
-     * Convert an area children into the output array
-     *
-     * @param \DOMElement $node
-     *
-     * @return array
-     */
-    protected function convertArea(\DOMElement $node)
-    {
-        $area = [];
-        /** @var \DOMElement $childNode */
-        foreach ($node->childNodes as $childNode) {
-            if ($childNode->nodeType == XML_ELEMENT_NODE ||
-                ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
-                    $childNode->nodeType == XML_TEXT_NODE && trim(
-                        $childNode->nodeValue
-                    ) != '')
-            ) {
-                // Convert any assets associated with the front-end
-                $nodeValue = $childNode->nodeValue;
-                if ($childNode->nodeName == 'assets') {
-                    $nodeValue = $this->convertAreaAssets($childNode);
-                }
-
-                $area[$childNode->nodeName] = $nodeValue;
-            }
-        }
-
-        return $area;
-    }
-
-    /**
-     * Convert assets within an area to an array
-     *
-     * @param \DOMElement $node
-     *
-     * @return array
-     */
-    protected function convertAreaAssets(\DOMElement $node)
-    {
-        $assets = [];
-        /** @var \DOMElement $assetNode */
-        foreach ($node->childNodes as $assetNode) {
-            if ($assetNode->nodeType == XML_ELEMENT_NODE ||
-                ($assetNode->nodeType == XML_CDATA_SECTION_NODE ||
-                    $assetNode->nodeType == XML_TEXT_NODE && trim(
-                        $assetNode->nodeValue
-                    ) != '')
-            ) {
-                $assets[$assetNode->attributes->getNamedItem('name')->nodeValue] = $assetNode->nodeValue;
-            }
-        }
-
-        return $assets;
     }
 }

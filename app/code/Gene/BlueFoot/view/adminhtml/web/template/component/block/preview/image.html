@@ -1,6 +1,6 @@
-<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-image" data-bind="css: {'loading': preview.loading()}, dropzone: {url: preview.uploadUrl(), drop: preview.attachmentDrop(), success: preview.attachmentSuccess(), error: preview.attachmentError, bindKey: 'image'}">
-    <img data-bind="visible: preview.image, attr: {src: preview.imageUrl, alt: preview.alt_tag}" />
-    <div class="bluefoot-image-placeholder" data-bind="visible: !preview.image(), click: $data.edit">
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-image" data-bind="css: {'loading': preview.loading()}, dropzone: {url: preview.data.uploadUrl(), drop: preview.data.attachmentDrop(), success: preview.data.attachmentSuccess(), error: preview.data.attachmentError, bindKey: 'image'}">
+    <img data-bind="visible: preview.data.image, attr: {alt: preview.data.alt_tag}" />
+    <div class="bluefoot-image-placeholder" data-bind="visible: !preview.data.image(), click: $data.edit">
         <i class="fa fa-picture-o" aria-hidden="true"></i>
         <p data-bind="text: $t('Drop image here to upload, or edit for media gallery')"></p>
     </div>
@@ -11,5 +11,5 @@
             </div>
         </div>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.getTemplate() --><!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

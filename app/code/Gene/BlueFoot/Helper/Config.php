@@ -13,6 +13,8 @@ use Magento\Framework\UrlInterface;
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    const UPLOAD_DIR = 'wysiwyg' . DIRECTORY_SEPARATOR . 'bluefoot';
+
     /**
      * @var \Magento\Framework\Filesystem\DirectoryList
      */
@@ -39,9 +41,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getUploadDir()
     {
-        return $this->directoryList->getPath('media')
-                . DIRECTORY_SEPARATOR .'wysiwyg'
-                . DIRECTORY_SEPARATOR . 'bluefoot';
+        return $this->directoryList->getPath('media') . DIRECTORY_SEPARATOR . self::UPLOAD_DIR;
     }
 
 

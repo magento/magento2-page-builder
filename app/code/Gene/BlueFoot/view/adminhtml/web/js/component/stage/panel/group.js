@@ -1,64 +1,57 @@
-define(['exports', 'knockout'], function (exports, _knockout) {
-    'use strict';
+define(["knockout"], function (_knockout) {
+  /**
+   * Group Class
+   *
+   * @author Dave Macaulay <dmacaulay@magento.com>
+   */
+  var Group =
+  /*#__PURE__*/
+  function () {
+    /**
+     * Group constructor
+     *
+     * @param id
+     * @param group
+     * @param blocks
+     *
+     * @todo change group type
+     */
+    function Group(id, group, blocks) {
+      if (blocks === void 0) {
+        blocks = [];
+      }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.Group = undefined;
-
-    var _knockout2 = _interopRequireDefault(_knockout);
-
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+      this.id = _knockout.observable();
+      this.code = _knockout.observable('');
+      this.label = _knockout.observable('');
+      this.icon = _knockout.observable('');
+      this.sort = _knockout.observable();
+      this.blocks = _knockout.observableArray([]);
+      this.active = _knockout.observable(false);
+      this.hidden = _knockout.observable(false);
+      this.id(id);
+      this.code(group.code);
+      this.label(group.label);
+      this.icon(group.icon);
+      this.sort(group.sort);
+      this.blocks(blocks);
     }
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var Group = exports.Group = function () {
-        /**
-         * Group constructor
-         *
-         * @param id
-         * @param group
-         * @param blocks
-         *
-         * @todo change group type
-         */
-        function Group(id, group) {
-            var blocks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-            _classCallCheck(this, Group);
-
-            this.id = _knockout2.default.observable();
-            this.code = _knockout2.default.observable('');
-            this.name = _knockout2.default.observable('');
-            this.icon = _knockout2.default.observable('');
-            this.sort = _knockout2.default.observable();
-            this.blocks = _knockout2.default.observableArray([]);
-            this.active = _knockout2.default.observable(false);
-            this.hidden = _knockout2.default.observable(false);
-            this.id(id);
-            this.code(group.code);
-            this.name(group.name);
-            this.icon(group.icon);
-            this.sort(group.sort);
-            this.blocks(blocks);
-        }
-        /**
-         * Toggle the group
-         */
+    /**
+     * Toggle the group
+     */
 
 
-        Group.prototype.toggle = function toggle() {
-            this.active(!this.active());
-        };
+    var _proto = Group.prototype;
 
-        return Group;
-    }();
+    _proto.toggle = function toggle() {
+      this.active(!this.active());
+    };
+
+    return Group;
+  }();
+
+  return {
+    Group: Group
+  };
 });
+//# sourceMappingURL=group.js.map

@@ -1,75 +1,59 @@
-define(['exports', '../../../event-emitter', 'knockout'], function (exports, _eventEmitter, _knockout) {
-    'use strict';
+define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockout) {
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.Block = undefined;
+  /**
+   * Block Class
+   */
+  var Block =
+  /*#__PURE__*/
+  function (_EventEmitter) {
+    _inheritsLoose(Block, _EventEmitter);
 
-    var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+    /**
+     * Block Constructor
+     *
+     * @param {string} identifier
+     * @param {ContentBlockConfig} config
+     */
+    function Block(identifier, config) {
+      var _this;
 
-    var _knockout2 = _interopRequireDefault(_knockout);
+      _this = _EventEmitter.call(this) || this;
+      _this.config = void 0;
+      _this.identifier = _knockout.observable('');
+      _this.label = _knockout.observable('');
+      _this.icon = _knockout.observable('');
+      _this.droppable = true;
+      _this.config = config;
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+      _this.identifier(identifier);
+
+      _this.label(config.label);
+
+      _this.icon(config.icon);
+
+      return _this;
     }
+    /**
+     * Return the draggable config to the element
+     *
+     * @returns {string}
+     */
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
 
-    function _possibleConstructorReturn(self, call) {
-        if (!self) {
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
+    var _proto = Block.prototype;
 
-        return call && (typeof call === "object" || typeof call === "function") ? call : self;
-    }
+    _proto.getDraggableConfig = function getDraggableConfig() {
+      return this.config.allowed_parents.map(function (value, index) {
+        return '.' + value + '-container';
+      }).join(', ');
+    };
 
-    function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-        }
+    return Block;
+  }(_eventEmitter);
 
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
-        });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-
-    var Block = exports.Block = function (_EventEmitter) {
-        _inherits(Block, _EventEmitter);
-
-        /**
-         * Block constructor
-         *
-         * @param config
-         */
-        function Block(config) {
-            _classCallCheck(this, Block);
-
-            var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-            _this.code = _knockout2.default.observable('');
-            _this.name = _knockout2.default.observable('');
-            _this.icon = _knockout2.default.observable('');
-            _this.droppable = true;
-            _this.config = config;
-            _this.code(config.code);
-            _this.name(config.name);
-            _this.icon(config.icon);
-            return _this;
-        }
-
-        return Block;
-    }(_eventEmitter2.default);
+  return {
+    Block: Block
+  };
 });
+//# sourceMappingURL=block.js.map

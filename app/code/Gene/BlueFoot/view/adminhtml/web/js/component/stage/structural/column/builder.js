@@ -1,85 +1,75 @@
-define(['exports', 'knockout', '../../../config'], function (exports, _knockout, _config) {
-    'use strict';
+define(["knockout", "../../../config"], function (_knockout, _config) {
+  /**
+   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var ColumnBuilder =
+  /*#__PURE__*/
+  function () {
+    /**
+     * ColumnBuilder constructor
+     */
+    function ColumnBuilder() {
+      this.position = _knockout.observable('');
+      this.visible = _knockout.observable(false);
+      this.sizes = _knockout.observableArray([]);
+      this.template = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.ColumnBuilder = undefined;
+      var columnOptions = _config.getInitConfig("column_definitions");
 
-    var _knockout2 = _interopRequireDefault(_knockout);
-
-    var _config2 = _interopRequireDefault(_config);
-
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
-    }
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
+      for (var i = 0; i < columnOptions.length; i++) {
+        if (columnOptions[i].displayed === true) {
+          this.sizes.push({
+            label: columnOptions[i].label,
+            className: columnOptions[i].className
+          });
         }
+      }
     }
-
-    var ColumnBuilder = exports.ColumnBuilder = function () {
-        /**
-         * ColumnBuilder constructor
-         */
-        function ColumnBuilder() {
-            _classCallCheck(this, ColumnBuilder);
-
-            this.position = _knockout2.default.observable('');
-            this.visible = _knockout2.default.observable(false);
-            this.sizes = _knockout2.default.observableArray([]);
-            this.template = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
-            var columnOptions = _config2.default.getInitConfig("column_definitions");
-            for (var i = 0; i < columnOptions.length; i++) {
-                if (columnOptions[i].displayed === true) {
-                    this.sizes.push({
-                        label: columnOptions[i].label,
-                        className: columnOptions[i].className
-                    });
-                }
-            }
-        }
-        /**
-         * Show the builder from the column options scope
-         */
+    /**
+     * Show the builder from the column options scope
+     */
 
 
-        ColumnBuilder.prototype.showFromOption = function showFromOption() {
-            this.position('top');
-            this.visible(true);
-        };
+    var _proto = ColumnBuilder.prototype;
 
-        /**
-         * Change the visibility to visible
-         */
-        ColumnBuilder.prototype.show = function show() {
-            this.visible(true);
-        };
+    _proto.showFromOption = function showFromOption() {
+      this.position('top');
+      this.visible(true);
+    };
 
-        /**
-         * Change the visibility to hidden
-         */
-        ColumnBuilder.prototype.hide = function hide() {
-            this.visible(false);
-        };
+    /**
+     * Change the visibility to visible
+     */
+    _proto.show = function show() {
+      this.visible(true);
+    };
 
-        /**
-         * Proxy to the correct parent's add column function
-         */
-        ColumnBuilder.prototype.addColumn = function addColumn(parents, data) {
-            // Nest a column (within a column or on a row)
-            if (this.position() == 'top') {
-                parents[1].addColumn(data);
-            } else {
-                // Add to left or right side of current column
-                parents[1].insertColumnAtIndex(this.position(), parents[1], data);
-            }
-        };
+    /**
+     * Change the visibility to hidden
+     */
+    _proto.hide = function hide() {
+      this.visible(false);
+    };
 
-        return ColumnBuilder;
-    }();
+    /**
+     * Proxy to the correct parent's add column function
+     */
+    _proto.addColumn = function addColumn(parents, data) {
+      // Nest a column (within a column or on a row)
+      if (this.position() == 'top') {
+        parents[1].addColumn(data);
+      } else {
+        // Add to left or right side of current column
+        parents[1].insertColumnAtIndex(this.position(), parents[1], data);
+      }
+    };
+
+    return ColumnBuilder;
+  }();
+
+  return {
+    ColumnBuilder: ColumnBuilder
+  };
 });
+//# sourceMappingURL=builder.js.map

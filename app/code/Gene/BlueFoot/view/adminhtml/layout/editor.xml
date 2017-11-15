@@ -2,11 +2,10 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="before.body.end">
-            <block class="Gene\BlueFoot\Block\Adminhtml\Stage\Init" name="gene.bluefoot.init" template="init.phtml" />
+            <block class="Gene\BlueFoot\Block\Adminhtml\Stage\Init" name="gene.bluefoot.init" template="Gene_BlueFoot::init.phtml" />
+            <block class="Gene\BlueFoot\Block\Adminhtml\ContentType\ComponentList" name="gene.bluefoot.component.list" template="Gene_BlueFoot::content_type/component_list.phtml" />
+
             <uiComponent name="bluefoot_modal_form" />
-            <block class="Gene\BlueFoot\Block\Adminhtml\ComponentList" name="gene.bluefoot.component.list" template="component_list.phtml">
-                <uiComponent name="bluefoot_heading_form" />
-            </block>
         </referenceContainer>
     </body>
 </page>

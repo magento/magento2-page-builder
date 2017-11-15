@@ -21,9 +21,27 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
     public function __construct(
         \Gene\BlueFoot\Model\Config\Reader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
-        $cacheId = 'gene_bluefoot_pagebuilder'
+        $cacheId = 'gene_bluefoot_content_types'
     ) {
         parent::__construct($reader, $cache, $cacheId);
+    }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->get('groups');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function getGroup($name)
+    {
+        return $this->get('groups/' . $name);
     }
 
     /**
@@ -31,20 +49,20 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
      *
      * @return array|mixed|null
      */
-    public function getContentBlocks()
+    public function getContentTypes()
     {
-        return $this->get('content_blocks');
+        return $this->get('types');
     }
 
     /**
      * Return a specific content block by it's identifier
      *
-     * @param $identifier
+     * @param $name
      *
      * @return array|mixed|null
      */
-    public function getContentBlock($identifier)
+    public function getContentType($name)
     {
-        return $this->get('content_blocks/' . $identifier);
+        return $this->get('types/' . $name);
     }
 }
