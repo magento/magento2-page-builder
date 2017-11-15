@@ -122,7 +122,6 @@
                 <title value="Column settings appear on frontend"/>
                 <description value="Validate selected column settings appear on the frontend"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
                 <group value="bluefoot"/>
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
@@ -349,9 +348,8 @@
                 <title value="Background Image Url is displayed on front end"/>
                 <description value="Validate background image appears on the frontend"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value=""/>
                 <group value="bluefoot"/>
-                <group value="skip"/> <!-- https://jira.corp.magento.com/browse/MQE-235 -->
+                <group value="skip"/>
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
@@ -369,9 +367,6 @@
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
             <wait time="5" mergeKey="wait5"/>
             <dontSeeInPageSource userInput=".png%22" mergeKey="dontSeeEscapedQuoteInPageSource"/>
-            <!--<grabAttributeFrom returnVariable="title" selector="#target" userInput="title" mergeKey="grabAttributeFrom"/>-->
-            <!--<amOnUrl url="http://www.google.com/" mergeKey="amOnUrl"/>-->
-            <!--<seeCurrentUrlMatches url="{{BlueFootBackgroundImageProperty.url}}" mergeKey="seeCurrentUrlMatches"/>-->
         </test>
         <test name="ColumnBackgroundColorPreserved">
             <annotations>
