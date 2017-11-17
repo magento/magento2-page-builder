@@ -44,20 +44,35 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <field name="heading_type">
+        <field name="border_color" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Divider Form</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">page</item>
-                    <item name="sortOrder" xsi:type="number">20</item>
-                    <item name="dataScope" xsi:type="string">heading_type</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <item name="default" xsi:type="string">#000000</item>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Color</label>
+                <addAfter>hex code</addAfter>
+                <notice translate="true">Example: #FF5733</notice>
+            </settings>
+        </field>
+        <field name="border_width" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">1px</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Height</label>
+                <notice translate="true">How thick do you want the divider to be? Default is 1px.</notice>
+            </settings>
+        </field>
+        <field name="width" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Width</label>
+                <addAfter>px or %</addAfter>
+                <notice translate="true">Example: 50px or 100%</notice>
+            </settings>
         </field>
     </fieldset>
 </form>

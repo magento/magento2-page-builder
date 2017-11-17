@@ -27,12 +27,16 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           return;
         }
 
-        if (key === 'min_height') {
+        if (key === 'min_height' || key === 'border_width') {
           value = value.replace('px', '') + 'px';
         }
 
         if (key === 'width') {
-          value = value.replace('%', '') + '%';
+          if (value.indexOf('px') !== -1) {
+            value = value.replace('px', '') + 'px';
+          } else {
+            value = value.replace('%', '') + '%';
+          }
         }
 
         if (key === 'background_repeat') {
@@ -97,7 +101,15 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           }
         }
 
-        if (key === 'background-color') {
+        if (key === 'border-top-color') {
+          key = 'border-color';
+        }
+
+        if (key === 'border-top-width') {
+          key = 'border-width';
+        }
+
+        if (key === 'background-color' || key === 'border-color') {
           var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
           var matches = regexp.exec(value);
           value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[3]));
