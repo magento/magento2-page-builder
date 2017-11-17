@@ -9,6 +9,7 @@ import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import Structural from "./structural/abstract";
 import filterHtml from '../../component/format/filter-html';
 import decodeAllDataUrlsInString from "../../utils/directives";
+import decodeAllImageUrlsInString from "../../utils/directives";
 
 /**
  * Render the tree into a string
@@ -30,7 +31,8 @@ export default class Save {
             engine.waitForFinishRender().then(() => {
                 const filtered: JQuery = filterHtml(element),
                     output = decodeAllDataUrlsInString(filtered.html());
-                resolve(output);
+                let decoded = decodeAllImageUrlsInString(output);
+                resolve(decoded);
                 element.remove();
             });
             ko.applyBindingsToNode(

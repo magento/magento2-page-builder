@@ -68,6 +68,10 @@ define(["./block", "knockout", "../../config"], function (_block, _knockout, _co
       alert($t("Your image could not be uploaded"));
     };
 
+    _proto.image = function image() {
+      return;
+    };
+
     return PreviewImageBlock;
   }(_block);
 

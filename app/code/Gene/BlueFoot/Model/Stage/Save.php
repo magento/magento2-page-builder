@@ -70,19 +70,19 @@ class Save
             'html' => $html
         ]);
 
-        if ($parser->hasStage()) {
-            /* @var $stageElement \Gene\BlueFoot\Model\Stage\Save\Parser\Element */
-            $stageElement = $parser->parse();
-
-            // Render the stage element as HTML
-            return $this->rendererFactory->create([
-                'storeId' => $storeId,
-                'object' => $object /* Object passed for contextual rendering */
-            ])->render(
-                $stageElement,
-                true
-            );
-        }
+//        if ($parser->hasStage()) {
+//            /* @var $stageElement \Gene\BlueFoot\Model\Stage\Save\Parser\Element */
+//            $stageElement = $parser->parse();
+//
+//            // Render the stage element as HTML
+//            return $this->rendererFactory->create([
+//                'storeId' => $storeId,
+//                'object' => $object /* Object passed for contextual rendering */
+//            ])->render(
+//                $stageElement,
+//                true
+//            );
+//        }
 
         return false;
     }

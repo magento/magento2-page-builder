@@ -40,7 +40,9 @@
     </dataSource>
     <fieldset name="general">
         <settings>
-            <label />
+            <label translate="true">Images</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
         <field name="image" formElement="fileUploader">
             <settings>
@@ -52,13 +54,131 @@
                 <fileUploader>
                     <settings>
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
-                        <maxFileSize>2097152</maxFileSize>
+                        <maxFileSize>4194304</maxFileSize>
                         <uploaderConfig>
                             <param xsi:type="string" name="url">bluefoot/contenttype/image_upload</param>
                         </uploaderConfig>
+                        <previewTmpl>Gene_BlueFoot/form/element/uploader/preview.html</previewTmpl>
                     </settings>
                 </fileUploader>
             </formElements>
         </field>
+        <field name="mobile_image" formElement="fileUploader">
+            <settings>
+                <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
+                <label translate="true">Mobile Image</label>
+                <componentType>fileUploader</componentType>
+            </settings>
+            <formElements>
+                <fileUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">bluefoot/contenttype/image_upload</param>
+                        </uploaderConfig>
+                        <previewTmpl>Gene_BlueFoot/form/element/uploader/preview.html</previewTmpl>
+                    </settings>
+                </fileUploader>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="seo">
+        <settings>
+            <label translate="true">Seo</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="alt" sortOrder="10" formElement="input">
+            <settings>
+                <label translate="true">Alternative Text</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="title_tag" sortOrder="20" formElement="input">
+            <settings>
+                <label translate="true">Title Tag</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="Extra">
+        <settings>
+            <label translate="true">Extra</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="lightbox" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">No</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Has Lightbox?</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">No</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">Yes</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="show_caption" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">No</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show Caption</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">No</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">Yes</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="Advanced">
+        <settings>
+            <label translate="true">Advanced</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
     </fieldset>
 </form>
