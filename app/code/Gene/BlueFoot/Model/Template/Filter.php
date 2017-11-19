@@ -84,7 +84,15 @@ class Filter
         $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
         foreach ($nodes as $node) {
             $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
-            $data = json_decode($node->getAttribute('data-options'), true) ?: [];
+            $backendBlockTemplate = $contentTypes[$node->getAttribute('data-role')]['backend_template'];
+            $data = [];
+            foreach ($node->attributes as $attribute) {
+                $attributeName = str_replace(['data-', '-'], ['', '_'], $attribute->nodeName);
+                $data[$attributeName] = $attribute->nodeValue;
+            }
+            if ($backendBlockTemplate) {
+                $data['template'] = $backendBlockTemplate;
+            }
             $backendBlockInstance = $this->blockFactory->createBlock(
                 $backendBlockClassName,
                 ['data' => $data]
