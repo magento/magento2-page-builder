@@ -16,7 +16,7 @@ export default class Heading implements ReadInterface {
         return new Promise((resolve: Function) => {
             resolve(
                 {
-                    'heading_type': element.nodeName,
+                    'heading_type': element.nodeName.toLowerCase(),
                     'title': element.innerText
                 }
             );
