@@ -177,6 +177,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     getData() {
+        console.log(this.stage.store.get(this.id));
         return this.stage.store.get(this.id);
     }
 }

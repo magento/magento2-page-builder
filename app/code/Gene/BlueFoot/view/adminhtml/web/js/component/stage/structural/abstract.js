@@ -154,6 +154,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
 
 
     _proto.getData = function getData() {
+      console.log(this.stage.store.get(this.id));
       return this.stage.store.get(this.id);
     };
 
