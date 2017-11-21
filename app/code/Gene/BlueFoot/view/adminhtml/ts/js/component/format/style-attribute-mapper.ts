@@ -45,6 +45,15 @@ export default class StyleAttributeMapper {
                         directive = '{{media url=' + mediaPath[1] + '}}';
                     value = 'url(\'' + toDataUrl(directive) + '\')';
                 }
+
+                if (key === 'margins_and_padding') {
+                    result['margin'] = `${value.margin.top}px ${value.margin.right}px`
+                        + ` ${value.margin.bottom}px ${value.margin.left}px`;
+                    result['padding'] = `${value.padding.top}px ${value.padding.right}px`
+                        + ` ${value.padding.bottom}px ${value.padding.left}px`;
+                    return;
+                }
+
                 result[this.fromSnakeToCamelCase(key)] = value;
             }
         );
@@ -102,6 +111,15 @@ export default class StyleAttributeMapper {
                         };
                     value = [image];
                 }
+
+                if (key.startsWith('margin') || key.startsWith('padding')) {
+                    const spacingObj = {margin: {}, padding: {}};
+                    let [attributeType, attributeDirection] = key.split('-');
+                    result['margins_and_padding'] = result['margins_and_padding'] || spacingObj;
+                    result['margins_and_padding'][attributeType] = _.extend(result['margins_and_padding'][attributeType], {[attributeDirection]: value.replace('px', '')});
+                    return;
+                }
+
                 result[key.replace('-', '_')] = value;
             }
         );
