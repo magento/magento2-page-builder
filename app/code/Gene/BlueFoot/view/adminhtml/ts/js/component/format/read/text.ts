@@ -5,7 +5,7 @@
 
 import ReadInterface from "../read-interface";
 
-export default class Heading implements ReadInterface {
+export default class Text implements ReadInterface {
     /**
      * Read heading type and title from the element
      *
@@ -16,8 +16,7 @@ export default class Heading implements ReadInterface {
         return new Promise((resolve: Function) => {
             resolve(
                 {
-                    'heading_type': element.nodeName.toLowerCase(),
-                    'title': element.innerText
+                    'content': element.innerHTML
                 }
             );
         });
