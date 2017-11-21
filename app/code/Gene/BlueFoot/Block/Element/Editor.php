@@ -19,23 +19,25 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
      */
     protected function _getToggleButtonHtml($visible = true)
     {
-        $html = $this->_getButtonHtml(
-            [
-                'title' => $this->translate('Enable Advanced CMS'),
-                'class' => 'gene-bluefoot init-gene-bluefoot action-default scalable action action-secondary',
-                'id' => 'gene-bluefoot' . $this->getHtmlId()
-            ]
-        );
-        $html .= $this->_getButtonHtml(
-            [
-                'title' => $this->translate('Disable Advanced CMS'),
-                'class' => 'gene-bluefoot disable-gene-bluefoot',
-                'style' => 'display: none;',
-                'id' => 'disable-gene-bluefoot' . $this->getHtmlId()
-            ]
-        );
-        $html .= parent::_getToggleButtonHtml($visible);
-        return $html;
+        $buttonHtml = '';
+        if ($this->getConfig()->getData('page_builder')) {
+            $buttonHtml .= $this->_getButtonHtml(
+                [
+                    'title' => $this->translate('Enable Advanced CMS'),
+                    'class' => 'gene-bluefoot init-gene-bluefoot action-default scalable action action-secondary',
+                    'id' => 'gene-bluefoot' . $this->getHtmlId()
+                ]
+            );
+            $buttonHtml .= $this->_getButtonHtml(
+                [
+                    'title' => $this->translate('Disable Advanced CMS'),
+                    'class' => 'gene-bluefoot disable-gene-bluefoot',
+                    'style' => 'display: none;',
+                    'id' => 'disable-gene-bluefoot' . $this->getHtmlId()
+                ]
+            );
+        }
+        return $buttonHtml . parent::_getToggleButtonHtml($visible);
     }
 
     /**
