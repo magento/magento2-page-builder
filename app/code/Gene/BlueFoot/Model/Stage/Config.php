@@ -175,7 +175,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'preview_component' => (isset($contentType['preview_component'])
                 ? $contentType['preview_component']
                 : self::DEFAULT_PREVIEW_COMPONENT),
-            'component' => (isset($contentBlock['component'])
+            'component' => (isset($contentType['component'])
                 ? $contentType['component'] : self::DEFAULT_COMPONENT),
             'allowed_parents' => isset($contentType['allowed_parents'])
                 ? explode(',', $contentType['allowed_parents']) : [],
