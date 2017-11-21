@@ -5,6 +5,7 @@
 
 import ReadInterface from "../read-interface";
 import Config from "../../../component/config";
+import _ from 'underscore';
 
 export default class Image implements ReadInterface {
     /**
@@ -22,19 +23,23 @@ export default class Image implements ReadInterface {
             "type": "image/" + mainImageUrl.split('.').pop(),
             "url": Config.getInitConfig('media_url') + mainImageUrl
         };
-        let mobileImageUrl = decodeURIComponent(element.children[0].children[1].getAttribute('src')).split('media url=').pop();
-        mobileImageUrl = mobileImageUrl.substring(0, mobileImageUrl.length - 2);
-        let mobileImageObj = {
-            "name": mobileImageUrl.split('/').pop(),
-            "size": 0,
-            "type": "image/" + mobileImageUrl.split('.').pop(),
-            "url": Config.getInitConfig('media_url') + mobileImageUrl
-        };
+        let mobileImageUrl = decodeURIComponent(element.children[0].children[1].getAttribute('src'));
+        let mobileImageObj = {};
+        if (mobileImageUrl != "null") {
+            mobileImageUrl = mobileImageUrl.split('media url=').pop();
+            mobileImageUrl = mobileImageUrl.substring(0, mobileImageUrl.length - 2);
+            mobileImageObj = {
+                "name": mobileImageUrl.split('/').pop(),
+                "size": 0,
+                "type": "image/" + mobileImageUrl.split('.').pop(),
+                "url": Config.getInitConfig('media_url') + mobileImageUrl
+            };
+        }
         return new Promise((resolve: Function) => {
             resolve(
                 {
                     'image' : [mainImageObj],
-                    'mobile_image' : [mobileImageObj],
+                    'mobile_image' : (_.isEmpty(mobileImageObj)) ? "" : [mobileImageObj],
                     'alt' : element.children[0].children[0].getAttribute('alt'),
                     'title_tag' : element.children[0].children[0].getAttribute('title'),
                     'lightbox' : (element.children[0].getAttribute('class') == 'bluefoot-lightbox') ? "Yes" : "No",

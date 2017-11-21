@@ -5,10 +5,11 @@
 
 import Block from "./block";
 import Config from "../config";
+import _ from 'underscore';
 
 export default class Image extends Block {
 
-    getImageUrl(image: {}) {
+    private getImageUrl(image: {}) {
         let imageUrl = image[0]['url'],
             mediaUrl = Config.getInitConfig('media_url'),
             mediaPath = imageUrl.split(mediaUrl),
@@ -16,21 +17,21 @@ export default class Image extends Block {
         return directive;
     }
 
-    getImage1Attributes() {
+    getMainImageAttributes() {
         let data = this.getData();
         if (data.image == "" || data.image == undefined) {
             return {};
-        } else if (data.image[0] == undefined) {
+        } else if (_.isEmpty(data.image[0])) {
             return;
         }
         return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
     }
 
-    getImage2Attributes() {
+    getMobileImageAttributes() {
         let data = this.getData();
         if (data.mobile_image == "" || data.mobile_image == undefined) {
             return {};
-        } else if (data.mobile_image[0] == undefined) {
+        } else if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
         return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
@@ -40,18 +41,10 @@ export default class Image extends Block {
         let data = this.getData();
         if (data.image == "" || data.image == undefined) {
             return {};
-        } else if (data.image[0] == undefined) {
+        } else if (_.isEmpty(data.image[0])) {
             return;
         }
         return {href: this.getImageUrl(data.image), title: data.title_tag, class: (data.lightbox == "Yes" ? "bluefoot-lightbox" : "") };
-    }
-
-    getPreviewImageAttributes() {
-        let data = this.getData();
-        if (data.image == "" || data.image == undefined) {
-            return false;
-        }
-        return {src: data.image[0].url, style: "width:20%"};
     }
 
     getCaption() {

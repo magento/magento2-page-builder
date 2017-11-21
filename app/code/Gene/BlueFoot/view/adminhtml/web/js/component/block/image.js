@@ -1,4 +1,4 @@
-define(["./block", "../config"], function (_block, _config) {
+define(["./block", "../config", "underscore"], function (_block, _config, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -21,12 +21,12 @@ define(["./block", "../config"], function (_block, _config) {
       return directive;
     };
 
-    _proto.getImage1Attributes = function getImage1Attributes() {
+    _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
 
       if (data.image == "" || data.image == undefined) {
         return {};
-      } else if (data.image[0] == undefined) {
+      } else if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
@@ -37,12 +37,12 @@ define(["./block", "../config"], function (_block, _config) {
       };
     };
 
-    _proto.getImage2Attributes = function getImage2Attributes() {
+    _proto.getMobileImageAttributes = function getMobileImageAttributes() {
       var data = this.getData();
 
       if (data.mobile_image == "" || data.mobile_image == undefined) {
         return {};
-      } else if (data.mobile_image[0] == undefined) {
+      } else if (_underscore.isEmpty(data.mobile_image[0])) {
         return;
       }
 
@@ -58,7 +58,7 @@ define(["./block", "../config"], function (_block, _config) {
 
       if (data.image == "" || data.image == undefined) {
         return {};
-      } else if (data.image[0] == undefined) {
+      } else if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
@@ -66,19 +66,6 @@ define(["./block", "../config"], function (_block, _config) {
         href: this.getImageUrl(data.image),
         title: data.title_tag,
         class: data.lightbox == "Yes" ? "bluefoot-lightbox" : ""
-      };
-    };
-
-    _proto.getPreviewImageAttributes = function getPreviewImageAttributes() {
-      var data = this.getData();
-
-      if (data.image == "" || data.image == undefined) {
-        return false;
-      }
-
-      return {
-        src: data.image[0].url,
-        style: "width:20%"
       };
     };
 
