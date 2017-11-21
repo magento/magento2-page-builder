@@ -8,7 +8,7 @@ import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
 
-export default class Newsletter extends PreviewBlock {
+export default class Search extends PreviewBlock {
     /**
      * PreviewBlock constructor
      *
@@ -20,16 +20,13 @@ export default class Newsletter extends PreviewBlock {
         this.updateDataValue('html', ko.observable(''));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                if (this.data.title() === '') {
+                if (this.data.placeholder() === '') {
                     return;
                 }
                 const url = Config.getInitConfig('preview_url'),
                     requestData = {
                         role: this.config.name,
-                        'button_text': this.data.button_text,
-                        'button_label': this.data.button_label,
-                        'placeholder': this.data.placeholder,
-                        'title': this.data.title,
+                        'placeholder': this.data.placeholder
                     };
 
                 jQuery.post(url, requestData, (response) => {

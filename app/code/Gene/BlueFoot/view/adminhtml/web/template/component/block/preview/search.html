@@ -4,12 +4,13 @@
  * See COPYING.txt for license details.
  */
 -->
-<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-search-block bluefoot-no-blur bluefoot-live-edit">
-  <span class="bluefoot-search-block-input">
-    <div data-bind="html: preview.data.placeholder"></div>
-    <button type="button" class="bluefoot-block-button">
-      Search
-    </button>
-  </span>
+
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview">
+  <!-- ko if: preview.data.html() -->
+    <div data-bind="html: preview.data.html"></div>
+  <!-- /ko -->
+  <!-- ko ifnot: preview.data.html() -->
+    <span data-bind="html: $t('Search')"></span>
+  <!-- /ko -->
   <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>
