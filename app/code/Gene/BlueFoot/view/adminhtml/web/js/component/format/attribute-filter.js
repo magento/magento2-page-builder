@@ -7,7 +7,7 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function AttributeFilter() {
-      this.allowAttributes = ['name', 'appearance'];
+      this.allowAttributes = ['name', 'appearance', 'button_text', 'label_text', 'placeholder', 'title'];
     }
 
     var _proto = AttributeFilter.prototype;
