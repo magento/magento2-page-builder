@@ -210,23 +210,25 @@
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="search" translate="label" sortOrder="10">
-            <label>Search</label>
-            <icon>icon-bluefoot-search</icon>
-            <component>Gene_BlueFoot/js/component/block/inline</component>
-            <preview_component>Gene_BlueFoot/js/component/block/render/search.html</preview_component>
-            <preview_template>Gene_BlueFoot/component/block/preview/search.html</preview_template>
-            <form>search_form</form>
-            <group>other</group>
-            <readers>
-                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
-            </readers>
-        </type>
         <type name="code" translate="label" sortOrder="10">
             <label>Code</label>
             <icon>icon-bluefoot-code</icon>
             <form>code_form</form>
             <group>other</group>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="search" translate="label" sortOrder="10">
+            <label>Search</label>
+            <icon>icon-bluefoot-search</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/search.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/search.html</render_template>
+            <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml</backend_template>
+            <form>search_form</form>
+            <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
