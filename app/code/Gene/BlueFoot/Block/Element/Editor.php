@@ -20,7 +20,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getToggleButtonHtml($visible = true)
     {
         $buttonHtml = '';
-        if ($this->getConfig()->getData('page_builder')) {
+        if ($this->getConfig()->getData('pagebuilder_button')) {
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Enable Advanced CMS'),
