@@ -55,8 +55,4 @@ export default class PreviewImageBlock extends PreviewBlock {
         this.loading(false);
         alert($t("Your image could not be uploaded"));
     }
-
-    image() {
-        return;
-    }
 }
