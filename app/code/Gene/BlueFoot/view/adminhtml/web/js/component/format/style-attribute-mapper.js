@@ -76,7 +76,11 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (key === 'min-height') {
+        if (key === 'border-top-width') {
+          key = 'border-width';
+        }
+
+        if (key === 'min-height' || key === 'border-width') {
           value = value.replace('px', '');
         }
 
@@ -103,10 +107,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
 
         if (key === 'border-top-color') {
           key = 'border-color';
-        }
-
-        if (key === 'border-top-width') {
-          key = 'border-width';
         }
 
         if (key === 'background-color' || key === 'border-color') {
