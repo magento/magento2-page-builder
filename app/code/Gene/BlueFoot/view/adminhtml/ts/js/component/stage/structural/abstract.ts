@@ -58,7 +58,6 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         this.parent = parent;
         this.config = config;
-        hljs.initHighlightingOnLoad();
     }
 
     /**

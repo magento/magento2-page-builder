@@ -53,7 +53,6 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
       _this.appearance = appearance;
       _this.parent = parent;
       _this.config = config;
-      hljs.initHighlightingOnLoad();
       return _this;
     }
     /**
