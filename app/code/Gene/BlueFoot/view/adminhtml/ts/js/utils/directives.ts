@@ -46,15 +46,3 @@ export default function decodeAllDataUrlsInString(str: string) {
         return 'url(\'' + fromDataUrl(url) +'\')';
     });
 }
-
-/**
- * Decode all data URIs present in a string
- *
- * @param {string} str
- * @returns {string}
- */
-export default function decodeAllImageUrlsInString(str: string) {
-    return str.replace(new RegExp('\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+?)(?:&quot;|\'|")?\\s*\\)', 'g'), function(match, url) {
-        return fromDataUrl(url);
-    });
-}

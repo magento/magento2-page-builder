@@ -1,4 +1,4 @@
-define(["./block", "../config", "../../utils/directives"], function (_block, _config, _directives) {
+define(["./block", "../config"], function (_block, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -18,7 +18,7 @@ define(["./block", "../config", "../../utils/directives"], function (_block, _co
           mediaPath = imageUrl.split(mediaUrl),
           directive = '{{media url=' + mediaPath[1] + '}}';
 
-      return (0, _directives.toDataUrl)(directive);
+      return directive;
     };
 
     _proto.getImage1Attributes = function getImage1Attributes() {
@@ -26,6 +26,8 @@ define(["./block", "../config", "../../utils/directives"], function (_block, _co
 
       if (data.image == "" || data.image == undefined) {
         return {};
+      } else if (data.image[0] == undefined) {
+        return;
       }
 
       return {
@@ -40,6 +42,8 @@ define(["./block", "../config", "../../utils/directives"], function (_block, _co
 
       if (data.mobile_image == "" || data.mobile_image == undefined) {
         return {};
+      } else if (data.mobile_image[0] == undefined) {
+        return;
       }
 
       return {
@@ -54,6 +58,8 @@ define(["./block", "../config", "../../utils/directives"], function (_block, _co
 
       if (data.image == "" || data.image == undefined) {
         return {};
+      } else if (data.image[0] == undefined) {
+        return;
       }
 
       return {
@@ -63,16 +69,24 @@ define(["./block", "../config", "../../utils/directives"], function (_block, _co
       };
     };
 
-    _proto.hasMobileImage = function hasMobileImage() {
+    _proto.getPreviewImageAttributes = function getPreviewImageAttributes() {
       var data = this.getData();
-      return data.mobile_image == "" || data.mobile_image == undefined;
+
+      if (data.image == "" || data.image == undefined) {
+        return false;
+      }
+
+      return {
+        src: data.image[0].url,
+        style: "width:20%"
+      };
     };
 
     _proto.getCaption = function getCaption() {
       var data = this.getData();
 
-      if (data.show_caption == "YES") {
-        return "HELLO";
+      if (data.show_caption == "Yes") {
+        return data.title_tag;
       } else {
         return "";
       }

@@ -51,21 +51,8 @@ define([], function () {
       return 'url(\'' + fromDataUrl(url) + '\')';
     });
   }
-  /**
-   * Decode all data URIs present in a string
-   *
-   * @param {string} str
-   * @returns {string}
-   */
 
-
-  function decodeAllImageUrlsInString(str) {
-    return str.replace(new RegExp('\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+?)(?:&quot;|\'|")?\\s*\\)', 'g'), function (match, url) {
-      return fromDataUrl(url);
-    });
-  }
-
-  return Object.assign(decodeAllImageUrlsInString, {
+  return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
     fromDataUrl: fromDataUrl
   });

@@ -1,4 +1,9 @@
 <div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-image" data-bind="">
-    123
+    <!-- ko if: getPreviewImageAttributes() -->
+        <img data-bind="attr: getPreviewImageAttributes()"></img>
+    <!-- /ko -->
+    <!-- ko ifnot: getPreviewImageAttributes()-->
+        <i class="icon-bluefoot-image">  Image</i>
+    <!-- /ko -->
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

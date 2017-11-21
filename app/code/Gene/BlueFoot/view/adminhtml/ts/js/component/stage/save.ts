@@ -31,8 +31,7 @@ export default class Save {
             engine.waitForFinishRender().then(() => {
                 const filtered: JQuery = filterHtml(element),
                     output = decodeAllDataUrlsInString(filtered.html());
-                let decoded = decodeAllImageUrlsInString(output);
-                resolve(decoded);
+                resolve(output);
                 element.remove();
             });
             ko.applyBindingsToNode(
