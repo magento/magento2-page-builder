@@ -44,21 +44,33 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <field name="textarea">
+        <field name="content" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Text</item>
-                    <item name="formElement" xsi:type="string">textarea</item>
-                    <item name="source" xsi:type="string">page</item>
-                    <item name="sortOrder" xsi:type="number">1</item>
-                    <item name="dataScope" xsi:type="string">textarea</item>
-                    <item name="default" xsi:type="string">Type your text here...</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">block</item>
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="toggle_button" xsi:type="boolean">false</item>
                     </item>
                 </item>
             </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <label/>
+                <dataScope>content</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                        <page_builder>false</page_builder>
+                    </settings>
+                </wysiwyg>
+            </formElements>
         </field>
     </fieldset>
 </form>
