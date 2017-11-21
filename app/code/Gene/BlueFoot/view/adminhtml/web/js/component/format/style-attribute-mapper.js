@@ -31,10 +31,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           value = value.replace('px', '') + 'px';
         }
 
-        if (key === 'width') {
-          value = value.replace('%', '') + '%';
-        }
-
         if (key === 'background_repeat') {
           value = value === "1" ? 'repeat' : 'no-repeat';
         }
@@ -74,10 +70,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
 
         if (key === 'min-height') {
           value = value.replace('px', '');
-        }
-
-        if (key === 'width') {
-          value = value.replace('%', '');
         }
 
         if (key === 'background-repeat-y') {

@@ -28,9 +28,6 @@ export default class StyleAttributeMapper {
                 if (key === 'min_height') {
                     value = value.replace('px', '') + 'px';
                 }
-                if (key === 'width') {
-                    value = value.replace('%', '') + '%';
-                }
                 if (key === 'background_repeat') {
                     value = value === "1" ? 'repeat' : 'no-repeat';
                 }
@@ -64,9 +61,6 @@ export default class StyleAttributeMapper {
                 let value = data[key];
                 if (key === 'min-height') {
                     value = value.replace('px', '');
-                }
-                if (key === 'width') {
-                    value = value.replace('%', '');
                 }
                 if (key === 'background-repeat-y') {
                     key = 'background-repeat';
