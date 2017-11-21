@@ -66,7 +66,10 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: any) => {
                 let value = data[key];
-                if (key === 'min-height') {
+                if (key === 'border-top-width') {
+                    key = 'border-width';
+                }
+                if (key === 'min-height' || key === 'border-width') {
                     value = value.replace('px', '');
                 }
                 if (key === 'width') {
@@ -88,9 +91,6 @@ export default class StyleAttributeMapper {
                 }
                 if (key === 'border-top-color') {
                     key = 'border-color';
-                }
-                if (key === 'border-top-width') {
-                    key = 'border-width';
                 }
                 if (key === 'background-color' || key === 'border-color') {
                     const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
