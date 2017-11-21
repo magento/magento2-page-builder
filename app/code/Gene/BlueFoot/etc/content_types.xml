@@ -210,13 +210,17 @@
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="code" translate="label" sortOrder="10">
-            <label>Code</label>
+        <type name="html" translate="label" sortOrder="10">
+            <label>HTML</label>
             <icon>icon-bluefoot-code</icon>
-            <form>code_form</form>
+            <form>html_form</form>
             <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
+            <preview_template>Gene_BlueFoot/component/block/preview/html.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/html.html</render_template>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="html" component="Gene_BlueFoot/js/component/format/read/html"/>
             </readers>
         </type>
     </content_types>
