@@ -10,6 +10,11 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       var _this;
 
       _this = _EventEmitter.call(this) || this;
+      _this.fieldValue = void 0;
+      _this.stage = void 0;
+      _this.stageElement = void 0;
+      _this.stageDocument = void 0;
+      _this.attributeReaderComposite = void 0;
       _this.attributeReaderComposite = new _composite();
       _this.fieldValue = fieldValue;
       return _this;
