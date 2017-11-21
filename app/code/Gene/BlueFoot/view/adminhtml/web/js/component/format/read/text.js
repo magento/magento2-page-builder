@@ -3,12 +3,12 @@ define([], function () {
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Heading =
+  var Text =
   /*#__PURE__*/
   function () {
-    function Heading() {}
+    function Text() {}
 
-    var _proto = Heading.prototype;
+    var _proto = Text.prototype;
 
     /**
      * Read heading type and title from the element
@@ -19,15 +19,14 @@ define([], function () {
     _proto.read = function read(element) {
       return new Promise(function (resolve) {
         resolve({
-          'heading_type': element.nodeName.toLowerCase(),
-          'title': element.innerText
+          'content': element.innerHTML
         });
       });
     };
 
-    return Heading;
+    return Text;
   }();
 
-  return Heading;
+  return Text;
 });
-//# sourceMappingURL=heading.js.map
+//# sourceMappingURL=text.js.map

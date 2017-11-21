@@ -60,10 +60,13 @@
             <icon>icon-bluefoot-text</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
             <preview_template>Gene_BlueFoot/component/block/preview/text.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/text.html</render_template>
             <form>text_form</form>
             <group>general</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/text"/>
             </readers>
         </type>
         <type name="heading" translate="label" sortOrder="30">
@@ -180,6 +183,7 @@
             <icon>icon-bluefoot-block</icon>
             <form>block_form</form>
             <group>magento</group>
+            <backend_block>Gene\BlueFoot\Block\ContentType\Block</backend_block>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -218,6 +222,19 @@
             <group>other</group>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+            </readers>
+        </type>
+        <type name="html" translate="label" sortOrder="20">
+            <label>HTML</label>
+            <icon>icon-bluefoot-code</icon>
+            <form>html_form</form>
+            <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
+            <preview_template>Gene_BlueFoot/component/block/preview/html.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/html.html</render_template>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="html" component="Gene_BlueFoot/js/component/format/read/html"/>
             </readers>
         </type>
     </content_types>
