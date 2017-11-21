@@ -23,14 +23,7 @@ define([], function () {
      * @param template
      */
     function Option(parent, code, icon, title, action, classes, sort, template) {
-      this.parent = void 0;
-      this.code = void 0;
-      this.icon = void 0;
-      this.title = void 0;
       this.action = false;
-      this.classes = void 0;
-      this.sort = void 0;
-      this._template = void 0;
       this.parent = parent;
       this.code = code;
       this.icon = icon;

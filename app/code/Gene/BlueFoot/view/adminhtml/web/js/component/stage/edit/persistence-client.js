@@ -13,9 +13,6 @@ define([], function () {
      * @param {string} id
      */
     function PersistenceClient(modal, store, id) {
-      this.modal = void 0;
-      this.store = void 0;
-      this.id = void 0;
       this.modal = modal;
       this.store = store;
       this.id = id;

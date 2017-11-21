@@ -8,7 +8,6 @@ define(["underscore", "Gene_BlueFoot/js/component/loader", "../../config"], func
   function () {
     // Configuration for content types
     function AttributeReaderComposite() {
-      this.contentTypeConfig = void 0;
       this.contentTypeConfig = _config.getInitConfig('contentTypes');
     }
     /**

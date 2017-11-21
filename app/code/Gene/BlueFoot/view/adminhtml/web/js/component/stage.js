@@ -16,15 +16,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      _this.parent = void 0;
-      _this.stage = void 0;
       _this.active = true;
-      _this.showBorders = void 0;
-      _this.userSelect = void 0;
-      _this.loading = void 0;
-      _this.originalScrollTop = void 0;
       _this.serializeRole = 'stage';
-      _this.store = void 0;
       _this.save = new _save();
 
       _this.setChildren(stageContent);
