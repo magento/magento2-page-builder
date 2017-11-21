@@ -6,7 +6,13 @@
 -->
 
 <div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-block bluefoot-no-blur bluefoot-live-edit">
-    <!--The preview is just the HTML of the static block.-->
-    <div data-bind="css: 'bluefoot-block'">Block</div>
+    <div data-bind="css: 'bluefoot-block'">
+        <!-- ko if: getData().identifier -->
+            <div data-bind="html: preview.getContent()"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: getData().identifier-->
+            Block
+        <!-- /ko -->
+    </div>
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

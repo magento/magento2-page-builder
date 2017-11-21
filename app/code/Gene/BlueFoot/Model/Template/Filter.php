@@ -84,7 +84,8 @@ class Filter
         $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
         foreach ($nodes as $node) {
             $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
-            $backendBlockTemplate = $contentTypes[$node->getAttribute('data-role')]['backend_template'];
+            $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
+                ? $contentTypes[$node->getAttribute('data-role')]['backend_template'] : false;
             $data = [];
             foreach ($node->attributes as $attribute) {
                 $attributeName = str_replace(['data-', '-'], ['', '_'], $attribute->nodeName);

@@ -9,7 +9,8 @@ define([], function () {
     function AttributeMapper() {
       this.attributeNameMapping = {
         name: 'data-role',
-        appearance: 'data-appearance'
+        appearance: 'data-appearance',
+        identifier: 'data-identifier'
       };
     }
 
