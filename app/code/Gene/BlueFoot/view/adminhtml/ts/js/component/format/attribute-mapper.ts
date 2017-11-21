@@ -6,7 +6,15 @@ import {DataObject} from "../component/data-store";
 
 export default class AttributeMapper {
     // Attribute name mapping
-    attributeNameMapping: DataObject = {name: 'data-role', appearance: 'data-appearance'};
+    attributeNameMapping: DataObject = {
+        name: 'data-role',
+        appearance: 'data-appearance',
+        identifier: 'data-identifier',
+        button_text: 'data-button-text',
+        label_text: 'data-label-text',
+        placeholder: 'data-placeholder',
+        title: 'data-title'
+    };
 
     /**
      * Map attribute keys to DOM key names and normalize values

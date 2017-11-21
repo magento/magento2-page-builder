@@ -36,7 +36,7 @@ export default class Default implements ReadInterface {
 
         Object.keys(element.dataset).map(key => {
             if (element.dataset[key] !== '') {
-                data[key] = element.dataset[key];
+                data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.dataset[key];
             }
         });
 

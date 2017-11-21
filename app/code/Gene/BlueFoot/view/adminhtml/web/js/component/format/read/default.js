@@ -36,7 +36,7 @@ define(["underscore", "../style-attribute-mapper"], function (_underscore, _styl
 
       Object.keys(element.dataset).map(function (key) {
         if (element.dataset[key] !== '') {
-          data[key] = element.dataset[key];
+          data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.dataset[key];
         }
       });
       data['css_classes'] = element.className.split(' ').filter(function (value) {
