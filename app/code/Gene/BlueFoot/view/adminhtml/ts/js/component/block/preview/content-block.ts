@@ -3,43 +3,37 @@
  * See COPYING.txt for license details.
  */
 
-import _, {Dictionary} from "underscore";
 import ko from "knockout";
+import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
 
-interface PreviewData {
-    [key: string]: KnockoutObservable<any>;
-}
-
 export default class ContentBlock extends PreviewBlock {
-    html: KnockoutObservable<string> = ko.observable('default');
     /**
-     * Get the content of a static block
+     * PreviewBlock constructor
      *
-     * @returns {DataObject}
+     * @param {Block} parent
+     * @param {Object} config
      */
-    getContent() {
-        const url        = Config.getInitConfig('preview_url'),
-              identifier = this.data.identifier(),
-              data       = {
-                  identifier: identifier,
-                  role: this.config.name
-              };
+    constructor(parent: Block, config: object) {
+        super(parent, config)
+        this.updateDataValue('html', ko.observable(''));
+        this.parent.stage.store.subscribe(
+            (data: Dictionary<{}>) => {
+                if (data.identifier === '') {
+                    return;
+                }
+                const url = Config.getInitConfig('preview_url'),
+                    requestData = {
+                        identifier: data.identifier,
+                        role: this.config.name
+                    };
 
-        console.log('ko');
-        console.log(this.html());
-        this.html('anthoula');
-
-        jQuery.post(url, data, function(data) {
-            let html = JSON.stringify(data.content);
-            console.log(typeof data);
-            console.log(data);
-            console.log(typeof html);
-            console.log(html);
-            // this.html(html);
-        });
-
-        return identifier;
+                jQuery.post(url, requestData, (response) => {
+                    this.updateDataValue('html', response.content.trim());
+                });
+            },
+            this.parent.id
+        );
     }
 }

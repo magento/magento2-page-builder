@@ -10,6 +10,7 @@ define([], function () {
       this.attributeNameMapping = {
         name: 'data-role',
         appearance: 'data-appearance',
+        identifier: 'data-identifier',
         button_text: 'data-button-text',
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',

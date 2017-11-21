@@ -15,21 +15,6 @@ class Preview extends \Magento\Backend\App\Action
     private $resultJsonFactory;
 
     /**
-     * @var \Magento\Framework\File\UploaderFactory
-     */
-    private $uploaderFactory;
-
-    /**
-     * @var \Gene\BlueFoot\Helper\Config
-     */
-    private $configHelper;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * @var \Gene\BlueFoot\Model\Config
      */
     private $config;
@@ -40,29 +25,22 @@ class Preview extends \Magento\Backend\App\Action
     private $blockFactory;
 
     /**
-     * Upload constructor.
+     * Constructor
      *
-     * @param \Magento\Backend\App\Action\Context              $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Gene\BlueFoot\Helper\Config                     $configHelper
-     * @param \Magento\Store\Model\StoreManagerInterface       $storeManager
-     * @param \Magento\Framework\File\UploaderFactory          $uploaderFactory
+     * @param \Gene\BlueFoot\Model\Config $config
+     * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Gene\BlueFoot\Helper\Config $configHelper,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\File\UploaderFactory $uploaderFactory,
         \Gene\BlueFoot\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory
     ) {
         parent::__construct($context);
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->configHelper = $configHelper;
-        $this->storeManager = $storeManager;
-        $this->uploaderFactory = $uploaderFactory;
         $this->config = $config;
         $this->blockFactory = $blockFactory;
     }
@@ -75,16 +53,30 @@ class Preview extends \Magento\Backend\App\Action
     public function execute()
     {
         try {
+            $error = false;
             $params = $this->getRequest()->getParams();
             $contentTypes = $this->config->getContentTypes();
-            $backendBlockClassName = $contentTypes[$params['role']]['backend_block'];
+            $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
+                ? $contentTypes[$params['role']]['backend_block'] : false;
+            if (!$backendBlockClassName) {
+                $error = true;
+            }
             $backendBlockInstance = $this->blockFactory->createBlock(
                 $backendBlockClassName,
                 ['data' => $params]
             );
-            $result = ['content' => $backendBlockInstance->toHtml()];
+            if (!$error) {
+                $result = [
+                    'content' => $backendBlockInstance->toHtml()
+                ];
+            } else {
+                $result = ['content' => ''];
+            }
         } catch (\Exception $e) {
-            $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
+            $result = [
+                'error' => $e->getMessage(),
+                'errorcode' => $e->getCode()
+            ];
         }
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
