@@ -55,7 +55,7 @@ class Filter
         );
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         try {
-            $domDocument->loadXML($string);
+            $domDocument->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
             restore_error_handler();
             $this->logger->critical($e);
@@ -82,6 +82,7 @@ class Filter
         }
 
         $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
+        $replacements = [];
         foreach ($nodes as $node) {
             $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
             $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
@@ -98,12 +99,14 @@ class Filter
                 $backendBlockClassName,
                 ['data' => $data]
             );
-            $documentFragment = $domDocument->createDocumentFragment();
-            $documentFragment->appendXML($backendBlockInstance->toHtml());
-            $node->parentNode->replaceChild($documentFragment, $node);
+            $uniqueIdentifier = 'block-' . uniqid();
+            $replacements[$uniqueIdentifier] = $backendBlockInstance->toHtml();
+            $node->parentNode->replaceChild($domDocument->createTextNode($uniqueIdentifier), $node);
         }
-        return $domDocument->saveXML(
-            $domDocument->documentElement
+        return str_replace(
+            array_keys($replacements),
+            $replacements,
+            $domDocument->saveHTML()
         );
     }
 }
