@@ -53,19 +53,21 @@ class Preview extends \Magento\Backend\App\Action
     public function execute()
     {
         try {
-            $error = false;
             $params = $this->getRequest()->getParams();
+
             $contentTypes = $this->config->getContentTypes();
             $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
                 ? $contentTypes[$params['role']]['backend_block'] : false;
-            if (!$backendBlockClassName) {
-                $error = true;
+            $backendBlockTemplate = isset($contentTypes[$params['role']]['backend_template'])
+                ? $contentTypes[$params['role']]['backend_template'] : false;
+            if ($backendBlockTemplate) {
+                $params['template'] = $backendBlockTemplate;
             }
-            $backendBlockInstance = $this->blockFactory->createBlock(
-                $backendBlockClassName,
-                ['data' => $params]
-            );
-            if (!$error) {
+            if ($backendBlockClassName) {
+                $backendBlockInstance = $this->blockFactory->createBlock(
+                    $backendBlockClassName,
+                    ['data' => $params]
+                );
                 $result = [
                     'content' => $backendBlockInstance->toHtml()
                 ];
