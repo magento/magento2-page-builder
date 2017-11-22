@@ -4,10 +4,10 @@
  */
 
 import ko from "knockout";
+import _, {Dictionary} from "underscore";
 import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
-import _, {Dictionary} from "underscore";
 
 export default class ContentBlock extends PreviewBlock {
     /**
