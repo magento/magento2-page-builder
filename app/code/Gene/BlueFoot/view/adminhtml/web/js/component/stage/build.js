@@ -45,49 +45,64 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.buildStage = function buildStage(stage) {
-      this.stage = stage;
-      return this.parseAndBuildElement(this.stageDocument, this.stage);
+      this.stage = stage; // Iterate through the stages children
+
+      return this.buildElement(this.stageDocument, this.stage);
+    };
+    /**
+     * Build an element and it's children into the stage
+     *
+     * @param {Element} element
+     * @param {EditableArea} parent
+     * @returns {Promise<void>}
+     */
+
+
+    _proto.buildElement = function buildElement(element, parent) {
+      var _this2 = this;
+
+      if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
+        var childPromises = [],
+            childElements = [],
+            children = this.getElementChildren(element);
+
+        if (children.length > 0) {
+          _.forEach(children, function (childElement) {
+            childPromises.push(_this2.createBlock(childElement, _this2.stage));
+            childElements.push(childElement);
+          });
+        } else {
+          childPromises.push(this.createBlock(element, parent));
+        } // Wait for all the promises to finish and add the instances to the stage
+
+
+        return Promise.all(childPromises).then(function (children) {
+          return children.forEach(function (child, index) {
+            parent.addChild(child);
+
+            _this2.buildElement(childElements[index], child);
+          });
+        });
+      }
     };
     /**
      * Parse an element in the structure and build the required element
      *
-     * @param element
-     * @param parent
+     * @param {Element} element
+     * @param {EditableArea} parent
      * @returns {Promise<EditableAreaInterface>}
      */
 
 
-    _proto.parseAndBuildElement = function parseAndBuildElement(element, parent) {
-      var _this2 = this;
+    _proto.createBlock = function createBlock(element, parent) {
+      var _this3 = this;
 
-      if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
-        parent = parent || this.stage;
-        var self = this,
-            role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
-        var getElementDataPromise = new Promise(function (resolve, error) {
-          resolve(self.getElementData(element));
-        });
-        return getElementDataPromise.then(function (data) {
-          var children = _this2.getElementChildren(element); // Add element to stage
-
-
-          return _this2.buildElement(role, data, parent).then(function (newParent) {
-            if (children.length > 0) {
-              var childPromises = [];
-
-              _.forEach(children, function (child) {
-                childPromises.push(self.parseAndBuildElement(child, newParent));
-              });
-
-              return Promise.all(childPromises);
-            } else {
-              return newParent;
-            }
-          });
-        });
-      } else {
-        return Promise.reject(new Error('Element does not contain valid role attribute.'));
-      }
+      parent = parent || this.stage;
+      var self = this,
+          role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
+      return this.getElementData(element).then(function (data) {
+        return (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, _this3.stage, data);
+      });
     };
     /**
      * Retrieve the elements data
@@ -113,7 +128,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
 
     _proto.getElementChildren = function getElementChildren(element) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (element.hasChildNodes()) {
         var children = []; // Find direct children of the element
@@ -124,7 +139,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
             if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
               children.push(child);
             } else {
-              children = _this3.getElementChildren(child);
+              children = _this4.getElementChildren(child);
             }
           }
         });
@@ -135,47 +150,6 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       }
 
       return [];
-    };
-    /**
-     * Forward build instruction to necessary build function
-     *
-     * @param role
-     * @param data
-     * @param parent
-     * @returns {Promise<EditableAreaInterface>}
-     */
-
-
-    _proto.buildElement = function buildElement(role, data, parent) {
-      switch (role) {
-        case 'stage':
-          // If the stage is being built, we don't need to "build" anything, just return the stage as the
-          // new parent
-          return Promise.resolve(this.stage);
-
-        default:
-          return this.buildEntity(role, data, parent);
-      }
-    };
-    /**
-     * Add an entity into the system
-     *
-     * @param role
-     * @param data
-     * @param parent
-     * @returns {Promise<T>}
-     */
-
-
-    _proto.buildEntity = function buildEntity(role, data, parent) {
-      return new Promise(function (resolve, reject) {
-        (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, this.stage, data).then(function (block) {
-          parent.addChild(block);
-          resolve(block);
-        }).catch(function (error) {
-          reject(error);
-        });
-      }.bind(this));
     };
 
     return Build;

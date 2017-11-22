@@ -4,23 +4,25 @@
  */
 
 import * as _ from 'underscore';
-import { StageInterface } from '../stage.d';
+import {StageInterface} from '../stage.d';
 import EventEmitter from '../event-emitter';
 import Config from '../config';
 import createBlock from '../block/factory';
-import { EditableAreaInterface } from './structural/editable-area.d';
-import { RowInterface } from './structural/row.d';
-import { ColumnInterface } from './structural/column.d';
+import {EditableAreaInterface} from './structural/editable-area.d';
+import {RowInterface} from './structural/row.d';
+import {ColumnInterface} from './structural/column.d';
 import Block from '../block/block';
 import AttributeReaderComposite from '../format/read/composite';
+import Stage from "../stage";
+import EditableArea from "./structural/editable-area";
 
 export default class Build extends EventEmitter {
     fieldValue: string;
-    stage: StageInterface;
+    stage: Stage;
     stageElement: Element;
     stageDocument: Element;
     attributeReaderComposite: AttributeReaderComposite;
-    
+
     constructor(fieldValue: string) {
         super();
         this.attributeReaderComposite = new AttributeReaderComposite();
@@ -48,49 +50,63 @@ export default class Build extends EventEmitter {
      * @param stage
      * @returns {Build}
      */
-    buildStage(stage: StageInterface) {
+    buildStage(stage: Stage) {
         this.stage = stage;
 
-        return this.parseAndBuildElement(this.stageDocument, this.stage);
+        // Iterate through the stages children
+        return this.buildElement(this.stageDocument, this.stage);
+    }
+
+    /**
+     * Build an element and it's children into the stage
+     *
+     * @param {Element} element
+     * @param {EditableArea} parent
+     * @returns {Promise<void>}
+     */
+    buildElement(element: Element, parent: EditableArea) {
+        if (element instanceof HTMLElement
+            && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
+        ) {
+            let childPromises: Array<Promise<EditableArea>> = [],
+                childElements: Array<Element> = [],
+                children = this.getElementChildren(element);
+
+            if (children.length > 0) {
+                _.forEach(children, (childElement: Element) => {
+                    childPromises.push(this.createBlock(childElement, this.stage));
+                    childElements.push(childElement);
+                });
+            } else {
+                childPromises.push(this.createBlock(element, parent));
+            }
+
+            // Wait for all the promises to finish and add the instances to the stage
+            return Promise.all(childPromises).then(children => children.forEach((child, index) => {
+                parent.addChild(child);
+                this.buildElement(childElements[index], child);
+            }));
+        }
     }
 
     /**
      * Parse an element in the structure and build the required element
      *
-     * @param element
-     * @param parent
+     * @param {Element} element
+     * @param {EditableArea} parent
      * @returns {Promise<EditableAreaInterface>}
      */
-    parseAndBuildElement(element: Element, parent: EditableAreaInterface): Promise<EditableAreaInterface> {
-        if (element instanceof HTMLElement
-            && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
-        ) {
-            parent = parent || this.stage;
-            let self = this,
-                role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
+    createBlock(element: Element, parent: EditableArea): Promise<EditableArea> {
+        parent = parent || this.stage;
+        let self = this,
+            role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
 
-            let getElementDataPromise = new Promise((resolve: Function, error: Function) => {
-                resolve(self.getElementData(element));
-            });
-
-            return getElementDataPromise.then((data) => {
-                let children = this.getElementChildren(element);
-                // Add element to stage
-                return this.buildElement(role, data, parent).then((newParent) => {
-                    if (children.length > 0) {
-                        let childPromises: Array<Promise<EditableAreaInterface>> = [];
-                        _.forEach(children, function (child) {
-                            childPromises.push(self.parseAndBuildElement(child, newParent));
-                        });
-                        return Promise.all(childPromises);
-                    } else {
-                        return newParent;
-                    }
-                });
-            });
-        } else {
-            return Promise.reject(new Error('Element does not contain valid role attribute.'));
-        }
+        return this.getElementData(element).then(data => createBlock(
+            Config.getInitConfig('contentTypes')[role],
+            parent,
+            this.stage,
+            data
+        ));
     }
 
     /**
@@ -99,7 +115,7 @@ export default class Build extends EventEmitter {
      * @param element
      * @returns {{}}
      */
-    getElementData(element: HTMLElement) {
+    getElementData(element: Element) {
         let result = {};
         const readPromise = this.attributeReaderComposite.read(element);
         return readPromise.then((data) => {
@@ -113,7 +129,7 @@ export default class Build extends EventEmitter {
      * @param element
      * @returns {Array}
      */
-    getElementChildren(element: HTMLElement) {
+    getElementChildren(element: Element) {
         if (element.hasChildNodes()) {
             let children: Array<any> = [];
             // Find direct children of the element
@@ -134,48 +150,5 @@ export default class Build extends EventEmitter {
         }
 
         return [];
-    }
-
-    /**
-     * Forward build instruction to necessary build function
-     *
-     * @param role
-     * @param data
-     * @param parent
-     * @returns {Promise<EditableAreaInterface>}
-     */
-    buildElement(role: string, data: object, parent: any): Promise<EditableAreaInterface> {
-        switch (role) {
-            case 'stage':
-                // If the stage is being built, we don't need to "build" anything, just return the stage as the
-                // new parent
-                return Promise.resolve(this.stage);
-            default:
-                return this.buildEntity(role, data, parent);
-        }
-    }
-
-    /**
-     * Add an entity into the system
-     *
-     * @param role
-     * @param data
-     * @param parent
-     * @returns {Promise<T>}
-     */
-    private buildEntity(role: string, data: object, parent: EditableAreaInterface): Promise<Block> {
-        return new Promise(function (resolve, reject) {
-            createBlock(
-                Config.getInitConfig('contentTypes')[role],
-                parent,
-                this.stage,
-                data
-            ).then(function (block) {
-                parent.addChild(block);
-                resolve(block);
-            }).catch(function (error) {
-                reject(error);
-            });
-        }.bind(this));
     }
 }
