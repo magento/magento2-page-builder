@@ -16,7 +16,7 @@ export default class Image implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         let mainImageUrl = decodeURIComponent(element.children[0].children[0].getAttribute('src')).split('media url=').pop();
-            mainImageUrl = mainImageUrl.substring(0, mainImageUrl.length - 2);
+        mainImageUrl = mainImageUrl.substring(0, mainImageUrl.length - 2);
         let mainImageObj = {
             "name": mainImageUrl.split('/').pop(),
             "size": 0,
