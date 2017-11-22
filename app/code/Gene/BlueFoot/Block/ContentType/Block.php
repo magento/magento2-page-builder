@@ -50,6 +50,12 @@ class Block extends \Magento\Cms\Block\Block
                 $html = $this->_filterProvider->getBlockFilter()->setStoreId($storeId)->filter($block->getContent());
             }
         }
-        return $html;
+        return '<div class="'
+            . $this->escapeHtmlAttr($this->getClass())
+            . '" style="'
+            . $this->escapeHtmlAttr($this->getStyle())
+            . '">'
+            . $html
+            . '</div>';
     }
 }

@@ -33,7 +33,7 @@ export default class Newsletter extends PreviewBlock {
                     };
 
                 jQuery.post(url, requestData, (response) => {
-                    this.updateDataValue('html', response.content.trim());
+                    this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
                 });
             },
             this.parent.id

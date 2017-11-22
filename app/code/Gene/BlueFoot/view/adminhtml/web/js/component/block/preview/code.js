@@ -20,8 +20,6 @@ define(["knockout", "bluefoot/highlight", "./block"], function (_knockout, _high
       _this.updateDataValue('html', _knockout.observable(''));
 
       _this.parent.stage.store.subscribe(function (data) {
-        console.log(_highlight.highlight('html', _this.data.snippet()).value);
-
         _this.updateDataValue('html', _highlight.highlight('html', _this.data.snippet()).value);
       }, _this.parent.id);
 

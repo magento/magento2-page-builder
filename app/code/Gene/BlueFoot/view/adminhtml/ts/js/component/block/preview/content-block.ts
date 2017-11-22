@@ -27,7 +27,7 @@ export default class ContentBlock extends PreviewBlock {
                 const url = Config.getInitConfig('preview_url'),
                     requestData = {identifier: data.identifier, role: this.config.name};
                 jQuery.post(url, requestData, (response) => {
-                    this.updateDataValue('html', response.content.trim());
+                    this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
                 });
             },
             this.parent.id

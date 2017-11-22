@@ -34,7 +34,7 @@ define(["knockout", "./block", "../../config"], function (_knockout, _block, _co
         };
 
         jQuery.post(url, requestData, function (response) {
-          _this.updateDataValue('html', response.content.trim());
+          _this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
         });
       }, _this.parent.id);
 
