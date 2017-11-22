@@ -54,8 +54,11 @@ class Filter
             }
         );
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $wrapperElementId = uniqid();
         try {
-            $domDocument->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $domDocument->loadHTML(
+                '<html><body id="' . $wrapperElementId . '">' . $string . '</body></html>'
+            );
         } catch (\Exception $e) {
             restore_error_handler();
             $this->logger->critical($e);
@@ -103,10 +106,15 @@ class Filter
             $replacements[$uniqueIdentifier] = $backendBlockInstance->toHtml();
             $node->parentNode->replaceChild($domDocument->createTextNode($uniqueIdentifier), $node);
         }
+        preg_match(
+            '/<body id="' . $wrapperElementId . '">(.+)<\/body><\/html>$/si',
+            mb_convert_encoding($domDocument->saveHTML(), 'UTF-8', 'HTML-ENTITIES'),
+            $matches
+        );
         return str_replace(
             array_keys($replacements),
             $replacements,
-            $domDocument->saveHTML()
+            !empty($matches) ? $matches[1] : ''
         );
     }
 }
