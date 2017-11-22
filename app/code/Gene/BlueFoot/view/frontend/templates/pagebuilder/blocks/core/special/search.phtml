@@ -1,31 +1,28 @@
 <?php
 /**
- * BlueFoot
- *
- * Version 1.0
- *
- * @author Hob Adams <hob@gene.co.uk>
- *
- * Newsletter Signup Block Template
- * @var $block               \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
- * @var $catalogSearchHelper Magento\Search\Helper\Data
- *
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-$_entity = $block->getEntity();
-$catalogSearchHelper = $block->helper('Magento\Search\Helper\Data');
 ?>
-<form id="search_mini_form_<?php echo $_entity->getEntityId(); ?>"
-      class="bluefoot-search-form bluefoot-full-width <?php echo $block->getCssAttributes(); ?>"
-      action="<?php echo $catalogSearchHelper->getResultUrl() ?>"
-      method="get"<?php echo $block->getStyleAttributes(); ?>>
+
+<?php
+$uniqueIdentifier = uniqid();
+$catalogSearchHelper = $this->helper(\Magento\Search\Helper\Data::class);
+?>
+
+<form id="search_mini_form_<?php /* @noEscape */ echo $uniqueIdentifier; ?>"
+      class="bluefoot-search-form bluefoot-full-width <?php echo $block->escapeHtmlAttr($block->getClass()); ?>"
+      style="<?php echo $block->escapeHtmlAttr($block->getStyle()); ?>"
+      action="<?php /* @noEscape */ echo $catalogSearchHelper->getResultUrl() ?>"
+      method="get">
     <div class="form-search">
-        <label for="search_<?php echo $_entity->getEntityId(); ?>"><?php echo __('Search:') ?></label>
-        <input id="search_<?php echo $_entity->getEntityId(); ?>" type="search"
-               name="<?php echo $catalogSearchHelper->getQueryParamName() ?>"
-               value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text"
-               maxlength="<?php echo $catalogSearchHelper->getMaxQueryLength(); ?>"
-               placeholder="<?php echo $_entity->getPlaceholder(); ?>"/>
+        <label for="search_<?php /* @noEscape */ echo $uniqueIdentifier; ?>"><?php echo __('Search:') ?></label>
+        <input id="search_<?php /* @noEscape */ echo $uniqueIdentifier; ?>" type="search"
+               name="<?php echo $block->escapeHtml($catalogSearchHelper->getQueryParamName()) ?>"
+               value="<?php echo $block->escapeHtml($catalogSearchHelper->getEscapedQueryText()) ?>" class="input-text"
+               maxlength="<?php echo $block->escapeHtml($catalogSearchHelper->getMaxQueryLength()); ?>"
+               placeholder="<?php echo $block->escapeHtml($block->getPlaceholder()); ?>"/>
         <button type="submit" title="<?php echo __('Search') ?>" class="button search-button"></button>
-        <div id="search_autocomplete_<?php echo $_entity->getEntityId(); ?>" class="search-autocomplete"></div>
+        <div id="search_autocomplete_<?php /* @noEscape */ echo $uniqueIdentifier; ?>" class="search-autocomplete"></div>
     </div>
 </form>

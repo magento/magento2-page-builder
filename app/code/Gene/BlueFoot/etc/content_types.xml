@@ -175,6 +175,7 @@
             <label>Newsletter</label>
             <icon>icon-bluefoot-newsletter</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/newsletter</preview_component>
             <preview_template>Gene_BlueFoot/component/block/preview/newsletter.html</preview_template>
             <render_template>Gene_BlueFoot/component/block/render/newsletter.html</render_template>
             <form>newsletter_form</form>
@@ -239,6 +240,22 @@
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
                 <reader name="html" component="Gene_BlueFoot/js/component/format/read/html"/>
+            </readers>
+        </type>
+        <type name="search" translate="label" sortOrder="10">
+            <label>Search</label>
+            <icon>icon-bluefoot-search</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/search</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/search.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/search.html</render_template>
+            <backend_block>Gene\BlueFoot\Block\ContentType\Search</backend_block>
+            <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml</backend_template>
+            <form>search_form</form>
+            <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
     </content_types>
