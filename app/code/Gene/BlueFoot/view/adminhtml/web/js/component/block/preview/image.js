@@ -12,6 +12,11 @@ define(["./block"], function (_block) {
 
     var _proto = Image.prototype;
 
+    /**
+     * Retrieve the image attributes for the preview
+     *
+     * @returns {any}
+     */
     _proto.getPreviewImageAttributes = function getPreviewImageAttributes() {
       if (this.data.image() == "" || this.data.image() == undefined) {
         return {
@@ -24,6 +29,12 @@ define(["./block"], function (_block) {
         style: "visibility: visible; width: 20%"
       };
     };
+    /**
+     * Get the preview icon attributes
+     *
+     * @returns {any}
+     */
+
 
     _proto.getPreviewIconAttributes = function getPreviewIconAttributes() {
       if (this.data.image() == "" || this.data.image() == undefined) {

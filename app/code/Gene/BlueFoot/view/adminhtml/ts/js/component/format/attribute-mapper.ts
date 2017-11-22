@@ -13,7 +13,8 @@ export default class AttributeMapper {
         button_text: 'data-button-text',
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',
-        title: 'data-title'
+        title: 'data-title',
+        src: 'src'
     };
 
     /**
@@ -31,6 +32,28 @@ export default class AttributeMapper {
                     key = this.attributeNameMapping[key];
                 }
                 result[key.replace('_', '-')] = value;
+            }
+        );
+        return result;
+    }
+
+    /**
+     * Convert attributes from the DOM into the data store
+     * @param {} data
+     * @returns {}
+     */
+    fromDom(data: DataObject): DataObject {
+        // Flip the object key / values
+        let attributeMapping = Object.keys(this.attributeNameMapping).reduce((obj: DataObject, key) => {
+            obj[this.attributeNameMapping[key]] = key;
+            return obj;
+        }, {}),
+            result: DataObject = {};
+        Object.keys(data).map(
+            (key: string) => {
+                if (key in attributeMapping) {
+                    result[attributeMapping[key]] = data[key];
+                }
             }
         );
         return result;

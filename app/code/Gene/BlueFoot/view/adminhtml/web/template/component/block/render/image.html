@@ -7,8 +7,12 @@
 
 <figure class="bluefoot-image bluefoot-entity" data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
     <a data-bind="attr: getImageAttributes()">
-        <img data-bind="attr: getMainImageAttributes()" class="bluefoot-mobile-hidden">
+        <img data-bind="attr: getMainImageAttributes(), css: {'bluefoot-mobile-hidden': getData().mobile_image}">
+        <!-- ko if: getData().mobile_image -->
         <img data-bind="attr: getMobileImageAttributes()" class="bluefoot-mobile-only">
+        <!-- /ko -->
     </a>
-    <figcaption><!--ko text: getCaption()--><!--/ko--></figcaption>
+    <!-- ko if: getData().show_caption == "Yes" -->
+    <figcaption data-bind="text: getCaption()"></figcaption>
+    <!-- /ko -->
 </figure>

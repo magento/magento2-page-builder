@@ -31,14 +31,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           value = value.replace('px', '') + 'px';
         }
 
-        if (key === 'width') {
-          if (value.indexOf('px') !== -1) {
-            value = value.replace('px', '') + 'px';
-          } else {
-            value = value.replace('%', '') + '%';
-          }
-        }
-
         if (key === 'background_repeat') {
           value = value === "1" ? 'repeat' : 'no-repeat';
         }
@@ -55,6 +47,12 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
               directive = '{{media url=' + mediaPath[1] + '}}';
 
           value = 'url(\'' + (0, _directives.toDataUrl)(directive) + '\')';
+        }
+
+        if (key === 'margins_and_padding') {
+          result['margin'] = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
+          result['padding'] = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
+          return;
         }
 
         result[_this.fromSnakeToCamelCase(key)] = value;
@@ -82,14 +80,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
 
         if (key === 'min-height' || key === 'border-width') {
           value = value.replace('px', '');
-        }
-
-        if (key === 'width') {
-          if (value.indexOf('px') !== -1) {
-            value = value.replace('px', '') + 'px';
-          } else {
-            value = value.replace('%', '') + '%';
-          }
         }
 
         if (key === 'background-repeat-y') {
@@ -134,6 +124,23 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           };
 
           value = [image];
+        }
+
+        if (key.startsWith('margin') || key.startsWith('padding')) {
+          var _$extend;
+
+          var spacingObj = {
+            margin: {},
+            padding: {}
+          };
+
+          var _key$split = key.split('-'),
+              attributeType = _key$split[0],
+              attributeDirection = _key$split[1];
+
+          result['margins_and_padding'] = result['margins_and_padding'] || spacingObj;
+          result['margins_and_padding'][attributeType] = _.extend(result['margins_and_padding'][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace('px', ''), _$extend));
+          return;
         }
 
         result[key.replace('-', '_')] = value;

@@ -110,8 +110,8 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     _proto.getCss = function getCss() {
       var cssClasses = {};
 
-      if ('css_classes' in this.getData()) {
-        this.getData().css_classes.map(function (value, index) {
+      if ('css_classes' in this.getData() && this.getData().css_classes != '') {
+        this.getData().css_classes.split(' ').map(function (value, index) {
           return cssClasses[value] = true;
         });
       }

@@ -141,8 +141,10 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     getCss() {
         let cssClasses = {};
-        if ('css_classes' in this.getData()) {
-            this.getData().css_classes.map((value, index) => cssClasses[value] = true);
+        if ('css_classes' in this.getData() && this.getData().css_classes != '') {
+            this.getData().css_classes.split(' ').map(
+                (value, index) => cssClasses[value] = true
+            );
         }
         return cssClasses;
     }
