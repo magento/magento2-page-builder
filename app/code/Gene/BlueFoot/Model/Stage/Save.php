@@ -65,25 +65,6 @@ class Save
      */
     public function processHtml($html, $storeId = 0, $object = false)
     {
-        // Parser turns the HTML string into nested Parser\Element's
-        $parser = $this->parserFactory->create([
-            'html' => $html
-        ]);
-
-        if ($parser->hasStage()) {
-            /* @var $stageElement \Gene\BlueFoot\Model\Stage\Save\Parser\Element */
-            $stageElement = $parser->parse();
-
-            // Render the stage element as HTML
-            return $this->rendererFactory->create([
-                'storeId' => $storeId,
-                'object' => $object /* Object passed for contextual rendering */
-            ])->render(
-                $stageElement,
-                true
-            );
-        }
-
         return false;
     }
 }
