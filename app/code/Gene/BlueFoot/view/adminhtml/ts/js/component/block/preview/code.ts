@@ -4,15 +4,14 @@
  */
 
 import ko from "knockout";
-import _, {Dictionary} from "underscore";
+import {Dictionary} from "underscore";
 import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
-import Config from "../../config";
 
 export default class Code extends PreviewBlock {
     /**
-     * PreviewBlock constructor
+     * Constructor
      *
      * @param {Block} parent
      * @param {Object} config
@@ -22,6 +21,8 @@ export default class Code extends PreviewBlock {
         this.updateDataValue('html', ko.observable(''));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
+
+                console.log(hljs.highlight('html', this.data.snippet()).value)
                 this.updateDataValue('html', hljs.highlight('html', this.data.snippet()).value);
             },
             this.parent.id
