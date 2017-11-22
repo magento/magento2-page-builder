@@ -26,7 +26,7 @@ define(["../../../component/config"], function (_config) {
         'show_caption': !!element.querySelector('figcaption') ? "Yes" : "No"
       }; // Detect if there is a mobile image and update the response
 
-      if (element.querySelector('img:nth-child(2)')) {
+      if (element.querySelector('img:nth-child(2)') && element.querySelector('img:nth-child(2)').getAttribute('src')) {
         response['mobile_image'] = this.generateImageObject(element.querySelector('img:nth-child(2)').getAttribute('src'));
       }
 
@@ -42,16 +42,20 @@ define(["../../../component/config"], function (_config) {
 
     _proto.generateImageObject = function generateImageObject(src) {
       // Match the URL & type from the directive
-      var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src)),
-          url = _$exec[1],
-          type = _$exec[2];
+      if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
+        var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src)),
+            _url = _$exec[1],
+            _type = _$exec[2];
 
-      return [{
-        "name": url.split('/').pop(),
-        "size": 0,
-        "type": "image/" + type,
-        "url": _config.getInitConfig('media_url') + url
-      }];
+        return [{
+          "name": _url.split('/').pop(),
+          "size": 0,
+          "type": "image/" + _type,
+          "url": _config.getInitConfig('media_url') + _url
+        }];
+      }
+
+      return "";
     };
 
     return Image;

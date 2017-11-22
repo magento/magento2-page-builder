@@ -34,7 +34,7 @@ export default class Image implements ReadInterface {
         };
 
         // Detect if there is a mobile image and update the response
-        if (element.querySelector('img:nth-child(2)')) {
+        if (element.querySelector('img:nth-child(2)') && element.querySelector('img:nth-child(2)').getAttribute('src')) {
             response['mobile_image'] = this.generateImageObject(element.querySelector('img:nth-child(2)').getAttribute('src'));
         }
 
@@ -49,15 +49,19 @@ export default class Image implements ReadInterface {
      */
     private generateImageObject(src: string): string | Array<ImageObject> {
         // Match the URL & type from the directive
-        const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src));
+        if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
+            const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src));
 
-        return [
-            {
-                "name": url.split('/').pop(),
-                "size": 0,
-                "type": "image/" + type,
-                "url": Config.getInitConfig('media_url') + url
-            }
-        ];
+            return [
+                {
+                    "name": url.split('/').pop(),
+                    "size": 0,
+                    "type": "image/" + type,
+                    "url": Config.getInitConfig('media_url') + url
+                }
+            ];
+        }
+
+        return "";
     }
 }
