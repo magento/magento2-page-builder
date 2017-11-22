@@ -26,12 +26,6 @@ define(["knockout", "bluefoot/highlight", "./block"], function (_knockout, _high
       return _this;
     }
 
-    var _proto = Code.prototype;
-
-    _proto.initHighlighting = function initHighlighting() {
-      _highlight.initHighlighting();
-    };
-
     return Code;
   }(_block);
 

@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
@@ -22,9 +26,5 @@ export default class Code extends PreviewBlock {
             },
             this.parent.id
         );
-    }
-
-    initHighlighting() {
-        hljs.initHighlighting();
     }
 }
