@@ -9,6 +9,12 @@ import _ from 'underscore';
 
 export default class Image extends Block {
 
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {{}} image
+     * @returns {string}
+     */
     private getImageUrl(image: {}) {
         let imageUrl = image[0]['url'],
             mediaUrl = Config.getInitConfig('media_url'),
@@ -17,6 +23,11 @@ export default class Image extends Block {
         return directive;
     }
 
+    /**
+     * Get the desktop (main) image attributes for the render
+     *
+     * @returns {any}
+     */
     getMainImageAttributes() {
         let data = this.getData();
         if (data.image == "" || data.image == undefined) {
@@ -27,6 +38,11 @@ export default class Image extends Block {
         return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
     }
 
+    /**
+     * Get the mobile image attributes for the render
+     *
+     * @returns {any}
+     */
     getMobileImageAttributes() {
         let data = this.getData();
         if (data.mobile_image == "" || data.mobile_image == undefined) {
@@ -37,6 +53,11 @@ export default class Image extends Block {
         return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
     }
 
+    /**
+     * Retrieve the image attributes
+     *
+     * @returns {any}
+     */
     getImageAttributes() {
         let data = this.getData();
         if (data.image == "" || data.image == undefined) {
@@ -47,12 +68,13 @@ export default class Image extends Block {
         return {href: this.getImageUrl(data.image), title: data.title_tag, class: (data.lightbox == "Yes" ? "bluefoot-lightbox" : "") };
     }
 
-    getCaption() {
+    /**
+     * Retrieve the caption for the image
+     *
+     * @returns {any}
+     */
+    getCaption(): string {
         let data = this.getData();
-        if (data.show_caption == "Yes") {
-            return data.title_tag;
-        } else {
-            return "";
-        }
+        return (data.show_caption == "Yes" ? data.title_tag as string : "");
     }
 }
