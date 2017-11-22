@@ -12,6 +12,12 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
 
     var _proto = Image.prototype;
 
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {{}} image
+     * @returns {string}
+     */
     _proto.getImageUrl = function getImageUrl(image) {
       var imageUrl = image[0]['url'],
           mediaUrl = _config.getInitConfig('media_url'),
@@ -20,6 +26,12 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
 
       return directive;
     };
+    /**
+     * Get the desktop (main) image attributes for the render
+     *
+     * @returns {any}
+     */
+
 
     _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
@@ -36,6 +48,12 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
         title: data.title_tag
       };
     };
+    /**
+     * Get the mobile image attributes for the render
+     *
+     * @returns {any}
+     */
+
 
     _proto.getMobileImageAttributes = function getMobileImageAttributes() {
       var data = this.getData();
@@ -52,6 +70,12 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
         title: data.title_tag
       };
     };
+    /**
+     * Retrieve the image attributes
+     *
+     * @returns {any}
+     */
+
 
     _proto.getImageAttributes = function getImageAttributes() {
       var data = this.getData();
@@ -68,15 +92,16 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
         class: data.lightbox == "Yes" ? "bluefoot-lightbox" : ""
       };
     };
+    /**
+     * Retrieve the caption for the image
+     *
+     * @returns {any}
+     */
+
 
     _proto.getCaption = function getCaption() {
       var data = this.getData();
-
-      if (data.show_caption == "Yes") {
-        return data.title_tag;
-      } else {
-        return "";
-      }
+      return data.show_caption == "Yes" ? data.title_tag : "";
     };
 
     return Image;

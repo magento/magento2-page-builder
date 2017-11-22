@@ -10,5 +10,7 @@
         <img data-bind="attr: getMainImageAttributes()" class="bluefoot-mobile-hidden">
         <img data-bind="attr: getMobileImageAttributes()" class="bluefoot-mobile-only">
     </a>
-    <figcaption><!--ko text: getCaption()--><!--/ko--></figcaption>
+    <!-- ko if: getData().show_caption == "Yes" -->
+    <figcaption data-bind="text: getCaption()"></figcaption>
+    <!-- /ko -->
 </figure>
