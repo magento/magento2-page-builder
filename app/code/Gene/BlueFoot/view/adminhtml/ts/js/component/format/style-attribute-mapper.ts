@@ -28,13 +28,6 @@ export default class StyleAttributeMapper {
                 if (key === 'min_height' || key === 'border_width') {
                     value = value.replace('px', '') + 'px';
                 }
-                if (key === 'width') {
-                    if (value.indexOf('px') !== -1) {
-                        value = value.replace('px', '') + 'px';
-                    } else {
-                        value = value.replace('%', '') + '%';
-                    }
-                }
                 if (key === 'background_repeat') {
                     value = value === "1" ? 'repeat' : 'no-repeat';
                 }
@@ -71,13 +64,6 @@ export default class StyleAttributeMapper {
                 }
                 if (key === 'min-height' || key === 'border-width') {
                     value = value.replace('px', '');
-                }
-                if (key === 'width') {
-                    if (value.indexOf('px') !== -1) {
-                        value = value.replace('px', '') + 'px';
-                    } else {
-                        value = value.replace('%', '') + '%';
-                    }
                 }
                 if (key === 'background-repeat-y') {
                     key = 'background-repeat';

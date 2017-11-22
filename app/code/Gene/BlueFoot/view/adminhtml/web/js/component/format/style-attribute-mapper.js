@@ -31,14 +31,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           value = value.replace('px', '') + 'px';
         }
 
-        if (key === 'width') {
-          if (value.indexOf('px') !== -1) {
-            value = value.replace('px', '') + 'px';
-          } else {
-            value = value.replace('%', '') + '%';
-          }
-        }
-
         if (key === 'background_repeat') {
           value = value === "1" ? 'repeat' : 'no-repeat';
         }
@@ -82,14 +74,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
 
         if (key === 'min-height' || key === 'border-width') {
           value = value.replace('px', '');
-        }
-
-        if (key === 'width') {
-          if (value.indexOf('px') !== -1) {
-            value = value.replace('px', '') + 'px';
-          } else {
-            value = value.replace('%', '') + '%';
-          }
         }
 
         if (key === 'background-repeat-y') {

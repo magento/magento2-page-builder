@@ -20,7 +20,9 @@ define(["jquery"], function (_jquery) {
     });
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find('*').each(function (index, value) {
-      (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
+      if (value.tagName !== 'IFRAME') {
+        (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
+      }
     });
     element.find('[data-wrapper]').each(function (index, value) {
       (0, _jquery)(value).parent().append((0, _jquery)(value).children());
