@@ -21,8 +21,6 @@ export default class Code extends PreviewBlock {
         this.updateDataValue('html', ko.observable(''));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-
-                console.log(hljs.highlight('html', this.data.snippet()).value)
                 this.updateDataValue('html', hljs.highlight('html', this.data.snippet()).value);
             },
             this.parent.id
