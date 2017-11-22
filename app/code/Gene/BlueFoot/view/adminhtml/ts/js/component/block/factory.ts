@@ -10,7 +10,7 @@ import EditableArea from "../stage/structural/editable-area";
 import AppearanceFactory from "../appearance/appearance-factory";
 
 interface ConfigObject {
-    js_block?: string;
+    component?: string;
     [key: string]: any
 }
 
@@ -21,7 +21,7 @@ interface ConfigObject {
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigObject): string {
-    return config.js_block || 'Gene_BlueFoot/js/component/block/block';
+    return config.component || 'Gene_BlueFoot/js/component/block/block';
 }
 
 /**

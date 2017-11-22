@@ -9,7 +9,13 @@ define([], function () {
     function AttributeMapper() {
       this.attributeNameMapping = {
         name: 'data-role',
-        appearance: 'data-appearance'
+        appearance: 'data-appearance',
+        identifier: 'data-identifier',
+        button_text: 'data-button-text',
+        label_text: 'data-label-text',
+        placeholder: 'data-placeholder',
+        title: 'data-title',
+        src: 'src'
       };
     }
 
@@ -33,6 +39,29 @@ define([], function () {
         }
 
         result[key.replace('_', '-')] = value;
+      });
+      return result;
+    };
+    /**
+     * Convert attributes from the DOM into the data store
+     * @param {} data
+     * @returns {}
+     */
+
+
+    _proto.fromDom = function fromDom(data) {
+      var _this2 = this;
+
+      // Flip the object key / values
+      var attributeMapping = Object.keys(this.attributeNameMapping).reduce(function (obj, key) {
+        obj[_this2.attributeNameMapping[key]] = key;
+        return obj;
+      }, {}),
+          result = {};
+      Object.keys(data).map(function (key) {
+        if (key in attributeMapping) {
+          result[attributeMapping[key]] = data[key];
+        }
       });
       return result;
     };

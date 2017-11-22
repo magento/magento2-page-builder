@@ -60,10 +60,13 @@
             <icon>icon-bluefoot-text</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
             <preview_template>Gene_BlueFoot/component/block/preview/text.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/text.html</render_template>
             <form>text_form</form>
             <group>general</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/text"/>
             </readers>
         </type>
         <type name="heading" translate="label" sortOrder="30">
@@ -83,17 +86,25 @@
         <type name="button" translate="label" sortOrder="40">
             <label>Button</label>
             <icon>icon-bluefoot-button</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/buttons.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/buttons.html</render_template>
             <form>button_form</form>
             <group>general</group>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
+            <allowed_parents>row,column</allowed_parents>
         </type>
         <type name="divider" translate="label" sortOrder="50">
             <label>Divider</label>
             <icon>icon-bluefoot-divider</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/divider.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/divider.html</render_template>
             <form>divider_form</form>
             <group>general</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -101,20 +112,26 @@
         <type name="image" translate="label" sortOrder="1">
             <label>Image</label>
             <icon>icon-bluefoot-image</icon>
-            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <component>Gene_BlueFoot/js/component/block/image</component>
             <preview_component>Gene_BlueFoot/js/component/block/preview/image</preview_component>
             <preview_template>Gene_BlueFoot/component/block/preview/image.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/image.html</render_template>
             <form>image_form</form>
             <group>media</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="image" component="Gene_BlueFoot/js/component/format/read/image"/>
             </readers>
         </type>
         <type name="video" translate="label" sortOrder="10">
             <label>Video</label>
             <icon>icon-bluefoot-video</icon>
+            <preview_template>Gene_BlueFoot/component/block/preview/video.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/video.html</render_template>
             <form>video_form</form>
             <group>media</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -167,8 +184,15 @@
         <type name="newsletter" translate="label" sortOrder="30">
             <label>Newsletter</label>
             <icon>icon-bluefoot-newsletter</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/newsletter</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/newsletter.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/newsletter.html</render_template>
             <form>newsletter_form</form>
             <group>interactive</group>
+            <backend_block>Gene\BlueFoot\Block\ContentType\Newsletter</backend_block>
+            <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/newsletter.phtml</backend_template>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -176,17 +200,14 @@
         <type name="block" translate="label" sortOrder="1">
             <label>Block</label>
             <icon>icon-bluefoot-block</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/content-block</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/block.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/block.html</render_template>
             <form>block_form</form>
             <group>magento</group>
-            <readers>
-                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
-            </readers>
-        </type>
-        <type name="segmented_block" translate="label" sortOrder="10">
-            <label>Segmented Block</label>
-            <icon>icon-bluefoot-block</icon>
-            <form>segmented_block_form</form>
-            <group>magento</group>
+            <backend_block>Gene\BlueFoot\Block\ContentType\Block</backend_block>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -212,8 +233,43 @@
         <type name="code" translate="label" sortOrder="10">
             <label>Code</label>
             <icon>icon-bluefoot-code</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/code</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/code.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/code.html</render_template>
             <form>code_form</form>
             <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="code" component="Gene_BlueFoot/js/component/format/read/code"/>
+            </readers>
+        </type>
+        <type name="html" translate="label" sortOrder="20">
+            <label>HTML</label>
+            <icon>icon-bluefoot-code</icon>
+            <form>html_form</form>
+            <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
+            <preview_template>Gene_BlueFoot/component/block/preview/html.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/html.html</render_template>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="html" component="Gene_BlueFoot/js/component/format/read/html"/>
+            </readers>
+        </type>
+        <type name="search" translate="label" sortOrder="10">
+            <label>Search</label>
+            <icon>icon-bluefoot-search</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/search</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/search.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/search.html</render_template>
+            <backend_block>Gene\BlueFoot\Block\ContentType\Search</backend_block>
+            <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml</backend_template>
+            <form>search_form</form>
+            <group>other</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>

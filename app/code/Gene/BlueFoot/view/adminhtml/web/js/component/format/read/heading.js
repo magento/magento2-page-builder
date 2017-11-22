@@ -19,7 +19,7 @@ define([], function () {
     _proto.read = function read(element) {
       return new Promise(function (resolve) {
         resolve({
-          'heading_type': element.nodeName,
+          'heading_type': element.nodeName.toLowerCase(),
           'title': element.innerText
         });
       });

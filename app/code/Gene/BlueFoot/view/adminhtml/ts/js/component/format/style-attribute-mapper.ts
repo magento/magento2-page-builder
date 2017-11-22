@@ -25,11 +25,8 @@ export default class StyleAttributeMapper {
                 if (value === '') {
                     return;
                 }
-                if (key === 'min_height') {
+                if (key === 'min_height' || key === 'border_width') {
                     value = value.replace('px', '') + 'px';
-                }
-                if (key === 'width') {
-                    value = value.replace('%', '') + '%';
                 }
                 if (key === 'background_repeat') {
                     value = value === "1" ? 'repeat' : 'no-repeat';
@@ -71,11 +68,11 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: any) => {
                 let value = data[key];
-                if (key === 'min-height') {
-                    value = value.replace('px', '');
+                if (key === 'border-top-width') {
+                    key = 'border-width';
                 }
-                if (key === 'width') {
-                    value = value.replace('%', '');
+                if (key === 'min-height' || key === 'border-width') {
+                    value = value.replace('px', '');
                 }
                 if (key === 'background-repeat-y') {
                     key = 'background-repeat';
@@ -91,7 +88,10 @@ export default class StyleAttributeMapper {
                         value = 'center center';
                     }
                 }
-                if (key === 'background-color') {
+                if (key === 'border-top-color') {
+                    key = 'border-color';
+                }
+                if (key === 'background-color' || key === 'border-color') {
                     const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
                     let matches = regexp.exec(value);
                     value = '#'

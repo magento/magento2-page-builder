@@ -5,7 +5,16 @@
 import {DataObject} from "../component/data-store";
 
 export default class AttributeFilter {
-    allowAttributes: Array<string> = ['name', 'appearance'];
+    allowAttributes: Array<string> = [
+        'name',
+        'appearance',
+        'src',
+        'button_text',
+        'label_text',
+        'placeholder',
+        'title',
+        'identifier'
+    ];
 
     /**
      * Filter allowed attributes from object

@@ -20,7 +20,9 @@ export default function filterHtml(element: JQuery): JQuery {
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find('*').each(
         function (index, value) {
-            $(value).contents().filter(isWhiteSpaceOrComment).remove();
+            if (value.tagName !== 'IFRAME') {
+                $(value).contents().filter(isWhiteSpaceOrComment).remove();
+            }
         }
     );
     element.find('[data-wrapper]').each((index, value) => {
