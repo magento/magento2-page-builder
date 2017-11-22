@@ -7,6 +7,7 @@ import ko from "knockout";
 import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
+import _, {Dictionary} from "underscore";
 
 export default class ContentBlock extends PreviewBlock {
     /**
@@ -16,7 +17,7 @@ export default class ContentBlock extends PreviewBlock {
      * @param {Object} config
      */
     constructor(parent: Block, config: object) {
-        super(parent, config)
+        super(parent, config);
         this.updateDataValue('html', ko.observable(''));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
@@ -24,11 +25,7 @@ export default class ContentBlock extends PreviewBlock {
                     return;
                 }
                 const url = Config.getInitConfig('preview_url'),
-                    requestData = {
-                        identifier: data.identifier,
-                        role: this.config.name
-                    };
-
+                    requestData = {identifier: data.identifier, role: this.config.name};
                 jQuery.post(url, requestData, (response) => {
                     this.updateDataValue('html', response.content.trim());
                 });
