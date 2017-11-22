@@ -48,7 +48,8 @@ export default class Default implements ReadInterface {
             }
         });
 
-        data['css_classes'] = element.className.split(' ').filter(value => value.length > 0);
+        // Copy the css classes into the data store
+        data['css_classes'] = element.className || "";
 
         return new Promise((resolve: Function) => {
             resolve(data);

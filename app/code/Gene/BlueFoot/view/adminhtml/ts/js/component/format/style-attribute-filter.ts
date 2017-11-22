@@ -30,6 +30,7 @@ export default class StyleAttributeFilter {
         'padding_left',
         'display',
         'align_self',
+        'text_align',
         'margins_and_padding'
     ];
 

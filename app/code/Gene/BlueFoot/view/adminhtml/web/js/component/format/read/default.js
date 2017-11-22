@@ -42,10 +42,9 @@ define(["underscore", "../style-attribute-mapper", "../attribute-mapper"], funct
         if (element.dataset[key] !== '') {
           data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.dataset[key];
         }
-      });
-      data['css_classes'] = element.className.split(' ').filter(function (value) {
-        return value.length > 0;
-      });
+      }); // Copy the css classes into the data store
+
+      data['css_classes'] = element.className || "";
       return new Promise(function (resolve) {
         resolve(data);
       });
