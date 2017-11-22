@@ -179,6 +179,7 @@
             <label>Newsletter</label>
             <icon>icon-bluefoot-newsletter</icon>
             <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/newsletter</preview_component>
             <preview_template>Gene_BlueFoot/component/block/preview/newsletter.html</preview_template>
             <render_template>Gene_BlueFoot/component/block/render/newsletter.html</render_template>
             <form>newsletter_form</form>
@@ -193,18 +194,14 @@
         <type name="block" translate="label" sortOrder="1">
             <label>Block</label>
             <icon>icon-bluefoot-block</icon>
+            <component>Gene_BlueFoot/js/component/block/inline</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/content-block</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/block.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/block.html</render_template>
             <form>block_form</form>
             <group>magento</group>
             <backend_block>Gene\BlueFoot\Block\ContentType\Block</backend_block>
-            <readers>
-                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
-            </readers>
-        </type>
-        <type name="segmented_block" translate="label" sortOrder="10">
-            <label>Segmented Block</label>
-            <icon>icon-bluefoot-block</icon>
-            <form>segmented_block_form</form>
-            <group>magento</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>

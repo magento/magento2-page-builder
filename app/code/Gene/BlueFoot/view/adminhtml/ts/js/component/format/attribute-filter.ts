@@ -11,7 +11,8 @@ export default class AttributeFilter {
         'button_text',
         'label_text',
         'placeholder',
-        'title'
+        'title',
+        'identifier'
     ];
 
     /**
