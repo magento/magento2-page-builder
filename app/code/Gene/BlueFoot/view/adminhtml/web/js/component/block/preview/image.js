@@ -1,76 +1,46 @@
-define(["./block", "knockout", "../../config"], function (_block, _knockout, _config) {
+define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var PreviewImageBlock =
+  var Image =
   /*#__PURE__*/
   function (_PreviewBlock) {
-    _inheritsLoose(PreviewImageBlock, _PreviewBlock);
+    _inheritsLoose(Image, _PreviewBlock);
 
-    function PreviewImageBlock() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.loading = _knockout.observable(false), _temp) || _this;
+    function Image() {
+      return _PreviewBlock.apply(this, arguments) || this;
     }
 
-    var _proto = PreviewImageBlock.prototype;
+    var _proto = Image.prototype;
 
-    /**
-     * Retrieve the upload URL from the configuration
-     */
-    _proto.uploadUrl = function uploadUrl() {
-      return _config.getPluginConfig('gene_widget_upload', 'upload_url');
-    };
-    /**
-     * Update data when an attachment is successful
-     */
+    _proto.getPreviewImageAttributes = function getPreviewImageAttributes() {
+      if (this.data.image() == "" || this.data.image() == undefined) {
+        return {
+          style: "visibility: hidden"
+        };
+      }
 
-
-    _proto.attachmentSuccess = function attachmentSuccess() {
-      var _this2 = this;
-
-      return function (file, response, bindKey) {
-        if (response.file) {
-          _this2.parent.stage.store.updateKey(_this2.parent.id, bindKey, response.file);
-
-          setTimeout(function () {
-            _this2.loading(false);
-          }, 50);
-        } else {
-          alert($t("Your image could not be uploaded"));
-        }
+      return {
+        src: this.data.image()[0].url,
+        style: "visibility: visible; width: 20%"
       };
     };
-    /**
-     * Handle an attachment being dropped
-     */
 
+    _proto.getPreviewIconAttributes = function getPreviewIconAttributes() {
+      if (this.data.image() == "" || this.data.image() == undefined) {
+        return {
+          class: "icon-bluefoot-image",
+          style: "visibility: visible"
+        };
+      }
 
-    _proto.attachmentDrop = function attachmentDrop() {
-      var _this3 = this;
-
-      return function (event) {
-        jQuery(event.target).parents('.dz-drag-hover').removeClass('dz-drag-hover');
-
-        _this3.loading(true);
+      return {
+        style: "visibility: hidden"
       };
     };
-    /**
-     * Handle an attachment error
-     */
 
-
-    _proto.attachmentError = function attachmentError() {
-      this.loading(false);
-      alert($t("Your image could not be uploaded"));
-    };
-
-    return PreviewImageBlock;
+    return Image;
   }(_block);
 
-  return PreviewImageBlock;
+  return Image;
 });
 //# sourceMappingURL=image.js.map
