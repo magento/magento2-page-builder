@@ -71,8 +71,6 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
             childPromises.push(_this2.createBlock(childElement, _this2.stage));
             childElements.push(childElement);
           });
-        } else {
-          childPromises.push(this.createBlock(element, parent));
         } // Wait for all the promises to finish and add the instances to the stage
 
 

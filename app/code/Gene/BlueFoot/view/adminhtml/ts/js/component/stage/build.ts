@@ -77,8 +77,6 @@ export default class Build extends EventEmitter {
                     childPromises.push(this.createBlock(childElement, this.stage));
                     childElements.push(childElement);
                 });
-            } else {
-                childPromises.push(this.createBlock(element, parent));
             }
 
             // Wait for all the promises to finish and add the instances to the stage
