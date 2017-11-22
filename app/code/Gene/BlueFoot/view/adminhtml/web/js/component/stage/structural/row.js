@@ -50,6 +50,35 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       column.updateColumnData(data);
       return column;
     };
+    /**
+     * Get stype properties for an block
+     * Example {'backgroundColor': '#cccccc'}
+     *
+     * @returns {DataObject}
+     */
+
+
+    _proto.getStyle = function getStyle() {
+      var children = this.children();
+      var styleAttributes = {},
+          isAllColumns = true;
+
+      if (children.length !== 0) {
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].config.name !== 'column') {
+            isAllColumns = false;
+          }
+        }
+      } else {
+        isAllColumns = false;
+      }
+
+      if (isAllColumns) {
+        styleAttributes['display'] = 'flex';
+      }
+
+      return styleAttributes;
+    };
 
     _createClass(Row, [{
       key: "options",

@@ -85,7 +85,11 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
         }
 
         if (key === 'width') {
-          value = value.replace('%', '');
+          if (value.indexOf('px') !== -1) {
+            value = value.replace('px', '') + 'px';
+          } else {
+            value = value.replace('%', '') + '%';
+          }
         }
 
         if (key === 'background-repeat-y') {
