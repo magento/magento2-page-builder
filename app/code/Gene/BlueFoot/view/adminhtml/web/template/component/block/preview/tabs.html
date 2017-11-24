@@ -1,0 +1,30 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-no-blur bluefoot-live-edit dashboard-store-stats">
+    <!-- ko if: preview.data.tabs().length == 0 -->
+        <i class="icon-bluefoot-tabs"></i> <span data-bind="text: $t('Tabs');"></span>
+    <!-- /ko -->
+    <!-- ko if: preview.data.tabs().length > 0 -->
+        <div class="pagebuilder-tabs" data-bind="afterRender: function (element) { preview.onContainerRender(element); }">
+            <ul role="tablist" class="tabs-horiz" data-bind="foreach: preview.data.tabs">
+                <li role="tab">
+                    <a href="#no-tab" class="ui-tabs-anchor" data-value="grid" title="Title 1" data-bind="attr: { href: '#tab_' + $parent.id + '_' + record_id, title: title }">
+                        <span data-bind="text: title"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content" style="float: left; width: 100%;" data-bind="foreach: preview.data.tabs">
+                <div id="no-tab" role="tabpanel" role="tabpanel" style="background: none; border-top: 1px solid #adadad;" data-bind="afterRender: function () { $parent.preview.onTabRender(); }, attr: { id: 'tab_' + $parent.id + '_' + record_id }, html: content">
+
+                </div>
+            </div>
+        </div>
+    <!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>
