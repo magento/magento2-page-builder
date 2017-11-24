@@ -3,12 +3,12 @@ define(["underscore"], function (_underscore) {
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Image =
+  var Tabs =
   /*#__PURE__*/
   function () {
-    function Image() {}
+    function Tabs() {}
 
-    var _proto = Image.prototype;
+    var _proto = Tabs.prototype;
 
     /**
      * Read heading type and title from the element
@@ -32,9 +32,9 @@ define(["underscore"], function (_underscore) {
       return Promise.resolve(response);
     };
 
-    return Image;
+    return Tabs;
   }();
 
-  return Image;
+  return Tabs;
 });
 //# sourceMappingURL=tabs.js.map

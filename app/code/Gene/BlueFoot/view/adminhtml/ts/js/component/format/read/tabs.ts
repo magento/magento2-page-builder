@@ -8,7 +8,7 @@ import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 
-export default class Image implements ReadInterface {
+export default class Tabs implements ReadInterface {
 
     /**
      * Read heading type and title from the element
