@@ -180,10 +180,15 @@
         <type name="map" translate="label" sortOrder="20">
             <label>Map</label>
             <icon>icon-bluefoot-map</icon>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/map</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/map.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/map.html</render_template>
             <form>map_form</form>
             <group>interactive</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="map" component="Gene_BlueFoot/js/component/format/read/map"/>
             </readers>
         </type>
         <type name="newsletter" translate="label" sortOrder="30">

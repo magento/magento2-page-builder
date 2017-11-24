@@ -31,6 +31,11 @@ export default class AttributeMapper {
                 if (key in this.attributeNameMapping) {
                     key = this.attributeNameMapping[key];
                 }
+                if (key == 'position') {
+                    const [lat, lng, zoom] = value.split(',');
+                    key = 'src';
+                    value = 'https://www.google.com/maps/embed/v1/view?center=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+                }
                 result[key.replace('_', '-')] = value;
             }
         );
