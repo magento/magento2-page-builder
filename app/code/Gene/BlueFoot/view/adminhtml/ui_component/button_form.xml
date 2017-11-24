@@ -44,14 +44,15 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <container name="theme_ua_regexp" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Magento_Backend/dynamic-rows/grid">
+        <container name="buttons" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Gene_BlueFoot/dynamic-rows/grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Buttons</item>
                     <item name="fallbackResetTpl" xsi:type="string">Magento_Backend/form/element/helper/fallback-reset-link</item>
                     <item name="componentType" xsi:type="string">dynamicRows</item>
                     <item name="recordTemplate" xsi:type="string">record</item>
                     <item name="deleteButtonLabel" xsi:type="string">Remove</item>
-                    <item name="addButtonLabel" xsi:type="string">Add New User Agent Rule</item>
+                    <item name="addButtonLabel" xsi:type="string">Add New Button</item>
                     <item name="deleteProperty" xsi:type="boolean">false</item>
                     <item name="dndConfig" xsi:type="array">
                         <item name="enabled" xsi:type="boolean">false</item>
@@ -61,13 +62,12 @@
             <container name="record" component="Magento_Ui/js/dynamic-rows/record">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
-                        <item name="label" xsi:type="string" translate="true">User Agent Rules</item>
                         <item name="isTemplate" xsi:type="boolean">true</item>
                         <item name="is_collection" xsi:type="boolean">true</item>
                         <item name="showFallbackReset" xsi:type="boolean">false</item>
                     </item>
                 </argument>
-                <field name="search_string" formElement="input">
+                <field name="text" formElement="input">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="fit" xsi:type="boolean">false</item>
@@ -79,32 +79,19 @@
                         </validation>
                         <showFallbackReset>false</showFallbackReset>
                         <dataType>text</dataType>
-                        <label>Search String</label>
-                        <dataScope>search</dataScope>
+                        <label>Text</label>
+                        <dataScope>text</dataScope>
                     </settings>
                 </field>
-                <field name="theme" formElement="select">
-                    <argument name="data" xsi:type="array">
-                        <item name="config" xsi:type="array">
-                            <item name="fit" xsi:type="boolean">false</item>
-                        </item>
-                    </argument>
+                <field name="link" formElement="input">
                     <settings>
                         <validation>
                             <rule name="required-entry" xsi:type="boolean">true</rule>
                         </validation>
-                        <showFallbackReset>false</showFallbackReset>
+                        <label>Link</label>
                         <dataType>text</dataType>
-                        <label>Theme Name</label>
-                        <dataScope>value</dataScope>
+                        <dataScope>link</dataScope>
                     </settings>
-                    <formElements>
-                        <select>
-                            <settings>
-                                <options class="Magento\Theme\Model\Design\Theme\Label"/>
-                            </settings>
-                        </select>
-                    </formElements>
                 </field>
                 <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete" sortOrder="50">
                     <argument name="data" xsi:type="array">
