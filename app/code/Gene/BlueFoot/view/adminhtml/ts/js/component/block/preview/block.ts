@@ -64,7 +64,11 @@ export default class PreviewBlock {
         if (typeof this.data[key] !== 'undefined' && ko.isObservable(this.data[key])) {
             this.data[key](value);
         } else {
-            this.data[key] = ko.observable(value);
+            if (_.isArray(value)) {
+                this.data[key] = ko.observableArray(value);
+            } else {
+                this.data[key] = ko.observable(value);
+            }
         }
     }
 }

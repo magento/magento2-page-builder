@@ -80,15 +80,22 @@ export default class Edit {
      */
     setDataProviderClient(): void {
         let formName = this.instance.config.form;
+
+        // Destroy the last data provider so a new instance is created
+        if (registry.get('_pagebuilder_last_provider')) {
+            registry.remove(registry.get('_pagebuilder_last_provider'));
+        }
+
+        // Set the current edited instances data into the registry
+        registry.set('_pagebuilder_edit_data', this.store.get(this.instance.id));
+
         // Retrieve the component
         registry.get(formName + '.' + formName, (component: any) => {
             const provider = registry.get(component.provider);
+            registry.set('_pagebuilder_last_provider', component.provider);
 
             // Set the data provider client to our persistence client
             provider.client = new PersistenceClient(this.modal, this.store, this.instance.id);
-
-            // Set the data on the provider from the data store
-            provider.set('data', this.store.get(this.instance.id));
         });
     }
 
