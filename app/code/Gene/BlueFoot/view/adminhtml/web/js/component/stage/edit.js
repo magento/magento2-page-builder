@@ -69,15 +69,23 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
     _proto.setDataProviderClient = function setDataProviderClient() {
       var _this = this;
 
-      var formName = this.instance.config.form; // Retrieve the component
+      var formName = this.instance.config.form; // Destroy the last data provider so a new instance is created
+
+      if (_uiRegistry.get('_pagebuilder_last_provider')) {
+        _uiRegistry.remove(_uiRegistry.get('_pagebuilder_last_provider'));
+      } // Set the current edited instances data into the registry
+
+
+      _uiRegistry.set('_pagebuilder_edit_data', this.store.get(this.instance.id)); // Retrieve the component
+
 
       _uiRegistry.get(formName + '.' + formName, function (component) {
-        var provider = _uiRegistry.get(component.provider); // Set the data provider client to our persistence client
+        var provider = _uiRegistry.get(component.provider);
+
+        _uiRegistry.set('_pagebuilder_last_provider', component.provider); // Set the data provider client to our persistence client
 
 
-        provider.client = new _persistenceClient(_this.modal, _this.store, _this.instance.id); // Set the data on the provider from the data store
-
-        provider.set('data', _this.store.get(_this.instance.id));
+        provider.client = new _persistenceClient(_this.modal, _this.store, _this.instance.id);
       });
     };
     /**

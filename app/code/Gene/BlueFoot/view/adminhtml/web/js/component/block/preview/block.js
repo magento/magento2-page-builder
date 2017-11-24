@@ -52,7 +52,11 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
       if (typeof this.data[key] !== 'undefined' && _knockout.isObservable(this.data[key])) {
         this.data[key](value);
       } else {
-        this.data[key] = _knockout.observable(value);
+        if (_underscore.isArray(value)) {
+          this.data[key] = _knockout.observableArray(value);
+        } else {
+          this.data[key] = _knockout.observable(value);
+        }
       }
     };
 
