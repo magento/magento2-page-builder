@@ -23,7 +23,7 @@ define(["../../../component/config"], function (_config) {
         'mobile_image': "",
         'alt': element.querySelector('img:nth-child(1)').getAttribute('alt'),
         'title_tag': element.querySelector('a').getAttribute('title'),
-        'link_text': element.querySelector('a>div').innerHTML,
+        'link_text': element.querySelector('a>div') === null ? "" : element.querySelector('a>div').innerHTML,
         'link_url': element.querySelector('a').getAttribute('href'),
         'open_in_new_window': target && target == '_blank' ? "1" : "0"
       }; // Detect if there is a mobile image and update the response
