@@ -13,7 +13,8 @@ export default class AttributeFilter {
         'label_text',
         'placeholder',
         'title',
-        'identifier'
+        'identifier',
+        'sku'
     ];
 
     /**

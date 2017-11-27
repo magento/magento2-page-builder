@@ -14,6 +14,7 @@ export default class AttributeMapper {
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',
         title: 'data-title',
+        sku: 'data-sku',
         src: 'src'
     };
 
