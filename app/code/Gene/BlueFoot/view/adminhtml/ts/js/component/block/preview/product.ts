@@ -29,6 +29,7 @@ export default class Product extends PreviewBlock {
                     requestData = {
                         role: this.config.name,
                         sku: this.data.sku,
+                        view_mode: this.data.view_mode,
                         is_preview: true
                     };
 

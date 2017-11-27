@@ -28,6 +28,7 @@ define(["./block", "../../config"], function (_block, _config) {
             requestData = {
           role: _this.config.name,
           sku: _this.data.sku,
+          view_mode: _this.data.view_mode,
           is_preview: true
         };
 
