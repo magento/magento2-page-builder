@@ -138,13 +138,25 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
      * @returns {DataObject}
      */
 
+    /**
+     * Get attributes for an block
+     * Example {'data-role': 'element'}
+     *
+     * @param extra
+     * @returns {}
+     */
 
-    _proto.getAttributes = function getAttributes() {
+
+    _proto.getAttributes = function getAttributes(extra) {
+      if (extra === void 0) {
+        extra = {};
+      }
+
       var data = this.getData();
 
       _underscore.extend(data, this.config);
 
-      return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+      return _underscore.extend(this.attributeMapper.toDom(this.attributeFilter.filter(data)), extra);
     };
     /**
      * Get block data

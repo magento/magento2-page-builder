@@ -167,10 +167,21 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {DataObject}
      */
-    getAttributes() {
+
+    /**
+     * Get attributes for an block
+     * Example {'data-role': 'element'}
+     *
+     * @param extra
+     * @returns {}
+     */
+    getAttributes(extra = {}) {
         let data = this.getData();
         _.extend(data, this.config);
-        return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+        return _.extend(
+            this.attributeMapper.toDom(this.attributeFilter.filter(data)),
+            extra
+        );
     }
 
     /**
