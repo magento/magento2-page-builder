@@ -11,7 +11,7 @@ define(["underscore"], function (_underscore) {
     var _proto = Tabs.prototype;
 
     /**
-     * Read heading type and title from the element
+     * Read information from element for content type
      *
      * @param element HTMLElement
      * @returns {Promise<any>}

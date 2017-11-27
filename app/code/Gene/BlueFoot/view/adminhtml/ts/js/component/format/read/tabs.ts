@@ -11,7 +11,7 @@ import {DataObject} from "../../data-store";
 export default class Tabs implements ReadInterface {
 
     /**
-     * Read heading type and title from the element
+     * Read information from element for content type
      *
      * @param element HTMLElement
      * @returns {Promise<any>}
