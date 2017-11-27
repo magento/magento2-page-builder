@@ -36,14 +36,16 @@ export default class Accordion extends Block {
      * @returns {number[]}
      */
     getActive() {
-        let items = this.getData().items as AccordionDataObject[],
-            activeItems = items.map(
-                (item, index) =>
-                    item.open_on_load === "1" ? index : null
-            ).filter((item) => {
-                return item !== null;
-            });
-
-        return _.isEmpty(activeItems) ? [0] : activeItems;
+        if (this.getData().items) {
+            let items = this.getData().items as AccordionDataObject[],
+                activeItems = items.map(
+                    (item, index) =>
+                        item.open_on_load === "1" ? index : null
+                ).filter((item) => {
+                    return item !== null;
+                });
+            return _.isEmpty(activeItems) ? [0] : activeItems;
+        }
+        return [0];
     }
 }

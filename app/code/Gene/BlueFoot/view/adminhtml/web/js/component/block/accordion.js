@@ -34,13 +34,17 @@ define(["./block"], function (_block) {
 
 
     _proto.getActive = function getActive() {
-      var items = this.getData().items,
-          activeItems = items.map(function (item, index) {
-        return item.open_on_load === "1" ? index : null;
-      }).filter(function (item) {
-        return item !== null;
-      });
-      return _.isEmpty(activeItems) ? [0] : activeItems;
+      if (this.getData().items) {
+        var items = this.getData().items,
+            activeItems = items.map(function (item, index) {
+          return item.open_on_load === "1" ? index : null;
+        }).filter(function (item) {
+          return item !== null;
+        });
+        return _.isEmpty(activeItems) ? [0] : activeItems;
+      }
+
+      return [0];
     };
 
     return Accordion;
