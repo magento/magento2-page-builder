@@ -44,7 +44,7 @@ define(["./block", "knockout", "jquery", "underscore", "mage/backend/tabs"], fun
 
       ++this.renderCounter;
 
-      if (this.data.tabs().length == this.renderCounter) {
+      if (this.data.tabs().length === this.renderCounter) {
         _underscore.delay(function () {
           return (0, _jquery)(_this2.element).tabs();
         }, 50);

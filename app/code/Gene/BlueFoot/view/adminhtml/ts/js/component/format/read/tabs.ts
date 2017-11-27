@@ -4,7 +4,6 @@
  */
 
 import ReadInterface from "../read-interface";
-import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 

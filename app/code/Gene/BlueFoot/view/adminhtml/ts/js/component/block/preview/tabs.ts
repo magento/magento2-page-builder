@@ -38,8 +38,8 @@ export default class Tabs extends Block {
      */
     onTabRender() {
         ++this.renderCounter;
-        if (this.data.tabs().length == this.renderCounter) {
-            _.delay(() => $(this.element).tabs(),50);
+        if (this.data.tabs().length === this.renderCounter) {
+            _.delay(() => $(this.element).tabs(), 50);
             this.renderCounter = 0;
         }
     }
