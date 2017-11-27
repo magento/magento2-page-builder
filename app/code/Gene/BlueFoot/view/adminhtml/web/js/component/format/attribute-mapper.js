@@ -15,7 +15,7 @@ define([], function () {
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',
         title: 'data-title',
-        src: 'src'
+        position: 'src'
       };
     }
 
@@ -32,20 +32,20 @@ define([], function () {
 
       var result = {};
       Object.keys(data).map(function (key) {
-        var value = data[key];
+        var value = data[key],
+            origKey = key;
 
         if (key in _this.attributeNameMapping) {
           key = _this.attributeNameMapping[key];
         }
 
-        if (key == 'position') {
+        if (result['src'] !== 'undefined' && origKey === 'position') {
           var _value$split = value.split(','),
               lat = _value$split[0],
               lng = _value$split[1],
               zoom = _value$split[2];
 
-          key = 'src';
-          value = 'https://www.google.com/maps/embed/v1/view?center=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+          value = 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
         }
 
         result[key.replace('_', '-')] = value;

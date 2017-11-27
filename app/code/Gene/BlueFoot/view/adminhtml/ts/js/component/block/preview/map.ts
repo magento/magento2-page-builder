@@ -22,7 +22,7 @@ export default class Map extends Block {
         // We need to compute the maps URL from the position
         this.getMapUrl = ko.computed(() => {
             const [lat, lng, zoom] = this.data.position().split(',');
-            return 'https://www.google.com/maps/embed/v1/view?center=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+            return 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
         });
     }
 }

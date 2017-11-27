@@ -21,7 +21,7 @@ define(["./block", "knockout", "mage/backend/tabs"], function (_block, _knockout
             lng = _this$data$position$s[1],
             zoom = _this$data$position$s[2];
 
-        return 'https://www.google.com/maps/embed/v1/view?center=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+        return 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
       });
       return _this;
     }
