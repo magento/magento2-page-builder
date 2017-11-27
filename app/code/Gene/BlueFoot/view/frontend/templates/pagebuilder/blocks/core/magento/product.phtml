@@ -31,7 +31,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
     $pos = $block->getPositioned();
     ?>
 
-    <div class="page-products bluefoot-product-single">
+    <div class="page-products bluefoot-product-single <?php echo $block->escapeHtmlAttr($block->getClass()); ?>" style="<?php echo $block->escapeHtmlAttr($block->getStyle()); ?>">
         <div class="products <?php /* @noEscape */ echo $viewMode; ?> products-<?php /* @noEscape */ echo $viewMode; ?>">
             <?php $iterator = 1; ?>
             <ol class="products list items product-items">
