@@ -15,7 +15,7 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     /**
      * Retrieve the image URL with directive
      *
-     * @param {{}} image
+     * @param {Array} image
      * @returns {string}
      */
     _proto.getImageUrl = function getImageUrl(image) {
@@ -49,7 +49,9 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
 
       if (data.image == "" || data.image == undefined) {
         return {};
-      } else if (_underscore.isEmpty(data.image[0])) {
+      }
+
+      if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
