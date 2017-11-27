@@ -29,7 +29,7 @@ define(["./block"], function (_block) {
     /**
      * Return the active (open on load) accordion items
      *
-     * @returns {number[]}
+     * @returns {number[]|[]}
      */
 
 
@@ -41,10 +41,10 @@ define(["./block"], function (_block) {
         }).filter(function (item) {
           return item !== null;
         });
-        return _.isEmpty(activeItems) ? [0] : activeItems;
+        return _.isEmpty(activeItems) ? [] : activeItems;
       }
 
-      return [0];
+      return [];
     };
 
     return Accordion;

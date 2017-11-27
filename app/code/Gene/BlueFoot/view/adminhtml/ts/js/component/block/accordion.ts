@@ -33,7 +33,7 @@ export default class Accordion extends Block {
     /**
      * Return the active (open on load) accordion items
      *
-     * @returns {number[]}
+     * @returns {number[]|[]}
      */
     getActive() {
         if (this.getData().items) {
@@ -44,8 +44,8 @@ export default class Accordion extends Block {
                 ).filter((item) => {
                     return item !== null;
                 });
-            return _.isEmpty(activeItems) ? [0] : activeItems;
+            return _.isEmpty(activeItems) ? [] : activeItems;
         }
-        return [0];
+        return [];
     }
 }
