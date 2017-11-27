@@ -27,7 +27,8 @@ define(["./block", "../../config"], function (_block, _config) {
         var url = _config.getInitConfig('preview_url'),
             requestData = {
           role: _this.config.name,
-          'sku': _this.data.sku
+          sku: _this.data.sku,
+          is_preview: true
         };
 
         jQuery.post(url, requestData, function (response) {

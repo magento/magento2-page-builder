@@ -36,6 +36,11 @@ class Init extends \Magento\Backend\Block\Template
     protected $cacheState;
 
     /**
+     * @var \Magento\Framework\Url
+     */
+    private $frontendUrlBuilder;
+
+    /**
      * Init constructor.
      *
      * @param \Magento\Backend\Block\Template\Context $context
@@ -47,10 +52,12 @@ class Init extends \Magento\Backend\Block\Template
         \Gene\BlueFoot\Model\Stage\Config $stageConfig,
         \Magento\Framework\App\CacheInterface $cacheManager,
         \Magento\Framework\App\Cache\StateInterface $cacheState,
+        \Magento\Framework\Url $frontendUrlBuilder,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->urlBuilder = $context->getUrlBuilder();
+        $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->stageConfig = $stageConfig;
         $this->cacheManager = $cacheManager;
         $this->cacheState = $cacheState;
@@ -85,7 +92,7 @@ class Init extends \Magento\Backend\Block\Template
             'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
             'template_delete_url'              => $this->urlBuilder->getUrl('bluefoot/stage/template_delete'),
             'template_pin_url'                 => $this->urlBuilder->getUrl('bluefoot/stage/template_pin'),
-            'preview_url'                      => $this->urlBuilder->getUrl('bluefoot/contenttype/preview'),
+            'preview_url'                      => $this->frontendUrlBuilder->getUrl('bluefoot/contenttype/preview'),
             'edit_panel_cache_key'             => $editCacheKey,
             'edit_panel_cache'                 =>
                 $this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Forms::TYPE_IDENTIFIER),

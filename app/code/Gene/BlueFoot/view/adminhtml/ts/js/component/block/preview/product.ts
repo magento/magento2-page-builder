@@ -28,7 +28,8 @@ export default class Product extends PreviewBlock {
                 const url = Config.getInitConfig('preview_url'),
                     requestData = {
                         role: this.config.name,
-                        'sku': this.data.sku
+                        sku: this.data.sku,
+                        is_preview: true
                     };
 
                 jQuery.post(url, requestData, (response) => {
