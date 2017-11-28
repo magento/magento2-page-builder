@@ -13,8 +13,7 @@ export default class AttributeMapper {
         button_text: 'data-button-text',
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',
-        title: 'data-title',
-        position: 'src'
+        title: 'data-title'
     };
 
     /**
@@ -27,18 +26,22 @@ export default class AttributeMapper {
         let result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                let value = data[key],
-                    origKey: string = key;
+                let value = data[key];
                 if (key in this.attributeNameMapping) {
                     key = this.attributeNameMapping[key];
                 }
-                if (result['src'] !== 'undefined' && origKey === 'position') {
+                if (key === 'position') {
                     const [lat, lng, zoom] = value.split(',');
+                    key = 'src';
                     value = 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
                 }
                 result[key.replace('_', '-')] = value;
             }
         );
+        if (result.position && result.src) {
+            result.src = result.position;
+            delete result.position;
+        }
         return result;
     }
 
