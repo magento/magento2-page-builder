@@ -16,8 +16,7 @@ define([], function () {
         placeholder: 'data-placeholder',
         title: 'data-title',
         view_mode: 'data-view-mode',
-        sku: 'data-sku',
-        src: 'src'
+        sku: 'data-sku'
       };
     }
 
@@ -40,8 +39,24 @@ define([], function () {
           key = _this.attributeNameMapping[key];
         }
 
+        if (key === 'position') {
+          var _value$split = value.split(','),
+              lat = _value$split[0],
+              lng = _value$split[1],
+              zoom = _value$split[2];
+
+          key = 'src';
+          value = 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+        }
+
         result[key.replace('_', '-')] = value;
       });
+
+      if (result.position && result.src) {
+        result.src = result.position;
+        delete result.position;
+      }
+
       return result;
     };
     /**

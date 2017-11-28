@@ -15,7 +15,8 @@ export default class AttributeFilter {
         'title',
         'identifier',
         'view_mode',
-        'sku'
+        'sku',
+        'position'
     ];
 
     /**

@@ -73,7 +73,9 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
 
       if (data.mobile_image == "" || data.mobile_image == undefined) {
         return {};
-      } else if (_underscore.isEmpty(data.mobile_image[0])) {
+      }
+
+      if (_underscore.isEmpty(data.mobile_image[0])) {
         return;
       }
 

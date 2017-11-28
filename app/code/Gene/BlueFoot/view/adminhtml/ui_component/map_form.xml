@@ -44,20 +44,41 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <field name="heading_type">
+        <field name="position" sortOrder="1" formElement="input" component="Gene_BlueFoot/js/form/element/map">
+            <settings>
+                <label>Position</label>
+                <notice translate="true">You can move the pin by double clicking or dragging it where you want. To alter the zoom please use the controls.</notice>
+            </settings>
+        </field>
+        <field name="width" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Map Form</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">page</item>
-                    <item name="sortOrder" xsi:type="number">20</item>
-                    <item name="dataScope" xsi:type="string">heading_type</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <item name="source" xsi:type="string">block</item>
+                    <item name="default" xsi:type="string">100%</item>
                 </item>
             </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Width</label>
+                <dataScope>width</dataScope>
+                <addAfter>px or %</addAfter>
+                <notice translate="true">Example: 50px or 100%</notice>
+            </settings>
+        </field>
+        <field name="height" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">block</item>
+                    <item name="default" xsi:type="string">350px</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Height</label>
+                <dataScope>height</dataScope>
+                <addAfter>px or %</addAfter>
+                <notice translate="true">Example: 50px or 100%</notice>
+            </settings>
         </field>
     </fieldset>
     <fieldset name="advanced">

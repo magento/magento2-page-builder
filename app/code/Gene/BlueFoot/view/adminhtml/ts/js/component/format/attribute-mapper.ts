@@ -2,7 +2,7 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../data-store";
+import {DataObject} from "../component/data-store";
 
 export default class AttributeMapper {
     // Attribute name mapping
@@ -15,8 +15,7 @@ export default class AttributeMapper {
         placeholder: 'data-placeholder',
         title: 'data-title',
         view_mode: 'data-view-mode',
-        sku: 'data-sku',
-        src: 'src'
+        sku: 'data-sku'
     };
 
     /**
@@ -33,9 +32,18 @@ export default class AttributeMapper {
                 if (key in this.attributeNameMapping) {
                     key = this.attributeNameMapping[key];
                 }
+                if (key === 'position') {
+                    const [lat, lng, zoom] = value.split(',');
+                    key = 'src';
+                    value = 'https://www.google.com/maps/embed/v1/place?q=' + lat + ',' + lng + '&zoom=' + zoom + '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw';
+                }
                 result[key.replace('_', '-')] = value;
             }
         );
+        if (result.position && result.src) {
+            result.src = result.position;
+            delete result.position;
+        }
         return result;
     }
 

@@ -7,12 +7,13 @@ define([
     'Magento_Ui/js/form/element/abstract',
     'underscore',
     'mage/translate',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBrASRp1DMfGbE8LKIb9tusSvAZRYZR6J4'
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
 ], function (AbstractField, _, $t) {
     'use strict';
 
     return AbstractField.extend({
         defaults: {
+            elementTmpl: 'Gene_BlueFoot/form/element/map',
             map: false,
             marker: false
         },
