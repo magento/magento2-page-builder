@@ -33,8 +33,30 @@
         <element name="modal" type="text" selector='//aside[contains(@class, "modal-popup")]'/>
         <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
+
+        <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
+        <element name="dropAreaInStage" type="button" selector="//div[contains(@class, 'stage-container')]/div[contains(@class, 'bluefoot-row-wrapper')][1]/div[contains(@class, 'bluefoot-row')]/div[contains(@class, 'row-container')]"/>
+        <element name="contentBlockInStage" type="button" selector='//div[contains(@class, "bluefoot-{{arg1}}")][1]' parameterized="true"/>
+
+        <element name="contentBlockPreviewInStage" type="button" selector='.stage-container.bluefoot-entity-preview."{{arg1}}"' parameterized="true"/>
+
+        <element name="contentBlockOptionsMenu" type="button" selector='//div[contains(@class, "bluefoot-{{arg1}}")][1]/div[@class="bluefoot-options"]' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector='.bluefoot-{{arg1}} a.edit-block[title="Edit"]' parameterized="true"/>
+
+        <element name="editColumn" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
+
+        <element name="contentBlockDuplicate" type="button" selector='.bluefoot-structure.bluefoot-{{arg1}}.bluefoot-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
+        <element name="contentBlockDelete" type="button" selector='.bluefoot-structure.bluefoot-{{arg1}}.bluefoot-options.remove-structural[title="Remove"]' parameterized="true"/>
+
         <element name="editForm" type="text" selector='//div[contains(@class, "bluefoot_modal_form_bluefoot_modal_form_modal")]'/>
         <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
+        <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>
+        <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
+        <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
+        <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
+        <element name="panelFieldLabel" type="text" selector=".bluefoot_modal_form_bluefoot_modal_form_modal [data-index='{{arg1}}'] [data-index='{{arg2}}'] label.admin__field-label" parameterized="true" />
+        <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
+        <element name="panelFieldControl" type="input" selector=".bluefoot_modal_form_bluefoot_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
@@ -90,6 +112,9 @@
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
+    </section>
+    <section name="HeaderOnFrontend">
+        <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
     </section>
     <section name="RowsOnFrontend">
         <element name="row1Display" type="button" selector="[data-role='row'][style='display: flex;']"/>
