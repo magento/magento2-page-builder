@@ -9,7 +9,6 @@ export default class AttributeMapper {
     attributeNameMapping: DataObject = {
         name: 'data-role',
         appearance: 'data-appearance',
-        id: 'id',
         identifier: 'data-identifier',
         button_text: 'data-button-text',
         label_text: 'data-label-text',
@@ -62,9 +61,10 @@ export default class AttributeMapper {
             result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                if (key in attributeMapping) {
-                    result[attributeMapping[key]] = data[key];
+                if (key in this.attributeNameMapping) {
+                    key = this.attributeNameMapping[key];
                 }
+                result[key] = data[key];
             }
         );
         return result;
