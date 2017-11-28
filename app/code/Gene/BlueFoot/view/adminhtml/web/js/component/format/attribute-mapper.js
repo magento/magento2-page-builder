@@ -15,6 +15,8 @@ define([], function () {
         label_text: 'data-label-text',
         placeholder: 'data-placeholder',
         title: 'data-title',
+        view_mode: 'data-view-mode',
+        sku: 'data-sku',
         src: 'src'
       };
     }

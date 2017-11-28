@@ -60,7 +60,7 @@ export default class PreviewBlock {
      * @param {string} key
      * @param value
      */
-    private updateDataValue(key: string, value: any) {
+    protected updateDataValue(key: string, value: any) {
         if (typeof this.data[key] !== 'undefined' && ko.isObservable(this.data[key])) {
             this.data[key](value);
         } else {

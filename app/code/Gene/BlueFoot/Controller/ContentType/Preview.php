@@ -3,11 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Controller\Adminhtml\ContentType;
+namespace Gene\BlueFoot\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class Preview extends \Magento\Backend\App\Action
+class Preview extends \Magento\Framework\App\Action\Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
