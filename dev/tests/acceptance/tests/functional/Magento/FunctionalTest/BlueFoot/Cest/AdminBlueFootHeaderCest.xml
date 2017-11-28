@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminBlueFootHeaderCest">
+        <annotations>
+            <features value="BlueFoot CMS"/>
+            <stories value="Bluefoot Header Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddHeader">
+            <annotations>
+                <title value="Add a header into stage"/>
+                <description value="A user should be able to add a header into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84258"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragHeaderIntoStage">
+                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterHeadingTypePropertyH5">
+                <argument name="property" value="BlueFootHeadingTypeProperty_H5"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterHeadingTitleProperty">
+                <argument name="property" value="BlueFootHeadingTitleProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
+            <amOnPage url="header{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{HeaderOnFrontend.header1Display('h5')}}" mergeKey="seeH5HeaderStyleApplied"/>
+            <see userInput="{{BlueFootHeadingTitleProperty.value}}" selector="{{HeaderOnFrontend.header1Display('h5')}}" mergeKey="assertHeadingTitleShowsFrontend"/>
+        </test>
+    </cest>
+</config>
