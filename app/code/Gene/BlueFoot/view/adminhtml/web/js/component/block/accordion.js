@@ -41,10 +41,10 @@ define(["./block"], function (_block) {
         }).filter(function (item) {
           return item !== null;
         });
-        return _.isEmpty(activeItems) ? [] : activeItems;
+        return _.isEmpty(activeItems) ? [0] : activeItems;
       }
 
-      return [];
+      return [0];
     };
 
     return Accordion;

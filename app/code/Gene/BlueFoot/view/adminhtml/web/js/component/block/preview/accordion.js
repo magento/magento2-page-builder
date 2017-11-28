@@ -1,4 +1,4 @@
-define(["./block", "knockout", "jquery", "accordion"], function (_block, _knockout, _jquery, _accordion) {
+define(["./block", "knockout", "jquery"], function (_block, _knockout, _jquery) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =
@@ -45,11 +45,13 @@ define(["./block", "knockout", "jquery", "accordion"], function (_block, _knocko
       ++this.renderCounter;
 
       if (this.data.items().length == this.renderCounter) {
-        _.delay(function () {
-          return (0, _jquery)(_this2.element).accordion({
-            active: _this2.parent.getActive()
-          });
-        }, 50);
+        require(['jquery', 'accordion'], function ($) {
+          _.delay(function () {
+            return $(_this2.element).accordion({
+              active: _this2.parent.getActive()
+            });
+          }, 50);
+        });
 
         this.renderCounter = 0;
       }

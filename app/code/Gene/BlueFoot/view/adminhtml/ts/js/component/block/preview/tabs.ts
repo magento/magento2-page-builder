@@ -7,7 +7,7 @@ import Block from "./block";
 import ko from "knockout";
 import $ from "jquery";
 import _ from "underscore";
-import "mage/backend/tabs";
+import "tabs";
 
 export default class Tabs extends Block {
     element: Element;

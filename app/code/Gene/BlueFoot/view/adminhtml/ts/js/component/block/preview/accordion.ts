@@ -7,7 +7,6 @@ import AccordionBlock from "../accordion";
 import Block from "./block";
 import ko from "knockout";
 import $ from "jquery";
-import "accordion";
 
 export default class Accordion extends Block {
     element: Element;
@@ -39,10 +38,12 @@ export default class Accordion extends Block {
     onItemRender() {
         ++this.renderCounter;
         if (this.data.items().length == this.renderCounter) {
-            _.delay(
-                () => $(this.element).accordion({ active: this.parent.getActive() }),
-                50
-            );
+            require(['jquery', 'accordion'], ($) => {
+                _.delay(
+                    () => $(this.element).accordion({ active: this.parent.getActive() }),
+                    50
+                );
+            });
             this.renderCounter = 0;
         }
     }

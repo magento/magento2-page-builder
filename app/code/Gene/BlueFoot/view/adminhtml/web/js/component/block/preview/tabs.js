@@ -1,4 +1,4 @@
-define(["./block", "knockout", "jquery", "underscore", "mage/backend/tabs"], function (_block, _knockout, _jquery, _underscore, _tabs) {
+define(["./block", "knockout", "jquery", "underscore", "tabs"], function (_block, _knockout, _jquery, _underscore, _tabs) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
