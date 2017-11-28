@@ -44,8 +44,8 @@ export default class Accordion extends Block {
                 ).filter((item) => {
                     return item !== null;
                 });
-            return _.isEmpty(activeItems) ? [] : activeItems;
+            return _.isEmpty(activeItems) ? [0] : activeItems;
         }
-        return [];
+        return [0];
     }
 }
