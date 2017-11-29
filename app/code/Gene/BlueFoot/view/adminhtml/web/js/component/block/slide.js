@@ -1,23 +1,36 @@
-define(["./block", "../config", "underscore", "../block/factory"], function (_block, _config, _underscore, _factory) {
+define(["./block", "../config", "underscore"], function (_block, _config, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var AdvancedSlider =
+  var Slide =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(AdvancedSlider, _Block);
+    _inheritsLoose(Slide, _Block);
 
-    function AdvancedSlider() {
+    function Slide() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = AdvancedSlider.prototype;
+    var _proto = Slide.prototype;
 
-    _proto.addSlide = function addSlide() {
-      var _this = this;
+    /**
+     * Retrieve the slide title
+     *
+     */
+    _proto.getTitle = function getTitle() {
+      var data = this.getData();
+      return data.title;
+    };
+    /**
+     * Does the slide have a title
+     *
+     * @returns {boolean}
+     */
 
-      (0, _factory)(_config.getInitConfig('contentTypes')['slide'], this.parent, this.stage, {}).then(function (slide) {
-        _this.addChild(slide);
-      });
+
+    _proto.hasTitle = function hasTitle() {
+      var data = this.getData();
+      console.log(preview.data);
+      return !(data.title == "" || data.title == undefined || _underscore.isEmpty(data.title));
     };
     /**
      * Retrieve the image URL with directive
@@ -95,9 +108,9 @@ define(["./block", "../config", "underscore", "../block/factory"], function (_bl
       };
     };
 
-    return AdvancedSlider;
+    return Slide;
   }(_block);
 
-  return AdvancedSlider;
+  return Slide;
 });
-//# sourceMappingURL=advanced-slider.js.map
+//# sourceMappingURL=slide.js.map

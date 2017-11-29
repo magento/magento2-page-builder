@@ -161,16 +161,20 @@
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="slider" translate="label" sortOrder="30">
-            <label>Slider</label>
+        <type name="slide" translate="label" sortOrder="30">
+            <label>Slide</label>
             <icon>icon-bluefoot-slider</icon>
-            <form>slider_form</form>
+            <component>Gene_BlueFoot/js/component/block/slide</component>
+            <preview_template>Gene_BlueFoot/component/block/preview/slide.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/slide.html</render_template>
+            <form>slide_form</form>
             <group>media</group>
+            <allowed_parents>advanced-slider</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="slide" component="Gene_BlueFoot/js/component/format/read/slide"/>
             </readers>
         </type>
-
         <type name="advanced-slider" translate="label" sortOrder="30">
             <label>Advanced Slider</label>
             <icon>icon-bluefoot-slider</icon>
@@ -182,10 +186,9 @@
             <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
-                <reader name="advanced-slider" component="Gene_BlueFoot/js/component/format/read/advanced-slider"/>
+                <!--<reader name="advanced-slider" component="Gene_BlueFoot/js/component/format/read/advanced-slider"/>-->
             </readers>
         </type>
-
         <type name="tabs" translate="label" sortOrder="1">
             <label>Tabs</label>
             <icon>icon-bluefoot-tabs</icon>
@@ -323,22 +326,6 @@
             <backend_block>Gene\BlueFoot\Block\ContentType\Search</backend_block>
             <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml</backend_template>
             <form>search_form</form>
-            <group>other</group>
-            <allowed_parents>row,column</allowed_parents>
-            <readers>
-                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
-            </readers>
-        </type>
-        <type name="slide" translate="label" sortOrder="10">
-            <label>Slide</label>
-            <icon>icon-bluefoot-search</icon>
-            <component>Gene_BlueFoot/js/component/block/inline</component>
-            <preview_component>Gene_BlueFoot/js/component/block/preview/search</preview_component>
-            <preview_template>Gene_BlueFoot/component/block/preview/search.html</preview_template>
-            <render_template>Gene_BlueFoot/component/block/render/search.html</render_template>
-            <backend_block>Gene\BlueFoot\Block\ContentType\Search</backend_block>
-            <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/search.phtml</backend_template>
-            <form>slide_form</form>
             <group>other</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>

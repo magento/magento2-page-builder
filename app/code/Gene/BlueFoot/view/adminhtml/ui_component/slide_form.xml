@@ -52,14 +52,14 @@
                 <dataScope>link_text</dataScope>
             </settings>
         </field>
-        <field name="link_url" sortOrder="10" formElement="input">
+        <field name="link_url" sortOrder="2" formElement="input">
             <settings>
                 <label translate="true">Link URL</label>
                 <dataType>text</dataType>
                 <dataScope>link_url</dataScope>
             </settings>
         </field>
-        <field name="title" sortOrder="1" formElement="input">
+        <field name="title" sortOrder="3" formElement="input">
             <settings>
                 <label translate="true">Title</label>
                 <validation>
@@ -67,6 +67,7 @@
                 </validation>
             </settings>
         </field>
+
         <field name="content" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -78,12 +79,11 @@
                 </item>
             </argument>
             <settings>
-                <label translate="true">Content</label>
                 <additionalClasses>
-                    <class name="admin__field-wide">false</class>
+                    <class name="admin__field-wide">true</class>
                 </additionalClasses>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
                 <label/>
                 <dataScope>content</dataScope>
@@ -130,7 +130,7 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">AHas Overlay Background</label>
+                <label translate="true">Has Overlay Background</label>
                 <notice translate="true">This will add a semi transparent overlay behind the slide content</notice>
             </settings>
             <formElements>

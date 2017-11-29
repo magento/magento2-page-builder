@@ -6,17 +6,30 @@
 import Block from "./block";
 import Config from "../config";
 import _ from 'underscore';
-import ko from "knockout";
-import Edit from "../stage/edit";
-import createBlock from "../block/factory";
 
-export default class AdvancedSlider extends Block {
+export default class Slide extends Block {
 
-    addSlide() {
-        createBlock(Config.getInitConfig('contentTypes')['slide'], this.parent, this.stage, {}).then((slide) => {
-            this.addChild(slide);
-        });
+
+    /**
+     * Retrieve the slide title
+     *
+     */
+    private getTitle(){
+        let data = this.getData();
+        return data.title;
     }
+
+    /**
+     * Does the slide have a title
+     *
+     * @returns {boolean}
+     */
+    hasTitle() {
+        let data = this.getData();
+        console.log(preview.data);
+        return !(data.title == "" || data.title == undefined || _.isEmpty(data.title));
+    }
+
 
     /**
      * Retrieve the image URL with directive
