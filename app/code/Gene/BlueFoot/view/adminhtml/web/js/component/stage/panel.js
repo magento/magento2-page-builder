@@ -56,7 +56,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
         this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig('contentTypes'), function (contentBlock) {
           var regEx = new RegExp('\\b' + self.searchValue(), 'gi');
           var matches = contentBlock.label.toLowerCase().match(regEx) ? true : false;
-          return matches && contentBlock.visible === true;
+          return matches && contentBlock.is_visible === true;
         }), function (contentBlock, identifier) {
           // Create a new instance of GroupBlock for each result
           return new _block.Block(identifier, contentBlock);
@@ -76,7 +76,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
           // Push the group instance into the observable array to update the UI
           _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentBlocks, {
             group: id,
-            visible: true
+            is_visible: true
           }),
           /* Retrieve content blocks with group id */
           function (contentBlock, identifier) {

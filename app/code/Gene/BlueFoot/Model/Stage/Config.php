@@ -167,7 +167,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'group' => (isset($contentType['group'])
                 ? $contentType['group'] : 'general'),
             'fields' => $this->uiComponentConfig->getFields($contentType['form']),
-            'visible' => true,
             'preview_template' => (isset($contentType['preview_template'])
                 ? $contentType['preview_template'] : ''),
             'render_template' => (isset($contentType['render_template'])
@@ -180,7 +179,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
             'allowed_parents' => isset($contentType['allowed_parents'])
                 ? explode(',', $contentType['allowed_parents']) : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
-            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : []
+            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
+            'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
     }
 }
