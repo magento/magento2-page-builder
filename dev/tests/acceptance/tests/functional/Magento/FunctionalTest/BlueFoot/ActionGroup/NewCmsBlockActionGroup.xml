@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <actionGroup name="addCmsBlock">
+        <amOnPage url="{{CmsNewBlock.page}}" mergeKey="amOnNewBlockPage"/>
+        <waitForPageLoad mergeKey="waitForPageLoad"/>
+        <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.title}}" userInput="{{BlueFootBlockIdentifierProperty.value}}" mergeKey="fillFieldTitle"/>
+        <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.identifier}}" userInput="{{BlueFootBlockIdentifierProperty.value}}" mergeKey="fillFieldIdentifier"/>
+        <click selector="{{CmsNewBlockBlockBasicFieldsSection.wysiwyg_hr_element}}" mergeKey="fillFieldContent"/>
+        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" mergeKey="clickSaveBlock"/>
+    </actionGroup>
+</config>
