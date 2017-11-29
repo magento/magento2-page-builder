@@ -45,7 +45,7 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <container name="items" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Gene_BlueFoot/dynamic-rows/grid">
+        <container name="slides" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Gene_BlueFoot/dynamic-rows/grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Slides</item>
@@ -60,8 +60,277 @@
                     </item>
                 </item>
             </argument>
-
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="showFallbackReset" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="title" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <showFallbackReset>false</showFallbackReset>
+                        <dataType>text</dataType>
+                        <label>Title</label>
+                        <dataScope>title</dataScope>
+                    </settings>
+                </field>
+                <button name="configure_button">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string">Configure</item>
+                            <item name="title" xsi:type="string">Configure</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.ns}.${ $.ns}.general.configure_slide</item>
+                                    <item name="actionName" xsi:type="string">toggleModal</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.ns}.${ $.ns}.general.configure_slide.insert_form</item>
+                                    <item name="actionName" xsi:type="string">render</item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </button>
+                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete" sortOrder="50">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <additionalClasses>
+                            <class name="data-grid-actions-cell">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label>Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
         </container>
+        <modal name="configure_slide">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="options" xsi:type="array">
+                        <item name="title" xsi:type="string" translate="true">Configure Slide</item>
+                        <item name="buttons" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="text" xsi:type="string">Close</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="string">actionCancel</item>
+                                </item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="text" xsi:type="string">Reset</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="targetName" xsi:type="string">${ $.name }.testField</item>
+                                        <item name="actionName" xsi:type="string">clear</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item name="text" xsi:type="string">Save</item>
+                                <item name="class" xsi:type="string">action-primary</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="targetName" xsi:type="string">${ $.name }.form</item>
+                                        <item name="actionName" xsi:type="string">save</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <form>
+                <argument name="data" xsi:type="array">
+                    <item name="js_config" xsi:type="array">
+                        <item name="provider" xsi:type="string">advanced_slider_form.advanced_slider_form_data_source</item>
+                        <item name="deps" xsi:type="string">advanced_slider_form.advanced_slider_form_data_source</item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Configure Slide</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataScope" xsi:type="string">data</item>
+                        <item name="namespace" xsi:type="string">advanced_slider_form</item>
+                    </item>
+                    <item name="template" xsi:type="string">templates/form/collapsible</item>
+                </argument>
+                <fieldset name="general">
+                    <settings>
+                        <label translate="true">Content</label>
+                        <collapsible>true</collapsible>
+                        <opened>true</opened>
+                    </settings>
+                    <field name="link_text" sortOrder="1" formElement="input">
+                        <settings>
+                            <label translate="true">Link Text</label>
+                            <dataType>text</dataType>
+                            <dataScope>link_text</dataScope>
+                        </settings>
+                    </field>
+                    <field name="link_url" sortOrder="10" formElement="input">
+                        <settings>
+                            <label translate="true">Link URL</label>
+                            <dataType>text</dataType>
+                            <dataScope>link_url</dataScope>
+                        </settings>
+                    </field>
+                    <field name="title" sortOrder="1" formElement="input">
+                        <settings>
+                            <label translate="true">Title</label>
+                            <validation>
+                                <rule name="validate-string" xsi:type="boolean">true</rule>
+                            </validation>
+                        </settings>
+                    </field>
+                    <field name="content" formElement="wysiwyg">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="source" xsi:type="string">page</item>
+                                <item name="wysiwygConfigData" xsi:type="array">
+                                    <item name="pagebuilder_button" xsi:type="boolean">false</item>
+                                    <item name="toggle_button" xsi:type="boolean">false</item>
+                                </item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <label translate="true">Content</label>
+                            <additionalClasses>
+                                <class name="admin__field-wide">false</class>
+                            </additionalClasses>
+                            <validation>
+                                <rule name="required-entry" xsi:type="boolean">true</rule>
+                            </validation>
+                            <label/>
+                            <dataScope>content</dataScope>
+                        </settings>
+                        <formElements>
+                            <wysiwyg>
+                                <settings>
+                                    <wysiwyg>true</wysiwyg>
+                                </settings>
+                            </wysiwyg>
+                        </formElements>
+                    </field>
+                </fieldset>
+                <fieldset name="appearance">
+                    <settings>
+                        <label translate="true">Appearance</label>
+                        <collapsible>true</collapsible>
+                        <opened>true</opened>
+                    </settings>
+                    <field name="background_image" formElement="fileUploader">
+                        <settings>
+                            <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
+                            <label translate="true">Background Image</label>
+                            <componentType>fileUploader</componentType>
+                        </settings>
+                        <formElements>
+                            <fileUploader>
+                                <settings>
+                                    <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                                    <maxFileSize>4194304</maxFileSize>
+                                    <uploaderConfig>
+                                        <param xsi:type="string" name="url">bluefoot/contenttype/image_upload</param>
+                                    </uploaderConfig>
+                                    <previewTmpl>Gene_BlueFoot/form/element/uploader/preview.html</previewTmpl>
+                                </settings>
+                            </fileUploader>
+                        </formElements>
+                    </field>
+                    <field name="has_overlay_background" sortOrder="1" formElement="select">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="default" xsi:type="string">No</item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <dataType>text</dataType>
+                            <label translate="true">AHas Overlay Background</label>
+                            <notice translate="true">This will add a semi transparent overlay behind the slide content</notice>
+                        </settings>
+                        <formElements>
+                            <select>
+                                <settings>
+                                    <options>
+                                        <option name="0" xsi:type="array">
+                                            <item name="value" xsi:type="boolean">false</item>
+                                            <item name="label" xsi:type="string" translate="true">No</item>
+                                        </option>
+                                        <option name="1" xsi:type="array">
+                                            <item name="value" xsi:type="boolean">true</item>
+                                            <item name="label" xsi:type="string" translate="true">Yes</item>
+                                        </option>
+                                    </options>
+                                </settings>
+                            </select>
+                        </formElements>
+                    </field>
+                </fieldset>
+                <fieldset name="advanced">
+                    <settings>
+                        <label translate="true">Advanced</label>
+                        <collapsible>true</collapsible>
+                    </settings>
+                    <field name="css_classes" sortOrder="1" formElement="input">
+                        <settings>
+                            <dataType>text</dataType>
+                            <label translate="true">CSS Classes</label>
+                            <dataScope>css_classes</dataScope>
+                            <notice translate="true">Space separated list of classes.</notice>
+                        </settings>
+                    </field>
+                    <field name="text_align" sortOrder="10" formElement="select">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="default" xsi:type="string">left</item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <dataType>text</dataType>
+                            <label translate="true">Alignment</label>
+                        </settings>
+                        <formElements>
+                            <select>
+                                <settings>
+                                    <options>
+                                        <option name="0" xsi:type="array">
+                                            <item name="value" xsi:type="string">left</item>
+                                            <item name="label" xsi:type="string" translate="true">Left</item>
+                                        </option>
+                                        <option name="1" xsi:type="array">
+                                            <item name="value" xsi:type="string">center</item>
+                                            <item name="label" xsi:type="string" translate="true">Center</item>
+                                        </option>
+                                        <option name="2" xsi:type="array">
+                                            <item name="value" xsi:type="string">right</item>
+                                            <item name="label" xsi:type="string" translate="true">Right</item>
+                                        </option>
+                                    </options>
+                                </settings>
+                            </select>
+                        </formElements>
+                    </field>
+                    <field name="margins_and_padding" sortOrder="20" formElement="input" component="Gene_BlueFoot/js/form/element/margins_and_padding">
+                        <settings>
+                            <label>Margins and Padding</label>
+                        </settings>
+                    </field>
+                </fieldset>
+            </form>
+        </modal>
     </fieldset>
 
     <fieldset name="settings">
