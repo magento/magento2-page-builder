@@ -19,8 +19,8 @@ define([], function () {
     _proto.read = function read(element) {
       var target = element.firstChild,
           response = {
-        link_text: element.querySelector('a').firstChild.firstChild.innerText,
-        link_url: element.querySelector('a').getAttribute('href'),
+        link_text: element.querySelector('a') !== null ? element.querySelector('a').firstChild.firstChild.innerText : "",
+        link_url: element.querySelector('a') !== null ? element.querySelector('a').getAttribute('href') : "",
         title: element.querySelector('h3').innerText,
         content: element.querySelector('h3').nextSibling.innerHTML
       };

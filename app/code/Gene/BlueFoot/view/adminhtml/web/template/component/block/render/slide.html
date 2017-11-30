@@ -9,7 +9,7 @@
     <div data-bind="css: {'has-overlay-background': getData().has_overlay_background}" class="pagebuilder-content">
         <h3 data-bind="text: getData().title"></h3>
         <div class="slider-content"  data-bind="html: getData().content"></div>
-        <!-- ko if: getData().link_text -->
+        <!-- ko if: getData().link_text.length > 0 -->
         <a class="button" data-bind="attr: {href: getData().link_url}">
             <span><span data-bind="text: getData().link_text"></span></span>
         </a>
