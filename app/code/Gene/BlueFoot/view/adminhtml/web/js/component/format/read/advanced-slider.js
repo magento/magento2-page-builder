@@ -3,12 +3,12 @@ define(["../../../component/config"], function (_config) {
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var AdvancedSlider =
+  var Image =
   /*#__PURE__*/
   function () {
-    function AdvancedSlider() {}
+    function Image() {}
 
-    var _proto = AdvancedSlider.prototype;
+    var _proto = Image.prototype;
 
     /**
      * Read heading type and title from the element
@@ -17,15 +17,13 @@ define(["../../../component/config"], function (_config) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var target = element.querySelector('a').getAttribute('target'),
-          response = {
+      var response = {
         'image': this.generateImageObject(element.querySelector('img:nth-child(1)').getAttribute('src')),
         'mobile_image': "",
         'alt': element.querySelector('img:nth-child(1)').getAttribute('alt'),
         'title_tag': element.querySelector('a').getAttribute('title'),
-        'link_text': element.querySelector('a>div') === null ? "" : element.querySelector('a>div').innerHTML,
-        'link_url': element.querySelector('a').getAttribute('href'),
-        'open_in_new_window': target && target == '_blank' ? "1" : "0"
+        'lightbox': !!element.querySelector('a.bluefoot-lightbox') ? "Yes" : "No",
+        'show_caption': !!element.querySelector('figcaption') ? "Yes" : "No"
       }; // Detect if there is a mobile image and update the response
 
       if (element.querySelector('img:nth-child(2)') && element.querySelector('img:nth-child(2)').getAttribute('src')) {
@@ -60,9 +58,9 @@ define(["../../../component/config"], function (_config) {
       return "";
     };
 
-    return AdvancedSlider;
+    return Image;
   }();
 
-  return AdvancedSlider;
+  return Image;
 });
 //# sourceMappingURL=advanced-slider.js.map

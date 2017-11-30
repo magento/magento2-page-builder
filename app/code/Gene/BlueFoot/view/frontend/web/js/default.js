@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-requirejs(['jquery', 'fancybox', 'highlight'], function ($, fancybox, hljs) {
+requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, hljs) {
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 
@@ -12,5 +12,10 @@ requirejs(['jquery', 'fancybox', 'highlight'], function ($, fancybox, hljs) {
                 hljs.highlight('html', $(block).html()).value
             );
         });
+
+        $("div[data-role='advanced-slider']").slick();
+
+
+
     });
 });

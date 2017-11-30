@@ -5,12 +5,14 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
-    <div data-bind="css: {'has-overlay-background': getData().has_overlay_background}">
+<div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()" class="pagebuilder-slider">
+    <div data-bind="css: {'has-overlay-background': getData().has_overlay_background}" class="pagebuilder-content">
         <h3 data-bind="text: getData().title"></h3>
-        <div data-bind="html: getData().content"></div>
+        <div class="slider-content"  data-bind="html: getData().content"></div>
+        <!-- ko if: getData().link_text -->
         <a class="button" data-bind="attr: {href: getData().link_url}">
             <span><span data-bind="text: getData().link_text"></span></span>
         </a>
+        <!-- /ko -->
     </div>
 </div>
