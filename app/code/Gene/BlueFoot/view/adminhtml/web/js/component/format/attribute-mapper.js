@@ -16,7 +16,15 @@ define([], function () {
         placeholder: 'data-placeholder',
         title: 'data-title',
         view_mode: 'data-view-mode',
-        sku: 'data-sku'
+        sku: 'data-sku',
+        autoplay: 'data-autoplay',
+        autoplay_speed: 'data-autoplay-speed',
+        fade: 'data-fade',
+        is_infinite: 'data-is-infinite',
+        show_arrows: 'data-show-arrows',
+        show_dots: 'data-show-dots',
+        advanced_settings: 'data-advanced-settings',
+        has_overlay_background: 'data-has-overlay-background'
       };
     }
 
