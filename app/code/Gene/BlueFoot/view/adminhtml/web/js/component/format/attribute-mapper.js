@@ -76,9 +76,11 @@ define([], function () {
       }, {}),
           result = {};
       Object.keys(data).map(function (key) {
-        if (key in attributeMapping) {
-          result[attributeMapping[key]] = data[key];
+        if (key in _this2.attributeNameMapping) {
+          key = _this2.attributeNameMapping[key];
         }
+
+        result[key] = data[key];
       });
       return result;
     };

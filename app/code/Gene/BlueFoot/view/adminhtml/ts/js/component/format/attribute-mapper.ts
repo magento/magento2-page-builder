@@ -61,9 +61,10 @@ export default class AttributeMapper {
             result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                if (key in attributeMapping) {
-                    result[attributeMapping[key]] = data[key];
+                if (key in this.attributeNameMapping) {
+                    key = this.attributeNameMapping[key];
                 }
+                result[key] = data[key];
             }
         );
         return result;

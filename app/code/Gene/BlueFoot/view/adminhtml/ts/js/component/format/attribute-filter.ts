@@ -8,6 +8,7 @@ export default class AttributeFilter {
     allowAttributes: Array<string> = [
         'name',
         'appearance',
+        'id',
         'src',
         'button_text',
         'label_text',
