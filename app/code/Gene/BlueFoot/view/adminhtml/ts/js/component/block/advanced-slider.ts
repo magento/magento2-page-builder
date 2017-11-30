@@ -12,9 +12,13 @@ import createBlock from "../block/factory";
 
 export default class AdvancedSlider extends Block {
 
+    /**
+     * Add a slide into the slider
+     */
     addSlide() {
         createBlock(Config.getInitConfig('contentTypes')['slide'], this.parent, this.stage, {}).then((slide) => {
             this.addChild(slide);
+            slide.edit.open();
         });
     }
 

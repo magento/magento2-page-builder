@@ -5,12 +5,12 @@
  */
 -->
 
-<div class="bluefoot-structure bluefoot-row" data-bind="resizable: {handle: '.bluefoot-column-resize-handle', items: '.bluefoot-slide'}">
-        <i class="icon-bluefoot-slider"></i> <span data-bind="text: $t('Advanced Slider');"></span>
-        <!-- ko template: optionsInstance.template --><!-- /ko -->
-        <!-- ko template: previewChildTemplate --><!-- /ko -->
-        <div class="bluefoot-empty .bluefoot-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('drag slides here')">
-        </div>
+<div class="bluefoot-structure bluefoot-row pagebuilder-advanced-slider">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: previewChildTemplate --><!-- /ko -->
 
-        <button data-bind="click: addSlide">Add Slide</button>
+    <div class="bluefoot-empty bluefoot-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('drag slides here')">
+    </div>
+
+    <button data-bind="click: addSlide">Add Slide</button>
 </div>
