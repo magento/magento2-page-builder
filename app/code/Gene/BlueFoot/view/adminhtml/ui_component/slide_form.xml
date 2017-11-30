@@ -44,21 +44,7 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="link_text" sortOrder="1" formElement="input">
-            <settings>
-                <label translate="true">Link Text</label>
-                <dataType>text</dataType>
-                <dataScope>link_text</dataScope>
-            </settings>
-        </field>
-        <field name="link_url" sortOrder="2" formElement="input">
-            <settings>
-                <label translate="true">Link URL</label>
-                <dataType>text</dataType>
-                <dataScope>link_url</dataScope>
-            </settings>
-        </field>
-        <field name="title" sortOrder="3" formElement="input">
+        <field name="title" sortOrder="1" formElement="input">
             <settings>
                 <label translate="true">Title</label>
                 <validation>
@@ -66,7 +52,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="content" formElement="wysiwyg">
+        <field name="content" sortOrder="10" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
@@ -83,7 +69,7 @@
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
-                <label/>
+                <label>Content</label>
                 <dataScope>content</dataScope>
             </settings>
             <formElements>
@@ -94,6 +80,20 @@
                 </wysiwyg>
             </formElements>
         </field>
+        <field name="link_text" sortOrder="20" formElement="input">
+            <settings>
+                <label translate="true">Link Text</label>
+                <dataType>text</dataType>
+                <dataScope>link_text</dataScope>
+            </settings>
+        </field>
+        <field name="link_url" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Link URL</label>
+                <dataType>text</dataType>
+                <dataScope>link_url</dataScope>
+            </settings>
+        </field>
     </fieldset>
     <fieldset name="appearance">
         <settings>
@@ -101,7 +101,7 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="background_image" formElement="fileUploader">
+        <field name="background_image" sortOrder="1" formElement="fileUploader">
             <settings>
                 <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
                 <label translate="true">Background Image</label>
@@ -120,32 +120,28 @@
                 </fileUploader>
             </formElements>
         </field>
-        <field name="has_overlay_background" sortOrder="1" formElement="select">
+        <field name="has_overlay_background" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">No</item>
+                    <item name="default" xsi:type="string">0</item>
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
+                <dataType>boolean</dataType>
                 <label translate="true">Has Overlay Background</label>
                 <notice translate="true">This will add a semi transparent overlay behind the slide content</notice>
+                <dataScope>has_overlay_background</dataScope>
             </settings>
             <formElements>
-                <select>
+                <checkbox>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="boolean">false</item>
-                                <item name="label" xsi:type="string" translate="true">No</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="boolean">true</item>
-                                <item name="label" xsi:type="string" translate="true">Yes</item>
-                            </option>
-                        </options>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
                     </settings>
-                </select>
+                </checkbox>
             </formElements>
         </field>
     </fieldset>

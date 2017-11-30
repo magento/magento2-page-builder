@@ -5,14 +5,12 @@
  */
 -->
 
-<div data-bind="style: getStyle(), css: getCss()">
-    <div data-bind="attr: {'data-has-overlay-background': getData().has_overlay_background}">
-        <div>
-            <h3 data-bind="attr: {text: getData().title}"></h3>
-            <div data-bind="attr: {html: getData().content}"></div>
-            <button type="button" class="button" data-bind="attr: {href: getData().link_url}">
-                <span><span data-bind="text: getData().link_text"></span></span>
-            </button>
-        </div>
+<div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
+    <div data-bind="css: {'has-overlay-background': getData().has_overlay_background}">
+        <h3 data-bind="text: getData().title"></h3>
+        <div data-bind="html: getData().content"></div>
+        <a class="button" data-bind="attr: {href: getData().link_url}">
+            <span><span data-bind="text: getData().link_text"></span></span>
+        </a>
     </div>
 </div>

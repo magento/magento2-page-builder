@@ -8,12 +8,13 @@ import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 
-//Placeholder
-interface ImageObject {
-    name: string;
-    size: number;
-    type: string;
-    url: string;
+interface SlideObject {
+    link_text: string;
+    link_url: string;
+    title: string;
+    content: string;
+    background_image?: string;
+    has_overlay_background?: string;
 }
 
 export default class Slide implements ReadInterface {
@@ -24,47 +25,15 @@ export default class Slide implements ReadInterface {
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
-    public read(element: HTMLElement): Promise<any> {
-        let target = element.querySelector('a').getAttribute('target'),
-            response: DataObject = {
-            'image': this.generateImageObject(element.querySelector('img:nth-child(1)').getAttribute('src')),
-            'mobile_image': "",
-            'alt': element.querySelector('img:nth-child(1)').getAttribute('alt'),
-            'title_tag': element.querySelector('a').getAttribute('title'),
-            'link_text': element.querySelector('a>div') === null ? "" : element.querySelector('a>div').innerHTML,
-            'link_url': element.querySelector('a').getAttribute('href'),
-            'open_in_new_window': target && target == '_blank' ? "1" : "0"
+    public read(element: HTMLElement): Promise<SlideObject> {
+        let target = element.firstChild,
+            response: SlideObject = {
+            link_text: element.querySelector('a').firstChild.firstChild.innerText,
+            link_url: element.querySelector('a').getAttribute('href'),
+            title: element.querySelector('h3').innerText,
+            content: element.querySelector('h3').nextSibling.innerHTML
         };
 
-        // Detect if there is a mobile image and update the response
-        if (element.querySelector('img:nth-child(2)') && element.querySelector('img:nth-child(2)').getAttribute('src')) {
-            response['mobile_image'] = this.generateImageObject(element.querySelector('img:nth-child(2)').getAttribute('src'));
-        }
-
-        return Promise.resolve({});
-    }
-
-    /**
-     * Generate the image object
-     *
-     * @param {string} src
-     * @returns {ImageObject}
-     */
-    private generateImageObject(src: string): string | Array<ImageObject> {
-        // Match the URL & type from the directive
-        if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
-            const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src));
-
-            return [
-                {
-                    "name": url.split('/').pop(),
-                    "size": 0,
-                    "type": "image/" + type,
-                    "url": Config.getInitConfig('media_url') + url
-                }
-            ];
-        }
-
-        return "";
+        return Promise.resolve(response);
     }
 }
