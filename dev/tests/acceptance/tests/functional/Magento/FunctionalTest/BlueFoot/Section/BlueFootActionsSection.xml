@@ -165,4 +165,16 @@
         <element name="fancyboxOpen" type="button" selector=".fancybox-overlay"/>
         <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
     </section>
+    <section name="MapInAdmin">
+        <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>
+        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//button[@title='Zoom in']"/>
+        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//button[@title='Zoom out']"/>
+    </section>
+    <section name="MapOnFrontend">
+        <element name="map1Lat" type="button" selector="//*[@data-role='map'][1][contains(@src, '30.401808299999995')]"/>
+        <element name="map1Lng" type="button" selector="//*[@data-role='map'][1][contains(@src, '-97.72355449999998')]"/>
+        <element name="map1Zoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom=6')]"/>
+        <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
+        <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
+    </section>
 </config>

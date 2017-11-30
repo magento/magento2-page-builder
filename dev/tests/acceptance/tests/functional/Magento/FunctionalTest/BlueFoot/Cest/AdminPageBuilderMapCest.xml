@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderMapCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Map Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddMap">
+            <annotations>
+                <title value="Add a map into stage"/>
+                <description value="A user should be able to add a map into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84676"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragMapIntoStage">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillMapPositionFields" mergeKey="enterMapPositionProperties">
+                <argument name="property" value="PageBuilderMapPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterMapWidthProperty">
+                <argument name="property" value="PageBuilderMapWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterMapHeightProperty">
+                <argument name="property" value="PageBuilderMapHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
+            <amOnPage url="map{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElementInDOM selector="{{MapOnFrontend.map1Lat}}" mergeKey="seeMapLatPositionSet"/>
+            <seeElementInDOM selector="{{MapOnFrontend.map1Lng}}" mergeKey="seeMapLngPositionSet"/>
+            <seeElementInDOM selector="{{MapOnFrontend.map1Zoom}}" mergeKey="seeMapZoomPositionSet"/>
+            <seeElementInDOM selector="{{MapOnFrontend.map1Width}}" mergeKey="seeMapWidthStyleApplied"/>
+            <seeElementInDOM selector="{{MapOnFrontend.map1Height}}" mergeKey="seeMapHeightStyleApplied"/>
+        </test>
+    </cest>
+</config>
