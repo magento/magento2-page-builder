@@ -57,6 +57,7 @@
         <element name="panelFieldLabel" type="text" selector=".bluefoot_modal_form_bluefoot_modal_form_modal [data-index='{{arg1}}'] [data-index='{{arg2}}'] label.admin__field-label" parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector=".bluefoot_modal_form_bluefoot_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
@@ -144,5 +145,16 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+    </section>
+    <section name="ImageOnFrontend">
+        <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
+        <element name="imageSource" type="button" selector="img.bluefoot-mobile-hidden[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="imageHasLightbox" type="button" selector="[data-role='image'] a.bluefoot-lightbox"/>
+        <element name="imageHasAltText" type="button" selector="img.bluefoot-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
+        <element name="imageHasTitleTag" type="button" selector="img.bluefoot-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.bluefoot-mobile-only[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="imageHasCaption" type="button" selector="figcaption"/>
+        <element name="fancyboxOpen" type="button" selector=".fancybox-overlay"/>
+        <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
     </section>
 </config>
