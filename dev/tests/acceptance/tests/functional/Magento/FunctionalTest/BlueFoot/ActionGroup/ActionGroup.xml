@@ -44,10 +44,6 @@
         <see userInput="Search" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupSearch"/>
     </actionGroup>
     <actionGroup name="enableBlueFoot">
-        <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-        <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-        <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-        <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
         <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
         <waitForPageLoad mergeKey="waitForPageLoad1"/>
         <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
@@ -278,7 +274,6 @@
         <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="waitForCmsPageSaveButton" />
         <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
-        <!--<see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>-->
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>

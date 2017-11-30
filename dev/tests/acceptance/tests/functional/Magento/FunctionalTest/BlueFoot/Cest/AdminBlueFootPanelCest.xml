@@ -17,6 +17,10 @@
             <env value="firefox"/>
             <env value="phantomjs"/>
         </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
+        </before>
         <after>
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
         </after>
@@ -28,16 +32,6 @@
                 <testCaseId value="MAGETWO-81951"/>
                 <group value="bluefoot"/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-            <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-            <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
-            <wait time="1" mergeKey="wait1"/>
             <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen1"/>
             <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreen"/>
             <wait time="1" mergeKey="wait2"/>
@@ -54,7 +48,6 @@
                 <testCaseId value="MAGETWO-81826"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
             <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
         </test>
@@ -66,7 +59,6 @@
                 <testCaseId value="MAGETWO-81827"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
             <see userInput="Buttons" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
             <see userInput="Banner" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockBanner"/>
@@ -80,7 +72,6 @@
                 <testCaseId value="MAGETWO-81827"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="blo" mergeKey="fillSearch"/>
             <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
         </test>
@@ -92,7 +83,6 @@
                 <testCaseId value="MAGETWO-81831"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
             <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" mergeKey="validateNothingFound"/>
         </test>
@@ -105,7 +95,6 @@
                 <group value="bluefoot"/>
                 <group value="skip"/>
             </annotations>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
             <!--toggle clearSearch on-->
             <dontSeeElement selector='//*[@id="bluefoot-panel"]/div[1]/a' mergeKey="dontSeeClearSearch"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearchField"/>

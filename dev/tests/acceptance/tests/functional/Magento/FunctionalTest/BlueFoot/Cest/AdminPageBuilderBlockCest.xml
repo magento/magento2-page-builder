@@ -23,6 +23,10 @@
             <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
         </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
         <test name="CanAddBlock">
             <annotations>
                 <title value="Can add block"/>
