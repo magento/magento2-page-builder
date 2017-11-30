@@ -191,6 +191,13 @@
         <selectOption selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="attachFileSlideOutPropertyGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}' mergeKey="attachImageFile"/>
+        <waitForElementVisible time="10" selector="{{BlueFootActionsSection.panelFieldUploadSummary(property.value)}}" mergeKey="waitForImageUploadSummary" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelField">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -270,7 +277,8 @@
         <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" mergeKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="waitForCmsPageSaveButton" />
-        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <!--<see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>-->
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
