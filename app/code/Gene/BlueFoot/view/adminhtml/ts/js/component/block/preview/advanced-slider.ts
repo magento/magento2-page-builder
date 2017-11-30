@@ -7,11 +7,31 @@ import Block from "../block";
 import PreviewBlock from "./block";
 import $ from "jquery";
 import "Gene_BlueFoot/js/resource/slick/slick";
-import {Dictionary} from "underscore";
+import _, {Dictionary} from "underscore";
+import Structural from "../../stage/structural/abstract";
 
 export default class AdvancedSlider extends PreviewBlock {
     element: Element;
     ready: boolean = false;
+
+    /**
+     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+     *
+     * @type {(() => any) & _.Cancelable}
+     */
+    buildSlick = _.debounce(() => {
+        _.delay(() => {
+            if (this.element && this.element.children.length > 0) {
+                try {
+                    $(this.element).slick('unslick');
+                } catch (e) {
+                    // This may error
+                }
+                console.log('init slick');
+                $(this.element).slick(this.buildSlickConfig());
+            }
+        }, 100);
+    }, 20);
 
     /**
      * @param {Block} parent
@@ -20,18 +40,8 @@ export default class AdvancedSlider extends PreviewBlock {
     constructor(parent: Block, config: object) {
         super(parent, config);
 
-        parent.children.subscribe(_.debounce(() => {
-            //$(this.element).slick(this.buildSlickConfig());
-            this.ready = true;
-        }, 10));
-
-        this.parent.stage.store.subscribe(
-            (data: Dictionary<{}>) => {
-                if (this.ready) {
-                    //$(this.element).slick(this.buildSlickConfig());
-                }
-            }
-        );
+        parent.children.subscribe(this.buildSlick);
+        this.parent.stage.store.subscribe(this.buildSlick);
     }
 
     /**

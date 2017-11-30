@@ -1,10 +1,16 @@
-define(["./block", "Gene_BlueFoot/js/resource/slick/slick"], function (_block, _slick) {
+define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscore"], function (_block, _jquery, _slick, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var AdvancedSlider =
   /*#__PURE__*/
   function (_PreviewBlock) {
     _inheritsLoose(AdvancedSlider, _PreviewBlock);
+
+    /**
+     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+     *
+     * @type {(() => any) & _.Cancelable}
+     */
 
     /**
      * @param {Block} parent
@@ -16,15 +22,22 @@ define(["./block", "Gene_BlueFoot/js/resource/slick/slick"], function (_block, _
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.element = void 0;
       _this.ready = false;
-      parent.children.subscribe(_.debounce(function () {
-        //$(this.element).slick(this.buildSlickConfig());
-        _this.ready = true;
-      }, 10));
+      _this.buildSlick = _underscore.debounce(function () {
+        _underscore.delay(function () {
+          if (_this.element && _this.element.children.length > 0) {
+            try {
+              (0, _jquery)(_this.element).slick('unslick');
+            } catch (e) {// This may error
+            }
 
-      _this.parent.stage.store.subscribe(function (data) {
-        if (_this.ready) {//$(this.element).slick(this.buildSlickConfig());
-        }
-      });
+            console.log('init slick');
+            (0, _jquery)(_this.element).slick(_this.buildSlickConfig());
+          }
+        }, 100);
+      }, 20);
+      parent.children.subscribe(_this.buildSlick);
+
+      _this.parent.stage.store.subscribe(_this.buildSlick);
 
       return _this;
     }
