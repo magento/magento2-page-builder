@@ -5,7 +5,8 @@
  * See COPYING.txt for license details.
  */
 -->
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">products_list_form.products_list_form_data_source</item>
@@ -29,8 +30,8 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
             <argument name="name" xsi:type="string">products_list_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string" />
-            <argument name="requestFieldName" xsi:type="string" />
+            <argument name="primaryFieldName" xsi:type="string"/>
+            <argument name="requestFieldName" xsi:type="string"/>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -51,43 +52,38 @@
                 <dataScope>category</dataScope>
             </settings>
         </field>
-      </fieldset>
-      <fieldset name="display">
+    </fieldset>
+    <fieldset name="display">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="label" xsi:type="string">Display</item>
             </item>
         </argument>
-        <field name="hide" sortOrder="1" formElement="select">
+        <field name="hide_out_of_stock" sortOrder="1" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">No</item>
+                    <item name="default" xsi:type="string">true</item>
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
+                <dataType>string</dataType>
                 <label translate="true">Hide out of stock products</label>
-                <dataScope>hideOutOfStock</dataScope>
+                <dataScope>hide_out_of_stock</dataScope>
             </settings>
             <formElements>
-                <select>
+                <checkbox>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">no</item>
-                                <item name="label" xsi:type="string" translate="true">No</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">yes</item>
-                                <item name="label" xsi:type="string" translate="true">Yes</item>
-                            </option>
-                        </options>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
                     </settings>
-                </select>
+                </checkbox>
             </formElements>
         </field>
         <field name="product_count" sortOrder="10" formElement="input">
-          <argument name="data" xsi:type="array">
+            <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">4</item>
                 </item>
@@ -95,7 +91,7 @@
             <settings>
                 <dataType>number</dataType>
                 <label translate="true">Product Count</label>
-                <dataScope>productCount</dataScope>
+                <dataScope>product_count</dataScope>
             </settings>
         </field>
     </fieldset>
@@ -143,7 +139,8 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Gene_BlueFoot/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input"
+               component="Gene_BlueFoot/js/form/element/margins_and_padding">
             <settings>
                 <label>Margins and Padding</label>
             </settings>

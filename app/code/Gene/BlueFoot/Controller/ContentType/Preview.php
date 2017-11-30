@@ -56,23 +56,37 @@ class Preview extends \Magento\Framework\App\Action\Action
             $params = $this->getRequest()->getParams();
 
             $contentTypes = $this->config->getContentTypes();
-            $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
-                ? $contentTypes[$params['role']]['backend_block'] : false;
-            $backendBlockTemplate = isset($contentTypes[$params['role']]['backend_template'])
-                ? $contentTypes[$params['role']]['backend_template'] : false;
-            if ($backendBlockTemplate) {
-                $params['template'] = $backendBlockTemplate;
-            }
-            if ($backendBlockClassName) {
-                $backendBlockInstance = $this->blockFactory->createBlock(
-                    $backendBlockClassName,
-                    ['data' => $params]
-                );
-                $result = [
-                    'content' => $backendBlockInstance->toHtml()
-                ];
+            $backendBlockLayout = isset($contentTypes[$params['role']]['layout_handle'])
+                ? $contentTypes[$params['role']]['layout_handle'] : false;
+            if ($backendBlockLayout) {
+                $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
+                    ? $contentTypes[$params['role']]['backend_block'] : false;
+                $backendBlockTemplate = isset($contentTypes[$params['role']]['backend_template'])
+                    ? $contentTypes[$params['role']]['backend_template'] : false;
+                if ($backendBlockTemplate) {
+                    $params['template'] = $backendBlockTemplate;
+                }
+                if ($backendBlockClassName) {
+                    $backendBlockInstance = $this->blockFactory->createBlock(
+                        $backendBlockClassName,
+                        ['data' => $params]
+                    );
+                    $result = [
+                        'content' => $backendBlockInstance->toHtml()
+                    ];
+
+                } else {
+                    $result = ['content' => ''];
+                }
             } else {
-                $result = ['content' => ''];
+                $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+                $pageResult->addHandle(['bluefoot_product_list']);
+                $result = [
+                    'content' => $pageResult->getLayout()
+                        ->getBlock('product.list')
+                        ->addData($params)
+                        ->toHtml()
+                ];
             }
         } catch (\Exception $e) {
             $result = [

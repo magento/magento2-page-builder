@@ -7,7 +7,7 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function AttributeFilter() {
-      this.allowAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position'];
+      this.allowAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category', 'product_count', 'hide_out_of_stock'];
     }
 
     var _proto = AttributeFilter.prototype;

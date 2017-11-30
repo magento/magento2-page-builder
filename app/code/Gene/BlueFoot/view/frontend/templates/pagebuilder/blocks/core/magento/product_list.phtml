@@ -9,11 +9,13 @@
  * @var $block \Magento\Catalog\Block\Product\ListProduct
  */
 ?>
+
 <?php
-$_entity = $block->getEntity();
+$uniqueIdentifier = uniqid();
 $_productCollection = $block->getProductCollection();
-$_helper = $block->helper('Magento\Catalog\Helper\Output');
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
+
 <?php if ($_productCollection !== false && $_productCollection->count()): ?>
     <?php
     $viewMode = 'grid';
@@ -25,7 +27,7 @@ $_helper = $block->helper('Magento\Catalog\Helper\Output');
      */
     $pos = $block->getPositioned();
     ?>
-    <div id="bluefoot-product-list-<?php echo $block->getEntity()->getId(); ?>"
+    <div id="bluefoot-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>"
          class="products bluefoot-product-list <?php /* @escapeNotVerified */
          echo $viewMode; ?> products-<?php /* @escapeNotVerified */
          echo $viewMode; ?> <?php //echo $block->getCssAttributes(); ?>"<?php //echo $block->getStyleAttributes(); ?>>
@@ -104,7 +106,7 @@ $_helper = $block->helper('Magento\Catalog\Helper\Output');
                                 </div>
                                 <div data-role="add-to-links"
                                      class="actions-secondary"<?php echo strpos($pos, $viewMode . '-secondary') ? $position : ''; ?>>
-                                    <?php if ($block->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
                                         <a href="#"
                                            class="action towishlist"
                                            title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
@@ -118,7 +120,7 @@ $_helper = $block->helper('Magento\Catalog\Helper\Output');
                                         </a>
                                     <?php endif; ?>
                                     <?php
-                                    $compareHelper = $block->helper('Magento\Catalog\Helper\Product\Compare');
+                                    $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
                                     ?>
                                     <a href="#"
                                        class="action tocompare"
@@ -150,7 +152,7 @@ $_helper = $block->helper('Magento\Catalog\Helper\Output');
             <?php endforeach; ?>
         </ol>
     </div>
-    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+    <?php if (!$block->getIsPreview() && !$block->isRedirectToCartEnabled()) : ?>
         <script type="text/x-magento-init">
         {
             "[data-role=tocart-form], .form.map.checkout": {
@@ -161,11 +163,13 @@ $_helper = $block->helper('Magento\Catalog\Helper\Output');
         </script>
     <?php endif; ?>
 
+    <?php if (!$block->getIsPreview()) : ?>
     <script type="text/javascript">
         require(['jquery', 'bluefoot/normalise-heights'], function (jQuery) {
             jQuery(function () {
-                jQuery('#bluefoot-product-list-<?php echo $block->getEntity()->getId(); ?>').bluefootNormaliseHeights();
+                jQuery('#bluefoot-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>').bluefootNormaliseHeights();
             });
         });
     </script>
+    <?php endif; ?>
 <?php endif; ?>
