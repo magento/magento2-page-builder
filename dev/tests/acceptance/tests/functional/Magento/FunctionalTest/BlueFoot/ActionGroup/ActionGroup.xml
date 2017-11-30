@@ -183,6 +183,17 @@
         <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="fillMapPositionFields">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
+        <waitForElement time="2" selector="{{MapInAdmin.mapPosition}}" mergeKey="waitForMapPositionElement" />
+        <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" mergeKey="setPositionPropertyVisible"/>
+        <fillField selector="{{MapInAdmin.mapPosition}}" userInput="{{property.lat}},{{property.lng}},{{property.zoom}}" mergeKey="fillPositionField"/>
+    </actionGroup>
     <actionGroup name="selectSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>
