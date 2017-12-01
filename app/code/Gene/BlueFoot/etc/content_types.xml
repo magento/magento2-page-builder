@@ -161,11 +161,32 @@
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="slider" translate="label" sortOrder="30">
-            <label>Slider</label>
+        <type name="slide" translate="label" sortOrder="30">
+            <label>Slide</label>
             <icon>icon-bluefoot-slider</icon>
-            <form>slider_form</form>
+            <component>Gene_BlueFoot/js/component/block/slide</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/slide</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/slide.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/slide.html</render_template>
+            <form>slide_form</form>
             <group>media</group>
+            <allowed_parents>advanced-slider</allowed_parents>
+            <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
+                <reader name="slide" component="Gene_BlueFoot/js/component/format/read/slide"/>
+            </readers>
+            <is_visible>false</is_visible>
+        </type>
+        <type name="advanced-slider" translate="label" sortOrder="30">
+            <label>Advanced Slider</label>
+            <icon>icon-bluefoot-slider</icon>
+            <component>Gene_BlueFoot/js/component/block/advanced-slider</component>
+            <preview_component>Gene_BlueFoot/js/component/block/preview/advanced-slider</preview_component>
+            <preview_template>Gene_BlueFoot/component/block/preview/advanced-slider.html</preview_template>
+            <render_template>Gene_BlueFoot/component/block/render/advanced-slider.html</render_template>
+            <form>advanced_slider_form</form>
+            <group>media</group>
+            <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
@@ -226,6 +247,7 @@
             <backend_template>Gene_BlueFoot::pagebuilder/blocks/core/special/newsletter.phtml</backend_template>
             <allowed_parents>row,column</allowed_parents>
             <readers>
+                <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
                 <reader name="default" component="Gene_BlueFoot/js/component/format/read/default"/>
             </readers>
         </type>
