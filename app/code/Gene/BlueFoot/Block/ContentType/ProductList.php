@@ -23,7 +23,6 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
         \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
         \Magento\Framework\Url\Helper\Data $urlHelper,
-        \Magento\CatalogInventory\Helper\Stock $stock,
         array $data = []
     ) {
         parent::__construct(
