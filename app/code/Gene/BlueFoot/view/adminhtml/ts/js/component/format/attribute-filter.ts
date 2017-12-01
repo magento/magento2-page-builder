@@ -20,7 +20,7 @@ export default class AttributeFilter {
         'position',
         'category',
         'product_count',
-        'hide_out_of_stock'
+        'show_out_of_stock'
     ];
 
     /**

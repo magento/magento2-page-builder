@@ -30,7 +30,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
     <div id="bluefoot-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>"
          class="products bluefoot-product-list <?php /* @escapeNotVerified */
          echo $viewMode; ?> products-<?php /* @escapeNotVerified */
-         echo $viewMode; ?> <?php //echo $block->getCssAttributes(); ?>"<?php //echo $block->getStyleAttributes(); ?>>
+         echo $viewMode; ?> <?php echo $block->escapeHtmlAttr($block->getClass()); ?>" style="<?php echo $block->escapeHtmlAttr($block->getStyle()); ?>">
         <?php $iterator = 1; ?>
         <ol class="products list items product-items">
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>

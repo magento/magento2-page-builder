@@ -19,7 +19,7 @@ define([], function () {
         sku: 'data-sku',
         category: 'category',
         product_count: 'data-product-count',
-        hide_out_of_stock: 'data-hide-out-of-stock'
+        show_out_of_stock: 'data-show-out-of-stock'
       };
     }
 
