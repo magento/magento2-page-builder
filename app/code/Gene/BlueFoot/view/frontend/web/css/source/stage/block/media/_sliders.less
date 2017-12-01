@@ -62,17 +62,56 @@
 @borderWidth:2px;
 @entityBorderWidth:1px;
 
+@import './slick';
+@import './slick-theme';
 
 .pagebuilder-advanced-slider {
+    .slick-arrow {
+        box-shadow: none;
+
+        &.slick-prev {
+            transform: translate(-150%, -10px);
+            &:before {
+                content: "<";
+                font-weight: 300;
+            }
+        }
+        &.slick-next {
+            transform: translate(150%, -10px);
+            &:before {
+                content: ">";
+                font-weight: 300;
+            }
+        }
+        &:hover {
+            border: 0;
+        }
+        &:active {
+            box-shadow: none;
+        }
+    }
     .slick-slider {
         .slick-slide {
             min-height: 50px;
         }
     }
+    .slick-dots {
+        li {
+            button {
+                box-shadow: none;
+                &:before {
+                    font-size: 22px;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                &:hover {
+                    border: none;
+                }
+            }
+        }
+    }
 }
-
-@import './slick';
-@import './slick-theme';
 
 a.button {
     -webkit-appearance: button;
@@ -92,11 +131,14 @@ a.button {
 
     .pagebuilder-content {
         margin: 80px 70px;
-        padding: 14px 16px;
+        padding: 24px 20px;
+        width: 30%;
         color: white;
+        float: left;
 
         h3 {
-            margin-bottom: 10px;
+            margin-top: 6px;
+            margin-bottom: 6px;
             color: white;
         }
 
@@ -108,8 +150,8 @@ a.button {
             margin-top: 14px;
         }
 
-        &.overlay-background {
-            background: rgba(0,0,0,0.3);
+        &.has-overlay-background {
+            background-color: rgba(0,0,0,0.3);
         }
     }
 }
