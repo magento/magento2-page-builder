@@ -12,6 +12,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="PageBuilder Block Configuration"/>
+            <testCaseId value="MAGETWO-84276"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -39,7 +40,7 @@
             </actionGroup>
             <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="waitForElementVisible" />
             <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragHeaderIntoStage">
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
@@ -53,9 +54,10 @@
             <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <waitForElementVisible time="10" selector="{{blockOnBackend.hr}}" mergeKey="waitForHrElementVisible" />
-            <seeElement selector="{{blockOnBackend.hr}}" mergeKey="seeBlockContentFrontend"/>
+            <waitForElementVisible time="10" selector="{{BlockOnBackend.hr}}" mergeKey="waitForHrElementVisible" />
+            <seeElement selector="{{BlockOnBackend.hr}}" mergeKey="seeBlockContentBackend"/>
             <amOnPage url="block{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{BlockOnFrontend.hr}}" mergeKey="seeBlockContentFrontend"/>
         </test>
     </cest>
 </config>
