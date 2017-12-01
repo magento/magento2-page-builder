@@ -8,10 +8,10 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminPageBuilderImageCest">
+    <cest name="AdminPageBuilderDriverCest">
         <annotations>
             <features value="PageBuilder CMS"/>
-            <stories value="PageBuilder Image Configuration"/>
+            <stories value="PageBuilder Driver Configuration"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -26,23 +26,23 @@
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddImage">
+        <test name="CanAddDriver">
             <annotations>
-                <title value="Add an image content block into stage"/>
-                <description value="A user should be able to add an image into a row."/>
+                <title value="Add an driver content block into stage"/>
+                <description value="A user should be able to add an driver into a row."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84259"/>
+                <testCaseId value="MAGETWO-84673"/>
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
             <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragImageIntoStage">
-                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragDriverIntoStage">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
             <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachImageFile">
                 <argument name="property" value="PageBuilderImagePropertyJpg"/>
@@ -50,32 +50,34 @@
             <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachMobileImageFile">
                 <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
             </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDriverLinkText">
+                <argument name="property" value="PageBuilderLinkTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDriverLinkUrl">
+                <argument name="property" value="PageBuilderLinkUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="clickSlideOutPanelFieldGeneral" mergeKey="openLinkInNewWindow">
+                <argument name="property" value="PageBuilderNewWindowProperty"/>
+            </actionGroup>
             <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterAltTextProperty">
                 <argument name="property" value="PageBuilderImageAltTextProperty"/>
             </actionGroup>
             <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterTitleTagProperty">
                 <argument name="property" value="PageBuilderImageTitleTagProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterHasLightbox">
-                <argument name="property" value="PageBuilderImageLightboxProperty"/>
-            </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterShowCaption">
-                <argument name="property" value="PageBuilderImageShowCaptionProperty"/>
-            </actionGroup>
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <amOnPage url="image{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ImageOnFrontend.imageDisplay}}" mergeKey="seeMainImageDisplayed"/>
+            <amOnPage url="driver{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{DriverOnFrontend.imageDisplay}}" mergeKey="seeMainImageDisplayed"/>
             <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" mergeKey="seeMainImageSource"/>
-            <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" mergeKey="seeImageLightboxLink"/>
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" mergeKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" mergeKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" mergeKey="seeMobileImageInDom"/>
-            <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" mergeKey="seeTitleTagDisplayedAsCaption"/>
-            <click selector="{{ImageOnFrontend.imageHasLightbox}}" mergeKey="clickMainImage"/>
-            <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" mergeKey="waitForLightbox" />
-            <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" mergeKey="seeLightBoxDisplayed"/>
+
+            <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{DriverOnFrontend.linkText}}" mergeKey="seeLinkTextDisplayed"/>
+            <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" mergeKey="seeLinkUrlInDom"/>
+            <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" mergeKey="verifyLinkOpensNewWindow"/>
         </test>
     </cest>
 </config>
