@@ -54,7 +54,6 @@ class Preview extends \Magento\Framework\App\Action\Action
     {
         try {
             $params = $this->getRequest()->getParams();
-
             $contentTypes = $this->config->getContentTypes();
             $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
                 ? $contentTypes[$params['role']]['backend_block'] : false;
@@ -68,6 +67,8 @@ class Preview extends \Magento\Framework\App\Action\Action
                     $backendBlockClassName,
                     ['data' => $params]
                 );
+                $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+                $pageResult->getLayout()->addBlock($backendBlockInstance);
                 $result = [
                     'content' => $backendBlockInstance->toHtml()
                 ];

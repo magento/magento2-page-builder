@@ -17,7 +17,10 @@ export default class AttributeFilter {
         'identifier',
         'view_mode',
         'sku',
-        'position'
+        'position',
+        'category',
+        'product_count',
+        'show_out_of_stock'
     ];
 
     /**

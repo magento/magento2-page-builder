@@ -15,7 +15,10 @@ export default class AttributeMapper {
         placeholder: 'data-placeholder',
         title: 'data-title',
         view_mode: 'data-view-mode',
-        sku: 'data-sku'
+        sku: 'data-sku',
+        category: 'category',
+        product_count: 'data-product-count',
+        show_out_of_stock: 'data-show-out-of-stock'
     };
 
     /**

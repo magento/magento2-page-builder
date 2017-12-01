@@ -23,20 +23,28 @@ class Filter
     private $logger;
 
     /**
+     * @var \Magento\Framework\View\Layout
+     */
+    private $layout;
+
+    /**
      * Constructor
      *
-     * @param Config $config
+     * @param \Gene\BlueFoot\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\View\Layout $layout
      */
     public function __construct(
         \Gene\BlueFoot\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory,
-        \Psr\Log\LoggerInterface $logger
+        \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\View\Layout $layout
     ) {
         $this->config = $config;
         $this->blockFactory = $blockFactory;
         $this->logger = $logger;
+        $this->layout = $layout;
     }
 
     /**
@@ -87,14 +95,14 @@ class Filter
         $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
         $replacements = [];
         foreach ($nodes as $node) {
-            $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
-            $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
-                ? $contentTypes[$node->getAttribute('data-role')]['backend_template'] : false;
             $data = [];
             foreach ($node->attributes as $attribute) {
                 $attributeName = str_replace(['data-', '-'], ['', '_'], $attribute->nodeName);
                 $data[$attributeName] = $attribute->nodeValue;
             }
+            $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
+            $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
+                ? $contentTypes[$node->getAttribute('data-role')]['backend_template'] : false;
             if ($backendBlockTemplate) {
                 $data['template'] = $backendBlockTemplate;
             }
@@ -102,6 +110,7 @@ class Filter
                 $backendBlockClassName,
                 ['data' => $data]
             );
+            $this->layout->addBlock($backendBlockInstance);
             $uniqueIdentifier = 'block-' . uniqid();
             $replacements[$uniqueIdentifier] = $backendBlockInstance->toHtml();
             $node->parentNode->replaceChild($domDocument->createTextNode($uniqueIdentifier), $node);
