@@ -65,7 +65,12 @@
 @import './slick';
 @import './slick-theme';
 
+div[data-role='advanced-slider'],
 .pagebuilder-advanced-slider {
+    display:none;
+    &.ready{
+        display:block;
+    }
     .slick-arrow {
         box-shadow: none;
 
@@ -128,13 +133,13 @@ a.button {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    padding: 80px 0;
 
     .pagebuilder-content {
-        margin: 80px 70px;
+        display:inline-block;
         padding: 24px 20px;
         width: 30%;
         color: white;
-        float: left;
 
         h3 {
             margin-top: 6px;

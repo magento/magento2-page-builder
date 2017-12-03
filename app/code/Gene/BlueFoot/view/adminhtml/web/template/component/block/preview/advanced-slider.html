@@ -6,11 +6,13 @@
 -->
 
 <div class="bluefoot-structure bluefoot-row pagebuilder-advanced-slider">
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <!-- ko template: previewChildTemplate --><!-- /ko -->
+    <div data-bind="style: {textAlign: preview.data.text_align}">
+        <!-- ko template: previewChildTemplate --><!-- /ko -->
+    </div>
 
-    <div class="bluefoot-empty bluefoot-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('drag slides here')">
+    <div class="bluefoot-empty bluefoot-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('Click \'Add Slide\'')">
     </div>
 
     <button data-bind="click: addSlide">Add Slide</button>
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

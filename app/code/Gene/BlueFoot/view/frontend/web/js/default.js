@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, hljs) {
+requirejs(['jquery', 'fancybox', 'highlight', 'underscore', 'slick'], function ($, fancybox, hljs, _) {
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 
@@ -14,14 +14,34 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, h
         });
 
         $("div[data-role='advanced-slider']").each(function (index, element) {
-            $(element).slick({
-                autoplay: $(element).data('autoplay') === 1,
-                autoplaySpeed: $(element).data('autoplay-speed') || 0,
-                fade: $(element).data('fade') === 1,
-                infinite: $(element).data('is-infinite') === 1,
-                arrows: $(element).data('show-arrows') === 1,
-                dots: $(element).data('show-dots') === 1
-            });
+
+            /**
+             * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+             *
+             * @type {(() => any) & _.Cancelable}
+             */
+            _.debounce(() => {
+                _.delay(() => {
+                    if ($(element) && $(element).length > 0) {
+                        try {
+                            $(element).slick('unslick');
+                        } catch (e) {
+                            // This may error
+                        }
+                        console.log('init slick');
+                        $(element).addClass('ready');
+
+                        $(element).slick({
+                            autoplay: $(element).data('autoplay') === 1,
+                            autoplaySpeed: $(element).data('autoplay-speed') || 0,
+                            fade: $(element).data('fade') === 1,
+                            infinite: $(element).data('is-infinite') === 1,
+                            arrows: $(element).data('show-arrows') === 1,
+                            dots: $(element).data('show-dots') === 1
+                        });
+                    }
+                }, 100);
+            }, 20)();
         });
     });
 });
