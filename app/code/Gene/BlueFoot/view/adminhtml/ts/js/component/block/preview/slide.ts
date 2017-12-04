@@ -26,5 +26,4 @@ export default class Slide extends PreviewBlock {
             return {};
         });
     }
-
 }

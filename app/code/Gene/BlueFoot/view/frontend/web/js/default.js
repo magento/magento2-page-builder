@@ -28,7 +28,6 @@ requirejs(['jquery', 'fancybox', 'highlight', 'underscore', 'slick'], function (
                         } catch (e) {
                             // This may error
                         }
-                        console.log('init slick');
                         $(element).addClass('ready');
 
                         $(element).slick({
