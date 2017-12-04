@@ -18,17 +18,13 @@ requirejs(['jquery', 'fancybox', 'highlight', 'underscore', 'slick'], function (
             /**
              * Assign a debounce and delay to the init of slick to ensure the DOM has updated
              *
-             * @type {(() => any) & _.Cancelable}
              */
-            _.debounce(() => {
-                _.delay(() => {
+            _.debounce(function(){
+                _.delay(function(){
                     if ($(element) && $(element).length > 0) {
-                        try {
+                        if($(element).hasClass('slick-initialized')){
                             $(element).slick('unslick');
-                        } catch (e) {
-                            // This may error
                         }
-                        $(element).addClass('ready');
 
                         $(element).slick({
                             autoplay: $(element).data('autoplay') === 1,
