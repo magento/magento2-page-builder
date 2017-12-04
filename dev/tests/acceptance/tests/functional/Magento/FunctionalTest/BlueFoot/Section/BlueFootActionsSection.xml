@@ -57,6 +57,8 @@
         <element name="panelFieldLabel" type="text" selector=".bluefoot_modal_form_bluefoot_modal_form_modal [data-index='{{arg1}}'] [data-index='{{arg2}}'] label.admin__field-label" parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector=".bluefoot_modal_form_bluefoot_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
+        <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
@@ -147,5 +149,50 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+    </section>
+    <section name="AccordionEditSection">
+        <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
+        <element name="itemTitle" type="input" selector="//*[@name='items[{{arg1}}][title]']" parameterized="true"/>
+        <element name="itemContent" type="input" selector="//*[@name='items[{{arg1}}][content]']" parameterized="true"/>
+    </section>
+    <section name="AccordionFrontendSection">
+        <element name="itemTitleElement" type="button" selector="//div[@data-role='accordion']/div[@data-collapsible='true']/div[@data-role='trigger]/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="itemContentElement" type="button" selector="//div[@data-role='accordion']/div[@class='accordion-content']/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
+    </section>
+    <section name="ButtonsEditSection">
+        <element name="addNewButton" type="button" selector="//button/span[contains(text(), 'Add New Button')]"/>
+        <element name="buttonText" type="input" selector="//*[@name='buttons[{{arg1}}][text]']" parameterized="true"/>
+        <element name="buttonLink" type="input" selector="//*[@name='buttons[{{arg1}}][link]']" parameterized="true"/>
+    </section>
+    <section name="ButtonsFrontendSection">
+        <element name="buttonElement" type="button" selector="//div[@data-role='button']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
+    </section>
+    <section name="DividerOnFrontend">
+        <element name="dividerColor" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-color: rgb(255, 87, 51)')]"/>
+        <element name="dividerThickness" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-width: 10px')]"/>
+        <element name="dividerWidth" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'width: 50%')]"/>
+    </section>
+    <section name="ImageOnFrontend">
+        <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
+        <element name="imageSource" type="button" selector="img.bluefoot-mobile-hidden[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="imageHasLightbox" type="button" selector="[data-role='image'] a.bluefoot-lightbox"/>
+        <element name="imageHasAltText" type="button" selector="img.bluefoot-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
+        <element name="imageHasTitleTag" type="button" selector="img.bluefoot-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.bluefoot-mobile-only[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="imageHasCaption" type="button" selector="figcaption"/>
+        <element name="fancyboxOpen" type="button" selector=".fancybox-overlay"/>
+        <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+    </section>
+    <section name="MapInAdmin">
+        <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>
+        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//button[@title='Zoom in']"/>
+        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//button[@title='Zoom out']"/>
+    </section>
+    <section name="MapOnFrontend">
+        <element name="map1Lat" type="button" selector="//*[@data-role='map'][1][contains(@src, '30.401808299999995')]"/>
+        <element name="map1Lng" type="button" selector="//*[@data-role='map'][1][contains(@src, '-97.72355449999998')]"/>
+        <element name="map1Zoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom=6')]"/>
+        <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
+        <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
     </section>
 </config>

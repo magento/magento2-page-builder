@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderBlockCest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="PageBuilder Block Configuration"/>
+            <testCaseId value="MAGETWO-84276"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="addCmsBlock" mergeKey="addCmsBlock"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddBlock">
+            <annotations>
+                <title value="Can add block"/>
+                <description value="The user should be able to add block content types and they should be visible on frontend"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterIdentifierProperty">
+                <argument name="property" value="BlueFootBlockIdentifierProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <waitForElementVisible time="10" selector="{{BlockOnBackend.hr}}" mergeKey="waitForHrElementVisible" />
+            <seeElement selector="{{BlockOnBackend.hr}}" mergeKey="seeBlockContentBackend"/>
+            <amOnPage url="block{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{BlockOnFrontend.hr}}" mergeKey="seeBlockContentFrontend"/>
+        </test>
+    </cest>
+</config>

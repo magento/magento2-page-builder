@@ -29,7 +29,7 @@ define([
 
             // Get the start value
             if (!this.value()) {
-                this.value('50.821392, -0.139439, 8');
+                this.value('50.821392,-0.139439,8');
             }
 
             // Convert the value into an array
@@ -74,8 +74,7 @@ define([
          * Event for drag end to update value
          */
         onDragEnd: function () {
-            var curLatLng = this.marker.getPosition();
-            this.value(curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom());
+            this.value(this.exportValue());
         },
 
         /**
@@ -84,17 +83,32 @@ define([
          * @param event
          */
         onDoubleClick: function (event) {
-            var curLatLng = event.latLng;
-            this.marker.setPosition(curLatLng);
-            this.value(curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom());
+            this.value(this.exportValue(event.latLng));
         },
 
         /**
          * Event for on zoom change to update zoom value
          */
         onZoomChange: function () {
-            var curLatLng = this.marker.getPosition();
-            this.value(curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom());
+            this.value(this.exportValue());
+        },
+        onUpdate: function () {
+            this._super();
+
+            if (!this.map || this.value() === ''|| this.value() === this.exportValue()) {
+                return;
+            }
+
+            // Convert the value into an arrayv
+            var value  = this.value().split(','),
+                latLng = new google.maps.LatLng(value[0], value[1]);
+            this.marker.setPosition(latLng);
+            this.map.setZoom(parseInt(value[2]));
+            this.map.setCenter(latLng);
+        },
+        exportValue: function (latLng) {
+            var curLatLng = latLng ? latLng : this.marker.getPosition();
+            return curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom();
         }
     });
 });

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderDriverCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Driver Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddDriver">
+            <annotations>
+                <title value="Add an driver content block into stage"/>
+                <description value="A user should be able to add an driver into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84673"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragDriverIntoStage">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachImageFile">
+                <argument name="property" value="PageBuilderImagePropertyJpg"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachMobileImageFile">
+                <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDriverLinkText">
+                <argument name="property" value="PageBuilderLinkTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDriverLinkUrl">
+                <argument name="property" value="PageBuilderLinkUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="clickSlideOutPanelFieldGeneral" mergeKey="openLinkInNewWindow">
+                <argument name="property" value="PageBuilderNewWindowProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterAltTextProperty">
+                <argument name="property" value="PageBuilderImageAltTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterTitleTagProperty">
+                <argument name="property" value="PageBuilderImageTitleTagProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="driver{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{DriverOnFrontend.imageDisplay}}" mergeKey="seeMainImageDisplayed"/>
+            <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" mergeKey="seeMainImageSource"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" mergeKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" mergeKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" mergeKey="seeMobileImageInDom"/>
+
+            <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{DriverOnFrontend.linkText}}" mergeKey="seeLinkTextDisplayed"/>
+            <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" mergeKey="seeLinkUrlInDom"/>
+            <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" mergeKey="verifyLinkOpensNewWindow"/>
+        </test>
+    </cest>
+</config>
