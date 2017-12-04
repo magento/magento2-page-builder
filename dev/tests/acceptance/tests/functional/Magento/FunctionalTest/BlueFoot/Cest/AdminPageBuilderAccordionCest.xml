@@ -19,7 +19,6 @@
         </annotations>
         <before>
             <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="addCmsBlock" mergeKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
         </before>
@@ -38,6 +37,7 @@
             <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
+            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
             <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
@@ -46,7 +46,7 @@
             </actionGroup>
             <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
             <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" mergeKey="waitForAddItemsElementVisible"/>
-            <click selector="{{AccordionEditSection.addNewItem}" mergeKey="clickOnAddItemsElement"/>
+            <click selector="{{AccordionEditSection.addNewItem}}" mergeKey="clickOnAddItemsElement"/>
             <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" mergeKey="waitForItemRow0TextVisible"/>
             <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" mergeKey="fillItemRow0TitleField"/>
             <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" mergeKey="fillItemRow0ContentField"/>
