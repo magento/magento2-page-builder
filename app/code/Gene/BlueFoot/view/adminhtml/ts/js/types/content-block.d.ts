@@ -6,7 +6,7 @@
 interface ContentBlockConfig {
     label: string;
     name: string;
-    visible: boolean;
+    is_visible: boolean;
     icon: string;
     allowed_parents: Array<any>;
 }

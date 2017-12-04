@@ -55,4 +55,23 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
         }
         return $toolbar;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toHtml()
+    {
+        if ($this->getCategoryId()) {
+            try {
+                $category = $this->categoryRepository->get($this->getCategoryId());
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                $category = null;
+            }
+
+            if (!$category) {
+                return '';
+            }
+        }
+        return parent::toHtml();
+    }
 }

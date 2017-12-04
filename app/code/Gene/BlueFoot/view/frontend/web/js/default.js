@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-requirejs(['jquery', 'fancybox', 'highlight'], function ($, fancybox, hljs) {
+requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, hljs) {
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 
@@ -11,6 +11,17 @@ requirejs(['jquery', 'fancybox', 'highlight'], function ($, fancybox, hljs) {
             $(block).html(
                 hljs.highlight('html', $(block).html()).value
             );
+        });
+
+        $("div[data-role='advanced-slider']").each(function (index, element) {
+            $(element).slick({
+                autoplay: $(element).data('autoplay') === 1,
+                autoplaySpeed: $(element).data('autoplay-speed') || 0,
+                fade: $(element).data('fade') === 1,
+                infinite: $(element).data('is-infinite') === 1,
+                arrows: $(element).data('show-arrows') === 1,
+                dots: $(element).data('show-dots') === 1
+            });
         });
     });
 });
