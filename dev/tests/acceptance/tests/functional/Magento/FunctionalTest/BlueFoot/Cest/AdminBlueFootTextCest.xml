@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminBlueFootTextCest">
+        <annotations>
+            <features value="BlueFoot CMS"/>
+            <stories value="BlueFoot Text Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddText">
+            <annotations>
+                <title value="Add text onto stage"/>
+                <description value="A user should be able to add text into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84263"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragButtonsOntoStage">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear mergeKey="waitForEditPanelSpinner"/>
+            <waitForElementVisible selector="#text_form_content_magentovariable" mergeKey="waitForVariableButton"/>
+            <click selector="#text_form_content_magentovariable" mergeKey="clickInsertVariableButton"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForVariablesSpinner"/>
+            <click selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" mergeKey="clickBaseUnsecureUrl"/>
+            <waitForElementNotVisible selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" mergeKey="waitForVariableModalToClose"/>
+            <click selector="#text_form_content_magentowidget" mergeKey="clickInsertWidgetButton"/>
+            <waitForElementVisible selector="#select_widget_type" mergeKey="waitForWidgetSelectVisible"/>
+            <selectOption selector="#select_widget_type" userInput="Magento\Cms\Block\Widget\Page\Link" mergeKey="selectCMSPageLinkWidget"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForCMSPageLinkWidgetForm"/>
+            <click selector="//button/span[contains(text(), 'Select Page...')]" mergeKey="clickSelectPageButton"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForSelectPageModal"/>
+            <click selector="//td[contains(@class, 'col-url')][contains(text(), 'home')]" mergeKey="clickHomePageRow"/>
+            <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), 'home')]" mergeKey="waitForPageSelectionModalToClose"/>
+            <click selector="#insert_button" mergeKey="clickInsertWidget"/>
+            <waitForElementNotVisible selector="#insert_button" mergeKey="waitForInsertWidgetModalToClose"/>
+            <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" mergeKey="addTextToWYSIWYG"/>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <see selector="div.bluefoot-html" userInput="{{config path=&quot;web/unsecure/base_url&quot;}}" mergeKey="seeVariableCodeInStage"/>
+            <see selector="div.bluefoot-html"
+                 userInput="{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=&quot;2&quot;}}"
+                 mergeKey="seeWidgetCodeInStage"/>
+            <see selector="div.bluefoot-html" userInput="This is some text" mergeKey="seeTypedTextInStage"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="{{BlueFootTextContentBlock.name}}{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <see userInput="{{_ENV.MAGENTO_BASE_URL}}" mergeKey="seeBaseUnsecureUrlOnStorefront"/>
+            <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}home']" mergeKey="seeHomePageWidgetOnStorefront"/>
+            <see userInput="This is some text" mergeKey="seeTypedTextOnStorefront"/>
+        </test>
+    </cest>
+</config>

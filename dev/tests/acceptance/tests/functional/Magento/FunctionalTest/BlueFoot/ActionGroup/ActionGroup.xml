@@ -44,10 +44,6 @@
         <see userInput="Search" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupSearch"/>
     </actionGroup>
     <actionGroup name="enableBlueFoot">
-        <amOnPage url="{{AdminLoginPage}}" mergeKey="navigateToAdmin"/>
-        <fillField selector="{{AdminLoginFormSection.username}}" userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" mergeKey="fillUsername"/>
-        <fillField selector="{{AdminLoginFormSection.password}}" userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" mergeKey="fillPassword"/>
-        <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
         <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
         <waitForPageLoad mergeKey="waitForPageLoad1"/>
         <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
@@ -57,7 +53,6 @@
     </actionGroup>
 
     <actionGroup name="navigateToAPageWithBlueFoot">
-        <loginAsAdmin mergeKey="loginAsAdmin"/>
         <waitForPageLoad mergeKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
         <waitForPageLoad mergeKey="waitForPageLoad"/>
@@ -183,6 +178,17 @@
         <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="fillMapPositionFields">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
+        <waitForElement time="2" selector="{{MapInAdmin.mapPosition}}" mergeKey="waitForMapPositionElement" />
+        <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" mergeKey="setPositionPropertyVisible"/>
+        <fillField selector="{{MapInAdmin.mapPosition}}" userInput="{{property.lat}},{{property.lng}},{{property.zoom}}" mergeKey="fillPositionField"/>
+    </actionGroup>
     <actionGroup name="selectSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -191,6 +197,24 @@
         <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
         <selectOption selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="attachFileSlideOutPropertyGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}' mergeKey="attachImageFile"/>
+        <waitForElementVisible time="10" selector="{{BlueFootActionsSection.panelFieldUploadSummary(property.value)}}" mergeKey="waitForImageUploadSummary" />
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelFieldGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <!--<click selector="{{BlueFootActionsSection.panelFieldControlSwitch(property.section, property.fieldName)}}" mergeKey="clickProperty"/>-->
+        <click selector="{{BlueFootActionsSection.panelFieldControlSwitch(property.fieldName)}}" mergeKey="clickProperty"/>
+        <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+        <waitForElementVisible time="2" selector="{{BlueFootActionsSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootActionsSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelField">
         <arguments>
@@ -271,7 +295,7 @@
         <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" mergeKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="waitForCmsPageSaveButton" />
-        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>

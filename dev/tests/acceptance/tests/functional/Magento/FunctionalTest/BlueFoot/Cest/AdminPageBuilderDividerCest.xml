@@ -8,10 +8,10 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminBlueFootHeaderCest">
+    <cest name="AdminPageBuilderDividerCest">
         <annotations>
-            <features value="BlueFoot CMS"/>
-            <stories value="Bluefoot Header Configuration"/>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Divider Configuration"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -26,36 +26,40 @@
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddHeader">
+        <test name="CanAddDivider">
             <annotations>
-                <title value="Add a header into stage"/>
-                <description value="A user should be able to add a header into a row."/>
+                <title value="Add a divider into stage"/>
+                <description value="A user should be able to add a divider into a row."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84258"/>
+                <testCaseId value="MAGETWO-84672"/>
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             </actionGroup>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragHeaderIntoStage">
-                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragDividerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterHeadingTypePropertyH5">
-                <argument name="property" value="BlueFootHeadingTypeProperty_H5"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDividerLineColorProperty">
+                <argument name="property" value="PageBuilderDividerLineColorProperty"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterHeadingTitleProperty">
-                <argument name="property" value="BlueFootHeadingTitleProperty"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDividerLineThicknessProperty">
+                <argument name="property" value="PageBuilderDividerLineThicknessProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterDividerLineWidthProperty">
+                <argument name="property" value="PageBuilderDividerLineWidthProperty"/>
             </actionGroup>
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="header{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{HeaderOnFrontend.header1Display('h5')}}" mergeKey="seeH5HeaderStyleApplied"/>
-            <see userInput="{{BlueFootHeadingTitleProperty.value}}" selector="{{HeaderOnFrontend.header1Display('h5')}}" mergeKey="assertHeadingTitleShowsFrontend"/>
+            <amOnPage url="divider{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{DividerOnFrontend.dividerColor}}" mergeKey="seeDividerColorStyleApplied"/>
+            <seeElement selector="{{DividerOnFrontend.dividerThickness}}" mergeKey="seeDividerThicknessStyleApplied"/>
+            <seeElement selector="{{DividerOnFrontend.dividerWidth}}" mergeKey="seeDividerWidthStyleApplied"/>
         </test>
     </cest>
 </config>
