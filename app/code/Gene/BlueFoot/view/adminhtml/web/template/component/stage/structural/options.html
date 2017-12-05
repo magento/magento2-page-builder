@@ -1,0 +1,14 @@
+<div class="bluefoot-options">
+    <div class="bluefoot-options-wrapper">
+        <ul class="bluefoot-options-links" data-bind="foreach: options">
+            <li class="bluefoot-options-link">
+                <!-- ko if: template -->
+                    <!-- ko template: template --><!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: template -->
+                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action.call($parent, $data); }, css: classes"></a>
+                <!-- /ko -->
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Accordion Item Template
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $block->getEntity();
+
+if ($_entity->getOpenOnLoad()) :
+    $block->setCssClasses('active');
+endif;
+?>
+<div
+    class="bluefoot-accordion-item bluefoot-accordion-outer bluefoot-full-width <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+    <h4 class="bluefoot-accordion-link bluefoot-full-width"><?php echo $_entity->getTitle(); ?></h4>
+
+    <div
+        class="bluefoot-accordion-inner bluefoot-full-width"<?php echo (!$_entity->getOpenOnLoad()) ? ' style="display:none;"' : ''; ?>>
+        <?php echo $_entity->getTextarea(); ?>
+    </div>
+</div>

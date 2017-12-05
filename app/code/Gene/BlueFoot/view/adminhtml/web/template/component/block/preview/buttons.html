@@ -1,0 +1,18 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-no-blur bluefoot-live-edit bluefoot-buttons">
+    <!-- ko if: preview.data.buttons().length == 0 -->
+        <i class="icon-bluefoot-button"></i> <span data-bind="text: $t('Buttons');"></span>
+    <!-- /ko -->
+    <!-- ko if: preview.data.buttons().length > 0 -->
+        <!-- ko foreach: preview.data.buttons() -->
+            <button type="button" data-bind="text: text" class="button"></button>
+        <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>

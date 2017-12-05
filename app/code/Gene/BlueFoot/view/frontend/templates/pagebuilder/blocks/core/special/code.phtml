@@ -1,0 +1,27 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Code Template
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Block\AbstractBlock
+ *
+ */
+$_entity = $block->getEntity();
+?>
+<div id="bluefoot-code-<?php echo $_entity->getId(); ?>"
+     class="bluefoot-code <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+    <pre><code class="lineNumbers"><?php echo $_entity->getHtml(); ?></code></pre>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'highlight'], function (jQuery) {
+        jQuery(function () {
+            jQuery('#bluefoot-code-<?php echo $_entity->getId(); ?> code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    });
+</script>

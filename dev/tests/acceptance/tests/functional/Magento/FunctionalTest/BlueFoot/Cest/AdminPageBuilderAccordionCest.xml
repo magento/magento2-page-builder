@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderAccordionCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Accordion Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="addCmsBlock" mergeKey="addCmsBlock"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddAccordion">
+            <annotations>
+                <title value="Can add an Accordion"/>
+                <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84675"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+            <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" mergeKey="waitForAddItemsElementVisible"/>
+            <click selector="{{AccordionEditSection.addNewItem}" mergeKey="clickOnAddItemsElement"/>
+            <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" mergeKey="waitForItemRow0TextVisible"/>
+            <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" mergeKey="fillItemRow0TitleField"/>
+            <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" mergeKey="fillItemRow0ContentField"/>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
+            <amOnPage url="accordion{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" mergeKey="seeAccordionTitleOnStorefront"/>
+            <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" mergeKey="seeAccordionContentOnStorefront"/>
+        </test>
+    </cest>
+</config>

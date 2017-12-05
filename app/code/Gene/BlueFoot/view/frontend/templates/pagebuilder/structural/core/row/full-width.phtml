@@ -1,0 +1,19 @@
+<?php
+/**
+ * BlueFoot
+ *
+ * Version 1.0
+ *
+ * @author Hob Adams <hob@gene.co.uk>
+ *
+ * Full width row Template
+ * @var $block \Gene\BlueFoot\Block\Entity\PageBuilder\Structural\Row
+ *
+ */
+if ($block->getBackgroundStyles()) :
+    $block->setCssClasses('with-media-background');
+endif;
+?>
+<div class="bluefoot-row <?php echo $block->getCssAttributes(); ?>"<?php echo $block->getStyleAttributes(); ?>>
+    <?php echo $block->getRenderedChildHtml(); ?>
+</div>

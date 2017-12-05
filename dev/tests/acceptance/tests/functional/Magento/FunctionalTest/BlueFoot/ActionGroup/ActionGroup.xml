@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <actionGroup name="validateGroupsAndContentTypes">
+        <see userInput="General" selector="{{BlueFootActionsSection.generalGroup}}" mergeKey="seeGeneralGroup"/>
+        <see userInput="Row" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupRow"/>
+        <see userInput="Column" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupColumn"/>
+        <see userInput="Text" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupText"/>
+        <see userInput="Header" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupHeader"/>
+        <see userInput="Buttons" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupButtons"/>
+        <see userInput="Divider" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupDivider"/>
+
+        <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
+        <see userInput="Media" selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="seeMediaGroup"/>
+        <see userInput="Image" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupImage"/>
+        <see userInput="Driver" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupDriver"/>
+        <see userInput="Video" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupVideo"/>
+        <see userInput="Banner" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupBanner"/>
+        <see userInput="Slider" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupSlider"/>
+
+        <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
+        <see userInput="Interactive" selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="seeInteractiveGroup"/>
+        <see userInput="Tabs" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupTabs"/>
+        <see userInput="Accordion" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupAccordion"/>
+        <see userInput="Map" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupMap"/>
+        <see userInput="Newsletter" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupNewsletter"/>
+
+        <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
+        <see userInput="Magento" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="seeMagentoGroup"/>
+        <see userInput="Block" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupBlock"/>
+        <see userInput="Product" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupProduct"/>
+
+        <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
+        <see userInput="Anchor" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupAnchor"/>
+        <see userInput="Code" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupCode"/>
+        <see userInput="Html" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupHtml"/>
+        <see userInput="Search" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupSearch"/>
+    </actionGroup>
+    <actionGroup name="enableBlueFoot">
+        <amOnPage url="{{CmsPagesPage}}" mergeKey="amOnPagePagesGrid"/>
+        <waitForPageLoad mergeKey="waitForPageLoad1"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPage}}" mergeKey="clickAddNewPage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+        <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+        <wait time="1" mergeKey="wait1"/>
+    </actionGroup>
+
+    <actionGroup name="navigateToAPageWithBlueFoot">
+        <waitForPageLoad mergeKey="waitForDashboardPageLoad"/>
+        <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
+        <waitForPageLoad mergeKey="waitForPageLoad"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForElementVisible" />
+    </actionGroup>
+
+    <actionGroup name="switchToBlueFootStage">
+        <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="waitForBlueFootButton" />
+        <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
+        <!-- Wait for the first row to be added into the stage for it to be "ready" -->
+        <waitForElementVisible time="5" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
+    </actionGroup>
+
+    <actionGroup name="addBlueFootRowToStage">
+        <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
+        <seeElement selector="{{BlueFootRowSection.row2}}" mergeKey="seeElementRow"/>
+        <waitForElement time="1" selector="{{BlueFootRowSection.row2}}" mergeKey="waitForBlueFootButton" />
+    </actionGroup>
+
+    <actionGroup name="dragBlueFootColumnIntoStage">
+        <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
+        <waitForElementVisible time="1" selector="{{BlueFootColumnSection.column}}" mergeKey="waitForColumn" />
+        <seeElement selector="{{BlueFootColumnSection.column}}" mergeKey="seeElementColumn"/>
+    </actionGroup>
+
+    <actionGroup name="openBlueFootEditColumnPanel">
+        <arguments>
+            <argument name="column" defaultValue="" />
+        </arguments>
+        <moveMouseOver selector="{{BlueFootColumnSection.columnInStage}}" mergeKey="onMouseOverColumn"/>
+        <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{BlueFootColumnSection.editColumn}}" mergeKey="clickEditColumn"/>
+        <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" mergeKey="waitForAnimation" />
+        <waitForElementNotVisible time="5" selector="{{BlueFootColumnSection.editFormSpinner}}" mergeKey="waitForSpinner"/>
+    </actionGroup>
+    <actionGroup name="openBlueFootEditColumnPanel2">
+        <moveMouseOver selector="{{BlueFootColumnSection.columnInStage2}}" mergeKey="onMouseOverColumn2"/>
+        <click selector="{{BlueFootColumnSection.editColumn2}}" mergeKey="clickEditColumn2"/>
+        <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" mergeKey="waitForAnimation" />
+    </actionGroup>
+    <actionGroup name="openBlueFootEditColumnPanel3">
+        <moveMouseOver selector="{{BlueFootColumnSection.columnInStage3}}" mergeKey="onMouseOverColumn2"/>
+        <click selector="{{BlueFootColumnSection.editColumn3}}" mergeKey="clickEditColumn2"/>
+        <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" mergeKey="waitForAnimation" />
+    </actionGroup>
+    <actionGroup name="addBlueFootPageTitle">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{contentBlockType.name}}{{BlueFootPageTitle.pageName}}" mergeKey="enterPageTitle"/>
+    </actionGroup>
+    <actionGroup name="dragContentBlockToStage">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <dragAndDrop selector1="{{BlueFootActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{BlueFootActionsSection.dropAreaInStage}}" mergeKey="dropContentBlockIntoStage"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" mergeKey="waitForContentBlockInStage" />
+        <seeElement selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" mergeKey="seeContentBlockInStage"/>
+    </actionGroup>
+    <actionGroup name="openBlueFootEditPanel">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <moveMouseOver selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" mergeKey="onMouseOverContentBlockStage"/>
+        <seeElement selector="{{BlueFootActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" mergeKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{BlueFootActionsSection.contentBlockEdit(contentBlockType.role)}}" mergeKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" mergeKey="waitForAnimation" />
+        <see userInput="Edit {{contentBlockType.name}}" selector="{{BlueFootActionsSection.editFormTitle}}" mergeKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
+    <actionGroup name="removeBlueFootRow">
+        <moveMouseOver selector="{{BlueFootRowSection.row}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootRowSection.rowOptionsMenu}}" mergeKey="seeRowOptionsMenu"/>
+        <click selector="{{BlueFootRowSection.removeRow}}" mergeKey="clickRemoveRow"/>
+        <wait time="1" mergeKey="wait1"/>
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <wait time="1" mergeKey="wait2"/>
+    </actionGroup>
+
+    <actionGroup name="removeBlueFootColumn">
+        <moveMouseOver selector="{{BlueFootColumnSection.column}}" mergeKey="onMouseOverRow"/>
+        <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
+        <click selector="{{BlueFootColumnSection.removeColumn}}" mergeKey="clickRemoveColumn"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modal}}" mergeKey="waitForModal" />
+        <seeElement selector="{{BlueFootActionsSection.modal}}" mergeKey="seeRemovalModal"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalOk" />
+        <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
+        <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalHide" />
+    </actionGroup>
+
+    <actionGroup name="validateSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="seePropertyLabel"/>
+        <seeElementInDOM selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seePropertyControl"/>
+    </actionGroup>
+
+    <actionGroup name="validateSlideOutPanelFieldIsRequired">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <seeElement selector='{{BlueFootColumnSection.panelFieldRequired(property.section, property.fieldName)}}' mergeKey="seePropertyIsRequired"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
+        <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
+        <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="fillMapPositionFields">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
+        <waitForElement time="2" selector="{{MapInAdmin.mapPosition}}" mergeKey="waitForMapPositionElement" />
+        <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" mergeKey="setPositionPropertyVisible"/>
+        <fillField selector="{{MapInAdmin.mapPosition}}" userInput="{{property.lat}},{{property.lng}},{{property.zoom}}" mergeKey="fillPositionField"/>
+    </actionGroup>
+    <actionGroup name="selectSlideOutPanelFieldGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="seePropertyLabel"/>
+        <selectOption selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
+        <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="attachFileSlideOutPropertyGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}' mergeKey="attachImageFile"/>
+        <waitForElementVisible time="10" selector="{{BlueFootActionsSection.panelFieldUploadSummary(property.value)}}" mergeKey="waitForImageUploadSummary" />
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelFieldGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <!--<click selector="{{BlueFootActionsSection.panelFieldControlSwitch(property.section, property.fieldName)}}" mergeKey="clickProperty"/>-->
+        <click selector="{{BlueFootActionsSection.panelFieldControlSwitch(property.fieldName)}}" mergeKey="clickProperty"/>
+        <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+        <waitForElementVisible time="2" selector="{{BlueFootActionsSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootActionsSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="seePropertyLabel"/>
+        <fillField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
+    </actionGroup>
+    <actionGroup name="selectSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <selectOption selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="selectPropertyField"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <click selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="clickProperty"/>
+        <wait time="1" mergeKey="waitForClick{{property.fieldName}}"/>
+        <click selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="waitForSectionChangedIcon" />
+        <seeElement selector="{{BlueFootColumnSection.panelSectionChangedIcon(property.section)}}" mergeKey="verifySectionUpdated"/>
+    </actionGroup>
+    <actionGroup name="seeInFieldSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeInFieldProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsSelectedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <seeInField selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="seeOptionIsSelectedProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsCheckedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="waitForElementVisible" />
+        <seeCheckboxIsChecked selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seeOptionIsCheckedProperty"/>
+    </actionGroup>
+    <actionGroup name="attachFileSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}' mergeKey="attachBackgroundImageFile"/>
+        <waitForElementVisible time="10" selector="{{BlueFootColumnSection.panelFieldUploadSummary(property.value)}}" mergeKey="waitForImageUploadSummary" />
+    </actionGroup>
+    <actionGroup name="saveColumnSettings">
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="waitForColumnSaveButton" />
+        <click selector="{{BlueFootColumnSection.columnSaveButton}}" mergeKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
+    <actionGroup name="saveEditPanelSettings">
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.editFormSave}}" mergeKey="waitForColumnSaveButton" />
+        <click selector="{{BlueFootActionsSection.editFormSave}}" mergeKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
+    <actionGroup name="saveAndContinueEditCmsPage">
+        <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" mergeKey="clickSaveAndContinueEditCmsPage"/>
+        <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="waitForCmsPageSaveButton" />
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+    </actionGroup>
+    <actionGroup name="saveCmsPage">
+        <click selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="clickSaveCmsPage"/>
+        <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" mergeKey="waitForCmsPageSaveButton" />
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" mergeKey="assertSavePageSuccessMessage"/>
+    </actionGroup>
+</config>

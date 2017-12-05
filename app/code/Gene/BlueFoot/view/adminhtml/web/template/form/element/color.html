@@ -1,0 +1,7 @@
+<div class="admin__field admin__field-color">
+    <div class="color-picker">
+        <div class="color-hash" data-bind="style: {color: textColor}, click: function (current, event) { jQuery(event.currentTarget).parents('.color-picker').find('.color-picker-input').ColorPickerShow(); }">#</div>
+        <input type="text" maxlength="7" attr="id: uid, name: inputName" data-bind="afterRender: renderColorPicker, textInput: value, style: {backgroundColor: '#' + value(), color: textColor}" class="color-picker-input" />
+        <div class="color-prompt" data-bind="click: function (current, event) { jQuery(event.currentTarget).parents('.color-picker').find('.color-picker-input').ColorPickerShow(); }, text: $t('Select Color')"></div>
+    </div>
+</div>

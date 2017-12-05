@@ -1,0 +1,167 @@
+@border-size: 2px;
+
+.admin__fieldset > .admin__field > .admin__control-grouped {
+    &.bluefoot-active {
+        float: left;
+        width: 100%;
+        padding-left: 3rem;
+        margin: 3rem 0 0 0;
+    }
+}
+
+.bluefoot-stage-wrapper {
+    &.stage-full-screen {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 800;
+        background: white;
+        padding: 10px;
+        overflow: scroll;
+    }
+}
+
+.bluefoot-stage {
+    margin-left: 170px; // temp
+
+    padding: 0 0 60px 0; // 60px to include the add row button
+    min-height: 200px;
+
+    font-size: 0;
+
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+
+    &.stage-full-screen {
+        background: black;
+    }
+
+    &.bluefoot-no-user-select {
+        * {
+            -webkit-user-select: none!important; /* Chrome/Safari */
+            -moz-user-select: none!important; /* Firefox */
+            -ms-user-select: none!important; /* IE10+ */
+
+            /* Rules below not implemented in browsers yet */
+            -o-user-select: none!important;
+            user-select: none!important;
+        }
+    }
+
+    &.panel-collapsed {
+        margin-left: 32px;
+    }
+
+    .bluefoot-stage-loading {
+        text-align: center;
+        padding: 90px 0 30px 0;
+
+        p {
+            margin: 3rem 0 3rem;
+            font-size: 14px;
+        }
+    }
+
+    .bluefoot-canvas {
+        opacity: 0;
+        visibility: hidden;
+        transition: 1s ease-in-out;
+        -moz-transition: 1s ease-in-out;
+        -webkit-transition: 1s ease-in-out;
+
+        &.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    /* Remove aspects fo the UI when taking a screenshot for templates */
+    &.screengrab {
+        padding: 0;
+        border: none;
+        height: 80%;
+        overflow:hidden;
+
+        .bluefoot-add-row-wrapper {
+            display: none
+        }
+    }
+}
+
+.bluefoot-heading-h2 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 2rem;
+}
+.bluefoot-heading-h3 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: 1.7rem;
+}
+.bluefoot-heading-h4, .bluefoot-heading-h5, .bluefoot-heading-h6 {
+    font-weight: 600;
+    margin-top: 0;
+}
+.bluefoot-heading-h4 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    display: block;
+    font-weight: bold;
+}
+.bluefoot-heading-h5 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    line-height: 1.2;
+    font-size: 0.83em;
+    font-weight: bold;
+}
+.bluefoot-heading-h6 {
+    margin: 0 0 2rem;
+    color: #41362f;
+    display: block;
+    font-size: 0.67em;
+    font-weight: bold;
+}
+
+.bluefoot-add-row-wrapper {
+    float: left;
+    width: 100%;
+    text-align: center;
+
+    .bluefoot-add-row {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 26px;
+        background: @rowColor;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        color: white;
+
+        &:hover {
+            background: darken(@rowColor, 15%);
+        }
+    }
+}
+.bluefoot-row-wrapper, .bluefoot-structure-wrapper {
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+
+    &.bluefoot-sorting-original {
+        opacity: 0.4;
+    }
+}

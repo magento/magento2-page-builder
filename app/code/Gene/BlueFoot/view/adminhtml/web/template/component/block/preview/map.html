@@ -1,0 +1,16 @@
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="bluefoot-structure bluefoot-entity bluefoot-entity-preview bluefoot-map bluefoot-no-blur bluefoot-live-edit">
+    <!-- ko ifnot: preview.data.position -->
+        <i class="icon-bluefoot-map"></i> <span data-bind="text: $t('Map');"></span>
+    <!-- /ko -->
+    <!-- ko if: preview.data.position -->
+        <iframe data-bind="attr: { src: preview.getMapUrl(), width: preview.data.width(), height: preview.data.height() }" frameborder="0" />
+    <!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>

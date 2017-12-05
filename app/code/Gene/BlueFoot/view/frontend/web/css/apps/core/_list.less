@@ -1,0 +1,95 @@
+/**
+* BlueFoot
+ *
+ * Version 1.0
+ * @author Chloe Langford <chloe@gene.co.uk>
+ *
+ * _list contains {less} for the blog listing
+ *
+ */
+
+/*-- Basic page styling for app view and taxonomy view styles --*/
+
+.bluefoot-app, .bluefoot-content-list {
+  img, iframe {
+    max-width:100%;
+  }
+  .bluefoot-content-list-page-title {
+    h1 {
+      border-bottom:none;
+    }
+  }
+}
+
+.bluefoot-content-summary {
+  float:left;
+  width:100%;
+}
+
+.bluefoot-content-list-page-description {
+  margin-bottom:@margin;
+  padding-bottom:@margin;
+  border-bottom:1px solid @border_color;
+}
+
+.bluefoot-app {
+  .pager {
+    margin-bottom:0;
+    width:100%;
+    ol {
+      margin-bottom:0;
+    }
+    li {
+      list-style:none;
+      margin-left:0;
+    }
+  }
+
+}
+
+/*-- List Styles --*/
+
+.bluefoot-content-list-item {
+  border-bottom:1px solid @border_color;
+  padding-bottom:@margin;
+  margin-bottom:@margin;
+  .bluefoot-published-date {
+    font-size:@small_size;
+    font-weight:600;
+    margin-bottom:0;
+  }
+  &.last {
+    padding-bottom:0;
+    border-bottom:none;
+  }
+}
+
+.bluefoot-no-content {
+  p {
+    font-weight:bold;
+  }
+}
+
+/*-- Grid Styles --*/
+
+.bluefoot-content-grid-item {
+  .bluefoot-published-date {
+    font-size:@small_size;
+    font-weight:600;
+    margin-bottom:0;
+  }
+}
+
+
+/*-- Split View --*/
+
+.bluefoot-content-list-type-item {
+  border-bottom:1px solid @border_color;
+  padding-bottom:@margin;
+  margin-bottom:@margin;
+  .bluefoot-full-width;
+  &.last {
+    padding-bottom:0;
+    border-bottom:none;
+  }
+}

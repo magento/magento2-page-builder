@@ -1,0 +1,15 @@
+<div data-role="spinner" class="admin__data-grid-loading-mask" data-bind="visible: loading">
+    <div class="spinner">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<ul data-bind="foreach: {data: templateData, as: 'item'}" class="gene-bluefoot-template-grid">
+    <li>
+        <div data-bind="css: $parent.isSelected(item), click: function(obj, event) { $parent.selectTemplate(item); $parents[1].setTemplate(item); }" class="gene-bluefoot-template-container">
+            <img data-bind="attr: {src: item.preview}" class="gene-bluefoot-template-preview" />
+            <div data-bind="text: item.label" class="gene-bluefoot-template-label"></div>
+        </div>
+    </li>
+</ul>

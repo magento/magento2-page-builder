@@ -1,0 +1,23 @@
+<div class="admin__field admin__field-video">
+    <div class="video-field">
+        <ol>
+            <li data-bind="click: function() { type('youtube'); }, css: {active: type() == 'youtube'}">
+                <i class="fa fa-youtube" aria-hidden="true"></i>
+                <span data-bind="text: $t('YouTube')"></span>
+            </li>
+            <li data-bind="click: function() { type('vimeo'); }, css: {active: type() == 'vimeo'}">
+                <i class="fa fa-vimeo" aria-hidden="true"></i>
+                <span data-bind="text: $t('Vimeo')"></span>
+            </li>
+        </ol>
+
+        <input type="text"
+               attr="id: uid, name: inputName"
+               class="admin__control-text"
+               data-bind="textInput: value" />
+    </div>
+
+    <div class="video-iframe" data-bind="visible: type() && value() && iframeSrc()">
+        <iframe width="100%" height="315" frameborder="0" allowfullscreen data-bind="attr: {src: iframeSrc}"></iframe>
+    </div>
+</div>

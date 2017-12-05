@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">newsletter_form.newsletter_form_data_source</item>
+            <item name="deps" xsi:type="string">newsletter_form.newsletter_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Newsletter</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">newsletter_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
+            <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
+            <button name="close" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\CloseButton"/>
+        </buttons>
+    </settings>
+    <dataSource name="newsletter_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
+            <argument name="name" xsi:type="string">newsletter_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string" />
+            <argument name="requestFieldName" xsi:type="string" />
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string"/>
+            </item>
+        </argument>
+        <field name="button_text">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Button Text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">button_text</item>
+                </item>
+            </argument>
+        </field>
+        <field name="label_text">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Label</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataScope" xsi:type="string">label_text</item>
+                </item>
+            </argument>
+        </field>
+        <field name="placeholder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Placeholder</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="dataScope" xsi:type="string">placeholder</item>
+                </item>
+            </argument>
+        </field>
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="advanced">
+        <settings>
+            <label translate="true">Advanced</label>
+            <collapsible>true</collapsible>
+        </settings>
+        <field name="css_classes" sortOrder="1" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">CSS Classes</label>
+                <dataScope>css_classes</dataScope>
+                <notice translate="true">Space separated list of classes.</notice>
+            </settings>
+        </field>
+        <field name="text_align" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">left</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Alignment</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">left</item>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">center</item>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">right</item>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Gene_BlueFoot/js/form/element/margins_and_padding">
+            <settings>
+                <label>Margins and Padding</label>
+            </settings>
+        </field>
+    </fieldset>
+</form>
