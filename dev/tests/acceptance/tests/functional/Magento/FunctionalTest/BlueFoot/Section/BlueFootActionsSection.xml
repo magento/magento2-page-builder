@@ -152,6 +152,7 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+        <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
     </section>
     <section name="AccordionEditSection">
         <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
@@ -161,6 +162,9 @@
     <section name="AccordionFrontendSection">
         <element name="itemTitleElement" type="button" selector="//div[@data-role='accordion']/div[@data-collapsible='true']/div[@data-role='trigger']/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
         <element name="itemContentElement" type="button" selector="//div[@class='accordion-content'][contains(text(), '{{arg1}}')]" parameterized="true"/>
+    </section>
+    <section name="AnchorInAdmin">
+        <element name="anchorIdentifier" type="button" selector="//div[contains(@class, 'bluefoot-anchor')][1]"/>
     </section>
     <section name="ButtonsEditSection">
         <element name="addNewButton" type="button" selector="//button/span[contains(text(), 'Add New Button')]"/>
