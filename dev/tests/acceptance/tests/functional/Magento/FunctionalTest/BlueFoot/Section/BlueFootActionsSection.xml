@@ -118,6 +118,9 @@
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
     </section>
+    <section name="CodeOnFrontend">
+        <element name="codeDisplay" type="button" selector="[data-role='code'] {{arg1}}" parameterized="true"/>
+    </section>
     <section name="HeaderOnFrontend">
         <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
     </section>
@@ -149,6 +152,7 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+        <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
     </section>
     <section name="AdvancedForm">
         <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>

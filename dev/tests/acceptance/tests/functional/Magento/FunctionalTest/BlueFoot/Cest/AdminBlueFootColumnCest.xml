@@ -339,6 +339,9 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
             <wait time="1" mergeKey="wait3"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
             <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
@@ -350,13 +353,15 @@
                 <description value="Validate background image appears on the frontend"/>
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
-                <group value="skip"/>
             </annotations>
             <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" mergeKey="openEditPanel"/>
             <wait time="1" mergeKey="wait1"/>
+            <actionGroup ref="fillSlideOutPanelField" mergeKey="enterMinHeightProperty">
+                <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
+            </actionGroup>
             <actionGroup ref="attachFileSlideOutProperty" mergeKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
@@ -367,6 +372,7 @@
             <wait time="1" mergeKey="wait3"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="amOnBlueFootPage"/>
             <wait time="5" mergeKey="wait5"/>
+            <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(_ENV.MAGENTO_BASE_URL,BlueFootBackgroundImageProperty.path,BlueFootBackgroundImageProperty.fileType)}}" mergeKey="seeBackgroundImageInDom"/>
             <dontSeeInPageSource userInput=".png%22" mergeKey="dontSeeEscapedQuoteInPageSource"/>
         </test>
         <test name="ColumnBackgroundColorPreserved">
