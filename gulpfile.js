@@ -7,7 +7,7 @@ const gulp  = require('gulp'),
 
 const config = {
     basePath: 'app/code/Gene/BlueFoot',
-    tsPath: 'view/adminhtml/ts/',
+    tsPath: 'view/adminhtml/web/ts/',
     buildPath: 'view/adminhtml/web/',
     testsPath: 'dev/tests/js/',
     sourceMaps: !plugins.util.env.production
@@ -19,7 +19,7 @@ const buildTask = function (inputStream) {
             .pipe(plugins.babel())
             .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.write('./', {
                 includeContent: false,
-                sourceRoot: '../ts'
+                sourceRoot: './ts'
             })))
             .pipe(gulp.dest(path.join(config.basePath, config.buildPath)))
 };
