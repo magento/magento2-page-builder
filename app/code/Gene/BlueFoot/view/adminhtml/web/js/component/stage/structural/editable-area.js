@@ -28,7 +28,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
         _this.stage = stage;
       }
 
-      _underscore.bindAll(_this, 'onBlockDropped', 'onBlockInstanceDropped', 'onBlockRemoved', 'onBlockSorted', 'onSortStart', 'onSortStop'); // Attach events to structural elements
+      _underscore.bindAll(_this, 'onBlockDropped', 'onBlockInstanceDropped', 'onBlockRemoved', 'onBlockSorted', 'onSortStart'); // Attach events to structural elements
       // Block dropped from left hand panel
 
 
@@ -43,8 +43,6 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
       _this.on('blockSorted', _this.onBlockSorted);
 
       _this.on('sortStart', _this.onSortStart);
-
-      _this.on('sortStop', _this.onSortStop);
 
       return _this;
     }
@@ -136,7 +134,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
       child.parent = this;
       child.stage = this.stage;
 
-      if (index) {
+      if (index || index === 0) {
         // Use the arrayUtil function to add the item in the correct place within the array
         (0, _array.moveArrayItemIntoArray)(child, this.children, index);
       } else {
@@ -252,17 +250,6 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
         width: '',
         height: ''
       }).html(jQuery('<h3 />').text(this.title).html());
-    };
-    /**
-     * Event called when sorting stops on this element
-     *
-     * @param event
-     * @param params
-     */
-
-
-    _proto.onSortStop = function onSortStop(event, params) {
-      jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
     };
 
     _createClass(EditableArea, [{

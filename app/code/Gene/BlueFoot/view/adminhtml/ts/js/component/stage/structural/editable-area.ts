@@ -41,8 +41,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
             'onBlockInstanceDropped',
             'onBlockRemoved',
             'onBlockSorted',
-            'onSortStart',
-            'onSortStop'
+            'onSortStart'
         );
 
         // Attach events to structural elements
@@ -57,7 +56,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
         this.on('blockSorted', this.onBlockSorted);
 
         this.on('sortStart', this.onSortStart);
-        this.on('sortStop', this.onSortStop);
     }
 
     /**
@@ -143,7 +141,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     addChild(child: Structural, index?: number) :void {
         child.parent = this;
         child.stage = this.stage;
-        if (index) {
+        if (index || index === 0) {
             // Use the arrayUtil function to add the item in the correct place within the array
             moveArrayItemIntoArray(child, this.children, index);
         } else {
@@ -252,16 +250,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
         jQuery(params.helper)
             .css({width: '', height: ''})
             .html(jQuery('<h3 />').text(this.title).html());
-    }
-
-    /**
-     * Event called when sorting stops on this element
-     *
-     * @param event
-     * @param params
-     */
-    onSortStop(event: Event, params: SortParams): void {
-        jQuery(params.originalEle).removeClass('bluefoot-sorting-original');
     }
 }
 
