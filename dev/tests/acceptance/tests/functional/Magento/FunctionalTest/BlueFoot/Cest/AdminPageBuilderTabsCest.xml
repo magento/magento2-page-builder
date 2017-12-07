@@ -26,6 +26,47 @@
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
+        <test name="CanAddTabs">
+            <annotations>
+                <title value="Add Tabs onto stage"/>
+                <description value="A user should be able to add Tabs into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84922"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragTabsIntoStage">
+                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear mergeKey="waitForEditPanelSpinner"/>
+            <waitForElementVisible selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" mergeKey="waitForAddTabButton"/>
+            <click selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" mergeKey="clickAddTabButton1"/>
+            <fillField selector="{{PageBuilderTabsEditPanel.tabTitle('0')}}" userInput="Tab 1" mergeKey="fillTabRow1TitleField"/>
+            <fillField selector="{{PageBuilderTabsEditPanel.tabContent('0')}}" userInput="Tab 1 Content" mergeKey="fillTabRow1ContentField"/>
+            <click selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" mergeKey="clickAddTabButton2"/>
+            <fillField selector="{{PageBuilderTabsEditPanel.tabTitle('1')}}" userInput="Tab 2" mergeKey="fillTabRow2TitleField"/>
+            <fillField selector="{{PageBuilderTabsEditPanel.tabContent('1')}}" userInput="Tab 2 Content" mergeKey="fillTabRow2ContentField"/>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <seeElement selector="//li[@role='tab'][contains(@class, 'ui-tabs-active')]/a[@title='Tab 1']/span[contains(text(), 'Tab 1')]" mergeKey="seeTab1TitleOnStage"/>
+            <seeElement selector="//li[@role='tab']/a[@title='Tab 2']/span[contains(text(), 'Tab 2')]" mergeKey="seeTab2TitleOnStage"/>
+            <see selector="div.ui-tabs" userInput="Tab 1 Content" mergeKey="seeTab1ContentOnStage"/>
+            <dontSee selector="div.ui-tabs" userInput="Tab 2 Content" mergeKey="dontSeeTab2ContentOnStage"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 1" mergeKey="seeTab1TitleOnStorefront"/>
+            <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 2" mergeKey="seeTab2TitleOnStorefront"/>
+            <see selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" mergeKey="seeTab1ContentOnStorefront"/>
+            <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" mergeKey="dontSeeTab2ContentOnStorefront"/>
+            <click selector="a[href='#pagebuilder_tab1']" mergeKey="clickTab2OnStorefront"/>
+            <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" mergeKey="dontSeeTab1ContentOnStorefront"/>
+            <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" mergeKey="seeTab2ContentOnStorefront"/>
+        </test>
         <test name="TabsHasAdvancedFormSection">
             <annotations>
                 <title value="Tabs has Advanced form section"/>
