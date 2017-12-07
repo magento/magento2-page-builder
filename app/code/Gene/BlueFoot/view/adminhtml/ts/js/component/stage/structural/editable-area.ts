@@ -141,7 +141,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     addChild(child: Structural, index?: number) :void {
         child.parent = this;
         child.stage = this.stage;
-        if (index || index === 0) {
+        if (typeof index === 'number') {
             // Use the arrayUtil function to add the item in the correct place within the array
             moveArrayItemIntoArray(child, this.children, index);
         } else {

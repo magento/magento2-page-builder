@@ -134,7 +134,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
       child.parent = this;
       child.stage = this.stage;
 
-      if (index || index === 0) {
+      if (typeof index === 'number') {
         // Use the arrayUtil function to add the item in the correct place within the array
         (0, _array.moveArrayItemIntoArray)(child, this.children, index);
       } else {
