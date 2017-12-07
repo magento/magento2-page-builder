@@ -8,10 +8,10 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminPageBuilderAccordionCest">
+    <cest name="AdminPageBuilderProductCest">
         <annotations>
             <features value="PageBuilder CMS"/>
-            <stories value="PageBuilder Accordion Configuration"/>
+            <stories value="PageBuilder Product Configuration"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -19,62 +19,63 @@
         </annotations>
         <before>
             <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
         </before>
         <after>
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddAccordion">
+        <test name="CanAddProduct">
             <annotations>
-                <title value="Can add an Accordion"/>
-                <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
+                <title value="Add a product content block into stage"/>
+                <description value="A user should be able to add a product content block into a row."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84675"/>
+                <testCaseId value="MAGETWO-84901"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <actionGroup ref="createNewSimpleProduct" mergeKey="createSimpleProduct"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragProductIntoStage">
+                <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" mergeKey="waitForAddItemsElementVisible"/>
-            <click selector="{{AccordionEditSection.addNewItem}}" mergeKey="clickOnAddItemsElement"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" mergeKey="waitForItemRow0TextVisible"/>
-            <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" mergeKey="fillItemRow0TitleField"/>
-            <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" mergeKey="fillItemRow0ContentField"/>
+            <actionGroup ref="fillProductPanelFieldGeneral" mergeKey="enterProductProperties">
+                <argument name="property" value="PageBuilderProductProperty"/>
+            </actionGroup>
+            <!--<fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" mergeKey="fillSKU"/>-->
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="accordion{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" mergeKey="seeAccordionTitleOnStorefront"/>
-            <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" mergeKey="seeAccordionContentOnStorefront"/>
+            <amOnPage url="product{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{ProductOnFrontend.productDisplay}}" mergeKey="productApplied"/>
+            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" mergeKey="assertProductShowsFrontend"/>
         </test>
-        <test name="AccordionHasAdvancedFormSection">
+        <test name="ProductHasAdvancedFormSection">
             <annotations>
-                <title value="Accordion has Advanced form section"/>
-                <description value="A user should be able to configure advanced settings for accordion"/>
+                <title value="Product has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for product"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84912"/>
+                <testCaseId value="MAGETWO-84901"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragProductIntoStage">
+                <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
             <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>

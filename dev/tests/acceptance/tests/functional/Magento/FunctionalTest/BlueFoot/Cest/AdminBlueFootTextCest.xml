@@ -19,7 +19,11 @@
         </annotations>
         <before>
             <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot1"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" mergeKey="enterCmsPageLinkTitle"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPageLink"/>
+            <grabFromCurrentUrl returnVariable="cmsPageLinkID" url="~/page_id/(\d+)/~" mergeKey="grabFromCurrentUrl"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot2"/>
             <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
         </before>
         <after>
@@ -55,23 +59,61 @@
             <waitForLoadingMaskToDisappear mergeKey="waitForCMSPageLinkWidgetForm"/>
             <click selector="//button/span[contains(text(), 'Select Page...')]" mergeKey="clickSelectPageButton"/>
             <waitForLoadingMaskToDisappear mergeKey="waitForSelectPageModal"/>
-            <click selector="//td[contains(@class, 'col-url')][contains(text(), 'home')]" mergeKey="clickHomePageRow"/>
-            <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), 'home')]" mergeKey="waitForPageSelectionModalToClose"/>
+            <fillField selector="input[name='chooser_title']" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" mergeKey="enterPageNameInSearch"/>
+            <click selector="button[data-action='grid-filter-apply']" mergeKey="clickSearchButton"/>
+            <waitForLoadingMaskToDisappear mergeKey="waitForSearchResult"/>
+            <click selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" mergeKey="clickCmsPageLinkRow"/>
+            <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" mergeKey="waitForPageSelectionModalToClose"/>
             <click selector="#insert_button" mergeKey="clickInsertWidget"/>
             <waitForElementNotVisible selector="#insert_button" mergeKey="waitForInsertWidgetModalToClose"/>
             <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" mergeKey="addTextToWYSIWYG"/>
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
             <see selector="div.bluefoot-html" userInput="{{config path=&quot;web/unsecure/base_url&quot;}}" mergeKey="seeVariableCodeInStage"/>
+            <!-- Current implementation does not support string literals and variables. Re-factor once this feature is supported -->
             <see selector="div.bluefoot-html"
-                 userInput="{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=&quot;2&quot;}}"
+                 userInput="{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id="
                  mergeKey="seeWidgetCodeInStage"/>
             <see selector="div.bluefoot-html" userInput="This is some text" mergeKey="seeTypedTextInStage"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
             <amOnPage url="{{BlueFootTextContentBlock.name}}{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
             <see userInput="{{_ENV.MAGENTO_BASE_URL}}" mergeKey="seeBaseUnsecureUrlOnStorefront"/>
-            <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}home']" mergeKey="seeHomePageWidgetOnStorefront"/>
+            <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}{{BlueFootTextContentBlock.cmsPageLinkName}}']" mergeKey="seeHomePageWidgetOnStorefront"/>
             <see userInput="This is some text" mergeKey="seeTypedTextOnStorefront"/>
+        </test>
+        <test name="TextHasAdvancedFormSection">
+            <annotations>
+                <title value="Text has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for text"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84912"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragButtonsOntoStage">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
         </test>
     </cest>
 </config>

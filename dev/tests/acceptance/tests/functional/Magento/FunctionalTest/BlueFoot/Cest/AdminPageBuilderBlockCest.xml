@@ -59,5 +59,40 @@
             <amOnPage url="block{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
             <seeElement selector="{{BlockOnFrontend.hr}}" mergeKey="seeBlockContentFrontend"/>
         </test>
+        <test name="BlockHasAdvancedFormSection">
+            <annotations>
+                <title value="Block has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for block"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84912"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
     </cest>
 </config>

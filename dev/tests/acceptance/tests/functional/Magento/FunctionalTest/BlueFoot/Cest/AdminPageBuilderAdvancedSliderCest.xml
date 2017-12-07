@@ -27,7 +27,43 @@
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
 
-        <test name="CanAddSlidesToAdvancedSlider">
+
+        <test name="AdvancedSliderHasAdvancedFormSection">
+            <annotations>
+                <title value="Advanced Slider has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for advanced slider"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84912"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAdvancedSliderIntoStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
+
+        <test name="CanAddAdvancedSlider">
             <annotations>
                 <title value="Can add Advanced Slider to Stage"/>
                 <description value="The user should be able to add the slides media content type to advanced slider media content type and it should be visible on the frontend"/>
@@ -71,11 +107,9 @@
             <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachSlideImageFile1">
                 <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
             </actionGroup>
-
             <actionGroup ref="clickSlideOutPanelFieldGeneral" mergeKey="enterSlideHasBackgroundOverlay1">
                 <argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>
             </actionGroup>
-
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanel1Settings"/>
             <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" mergeKey="clickOnAddSlideElement"/>
             <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideTitle2">
@@ -104,14 +138,12 @@
             <seeElement selector="{{AdvancedSliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" mergeKey="seeAdvancedSliderShowArrowsSetting"/>
             <seeElement selector="{{AdvancedSliderOnFrontend.ShowDots}}" mergeKey="seeAdvancedSliderShowDotsSetting"/>
             <seeElement selector="{{AdvancedSliderOnFrontend.Autoplay}}" mergeKey="seeAdvancedSliderAutoplaySetting"/>
-
             <seeElement selector="{{SlideOnFrontend.slide1}}" mergeKey="seeSlide1InAdvancedSlider"/>
             <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" mergeKey="seeSlide1TitleDisplayed"/>
             <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" mergeKey="seeSlide1ContentDisplayed"/>
             <seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" mergeKey="seeSlide1HasOverlay"/>
             <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" mergeKey="seeSlide1LinkTextDisplayed"/>
             <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" mergeKey="seeSlide1LinkURL"/>
-
             <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" mergeKey="seeSlide1Background"/>
             <click selector="{{AdvancedSliderOnFrontend.nextSlide}}" mergeKey="clickNextSlideOnAdvancedSlider"/>
             <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" mergeKey="waitForSlide2" />

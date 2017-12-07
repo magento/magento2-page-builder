@@ -156,6 +156,12 @@
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
     </section>
+    <section name="AdvancedForm">
+        <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
+        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="advancedAlignment" type="input" selector="//select[@name='text_align']"/>
+        <element name="advancedMarginAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+    </section>
     <section name="AccordionEditSection">
         <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
         <element name="itemTitle" type="input" selector="//*[@name='items[{{arg1}}][title]']" parameterized="true"/>
@@ -204,7 +210,6 @@
         <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
         <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
     </section>
-
     <section name="AdvancedSliderOnFrontend">
         <element name="advancedSliderDisplay" type="button" selector="div[data-role='advanced-slider']"/>
         <element name="Autoplay" type="button" selector="div[data-role='advanced-slider'][data-autoplay='0']"/>
@@ -215,11 +220,9 @@
         <element name="ShowDots" type="button" selector="div[data-role='advanced-slider'][data-show-dots='0']"/>
         <element name="nextSlide" type="button" selector="[data-role='advanced-slider'] .slick-next"/>
     </section>
-
     <section name="AdvancedSliderInAdmin">
         <element name="addNewSlide" type="button" selector="//div[contains(@class, 'bluefoot-advanced-slider')][1]/button"/>
     </section>
-
     <section name="SlideOnFrontend">
         <element name="slide1" type="button" selector="[data-role='slide']"/>
         <element name="slideTitle1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content h3"/>
@@ -227,7 +230,6 @@
         <element name="slideLinkText1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a span span"/>
         <element name="slideLinkURL1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
         <element name="slideHasOverlay1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content.has-overlay-background"/>
-
         <element name="slide2" type="button" selector="[data-role='slide']"/>
         <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
         <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
@@ -235,7 +237,11 @@
         <element name="slideLinkText2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a span span"/>
         <element name="slideLinkURL2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
         <element name="slideBackgroundImage" type="text" selector="[data-role='slide']:nth-of-type({{arg1}})[style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
-
     </section>
-
+    <section name="SearchOnFrontend">
+        <element name="searchInput" type="input" selector="//*[@placeholder='{{arg1}}']" parameterized="true"/>
+    </section>
+    <section name="ProductOnFrontend">
+        <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
+    </section>
 </config>

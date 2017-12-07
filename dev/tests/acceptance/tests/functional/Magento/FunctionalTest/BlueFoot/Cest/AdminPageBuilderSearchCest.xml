@@ -8,10 +8,11 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminPageBuilderAccordionCest">
+    <cest name="AdminPageBuilderSearchCest">
         <annotations>
-            <features value="PageBuilder CMS"/>
-            <stories value="PageBuilder Accordion Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="PageBuilder Search Configuration"/>
+            <testCaseId value="MAGETWO-84886"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -26,55 +27,51 @@
             <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
             <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddAccordion">
+        <test name="CanAddSearch">
             <annotations>
-                <title value="Can add an Accordion"/>
-                <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
+                <title value="Can add search block"/>
+                <description value="The user should be able to add search content types and they should be visible on frontend"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84675"/>
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragSearchOntoStage">
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
-            <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" mergeKey="waitForAddItemsElementVisible"/>
-            <click selector="{{AccordionEditSection.addNewItem}}" mergeKey="clickOnAddItemsElement"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" mergeKey="waitForItemRow0TextVisible"/>
-            <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" mergeKey="fillItemRow0TitleField"/>
-            <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" mergeKey="fillItemRow0ContentField"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterIdentifierProperty">
+                <argument name="property" value="PageBuilderSearchProperty"/>
+            </actionGroup>
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="accordion{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" mergeKey="seeAccordionTitleOnStorefront"/>
-            <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" mergeKey="seeAccordionContentOnStorefront"/>
+            <amOnPage url="search{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{SearchOnFrontend.searchInput(PageBuilderSearchProperty.value)}}" mergeKey="seeSearchOnStoreFront"/>
         </test>
-        <test name="AccordionHasAdvancedFormSection">
+        <test name="SearchHasAdvancedFormSection">
             <annotations>
-                <title value="Accordion has Advanced form section"/>
-                <description value="A user should be able to configure advanced settings for accordion"/>
+                <title value="Search has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for search"/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAccordionOntoStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragSearchIntoStage">
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
             <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
