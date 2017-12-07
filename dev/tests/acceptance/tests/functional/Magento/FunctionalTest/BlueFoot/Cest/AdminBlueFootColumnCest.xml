@@ -34,7 +34,9 @@
                 <testCaseId value="MAGETWO-82860"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragColumnIntoStage"/>
         </test>
         <test name="CanRemoveColumn">
@@ -45,7 +47,9 @@
                 <testCaseId value="MAGETWO-82861"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
             <actionGroup ref="dragBlueFootColumnIntoStage" mergeKey="dragColumnIntoStage"/>
             <actionGroup ref="removeBlueFootColumn" mergeKey="removeColumn"/>
             <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
