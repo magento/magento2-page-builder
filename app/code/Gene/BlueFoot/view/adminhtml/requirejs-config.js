@@ -6,7 +6,9 @@ var config = {
         'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
         'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
         'hyperscript': 'Gene_BlueFoot/js/resource/hyperscript/hyperscript',
+        'slick': 'Gene_BlueFoot/js/resource/slick/slick',
         'xyperscript': 'Gene_BlueFoot/js/resource/xyperscript/xyperscript',
+
 
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',

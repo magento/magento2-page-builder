@@ -26,13 +26,16 @@ export default class PreviewBlock {
         this.parent = parent;
         this.config = config;
 
+        // Create an empty observable for all fields
+        if (this.config.fields) {
+            _.keys(this.config.fields).forEach((key: string) => {
+                this.updateDataValue(key, '');
+            });
+        }
+
         // Subscribe to this blocks data in the store
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                const missingFields = _.difference(this.config.fields_list, _.keys(data));
-                missingFields.forEach((key) => {
-                    this.updateDataValue(key, '');
-                });
                 _.forEach(data, (value, key) => {
                     this.updateDataValue(key, value);
                 });

@@ -20,7 +20,15 @@ export default class AttributeFilter {
         'position',
         'category',
         'product_count',
-        'show_out_of_stock'
+        'show_out_of_stock',
+        'autoplay',
+        'autoplay_speed',
+        'fade',
+        'is_infinite',
+        'show_arrows',
+        'show_dots',
+        'advanced_settings',
+        'has_overlay_background'
     ];
 
     /**

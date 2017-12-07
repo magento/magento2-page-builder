@@ -98,7 +98,7 @@ export default class Panel extends uiComponent implements PanelInterface {
                         const regEx = new RegExp('\\b' + self.searchValue(), 'gi');
                         const matches = contentBlock.label.toLowerCase().match(regEx) ? true : false;
                         return matches &&
-                            contentBlock.visible === true;
+                            contentBlock.is_visible === true;
                     }
                 ),
                 function (contentBlock, identifier: string) {
@@ -115,6 +115,8 @@ export default class Panel extends uiComponent implements PanelInterface {
     populateContentBlocks(): void {
         let groups = Config.getInitConfig('groups'),
             contentBlocks = Config.getInitConfig('contentTypes');
+
+
         // Verify the configuration contains the required information
         if (groups && contentBlocks) {
             // Iterate through the groups creating new instances with their associated content blocks
@@ -126,7 +128,7 @@ export default class Panel extends uiComponent implements PanelInterface {
                     _.map(
                         _.where(contentBlocks, {
                             group: id,
-                            visible: true
+                            is_visible: true
                         }), /* Retrieve content blocks with group id */
                         (contentBlock: ContentBlockConfig, identifier: string) => {
                             return new GroupBlock(identifier, contentBlock);

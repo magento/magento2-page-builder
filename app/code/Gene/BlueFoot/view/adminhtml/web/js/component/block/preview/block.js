@@ -19,15 +19,16 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
       this.config = void 0;
       this.data = {};
       this.parent = parent;
-      this.config = config; // Subscribe to this blocks data in the store
+      this.config = config; // Create an empty observable for all fields
 
-      this.parent.stage.store.subscribe(function (data) {
-        var missingFields = _underscore.difference(_this.config.fields_list, _underscore.keys(data));
-
-        missingFields.forEach(function (key) {
+      if (this.config.fields) {
+        _underscore.keys(this.config.fields).forEach(function (key) {
           _this.updateDataValue(key, '');
         });
+      } // Subscribe to this blocks data in the store
 
+
+      this.parent.stage.store.subscribe(function (data) {
         _underscore.forEach(data, function (value, key) {
           _this.updateDataValue(key, value);
         });
