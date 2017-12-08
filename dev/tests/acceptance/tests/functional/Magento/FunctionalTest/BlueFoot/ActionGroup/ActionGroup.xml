@@ -16,7 +16,6 @@
         <see userInput="Header" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupHeader"/>
         <see userInput="Buttons" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupButtons"/>
         <see userInput="Divider" selector="{{BlueFootActionsSection.generalGroupBlock}}" mergeKey="seeGeneralGroupDivider"/>
-
         <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
         <see userInput="Media" selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="seeMediaGroup"/>
         <see userInput="Image" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupImage"/>
@@ -24,19 +23,16 @@
         <see userInput="Video" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupVideo"/>
         <see userInput="Banner" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupBanner"/>
         <see userInput="Slider" selector="{{BlueFootActionsSection.mediaGroupBlock}}" mergeKey="seeMediaGroupSlider"/>
-
         <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
         <see userInput="Interactive" selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="seeInteractiveGroup"/>
         <see userInput="Tabs" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupTabs"/>
         <see userInput="Accordion" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupAccordion"/>
         <see userInput="Map" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupMap"/>
         <see userInput="Newsletter" selector="{{BlueFootActionsSection.interactiveGroupBlock}}" mergeKey="seeInteractiveGroupNewsletter"/>
-
         <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
         <see userInput="Magento" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="seeMagentoGroup"/>
         <see userInput="Block" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupBlock"/>
         <see userInput="Product" selector="{{BlueFootActionsSection.magentoGroupBlock}}" mergeKey="seeMagentoGroupProduct"/>
-
         <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
         <see userInput="Anchor" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupAnchor"/>
         <see userInput="Code" selector="{{BlueFootActionsSection.otherGroupBlock}}" mergeKey="seeOtherGroupCode"/>
@@ -51,14 +47,12 @@
         <click selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="clickEnableAdvancedCMS"/>
         <wait time="1" mergeKey="wait1"/>
     </actionGroup>
-
     <actionGroup name="navigateToAPageWithBlueFoot">
         <waitForPageLoad mergeKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{BlueFootCmsPage}}" mergeKey="amOnBlueFootPage"/>
         <waitForPageLoad mergeKey="waitForPageLoad"/>
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForElementVisible" />
     </actionGroup>
-
     <actionGroup name="switchToBlueFootStage">
         <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
         <waitForElementVisible time="1" selector="{{BlueFootActionsSection.openBlueFoot}}" mergeKey="waitForBlueFootButton" />
@@ -66,19 +60,16 @@
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
     </actionGroup>
-
     <actionGroup name="addBlueFootRowToStage">
         <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
         <seeElement selector="{{BlueFootRowSection.row2}}" mergeKey="seeElementRow"/>
         <waitForElement time="1" selector="{{BlueFootRowSection.row2}}" mergeKey="waitForBlueFootButton" />
     </actionGroup>
-
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
         <waitForElementVisible time="1" selector="{{BlueFootColumnSection.column}}" mergeKey="waitForColumn" />
         <seeElement selector="{{BlueFootColumnSection.column}}" mergeKey="seeElementColumn"/>
     </actionGroup>
-
     <actionGroup name="openBlueFootEditColumnPanel">
         <arguments>
             <argument name="column" defaultValue="" />
@@ -140,7 +131,6 @@
         <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
         <wait time="1" mergeKey="wait2"/>
     </actionGroup>
-
     <actionGroup name="removeBlueFootColumn">
         <moveMouseOver selector="{{BlueFootColumnSection.column}}" mergeKey="onMouseOverRow"/>
         <seeElement selector="{{BlueFootColumnSection.columnOptionsMenu}}" mergeKey="seeColumnOptionsMenu"/>
@@ -151,7 +141,6 @@
         <click selector="{{BlueFootActionsSection.modalOk}}" mergeKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" mergeKey="waitForModalHide" />
     </actionGroup>
-
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -160,7 +149,6 @@
         <see userInput="{{property.name}}" selector="{{BlueFootColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" mergeKey="seePropertyLabel"/>
         <seeElementInDOM selector="{{BlueFootColumnSection.panelFieldControl(property.section, property.fieldName)}}" mergeKey="seePropertyControl"/>
     </actionGroup>
-
     <actionGroup name="validateSlideOutPanelFieldIsRequired">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -178,7 +166,6 @@
         <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
     </actionGroup>
-
     <actionGroup name="fillSlideOutPanelFieldGeneralWysiwyg">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -187,7 +174,6 @@
         <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" mergeKey="waitForElementVisibleWysiwyg" />
         <fillField selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyFieldWysiwyg"/>
     </actionGroup>
-
     <actionGroup name="fillMapPositionFields">
         <arguments>
             <argument name="property" defaultValue=""/>
