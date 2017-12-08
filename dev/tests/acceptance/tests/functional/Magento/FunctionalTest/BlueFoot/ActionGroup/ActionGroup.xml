@@ -300,6 +300,13 @@
         <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
     </actionGroup>
+    <actionGroup name="closeEditPanelSettings">
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.editFormClose}}" mergeKey="waitForCloseButton" />
+        <click selector="{{BlueFootActionsSection.editFormClose}}" mergeKey="clickCloseButton"/>
+        <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" mergeKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad mergeKey="waitForCmsPageLoad"/>
