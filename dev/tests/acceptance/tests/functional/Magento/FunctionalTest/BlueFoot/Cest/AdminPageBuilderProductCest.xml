@@ -49,13 +49,14 @@
             <actionGroup ref="fillProductPanelFieldGeneral" mergeKey="enterProductProperties">
                 <argument name="property" value="PageBuilderProductProperty"/>
             </actionGroup>
-            <!--<fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" mergeKey="fillSKU"/>-->
             <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <seeElement selector="{{ProductOnAdmin.productDisplay}}" mergeKey="productApplied1"/>
+            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnAdmin.productDisplay}}" mergeKey="assertProductShowsAdmin"/>
             <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
             <amOnPage url="product{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ProductOnFrontend.productDisplay}}" mergeKey="productApplied"/>
+            <seeElement selector="{{ProductOnFrontend.productDisplay}}" mergeKey="productApplied2"/>
             <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" mergeKey="assertProductShowsFrontend"/>
         </test>
         <test name="ProductHasAdvancedFormSection">
