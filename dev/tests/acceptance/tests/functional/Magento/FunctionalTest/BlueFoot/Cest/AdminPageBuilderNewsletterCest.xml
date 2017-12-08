@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderNewsletterCest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="PageBuilder Newsletter Configuration"/>
+            <group value="bluefoot"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin mergeKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddNewsletter">
+            <annotations>
+                <title value="Can add newsletter"/>
+                <description value="The user should be able to add newsletter content types and they should be visible on frontend"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot2"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.interactiveGroup}}" mergeKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterNewsletterTypePropertyButtonText">
+                <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterNewsletterTypePropertyLabel">
+                <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterNewsletterTypePropertyPlaceholder">
+                <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterNewsletterTypePropertyTitle">
+                <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
+            <waitForElementVisible time="15" selector="{{NewsletterOnFrontend.form}}" mergeKey="waitForNewsletterFormElementVisible" />
+            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage2">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeButtonTextProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeLabelProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seePlaceholderProperty">
+                <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" mergeKey="seeTitleProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+            </actionGroup>
+            <amOnPage url="newsletter{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
+            <seeElement selector="{{NewsletterOnFrontend.form}}" mergeKey="seeNewsletterForm"/>
+            <seeElement selector="{{NewsletterOnFrontend.title('Newsletter title')}}" mergeKey="seeNewsletterTitle"/>
+            <seeElement selector="{{NewsletterOnFrontend.placeholder('Newsletter placeholder')}}" mergeKey="seeNewsletterPlaceholder"/>
+            <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" mergeKey="seeNewsletterLabel"/>
+            <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" mergeKey="seeNewsletterButtonText"/>
+        </test>
+    </cest>
+</config>
