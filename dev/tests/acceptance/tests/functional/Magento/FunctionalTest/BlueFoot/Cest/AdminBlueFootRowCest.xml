@@ -41,7 +41,9 @@
                 <testCaseId value="MAGETWO-82857"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
             <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" mergeKey="seeElementRow"/>
         </test>
         <test name="CanRemoveRow">
@@ -52,7 +54,9 @@
                 <testCaseId value="MAGETWO-82858"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootRowToStage" mergeKey="addFirstRow"/>
+            <actionGroup ref="dragContentBlockToStage" mergeKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
             <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" mergeKey="seeTwoRows"/>
             <actionGroup ref="removeBlueFootRow" mergeKey="removeRow"/>
             <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" mergeKey="seeOneRow"/>

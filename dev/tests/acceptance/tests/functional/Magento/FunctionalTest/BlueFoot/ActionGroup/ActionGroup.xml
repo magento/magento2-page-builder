@@ -66,13 +66,7 @@
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
     </actionGroup>
-
-    <actionGroup name="addBlueFootRowToStage">
-        <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
-        <seeElement selector="{{BlueFootRowSection.row2}}" mergeKey="seeElementRow"/>
-        <waitForElement time="1" selector="{{BlueFootRowSection.row2}}" mergeKey="waitForBlueFootButton" />
-    </actionGroup>
-
+    
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
         <waitForElementVisible time="1" selector="{{BlueFootColumnSection.column}}" mergeKey="waitForColumn" />

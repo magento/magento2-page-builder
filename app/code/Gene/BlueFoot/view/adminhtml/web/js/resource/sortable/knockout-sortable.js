@@ -126,6 +126,9 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
          * @param ui
          */
         onSortStop: function (event, ui) {
+            // Always remove the sorting original class from an element
+            ui.item.removeClass('bluefoot-sorting-original');
+
             var block = getViewModelFromUi(ui),
                 eventData = {
                     event: event,

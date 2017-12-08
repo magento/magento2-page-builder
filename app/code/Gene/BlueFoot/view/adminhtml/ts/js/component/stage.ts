@@ -5,15 +5,16 @@
 
 import EditableArea from './stage/structural/editable-area';
 import { StageInterface } from './stage.d';
-import Row from './stage/structural/row';
 import _ from 'underscore';
 import DataStore from "./data-store";
-import {DataObject} from "./data-store";
 import Build from "./stage/build";
 import $t from "mage/translate";
 import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
 import $ from 'jquery';
+import createBlock from "./block/factory";
+import Config from "./config";
+import Block from "./block/block";
 
 export default class Stage extends EditableArea implements StageInterface {
     parent: any;
@@ -26,6 +27,9 @@ export default class Stage extends EditableArea implements StageInterface {
     serializeRole: string = 'stage';
     store: DataStore;
     save: Save = new Save();
+    config: {} = {
+        name: 'stage'
+    };
 
     /**
      * Stage constructor
@@ -89,7 +93,12 @@ export default class Stage extends EditableArea implements StageInterface {
                     console.error(error);
                 });
         } else {
-            this.addRow(this);
+            // Add an initial row to the stage if the stage is currently empty
+            if (typeof Config.getInitConfig('contentTypes')['row'] !== 'undefined') {
+                createBlock(Config.getInitConfig('contentTypes')['row'], this, this, {}).then((row: Block) => {
+                    this.addChild(row);
+                });
+            }
             this.ready();
         }
     }
@@ -101,25 +110,6 @@ export default class Stage extends EditableArea implements StageInterface {
         this.emit('stageReady');
         this.children.valueHasMutated();
         this.loading(false);
-    }
-
-    /**
-     * Add a row to the stage
-     *
-     * @param self
-     * @param data
-     * @returns {Row}
-     */
-    addRow(self: Stage, data?: DataObject): Row {
-        let row = new Row(self, self);
-        this.store.update(row.id, data);
-        this.addChild(row);
-
-        return row;
-    }
-
-    openTemplateManager() {
-        // @todo
     }
 
     /**
@@ -147,10 +137,6 @@ export default class Stage extends EditableArea implements StageInterface {
      */
     isFullScreen(): boolean {
         return this.parent.isFullScreen();
-    }
-
-    addComponent() {
-        // @todo
     }
 
     /**
