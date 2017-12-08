@@ -230,10 +230,16 @@
         <element name="slideLinkURL2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
         <element name="slideBackgroundImage" type="text" selector="[data-role='slide']:nth-of-type({{arg1}})[style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
     </section>
+    <section name="SearchOnStage">
+        <element name="searchInput" type="input" selector="//*[@type='search']" />
+    </section>
     <section name="SearchOnFrontend">
         <element name="searchInput" type="input" selector="//*[@placeholder='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="ProductOnFrontend">
+        <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
+    </section>
+    <section name="ProductOnAdmin">
         <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
     </section>
 </config>

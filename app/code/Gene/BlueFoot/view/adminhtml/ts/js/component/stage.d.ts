@@ -20,10 +20,7 @@ export interface StageInterface extends EditableAreaInterface {
 
     build(buildInstance: Build, buildStructure: HTMLElement): void;
     ready(): void
-    addRow(self: StageInterface, data?: object): Row
-    openTemplateManager(): void
     goFullScreen(): void
-    addComponent(): void
     onSortingStart(): void
     onSortingStop(): void
     isFullScreen(): boolean
