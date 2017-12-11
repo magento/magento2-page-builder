@@ -37,7 +37,8 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
             return jQuery(elements)
                 .draggable(this._getConfig(extendedConfig))
                 .on('dragstart', function (event, ui) {
-                    // @todo remove Magento specific code from bindings
+                    // Ensure the dimensions are retained on the element
+                    ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
                     require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
                     // Attach the view model to the element for knockout sortable
                     getViewModelFromEvent(event).emit('dragStart', {
@@ -46,7 +47,6 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                     });
                 })
                 .on('dragstop', function (event, ui) {
-                    // @todo remove Magento specific code from bindings
                     require("uiRegistry").remove('dragElementViewModel');
                     getViewModelFromEvent(event).emit('dragStop', {
                         event: event,

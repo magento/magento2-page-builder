@@ -66,13 +66,7 @@
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{BlueFootRowSection.row}}" mergeKey="waitForBlueFootRow" />
     </actionGroup>
-
-    <actionGroup name="addBlueFootRowToStage">
-        <click selector="{{BlueFootColumnSection.addRow}}" mergeKey="clickAddRow"/>
-        <seeElement selector="{{BlueFootRowSection.row2}}" mergeKey="seeElementRow"/>
-        <waitForElement time="1" selector="{{BlueFootRowSection.row2}}" mergeKey="waitForBlueFootButton" />
-    </actionGroup>
-
+    
     <actionGroup name="dragBlueFootColumnIntoStage">
         <dragAndDrop selector1="{{BlueFootColumnSection.draggableColumnInPanel}}" selector2="{{BlueFootColumnSection.dropAreaInDefaultStage}}" mergeKey="dropColumnIntoStage"/>
         <waitForElementVisible time="1" selector="{{BlueFootColumnSection.column}}" mergeKey="waitForColumn" />
@@ -123,6 +117,7 @@
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
+        <waitForElementVisible time="10" selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" mergeKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" mergeKey="onMouseOverContentBlockStage"/>
         <seeElement selector="{{BlueFootActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" mergeKey="seeContentBlockOptionsMenu"/>
         <click selector="{{BlueFootActionsSection.contentBlockEdit(contentBlockType.role)}}" mergeKey="clickEditContentBlock"/>
@@ -178,6 +173,16 @@
         <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" mergeKey="clickOnFieldLabel"/>
     </actionGroup>
+
+    <actionGroup name="fillSlideOutPanelFieldGeneralWysiwyg">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" mergeKey="waitForElementVisibleWysiwyg" />
+        <fillField selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" userInput="{{property.value}}" mergeKey="fillPropertyFieldWysiwyg"/>
+    </actionGroup>
+
     <actionGroup name="fillMapPositionFields">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -287,6 +292,13 @@
         <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
         <waitForElementVisible time="1" selector="{{BlueFootActionsSection.editFormSave}}" mergeKey="waitForColumnSaveButton" />
         <click selector="{{BlueFootActionsSection.editFormSave}}" mergeKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
+    </actionGroup>
+    <actionGroup name="closeEditPanelSettings">
+        <waitForLoadingMaskToDisappear mergeKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.editFormClose}}" mergeKey="waitForCloseButton" />
+        <click selector="{{BlueFootActionsSection.editFormClose}}" mergeKey="clickCloseButton"/>
         <waitForElementNotVisible time="5" selector="{{BlueFootActionsSection.editForm}}" mergeKey="waitForEditFormNotVisible" />
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" mergeKey="waitForCmsPageSaveButton" />
     </actionGroup>

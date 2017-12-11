@@ -21,7 +21,7 @@ export default class ProductList extends PreviewBlock {
         this.updateDataValue('html', '');
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                if (this.data.category() === '') {
+                if (this.data.category_id() === '') {
                     return;
                 }
                 const url = Config.getInitConfig('preview_url'),
@@ -29,7 +29,7 @@ export default class ProductList extends PreviewBlock {
                         role: this.config.name,
                         product_count: data.product_count,
                         hide_out_of_stock: data.hide_out_of_stock,
-                        category_id: data.category,
+                        category_id: data.category_id,
                         is_preview: true
                     };
 
