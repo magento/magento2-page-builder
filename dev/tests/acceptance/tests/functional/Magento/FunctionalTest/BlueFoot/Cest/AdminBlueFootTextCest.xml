@@ -18,17 +18,17 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot1"/>
-            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" mergeKey="enterCmsPageLinkTitle"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPageLink"/>
-            <grabFromCurrentUrl returnVariable="cmsPageLinkID" url="~/page_id/(\d+)/~" mergeKey="grabFromCurrentUrl"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot2"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot1"/>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" stepKey="enterCmsPageLinkTitle"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageLink"/>
+            <grabFromCurrentUrl returnVariable="cmsPageLinkID" url="~/page_id/(\d+)/~" stepKey="grabFromCurrentUrl"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot2"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <test name="CanAddText">
             <annotations>
@@ -38,48 +38,48 @@
                 <testCaseId value="MAGETWO-84263"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragButtonsOntoStage">
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <waitForLoadingMaskToDisappear mergeKey="waitForEditPanelSpinner"/>
-            <waitForElementVisible selector="#text_form_content_magentovariable" mergeKey="waitForVariableButton"/>
-            <click selector="#text_form_content_magentovariable" mergeKey="clickInsertVariableButton"/>
-            <waitForLoadingMaskToDisappear mergeKey="waitForVariablesSpinner"/>
-            <click selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" mergeKey="clickBaseUnsecureUrl"/>
-            <waitForElementNotVisible selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" mergeKey="waitForVariableModalToClose"/>
-            <click selector="#text_form_content_magentowidget" mergeKey="clickInsertWidgetButton"/>
-            <waitForElementVisible selector="#select_widget_type" mergeKey="waitForWidgetSelectVisible"/>
-            <selectOption selector="#select_widget_type" userInput="Magento\Cms\Block\Widget\Page\Link" mergeKey="selectCMSPageLinkWidget"/>
-            <waitForLoadingMaskToDisappear mergeKey="waitForCMSPageLinkWidgetForm"/>
-            <click selector="//button/span[contains(text(), 'Select Page...')]" mergeKey="clickSelectPageButton"/>
-            <waitForLoadingMaskToDisappear mergeKey="waitForSelectPageModal"/>
-            <fillField selector="input[name='chooser_title']" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" mergeKey="enterPageNameInSearch"/>
-            <click selector="button[data-action='grid-filter-apply']" mergeKey="clickSearchButton"/>
-            <waitForLoadingMaskToDisappear mergeKey="waitForSearchResult"/>
-            <click selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" mergeKey="clickCmsPageLinkRow"/>
-            <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" mergeKey="waitForPageSelectionModalToClose"/>
-            <click selector="#insert_button" mergeKey="clickInsertWidget"/>
-            <waitForElementNotVisible selector="#insert_button" mergeKey="waitForInsertWidgetModalToClose"/>
-            <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" mergeKey="addTextToWYSIWYG"/>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <see selector="div.bluefoot-html" userInput="{{config path=&quot;web/unsecure/base_url&quot;}}" mergeKey="seeVariableCodeInStage"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+            <waitForElementVisible selector="#text_form_content_magentovariable" stepKey="waitForVariableButton"/>
+            <click selector="#text_form_content_magentovariable" stepKey="clickInsertVariableButton"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForVariablesSpinner"/>
+            <click selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" stepKey="clickBaseUnsecureUrl"/>
+            <waitForElementNotVisible selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" stepKey="waitForVariableModalToClose"/>
+            <click selector="#text_form_content_magentowidget" stepKey="clickInsertWidgetButton"/>
+            <waitForElementVisible selector="#select_widget_type" stepKey="waitForWidgetSelectVisible"/>
+            <selectOption selector="#select_widget_type" userInput="Magento\Cms\Block\Widget\Page\Link" stepKey="selectCMSPageLinkWidget"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForCMSPageLinkWidgetForm"/>
+            <click selector="//button/span[contains(text(), 'Select Page...')]" stepKey="clickSelectPageButton"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSelectPageModal"/>
+            <fillField selector="input[name='chooser_title']" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" stepKey="enterPageNameInSearch"/>
+            <click selector="button[data-action='grid-filter-apply']" stepKey="clickSearchButton"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSearchResult"/>
+            <click selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" stepKey="clickCmsPageLinkRow"/>
+            <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" stepKey="waitForPageSelectionModalToClose"/>
+            <click selector="#insert_button" stepKey="clickInsertWidget"/>
+            <waitForElementNotVisible selector="#insert_button" stepKey="waitForInsertWidgetModalToClose"/>
+            <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <see selector="div.bluefoot-html" userInput="{{config path=&quot;web/unsecure/base_url&quot;}}" stepKey="seeVariableCodeInStage"/>
             <!-- Current implementation does not support string literals and variables. Re-factor once this feature is supported -->
             <see selector="div.bluefoot-html"
                  userInput="{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id="
-                 mergeKey="seeWidgetCodeInStage"/>
-            <see selector="div.bluefoot-html" userInput="This is some text" mergeKey="seeTypedTextInStage"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <amOnPage url="{{BlueFootTextContentBlock.name}}{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <see userInput="{{_ENV.MAGENTO_BASE_URL}}" mergeKey="seeBaseUnsecureUrlOnStorefront"/>
-            <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}{{BlueFootTextContentBlock.cmsPageLinkName}}']" mergeKey="seeHomePageWidgetOnStorefront"/>
-            <see userInput="This is some text" mergeKey="seeTypedTextOnStorefront"/>
+                 stepKey="seeWidgetCodeInStage"/>
+            <see selector="div.bluefoot-html" userInput="This is some text" stepKey="seeTypedTextInStage"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="{{BlueFootTextContentBlock.name}}{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <see userInput="{{_ENV.MAGENTO_BASE_URL}}" stepKey="seeBaseUnsecureUrlOnStorefront"/>
+            <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}{{BlueFootTextContentBlock.cmsPageLinkName}}']" stepKey="seeHomePageWidgetOnStorefront"/>
+            <see userInput="This is some text" stepKey="seeTypedTextOnStorefront"/>
         </test>
         <test name="TextHasAdvancedFormSection">
             <annotations>
@@ -89,29 +89,29 @@
                 <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" mergeKey="enterPageTitle"/>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragButtonsOntoStage">
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>

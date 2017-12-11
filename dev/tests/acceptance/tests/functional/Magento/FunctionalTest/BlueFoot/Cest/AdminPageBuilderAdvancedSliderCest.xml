@@ -18,13 +18,13 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
 
 
@@ -36,29 +36,29 @@
                 <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAdvancedSliderIntoStage">
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
@@ -71,88 +71,88 @@
                 <testCaseId value="MAGETWO-84897"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragAdvancedSliderOntoStage">
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderOntoStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterFadeYes">
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
                 <argument name="property" value="PageBuilderAdvanceSliderFadeProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterIsInfiniteYes">
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterIsInfiniteYes">
                 <argument name="property" value="PageBuilderAdvanceSliderIsInfiniteProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterShowArrowYes">
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowArrowYes">
                 <argument name="property" value="PageBuilderAdvanceSliderShowArrowsProperty"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings1"/>
-            <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" mergeKey="clickOnAddSlideElement1"/>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideTitle1">
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+            <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement1"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
                 <argument name="property" value="PageBuilderSlideItemTitle1"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneralWysiwyg" mergeKey="enterSlideContent1">
+            <actionGroup ref="fillSlideOutPanelFieldGeneralWysiwyg" stepKey="enterSlideContent1">
                 <argument name="property" value="PageBuilderSlideItemContent1"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideLinkText1">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkText1">
                 <argument name="property" value="PageBuilderSlideItemLinkText1"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideLinkURL1">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
                 <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
             </actionGroup>
-            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachSlideImageFile1">
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
                 <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
             </actionGroup>
-            <actionGroup ref="clickSlideOutPanelFieldGeneral" mergeKey="enterSlideHasBackgroundOverlay1">
+            <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideHasBackgroundOverlay1">
                 <argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanel1Settings"/>
-            <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" mergeKey="clickOnAddSlideElement"/>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideTitle2">
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+            <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
                 <argument name="property" value="PageBuilderSlideItemTitle2"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneralWysiwyg" mergeKey="enterSlideContent2">
+            <actionGroup ref="fillSlideOutPanelFieldGeneralWysiwyg" stepKey="enterSlideContent2">
                 <argument name="property" value="PageBuilderSlideItemContent2"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideLinkText2">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkText2">
                 <argument name="property" value="PageBuilderSlideItemLinkText2"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterSlideLinkURL2">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
                 <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
             </actionGroup>
-            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachSlideImageFile2">
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile2">
                 <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanel2Settings"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <amOnPage url="advanced-slider{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.advancedSliderDisplay}}" mergeKey="seeAdvancedSliderOnBluefootPage"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.AutoplaySpeed(PageBuilderAdvanceSliderAutoplaySpeedProperty.value)}}" mergeKey="seeAdvancedSliderAutoplaySpeedSetting"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.Fade(PageBuilderAdvanceSliderFadeProperty.value)}}" mergeKey="seeAdvancedSliderFadeSetting"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.IsInfinite(PageBuilderAdvanceSliderIsInfiniteProperty.value)}}" mergeKey="seeAdvancedSliderIsInfiniteSetting"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" mergeKey="seeAdvancedSliderShowArrowsSetting"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.ShowDots}}" mergeKey="seeAdvancedSliderShowDotsSetting"/>
-            <seeElement selector="{{AdvancedSliderOnFrontend.Autoplay}}" mergeKey="seeAdvancedSliderAutoplaySetting"/>
-            <seeElement selector="{{SlideOnFrontend.slide1}}" mergeKey="seeSlide1InAdvancedSlider"/>
-            <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" mergeKey="seeSlide1TitleDisplayed"/>
-            <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" mergeKey="seeSlide1ContentDisplayed"/>
-            <seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" mergeKey="seeSlide1HasOverlay"/>
-            <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" mergeKey="seeSlide1LinkTextDisplayed"/>
-            <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" mergeKey="seeSlide1LinkURL"/>
-            <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" mergeKey="seeSlide1Background"/>
-            <click selector="{{AdvancedSliderOnFrontend.nextSlide}}" mergeKey="clickNextSlideOnAdvancedSlider"/>
-            <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" mergeKey="waitForSlide2" />
-            <seeElement selector="{{SlideOnFrontend.slide2}}" mergeKey="seeSlide2InAdvancedSlider"/>
-            <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" mergeKey="seeSlide2TitleDisplayed"/>
-            <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" mergeKey="seeSlide2ContentDisplayed"/>
-            <see userInput="{{PageBuilderSlideItemLinkText2.value}}" selector="{{SlideOnFrontend.slideLinkText2}}" mergeKey="seeSlide2LinkTextDisplayed"/>
-            <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" mergeKey="seeSlide2LinkURL"/>
-            <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('2',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" mergeKey="seeSlide2Background"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="advanced-slider{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.advancedSliderDisplay}}" stepKey="seeAdvancedSliderOnBluefootPage"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.AutoplaySpeed(PageBuilderAdvanceSliderAutoplaySpeedProperty.value)}}" stepKey="seeAdvancedSliderAutoplaySpeedSetting"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.Fade(PageBuilderAdvanceSliderFadeProperty.value)}}" stepKey="seeAdvancedSliderFadeSetting"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.IsInfinite(PageBuilderAdvanceSliderIsInfiniteProperty.value)}}" stepKey="seeAdvancedSliderIsInfiniteSetting"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" stepKey="seeAdvancedSliderShowArrowsSetting"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.ShowDots}}" stepKey="seeAdvancedSliderShowDotsSetting"/>
+            <seeElement selector="{{AdvancedSliderOnFrontend.Autoplay}}" stepKey="seeAdvancedSliderAutoplaySetting"/>
+            <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InAdvancedSlider"/>
+            <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
+            <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
+            <seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" stepKey="seeSlide1HasOverlay"/>
+            <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" stepKey="seeSlide1LinkTextDisplayed"/>
+            <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
+            <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
+            <click selector="{{AdvancedSliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnAdvancedSlider"/>
+            <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
+            <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InAdvancedSlider"/>
+            <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" stepKey="seeSlide2TitleDisplayed"/>
+            <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" stepKey="seeSlide2ContentDisplayed"/>
+            <see userInput="{{PageBuilderSlideItemLinkText2.value}}" selector="{{SlideOnFrontend.slideLinkText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
+            <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
+            <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('2',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
 
         </test>
     </cest>

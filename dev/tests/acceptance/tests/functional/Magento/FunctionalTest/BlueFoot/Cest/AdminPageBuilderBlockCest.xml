@@ -19,14 +19,14 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="addCmsBlock" mergeKey="addCmsBlock"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <test name="CanAddBlock">
             <annotations>
@@ -35,29 +35,29 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="waitForElementVisible" />
-            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterIdentifierProperty">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
                 <argument name="property" value="BlueFootBlockIdentifierProperty"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" mergeKey="waitForContentHeader" />
-            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" mergeKey="waitForCmsPageSpinner" />
-            <click selector="{{CmsNewPagePageContentSection.header}}" mergeKey="clickExpandContent"/>
-            <waitForElementVisible time="10" selector="{{BlockOnBackend.hr}}" mergeKey="waitForHrElementVisible" />
-            <seeElement selector="{{BlockOnBackend.hr}}" mergeKey="seeBlockContentBackend"/>
-            <amOnPage url="block{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{BlockOnFrontend.hr}}" mergeKey="seeBlockContentFrontend"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <waitForElementVisible time="10" selector="{{BlockOnBackend.hr}}" stepKey="waitForHrElementVisible" />
+            <seeElement selector="{{BlockOnBackend.hr}}" stepKey="seeBlockContentBackend"/>
+            <amOnPage url="block{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{BlockOnFrontend.hr}}" stepKey="seeBlockContentFrontend"/>
         </test>
         <test name="BlockHasAdvancedFormSection">
             <annotations>
@@ -67,30 +67,30 @@
                 <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="waitForElementVisible" />
-            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragBlockIntoStage">
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
