@@ -5,9 +5,6 @@
 
 import Block from "./block";
 import Config from "../config";
-import _ from 'underscore';
-import ko from "knockout";
-import Edit from "../stage/edit";
 import createBlock from "../block/factory";
 
 export default class AdvancedSlider extends Block {
@@ -20,61 +17,5 @@ export default class AdvancedSlider extends Block {
             this.addChild(slide);
             slide.edit.open();
         });
-    }
-
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {Array} image
-     * @returns {string}
-     */
-    private getImageUrl(image: []){
-        let imageUrl = image[0]['url'],
-            mediaUrl = Config.getInitConfig('media_url'),
-            mediaPath = imageUrl.split(mediaUrl),
-            directive = '{{media url=' + mediaPath[1] + '}}';
-        return directive;
-    }
-
-    /**
-     * Does the driver have a mobile image?
-     *
-     * @returns {boolean}
-     */
-    hasMobileImage() {
-        let data = this.getData();
-        return !(data.mobile_image == "" || data.mobile_image == undefined || _.isEmpty(data.mobile_image[0]));
-    }
-
-    /**
-     * Get the desktop (main) image attributes for the render
-     *
-     * @returns {any}
-     */
-    getMainImageAttributes() {
-        let data = this.getData();
-        if (data.image == "" || data.image == undefined) {
-            return {};
-        }
-        if (_.isEmpty(data.image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
-    }
-
-    /**
-     * Get the mobile image attributes for the render
-     *
-     * @returns {any}
-     */
-    getMobileImageAttributes() {
-        let data = this.getData();
-        if (data.mobile_image == "" || data.mobile_image == undefined) {
-            return {};
-        }
-        if (_.isEmpty(data.mobile_image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
     }
 }
