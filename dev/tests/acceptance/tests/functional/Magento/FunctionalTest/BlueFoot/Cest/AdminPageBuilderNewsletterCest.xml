@@ -10,7 +10,7 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <cest name="AdminPageBuilderNewsletterCest">
         <annotations>
-            <features value="PageBuilder CMS"/>
+            <features value="PageBuilder"/>
             <stories value="PageBuilder Newsletter Configuration"/>
             <group value="bluefoot"/>
             <env value="chrome"/>
@@ -26,6 +26,64 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
+        <test name="CanAddNewsletter">
+            <annotations>
+                <title value="Can add newsletter"/>
+                <description value="The user should be able to add newsletter content types and they should be visible on frontend"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="waitForElementVisible" />
+            <click selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyButtonText">
+                <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyLabel">
+                <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyPlaceholder">
+                <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyTitle">
+                <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <waitForElementVisible time="15" selector="{{NewsletterOnFrontend.form}}" stepKey="waitForNewsletterFormElementVisible" />
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage2">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLabelProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePlaceholderProperty">
+                <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTitleProperty">
+                <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+            </actionGroup>
+            <amOnPage url="newsletter{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{NewsletterOnFrontend.form}}" stepKey="seeNewsletterForm"/>
+            <seeElement selector="{{NewsletterOnFrontend.title('Newsletter title')}}" stepKey="seeNewsletterTitle"/>
+            <seeElement selector="{{NewsletterOnFrontend.placeholder('Newsletter placeholder')}}" stepKey="seeNewsletterPlaceholder"/>
+            <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" stepKey="seeNewsletterLabel"/>
+            <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" stepKey="seeNewsletterButtonText"/>
+        </test>
         <test name="NewsletterHasAdvancedFormSection">
             <annotations>
                 <title value="Newsletter has Advanced form section"/>

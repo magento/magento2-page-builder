@@ -27,7 +27,7 @@ export default class Newsletter extends PreviewBlock {
                     requestData = {
                         role: this.config.name,
                         'button_text': this.data.button_text,
-                        'button_label': this.data.button_label,
+                        'label_text': this.data.label_text,
                         'placeholder': this.data.placeholder,
                         'title': this.data.title,
                     };
