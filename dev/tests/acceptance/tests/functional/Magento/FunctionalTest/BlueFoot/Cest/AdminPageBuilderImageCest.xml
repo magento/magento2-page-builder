@@ -18,13 +18,13 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <test name="CanAddImage">
             <annotations>
@@ -34,80 +34,79 @@
                 <testCaseId value="MAGETWO-84259"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragImageIntoStage">
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachImageFile">
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
                 <argument name="property" value="PageBuilderImagePropertyJpg"/>
             </actionGroup>
-            <actionGroup ref="attachFileSlideOutPropertyGeneral" mergeKey="attachMobileImageFile">
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
                 <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterAltTextProperty">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">
                 <argument name="property" value="PageBuilderImageAltTextProperty"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterTitleTagProperty">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
                 <argument name="property" value="PageBuilderImageTitleTagProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterHasLightbox">
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">
                 <argument name="property" value="PageBuilderImageLightboxProperty"/>
             </actionGroup>
-            <actionGroup ref="selectSlideOutPanelFieldGeneral" mergeKey="enterShowCaption">
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">
                 <argument name="property" value="PageBuilderImageShowCaptionProperty"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <amOnPage url="image{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ImageOnFrontend.imageDisplay}}" mergeKey="seeMainImageDisplayed"/>
-            <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" mergeKey="seeMainImageSource"/>
-            <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" mergeKey="seeImageLightboxLink"/>
-            <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" mergeKey="seeImageAltText"/>
-            <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" mergeKey="seeImageAltText"/>
-            <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" mergeKey="seeMobileImageInDom"/>
-            <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" mergeKey="seeTitleTagDisplayedAsCaption"/>
-            <click selector="{{ImageOnFrontend.imageHasLightbox}}" mergeKey="clickMainImage"/>
-            <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" mergeKey="waitForLightbox" />
-            <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" mergeKey="seeLightBoxDisplayed"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="image{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
+            <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="seeImageLightboxLink"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
+            <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
+            <click selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="clickMainImage"/>
+            <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
+            <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
         </test>
         <test name="ImageHasAdvancedFormSection">
             <annotations>
                 <title value="Image has Advanced form section"/>
                 <description value="A user should be able to configure advanced settings for Image"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.mediaGroup}}" mergeKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragImageIntoStage">
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>

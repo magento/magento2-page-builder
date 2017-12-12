@@ -18,13 +18,13 @@
             <env value="phantomjs"/>
         </annotations>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <test name="CanAddHtml">
             <annotations>
@@ -34,58 +34,57 @@
                 <testCaseId value="MAGETWO-84270"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragHtmlIntoStage">
+            <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" mergeKey="enterHtmlContent">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
                 <argument name="property" value="BlueFootHtmlTypeProperty"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="html{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{HtmlOnFrontend.htmlDisplay('div')}}" mergeKey="htmlStyleApplied"/>
-            <see userInput="{{BlueFootHtmlTypeProperty.value}}" selector="{{HtmlOnFrontend.htmlDisplay('div')}}" mergeKey="assertHtmlShowsFrontend"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="html{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="htmlStyleApplied"/>
+            <see userInput="{{BlueFootHtmlTypeProperty.value}}" selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="assertHtmlShowsFrontend"/>
         </test>
         <test name="HtmlHasAdvancedFormSection">
             <annotations>
                 <title value="HTML has Advanced form section"/>
                 <description value="A user should be able to configure advanced settings html"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84912"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.otherGroup}}" mergeKey="clickOtherGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragHtmlIntoStage">
+            <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>

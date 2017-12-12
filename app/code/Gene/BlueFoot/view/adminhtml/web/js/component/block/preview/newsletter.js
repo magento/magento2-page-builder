@@ -28,7 +28,7 @@ define(["knockout", "./block", "../../config"], function (_knockout, _block, _co
             requestData = {
           role: _this.config.name,
           'button_text': _this.data.button_text,
-          'button_label': _this.data.button_label,
+          'label_text': _this.data.label_text,
           'placeholder': _this.data.placeholder,
           'title': _this.data.title
         };

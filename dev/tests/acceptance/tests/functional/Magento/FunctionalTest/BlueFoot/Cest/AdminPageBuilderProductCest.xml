@@ -18,46 +18,45 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <createData entity="_defaultCategory" mergeKey="createPreReqCategory"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <test name="CanAddProduct">
             <annotations>
                 <title value="Add a product content block into stage"/>
                 <description value="A user should be able to add a product content block into a row."/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84901"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="createNewSimpleProduct" mergeKey="createSimpleProduct"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="createNewSimpleProduct" stepKey="createSimpleProduct"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragProductIntoStage">
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragProductIntoStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <actionGroup ref="fillProductPanelFieldGeneral" mergeKey="enterProductProperties">
+            <actionGroup ref="fillProductPanelFieldGeneral" stepKey="enterProductProperties">
                 <argument name="property" value="PageBuilderProductProperty"/>
             </actionGroup>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <seeElement selector="{{ProductOnAdmin.productDisplay}}" mergeKey="productApplied1"/>
-            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnAdmin.productDisplay}}" mergeKey="assertProductShowsAdmin"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="product{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ProductOnFrontend.productDisplay}}" mergeKey="productApplied2"/>
-            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" mergeKey="assertProductShowsFrontend"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <seeElement selector="{{ProductOnAdmin.productDisplay}}" stepKey="productApplied1"/>
+            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnAdmin.productDisplay}}" stepKey="assertProductShowsAdmin"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="product{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{ProductOnFrontend.productDisplay}}" stepKey="productApplied2"/>
+            <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" stepKey="assertProductShowsFrontend"/>
         </test>
         <test name="ProductHasAdvancedFormSection">
             <annotations>
@@ -67,31 +66,31 @@
                 <testCaseId value="MAGETWO-84901"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.magentoGroup}}" mergeKey="clickMagentoGroup"/>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragProductIntoStage">
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragProductIntoStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" mergeKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" mergeKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" mergeKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedCssClassesProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedAlignmentProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
                 <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" mergeKey="seeAdvancedMarginsAndPaddingProperty">
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>

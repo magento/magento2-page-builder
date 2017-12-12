@@ -20,7 +20,7 @@ define(["./block", "../../config"], function (_block, _config) {
       _this.updateDataValue('html', '');
 
       _this.parent.stage.store.subscribe(function (data) {
-        if (_this.data.category() === '') {
+        if (_this.data.category_id() === '') {
           return;
         }
 
@@ -29,7 +29,7 @@ define(["./block", "../../config"], function (_block, _config) {
           role: _this.config.name,
           product_count: data.product_count,
           hide_out_of_stock: data.hide_out_of_stock,
-          category_id: data.category,
+          category_id: data.category_id,
           is_preview: true
         };
 
