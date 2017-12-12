@@ -13,14 +13,22 @@ class TreeConverter
     private $rendererPool;
 
     /**
+     * @var ChildrenExtractorPool
+     */
+    private $childrenExtractorPool;
+
+    /**
      * Constructor
      *
      * @param RendererPool $rendererPool
+     * @param ChildrenExtractorPool $childrenExtractorPool
      */
     public function __construct(
-        RendererPool $rendererPool
+        RendererPool $rendererPool,
+        ChildrenExtractorPool $childrenExtractorPool
     ) {
         $this->rendererPool = $rendererPool;
+        $this->childrenExtractorPool = $childrenExtractorPool;
     }
 
     /**
@@ -49,12 +57,14 @@ class TreeConverter
     {
         $contentType = isset($item['type']) ? $item['type'] : $item['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
-        if (isset($item['children'])) {
-            $children = '';
-            foreach ($item['children'] as $childItem) {
-                $children .= $this->convertTreeItem($childItem);
+        $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
+        $children = $childrenExtractor->extract($item);
+        if (!empty($children)) {
+            $childrenHtml = '';
+            foreach ($children as $childItem) {
+                $childrenHtml .= $this->convertTreeItem($childItem);
             }
-            return $renderer->render($item, ['children' => $children]);
+            return $renderer->render($item, ['children' => $childrenHtml]);
         }
         return $renderer->render($item, []);
     }

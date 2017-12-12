@@ -17,7 +17,15 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             ]
         );
 
-        $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter($rendererPool);
+        $childrenExtractorPool = new \Gene\BlueFoot\Setup\ChildrenExtractorPool(
+            [
+                'row' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('/'),
+                'column' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('/'),
+                'heading' => new \Gene\BlueFoot\Setup\DummyChildrenExtractor()
+            ]
+        );
+
+        $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter($rendererPool, $childrenExtractorPool);
 
         $masterFormat = $treeConverter->convert(
             '[{"type":"row","children":[{"type":"column","formData":{"width":"0.500","remove_padding":"1","css_classes":"","undefined":"","align":"","metric":{"margin":"- 5px - -","padding":"- - - -"}},"children":[{"contentType":"heading","entityId":"1","formData":{"align":"","metric":""}}]}]}]'

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Gene\BlueFoot\Setup;
+
+class ChildrenExtractorPool
+{
+    /**
+     * @var array
+     */
+    private $extractors;
+
+    public function __construct(
+        array $extractors
+    ) {
+        $this->extractors = $extractors;
+    }
+
+    /**
+     * Get children extractor for content type
+     *
+     * @param string $contentType
+     * @return ChildrenExtractorInterface
+     */
+    public function getExtractor($contentType)
+    {
+        return $this->extractors[$contentType];
+    }
+}
