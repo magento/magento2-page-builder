@@ -108,5 +108,50 @@
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
+        <test name="RowHasAdvancedFormSectionRequiredFields">
+            <annotations>
+                <title value="Add advanced tab"/>
+                <description value="See all the required fields in row content type advanced section"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84661"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedTextColorProperty">
+                <argument name="property" value="PageBuilderAdvancedTextColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderColorProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderSizeProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderSizeProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
     </cest>
 </config>
