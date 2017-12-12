@@ -26,43 +26,6 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-
-
-        <test name="AdvancedSliderHasAdvancedFormSection">
-            <annotations>
-                <title value="Advanced Slider has Advanced form section"/>
-                <description value="A user should be able to configure advanced settings for advanced slider"/>
-                <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84912"/>
-                <group value="bluefoot"/>
-            </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
-            </actionGroup>
-            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
-                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
-            </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
-            </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
-            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-            </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-            </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-            </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-            </actionGroup>
-        </test>
-
         <test name="CanAddAdvancedSlider">
             <annotations>
                 <title value="Can add Advanced Slider to Stage"/>
@@ -153,7 +116,39 @@
             <see userInput="{{PageBuilderSlideItemLinkText2.value}}" selector="{{SlideOnFrontend.slideLinkText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
             <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
             <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('2',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
-
+        </test>
+        <test name="AdvancedSliderHasAdvancedFormSection">
+            <annotations>
+                <title value="Advanced Slider has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for advanced slider"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
         </test>
     </cest>
 </config>
