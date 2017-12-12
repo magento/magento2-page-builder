@@ -7,6 +7,7 @@ import {DataObject} from "../component/data-store";
 export default class AttributeMapper {
     // Attribute name mapping
     attributeNameMapping: DataObject = {
+        id: 'id',
         name: 'data-role',
         appearance: 'data-appearance',
         identifier: 'data-identifier',
@@ -72,10 +73,9 @@ export default class AttributeMapper {
             result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                if (key in this.attributeNameMapping) {
-                    key = this.attributeNameMapping[key];
+                if (key in attributeMapping) {
+                    result[attributeMapping[key]] = data[key];
                 }
-                result[key] = data[key];
             }
         );
         return result;
