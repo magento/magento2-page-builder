@@ -12,6 +12,11 @@ class ChildrenExtractorPool
      */
     private $extractors;
 
+    /**
+     * Constructor
+     *
+     * @param array $extractors
+     */
     public function __construct(
         array $extractors
     ) {
