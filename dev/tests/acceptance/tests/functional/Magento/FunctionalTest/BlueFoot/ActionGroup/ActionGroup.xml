@@ -173,16 +173,6 @@
         <fillField selector="{{BlueFootActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
         <click selector="{{BlueFootActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-
-    <actionGroup name="fillSlideOutPanelFieldGeneralWysiwyg">
-        <arguments>
-            <argument name="property" defaultValue=""/>
-        </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" stepKey="waitForElementVisibleWysiwyg" />
-        <fillField selector="{{BlueFootActionsSection.panelFieldControlWysiwyg(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyFieldWysiwyg"/>
-    </actionGroup>
-
     <actionGroup name="fillMapPositionFields">
         <arguments>
             <argument name="property" defaultValue=""/>
