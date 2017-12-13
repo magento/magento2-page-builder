@@ -18,11 +18,7 @@ define([], function () {
         title: 'data-title',
         view_mode: 'data-view-mode',
         sku: 'data-sku',
-<<<<<<< HEAD
         category_id: 'data-category-id',
-=======
-        category: 'category',
->>>>>>> master
         product_count: 'data-product-count',
         show_out_of_stock: 'data-show-out-of-stock',
         autoplay: 'data-autoplay',
