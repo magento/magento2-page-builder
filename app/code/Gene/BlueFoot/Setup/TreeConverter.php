@@ -76,6 +76,6 @@ class TreeConverter
             }
             return $renderer->render($item, ['children' => $childrenHtml]);
         }
-        return $renderer->render($item, []);
+        return $renderer->render($item);
     }
 }
