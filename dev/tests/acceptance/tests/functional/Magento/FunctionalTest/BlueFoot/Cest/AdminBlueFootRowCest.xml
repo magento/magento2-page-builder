@@ -108,6 +108,42 @@
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
+        <test name="RowHasBackgroundFormSection">
+            <annotations>
+                <title value="Add background tab"/>
+                <description value="See that the background tab in row form works"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84659"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="waitForBackgroundForm"/>
+            <seeElement selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="seeBackgroundFormSection"/>
+            <click selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="clickBackgroundFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+            </actionGroup>
+        </test>
         <test name="RowHasAdvancedFormSectionRequiredFields">
             <annotations>
                 <title value="Add advanced tab"/>
