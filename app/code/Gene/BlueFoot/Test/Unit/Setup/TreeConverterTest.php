@@ -19,10 +19,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $childrenExtractorPool = new \Gene\BlueFoot\Setup\ChildrenExtractorPool(
             [
+                'default' => new \Gene\BlueFoot\Setup\DummyChildrenExtractor(),
                 'row' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children'),
                 'column' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children')
-            ],
-            new \Gene\BlueFoot\Setup\DummyChildrenExtractor()
+            ]
         );
 
         $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter(
@@ -53,10 +53,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $childrenExtractorPool = new \Gene\BlueFoot\Setup\ChildrenExtractorPool(
             [
+                'default' => new \Gene\BlueFoot\Setup\DummyChildrenExtractor(),
                 'row' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children'),
                 'buttons' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children/button_items'),
-            ],
-            new \Gene\BlueFoot\Setup\DummyChildrenExtractor()
+            ]
         );
 
         $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter(

@@ -13,22 +13,14 @@ class ChildrenExtractorPool
     private $extractors;
 
     /**
-     * @var ChildrenExtractorInterface
-     */
-    private $defaultExtractor;
-
-    /**
      * Constructor
      *
      * @param array $extractors
-     * @param ChildrenExtractorInterface $defaultExtractor
      */
     public function __construct(
-        array $extractors,
-        ChildrenExtractorInterface $defaultExtractor
+        array $extractors
     ) {
         $this->extractors = $extractors;
-        $this->defaultExtractor = $defaultExtractor;
     }
 
     /**
@@ -42,6 +34,6 @@ class ChildrenExtractorPool
         if (isset($this->extractors[$contentType])) {
             return $this->extractors[$contentType];
         }
-        return $this->defaultExtractor;
+        return $this->extractors['default'];
     }
 }
