@@ -43,10 +43,14 @@ class BlueFootToPageBuilder implements DataConverterInterface
      */
     public function convert($value)
     {
-        if (!$this->isValidBlueFootValue($value)) {
-            return $value;
+        if (preg_match('/<!--GENE_BLUEFOOT="(.*)"-->/', $value, $matches)) {
+            $structure = $matches[1];
+            if ($this->isValidBlueFootValue($structure)) {
+                return $this->converter->convert($structure);
+            }
         }
-        return $this->converter->convert($value);
+
+        return $value;
     }
 
     /**
