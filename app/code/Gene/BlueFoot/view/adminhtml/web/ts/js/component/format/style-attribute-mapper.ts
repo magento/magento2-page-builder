@@ -68,6 +68,10 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
+                debugger;
+                if (value === '') {
+                    return;
+                }
                 if (key === 'border-top-width') {
                     key = 'border-width';
                 }
@@ -98,7 +102,11 @@ export default class StyleAttributeMapper {
                     key = 'border-color';
                 }
                 if (key === 'background-color' || key === 'border-color') {
-                    value = this.colorRegex(value);
+                    if(value === 'initial'){
+                        value = '';
+                    }else{
+                        value = this.colorRegex(value);
+                    }
                 }
                 if (key === 'color') {
                     if(value === 'inherit') {

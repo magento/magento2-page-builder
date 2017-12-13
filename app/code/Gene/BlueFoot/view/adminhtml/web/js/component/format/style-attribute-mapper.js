@@ -77,6 +77,11 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
       var result = {};
       Object.keys(data).map(function (key) {
         var value = data[key];
+        debugger;
+
+        if (value === '') {
+          return;
+        }
 
         if (key === 'border-top-width') {
           key = 'border-width';
@@ -116,7 +121,11 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
         }
 
         if (key === 'background-color' || key === 'border-color') {
-          value = _this2.colorRegex(value);
+          if (value === 'initial') {
+            value = '';
+          } else {
+            value = _this2.colorRegex(value);
+          }
         }
 
         if (key === 'color') {
