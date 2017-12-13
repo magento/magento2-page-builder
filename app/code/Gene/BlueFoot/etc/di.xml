@@ -21,6 +21,8 @@
     <preference for="Gene\BlueFoot\Api\AttributeRepositoryInterface" type="Gene\BlueFoot\Model\Attribute\Repository" />
     <preference for="Gene\BlueFoot\Api\AttributeGroupRepositoryInterface" type="Gene\BlueFoot\Model\AttributeGroupRepository" />
 
+    <preference for="Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface" type="Gene\BlueFoot\Setup\DataConverter\StyleExtractor" />
+
     <type name="Magento\Eav\Model\Entity\Setup\PropertyMapper\Composite">
         <arguments>
             <argument name="propertyMappers" xsi:type="array">
@@ -65,7 +67,7 @@
             <argument name="configFactory" xsi:type="object">uiComponentConfigFactory</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\RendererPool">
+    <type name="Gene\BlueFoot\Setup\DataConverter\RendererPool">
         <arguments>
             <argument name="renderers" xsi:type="array">
                 <item name="row" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Row</item>
@@ -79,7 +81,7 @@
             <argument name="path" xsi:type="string">children</argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\ChildrenExtractorPool">
+    <type name="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
                 <item name="default" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Dummy</item>

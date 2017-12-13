@@ -7,16 +7,25 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
+use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 class Heading implements RendererInterface
 {
+    /**
+     * @var StyleExtractorInterface
+     */
+    private $styleExtractor;
+
     /**
      * @var EntityHydratorInterface
      */
     private $entityHydrator;
 
-    public function __construct(EntityHydratorInterface $entityHydrator)
-    {
+    public function __construct(
+        StyleExtractorInterface $styleExtractor,
+        EntityHydratorInterface $entityHydrator
+    ) {
+        $this->styleExtractor = $styleExtractor;
         $this->entityHydrator = $entityHydrator;
     }
 
@@ -30,6 +39,11 @@ class Heading implements RendererInterface
             'data-role' => 'heading',
             'class' => $eavData['css_classes'] ?? ''
         ];
+
+        $style = $this->styleExtractor->extractStyle($itemData['formData']);
+        if ($style) {
+            $rootElementAttributes['style'] = $style;
+        }
 
         $rootElementHtml = '<' . $eavData['heading_type'];
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {

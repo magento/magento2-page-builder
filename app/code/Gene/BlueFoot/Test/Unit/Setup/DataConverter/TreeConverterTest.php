@@ -25,7 +25,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             [
                 'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row(),
                 'column' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Column(),
-                'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading($headerHydratorMock)
+                'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading(
+                    new \Gene\BlueFoot\Setup\DataConverter\StyleExtractor(),
+                    $headerHydratorMock
+                )
             ]
         );
 

@@ -29,8 +29,8 @@ class ConfigurableEntityHydrator implements EntityHydratorInterface
         if (isset($data['entityId'])) {
             $entity = $this->entityRepository->getById($data['entityId']);
             foreach ($this->eavAttributeNames as $attributeName) {
-                if ($entity->has($attributeName)) {
-                    $eavData[$attributeName] = $entity->get($attributeName);
+                if ($entity->hasData($attributeName)) {
+                    $eavData[$attributeName] = $entity->getDataByKey($attributeName);
                 }
             }
         }
