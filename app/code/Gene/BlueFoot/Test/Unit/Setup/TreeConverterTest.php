@@ -9,11 +9,23 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
     public function testRender()
     {
+        $headerHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\EntityHydratorInterface::class)
+            ->getMockForAbstractClass();
+        $headerHydratorMock->expects($this->once())
+            ->method('hydrate')
+            ->willReturn(
+                [
+                    'css_classes' => 'primary',
+                    'title' => 'Heading text',
+                    'heading_type' => 'h2'
+                ]
+            );
+
         $rendererPool = new \Gene\BlueFoot\Setup\RendererPool(
             [
                 'row' => new \Gene\BlueFoot\Setup\RowRenderer(),
                 'column' => new \Gene\BlueFoot\Setup\ColumnRenderer(),
-                'heading' => new \Gene\BlueFoot\Setup\HeadingRenderer()
+                'heading' => new \Gene\BlueFoot\Setup\HeadingRenderer($headerHydratorMock)
             ]
         );
 
@@ -36,7 +48,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals(
-            '<div data-role="row"><div data-role="column"><h2 data-role="heading">Heading text</h2></div></div>',
+            '<div data-role="row"><div data-role="column"><h2 data-role="heading" class="primary">Heading text</h2></div></div>',
             $masterFormat
         );
     }

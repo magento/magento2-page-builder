@@ -88,6 +88,19 @@
             </argument>
         </arguments>
     </type>
+    <virtualType name="HeadingEntityHydrator" type="Gene\BlueFoot\Setup\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="0" xsi:type="string">title</item>
+                <item name="1" xsi:type="string">heading_type</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\HeadingRenderer">
+        <arguments>
+            <argument name="entityHydrator">HeadingEntityHydrator</argument>
+        </arguments>
+    </type>
     <type name="Magento\Cms\Block\Page">
         <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Page" />
     </type>

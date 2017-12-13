@@ -8,10 +8,32 @@ namespace Gene\BlueFoot\Setup;
 class HeadingRenderer implements RendererInterface
 {
     /**
+     * @var EntityHydratorInterface
+     */
+    private $entityHydrator;
+
+    public function __construct(EntityHydratorInterface $entityHydrator)
+    {
+        $this->entityHydrator = $entityHydrator;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render($itemData, $additionalData = [])
     {
-        return '<h2 data-role="heading">Heading text</h2>';
+        $eavData = $this->entityHydrator->hydrate($itemData);
+        $rootElementAttributes = [
+            'data-role' => 'heading',
+            'class' => $eavData['css_classes'] ?? ''
+        ];
+
+        $rootElementHtml = '<' . $eavData['heading_type'];
+        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+            $rootElementHtml .= " $attributeName=\"$attributeValue\"";
+        }
+        $rootElementHtml .= '>' . $eavData['title'] . '</' . $eavData['heading_type'] . '>';
+
+        return $rootElementHtml;
     }
 }
