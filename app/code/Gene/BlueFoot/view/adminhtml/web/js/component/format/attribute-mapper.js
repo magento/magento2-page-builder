@@ -8,6 +8,7 @@ define([], function () {
   function () {
     function AttributeMapper() {
       this.attributeNameMapping = {
+        id: 'id',
         name: 'data-role',
         appearance: 'data-appearance',
         identifier: 'data-identifier',
@@ -17,7 +18,11 @@ define([], function () {
         title: 'data-title',
         view_mode: 'data-view-mode',
         sku: 'data-sku',
+<<<<<<< HEAD
         category_id: 'data-category-id',
+=======
+        category: 'category',
+>>>>>>> master
         product_count: 'data-product-count',
         show_out_of_stock: 'data-show-out-of-stock',
         autoplay: 'data-autoplay',
@@ -87,11 +92,9 @@ define([], function () {
       }, {}),
           result = {};
       Object.keys(data).map(function (key) {
-        if (key in _this2.attributeNameMapping) {
-          key = _this2.attributeNameMapping[key];
+        if (key in attributeMapping) {
+          result[attributeMapping[key]] = data[key];
         }
-
-        result[key] = data[key];
       });
       return result;
     };
