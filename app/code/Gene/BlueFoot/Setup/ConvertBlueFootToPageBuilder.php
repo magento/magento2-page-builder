@@ -53,6 +53,12 @@ class ConvertBlueFootToPageBuilder
                     $this->setup->getTable('cms_block'),
                     'block_id',
                     'content'
+                ),
+                new FieldToConvert(
+                    DataConverter\BlueFootToPageBuilder::class,
+                    $this->setup->getTable('catalog_product_entity_text'),
+                    'value_id',
+                    'value'
                 )
             ],
             $this->setup->getConnection()
