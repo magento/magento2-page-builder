@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Setup;
 
 use Magento\Framework\Setup\UpgradeDataInterface;
@@ -17,17 +20,25 @@ class UpgradeData implements UpgradeDataInterface
     /**
      * @var \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository
      */
-    protected $groupRepository;
+    private $groupRepository;
+
+    /**
+     * @var ConvertBlueFootToPageBuilderFactory
+     */
+    private $convertBlueFootToPageBuilderFactory;
 
     /**
      * UpgradeData constructor.
      *
      * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository $groupRepository
+     * @param ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      */
     public function __construct(
-        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository $groupRepository
+        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository $groupRepository,
+        ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
     ) {
         $this->groupRepository = $groupRepository;
+        $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
     }
 
     /**
@@ -43,6 +54,12 @@ class UpgradeData implements UpgradeDataInterface
         // Run further changes when upgraded to 1.1.0
         if (version_compare($context->getVersion(), '1.1.0') < 0) {
             $this->migrateGroups();
+        }
+
+        // Upgrade data to our new storage format
+        if (version_compare($context->getVersion(), '1.1.1') < 0) {
+            $this->convertBlueFootToPageBuilderFactory->create(['setup', $setup])
+                ->convert();
         }
 
         $setup->endSetup();
@@ -89,5 +106,4 @@ class UpgradeData implements UpgradeDataInterface
 
         return $this;
     }
-
 }
