@@ -5,6 +5,8 @@
  */
 namespace Gene\BlueFoot\Setup;
 
+use Magento\Framework\Serialize\Serializer\Json;
+
 class TreeConverter
 {
     /**
@@ -18,17 +20,25 @@ class TreeConverter
     private $childrenExtractorPool;
 
     /**
+     * @var Json
+     */
+    private $serializer;
+
+    /**
      * Constructor
      *
      * @param RendererPool $rendererPool
      * @param ChildrenExtractorPool $childrenExtractorPool
+     * @param Json $serializer
      */
     public function __construct(
         RendererPool $rendererPool,
-        ChildrenExtractorPool $childrenExtractorPool
+        ChildrenExtractorPool $childrenExtractorPool,
+        Json $serializer
     ) {
         $this->rendererPool = $rendererPool;
         $this->childrenExtractorPool = $childrenExtractorPool;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -39,12 +49,12 @@ class TreeConverter
      */
     public function convert($string)
     {
-        $jsonTree = json_decode($string, true);
-        $result = '';
+        $jsonTree = $this->serializer->unserialize($string);
+        $html = '';
         foreach ($jsonTree as $treeItem) {
-            $result .= $this->convertTreeItem($treeItem);
+            $html .= $this->convertTreeItem($treeItem);
         }
-        return $result;
+        return $html;
     }
 
     /**

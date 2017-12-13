@@ -28,9 +28,10 @@ class ConfigurableChildrenExtractor implements ChildrenExtractorInterface
      */
     public function extract($data)
     {
-        if ('/' === $this->path) {
-            return $data['children'];
+        $parts = explode('/', $this->path);
+        foreach ($parts as $part) {
+            $data = $data[$part];
         }
-        return [];
+        return $data;
     }
 }

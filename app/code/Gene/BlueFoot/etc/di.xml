@@ -74,23 +74,18 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="RowChildrenExtractor" type="Gene\BlueFoot\Setup\ConfigurableChildrenExtractor">
+    <virtualType name="ChildrenExtractor" type="Gene\BlueFoot\Setup\ConfigurableChildrenExtractor">
         <arguments>
-            <argument name="path" xsi:type="string">/</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="ColumnChildrenExtractor" type="Gene\BlueFoot\Setup\ConfigurableChildrenExtractor">
-        <arguments>
-            <argument name="path" xsi:type="string">/</argument>
+            <argument name="path" xsi:type="string">children</argument>
         </arguments>
     </virtualType>
     <type name="Gene\BlueFoot\Setup\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
-                <item name="row" xsi:type="object">RowChildrenExtractor</item>
-                <item name="column" xsi:type="object">ColumnChildrenExtractor</item>
-                <item name="heading" xsi:type="object">Gene\BlueFoot\Setup\DummyChildrenExtractor</item>
+                <item name="row" xsi:type="object">ChildrenExtractor</item>
+                <item name="column" xsi:type="object">ChildrenExtractor</item>
             </argument>
+            <argument name="defaultExtractor" xsi:type="object">Gene\BlueFoot\Setup\DummyChildrenExtractor</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">
