@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import Block from "./block";
 
 export default class Row extends Block {
@@ -28,6 +29,6 @@ export default class Row extends Block {
         if (isAllColumns) {
             styleAttributes['display'] = 'flex';
         }
-        return styleAttributes;
+        return _.extend(super.getStyle(), styleAttributes);
     }
 }

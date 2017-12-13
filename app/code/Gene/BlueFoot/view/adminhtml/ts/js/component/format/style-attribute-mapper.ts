@@ -21,7 +21,7 @@ export default class StyleAttributeMapper {
         let result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                let value = data[key];
+                let value:any = data[key];
                 if (value === '') {
                     return;
                 }
@@ -67,7 +67,7 @@ export default class StyleAttributeMapper {
         let result: FromDomResult = {};
         Object.keys(data).map(
             (key: any) => {
-                let value = data[key];
+                let value: any = data[key];
                 if (key === 'border-top-width') {
                     key = 'border-width';
                 }
@@ -94,10 +94,12 @@ export default class StyleAttributeMapper {
                 if (key === 'background-color' || key === 'border-color') {
                     const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
                     let matches = regexp.exec(value);
-                    value = '#'
-                        + this.fromIntToHex(parseInt(matches[1]))
-                        + this.fromIntToHex(parseInt(matches[2]))
-                        + this.fromIntToHex(parseInt(matches[3]));
+                    if (matches[1]) {
+                        value = '#'
+                            + this.fromIntToHex(parseInt(matches[1]))
+                            + this.fromIntToHex(parseInt(matches[2]))
+                            + this.fromIntToHex(parseInt(matches[3]));
+                    }
                 }
                 if (key === 'background-image') {
                     // Replace the location.href if it exists and decode the value

@@ -3,6 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
+import "ko-resizable";
 import Structural from './abstract';
 import { ColumnInterface } from './column.d';
 import { RowInterface } from "./row.d";
@@ -11,7 +13,6 @@ import { Option } from "./options/option";
 import { OptionInterface } from "./options/option.d";
 import EditableArea from '../../stage/structural/editable-area'
 import Stage from '../../stage';
-import "ko-resizable";
 
 /**
  * @deprecated use component/block/row.
@@ -81,6 +82,6 @@ export default class Row extends Structural implements RowInterface {
         if (isAllColumns) {
             styleAttributes['display'] = 'flex';
         }
-        return styleAttributes;
+        return _.extend(super.getStyle(), styleAttributes);
     }
 }
