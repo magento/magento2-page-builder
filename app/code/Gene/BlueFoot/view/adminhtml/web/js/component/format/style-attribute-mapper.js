@@ -27,7 +27,11 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           return;
         }
 
-        if (key === 'min_height' || key === 'border_width') {
+        if (key === 'color' && (value === 'default' || value === 'Default')) {
+          value = 'inherit';
+        }
+
+        if (key === 'min_height' || key === 'border_width' || key === 'border_radius') {
           value = value.replace('px', '') + 'px';
         }
 
@@ -78,7 +82,15 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
           key = 'border-width';
         }
 
-        if (key === 'min-height' || key === 'border-width') {
+        if (key === 'border-top-style') {
+          key = 'border';
+        }
+
+        if (key === 'border-top-left-radius') {
+          key = 'border-radius';
+        }
+
+        if (key === 'min-height' || key === 'border-width' || key === 'border-radius') {
           value = value.replace('px', '');
         }
 
@@ -104,11 +116,14 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
         }
 
         if (key === 'background-color' || key === 'border-color') {
-          var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
-          var matches = regexp.exec(value);
+          value = _this2.colorRegex(value);
+        }
 
-          if (matches[1]) {
-            value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[3]));
+        if (key === 'color') {
+          if (value === 'inherit') {
+            value = 'Default';
+          } else {
+            value = _this2.colorRegex(value);
           }
         }
 
@@ -179,6 +194,15 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
     _proto.fromIntToHex = function fromIntToHex(value) {
       var hex = value.toString(16);
       return hex.length == 1 ? '0' + hex : hex;
+    };
+
+    _proto.colorRegex = function colorRegex(value) {
+      var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
+      var matches = regexp.exec(value);
+
+      if (matches[1]) {
+        return '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[3]));
+      }
     };
 
     return StyleAttributeMapper;
