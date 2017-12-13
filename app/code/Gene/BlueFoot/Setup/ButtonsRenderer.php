@@ -10,7 +10,7 @@ class ButtonsRenderer implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData)
+    public function render($itemData, $additionalData = [])
     {
         return '<div data-role="buttons">' . $additionalData['children'] . '</div>';
     }

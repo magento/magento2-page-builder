@@ -10,7 +10,7 @@ class RowRenderer implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData)
+    public function render($itemData, $additionalData = [])
     {
         return '<div data-role="row">' . $additionalData['children'] . '</div>';
     }

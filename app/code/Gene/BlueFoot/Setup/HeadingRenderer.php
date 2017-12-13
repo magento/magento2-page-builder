@@ -10,7 +10,7 @@ class HeadingRenderer implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData)
+    public function render($itemData, $additionalData = [])
     {
         return '<h2 data-role="heading">Heading text</h2>';
     }
