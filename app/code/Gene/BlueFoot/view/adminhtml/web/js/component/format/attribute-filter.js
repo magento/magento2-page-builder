@@ -1,4 +1,4 @@
-define([], function () {
+define(["../../utils/data-object"], function (_dataObject) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,7 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function AttributeFilter() {
-      this.allowAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category_id', 'product_count', 'show_out_of_stock', 'autoplay', 'autoplay_speed', 'fade', 'is_infinite', 'show_arrows', 'show_dots', 'advanced_settings', 'has_overlay_background'];
+      this.allowedAttributes = (0, _dataObject.toDataObject)(['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category_id', 'product_count', 'show_out_of_stock', 'autoplay', 'autoplay_speed', 'fade', 'is_infinite', 'show_arrows', 'show_dots', 'advanced_settings', 'has_overlay_background']);
     }
 
     var _proto = AttributeFilter.prototype;
@@ -19,15 +19,7 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.filter = function filter(data) {
-      var _this = this;
-
-      var attributes = {};
-      Object.keys(data).map(function (key) {
-        if (_this.allowAttributes.includes(key)) {
-          attributes[key] = data[key];
-        }
-      });
-      return attributes;
+      return (0, _dataObject.filterAttributes)(data, this.allowedAttributes);
     };
 
     return AttributeFilter;

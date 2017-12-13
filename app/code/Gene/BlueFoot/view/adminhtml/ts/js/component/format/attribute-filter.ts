@@ -3,9 +3,10 @@
  * See COPYING.txt for license details.
  */
 import {DataObject} from "../data-store";
+import {toDataObject, filterAttributes} from "../../utils/data-object";
 
 export default class AttributeFilter {
-    allowAttributes: Array<string> = [
+    allowedAttributes: DataObject = toDataObject([
         'name',
         'appearance',
         'id',
@@ -29,7 +30,7 @@ export default class AttributeFilter {
         'show_dots',
         'advanced_settings',
         'has_overlay_background'
-    ];
+    ]);
 
     /**
      * Filter allowed attributes from object
@@ -38,14 +39,6 @@ export default class AttributeFilter {
      * @returns {DataObject}
      */
     filter(data: DataObject): DataObject {
-        let attributes: DataObject = {};
-        Object.keys(data).map(
-            (key: string) => {
-                if (this.allowAttributes.includes(key)) {
-                    attributes[key] = data[key];
-                }
-            }
-        );
-        return attributes;
+        return filterAttributes(data, this.allowedAttributes)
     }
 }

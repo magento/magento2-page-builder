@@ -106,7 +106,10 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
         if (key === 'background-color' || key === 'border-color') {
           var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
           var matches = regexp.exec(value);
-          value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[3]));
+
+          if (matches[1]) {
+            value = '#' + _this2.fromIntToHex(parseInt(matches[1])) + _this2.fromIntToHex(parseInt(matches[2])) + _this2.fromIntToHex(parseInt(matches[3]));
+          }
         }
 
         if (key === 'background-image') {
