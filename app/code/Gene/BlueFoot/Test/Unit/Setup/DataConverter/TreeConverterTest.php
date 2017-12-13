@@ -3,13 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Test\Unit\Setup;
+namespace Gene\BlueFoot\Test\Unit\Setup\DataConverter;
 
 class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
     public function testRender()
     {
-        $headerHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\EntityHydratorInterface::class)
+        $headerHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface::class)
             ->getMockForAbstractClass();
         $headerHydratorMock->expects($this->once())
             ->method('hydrate')
@@ -21,23 +21,23 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ]
             );
 
-        $rendererPool = new \Gene\BlueFoot\Setup\RendererPool(
+        $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
-                'row' => new \Gene\BlueFoot\Setup\RowRenderer(),
-                'column' => new \Gene\BlueFoot\Setup\ColumnRenderer(),
-                'heading' => new \Gene\BlueFoot\Setup\HeadingRenderer($headerHydratorMock)
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row(),
+                'column' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Column(),
+                'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading($headerHydratorMock)
             ]
         );
 
-        $childrenExtractorPool = new \Gene\BlueFoot\Setup\ChildrenExtractorPool(
+        $childrenExtractorPool = new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool(
             [
-                'default' => new \Gene\BlueFoot\Setup\DummyChildrenExtractor(),
-                'row' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children'),
-                'column' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children')
+                'default' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Dummy(),
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable('children'),
+                'column' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable('children')
             ]
         );
 
-        $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter(
+        $treeConverter = new \Gene\BlueFoot\Setup\DataConverter\TreeConverter(
             $rendererPool,
             $childrenExtractorPool,
             new \Magento\Framework\Serialize\Serializer\Json()
@@ -55,23 +55,23 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     public function testRenderContentWithButtons()
     {
-        $rendererPool = new \Gene\BlueFoot\Setup\RendererPool(
+        $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
-                'row' => new \Gene\BlueFoot\Setup\RowRenderer(),
-                'buttons' => new \Gene\BlueFoot\Setup\ButtonsRenderer(),
-                'button_item' => new \Gene\BlueFoot\Setup\ButtonItemRenderer(),
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row(),
+                'buttons' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons(),
+                'button_item' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem(),
             ]
         );
 
-        $childrenExtractorPool = new \Gene\BlueFoot\Setup\ChildrenExtractorPool(
+        $childrenExtractorPool = new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool(
             [
-                'default' => new \Gene\BlueFoot\Setup\DummyChildrenExtractor(),
-                'row' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children'),
-                'buttons' => new \Gene\BlueFoot\Setup\ConfigurableChildrenExtractor('children/button_items'),
+                'default' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Dummy(),
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable('children'),
+                'buttons' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable('children/button_items'),
             ]
         );
 
-        $treeConverter = new \Gene\BlueFoot\Setup\TreeConverter(
+        $treeConverter = new \Gene\BlueFoot\Setup\DataConverter\TreeConverter(
             $rendererPool,
             $childrenExtractorPool,
             new \Magento\Framework\Serialize\Serializer\Json()

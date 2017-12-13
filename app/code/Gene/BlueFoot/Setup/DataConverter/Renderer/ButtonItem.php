@@ -3,15 +3,17 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
-class ButtonsRenderer implements RendererInterface
+use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+
+class ButtonItem implements RendererInterface
 {
     /**
      * {@inheritdoc}
      */
     public function render($itemData, $additionalData = [])
     {
-        return '<div data-role="buttons">' . $additionalData['children'] . '</div>';
+        return '<button data-role="button-item"></button>';
     }
 }

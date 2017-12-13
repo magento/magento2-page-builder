@@ -3,9 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
-class RowRenderer implements RendererInterface
+use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+
+class Row implements RendererInterface
 {
     /**
      * {@inheritdoc}

@@ -3,15 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Gene\BlueFoot\Setup\DataConverter;
 
-interface ChildrenExtractorInterface
+interface EntityHydratorInterface
 {
     /**
-     * Extract children for an element
-     *
      * @param array $data
      * @return array
      */
-    public function extract($data);
+    public function hydrate(array $data);
 }

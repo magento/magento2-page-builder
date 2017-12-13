@@ -3,9 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor;
 
-class ConfigurableChildrenExtractor implements ChildrenExtractorInterface
+use Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorInterface;
+
+class Configurable implements ChildrenExtractorInterface
 {
     /**
      * @var string
