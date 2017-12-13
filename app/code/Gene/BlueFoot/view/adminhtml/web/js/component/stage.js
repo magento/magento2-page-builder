@@ -1,4 +1,4 @@
-define(["./stage/structural/editable-area", "./stage/structural/row", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery"], function (_editableArea, _row, _underscore, _dataStore, _translate, _save, _jquery) {
+define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery", "./block/factory", "./config"], function (_editableArea, _underscore, _dataStore, _translate, _save, _jquery, _factory, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
@@ -26,6 +26,9 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       _this.serializeRole = 'stage';
       _this.store = void 0;
       _this.save = new _save();
+      _this.config = {
+        name: 'stage'
+      };
 
       _this.setChildren(stageContent);
 
@@ -71,6 +74,8 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
     var _proto = Stage.prototype;
 
     _proto.build = function build(buildInstance) {
+      var _this2 = this;
+
       var self = this;
 
       if (buildInstance) {
@@ -84,7 +89,13 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
           console.error(error);
         });
       } else {
-        this.addRow(this);
+        // Add an initial row to the stage if the stage is currently empty
+        if (typeof _config.getInitConfig('contentTypes')['row'] !== 'undefined') {
+          (0, _factory)(_config.getInitConfig('contentTypes')['row'], this, this, {}).then(function (row) {
+            _this2.addChild(row);
+          });
+        }
+
         this.ready();
       }
     };
@@ -99,27 +110,9 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
       this.loading(false);
     };
     /**
-     * Add a row to the stage
-     *
-     * @param self
-     * @param data
-     * @returns {Row}
-     */
-
-
-    _proto.addRow = function addRow(self, data) {
-      var row = new _row(self, self);
-      this.store.update(row.id, data);
-      this.addChild(row);
-      return row;
-    };
-
-    _proto.openTemplateManager = function openTemplateManager() {} // @todo
-
-    /**
      * Tells the stage wrapper to expand to fullscreen
      */
-    ;
+
 
     _proto.goFullScreen = function goFullScreen() {
       var isFullScreen = this.parent.isFullScreen();
@@ -148,13 +141,10 @@ define(["./stage/structural/editable-area", "./stage/structural/row", "underscor
     _proto.isFullScreen = function isFullScreen() {
       return this.parent.isFullScreen();
     };
-
-    _proto.addComponent = function addComponent() {} // @todo
-
     /**
      * Event handler for any element being sorted in the stage
      */
-    ;
+
 
     _proto.onSortingStart = function onSortingStart() {
       this.showBorders(true);

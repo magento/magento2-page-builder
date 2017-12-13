@@ -18,13 +18,13 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" mergeKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" mergeKey="switchToBlueFootStage"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
-            <waitForPageLoad mergeKey="waitForAdminLoginPageLoad"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <test name="CanAddButton">
             <annotations>
@@ -34,29 +34,61 @@
                 <testCaseId value="MAGETWO-84273"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" mergeKey="enterPageTitle1">
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <actionGroup ref="dragContentBlockToStage" mergeKey="dragButtonsOntoStage">
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <actionGroup ref="openBlueFootEditPanel" mergeKey="openEditMenuOnStage">
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <waitForLoadingMaskToDisappear mergeKey="waitForSpinner"/>
-            <waitForElement time="2" selector="{{ButtonsEditSection.addNewButton}}" mergeKey="waitForAddButtonsElementVisible"/>
-            <click selector="{{ButtonsEditSection.addNewButton}}" mergeKey="clickOnAddButtonsElement"/>
-            <waitForElement time="2" selector="{{ButtonsEditSection.buttonText('0')}}" mergeKey="waitForButtonRow0TextVisible"/>
-            <fillField selector="{{ButtonsEditSection.buttonText('0')}}" userInput="{{BlueFootButtonsProperty.text}}" mergeKey="fillButtonRow0TextField"/>
-            <fillField selector="{{ButtonsEditSection.buttonLink('0')}}" userInput="{{BlueFootButtonsProperty.link}}" mergeKey="fillButtonRow0LinkField"/>
-            <actionGroup ref="saveEditPanelSettings" mergeKey="saveEditPanelSettings"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" mergeKey="saveAndContinueEditCmsPage"/>
-            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" mergeKey="assertTitleSavedCmsPage"/>
-            <grabFromCurrentUrl returnVariable="cmsPageUri" mergeKey="grabFromCurrentUrl"/>
-            <amOnPage url="buttons{{BlueFootPageTitle.pageName}}" mergeKey="amOnBlueFootPage"/>
-            <seeElement selector="{{ButtonsFrontendSection.buttonElement(BlueFootButtonsProperty.link, BlueFootButtonsProperty.text)}}" mergeKey="seeButtonOnStorefront"/>
-            <click selector="{{ButtonsFrontendSection.buttonElement(BlueFootButtonsProperty.link, BlueFootButtonsProperty.text)}}" mergeKey="clickOnButtonElementOnStorefront"/>
-            <seeInCurrentUrl url="{{StorefrontProductPage.url}}{{BlueFootButtonsProperty.link}}" mergeKey="seeButtonClickUrl"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+            <waitForElement time="2" selector="{{ButtonsEditSection.addNewButton}}" stepKey="waitForAddButtonsElementVisible"/>
+            <click selector="{{ButtonsEditSection.addNewButton}}" stepKey="clickOnAddButtonsElement"/>
+            <waitForElement time="2" selector="{{ButtonsEditSection.buttonText('0')}}" stepKey="waitForButtonRow0TextVisible"/>
+            <fillField selector="{{ButtonsEditSection.buttonText('0')}}" userInput="{{BlueFootButtonsProperty.text}}" stepKey="fillButtonRow0TextField"/>
+            <fillField selector="{{ButtonsEditSection.buttonLink('0')}}" userInput="{{BlueFootButtonsProperty.link}}" stepKey="fillButtonRow0LinkField"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="buttons{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{ButtonsFrontendSection.buttonElement(BlueFootButtonsProperty.link, BlueFootButtonsProperty.text)}}" stepKey="seeButtonOnStorefront"/>
+            <click selector="{{ButtonsFrontendSection.buttonElement(BlueFootButtonsProperty.link, BlueFootButtonsProperty.text)}}" stepKey="clickOnButtonElementOnStorefront"/>
+            <seeInCurrentUrl url="{{StorefrontProductPage.url}}{{BlueFootButtonsProperty.link}}" stepKey="seeButtonClickUrl"/>
+        </test>
+        <test name="ButtonsHasAdvancedFormSection">
+            <annotations>
+                <title value="Buttons has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for buttons"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
         </test>
     </cest>
 </config>

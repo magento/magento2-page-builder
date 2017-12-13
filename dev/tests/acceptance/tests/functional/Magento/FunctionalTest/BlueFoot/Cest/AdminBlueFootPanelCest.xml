@@ -18,11 +18,11 @@
             <env value="phantomjs"/>
         </annotations>
         <before>
-            <loginAsAdmin mergeKey="loginAsAdmin"/>
-            <actionGroup ref="enableBlueFoot" mergeKey="enableBlueFoot"/>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="enableBlueFoot" stepKey="enableBlueFoot"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout" mergeKey="amOnLogoutPage"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
         </after>
         <test name="ActivateBlueFootFullScreen">
             <annotations>
@@ -32,13 +32,13 @@
                 <testCaseId value="MAGETWO-81951"/>
                 <group value="bluefoot"/>
             </annotations>
-            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen1"/>
-            <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreen"/>
-            <wait time="1" mergeKey="wait2"/>
-            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper stage-full-screen']" mergeKey="stageWrapperFullScreen2"/>
-            <click selector="{{BlueFootActionsSection.openFullScreen}}" mergeKey="clickFullScreenAgain"/>
-            <wait time="1" mergeKey="wait3"/>
-            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" mergeKey="stageWrapperFullScreen3"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" stepKey="stageWrapperFullScreen1"/>
+            <click selector="{{BlueFootActionsSection.openFullScreen}}" stepKey="clickFullScreen"/>
+            <wait time="1" stepKey="wait2"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper stage-full-screen']" stepKey="stageWrapperFullScreen2"/>
+            <click selector="{{BlueFootActionsSection.openFullScreen}}" stepKey="clickFullScreenAgain"/>
+            <wait time="1" stepKey="wait3"/>
+            <seeElement selector="{{BlueFootActionsSection.stageWrapper}}" parameterArray="['class' => 'bluefoot-stage-wrapper']" stepKey="stageWrapperFullScreen3"/>
         </test>
         <test name="ShowPanelGroups">
             <annotations>
@@ -48,8 +48,8 @@
                 <testCaseId value="MAGETWO-81826"/>
                 <group value="bluefoot"/>
             </annotations>
-            <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" mergeKey="firstSectionOfPanelIsOpen"/>
-            <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
+            <seeElement selector='{{BlueFootActionsSection.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
+            <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
         </test>
         <test name="SearchOneCharInPanel">
             <annotations>
@@ -59,10 +59,10 @@
                 <testCaseId value="MAGETWO-81827"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearch"/>
-            <see userInput="Buttons" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
-            <see userInput="Banner" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockBanner"/>
-            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockStaticBlock"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" stepKey="fillSearch"/>
+            <see userInput="Buttons" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
+            <see userInput="Banner" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateBlockBanner"/>
+            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateBlockStaticBlock"/>
         </test>
         <test name="SearchThreeCharInPanel">
             <annotations>
@@ -72,8 +72,8 @@
                 <testCaseId value="MAGETWO-81827"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="blo" mergeKey="fillSearch"/>
-            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" mergeKey="validateBlockButtons"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
+            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
         </test>
         <test name="SearchNoMatchesInPanel">
             <annotations>
@@ -83,8 +83,8 @@
                 <testCaseId value="MAGETWO-81831"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" mergeKey="fillSearch"/>
-            <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" mergeKey="validateNothingFound"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
+            <see userInput="Nothing found" selector="{{BlueFootActionsSection.nothingFound}}" stepKey="validateNothingFound"/>
         </test>
         <test name="ClearSearchInPanel">
             <annotations>
@@ -96,12 +96,12 @@
                 <group value="skip"/>
             </annotations>
             <!--toggle clearSearch on-->
-            <dontSeeElement selector='//*[@id="bluefoot-panel"]/div[1]/a' mergeKey="dontSeeClearSearch"/>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" mergeKey="fillSearchField"/>
-            <seeElement selector='{{BlueFootActionsSection.searchField}}' mergeKey="seeClearSearch"/>
+            <dontSeeElement selector='//*[@id="bluefoot-panel"]/div[1]/a' stepKey="dontSeeClearSearch"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="b" stepKey="fillSearchField"/>
+            <seeElement selector='{{BlueFootActionsSection.searchField}}' stepKey="seeClearSearch"/>
             <!--click clear search, empty search field when framework supports this, see blocks-->
-            <click selector="{{BlueFootActionsSection.clearSearch}}" mergeKey="clickClearSearch"/>
-            <actionGroup ref="validateGroupsAndContentTypes" mergeKey="validateGroupsAndContentTypes"/>
+            <click selector="{{BlueFootActionsSection.clearSearch}}" stepKey="clickClearSearch"/>
+            <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
         </test>
     </cest>
 </config>

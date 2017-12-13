@@ -15,7 +15,6 @@
         <element name="searchField" type="input" selector='//*[@id="bluefoot-panel"]/div[1]/a'/>
         <element name="clearSearch" type="button" selector='//*[@id="bluefoot-panel"]/div[1]/a'/>
         <element name="firstSection" type="button" selector='//*[@id="bluefoot-panel-groups"]/li[1]' timeout="30"/>
-
         <element name="generalGroup" type="button" selector='//*[@id="group-general"]'/>
         <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
@@ -26,28 +25,21 @@
         <element name="magentoGroupBlock" type="button" selector='//*[@id="group-magento"]/div/div/ul/li/a/span[2]'/>
         <element name="otherGroup" type="button" selector='//*[@id="group-other"]'/>
         <element name="otherGroupBlock" type="button" selector='//*[@id="group-other"]/div/div/ul/li/a/span[2]'/>
-
         <element name="searchPanel" type="input" selector='//*[@id="search-blocks-input"]' timeout="30"/>
         <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
         <element name="nothingFound" type="text" selector='//*[@id="bluefoot-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='//aside[contains(@class, "modal-popup")]'/>
         <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
-
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="//div[contains(@class, 'stage-container')]/div[contains(@class, 'bluefoot-row-wrapper')][1]/div[contains(@class, 'bluefoot-row')]/div[contains(@class, 'row-container')]"/>
         <element name="contentBlockInStage" type="button" selector='//div[contains(@class, "bluefoot-{{arg1}}")][1]' parameterized="true"/>
-
         <element name="contentBlockPreviewInStage" type="button" selector='.stage-container.bluefoot-entity-preview."{{arg1}}"' parameterized="true"/>
-
         <element name="contentBlockOptionsMenu" type="button" selector='//div[contains(@class, "bluefoot-{{arg1}}")][1]/div[@class="bluefoot-options"]' parameterized="true"/>
         <element name="contentBlockEdit" type="button" selector='.bluefoot-{{arg1}} a.edit-block[title="Edit"]' parameterized="true"/>
-
         <element name="editColumn" type="button" selector='(//div[@class="bluefoot-structure bluefoot-column"])[1]/div[@class="bluefoot-options"]/descendant::*[@class="edit-block"]'/>
-
         <element name="contentBlockDuplicate" type="button" selector='.bluefoot-structure.bluefoot-{{arg1}}.bluefoot-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.bluefoot-structure.bluefoot-{{arg1}}.bluefoot-options.remove-structural[title="Remove"]' parameterized="true"/>
-
         <element name="editForm" type="text" selector='//div[contains(@class, "bluefoot_modal_form_bluefoot_modal_form_modal")]'/>
         <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
         <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>
@@ -118,6 +110,9 @@
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
     </section>
+    <section name="CodeOnFrontend">
+        <element name="codeDisplay" type="button" selector="[data-role='code'] {{arg1}}" parameterized="true"/>
+    </section>
     <section name="HeaderOnFrontend">
         <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
     </section>
@@ -149,6 +144,13 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+        <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
+    </section>
+    <section name="AdvancedForm">
+        <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
+        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="advancedAlignment" type="input" selector="//select[@name='text_align']"/>
+        <element name="advancedMarginAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
     </section>
     <section name="AccordionEditSection">
         <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
@@ -156,8 +158,11 @@
         <element name="itemContent" type="input" selector="//*[@name='items[{{arg1}}][content]']" parameterized="true"/>
     </section>
     <section name="AccordionFrontendSection">
-        <element name="itemTitleElement" type="button" selector="//div[@data-role='accordion']/div[@data-collapsible='true']/div[@data-role='trigger]/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
-        <element name="itemContentElement" type="button" selector="//div[@data-role='accordion']/div[@class='accordion-content']/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="itemTitleElement" type="button" selector="//div[@data-role='accordion']/div[@data-collapsible='true']/div[@data-role='trigger']/span[contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="itemContentElement" type="button" selector="//div[@class='accordion-content'][contains(text(), '{{arg1}}')]" parameterized="true"/>
+    </section>
+    <section name="AnchorInAdmin">
+        <element name="anchorIdentifier" type="button" selector="//div[contains(@class, 'bluefoot-anchor')][1]"/>
     </section>
     <section name="ButtonsEditSection">
         <element name="addNewButton" type="button" selector="//button/span[contains(text(), 'Add New Button')]"/>
@@ -194,5 +199,45 @@
         <element name="map1Zoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom=6')]"/>
         <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
         <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
+    </section>
+    <section name="AdvancedSliderOnFrontend">
+        <element name="advancedSliderDisplay" type="button" selector="div[data-role='advanced-slider']"/>
+        <element name="Autoplay" type="button" selector="div[data-role='advanced-slider'][data-autoplay='0']"/>
+        <element name="AutoplaySpeed" type="button" selector="div[data-role='advanced-slider'][data-autoplay-speed='{{arg1}}']" parameterized="true"/>
+        <element name="Fade" type="button" selector="div[data-role='advanced-slider'][data-fade='{{arg1}}']" parameterized="true"/>
+        <element name="IsInfinite" type="button" selector="div[data-role='advanced-slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
+        <element name="ShowArrows" type="button" selector="div[data-role='advanced-slider'][data-show-arrows='{{arg1}}']" parameterized="true"/>
+        <element name="ShowDots" type="button" selector="div[data-role='advanced-slider'][data-show-dots='0']"/>
+        <element name="nextSlide" type="button" selector="[data-role='advanced-slider'] .slick-next"/>
+    </section>
+    <section name="AdvancedSliderInAdmin">
+        <element name="addNewSlide" type="button" selector="//div[contains(@class, 'bluefoot-advanced-slider')][1]/button"/>
+    </section>
+    <section name="SlideOnFrontend">
+        <element name="slide1" type="button" selector="[data-role='slide']"/>
+        <element name="slideTitle1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content h3"/>
+        <element name="slideContent1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a span span"/>
+        <element name="slideLinkURL1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideHasOverlay1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content.has-overlay-background"/>
+        <element name="slide2" type="button" selector="[data-role='slide']"/>
+        <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
+        <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
+        <element name="slideContent2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a span span"/>
+        <element name="slideLinkURL2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideBackgroundImage" type="text" selector="[data-role='slide']:nth-of-type({{arg1}})[style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
+    </section>
+    <section name="SearchOnStage">
+        <element name="searchInput" type="input" selector="//*[@type='search']" />
+    </section>
+    <section name="SearchOnFrontend">
+        <element name="searchInput" type="input" selector="//*[@placeholder='{{arg1}}']" parameterized="true"/>
+    </section>
+    <section name="ProductOnFrontend">
+        <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
+    </section>
+    <section name="ProductOnAdmin">
+        <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
     </section>
 </config>

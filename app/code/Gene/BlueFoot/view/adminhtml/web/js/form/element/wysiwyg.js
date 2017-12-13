@@ -47,6 +47,9 @@ define([
                 loading: false,
                 userSelect: true,
                 isFullScreen: false
+            },
+            config: {
+                name: 'stage'
             }
         },
 
@@ -96,6 +99,16 @@ define([
             $(node).bindings({
                 value: this.value
             });
+        },
+
+        /**
+         * Any events fired on the WYSIWYG component should be ran on the stage
+         *
+         * @param eventName
+         * @param params
+         */
+        emit: function (eventName, params) {
+            return this.stage.emit(eventName, params);
         },
 
         /**
