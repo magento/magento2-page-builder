@@ -7,6 +7,14 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Gene\BlueFoot\Model\EntityRepository;
 
+/**
+ * Class ConfigurableEntityHydrator
+ *
+ * Using dependency injection, a virtual type can extend this class and be used by your renderer, to configure
+ * additional attributes that you want to extract from the EAV during hydration.
+ *
+ * @see \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading for example of configuration
+ */
 class ConfigurableEntityHydrator implements EntityHydratorInterface
 {
     private $entityRepository;
@@ -20,8 +28,7 @@ class ConfigurableEntityHydrator implements EntityHydratorInterface
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @inheritdoc
      */
     public function hydrate(array $data)
     {
