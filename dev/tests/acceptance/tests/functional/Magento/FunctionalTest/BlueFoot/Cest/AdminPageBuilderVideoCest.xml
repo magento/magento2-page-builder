@@ -98,5 +98,59 @@
             <seeElementInDOM selector="{{VideoOnFrontend.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidth"/>
             <seeElementInDOM selector="{{VideoOnFrontend.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeight"/>
         </test>
+        <test name="VideoUrlPreservedOnEdit">
+            <annotations>
+                <title value="Verify video url shows in stage on edit"/>
+                <description value="Values saved for video should be preserved and shown."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-85679"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+                <argument name="property" value="PageBuilderVideoUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+                <argument name="property" value="PageBuilderVideoWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoHeightProperty">
+                <argument name="property" value="PageBuilderVideoHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStage"/>
+            <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStage"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStage"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStageAfterSave"/>
+            <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStageAfterSave"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStageAfterSave"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStageAfterSave"/>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStageAfterSave">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoUrlInAdmin">
+                <argument name="property" value="PageBuilderVideoUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoWidthInAdmin">
+                <argument name="property" value="PageBuilderVideoWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoHeightInAdmin">
+                <argument name="property" value="PageBuilderVideoHeightProperty"/>
+            </actionGroup>
+        </test>
     </cest>
 </config>
