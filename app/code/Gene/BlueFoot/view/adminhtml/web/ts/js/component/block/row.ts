@@ -31,4 +31,15 @@ export default class Row extends Block {
         }
         return _.extend(super.getStyle(), styleAttributes);
     }
+
+    /**
+     * Is parallax enabled?
+     *
+     * @returns {boolean}
+     */
+
+    isParallaxEnabled() {
+        let data = this.getData();
+        return !(data.enable_parallax === "" || data.enable_parallax === 'undefined' || data.enable_parallax === "0");
+    }
 }
