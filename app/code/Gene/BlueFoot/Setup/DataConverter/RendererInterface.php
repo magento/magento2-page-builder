@@ -14,5 +14,5 @@ interface RendererInterface
      * @param array $additionalData
      * @return string
      */
-    public function render($itemData, $additionalData = []);
+    public function render(array $itemData, array $additionalData = []);
 }

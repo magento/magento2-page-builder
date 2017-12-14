@@ -7,12 +7,15 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 
+/**
+ * Render row to PageBuilder format
+ */
 class Row implements RendererInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData = [])
+    public function render(array $itemData, array $additionalData = [])
     {
         return '<div data-role="row">' . $additionalData['children'] . '</div>';
     }

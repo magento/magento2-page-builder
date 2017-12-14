@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Pool of renderers for content types
+ */
 class RendererPool
 {
     /**
@@ -12,6 +15,11 @@ class RendererPool
      */
     private $renderers;
 
+    /**
+     * Constructor
+     *
+     * @param array $renderers
+     */
     public function __construct(
         array $renderers
     ) {

@@ -7,6 +7,9 @@ namespace Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor;
 
 use Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorInterface;
 
+/**
+ * Children data extractor that can be configured with path to children data
+ */
 class Configurable implements ChildrenExtractorInterface
 {
     /**
@@ -28,7 +31,7 @@ class Configurable implements ChildrenExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function extract($data)
+    public function extract(array $data)
     {
         $parts = explode('/', $this->path);
         foreach ($parts as $part) {

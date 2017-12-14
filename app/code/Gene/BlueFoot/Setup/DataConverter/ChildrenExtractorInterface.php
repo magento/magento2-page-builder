@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Extract children data from content type data
+ */
 interface ChildrenExtractorInterface
 {
     /**
@@ -13,5 +16,5 @@ interface ChildrenExtractorInterface
      * @param array $data
      * @return array
      */
-    public function extract($data);
+    public function extract(array $data);
 }

@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Pool of children extractors for content types
+ */
 class ChildrenExtractorPool
 {
     /**

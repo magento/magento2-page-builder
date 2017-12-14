@@ -7,12 +7,15 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 
+/**
+ * Render buttons to PageBuilder format
+ */
 class Buttons implements RendererInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData = [])
+    public function render(array $itemData, array $additionalData = [])
     {
         return '<div data-role="buttons">' . $additionalData['children'] . '</div>';
     }

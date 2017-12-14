@@ -9,6 +9,9 @@ use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
+/**
+ * Render heading to PageBuilder format
+ */
 class Heading implements RendererInterface
 {
     /**
@@ -32,7 +35,7 @@ class Heading implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render($itemData, $additionalData = [])
+    public function render(array $itemData, array $additionalData = [])
     {
         $eavData = $this->entityHydrator->hydrate($itemData);
         $rootElementAttributes = [

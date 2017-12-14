@@ -7,6 +7,9 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 
+/**
+ * Convert old BlueFoot format to PageBuilder format
+ */
 class TreeConverter
 {
     /**
