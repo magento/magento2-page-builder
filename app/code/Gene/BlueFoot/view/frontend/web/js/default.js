@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, hljs) {
+requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 
@@ -23,5 +23,7 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick'], function ($, fancybox, h
                 dots: $(element).data('show-dots') === 1
             });
         });
+
+        window.bgParallax('.pagebuilder-parallax');
     });
 });

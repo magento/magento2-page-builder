@@ -116,6 +116,10 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
         });
       }
 
+      if ('enable_parallax' in this.getData() && this.getData().enable_parallax === '1') {
+        cssClasses['pagebuilder-parallax'] = true;
+      }
+
       return cssClasses;
     };
     /**

@@ -29,7 +29,9 @@ export default class AttributeFilter {
         'show_arrows',
         'show_dots',
         'advanced_settings',
-        'has_overlay_background'
+        'has_overlay_background',
+        'enable_parallax',
+        'parallax_speed'
     ]);
 
     /**
