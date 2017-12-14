@@ -6,6 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
  * Render column to PageBuilder format
@@ -13,10 +14,39 @@ use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 class Column implements RendererInterface
 {
     /**
+     * @var StyleExtractorInterface
+     */
+    private $styleExtractor;
+
+    public function __construct(StyleExtractorInterface $styleExtractor)
+    {
+        $this->styleExtractor = $styleExtractor;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        return '<div data-role="column">' . $additionalData['children'] . '</div>';
+        $rootElementAttributes = [
+            'data-role' => 'column',
+            'class' => $itemData['formData']['css_classes'] ?? '',
+            'style' => ''
+        ];
+
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
+        }
+
+        $rootElementHtml = '<div';
+        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        $rootElementHtml .= '>' . $additionalData['children'] . '</div>';
+
+        return $rootElementHtml;
     }
 }

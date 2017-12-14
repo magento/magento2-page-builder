@@ -7,6 +7,16 @@ namespace Gene\BlueFoot\Test\Unit\Setup\DataConverter;
 
 class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var \Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface
+     */
+    private $styleExtractor;
+
+    protected function setUp()
+    {
+        $this->styleExtractor = new \Gene\BlueFoot\Setup\DataConverter\StyleExtractor();
+    }
+
     public function testRender()
     {
         $headerHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface::class)
@@ -21,13 +31,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ]
             );
 
+        $attributeMock = $this->getMockBuilder(\Gene\BlueFoot\Model\Attribute::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $attributeMock->expects($this->once())
+            ->method('getOptions')
+            ->willReturn([]);
+
         $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
-                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row(),
-                'column' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Column(),
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row($this->styleExtractor),
+                'column' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Column($this->styleExtractor),
                 'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading(
-                    new \Gene\BlueFoot\Setup\DataConverter\StyleExtractor(),
-                    $headerHydratorMock
+                    $this->styleExtractor,
+                    $headerHydratorMock,
+                    $attributeMock
                 )
             ]
         );
@@ -51,7 +69,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals(
-            '<div data-role="row"><div data-role="column"><h2 data-role="heading" class="primary">Heading text</h2></div></div>',
+            '<div data-role="row" style="display: flex;"><div data-role="column" style="margin: 0px 5px 0px 0px; padding: 0px 0px 0px 0px; width: 50%;"><h2 data-role="heading" class="primary">Heading text</h2></div></div>',
             $masterFormat
         );
     }
@@ -60,7 +78,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     {
         $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
-                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row(),
+                'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row($this->styleExtractor),
                 'buttons' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons(),
                 'button_item' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem(),
             ]

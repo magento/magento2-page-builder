@@ -6,6 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
  * Render row to PageBuilder format
@@ -13,10 +14,51 @@ use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 class Row implements RendererInterface
 {
     /**
+     * @var StyleExtractorInterface
+     */
+    private $styleExtractor;
+
+    public function __construct(StyleExtractorInterface $styleExtractor)
+    {
+        $this->styleExtractor = $styleExtractor;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        return '<div data-role="row">' . $additionalData['children'] . '</div>';
+        $rootElementAttributes = [
+            'data-role' => 'row',
+            'class' => $itemData['formData']['css_classes'] ?? '',
+            'style' => ''
+        ];
+
+        $columnChildrenCount = array_reduce($itemData['children'], function ($result, $child) {
+            if (isset($child['type']) && $child['type'] === 'column') {
+                $result++;
+            }
+            return $result;
+        }, 0);
+
+        if (!empty($itemData['children']) && $columnChildrenCount === count($itemData['children'])) {
+            $rootElementAttributes['style'] = 'display: flex; ';
+        }
+
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] .= $style;
+            }
+        }
+
+        $rootElementHtml = '<div';
+        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+            $attributeValue = trim($attributeValue);
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        $rootElementHtml .= '>' . $additionalData['children'] . '</div>';
+
+        return $rootElementHtml;
     }
 }

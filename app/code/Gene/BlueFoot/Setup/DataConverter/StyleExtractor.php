@@ -17,7 +17,8 @@ class StyleExtractor implements StyleExtractorInterface
             'margin' => isset($formData['metric']['margin']) ?
                 $this->extractMarginPadding($formData['metric']['margin']) : '',
             'padding' => isset($formData['metric']['padding']) ?
-                $this->extractMarginPadding($formData['metric']['padding']) : ''
+                $this->extractMarginPadding($formData['metric']['padding']) : '',
+            'width' => isset($formData['width']) ? ($formData['width'] * 100) . '%' : ''
         ];
 
         $styleString = '';
