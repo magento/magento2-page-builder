@@ -24,19 +24,12 @@ class Heading implements RendererInterface
      */
     private $entityHydrator;
 
-    /**
-     * @var \Gene\BlueFoot\Model\Attribute
-     */
-    private $headingEntityAttribute;
-
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EntityHydratorInterface $entityHydrator,
-        \Gene\BlueFoot\Model\Attribute $blueFootEntityAttribute
+        EntityHydratorInterface $entityHydrator
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->entityHydrator = $entityHydrator;
-        $this->headingEntityAttribute = $blueFootEntityAttribute;
     }
 
     /**
@@ -45,15 +38,6 @@ class Heading implements RendererInterface
     public function render(array $itemData, array $additionalData = [])
     {
         $eavData = $this->entityHydrator->hydrate($itemData);
-
-        // Replace integer heading value with label
-        $this->headingEntityAttribute->loadByCode('gene_bluefoot_entity', 'heading_type');
-        foreach ($this->headingEntityAttribute->getOptions() as $headingOption) {
-            if ($headingOption->getValue() === $eavData['heading_type']) {
-                $eavData['heading_type'] = $headingOption->getLabel();
-                break;
-            }
-        }
 
         $rootElementAttributes = [
             'data-role' => 'heading',

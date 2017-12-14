@@ -17,13 +17,33 @@ use Gene\BlueFoot\Model\EntityRepository;
  */
 class ConfigurableEntityHydrator implements EntityHydratorInterface
 {
+    /**
+     * @var EntityRepository
+     */
     private $entityRepository;
 
+    /**
+     * @var string[]
+     */
     private $eavAttributeNames = ['css_classes'];
 
-    public function __construct(EntityRepository $entityRepository, array $additionalEavAttributes = [])
-    {
+    /**
+     * @var \Gene\BlueFoot\Model\Attribute
+     */
+    private $blueFootEntityAttribute;
+
+    /**
+     * @param EntityRepository $entityRepository
+     * @param \Gene\BlueFoot\Model\Attribute $blueFootEntityAttribute
+     * @param string[] $additionalEavAttributes
+     */
+    public function __construct(
+        EntityRepository $entityRepository,
+        \Gene\BlueFoot\Model\Attribute $blueFootEntityAttribute,
+        array $additionalEavAttributes = []
+    ) {
         $this->entityRepository = $entityRepository;
+        $this->blueFootEntityAttribute = $blueFootEntityAttribute;
         $this->eavAttributeNames = array_merge($this->eavAttributeNames, $additionalEavAttributes);
     }
 
@@ -38,6 +58,17 @@ class ConfigurableEntityHydrator implements EntityHydratorInterface
             foreach ($this->eavAttributeNames as $attributeName) {
                 if ($entity->hasData($attributeName)) {
                     $eavData[$attributeName] = $entity->getDataByKey($attributeName);
+
+                    // Replace source model values with labels
+                    $this->blueFootEntityAttribute->loadByCode('gene_bluefoot_entity', $attributeName);
+                    if ($this->blueFootEntityAttribute->usesSource()) {
+                        foreach ($this->blueFootEntityAttribute->getOptions() as $sourceOption) {
+                            if ($sourceOption->getValue() === $eavData[$attributeName]) {
+                                $eavData[$attributeName] = $sourceOption->getLabel();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
