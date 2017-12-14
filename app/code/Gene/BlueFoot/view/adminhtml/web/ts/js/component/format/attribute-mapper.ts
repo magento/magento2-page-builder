@@ -27,7 +27,9 @@ export default class AttributeMapper {
         show_arrows: 'data-show-arrows',
         show_dots: 'data-show-dots',
         advanced_settings: 'data-advanced-settings',
-        has_overlay_background: 'data-has-overlay-background'
+        has_overlay_background: 'data-has-overlay-background',
+        enable_parallax: 'data-enable-parallax',
+        parallax_speed: 'data-speed'
     };
 
     /**

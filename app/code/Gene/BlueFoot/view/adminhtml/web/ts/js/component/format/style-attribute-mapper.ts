@@ -68,7 +68,6 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
-                debugger;
                 if (value === '') {
                     return;
                 }
