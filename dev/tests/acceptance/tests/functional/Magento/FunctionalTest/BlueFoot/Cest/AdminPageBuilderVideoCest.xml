@@ -59,5 +59,44 @@
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
+        <test name="CanAddVideo">
+            <annotations>
+                <title value="Add an video content block into stage"/>
+                <description value="A user should be able to add an video into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84896"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+                <argument name="property" value="PageBuilderVideoUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+                <argument name="property" value="PageBuilderVideoWidthProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoHeightProperty">
+                <argument name="property" value="PageBuilderVideoHeightProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStage"/>
+            <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStage"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStage"/>
+            <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="video{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElement selector="{{VideoOnFrontend.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoDisplayed"/>
+            <seeElementInDOM selector="{{VideoOnFrontend.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidth"/>
+            <seeElementInDOM selector="{{VideoOnFrontend.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeight"/>
+        </test>
     </cest>
 </config>
