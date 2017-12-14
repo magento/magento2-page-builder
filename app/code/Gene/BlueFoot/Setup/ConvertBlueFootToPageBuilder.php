@@ -69,7 +69,8 @@ class ConvertBlueFootToPageBuilder
                     DataConverter\BlueFootToPageBuilder::class,
                     $this->setup->getTable('catalog_product_entity_text'),
                     'value_id',
-                    'value'
+                    'value',
+                    $this->createQueryModifier('value', DataConverter\Validator::BLUEFOOT_KEY)
                 )
             ],
             $this->setup->getConnection()
