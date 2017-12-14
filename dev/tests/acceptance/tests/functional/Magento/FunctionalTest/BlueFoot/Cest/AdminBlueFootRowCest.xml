@@ -55,7 +55,6 @@
                 <title value="Can remove a row"/>
                 <description value="A user should be able to remove a row from the stage"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-82858"/>
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
@@ -83,7 +82,7 @@
         <test name="RowHasAdvancedFormSection">
             <annotations>
                 <title value="Row has Advanced form section"/>
-                <description value="A user should be able to configure advanced settings for search"/>
+                <description value="A user should be able to configure advanced settings for rows"/>
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
@@ -99,9 +98,6 @@
             <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-            </actionGroup>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
                 <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
             </actionGroup>
