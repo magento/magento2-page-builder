@@ -5,6 +5,7 @@
 import {DataObject} from "../../component/data-store";
 import Config from "../../component/config";
 import {toDataUrl} from "../../utils/directives";
+import _ from "underscore";
 
 interface FromDomResult {
     [key: string]: any;
@@ -21,11 +22,11 @@ export default class StyleAttributeMapper {
         let result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                let value:any = data[key];
+                let value: any = data[key];
                 if (value === '') {
                     return;
                 }
-                if(key === 'color' && (value === 'default' || value === 'Default')) {
+                if (key === 'color' && (value === 'default' || value === 'Default')) {
                     value = 'inherit';
                 }
                 if (key === 'min_height' || key === 'border_width' || key === 'border_radius') {
@@ -57,6 +58,7 @@ export default class StyleAttributeMapper {
         );
         return result;
     }
+
     /**
      * Map DOM key names and values to internal format
      *
@@ -101,16 +103,16 @@ export default class StyleAttributeMapper {
                     key = 'border-color';
                 }
                 if (key === 'background-color' || key === 'border-color') {
-                    if(value === 'initial'){
+                    if (value === 'initial') {
                         value = '';
-                    }else{
+                    } else {
                         value = this.colorRegex(value);
                     }
                 }
                 if (key === 'color') {
-                    if(value === 'inherit') {
+                    if (value === 'inherit') {
                         value = 'Default';
-                    }else{
+                    } else {
                         value = this.colorRegex(value);
                     }
                 }
@@ -165,14 +167,17 @@ export default class StyleAttributeMapper {
         return hex.length == 1 ? '0' + hex : hex;
     }
 
-    private colorRegex(value:string) {
-        const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
-        let matches = regexp.exec(value);
-        if (matches[1]) {
-            return '#'
-                + this.fromIntToHex(parseInt(matches[1]))
-                + this.fromIntToHex(parseInt(matches[2]))
-                + this.fromIntToHex(parseInt(matches[3]));
+    private colorRegex(value: string) {
+        if (value) {
+            const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
+            let matches = regexp.exec(value);
+            if (matches) {
+                return '#'
+                    + this.fromIntToHex(parseInt(matches[1]))
+                    + this.fromIntToHex(parseInt(matches[2]))
+                    + this.fromIntToHex(parseInt(matches[3]));
+            }
         }
+        return value;
     }
 }

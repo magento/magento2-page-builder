@@ -1,4 +1,4 @@
-define(["../../component/config", "../../utils/directives"], function (_config, _directives) {
+define(["../../component/config", "../../utils/directives", "underscore"], function (_config, _directives, _underscore) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -165,7 +165,7 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
               attributeDirection = _key$split[1];
 
           result['margins_and_padding'] = result['margins_and_padding'] || spacingObj;
-          result['margins_and_padding'][attributeType] = _.extend(result['margins_and_padding'][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace('px', ''), _$extend));
+          result['margins_and_padding'][attributeType] = _underscore.extend(result['margins_and_padding'][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace('px', ''), _$extend));
           return;
         }
 
@@ -205,12 +205,16 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
     };
 
     _proto.colorRegex = function colorRegex(value) {
-      var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
-      var matches = regexp.exec(value);
+      if (value) {
+        var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
+        var matches = regexp.exec(value);
 
-      if (matches[1]) {
-        return '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[3]));
+        if (matches) {
+          return '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[3]));
+        }
       }
+
+      return value;
     };
 
     return StyleAttributeMapper;

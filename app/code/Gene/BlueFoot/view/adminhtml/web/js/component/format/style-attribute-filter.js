@@ -1,29 +1,23 @@
-define(["../../utils/data-object"], function (_dataObject) {
-  /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
+define(["./data-filter"], function (_dataFilter) {
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
   var StyleAttributeFilter =
   /*#__PURE__*/
-  function () {
+  function (_DataFilter) {
+    _inheritsLoose(StyleAttributeFilter, _DataFilter);
+
+    // Allowed style attributes
     function StyleAttributeFilter() {
-      this.styleAttributes = (0, _dataObject.toDataObject)(['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left', 'display', 'align_self', 'text_align', 'color', 'border', 'margins_and_padding']);
+      var _this;
+
+      _this = _DataFilter.call(this) || this;
+      _this.allowedAttributes = void 0;
+      _this.allowedAttributes = _this.toDataObject(['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left', 'display', 'align_self', 'text_align', 'color', 'border', 'margins_and_padding']);
+      return _this;
     }
 
-    var _proto = StyleAttributeFilter.prototype;
-
-    /**
-     * Filter allowed style properties from object
-     *
-     * @param {DataObject} data
-     * @returns {DataObject}
-     */
-    _proto.filter = function filter(data) {
-      return (0, _dataObject.filterAttributes)(data, this.styleAttributes);
-    };
-
     return StyleAttributeFilter;
-  }();
+  }(_dataFilter);
 
   return StyleAttributeFilter;
 });

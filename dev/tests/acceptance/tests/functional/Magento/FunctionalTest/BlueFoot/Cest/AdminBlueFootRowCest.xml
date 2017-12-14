@@ -90,9 +90,6 @@
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
             </actionGroup>
-            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
-            </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
             </actionGroup>
@@ -129,24 +126,22 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="waitForBackgroundForm"/>
-            <seeElement selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="seeBackgroundFormSection"/>
-            <click selector="{{RowBackgroundFormSection.sectionTab}}" stepKey="clickBackgroundFormSection"/>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+            <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
+            <seeElement selector="{{RowOnBackend.backgroundSectionName}}" stepKey="seeBackgroundFormSection"/>
+            <click selector="{{RowOnBackend.backgroundSectionName}}" stepKey="clickBackgroundFormSection"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
                 <argument name="property" value="PageBuilderBackgroundColorProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-                <argument name="property" value="PageBuilderBackgroundImageProperty"/>
-            </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterSizeProperty">
                 <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
             </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-                <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
-            </actionGroup>
-            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-                <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
-            </actionGroup>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundColor}}" stepKey="seeParallaxBackgroundSet"/>
         </test>
         <test name="CanAddParallaxBackground">
             <annotations>
