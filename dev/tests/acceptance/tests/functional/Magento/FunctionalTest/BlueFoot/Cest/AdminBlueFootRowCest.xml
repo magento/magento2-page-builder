@@ -186,6 +186,7 @@
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
             <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <waitForPageLoad stepKey="waitForParallaxLibraryLoad"/>
             <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
             <seeElementInDOM selector="{{RowOnFrontend.parallaxSpeed(PageBuilderParallaxSpeedProperty.value)}}" stepKey="seeParallaxSpeedSet"/>
         </test>

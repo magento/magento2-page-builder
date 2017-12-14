@@ -33,6 +33,12 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
             }
         });
 
+        $('div[data-role="row"][data-enable-parallax="1"]').each(function (index, element) {
+            $(element).addClass('pagebuilder-parallax');
+        });
+    });
+
+    $(window).load(function (){
         window.bgParallax('.pagebuilder-parallax');
     });
 });
