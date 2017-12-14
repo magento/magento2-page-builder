@@ -30,7 +30,6 @@ define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscor
             } catch (e) {// This may error
             }
 
-            console.log('init slick');
             (0, _jquery)(_this.element).slick(_this.buildSlickConfig());
           }
         }, 100);

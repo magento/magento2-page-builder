@@ -27,7 +27,6 @@ export default class AdvancedSlider extends PreviewBlock {
                 } catch (e) {
                     // This may error
                 }
-                console.log('init slick');
                 $(this.element).slick(this.buildSlickConfig());
             }
         }, 100);

@@ -7,7 +7,7 @@ define(["../../utils/data-object"], function (_dataObject) {
   /*#__PURE__*/
   function () {
     function StyleAttributeFilter() {
-      this.styleAttributes = (0, _dataObject.toDataObject)(['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left', 'display', 'align_self', 'text_align', 'margins_and_padding']);
+      this.styleAttributes = (0, _dataObject.toDataObject)(['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left', 'display', 'align_self', 'text_align', 'color', 'border', 'margins_and_padding']);
     }
 
     var _proto = StyleAttributeFilter.prototype;

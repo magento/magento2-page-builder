@@ -22,6 +22,10 @@
             <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
         <test name="InitializeWithRow">
             <annotations>
                 <title value="Row exists on initialise"/>
@@ -188,6 +192,64 @@
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedTextColorProperty">
+                <argument name="property" value="PageBuilderAdvancedTextColorProperty_ffffff"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+                <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openSavedEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForSavedAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeSavedAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickSavedAdvancedFormSection"/>
+            <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentProperty.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInRow"/>
+            <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedBorderSizeProperty10.value}}" selector="{{AdvancedForm.advancedBorderSize}}" stepKey="assertBorderSizeSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedTextColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedTextColor}}" stepKey="assertTextColorSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedCssClassesProperty.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInRow"/>
+            <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInRow"/>
+            <amOnPage url="row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <waitForElementVisible time="2" selector="{{RowsOnFrontend.rowDisplay}}" stepKey="waitForFrontEndRow"/>
+            <seeElement selector="{{RowsOnFrontend.rowColor}}" stepKey="seeRowColorStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowTextAlign}}" stepKey="seeRowTextAlignStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowBorder}}" stepKey="seeRowBorderStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowBorderRadius}}" stepKey="seeRowBorderRadiusStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowMargin}}" stepKey="seeRowMarginStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowPadding}}" stepKey="seeRowPaddingStyle"/>
+            <seeElement selector="{{RowsOnFrontend.rowClass}}" stepKey="seeRowClass"/>
         </test>
     </cest>
 </config>

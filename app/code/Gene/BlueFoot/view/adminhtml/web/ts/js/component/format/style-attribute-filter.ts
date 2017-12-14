@@ -32,6 +32,8 @@ export default class StyleAttributeFilter {
         'display',
         'align_self',
         'text_align',
+        'color',
+        'border',
         'margins_and_padding'
     ]);
 
