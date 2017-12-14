@@ -148,6 +148,51 @@
                 <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
             </actionGroup>
         </test>
+        <test name="CanAddParallaxBackground">
+            <annotations>
+                <title value="Add parallax to background image"/>
+                <description value="A user should be able to apply parallax to a background image"/>
+                <severity value="CRITICAL"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{RowOnBackend.parallaxSectionName}}" stepKey="waitForParallaxForm"/>
+            <seeElement selector="{{RowOnBackend.parallaxSectionName}}" stepKey="seeParallaxFormSection"/>
+            <click selector="{{RowOnBackend.parallaxSectionName}}" stepKey="clickParallaxFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxEnabledProperty">
+                <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
+                <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxEnabledPropertyIsRequired">
+                <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxSpeedPropertyIsRequired">
+                <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
+            </actionGroup>
+            <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
+                <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
+                <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
+            </actionGroup>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
+        </test>
         <test name="RowHasAdvancedFormSectionRequiredFields">
             <annotations>
                 <title value="Add advanced tab"/>

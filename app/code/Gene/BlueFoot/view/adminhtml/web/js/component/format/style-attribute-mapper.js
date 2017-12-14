@@ -77,7 +77,6 @@ define(["../../component/config", "../../utils/directives"], function (_config, 
       var result = {};
       Object.keys(data).map(function (key) {
         var value = data[key];
-        debugger;
 
         if (value === '') {
           return;
