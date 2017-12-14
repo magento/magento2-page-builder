@@ -39,17 +39,6 @@ define(["underscore", "./block"], function (_underscore, _block) {
 
       return _underscore.extend(_Block.prototype.getStyle.call(this), styleAttributes);
     };
-    /**
-     * Is parallax enabled?
-     *
-     * @returns {boolean}
-     */
-
-
-    _proto.isParallaxEnabled = function isParallaxEnabled() {
-      var data = this.getData();
-      return !(data.enable_parallax === "" || data.enable_parallax === 'undefined' || data.enable_parallax === "0");
-    };
 
     return Row;
   }(_block);
