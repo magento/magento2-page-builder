@@ -71,7 +71,7 @@ class InstallData implements InstallDataInterface
         \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory,
         \Magento\Framework\Module\Dir\Reader $moduleReader,
         \Magento\Framework\Filesystem\Io\File $ioFile,
-        \Gene\BlueFoot\Model\Installer\File $fileInstaller,
+        \Magento\PageBuilder\Setup\DataConverter\Installer\File $fileInstaller,
         ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface,
         \Magento\Eav\Model\Config $eavConfig
     ) {
@@ -160,10 +160,11 @@ class InstallData implements InstallDataInterface
      */
     protected function installDefaultContentBlocks($setup)
     {
-        $file = $this->moduleReader->getModuleDir(false, 'Gene_BlueFoot') . DIRECTORY_SEPARATOR .
-            'Setup' . DIRECTORY_SEPARATOR .
-            'data' . DIRECTORY_SEPARATOR .
-            'pagebuilder_blocks_core.json';
+        $file = __DIR__
+            . DIRECTORY_SEPARATOR
+            . 'data'
+            . DIRECTORY_SEPARATOR
+            . 'pagebuilder_blocks_core.json';
 
         if ($this->ioFile->fileExists($file)) {
             $this->fileInstaller->install($file, $setup);
