@@ -31,21 +31,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ]
             );
 
-        $attributeMock = $this->getMockBuilder(\Gene\BlueFoot\Model\Attribute::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $attributeMock->expects($this->once())
-            ->method('getOptions')
-            ->willReturn([]);
-
         $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
                 'row' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Row($this->styleExtractor),
                 'column' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Column($this->styleExtractor),
                 'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading(
                     $this->styleExtractor,
-                    $headerHydratorMock,
-                    $attributeMock
+                    $headerHydratorMock
                 )
             ]
         );
