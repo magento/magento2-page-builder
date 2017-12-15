@@ -167,6 +167,12 @@ export default class StyleAttributeMapper {
         return hex.length == 1 ? '0' + hex : hex;
     }
 
+    /**
+     * Convert from string to hex
+     *
+     * @param {string} value
+     * @returns {string}
+     */
     private convertRgbToHex(value: string) {
         if (value) {
             const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;

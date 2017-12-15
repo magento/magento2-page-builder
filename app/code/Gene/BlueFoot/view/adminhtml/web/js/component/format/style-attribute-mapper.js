@@ -203,6 +203,13 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
       var hex = value.toString(16);
       return hex.length == 1 ? '0' + hex : hex;
     };
+    /**
+     * Convert from string to hex
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+
 
     _proto.convertRgbToHex = function convertRgbToHex(value) {
       if (value) {
