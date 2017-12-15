@@ -106,14 +106,14 @@ export default class StyleAttributeMapper {
                     if (value === 'initial') {
                         value = '';
                     } else {
-                        value = this.colorRegex(value);
+                        value = this.convertRgbToHex(value);
                     }
                 }
                 if (key === 'color') {
                     if (value === 'inherit') {
                         value = 'Default';
                     } else {
-                        value = this.colorRegex(value);
+                        value = this.convertRgbToHex(value);
                     }
                 }
                 if (key === 'background-image') {
@@ -167,7 +167,7 @@ export default class StyleAttributeMapper {
         return hex.length == 1 ? '0' + hex : hex;
     }
 
-    private colorRegex(value: string) {
+    private convertRgbToHex(value: string) {
         if (value) {
             const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
             let matches = regexp.exec(value);

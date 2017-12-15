@@ -123,7 +123,7 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
           if (value === 'initial') {
             value = '';
           } else {
-            value = _this2.colorRegex(value);
+            value = _this2.convertRgbToHex(value);
           }
         }
 
@@ -131,7 +131,7 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
           if (value === 'inherit') {
             value = 'Default';
           } else {
-            value = _this2.colorRegex(value);
+            value = _this2.convertRgbToHex(value);
           }
         }
 
@@ -204,7 +204,7 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
       return hex.length == 1 ? '0' + hex : hex;
     };
 
-    _proto.colorRegex = function colorRegex(value) {
+    _proto.convertRgbToHex = function convertRgbToHex(value) {
       if (value) {
         var regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
         var matches = regexp.exec(value);

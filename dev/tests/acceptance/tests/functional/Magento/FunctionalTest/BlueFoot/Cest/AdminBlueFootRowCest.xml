@@ -131,13 +131,30 @@
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterSizeProperty">
                 <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
             </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAttachmentProperty">
+                <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+            </actionGroup>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <actionGroup ref="openBlueFootEditPanel" stepKey="openSavedEditMenuOnStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundFormAgain"/>
+            <click selector="{{RowOnBackend.backgroundSectionName}}" stepKey="clickBackgroundFormSectionAgain"/>
+            <seeInField userInput="{{PageBuilderBackgroundColorProperty.value}}" selector="{{RowOnBackend.colorInput}}" stepKey="assertBackgroundColorSavedInRow"/>
+            <seeOptionIsSelected userInput="{{PageBuilderBackgroundSizeProperty.value}}" selector="{{RowOnBackend.sizeInput}}" stepKey="assertBackgroundSizeSavedInRow"/>
+            <seeOptionIsSelected userInput="{{PageBuilderBackgroundAttachmentProperty.value}}" selector="{{RowOnBackend.attachmentInput}}" stepKey="assertBackgroundAttachmentSavedInRow"/>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
             <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
             <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
-            <seeElementInDOM selector="{{RowOnFrontend.backgroundColor}}" stepKey="seeParallaxBackgroundSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundColor}}" stepKey="seeBackgroundColorSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundSize}}" stepKey="seeBackgroundSizeSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundAttachment}}" stepKey="seeBackgroundAttachmentSet"/>
         </test>
         <test name="CanAddParallaxBackground">
             <annotations>
