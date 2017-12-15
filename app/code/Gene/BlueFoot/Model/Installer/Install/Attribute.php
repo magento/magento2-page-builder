@@ -180,7 +180,6 @@ class Attribute extends AbstractInstall
             foreach ($attributes as $attribute) {
                 if (isset($attribute['attribute_code'])) {
                     $this->createAttribute($attribute, $eavSetup, $attribute['attribute_code']);
-                    $this->entity->getAttribute($attribute['attribute_code']);
                 }
             }
         }
