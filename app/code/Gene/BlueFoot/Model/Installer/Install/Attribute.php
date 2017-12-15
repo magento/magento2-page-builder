@@ -3,8 +3,8 @@
 namespace Gene\BlueFoot\Model\Installer\Install;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
-use Gene\BlueFoot\Setup\EntitySetupFactory;
-use Gene\BlueFoot\Setup\EntitySetup;
+use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
+use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
 /**
  * Class Attribute
@@ -180,6 +180,7 @@ class Attribute extends AbstractInstall
             foreach ($attributes as $attribute) {
                 if (isset($attribute['attribute_code'])) {
                     $this->createAttribute($attribute, $eavSetup, $attribute['attribute_code']);
+                    $this->entity->getAttribute($attribute['attribute_code']);
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gene\BlueFoot\Setup;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;

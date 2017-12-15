@@ -1,6 +1,6 @@
 <?php
 
-namespace Gene\BlueFoot\Setup;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 use Magento\Framework\Setup\InstallDataInterface;
@@ -67,7 +67,7 @@ class InstallData implements InstallDataInterface
      * @param \Magento\Eav\Model\Config                                $eavConfig
      */
     public function __construct(
-        EntitySetupFactory $entitySetupFactory,
+        \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory $entitySetupFactory,
         \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory,
         \Magento\Framework\Module\Dir\Reader $moduleReader,
         \Magento\Framework\Filesystem\Io\File $ioFile,

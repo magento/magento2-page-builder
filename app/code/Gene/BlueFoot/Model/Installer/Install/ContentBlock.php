@@ -4,8 +4,8 @@ namespace Gene\BlueFoot\Model\Installer\Install;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
-use Gene\BlueFoot\Setup\EntitySetupFactory;
-use Gene\BlueFoot\Setup\EntitySetup;
+use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
+use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
 /**
  * Class ContentBlock

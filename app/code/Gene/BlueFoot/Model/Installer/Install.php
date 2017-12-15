@@ -2,7 +2,7 @@
 
 namespace Gene\BlueFoot\Model\Installer;
 
-use Gene\BlueFoot\Setup\EntitySetupFactory;
+use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 
 /**
  * Class Install

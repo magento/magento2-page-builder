@@ -1,6 +1,6 @@
 <?php
 
-namespace Gene\BlueFoot\Setup;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Eav\Model\Config;
 use Magento\Eav\Model\Entity\Setup\Context;
