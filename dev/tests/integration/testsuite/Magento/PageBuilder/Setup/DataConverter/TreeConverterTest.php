@@ -13,36 +13,58 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     /**
      * @var ObjectManagerInterface
      */
-    private $objectManager;
+    private static $objectManager;
 
     /**
      * @var \Gene\BlueFoot\Setup\DataConverter\TreeConverter
      */
-    private $treeConverter;
+    private static $treeConverter;
 
-    protected function setUp()
-    {
-        $this->objectManager = Bootstrap::getObjectManager();
-    }
+    /**
+     * @var array
+     */
+    private static $dropTableNames = [
+        'gene_bluefoot_entity_datetime',
+        'gene_bluefoot_entity_decimal',
+        'gene_bluefoot_entity_int',
+        'gene_bluefoot_entity_text',
+        'gene_bluefoot_entity_varchar',
+        'gene_bluefoot_eav_attribute',
+        'gene_bluefoot_entity_type',
+        'gene_bluefoot_entity_type_group',
+        'gene_bluefoot_stage_template',
+        'gene_bluefoot_entity'
+    ];
 
-    public function testConvert()
+    /**
+     * @var array
+     */
+    private $dropdownAttributeCodes = ['heading_type'];
+    
+    public static function setUpBeforeClass()
     {
+        self::$objectManager = Bootstrap::getObjectManager();
+
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = $this->objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallSchema::class);
+        $installSchema = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallSchema::class);
+
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = $this->objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallData::class);
+        $installData = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallData::class);
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
-        $schemaSetup = $this->objectManager->create(\Magento\Setup\Module\Setup::class);
+        $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
 
         /** @var \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup */
-        $moduleDataSetup = $this->objectManager->create(\Magento\Framework\Setup\ModuleDataSetupInterface::class);
+        $moduleDataSetup = self::$objectManager->create(\Magento\Framework\Setup\ModuleDataSetupInterface::class);
 
         /** @var \Magento\Framework\Setup\ModuleContextInterface $moduleContext */
-        $moduleContext = $this->objectManager->create(\Magento\Setup\Model\ModuleContext::class, ['version' => '1.0.0']);
+        $moduleContext = self::$objectManager->create(
+            \Magento\Setup\Model\ModuleContext::class,
+            ['version' => '1.0.0']
+        );
 
         /** @var \Magento\Framework\DB\Adapter\AdapterInterface $dbAdapter */
-        $dbAdapter = $this->objectManager->create(\Magento\Framework\App\ResourceConnection::class)->getConnection();
+        $dbAdapter = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class)->getConnection();
 
         $entityTypeSelect = $dbAdapter->select()
             ->from('eav_entity_type', ['entity_type_id'])
@@ -50,20 +72,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entityTypeId = $dbAdapter->fetchOne($entityTypeSelect);
 
-        $eavAttributeSetSelect = $dbAdapter->select()
-            ->from('eav_attribute_set', ['attribute_set_id'])
-            ->where('entity_type_id = ?', $entityTypeId);
-
-        $dbAdapter->dropTable('gene_bluefoot_entity_datetime');
-        $dbAdapter->dropTable('gene_bluefoot_entity_decimal');
-        $dbAdapter->dropTable('gene_bluefoot_entity_int');
-        $dbAdapter->dropTable('gene_bluefoot_entity_text');
-        $dbAdapter->dropTable('gene_bluefoot_entity_varchar');
-        $dbAdapter->dropTable('gene_bluefoot_eav_attribute');
-        $dbAdapter->dropTable('gene_bluefoot_entity_type');
-        $dbAdapter->dropTable('gene_bluefoot_entity_type_group');
-        $dbAdapter->dropTable('gene_bluefoot_stage_template');
-        $dbAdapter->dropTable('gene_bluefoot_entity');
+        foreach (self::$dropTableNames as $tableName) {
+            $dbAdapter->dropTable($tableName);
+        }
 
         if ($entityTypeId) {
             $dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
@@ -71,48 +82,99 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             $dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
             $dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
         }
-        $dbAdapter->delete('eav_attribute_option');
-        $dbAdapter->delete('eav_attribute_option_value');
-        //$dbAdapter->delete('eav_attribute_group', 'attribute_set_id in (' . implode(',', $dbAdapter->fetchCol($eavAttributeSetSelect)) . ')');
 
         $installSchema->install($schemaSetup, $moduleContext);
 
         $installData->install($moduleDataSetup, $moduleContext);
 
-        $this->treeConverter = $this->objectManager->create(\Gene\BlueFoot\Setup\DataConverter\TreeConverter::class);
+        self::$treeConverter = self::$objectManager->create(\Gene\BlueFoot\Setup\DataConverter\TreeConverter::class);
+    }
 
-        $entityRepository = $this->objectManager->create(\Gene\BlueFoot\Api\EntityRepositoryInterface::class);
-
-        /** @var \Gene\BlueFoot\Model\Entity */
-        $entity = $this->objectManager->create(\Gene\BlueFoot\Model\Entity::class);
-
-        /** @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface $contentBlockRepository */
-        $contentBlockRepository = $this->objectManager->create(\Gene\BlueFoot\Api\ContentBlockRepositoryInterface::class);
-        $contentBlock = $contentBlockRepository->getByIdentifier('heading');
-
-        /** @var \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository */
-        $attributeRepository = $this->objectManager->create(\Magento\Eav\Api\AttributeRepositoryInterface::class);
-        $headingTypeAttribute = $attributeRepository->get('gene_bluefoot_entity', 'heading_type');
-
-        $entity->setData(
-            [
-                'attribute_set_id' => $contentBlock->getId(),
-                'title' => 'Heading title',
-                'css_classes' => 'heading-class',
-                'metric' => '{"margin":"12px - - -","padding":"- - - -"}',
-                'align' => 'center',
-                'heading_type' => $headingTypeAttribute->getOptions()[3]['value'],
-            ]
-        );
-        $entityRepository->save($entity);
-
-        $masterFormat = $this->treeConverter->convert(
-            '[{"type":"row","children":[{"type":"column","formData":{"width":"0.500","remove_padding":"1","css_classes":"","undefined":"","align":"","metric":{"margin":"- 5px - -","padding":"- - - -"}},"children":[{"contentType":"heading","entityId":"' . 1 . '","formData":{"align":"","metric":""}}]}]}]'
-        );
+    /**
+     * @param $contentTypes
+     * @param $jsonFormatFileName
+     * @param $masterFormatFileName
+     * @dataProvider convertDataProvider
+     */
+    public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName)
+    {
+        foreach ($contentTypes as $contentTypesCode => $contentTypeData) {
+            $this->saveContentType($contentTypesCode, $contentTypeData);
+        }
 
         $this->assertEquals(
-            '<div data-role="row" style="display: flex;"><div data-role="column" style="margin: 0px 5px 0px 0px; padding: 0px 0px 0px 0px; width: 50%;"><h4 data-role="heading" class="heading-class">Heading title</h4></div></div>',
-            $masterFormat
+            file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
+            self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function convertDataProvider()
+    {
+        return [
+            'row column and heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'heading-class',
+                        'metric' => '{"margin":"12px - - -","padding":"- - - -"}',
+                        'align' => 'center',
+                        'heading_type' => 'h4',
+                    ]
+                ],
+                'json_format' => 'row_column_heading.json',
+                'master_format' => 'row_column_heading.html'
+            ]
+        ];
+    }
+
+    /**
+     * @param string $contentTypeCode
+     * @param array $data
+     * @return int
+     */
+    private function saveContentType($contentTypeCode, $data)
+    {
+        /** @var \Gene\BlueFoot\Model\Entity */
+        $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
+
+        /** @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface $contentBlockRepository */
+        $contentBlockRepository = self::$objectManager->create(
+            \Gene\BlueFoot\Api\ContentBlockRepositoryInterface::class
+        );
+
+        /** @var \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock */
+        $contentBlock = $contentBlockRepository->getByIdentifier($contentTypeCode);
+
+        $data['attribute_set_id'] = $contentBlock->getId();
+
+        /** @var \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository */
+        $attributeRepository = self::$objectManager->create(\Magento\Eav\Api\AttributeRepositoryInterface::class);
+
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $this->dropdownAttributeCodes)) {
+                continue;
+            }
+            $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
+            if ($attribute && $attribute->getOptions()) {
+                foreach ($attribute->getOptions() as $option) {
+                    if ($option['label'] === $value) {
+                        $data[$key] = $option['value'];
+                    }
+                }
+            }
+        }
+
+        $entity->setData($data);
+
+        /** @var \Gene\BlueFoot\Api\EntityRepositoryInterface $entityRepository */
+        $entityRepository = self::$objectManager->create(\Gene\BlueFoot\Api\EntityRepositoryInterface::class);
+
+        $entityRepository->save($entity);
+
+        return $entity->getId();
     }
 }
