@@ -9,10 +9,7 @@ use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
-/**
- * Render heading to PageBuilder format
- */
-class Heading implements RendererInterface
+class Anchor implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -40,8 +37,9 @@ class Heading implements RendererInterface
         $eavData = $this->entityHydrator->hydrate($itemData);
 
         $rootElementAttributes = [
-            'data-role' => 'heading',
-            'class' => $eavData['css_classes'] ?? ''
+            'data-role' => 'anchor',
+            'class' => $eavData['css_classes'] ?? '',
+            'id' => $eavData['anchor_id']
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);
@@ -49,11 +47,11 @@ class Heading implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<' . $eavData['heading_type'];
+        $rootElementHtml = '<span';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $eavData['title'] . '</' . $eavData['heading_type'] . '>';
+        $rootElementHtml .= '></span>';
 
         return $rootElementHtml;
     }

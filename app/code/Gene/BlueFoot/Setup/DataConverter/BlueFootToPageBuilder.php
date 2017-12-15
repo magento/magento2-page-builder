@@ -39,15 +39,17 @@ class BlueFootToPageBuilder implements DataConverterInterface
     }
 
     /**
-     * Convert from one format to another
+     * Convert from legacy BlueFoot format into new storage format
      *
      * @param string $value
      * @return string
      */
     public function convert($value)
     {
-        if ($this->validator->isBlueFoot($value)) {
-            return $this->converter->convert($this->validator->getJson());
+        if (preg_match('/<!--' . Validator::BLUEFOOT_KEY . '="(.*)"-->/', $value, $matches)) {
+            if ($this->validator->isValidBlueFootJson($matches[1])) {
+                return $this->converter->convert($matches[1]);
+            }
         }
 
         return $value;

@@ -45,7 +45,7 @@ class MixedToPageBuilder implements DataConverterInterface
      */
     public function convert($value)
     {
-        if ($this->validator->isMixed($value)) {
+        if (strstr($value, Validator::UNMIGRATED_KEY) !== false) {
             return $this->convertMixed($value);
         }
 
@@ -53,8 +53,7 @@ class MixedToPageBuilder implements DataConverterInterface
     }
 
     /**
-     * Extract any valid instances of un-migrated content, convert their internal structure and replace them in the
-     * original structure
+     * Convert any instances of un-migrated content to the new format
      *
      * @param $value
      *
@@ -62,7 +61,10 @@ class MixedToPageBuilder implements DataConverterInterface
      */
     private function convertMixed($value)
     {
-        // Match all HTML content types containing un-migrated content
+        /**
+         * Match all instances of any un-migrated content within the value argument. This will automatically retrieve
+         * any instance of a HTML content type (of the new format) with legacy encoded data stored inside it.
+         */
         preg_match_all(
             '/<div.*data-role="html".*>[\n\r\s]*<!--' . Validator::UNMIGRATED_KEY . '="(.*)"-->[\n\r\s]*<\/div>/',
             $value,
@@ -72,6 +74,10 @@ class MixedToPageBuilder implements DataConverterInterface
 
         $response = $value;
         foreach ($matches as $match) {
+            /**
+             * $contentType matches the ensure HTML content types declaration
+             * $structure matches the internal JSON structure of the HTML comment
+             */
             list ($contentType, $structure) = $match;
             if ($this->validator->isValidBlueFootJson($structure, false)) {
                 $response = str_replace(
