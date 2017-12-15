@@ -45,7 +45,7 @@ class MixedToPageBuilder implements DataConverterInterface
      */
     public function convert($value)
     {
-        if ($this->validator->isMixed($value)) {
+        if (strstr($value, Validator::UNMIGRATED_KEY) !== false) {
             return $this->convertMixed($value);
         }
 

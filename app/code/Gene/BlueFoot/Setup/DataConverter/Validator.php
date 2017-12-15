@@ -18,11 +18,6 @@ class Validator
     private $serializer;
 
     /**
-     * @var string
-     */
-    private $json;
-
-    /**
      * Validator constructor.
      *
      * @param Json $serializer
@@ -31,46 +26,6 @@ class Validator
         Json $serializer
     ) {
         $this->serializer = $serializer;
-    }
-
-    /**
-     * Determine if a value is a combination of mixed and un-migrated content, for this we just scan for an instance
-     * of the un-migrated key
-     *
-     * @param $value
-     *
-     * @return bool
-     */
-    public function isMixed($value)
-    {
-        return strstr($value, self::UNMIGRATED_KEY) !== false;
-    }
-
-    /**
-     * Determine if the value is a valid BlueFoot structure
-     *
-     * @param $value
-     *
-     * @return bool
-     */
-    public function isBlueFoot($value)
-    {
-        if (preg_match('/<!--' . self::BLUEFOOT_KEY . '="(.*)"-->/', $value, $matches)) {
-            $this->json = $matches[1];
-            return $this->isValidBlueFootJson($this->json);
-        }
-
-        return false;
-    }
-
-    /**
-     * Retrieve the JSON value
-     *
-     * @return string
-     */
-    public function getJson()
-    {
-        return $this->json;
     }
 
     /**
