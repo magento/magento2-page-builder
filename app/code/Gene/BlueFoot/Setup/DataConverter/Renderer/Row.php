@@ -34,15 +34,17 @@ class Row implements RendererInterface
             'style' => ''
         ];
 
-        $columnChildrenCount = array_reduce($itemData['children'], function ($result, $child) {
-            if (isset($child['type']) && $child['type'] === 'column') {
-                $result++;
-            }
-            return $result;
-        }, 0);
+        if (!empty($itemData['children'])) {
+            $columnChildrenCount = array_reduce($itemData['children'], function ($result, $child) {
+                if (isset($child['type']) && $child['type'] === 'column') {
+                    $result++;
+                }
+                return $result;
+            }, 0);
 
-        if (!empty($itemData['children']) && $columnChildrenCount === count($itemData['children'])) {
-            $rootElementAttributes['style'] = 'display: flex; ';
+            if ($columnChildrenCount === count($itemData['children'])) {
+                $rootElementAttributes['style'] = 'display: flex; ';
+            }
         }
 
         if (isset($itemData['formData'])) {
@@ -57,7 +59,7 @@ class Row implements RendererInterface
             $attributeValue = trim($attributeValue);
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $additionalData['children'] . '</div>';
+        $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
 
         return $rootElementHtml;
     }

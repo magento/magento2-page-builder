@@ -114,19 +114,38 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     public function convertDataProvider()
     {
         return [
+            'empty row' => [
+                [],
+                'empty_row.json',
+                'empty_row.html'
+            ],
+            'heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'heading_type' => 'h2',
+                    ]
+                ],
+                'heading.json',
+                'heading.html'
+            ],
             'row column and heading' => [
                 [
                     'heading' => [
                         'entity_id' => 1,
                         'title' => 'Heading title',
-                        'css_classes' => 'heading-class',
-                        'metric' => '{"margin":"12px - - -","padding":"- - - -"}',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
                         'align' => 'center',
                         'heading_type' => 'h4',
                     ]
                 ],
-                'json_format' => 'row_column_heading.json',
-                'master_format' => 'row_column_heading.html'
+                'row_column_heading.json',
+                'row_column_heading.html'
             ]
         ];
     }

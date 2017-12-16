@@ -34,9 +34,12 @@ class Configurable implements ChildrenExtractorInterface
     public function extract(array $data)
     {
         $parts = explode('/', $this->path);
+        $children = [];
         foreach ($parts as $part) {
-            $data = $data[$part];
+            if (isset($data[$part])) {
+                $children = $data[$part];
+            }
         }
-        return $data;
+        return $children;
     }
 }

@@ -5,8 +5,21 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+use Magento\Framework\Serialize\Serializer\Json;
+
 class StyleExtractor implements StyleExtractorInterface
 {
+    /**
+     * @var Json
+     */
+    private $serializer;
+
+    public function __construct(
+        Json $serializer
+    ) {
+        $this->serializer = $serializer;
+    }
+
     /**
      * @inheritdoc
      */
@@ -14,12 +27,19 @@ class StyleExtractor implements StyleExtractorInterface
     {
         $styleAttributes = [
             'text-align' => $formData['align'],
-            'margin' => isset($formData['metric']['margin']) ?
-                $this->extractMarginPadding($formData['metric']['margin']) : '',
-            'padding' => isset($formData['metric']['padding']) ?
-                $this->extractMarginPadding($formData['metric']['padding']) : '',
-            'width' => isset($formData['width']) ? ($formData['width'] * 100) . '%' : ''
+            'width' => isset($formData['width']) ? ($formData['width'] * 100) . '%' : '',
+            'background-color' => isset($formData['background_color'])
+                ? '#' . $formData['background_color'] : '',
+            'background-image' => isset($formData['background_image'])
+                ? '{{media url=' . $formData['background_image'] . '}}' : ''
         ];
+        if (isset($formData['metric']) && $formData['metric']) {
+            $metric = $this->serializer->unserialize($formData['metric']);
+            $styleAttributes['margin'] = isset($metric['margin']) ?
+                $this->extractMarginPadding($metric['margin']) : '';
+            $styleAttributes['padding'] = isset($metric['padding']) ?
+                $this->extractMarginPadding($metric['padding']) : '';
+        }
 
         $styleString = '';
         foreach ($styleAttributes as $attributeName => $attributeValue) {
