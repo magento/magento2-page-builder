@@ -38,36 +38,28 @@
             </item>
         </argument>
     </dataSource>
-    <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string"/>
-            </item>
-        </argument>
-    </fieldset>
     <fieldset name="background">
         <settings>
             <label translate="true">Background</label>
             <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-        <field name="background_color" formElement="input">
+        <field name="background_color" sortOrder="10" formElement="input">
             <settings>
-                <dataType>text</dataType>
                 <label translate="true">Background Color</label>
-                <dataScope>background_color</dataScope>
             </settings>
         </field>
-        <field name="background_image" formElement="fileUploader">
+        <field name="background_image" sortOrder="20" formElement="fileUploader">
             <settings>
-                <notice translate="true">Maximum file size: 4MB. Allowed File types: JPG, PNG, GIF.</notice>
-                <label>Background Image</label>
+                <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
+                <label translate="true">Background Image</label>
                 <componentType>fileUploader</componentType>
             </settings>
             <formElements>
                 <fileUploader>
                     <settings>
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
-                        <maxFileSize>4194304</maxFileSize>
+                        <maxFileSize>2097152</maxFileSize>
                         <uploaderConfig>
                             <param xsi:type="string" name="url">bluefoot/contenttype/image_upload</param>
                         </uploaderConfig>
@@ -76,24 +68,60 @@
                 </fileUploader>
             </formElements>
         </field>
-        <field name="background_size" formElement="select">
+        <field name="background_position" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
+                    <item name="default" xsi:type="string">top_aligned</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Background Size</label>
-                <dataScope>background_size</dataScope>
+                <label translate="true">Background Position</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
+                                <item name="value" xsi:type="string">left top</item>
+                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">center center</item>
+                                <item name="label" xsi:type="string" translate="true">Centered</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">left bottom</item>
+                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="background_size" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">auto</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Size</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">auto</item>
+                                <item name="label" xsi:type="string" translate="true">Auto</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">cover</item>
@@ -102,34 +130,6 @@
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">contain</item>
                                 <item name="label" xsi:type="string" translate="true">Contain</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="background_attachment" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Background Attachment</label>
-                <dataScope>background_attachment</dataScope>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">fixed</item>
-                                <item name="label" xsi:type="string" translate="true">Fixed</item>
                             </option>
                         </options>
                     </settings>
@@ -146,6 +146,9 @@
                 <dataType>boolean</dataType>
                 <label translate="true">Background Repeat</label>
                 <dataScope>background_repeat</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <checkbox>
@@ -157,6 +160,36 @@
                         <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
+            </formElements>
+        </field>
+        <field name="background_attachment" sortOrder="60" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">scroll</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Attachment</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">scroll</item>
+                                <item name="label" xsi:type="string" translate="true">Scroll</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">fixed</item>
+                                <item name="label" xsi:type="string" translate="true">Fixed</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
             </formElements>
         </field>
     </fieldset>

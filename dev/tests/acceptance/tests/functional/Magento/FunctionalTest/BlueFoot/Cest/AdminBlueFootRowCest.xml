@@ -110,7 +110,6 @@
                 <title value="Add background tab"/>
                 <description value="See that the background tab in row form works"/>
                 <severity value="CRITICAL"/>
-                <testCaseId value="MAGETWO-84659"/>
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
@@ -125,12 +124,31 @@
             <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
             <seeElement selector="{{RowOnBackend.backgroundSectionName}}" stepKey="seeBackgroundFormSection"/>
             <click selector="{{RowOnBackend.backgroundSectionName}}" stepKey="clickBackgroundFormSection"/>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundPositionPropertyIsRequired">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundSizePropertyIsRequired">
+                <argument name="property" value="BlueFootBackgroundSizeProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundRepeatPropertyIsRequired">
+                <argument name="property" value="BlueFootBackgroundRepeatProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundAttachmentPropertyIsRequired">
+                <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
+            </actionGroup>
             <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
                 <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBlueFootFile">
+                <argument name="property" value="BlueFootBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+                <argument name="property" value="BlueFootBackgroundPositionProperty"/>
             </actionGroup>
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterSizeProperty">
                 <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
             </actionGroup>
+            <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterAttachmentProperty">
                 <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
             </actionGroup>
@@ -153,7 +171,10 @@
             <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
             <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <seeElementInDOM selector="{{RowOnFrontend.backgroundColor}}" stepKey="seeBackgroundColorSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundImage}}" stepKey="seeBackgroundImageSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundPosition}}" stepKey="seeBackgroundPositionSet"/>
             <seeElementInDOM selector="{{RowOnFrontend.backgroundSize}}" stepKey="seeBackgroundSizeSet"/>
+            <seeElementInDOM selector="{{RowOnFrontend.backgroundRepeat}}" stepKey="seeBackgroundRepeatSet"/>
             <seeElementInDOM selector="{{RowOnFrontend.backgroundAttachment}}" stepKey="seeBackgroundAttachmentSet"/>
         </test>
         <test name="CanAddParallaxBackground">
