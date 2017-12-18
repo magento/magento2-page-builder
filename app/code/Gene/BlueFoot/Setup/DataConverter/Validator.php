@@ -9,9 +9,6 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 class Validator
 {
-    const BLUEFOOT_KEY = 'GENE_BLUEFOOT';
-    const UNMIGRATED_KEY = 'UNMIGRATED_CONTENT';
-
     /**
      * @var Json
      */
