@@ -16,6 +16,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     private static $objectManager;
 
     /**
+     * @var \Magento\Framework\DB\Adapter\AdapterInterface
+     */
+    private static $dbAdapter;
+
+    /**
      * @var \Gene\BlueFoot\Setup\DataConverter\TreeConverter
      */
     private static $treeConverter;
@@ -63,24 +68,26 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             ['version' => '1.0.0']
         );
 
-        /** @var \Magento\Framework\DB\Adapter\AdapterInterface $dbAdapter */
-        $dbAdapter = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class)->getConnection();
+        /** @var \Magento\Framework\App\ResourceConnection $resourceConnection */
+        $resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
 
-        $entityTypeSelect = $dbAdapter->select()
+        self::$dbAdapter = $resourceConnection->getConnection();
+
+        $entityTypeSelect = self::$dbAdapter->select()
             ->from('eav_entity_type', ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
 
-        $entityTypeId = $dbAdapter->fetchOne($entityTypeSelect);
+        $entityTypeId = self::$dbAdapter->fetchOne($entityTypeSelect);
 
         foreach (self::$dropTableNames as $tableName) {
-            $dbAdapter->dropTable($tableName);
+            self::$dbAdapter->dropTable($tableName);
         }
 
         if ($entityTypeId) {
-            $dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
-            $dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
-            $dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
-            $dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
+            self::$dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
+            self::$dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
+            self::$dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
+            self::$dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
         }
 
         $installSchema->install($schemaSetup, $moduleContext);
@@ -88,6 +95,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $installData->install($moduleDataSetup, $moduleContext);
 
         self::$treeConverter = self::$objectManager->create(\Gene\BlueFoot\Setup\DataConverter\TreeConverter::class);
+    }
+
+    protected function setUp()
+    {
+        self::$dbAdapter->delete('gene_bluefoot_entity');
     }
 
     /**
@@ -118,6 +130,30 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 [],
                 'empty_row.json',
                 'empty_row.html'
+            ],
+            'row with column and heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'heading_type' => 'h4',
+                    ]
+                ],
+                'row_with_column_and_heading.json',
+                'row_with_column_and_heading.html'
+            ],
+            'one column' => [
+                [],
+                'one_column.json',
+                'one_column.html'
+            ],
+            'two columns' => [
+                [],
+                'two_columns.json',
+                'two_columns.html'
             ],
             'heading' => [
                 [
