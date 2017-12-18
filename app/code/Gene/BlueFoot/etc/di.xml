@@ -74,7 +74,7 @@
                 <item name="column" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Column</item>
                 <item name="heading" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Heading</item>
                 <item name="anchor" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor</item>
-                <item name="textarea" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Text</item>
+                <item name="textarea" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\TextArea</item>
             </argument>
         </arguments>
     </type>
@@ -100,10 +100,10 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="TextEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="TextAreaEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="0" xsi:type="string">textarea</item>
+                <item name="textarea" xsi:type="string">textarea</item>
             </argument>
         </arguments>
     </virtualType>
@@ -124,9 +124,9 @@
             <argument name="entityHydrator" xsi:type="object">AnchorEntityHydrator</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Text">
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\TextArea">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">TextEntityHydrator</argument>
+            <argument name="entityHydrator" xsi:type="object">TextAreaEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">

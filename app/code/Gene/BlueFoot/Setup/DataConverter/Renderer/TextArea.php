@@ -12,7 +12,7 @@ use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 /**
  * Render text to PageBuilder format
  */
-class Text implements RendererInterface
+class TextArea implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -42,7 +42,6 @@ class Text implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'text',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'style' => ''
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);

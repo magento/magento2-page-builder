@@ -43,7 +43,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     $this->styleExtractor,
                     $headerHydratorMock
                 ),
-                'textarea' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Text(
+                'textarea' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\TextArea(
                     $this->styleExtractor,
                     $textHydratorMock
                 )
