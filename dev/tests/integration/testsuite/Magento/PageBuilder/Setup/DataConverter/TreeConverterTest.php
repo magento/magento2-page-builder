@@ -146,7 +146,20 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'row_column_heading.json',
                 'row_column_heading.html'
-            ]
+            ],
+            'textarea' => [
+                [
+                    'textarea' => [
+                        'entity_id' => 1,
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
+                        'align' => 'right',
+                        'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                    ]
+                ],
+                'textarea.json',
+                'textarea.html'
+            ],
         ];
     }
 

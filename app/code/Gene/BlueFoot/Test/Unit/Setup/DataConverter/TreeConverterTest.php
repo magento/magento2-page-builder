@@ -14,22 +14,26 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->styleExtractor = new \Gene\BlueFoot\Setup\DataConverter\StyleExtractor();
+        $this->styleExtractor = new \Gene\BlueFoot\Setup\DataConverter\StyleExtractor(
+            new \Magento\Framework\Serialize\Serializer\Json()
+        );
     }
 
-    public function testRender()
+    /**
+     * @dataProvider dataProviderRender
+     */
+    public function testRender($hydrated, $original, $expected)
     {
         $headerHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface::class)
             ->getMockForAbstractClass();
-        $headerHydratorMock->expects($this->once())
+        $headerHydratorMock->expects($this->any())
             ->method('hydrate')
-            ->willReturn(
-                [
-                    'css_classes' => 'primary',
-                    'title' => 'Heading text',
-                    'heading_type' => 'h2'
-                ]
-            );
+            ->willReturn($hydrated);
+        $textHydratorMock = $this->getMockBuilder(\Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface::class)
+            ->getMockForAbstractClass();
+        $textHydratorMock->expects($this->any())
+            ->method('hydrate')
+            ->willReturn($hydrated);
 
         $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
@@ -38,6 +42,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'heading' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading(
                     $this->styleExtractor,
                     $headerHydratorMock
+                ),
+                'textarea' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Text(
+                    $this->styleExtractor,
+                    $textHydratorMock
                 )
             ]
         );
@@ -56,14 +64,35 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             new \Magento\Framework\Serialize\Serializer\Json()
         );
 
-        $masterFormat = $treeConverter->convert(
-            '[{"type":"row","children":[{"type":"column","formData":{"width":"0.500","remove_padding":"1","css_classes":"","undefined":"","align":"","metric":{"margin":"- 5px - -","padding":"- - - -"}},"children":[{"contentType":"heading","entityId":"1","formData":{"align":"","metric":""}}]}]}]'
-        );
+        $masterFormat = $treeConverter->convert($original);
 
         $this->assertEquals(
-            '<div data-role="row" style="display: flex;"><div data-role="column" style="margin: 0px 5px 0px 0px; padding: 0px 0px 0px 0px; width: 50%;"><h2 data-role="heading" class="primary">Heading text</h2></div></div>',
+            $expected,
             $masterFormat
         );
+    }
+
+    public function dataProviderRender()
+    {
+        return [
+            [
+                [
+                    'css_classes' => 'primary',
+                    'title' => 'Heading text',
+                    'heading_type' => 'h2'
+                ],
+                '[{"type":"row","children":[{"type":"column","formData":{"width":"0.500","remove_padding":"1","css_classes":"","undefined":"","align":"","metric":"{\"margin\":\"- 5px - -\",\"padding\":\"- - - -\"}"},"children":[{"contentType":"heading","entityId":"1","formData":{"align":"","metric":""}}]}]}]',
+                '<div data-role="row" style="display: flex;"><div data-role="column" style="width: 50%; margin: 0px 5px 0px 0px; padding: 0px 0px 0px 0px;"><h2 data-role="heading" class="primary">Heading text</h2></div></div>',
+            ],
+            [
+                [
+                    'css_classes' => '',
+                    'textarea' => '<p><span style="text-decoration: underline;">fdsafsd</span></p><p><strong>Hello</strong></p>'
+                ],
+                '[{"type":"row","children":[{"contentType":"textarea","entityId":"27","formData":{"align":"center","metric":"{\"margin\":\"10px - - -\",\"padding\":\"- - - -\"}"}}]}]',
+                '<div data-role="row"><div data-role="text" style="text-align: center; margin: 10px 0px 0px 0px; padding: 0px 0px 0px 0px;"><p><span style="text-decoration: underline;">fdsafsd</span></p><p><strong>Hello</strong></p></div></div>'
+            ]
+        ];
     }
 
     public function testRenderContentWithButtons()
