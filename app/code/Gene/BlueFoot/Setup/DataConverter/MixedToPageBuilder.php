@@ -45,7 +45,7 @@ class MixedToPageBuilder implements DataConverterInterface
      */
     public function convert($value)
     {
-        if (strstr($value, Validator::UNMIGRATED_KEY) !== false) {
+        if (strstr($value, Format::UNMIGRATED_KEY) !== false) {
             return $this->convertMixed($value);
         }
 
@@ -66,7 +66,7 @@ class MixedToPageBuilder implements DataConverterInterface
          * any instance of a HTML content type (of the new format) with legacy encoded data stored inside it.
          */
         preg_match_all(
-            '/<div.*data-role="html".*>[\n\r\s]*<!--' . Validator::UNMIGRATED_KEY . '="(.*)"-->[\n\r\s]*<\/div>/',
+            '/<div.*data-role="html".*>[\n\r\s]*<!--' . Format::UNMIGRATED_KEY . '="(.*)"-->[\n\r\s]*<\/div>/',
             $value,
             $matches,
             PREG_SET_ORDER

@@ -12,6 +12,7 @@ use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\DB\AggregatedFieldDataConverter;
 use Magento\Framework\DB\Select\QueryModifierFactory;
 use Magento\Framework\DB\FieldToConvert;
+use Gene\BlueFoot\Setup\DataConverter\Format;
 
 class ConvertBlueFootToPageBuilder
 {
@@ -69,21 +70,21 @@ class ConvertBlueFootToPageBuilder
                     $this->setup->getTable('cms_page'),
                     $pageMetadata->getIdentifierField(),
                     'content',
-                    $this->createQueryModifier('content', DataConverter\Validator::BLUEFOOT_KEY)
+                    $this->createQueryModifier('content', Format::BLUEFOOT_KEY)
                 ),
                 new FieldToConvert(
                     DataConverter\BlueFootToPageBuilder::class,
                     $this->setup->getTable('cms_block'),
                     $blockMetadata->getIdentifierField(),
                     'content',
-                    $this->createQueryModifier('content', DataConverter\Validator::BLUEFOOT_KEY)
+                    $this->createQueryModifier('content', Format::BLUEFOOT_KEY)
                 ),
                 new FieldToConvert(
                     DataConverter\BlueFootToPageBuilder::class,
                     $this->setup->getTable('catalog_product_entity_text'),
                     'value_id',
                     'value',
-                    $this->createQueryModifier('value', DataConverter\Validator::BLUEFOOT_KEY)
+                    $this->createQueryModifier('value', Format::BLUEFOOT_KEY)
                 )
             ],
             $this->setup->getConnection()

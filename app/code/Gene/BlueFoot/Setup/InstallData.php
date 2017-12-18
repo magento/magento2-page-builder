@@ -37,20 +37,15 @@ class InstallData implements InstallDataInterface
     }
 
     /**
-     * Detect if BlueFoot was previously installed and convert any data to our new format
+     * Detect if BlueFoot was previously installed and convert data to the new format
      *
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
-     * @param \Magento\Framework\Setup\ModuleContextInterface   $context
+     * @param \Magento\Framework\Setup\ModuleContextInterface $context
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        $setup->startSetup();
-
         if ($this->fullModuleList->has('Gene_BlueFoot')) {
-            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])
-                ->convert();
+            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
         }
-
-        $setup->endSetup();
     }
 }
