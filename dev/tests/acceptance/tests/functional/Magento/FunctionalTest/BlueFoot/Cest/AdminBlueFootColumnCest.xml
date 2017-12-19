@@ -64,7 +64,6 @@
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
@@ -112,7 +111,6 @@
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
-            <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
             <seeElement selector="{{BlueFootActionsSection.editForm}}" stepKey="seeEditForm"/>
             <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
@@ -492,11 +490,10 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

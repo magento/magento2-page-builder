@@ -66,8 +66,8 @@
         </test>
         <test name="CanRemoveMap">
             <annotations>
-                <title value="Remove newsletter content block from stage"/>
-                <description value="A user should be able to remove newsletter block from a row."/>
+                <title value="Remove map content block from stage"/>
+                <description value="A user should be able to remove map block from a row."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84895"/>
                 <group value="bluefoot"/>
@@ -77,7 +77,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderMapContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             </actionGroup>
@@ -97,7 +96,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

@@ -127,7 +127,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderAdvancedSliderContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
@@ -148,7 +147,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

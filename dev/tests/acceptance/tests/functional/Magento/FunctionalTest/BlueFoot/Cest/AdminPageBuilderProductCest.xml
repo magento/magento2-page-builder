@@ -68,12 +68,10 @@
             </annotations>
             <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
-            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="product" stepKey="fillSearch"/>
-            <see userInput="Product" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderProductContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
@@ -96,7 +94,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderProductContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

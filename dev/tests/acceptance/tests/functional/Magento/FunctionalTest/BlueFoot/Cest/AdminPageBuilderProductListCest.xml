@@ -25,7 +25,7 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddProduct">
+        <test name="CanAddProductList">
             <annotations>
                 <title value="Add a product list content block into stage"/>
                 <description value="A user should be able to add a product list content block into a row."/>
@@ -76,7 +76,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderProductListContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
             </actionGroup>
@@ -98,7 +97,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

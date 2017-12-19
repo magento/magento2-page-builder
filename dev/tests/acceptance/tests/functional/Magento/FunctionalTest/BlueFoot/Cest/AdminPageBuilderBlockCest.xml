@@ -20,9 +20,9 @@
         </annotations>
         <before>
             <loginAsAdmin stepKey="loginAsAdmin"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
-            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
+            <!--<actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>-->
+            <!--<actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>-->
+            <!--<actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>-->
         </before>
         <after>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
@@ -35,6 +35,9 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
+            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
@@ -67,12 +70,13 @@
                 <testCaseId value="MAGETWO-84895"/>
                 <group value="bluefoot"/>
             </annotations>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="block" stepKey="fillSearch"/>
             <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootBlockContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
@@ -85,6 +89,8 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
             <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="waitForElementVisible" />
             <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
@@ -93,7 +99,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

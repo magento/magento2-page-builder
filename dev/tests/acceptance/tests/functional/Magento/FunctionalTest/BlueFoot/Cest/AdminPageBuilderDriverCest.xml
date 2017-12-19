@@ -74,7 +74,6 @@
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
-
             <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{DriverOnFrontend.linkText}}" stepKey="seeLinkTextDisplayed"/>
             <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
             <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
@@ -91,7 +90,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderDriverContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
@@ -111,7 +109,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

@@ -60,7 +60,7 @@
         </test>
         <test name="CanRemoveButton">
             <annotations>
-                <title value="Remove an button content block from stage"/>
+                <title value="Remove button content block from stage"/>
                 <description value="A user should be able to remove a button from a row."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84895"/>
@@ -69,7 +69,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootButtonsContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
@@ -88,7 +87,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

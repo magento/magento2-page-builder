@@ -58,10 +58,10 @@
             <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" stepKey="seeAccordionTitleOnStorefront"/>
             <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" stepKey="seeAccordionContentOnStorefront"/>
         </test>
-        <test name="CanRemoveAdvancedSlider">
+        <test name="CanRemoveAccordion">
             <annotations>
-                <title value="Remove advanced slider content block from stage"/>
-                <description value="A user should be able to remove advanced slider block from a row."/>
+                <title value="Remove accordion content block from stage"/>
+                <description value="A user should be able to remove accordion block from a row."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84895"/>
                 <group value="bluefoot"/>
@@ -71,7 +71,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockIntoStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderAccordionContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
@@ -91,7 +90,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

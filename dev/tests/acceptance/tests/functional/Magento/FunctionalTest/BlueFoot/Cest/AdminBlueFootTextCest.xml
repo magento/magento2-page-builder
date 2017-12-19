@@ -96,7 +96,6 @@
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
                 <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             </actionGroup>
-            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderTextContentBlock.role)}}' stepKey="seePreviewInStage"/>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
                 <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             </actionGroup>
@@ -110,13 +109,13 @@
                 <group value="bluefoot"/>
             </annotations>
             <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
-            <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragTextOntoStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
