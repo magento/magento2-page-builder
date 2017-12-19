@@ -59,6 +59,25 @@
             <amOnPage url="block{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <seeElement selector="{{BlockOnFrontend.hr}}" stepKey="seeBlockContentFrontend"/>
         </test>
+        <test name="CanRemoveBlock">
+            <annotations>
+                <title value="Remove block content block from stage"/>
+                <description value="A user should be able to remove block block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="block" stepKey="fillSearch"/>
+            <see userInput="Block" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootBlockContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(BlueFootBlockContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="BlockHasAdvancedFormSection">
             <annotations>
                 <title value="Block has Advanced form section"/>
@@ -66,9 +85,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
-                <argument name="contentBlockType" value="BlueFootBlockContentBlock"/>
-            </actionGroup>
             <waitForElementVisible time="10" selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="waitForElementVisible" />
             <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">

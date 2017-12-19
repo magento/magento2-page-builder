@@ -61,6 +61,23 @@
             <seeElement selector="{{DividerOnFrontend.dividerThickness}}" stepKey="seeDividerThicknessStyleApplied"/>
             <seeElement selector="{{DividerOnFrontend.dividerWidth}}" stepKey="seeDividerWidthStyleApplied"/>
         </test>
+        <test name="CanRemoveDivider">
+            <annotations>
+                <title value="Remove divider content block from stage"/>
+                <description value="A user should be able to remove divider block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderDividerContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderDividerContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="DividerHasAdvancedFormSection">
             <annotations>
                 <title value="Divider has Advanced form section"/>
@@ -68,9 +85,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            </actionGroup>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragDividerIntoStage">
                 <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             </actionGroup>

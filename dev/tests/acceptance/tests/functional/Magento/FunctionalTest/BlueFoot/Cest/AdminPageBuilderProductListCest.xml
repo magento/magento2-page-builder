@@ -61,6 +61,27 @@
             <seeElement selector="{{ProductOnFrontend.productDisplay}}" stepKey="productApplied"/>
             <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" stepKey="assertProductListShowsFrontend"/>
         </test>
+        <test name="CanRemoveProductList">
+            <annotations>
+                <title value="Remove product list content block from stage"/>
+                <description value="A user should be able to remove product list block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="product list" stepKey="fillSearch"/>
+            <see userInput="Product List" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderProductListContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderProductListContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="ProductListHasAdvancedFormSection">
             <annotations>
                 <title value="Product List has Advanced form section"/>
@@ -70,9 +91,6 @@
             </annotations>
             <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot"/>
             <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragProductListIntoStage">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>

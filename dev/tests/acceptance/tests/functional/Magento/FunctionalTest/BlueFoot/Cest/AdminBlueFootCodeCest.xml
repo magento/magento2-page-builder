@@ -55,6 +55,25 @@
             <seeElement selector="{{CodeOnFrontend.codeDisplay('code')}}" stepKey="codeStyleApplied"/>
             <see userInput="{{BlueFootCodeTypeProperty.value}}" selector="{{CodeOnFrontend.codeDisplay('code')}}" stepKey="assertCodeShowsFrontend"/>
         </test>
+        <test name="CanRemoveCode">
+            <annotations>
+                <title value="Remove a code content block from stage"/>
+                <description value="A user should be able to remove a code block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="code" stepKey="fillSearch"/>
+            <see userInput="Code" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="BlueFootCodeContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootCodeContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="BlueFootCodeContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(BlueFootCodeContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="CodeHasAdvancedFormSection">
             <annotations>
                 <title value="Code has Advanced form section"/>
@@ -62,9 +81,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootCodeContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragCodeIntoStage">
                 <argument name="contentBlockType" value="BlueFootCodeContentBlock"/>

@@ -58,6 +58,25 @@
             <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" stepKey="seeAccordionTitleOnStorefront"/>
             <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" stepKey="seeAccordionContentOnStorefront"/>
         </test>
+        <test name="CanRemoveAdvancedSlider">
+            <annotations>
+                <title value="Remove advanced slider content block from stage"/>
+                <description value="A user should be able to remove advanced slider block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="accordion" stepKey="fillSearch"/>
+            <see userInput="Accordion" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockIntoStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderAccordionContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderAccordionContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="AccordionHasAdvancedFormSection">
             <annotations>
                 <title value="Accordion has Advanced form section"/>
@@ -65,9 +84,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragAccordionOntoStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>

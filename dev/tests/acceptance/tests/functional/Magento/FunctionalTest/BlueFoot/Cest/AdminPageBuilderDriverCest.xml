@@ -79,6 +79,24 @@
             <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
             <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
         </test>
+        <test name="CanRemoveDriver">
+            <annotations>
+                <title value="Remove driver content block from stage"/>
+                <description value="A user should be able to remove driver block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderDriverContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderDriverContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="DriverHasAdvancedFormSection">
             <annotations>
                 <title value="Driver has Advanced form section"/>
@@ -86,9 +104,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragDriverIntoStage">
                 <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>

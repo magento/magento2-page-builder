@@ -58,6 +58,23 @@
             <click selector="{{ButtonsFrontendSection.buttonElement(BlueFootButtonsProperty.link, BlueFootButtonsProperty.text)}}" stepKey="clickOnButtonElementOnStorefront"/>
             <seeInCurrentUrl url="{{StorefrontProductPage.url}}{{BlueFootButtonsProperty.link}}" stepKey="seeButtonClickUrl"/>
         </test>
+        <test name="CanRemoveButton">
+            <annotations>
+                <title value="Remove an button content block from stage"/>
+                <description value="A user should be able to remove a button from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootButtonsContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(BlueFootButtonsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="ButtonsHasAdvancedFormSection">
             <annotations>
                 <title value="Buttons has Advanced form section"/>
@@ -65,9 +82,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
-            </actionGroup>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>

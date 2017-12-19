@@ -77,6 +77,24 @@
             <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
             <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
         </test>
+        <test name="CanRemoveImage">
+            <annotations>
+                <title value="Remove image content block from stage"/>
+                <description value="A user should be able to remove image block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderImageContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderImageContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="ImageHasAdvancedFormSection">
             <annotations>
                 <title value="Image has Advanced form section"/>
@@ -84,9 +102,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>

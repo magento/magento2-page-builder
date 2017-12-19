@@ -118,6 +118,20 @@
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{BlueFootActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="removeContentBlockFromStage">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{BlueFootActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="onMouseOverContentBlockStage"/>
+        <seeElement selector="{{BlueFootActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{BlueFootActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modal}}" stepKey="waitForModal" />
+        <seeElement selector="{{BlueFootActionsSection.modal}}" stepKey="seeRemovalModal"/>
+        <waitForElementVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <click selector="{{BlueFootActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForElementNotVisible time="1" selector="{{BlueFootActionsSection.modalOk}}" stepKey="waitForModalHide" />
+    </actionGroup>
     <actionGroup name="removeBlueFootRow">
         <moveMouseOver selector="{{BlueFootRowSection.row}}" stepKey="onMouseOverRow"/>
         <seeElement selector="{{BlueFootRowSection.rowOptionsMenu}}" stepKey="seeRowOptionsMenu"/>

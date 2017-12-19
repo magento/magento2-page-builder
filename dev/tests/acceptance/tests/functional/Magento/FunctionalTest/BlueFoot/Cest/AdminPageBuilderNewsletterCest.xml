@@ -84,6 +84,25 @@
             <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" stepKey="seeNewsletterLabel"/>
             <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" stepKey="seeNewsletterButtonText"/>
         </test>
+        <test name="CanRemoveNewsletter">
+            <annotations>
+                <title value="Remove newsletter content block from stage"/>
+                <description value="A user should be able to remove newsletter block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="news" stepKey="fillSearch"/>
+            <see userInput="Newsletter" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderNewsletterContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderNewsletterContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="NewsletterHasAdvancedFormSection">
             <annotations>
                 <title value="Newsletter has Advanced form section"/>
@@ -91,9 +110,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragNewsletterIntoStage">
                 <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>

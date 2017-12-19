@@ -55,6 +55,25 @@
             <amOnPage url="search{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <seeElement selector="{{SearchOnFrontend.searchInput(PageBuilderSearchProperty.value)}}" stepKey="seeSearchOnStoreFront"/>
         </test>
+        <test name="CanRemoveSearch">
+            <annotations>
+                <title value="Remove search content block from stage"/>
+                <description value="A user should be able to remove search block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="search" stepKey="fillSearch"/>
+            <see userInput="Search" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderSearchContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderSearchContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="SearchHasAdvancedFormSection">
             <annotations>
                 <title value="Search has Advanced form section"/>
@@ -62,9 +81,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
-            </actionGroup>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="search" stepKey="fillSearch"/>
             <see userInput="Search" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchBlock"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragSearchIntoStage">

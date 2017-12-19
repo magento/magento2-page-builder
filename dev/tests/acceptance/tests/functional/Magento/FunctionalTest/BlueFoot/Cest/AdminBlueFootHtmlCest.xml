@@ -55,6 +55,25 @@
             <seeElement selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="htmlStyleApplied"/>
             <see userInput="{{BlueFootHtmlTypeProperty.value}}" selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="assertHtmlShowsFrontend"/>
         </test>
+        <test name="CanRemoveHtml">
+            <annotations>
+                <title value="Remove a html content block from stage"/>
+                <description value="A user should be able to remove html block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="html" stepKey="fillSearch"/>
+            <see userInput="HTML" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootHtmlContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(BlueFootHtmlContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="HtmlHasAdvancedFormSection">
             <annotations>
                 <title value="HTML has Advanced form section"/>
@@ -62,9 +81,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
                 <argument name="contentBlockType" value="BlueFootHtmlContentBlock"/>

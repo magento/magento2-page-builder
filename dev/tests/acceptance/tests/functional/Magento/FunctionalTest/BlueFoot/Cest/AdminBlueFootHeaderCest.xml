@@ -57,6 +57,23 @@
             <seeElement selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="seeH5HeaderStyleApplied"/>
             <see userInput="{{BlueFootHeadingTitleProperty.value}}" selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="assertHeadingTitleShowsFrontend"/>
         </test>
+        <test name="CanRemoveHeader">
+            <annotations>
+                <title value="Remove a header content block from stage"/>
+                <description value="A user should be able to remove a header block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(BlueFootHeaderContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(BlueFootHeaderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="HeaderHasAdvancedFormSection">
             <annotations>
                 <title value="Header has Advanced form section"/>
@@ -64,9 +81,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
-            </actionGroup>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
                 <argument name="contentBlockType" value="BlueFootHeaderContentBlock"/>
             </actionGroup>

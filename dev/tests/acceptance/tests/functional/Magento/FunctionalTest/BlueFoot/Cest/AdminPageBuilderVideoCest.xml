@@ -33,9 +33,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickmediaGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
                 <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -97,6 +94,24 @@
             <seeElement selector="{{VideoOnFrontend.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoDisplayed"/>
             <seeElementInDOM selector="{{VideoOnFrontend.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidth"/>
             <seeElementInDOM selector="{{VideoOnFrontend.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeight"/>
+        </test>
+        <test name="CanRemoveVideo">
+            <annotations>
+                <title value="Remove an video content block from stage"/>
+                <description value="A user should be able to remove a video from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <click selector="{{BlueFootActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderVideoContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
         </test>
         <test name="VideoUrlPreservedOnEdit">
             <annotations>

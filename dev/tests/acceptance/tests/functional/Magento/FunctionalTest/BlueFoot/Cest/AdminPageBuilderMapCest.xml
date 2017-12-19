@@ -64,6 +64,25 @@
             <seeElementInDOM selector="{{MapOnFrontend.map1Width}}" stepKey="seeMapWidthStyleApplied"/>
             <seeElementInDOM selector="{{MapOnFrontend.map1Height}}" stepKey="seeMapHeightStyleApplied"/>
         </test>
+        <test name="CanRemoveMap">
+            <annotations>
+                <title value="Remove newsletter content block from stage"/>
+                <description value="A user should be able to remove newsletter block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="map" stepKey="fillSearch"/>
+            <see userInput="Map" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderMapContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderMapContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="MapHasAdvancedFormSection">
             <annotations>
                 <title value="Map has Advanced form section"/>
@@ -71,9 +90,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragMapIntoStage">
                 <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>

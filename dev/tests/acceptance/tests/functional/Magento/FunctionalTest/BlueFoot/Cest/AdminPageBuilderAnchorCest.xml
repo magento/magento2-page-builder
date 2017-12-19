@@ -55,6 +55,25 @@
             <amOnPage url="anchor{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <seeElementInDOM selector="//span[@id='{{PageBuilderAnchorIdentifierProperty.value}}']" stepKey="seeAnchorIdentifierSet"/>
         </test>
+        <test name="CanRemoveAnchor">
+            <annotations>
+                <title value="Remove anchor content block from stage"/>
+                <description value="A user should be able to remove anchor block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="anchor" stepKey="fillSearch"/>
+            <see userInput="Anchor" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderAnchorContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderAnchorContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="AnchorHasAdvancedFormSection">
             <annotations>
                 <title value="Anchor has Advanced form section"/>
@@ -62,9 +81,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragAnchorIntoStage">
                 <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>

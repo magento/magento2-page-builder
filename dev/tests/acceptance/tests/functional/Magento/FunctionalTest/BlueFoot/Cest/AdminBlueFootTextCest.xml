@@ -20,11 +20,6 @@
         <before>
             <loginAsAdmin stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot1"/>
-            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" stepKey="enterCmsPageLinkTitle"/>
-            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageLink"/>
-            <grabFromCurrentUrl returnVariable="cmsPageLinkID" url="~/page_id/(\d+)/~" stepKey="grabFromCurrentUrl"/>
-            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot2"/>
-            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
         </before>
         <after>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
@@ -38,6 +33,11 @@
                 <testCaseId value="MAGETWO-84263"/>
                 <group value="bluefoot"/>
             </annotations>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootTextContentBlock.cmsPageLinkName}}" stepKey="enterCmsPageLinkTitle"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageLink"/>
+            <grabFromCurrentUrl returnVariable="cmsPageLinkID" url="~/page_id/(\d+)/~" stepKey="grabFromCurrentUrl"/>
+            <actionGroup ref="navigateToAPageWithBlueFoot" stepKey="navigateToAPageWithBlueFoot2"/>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
@@ -84,6 +84,24 @@
             <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}{{BlueFootTextContentBlock.cmsPageLinkName}}']" stepKey="seeHomePageWidgetOnStorefront"/>
             <see userInput="This is some text" stepKey="seeTypedTextOnStorefront"/>
         </test>
+        <test name="CanRemoveText">
+            <annotations>
+                <title value="Remove a text content block from stage"/>
+                <description value="A user should be able to remove text block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderTextContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderTextContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="TextHasAdvancedFormSection">
             <annotations>
                 <title value="Text has Advanced form section"/>
@@ -91,10 +109,7 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{BlueFootFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
-            </actionGroup>
+            <actionGroup ref="switchToBlueFootStage" stepKey="switchToBlueFootStage"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>

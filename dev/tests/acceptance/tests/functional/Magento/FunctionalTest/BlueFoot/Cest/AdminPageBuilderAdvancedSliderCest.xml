@@ -114,6 +114,25 @@
             <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
             <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('2',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
         </test>
+        <test name="CanRemoveAdvancedSlider">
+            <annotations>
+                <title value="Remove advanced slider content block from stage"/>
+                <description value="A user should be able to remove advanced slider block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+            <see userInput="Advanced Slider" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderAdvancedSliderContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderAdvancedSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="AdvancedSliderHasAdvancedFormSection">
             <annotations>
                 <title value="Advanced Slider has Advanced form section"/>
@@ -121,9 +140,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
-            </actionGroup>
             <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
             <see userInput="Advanced Slider" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">

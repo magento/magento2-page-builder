@@ -75,6 +75,25 @@
             <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="dontSeeTab1ContentOnStorefront"/>
             <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="seeTab2ContentOnStorefront"/>
         </test>
+        <test name="CanRemoveTabs">
+            <annotations>
+                <title value="Remove tabs content block from stage"/>
+                <description value="A user should be able to remove tabs block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
+            <see userInput="Tabs" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            </actionGroup>
+            <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderTabsContentBlock.role)}}' stepKey="seePreviewInStage"/>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{BlueFootActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
         <test name="TabsHasAdvancedFormSection">
             <annotations>
                 <title value="Tabs has Advanced form section"/>
@@ -82,9 +101,6 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-            </actionGroup>
             <click selector="{{BlueFootActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
                 <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
