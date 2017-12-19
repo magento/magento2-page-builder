@@ -41,11 +41,7 @@ class AdvancedSliderItem implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'slide',
-            'data-has-overlay-background' => isset($eavData['has_overlay']) ? $eavData['has_overlay'] : '',
-            'data-link-text' => isset($eavData['link_text']) ? $eavData['link_text'] : '',
-            'data-link-url' => isset($eavData['link_url']) ? $eavData['link_url'] : '',
-            'data-textarea' => isset($eavData['textarea']) ? $eavData['textarea'] : '',
-            'class' => $eavData['css_classes'] ?? '',
+            'class' => ($eavData['css_classes'] ?? '') . ' pagebuilder-slider',
         ];
 
         $formData = $itemData['formData'];
@@ -60,8 +56,27 @@ class AdvancedSliderItem implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></div>';
-
+        $rootElementHtml .= '><div style="text-align: '
+            . $formData['align']
+            . ';"><div';
+        if ($eavData['has_overlay']) {
+            $rootElementHtml .= ' class="has-background-overlay"';
+        }
+        $rootElementHtml .= ' style="text-align: '
+            . $formData['align']
+            . ';" class="pagebuilder-content"><h3>'
+            . $eavData['title']
+            . '</h3><div class="slider-content">'
+            . $eavData['textarea']
+            . '</div>';
+        if (isset($eavData['link_text'])) {
+            $rootElementHtml .= '<a class="button" href="'
+                . $eavData['link_url']
+                . '"><span><span>'
+                . $eavData['link_text']
+                . '</span></span></a>';
+        }
+        $rootElementHtml .= '</div></div></div>';
         return $rootElementHtml;
     }
 }
