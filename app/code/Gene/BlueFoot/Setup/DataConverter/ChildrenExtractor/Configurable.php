@@ -37,7 +37,7 @@ class Configurable implements ChildrenExtractorInterface
         $children = [];
         foreach ($parts as $part) {
             if (isset($data[$part])) {
-                $children = $data[$part];
+                $data = $children = $data[$part];
             }
         }
         return $children;

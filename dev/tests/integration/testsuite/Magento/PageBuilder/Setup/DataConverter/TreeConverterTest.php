@@ -196,6 +196,67 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'textarea.json',
                 'textarea.html'
             ],
+            'advanced slider' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'autoplay' => '0',
+                        'autoplay_speed' => '0',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '0',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '{}',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'has_overlay' => '0',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                    ]
+                ],
+                'advanced_slider.json',
+                'advanced_slider.html'
+            ],
+            'advanced slider image appearance' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'autoplay' => '1',
+                        'autoplay_speed' => '500',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '1',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'has_overlay' => '1',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                        'background_image' => '/m/a/magento.png'
+                    ]
+                ],
+                'advanced_slider_image_appearance.json',
+                'advanced_slider_image_appearance.html'
+            ],
         ];
     }
 
