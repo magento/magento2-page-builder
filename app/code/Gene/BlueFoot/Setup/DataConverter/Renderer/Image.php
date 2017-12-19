@@ -10,7 +10,7 @@ use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render text to PageBuilder format
+ * Render image to PageBuilder format
  */
 class Image implements RendererInterface
 {
