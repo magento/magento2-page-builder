@@ -9,6 +9,9 @@ use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
+/**
+ * Render anchor item to PageBuilder format
+ */
 class Anchor implements RendererInterface
 {
     /**
