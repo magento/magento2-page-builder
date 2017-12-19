@@ -79,6 +79,7 @@
                 <item name="html" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Html</item>
                 <item name="advanced_slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider</item>
                 <item name="advanced_slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
+                <item name="image" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Image</item>
             </argument>
         </arguments>
     </type>
@@ -121,6 +122,18 @@
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="html" xsi:type="string">html</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ImageEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="image" xsi:type="string">image</item>
+                <item name="mobile_image" xsi:type="string">mobile_image</item>
+                <item name="alt_tag" xsi:type="string">alt_tag</item>
+                <item name="title_tag" xsi:type="string">title_tag</item>
+                <item name="has_lightbox" xsi:type="string">has_lightbox</item>
+                <item name="show_caption" xsi:type="string">show_caption</item>
             </argument>
         </arguments>
     </virtualType>
@@ -198,6 +211,11 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Html">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">HtmlEntityHydrator</argument>
+        </arguments>
+    </type>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Image">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">ImageEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">

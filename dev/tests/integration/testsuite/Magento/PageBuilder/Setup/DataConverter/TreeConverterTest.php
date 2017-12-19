@@ -354,6 +354,40 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'advanced_slider_overlay.json',
                 'advanced_slider_overlay.html'
             ],
+            'image_with_mobile' => [
+                [
+                    'image' => [
+                        'entity_id' => 5,
+                        'css_classes' => 'primary',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'image' => '/b/u/bunny_2.jpeg',
+                        'mobile_image' => '/k/i/kitten_2.jpeg',
+                        'alt_tag' => 'bunny?',
+                        'title_tag' => 'BUNNIES!',
+                        'has_lightbox' => '1',
+                        'show_caption' => '1'
+                    ]
+                ],
+                'image_with_mobile.json',
+                'image_with_mobile.html'
+            ],
+            'image_with_less_options' => [
+                [
+                    'image' => [
+                        'entity_id' => 5,
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'image' => '/b/u/bunny_1.jpeg',
+                        'alt_tag' => 'bunny?',
+                        'has_lightbox' => '0',
+                        'show_caption' => '0'
+                    ]
+                ],
+                'image_with_less_options.json',
+                'image_with_less_options.html'
+            ],
         ];
     }
 
