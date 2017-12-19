@@ -39,9 +39,12 @@ class AdvancedSliderItem implements RendererInterface
     {
         $eavData = $this->entityHydrator->hydrate($itemData);
 
+        $cssClasses = $eavData['css_classes'] ?? '';
+        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
+
         $rootElementAttributes = [
             'data-role' => 'slide',
-            'class' => ($eavData['css_classes'] ?? '') . ' pagebuilder-slider',
+            'class' => $cssClasses
         ];
 
         $formData = $itemData['formData'];
@@ -52,19 +55,30 @@ class AdvancedSliderItem implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
+
+        $innerDivElement1Attributes = [];
+        if ($formData['align']) {
+            $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
-        $rootElementHtml .= '><div style="text-align: '
-            . $formData['align']
-            . ';"><div';
+
+        $rootElementHtml .= '><div'
+            . $this->printAttributes($innerDivElement1Attributes)
+            . '><div';
+
+        $innerDivElement2Attributes = [];
+        if ($formData['align']) {
+            $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
+        }
+        $innerDivElement2AttributeCssClasses = '';
         if ($eavData['has_overlay']) {
-            $rootElementHtml .= ' class="has-background-overlay"';
+            $innerDivElement2AttributeCssClasses = 'has-background-overlay ';
         }
-        $rootElementHtml .= ' style="text-align: '
-            . $formData['align']
-            . ';" class="pagebuilder-content"><h3>'
+        $innerDivElement2AttributeCssClasses .= 'pagebuilder-content';
+        $innerDivElement2Attributes['class'] = $innerDivElement2AttributeCssClasses;
+
+        $rootElementHtml .= $this->printAttributes($innerDivElement2Attributes)
+            . '><h3>'
             . $eavData['title']
             . '</h3><div class="slider-content">'
             . $eavData['textarea']
@@ -77,6 +91,22 @@ class AdvancedSliderItem implements RendererInterface
                 . '</span></span></a>';
         }
         $rootElementHtml .= '</div></div></div>';
+
         return $rootElementHtml;
+    }
+
+    /**
+     * Print HTML attributes
+     *
+     * @param array $elementAttributes
+     * @return string
+     */
+    private function printAttributes($elementAttributes): string
+    {
+        $elementAttributesHtml = '';
+        foreach ($elementAttributes as $attributeName => $attributeValue) {
+            $elementAttributesHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        return $elementAttributesHtml;
     }
 }
