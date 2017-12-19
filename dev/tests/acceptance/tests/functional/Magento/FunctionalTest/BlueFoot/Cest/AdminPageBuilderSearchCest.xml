@@ -37,8 +37,8 @@
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle">
                 <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.otherGroup}}" stepKey="waitForElementVisible" />
-            <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="search" stepKey="fillSearch"/>
+            <see userInput="Search" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchBlock"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragSearchOntoStage">
                 <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
@@ -65,7 +65,8 @@
             <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
                 <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>
-            <click selector="{{BlueFootActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+            <fillField selector="{{BlueFootActionsSection.searchPanel}}" userInput="search" stepKey="fillSearch"/>
+            <see userInput="Search" selector="{{BlueFootActionsSection.searchResults}}" stepKey="validateSearchBlock"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragSearchIntoStage">
                 <argument name="contentBlockType" value="PageBuilderSearchContentBlock"/>
             </actionGroup>

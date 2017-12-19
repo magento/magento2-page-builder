@@ -8,6 +8,7 @@ define([], function () {
   function () {
     function AttributeMapper() {
       this.attributeNameMapping = {
+        id: 'id',
         name: 'data-role',
         appearance: 'data-appearance',
         identifier: 'data-identifier',
@@ -87,11 +88,9 @@ define([], function () {
       }, {}),
           result = {};
       Object.keys(data).map(function (key) {
-        if (key in _this2.attributeNameMapping) {
-          key = _this2.attributeNameMapping[key];
+        if (key in attributeMapping) {
+          result[attributeMapping[key]] = data[key];
         }
-
-        result[key] = data[key];
       });
       return result;
     };
