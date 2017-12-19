@@ -30,8 +30,8 @@ class StyleExtractor implements StyleExtractorInterface
             'width' => isset($formData['width']) ? ($formData['width'] * 100) . '%' : '',
             'background-color' => isset($formData['background_color'])
                 ? '#' . $formData['background_color'] : '',
-            'background-image' => isset($formData['background_image'])
-                ? '{{media url=' . $formData['background_image'] . '}}' : ''
+            'background-image' => !empty($formData['background_image'])
+                ? ('{{media url=' . $formData['background_image'] . '}}') : ''
         ];
         if (isset($formData['metric']) && $formData['metric']) {
             $metric = $this->serializer->unserialize($formData['metric']);
