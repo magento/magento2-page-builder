@@ -74,10 +74,12 @@
                 <item name="column" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Column</item>
                 <item name="heading" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Heading</item>
                 <item name="anchor" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor</item>
+                <item name="hr" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Divider</item>
                 <item name="textarea" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea</item>
                 <item name="html" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Html</item>
                 <item name="advanced_slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider</item>
                 <item name="advanced_slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
+                <item name="image" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Image</item>
                 <item name="buttons" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons</item>
                 <item name="button_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem</item>
             </argument>
@@ -131,6 +133,18 @@
             </argument>
         </arguments>
     </virtualType>
+    <virtualType name="ImageEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="image" xsi:type="string">image</item>
+                <item name="mobile_image" xsi:type="string">mobile_image</item>
+                <item name="alt_tag" xsi:type="string">alt_tag</item>
+                <item name="title_tag" xsi:type="string">title_tag</item>
+                <item name="has_lightbox" xsi:type="string">has_lightbox</item>
+                <item name="show_caption" xsi:type="string">show_caption</item>
+            </argument>
+        </arguments>
+    </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Heading">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">HeadingEntityHydrator</argument>
@@ -146,6 +160,20 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">AnchorEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="DividerEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="color" xsi:type="string">color</item>
+                <item name="hr_width" xsi:type="string">hr_width</item>
+                <item name="hr_height" xsi:type="string">hr_height</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Divider">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">DividerEntityHydrator</argument>
         </arguments>
     </type>
     <virtualType name="AdvancedSliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
@@ -191,6 +219,11 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Html">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">HtmlEntityHydrator</argument>
+        </arguments>
+    </type>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Image">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">ImageEntityHydrator</argument>
         </arguments>
     </type>
     <virtualType name="ButtonsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">

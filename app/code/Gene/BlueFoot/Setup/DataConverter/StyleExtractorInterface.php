@@ -14,7 +14,17 @@ interface StyleExtractorInterface
      * master format and output as an injectable string.
      *
      * @param array $formData
+     * @param array $additionalStyles
      * @return string
      */
-    public function extractStyle(array $formData);
+    public function extractStyle(array $formData, array $additionalStyles = []);
+
+    /**
+     * Convert a hex value into it's corresponding RGB values
+     *
+     * @param $hex
+     *
+     * @return string
+     */
+    public function convertHexToRgb($hex);
 }

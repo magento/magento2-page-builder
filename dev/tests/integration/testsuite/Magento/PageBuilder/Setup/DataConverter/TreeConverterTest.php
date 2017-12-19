@@ -126,221 +126,268 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     public function convertDataProvider()
     {
         return [
-//            'row empty' => [
-//                [],
-//                'row_empty.json',
-//                'row_empty.html'
-//            ],
-//            'row with column and heading' => [
-//                [
-//                    'heading' => [
-//                        'entity_id' => 1,
-//                        'title' => 'Heading title',
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'heading_type' => 'h4',
-//                    ]
-//                ],
-//                'row_with_column_and_heading.json',
-//                'row_with_column_and_heading.html'
-//            ],
-//            'one column' => [
-//                [],
-//                'one_column.json',
-//                'one_column.html'
-//            ],
-//            'two columns' => [
-//                [],
-//                'two_columns.json',
-//                'two_columns.html'
-//            ],
-//            'heading' => [
-//                [
-//                    'heading' => [
-//                        'entity_id' => 1,
-//                        'title' => 'Heading title',
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'heading_type' => 'h2',
-//                    ]
-//                ],
-//                'heading.json',
-//                'heading.html'
-//            ],
-//            'row column and heading' => [
-//                [
-//                    'heading' => [
-//                        'entity_id' => 1,
-//                        'title' => 'Heading title',
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'heading_type' => 'h4',
-//                    ]
-//                ],
-//                'row_column_heading.json',
-//                'row_column_heading.html'
-//            ],
-//            'textarea' => [
-//                [
-//                    'textarea' => [
-//                        'entity_id' => 5,
-//                        'css_classes' => '',
-//                        'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
-//                        'align' => 'right',
-//                        'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
-//                    ]
-//                ],
-//                'textarea.json',
-//                'textarea.html'
-//            ],
-//            'html' => [
-//                [
-//                    'html' => [
-//                        'entity_id' => 5,
-//                        'css_classes' => 'secondary',
-//                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-//                        'align' => '',
-//                        'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
-//                    ]
-//                ],
-//                'html.json',
-//                'html.html'
-//            ],
-//            'anchor' => [
-//                [
-//                    'anchor' => [
-//                        'entity_id' => 1,
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-//                        'align' => 'left',
-//                        'anchor_id' => 'anchor-identifier',
-//                    ]
-//                ],
-//                'anchor.json',
-//                'anchor.html'
-//            ],
-//            'advanced slider' => [
-//                [
-//                    'advanced_slider' => [
-//                        'entity_id' => 1,
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'autoplay' => '0',
-//                        'autoplay_speed' => '0',
-//                        'fade' => '0',
-//                        'is_infinite' => '0',
-//                        'show_arrows' => '0',
-//                        'show_dots' => '0',
-//                        'slider_advanced_settings' => '{}',
-//                    ],
-//                    'advanced_slider_item' => [
-//                        'entity_id' => 2,
-//                        'title' => 'Slide title',
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'has_overlay' => '0',
-//                        'link_text' => 'Domain',
-//                        'link_url' => 'http://domain.com/',
-//                        'textarea' => '<p>Slide <strong>content</strong></p>',
-//                    ]
-//                ],
-//                'advanced_slider.json',
-//                'advanced_slider.html'
-//            ],
-//            'advanced slider image appearance' => [
-//                [
-//                    'advanced_slider' => [
-//                        'entity_id' => 1,
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'autoplay' => '1',
-//                        'autoplay_speed' => '500',
-//                        'fade' => '0',
-//                        'is_infinite' => '0',
-//                        'show_arrows' => '1',
-//                        'show_dots' => '0',
-//                        'slider_advanced_settings' => '',
-//                    ],
-//                    'advanced_slider_item' => [
-//                        'entity_id' => 2,
-//                        'title' => 'Slide title',
-//                        'css_classes' => 'one two',
-//                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-//                        'align' => 'center',
-//                        'has_overlay' => '0',
-//                        'link_text' => 'Domain',
-//                        'link_url' => 'http://domain.com/',
-//                        'textarea' => '<p>Slide <strong>content</strong></p>',
-//                        'background_image' => '/m/a/magento.png'
-//                    ]
-//                ],
-//                'advanced_slider_image_appearance.json',
-//                'advanced_slider_image_appearance.html'
-//            ],
-//            'advanced slider no link text' => [
-//                [
-//                    'advanced_slider' => [
-//                        'entity_id' => 1,
-//                        'css_classes' => '',
-//                        'metric' => '',
-//                        'align' => '',
-//                        'autoplay' => '1',
-//                        'autoplay_speed' => '500',
-//                        'fade' => '0',
-//                        'is_infinite' => '0',
-//                        'show_arrows' => '1',
-//                        'show_dots' => '0',
-//                        'slider_advanced_settings' => '',
-//                    ],
-//                    'advanced_slider_item' => [
-//                        'entity_id' => 2,
-//                        'title' => 'Slide title',
-//                        'css_classes' => '',
-//                        'metric' => '{}',
-//                        'align' => '',
-//                        'has_overlay' => '0',
-//                        'link_url' => 'http://domain.com/',
-//                        'textarea' => '<p>Slide <strong>content</strong></p>',
-//                    ]
-//                ],
-//                'advanced_slider_no_link_text.json',
-//                'advanced_slider_no_link_text.html'
-//            ],
-//            'advanced slider overlay' => [
-//                [
-//                    'advanced_slider' => [
-//                        'entity_id' => 1,
-//                        'css_classes' => '',
-//                        'metric' => '',
-//                        'align' => '',
-//                        'autoplay' => '1',
-//                        'autoplay_speed' => '500',
-//                        'fade' => '0',
-//                        'is_infinite' => '0',
-//                        'show_arrows' => '1',
-//                        'show_dots' => '0',
-//                        'slider_advanced_settings' => '',
-//                    ],
-//                    'advanced_slider_item' => [
-//                        'entity_id' => 2,
-//                        'title' => 'Slide title',
-//                        'css_classes' => '',
-//                        'metric' => '{}',
-//                        'align' => '',
-//                        'has_overlay' => '1',
-//                        'link_url' => 'http://domain.com/',
-//                        'textarea' => '<p>Slide <strong>content</strong></p>',
-//                    ]
-//                ],
-//                'advanced_slider_overlay.json',
-//                'advanced_slider_overlay.html'
-//            ],
+            'row empty' => [
+                [],
+                'row_empty.json',
+                'row_empty.html'
+            ],
+            'row with column and heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'heading_type' => 'h4',
+                    ]
+                ],
+                'row_with_column_and_heading.json',
+                'row_with_column_and_heading.html'
+            ],
+            'one column' => [
+                [],
+                'one_column.json',
+                'one_column.html'
+            ],
+            'two columns' => [
+                [],
+                'two_columns.json',
+                'two_columns.html'
+            ],
+            'heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'heading_type' => 'h2',
+                    ]
+                ],
+                'heading.json',
+                'heading.html'
+            ],
+            'row column and heading' => [
+                [
+                    'heading' => [
+                        'entity_id' => 1,
+                        'title' => 'Heading title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'heading_type' => 'h4',
+                    ]
+                ],
+                'row_column_heading.json',
+                'row_column_heading.html'
+            ],
+            'textarea' => [
+                [
+                    'textarea' => [
+                        'entity_id' => 5,
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
+                        'align' => 'right',
+                        'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                    ]
+                ],
+                'textarea.json',
+                'textarea.html'
+            ],
+            'html' => [
+                [
+                    'html' => [
+                        'entity_id' => 5,
+                        'css_classes' => 'secondary',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                    ]
+                ],
+                'html.json',
+                'html.html'
+            ],
+            'anchor' => [
+                [
+                    'anchor' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => 'left',
+                        'anchor_id' => 'anchor-identifier',
+                    ]
+                ],
+                'anchor.json',
+                'anchor.html'
+            ],
+            'divider' => [
+                [
+                    'hr' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'color' => '9e6767',
+                        'hr_height' => '22px',
+                        'hr_width' => '100px'
+                    ]
+                ],
+                'divider.json',
+                'divider.html'
+            ],
+            'advanced slider' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'autoplay' => '0',
+                        'autoplay_speed' => '0',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '0',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '{}',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'has_overlay' => '0',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                    ]
+                ],
+                'advanced_slider.json',
+                'advanced_slider.html'
+            ],
+            'advanced slider image appearance' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'autoplay' => '1',
+                        'autoplay_speed' => '500',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '1',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'has_overlay' => '0',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                        'background_image' => '/m/a/magento.png'
+                    ]
+                ],
+                'advanced_slider_image_appearance.json',
+                'advanced_slider_image_appearance.html'
+            ],
+            'advanced slider no link text' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => '',
+                        'metric' => '',
+                        'align' => '',
+                        'autoplay' => '1',
+                        'autoplay_speed' => '500',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '1',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => '',
+                        'metric' => '{}',
+                        'align' => '',
+                        'has_overlay' => '0',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                    ]
+                ],
+                'advanced_slider_no_link_text.json',
+                'advanced_slider_no_link_text.html'
+            ],
+            'advanced slider overlay' => [
+                [
+                    'advanced_slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => '',
+                        'metric' => '',
+                        'align' => '',
+                        'autoplay' => '1',
+                        'autoplay_speed' => '500',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '1',
+                        'show_dots' => '0',
+                        'slider_advanced_settings' => '',
+                    ],
+                    'advanced_slider_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Slide title',
+                        'css_classes' => '',
+                        'metric' => '{}',
+                        'align' => '',
+                        'has_overlay' => '1',
+                        'link_url' => 'http://domain.com/',
+                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                    ]
+                ],
+                'advanced_slider_overlay.json',
+                'advanced_slider_overlay.html'
+            ],
+            'image with mobile' => [
+                [
+                    'image' => [
+                        'entity_id' => 5,
+                        'css_classes' => 'primary',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'image' => '/b/u/bunny_2.jpeg',
+                        'mobile_image' => '/k/i/kitten_2.jpeg',
+                        'alt_tag' => 'bunny?',
+                        'title_tag' => 'BUNNIES!',
+                        'has_lightbox' => '1',
+                        'show_caption' => '1'
+                    ]
+                ],
+                'image_with_mobile.json',
+                'image_with_mobile.html'
+            ],
+            'image with less options' => [
+                [
+                    'image' => [
+                        'entity_id' => 5,
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'image' => '/b/u/bunny_1.jpeg',
+                        'alt_tag' => 'bunny?',
+                        'has_lightbox' => '0',
+                        'show_caption' => '0'
+                    ]
+                ],
+                'image_with_less_options.json',
+                'image_with_less_options.html'
+            ],
             'buttons' => [
                 [
                     'buttons' => [
