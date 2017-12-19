@@ -12,7 +12,7 @@ use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 /**
  * Render text to PageBuilder format
  */
-class Text implements RendererInterface
+class Html implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -40,9 +40,8 @@ class Text implements RendererInterface
         $eavData = $this->entityHydrator->hydrate($itemData);
 
         $rootElementAttributes = [
-            'data-role' => 'text',
+            'data-role' => 'html',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'style' => ''
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);
@@ -54,7 +53,7 @@ class Text implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $eavData['textarea'] . '</div>';
+        $rootElementHtml .= '>' . $eavData['html'] . '</div>';
 
         return $rootElementHtml;
     }
