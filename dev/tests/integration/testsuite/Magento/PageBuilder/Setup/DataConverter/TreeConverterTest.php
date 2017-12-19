@@ -209,6 +209,19 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'html.json',
                 'html.html'
             ],
+            'anchor' => [
+                [
+                    'anchor' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => 'left',
+                        'anchor_id' => 'anchor-identifier',
+                    ]
+                ],
+                'anchor.json',
+                'anchor.html'
+            ],
             'advanced slider' => [
                 [
                     'advanced_slider' => [
