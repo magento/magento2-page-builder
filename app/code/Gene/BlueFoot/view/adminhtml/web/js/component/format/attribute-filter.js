@@ -7,7 +7,14 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function AttributeFilter() {
+<<<<<<< HEAD
       this.allowAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category_id', 'product_count', 'show_out_of_stock', 'autoplay', 'autoplay_speed', 'fade', 'is_infinite', 'show_arrows', 'show_dots', 'advanced_settings', 'has_overlay_background'];
+=======
+      this.allowedAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category_id', 'product_count', 'show_out_of_stock', 'autoplay', 'autoplay_speed', 'fade', 'is_infinite', 'show_arrows', 'show_dots', 'advanced_settings', 'has_overlay_background', 'enable_parallax', 'parallax_speed'].reduce(function (acc, next) {
+        acc[next] = true;
+        return acc;
+      }, {});
+>>>>>>> MAGETWO-66349-row
     }
 
     var _proto = AttributeFilter.prototype;
@@ -19,15 +26,15 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.filter = function filter(data) {
-      var _this = this;
+      var result = {};
 
-      var attributes = {};
-      Object.keys(data).map(function (key) {
-        if (_this.allowAttributes.includes(key)) {
-          attributes[key] = data[key];
+      for (var key in data) {
+        if (this.allowedAttributes[key]) {
+          result[key] = data[key];
         }
-      });
-      return attributes;
+      }
+
+      return result;
     };
 
     return AttributeFilter;

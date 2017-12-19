@@ -2,11 +2,11 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../component/data-store";
+import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
     // Allowed style attributes
-    styleAttributes: Array<string> = [
+    allowedAttributes: DataObject = [
         'width',
         'height',
         'min_height',
@@ -31,24 +31,27 @@ export default class StyleAttributeFilter {
         'display',
         'align_self',
         'text_align',
+        'color',
+        'border',
         'margins_and_padding'
-    ];
+    ].reduce((acc: any, next: string) => {
+        acc[next] = true;
+        return acc;
+    }, {});
 
     /**
-     * Filter allowed style properties from object
+     * Filter allowed attributes from object
      *
      * @param {DataObject} data
      * @returns {DataObject}
      */
     filter(data: DataObject): DataObject {
         let result: DataObject = {};
-        Object.keys(data).map(
-            (key: string) => {
-                if (Object.values(this.styleAttributes).indexOf(key) > -1) {
-                    result[key] = data[key];
-                }
+        for (let key in data) {
+            if (this.allowedAttributes[key]) {
+                result[key] = data[key];
             }
-        );
+        }
         return result;
     }
 }

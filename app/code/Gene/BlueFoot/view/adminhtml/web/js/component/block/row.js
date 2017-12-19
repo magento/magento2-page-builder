@@ -1,4 +1,4 @@
-define(["./block"], function (_block) {
+define(["underscore", "./block"], function (_underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Row =
@@ -37,7 +37,7 @@ define(["./block"], function (_block) {
         styleAttributes['display'] = 'flex';
       }
 
-      return styleAttributes;
+      return _underscore.extend(_Block.prototype.getStyle.call(this), styleAttributes);
     };
 
     return Row;
