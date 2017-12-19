@@ -222,6 +222,19 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'anchor.json',
                 'anchor.html'
             ],
+            'divider' => [
+                [
+                    'hr' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'color' => '9e6767',
+                        'hr_height' => '22px',
+                        'hr_width' => '100px'
+                    ]
+                ],
+                'divider.json',
+                'divider.html'
+            ],
             'advanced slider' => [
                 [
                     'advanced_slider' => [

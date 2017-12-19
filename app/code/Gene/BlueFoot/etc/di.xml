@@ -74,6 +74,7 @@
                 <item name="column" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Column</item>
                 <item name="heading" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Heading</item>
                 <item name="anchor" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor</item>
+                <item name="hr" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Divider</item>
                 <item name="textarea" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea</item>
                 <item name="html" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Html</item>
                 <item name="advanced_slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider</item>
@@ -138,6 +139,20 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">AnchorEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="DividerEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="color" xsi:type="string">color</item>
+                <item name="hr_width" xsi:type="string">hr_width</item>
+                <item name="hr_height" xsi:type="string">hr_height</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Divider">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">DividerEntityHydrator</argument>
         </arguments>
     </type>
     <virtualType name="AdvancedSliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">

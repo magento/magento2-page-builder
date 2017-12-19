@@ -23,7 +23,7 @@ class StyleExtractor implements StyleExtractorInterface
     /**
      * @inheritdoc
      */
-    public function extractStyle(array $formData)
+    public function extractStyle(array $formData, array $additionalStyles = [])
     {
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
@@ -41,6 +41,10 @@ class StyleExtractor implements StyleExtractorInterface
                 $this->extractMarginPadding($metric['padding']) : '';
         }
 
+        if (!empty($additionalStyles)) {
+            $styleAttributes = array_merge($styleAttributes, $additionalStyles);
+        }
+
         $styleString = '';
         foreach ($styleAttributes as $attributeName => $attributeValue) {
             if ($attributeValue) {
@@ -49,6 +53,15 @@ class StyleExtractor implements StyleExtractorInterface
         }
 
         return rtrim($styleString);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function convertHexToRgb($hex)
+    {
+        list($r, $g, $b) = sscanf(ltrim($hex, '#'), "%02x%02x%02x");
+        return "rgb($r, $g, $b)";
     }
 
     /**
