@@ -78,6 +78,8 @@
                 <item name="html" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Html</item>
                 <item name="advanced_slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider</item>
                 <item name="advanced_slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
+                <item name="buttons" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons</item>
+                <item name="button_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem</item>
             </argument>
         </arguments>
     </type>
@@ -91,6 +93,11 @@
             <argument name="path" xsi:type="string">children/advanced_slider_items</argument>
         </arguments>
     </virtualType>
+    <virtualType name="ButtonsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+        <arguments>
+            <argument name="path" xsi:type="string">children/button_items</argument>
+        </arguments>
+    </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
@@ -98,6 +105,7 @@
                 <item name="row" xsi:type="object">ChildrenExtractor</item>
                 <item name="column" xsi:type="object">ChildrenExtractor</item>
                 <item name="advanced_slider" xsi:type="object">AdvancedSliderChildrenExtractor</item>
+                <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
             </argument>
         </arguments>
     </type>
@@ -183,6 +191,31 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Html">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">HtmlEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="ButtonsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="button_items" xsi:type="string">button_items</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">ButtonsEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="ButtonItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="link_text" xsi:type="string">link_text</item>
+                <item name="link_url" xsi:type="string">link_url</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">ButtonItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">
