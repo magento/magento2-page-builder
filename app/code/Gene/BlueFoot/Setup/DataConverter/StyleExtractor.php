@@ -71,15 +71,6 @@ class StyleExtractor implements StyleExtractorInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function convertHexToRgb($hex)
-    {
-        list($r, $g, $b) = sscanf(ltrim($hex, '#'), "%02x%02x%02x");
-        return "rgb($r, $g, $b)";
-    }
-
-    /**
      * Transform data to valid CSS string
      *
      * @param string $attributeData
