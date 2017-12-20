@@ -89,6 +89,7 @@
                 <item name="accordion" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion</item>
                 <item name="accordion_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem</item>
                 <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
+                <item name="code" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Code</item>
             </argument>
         </arguments>
     </type>
@@ -358,5 +359,17 @@
     </type>
     <type name="Magento\Cms\Block\Block">
         <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Block" />
+    </type>
+    <virtualType name="CodeEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="html" xsi:type="string">html</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Code">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">CodeEntityHydrator</argument>
+        </arguments>
     </type>
 </config>
