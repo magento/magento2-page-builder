@@ -86,13 +86,10 @@
                 <severity value="CRITICAL"/>
                 <group value="bluefoot"/>
             </annotations>
-            <actionGroup ref="addBlueFootPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
-            </actionGroup>
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
@@ -147,7 +144,7 @@
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
             <waitForElementVisible time="2" selector="{{RowOnBackendPreview.backgroundColor}}" stepKey="waitToSeeRow"/>
             <seeElementInDOM selector="{{RowOnBackendPreview.backgroundColor}}" stepKey="seeBackgroundColorInPreview"/>
-            <seeElementInDOM selector="{{RowOnBackendPreview.backgroundAttachment}" stepKey="seeBackgroundAttachmentInPreview"/>
+            <seeElementInDOM selector="{{RowOnBackendPreview.backgroundAttachment}}" stepKey="seeBackgroundAttachmentInPreview"/>
             <seeElementInDOM selector="{{RowOnBackendPreview.backgroundSize}}" stepKey="seeBackgroundSizeInPreview"/>
             <seeElementInDOM selector="{{RowOnBackendPreview.backgroundPosition}}" stepKey="seeBackgroundPositionInPreview"/>
             <actionGroup ref="openBlueFootEditPanel" stepKey="openSavedEditMenuOnStage">
@@ -161,7 +158,6 @@
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
             <amOnPage url="Row{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <seeElementInDOM selector="{{RowOnFrontend.backgroundColor}}" stepKey="seeBackgroundColorSet"/>
             <seeElementInDOM selector="{{RowOnFrontend.backgroundImage}}" stepKey="seeBackgroundImageSet"/>
@@ -234,7 +230,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedTextColorProperty">
@@ -289,7 +285,7 @@
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-            <waitForElementVisible time="2" selector="{{RowOnBackendPreview.backgroundColor}}" stepKey="waitToSeeRow"/>
+            <waitForElementVisible time="2" selector="{{BlueFootActionsSection.dropAreaInStage}}" stepKey="waitToSeeRow"/>
             <seeElementInDOM selector="{{RowOnBackendPreview.textAlign}}" stepKey="seeTextAlignInPreview" />
             <seeElementInDOM selector="{{RowOnBackendPreview.css}}" stepKey="seeCssInPreview"/>
             <seeElementInDOM selector="{{RowOnBackendPreview.margin}}" stepKey="seeMarginInPreview"/>
