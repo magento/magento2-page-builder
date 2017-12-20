@@ -646,6 +646,22 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'map.json',
                 'map.html'
             ],
+            'newsletter' => [
+                [
+                    'newsletter' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'newsletter-one newsletter-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'center',
+                        'title' => 'Title',
+                        'button_text' => 'Button Text',
+                        'label' => 'Label',
+                        'placeholder' => 'Placeholder',
+                    ]
+                ],
+                'newsletter.json',
+                'newsletter.html'
+            ],
             'custom' => [
                 [],
                 'custom.json',

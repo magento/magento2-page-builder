@@ -90,6 +90,7 @@
                 <item name="accordion_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem</item>
                 <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
                 <item name="code" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Code</item>
+                <item name="newsletter" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter</item>
             </argument>
         </arguments>
     </type>
@@ -370,6 +371,21 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Code">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">CodeEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="NewsletterEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="button_text" xsi:type="string">button_text</item>
+                <item name="label" xsi:type="string">label</item>
+                <item name="title" xsi:type="string">title</item>
+                <item name="placeholder" xsi:type="string">placeholder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">NewsletterEntityHydrator</argument>
         </arguments>
     </type>
 </config>
