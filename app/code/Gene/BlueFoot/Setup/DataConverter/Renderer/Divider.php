@@ -8,6 +8,7 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
+use Gene\BlueFoot\Setup\DataConverter\StyleConverter;
 
 /**
  * Render driver item to PageBuilder format
@@ -24,12 +25,19 @@ class Divider implements RendererInterface
      */
     private $entityHydrator;
 
+    /**
+     * @var StyleConverter
+     */
+    private $styleConverter;
+
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EntityHydratorInterface $entityHydrator
+        EntityHydratorInterface $entityHydrator,
+        StyleConverter $styleConverter
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->entityHydrator = $entityHydrator;
+        $this->styleConverter = $styleConverter;
     }
 
     /**
@@ -49,7 +57,7 @@ class Divider implements RendererInterface
             $itemData['formData'],
             [
                 'border-color' =>
-                    isset($eavData['color']) ? $this->styleExtractor->convertHexToRgb($eavData['color']) : '',
+                    isset($eavData['color']) ? $this->styleConverter->convertHexToRgb($eavData['color']) : '',
                 'border-width' => isset($eavData['hr_height']) ? $eavData['hr_height'] : '',
                 'width' => isset($eavData['hr_width']) ? $eavData['hr_width'] : ''
             ]
