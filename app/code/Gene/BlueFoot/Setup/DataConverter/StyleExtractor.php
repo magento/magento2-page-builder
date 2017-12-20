@@ -25,7 +25,6 @@ class StyleExtractor implements StyleExtractorInterface
      */
     public function extractStyle(array $formData, array $additionalStyles = [])
     {
-
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
             'width' => isset($formData['width']) ? $this->normalizeSizeDimension($formData['width']) : '',
