@@ -43,9 +43,9 @@ export default class Row extends PreviewBlock {
                 backgroundSize: data.background_size(),
                 border: data.border(),
                 borderColor: data.border_color(),
-                borderRadius: data.border_radius(),
-                borderWidth: data,
-                color: data.color,
+                borderRadius: `${data.border_radius()}px`,
+                borderWidth: `${data.border_width()}px`,
+                color: data.color(),
                 textAlign: data.text_align()
             };
         })
