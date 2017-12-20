@@ -420,7 +420,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'buttons_empty.json',
                 'buttons_empty.html'
             ],
-            'buttons empty link text' => [
+            'buttons no link text' => [
                 [
                     'buttons' => [
                         'entity_id' => 1,
@@ -435,10 +435,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         'link_url' => 'http://domain.com/',
                     ]
                 ],
-                'buttons_empty_link_text.json',
-                'buttons_empty_link_text.html'
+                'buttons_no_link_text.json',
+                'buttons_no_link_text.html'
             ],
-            'buttons empty link url' => [
+            'buttons no link url' => [
                 [
                     'buttons' => [
                         'entity_id' => 1,
@@ -453,8 +453,81 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         'link_text' => 'Domain.com',
                     ]
                 ],
-                'buttons_empty_link_url.json',
-                'buttons_empty_link_url.html'
+                'buttons_no_link_url.json',
+                'buttons_no_link_url.html'
+            ],
+            'slider' => [
+                [
+                    'slider' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'left',
+                        'autoplay' => '0',
+                        'autoplay_speed' => '0',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '0',
+                        'show_dots' => '0',
+                        'slider_items' => '0',
+                        'slider_advanced_settings' => '{}',
+                    ],
+                    'slider_item' => [
+                        'entity_id' => 2,
+                        'css_classes' => 'three four',
+                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                        'align' => 'center',
+                        'title_tag' => 'Title',
+                        'image' => '/m/a/magento.png',
+                        'link_url' => 'http://domain.com/',
+                    ]
+                ],
+                'slider.json',
+                'slider.html'
+            ],
+            'slider no link url' => [
+                [
+                    'slider' => [
+                        'entity_id' => 1,
+                        'autoplay' => '0',
+                        'autoplay_speed' => '0',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '0',
+                        'show_dots' => '0',
+                        'slider_items' => '0',
+                        'slider_advanced_settings' => '{}',
+                    ],
+                    'slider_item' => [
+                        'entity_id' => 2,
+                        'title_tag' => 'Title',
+                        'image' => '/m/a/magento.png',
+                    ]
+                ],
+                'slider_no_link_url.json',
+                'slider_no_link_url.html'
+            ],
+            'slider no link text' => [
+                [
+                    'slider' => [
+                        'entity_id' => 1,
+                        'autoplay' => '0',
+                        'autoplay_speed' => '0',
+                        'fade' => '0',
+                        'is_infinite' => '0',
+                        'show_arrows' => '0',
+                        'show_dots' => '0',
+                        'slider_items' => '0',
+                        'slider_advanced_settings' => '{}',
+                    ],
+                    'slider_item' => [
+                        'entity_id' => 2,
+                        'image' => '/m/a/magento.png',
+                        'link_url' => 'http://domain.com/',
+                    ]
+                ],
+                'slider_no_link_text.json',
+                'slider_no_link_text.html'
             ],
         ];
     }

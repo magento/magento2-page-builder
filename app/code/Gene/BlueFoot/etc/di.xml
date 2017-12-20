@@ -82,6 +82,8 @@
                 <item name="image" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Image</item>
                 <item name="buttons" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons</item>
                 <item name="button_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem</item>
+                <item name="slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Slider</item>
+                <item name="slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem</item>
             </argument>
         </arguments>
     </type>
@@ -93,6 +95,11 @@
     <virtualType name="AdvancedSliderChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/advanced_slider_items</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="SliderChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+        <arguments>
+            <argument name="path" xsi:type="string">children/slider_items</argument>
         </arguments>
     </virtualType>
     <virtualType name="ButtonsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
@@ -108,14 +115,15 @@
                 <item name="column" xsi:type="object">ChildrenExtractor</item>
                 <item name="advanced_slider" xsi:type="object">AdvancedSliderChildrenExtractor</item>
                 <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
+                <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
             </argument>
         </arguments>
     </type>
     <virtualType name="HeadingEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="0" xsi:type="string">title</item>
-                <item name="1" xsi:type="string">heading_type</item>
+                <item name="title" xsi:type="string">title</item>
+                <item name="heading_type" xsi:type="string">heading_type</item>
             </argument>
         </arguments>
     </virtualType>
@@ -209,6 +217,40 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">AdvancedSliderItemEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="SliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="autoplay" xsi:type="string">autoplay</item>
+                <item name="autoplay_speed" xsi:type="string">autoplay_speed</item>
+                <item name="fade" xsi:type="string">fade</item>
+                <item name="is_infinite" xsi:type="string">is_infinite</item>
+                <item name="show_arrows" xsi:type="string">show_arrows</item>
+                <item name="show_dots" xsi:type="string">show_dots</item>
+                <item name="slider_advanced_settings" xsi:type="string">slider_advanced_settings</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Slider">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">SliderEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="SliderItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="title" xsi:type="string">title</item>
+                <item name="link_text" xsi:type="string">link_text</item>
+                <item name="link_url" xsi:type="string">link_url</item>
+                <item name="image" xsi:type="string">image</item>
+                <item name="title_tag" xsi:type="string">title_tag</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">SliderItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea">
