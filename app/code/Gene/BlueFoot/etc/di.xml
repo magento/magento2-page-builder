@@ -82,6 +82,7 @@
                 <item name="image" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Image</item>
                 <item name="buttons" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons</item>
                 <item name="button_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem</item>
+                <item name="video" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Video</item>
                 <item name="slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Slider</item>
                 <item name="slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem</item>
             </argument>
@@ -150,6 +151,15 @@
                 <item name="title_tag" xsi:type="string">title_tag</item>
                 <item name="has_lightbox" xsi:type="string">has_lightbox</item>
                 <item name="show_caption" xsi:type="string">show_caption</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VideoEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="video_height" xsi:type="string">video_height</item>
+                <item name="video_url" xsi:type="string">video_url</item>
+                <item name="video_width" xsi:type="string">video_width</item>
             </argument>
         </arguments>
     </virtualType>
@@ -291,6 +301,11 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">ButtonItemEntityHydrator</argument>
+        </arguments>
+    </type>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">VideoEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">
