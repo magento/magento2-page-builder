@@ -54,6 +54,9 @@ class TreeConverter
     {
         $jsonTree = $this->serializer->unserialize($string);
         $html = '';
+        if (isset($jsonTree['type']) || isset($jsonTree['contentType'])) {
+            $jsonTree = [$jsonTree];
+        }
         foreach ($jsonTree as $treeItem) {
             $html .= $this->convertTreeItem($treeItem);
         }

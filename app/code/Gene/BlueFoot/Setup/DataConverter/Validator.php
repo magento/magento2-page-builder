@@ -15,7 +15,7 @@ class Validator
     private $serializer;
 
     /**
-     * Validator constructor.
+     * Constructor
      *
      * @param Json $serializer
      */
@@ -26,12 +26,12 @@ class Validator
     }
 
     /**
-     * Check if a JSON string is a valid instance of BlueFoot content
+     * Check if a JSON string is a valid BlueFoot content
      *
      * @param string $json
      * @param bool $isStage if we require an entire stage we will validate the first child is a row
-     *
      * @return bool
+     * @throws \InvalidArgumentException
      */
     public function isValidBlueFootJson($json, $isStage = true)
     {
@@ -40,11 +40,11 @@ class Validator
 
             // Determine if the object has items with a key of type or contentType
             $valid = count($structure) > 0
-                && (isset(current($structure)["type"]) || isset(current($structure)["contentType"]));
+                && (isset($structure['type']) || isset($structure['contentType']));
 
             // If we're validating an entire stage verify the first item is of type row
-            if ($valid && $isStage && isset(current($structure)["type"])) {
-                return current($structure)["type"] === "row";
+            if ($valid && $isStage && isset($structure['type'])) {
+                return $structure['type'] === 'row';
             }
 
             return $valid;
