@@ -617,6 +617,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'map.json',
                 'map.html'
             ],
+            'custom' => [
+                [],
+                'custom.json',
+                'custom.html'
+            ],
         ];
     }
 
