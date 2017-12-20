@@ -10,7 +10,7 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render text to PageBuilder format
+ * Render html to PageBuilder format
  */
 class Html implements RendererInterface
 {
@@ -41,7 +41,7 @@ class Html implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'html',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => $eavData['css_classes'] ?? ''
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);

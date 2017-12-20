@@ -218,8 +218,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 [
                     'html' => [
                         'entity_id' => 5,
-                        'css_classes' => 'secondary',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                         'align' => '',
                         'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                     ]
