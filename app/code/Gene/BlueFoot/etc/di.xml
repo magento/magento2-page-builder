@@ -121,7 +121,7 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="HeadingEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="HeadingEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -129,21 +129,21 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="TextareaEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="TextareaEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="textarea" xsi:type="string">textarea</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="HtmlEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="HtmlEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="html" xsi:type="string">html</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="ImageEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="ImageEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="image" xsi:type="string">image</item>
@@ -155,7 +155,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="VideoEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="VideoEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="video_height" xsi:type="string">video_height</item>
@@ -166,10 +166,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Heading">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">HeadingEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">HeadingEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="AnchorEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="AnchorEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="anchor_id" xsi:type="string">anchor_id</item>
@@ -178,10 +178,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">AnchorEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">AnchorEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="DividerEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="DividerEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="color" xsi:type="string">color</item>
@@ -192,10 +192,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Divider">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">DividerEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">DividerEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="AdvancedSliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="AdvancedSliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="autoplay" xsi:type="string">autoplay</item>
@@ -210,10 +210,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">AdvancedSliderEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="AdvancedSliderItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="AdvancedSliderItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -227,10 +227,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">AdvancedSliderItemEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderItemEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="SliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="SliderEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="autoplay" xsi:type="string">autoplay</item>
@@ -245,10 +245,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Slider">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">SliderEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">SliderEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="SliderItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="SliderItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -261,25 +261,25 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">SliderItemEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">SliderItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">TextareaEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">TextareaEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Html">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">HtmlEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">HtmlEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Image">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">ImageEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">ImageEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="ButtonsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="ButtonsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="button_items" xsi:type="string">button_items</item>
@@ -288,10 +288,10 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">ButtonsEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">ButtonsEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="ButtonItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="ButtonItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="link_text" xsi:type="string">link_text</item>
@@ -301,15 +301,15 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">ButtonItemEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">ButtonItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">VideoEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">VideoEntityHydrator</argument>
         </arguments>
     </type>
-    <virtualType name="MapEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+    <virtualType name="MapEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="map" xsi:type="string">map</item>
@@ -320,7 +320,7 @@
     </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Map">
         <arguments>
-            <argument name="entityHydrator" xsi:type="object">MapEntityHydrator</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">MapEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">

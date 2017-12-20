@@ -6,7 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
-use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
+use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
@@ -20,16 +20,16 @@ class SliderItem implements RendererInterface
     private $styleExtractor;
 
     /**
-     * @var EntityHydratorInterface
+     * @var EavAttributeLoaderInterface
      */
-    private $entityHydrator;
+    private $eavAttributeLoader;
 
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EntityHydratorInterface $entityHydrator
+        EavAttributeLoaderInterface $eavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
-        $this->entityHydrator = $entityHydrator;
+        $this->eavAttributeLoader = $eavAttributeLoader;
     }
 
     /**
@@ -37,7 +37,7 @@ class SliderItem implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->entityHydrator->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
         $cssClasses = $eavData['css_classes'] ?? '';
         $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';

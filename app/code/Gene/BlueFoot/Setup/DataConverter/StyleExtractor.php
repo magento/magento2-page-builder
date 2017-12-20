@@ -7,6 +7,9 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 
+/**
+ * Extract and convert styles from a data array into value style string
+ */
 class StyleExtractor implements StyleExtractorInterface
 {
     /**

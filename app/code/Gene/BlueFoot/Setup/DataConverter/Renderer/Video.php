@@ -6,7 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
-use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
+use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
@@ -20,16 +20,16 @@ class Video implements RendererInterface
     private $styleExtractor;
 
     /**
-     * @var EntityHydratorInterface
+     * @var EavAttributeLoaderInterface
      */
-    private $entityHydrator;
+    private $eavAttributeLoader;
 
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EntityHydratorInterface $entityHydrator
+        EavAttributeLoaderInterface $eavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
-        $this->entityHydrator = $entityHydrator;
+        $this->eavAttributeLoader = $eavAttributeLoader;
     }
 
     /**
@@ -37,7 +37,7 @@ class Video implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->entityHydrator->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
         $rootElementAttributes = [
             'data-role' => 'video',
@@ -52,14 +52,11 @@ class Video implements RendererInterface
         if (isset($eavData['video_height'])) {
             $eavStyle .= 'height: ' . $eavData['video_height'] . "; ";
         }
+        $rootElementAttributes['style'] = $eavStyle;
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);
         if ($style) {
-            $rootElementAttributes['style'] = $eavStyle . $style;
-        } else {
-            if ($eavStyle != '') {
-                $rootElementAttributes['style'] = $eavStyle;
-            }
+            $rootElementAttributes['style'] .= $style;
         }
         $rootElementAttributes['style'] = rtrim($rootElementAttributes['style']);
 

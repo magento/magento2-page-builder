@@ -6,7 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
-use Gene\BlueFoot\Setup\DataConverter\EntityHydratorInterface;
+use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleConverter;
 
@@ -21,9 +21,9 @@ class Divider implements RendererInterface
     private $styleExtractor;
 
     /**
-     * @var EntityHydratorInterface
+     * @var EavAttributeLoaderInterface
      */
-    private $entityHydrator;
+    private $eavAttributeLoader;
 
     /**
      * @var StyleConverter
@@ -32,11 +32,11 @@ class Divider implements RendererInterface
 
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EntityHydratorInterface $entityHydrator,
+        EavAttributeLoaderInterface $eavAttributeLoader,
         StyleConverter $styleConverter
     ) {
         $this->styleExtractor = $styleExtractor;
-        $this->entityHydrator = $entityHydrator;
+        $this->eavAttributeLoader = $eavAttributeLoader;
         $this->styleConverter = $styleConverter;
     }
 
@@ -45,7 +45,7 @@ class Divider implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->entityHydrator->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
         $rootElementAttributes = [
             'data-role' => 'divider',

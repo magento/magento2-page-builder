@@ -5,7 +5,7 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
-interface EntityHydratorInterface
+interface EavAttributeLoaderInterface
 {
     /**
      * Hydrate BlueFoot data object with additional data from EAV
