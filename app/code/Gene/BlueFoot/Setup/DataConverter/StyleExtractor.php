@@ -25,9 +25,11 @@ class StyleExtractor implements StyleExtractorInterface
      */
     public function extractStyle(array $formData, array $additionalStyles = [])
     {
+
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
-            'width' => isset($formData['width']) ? ($formData['width'] * 100) . '%' : '',
+            'width' => isset($formData['width']) ? $this->normalizeSizeDimension($formData['width']) : '',
+            'height' => isset($formData['height']) ? $this->normalizeSizeDimension($formData['height']) : '',
             'background-color' => isset($formData['background_color'])
                 ? '#' . $formData['background_color'] : '',
             'background-image' => !empty($formData['background_image'])
@@ -53,6 +55,20 @@ class StyleExtractor implements StyleExtractorInterface
         }
 
         return rtrim($styleString);
+    }
+
+    /**
+     * Normalize value for width/height
+     *
+     * @param string $value
+     * @return string
+     */
+    private function normalizeSizeDimension($value)
+    {
+        if (strpos($value, 'px') !== false || strpos($value, '%') !== false) {
+            return $value;
+        }
+        return ($value * 100) . '%';
     }
 
     /**
