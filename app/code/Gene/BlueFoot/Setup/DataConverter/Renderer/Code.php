@@ -49,12 +49,12 @@ class Code implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementCode = '<pre';
+        $rootElementHtml = '<pre';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementCode .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementCode .= '><code>' . $eavData['html'] . '</code></pre>';
+        $rootElementHtml .= '><code>' . $eavData['html'] . '</code></pre>';
 
-        return $rootElementCode;
+        return $rootElementHtml;
     }
 }
