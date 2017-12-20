@@ -43,8 +43,8 @@ class Image implements RendererInterface
             'data-role' => 'image'
         ];
 
-        if (isset($itemData['formData']['css_classes'])) {
-            $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity ' . $itemData['formData']['css_classes'];
+        if (isset($eavData['css_classes'])) {
+            $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity ' . $eavData['css_classes'];
         } else {
             $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity';
         }
