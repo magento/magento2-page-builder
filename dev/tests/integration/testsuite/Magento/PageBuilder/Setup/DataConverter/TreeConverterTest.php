@@ -372,17 +372,17 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'advanced_slider_overlay.json',
                 'advanced_slider_overlay.html'
             ],
-            'image with mobile' => [
+            'image with all options and mobile' => [
                 [
                     'image' => [
                         'entity_id' => 5,
                         'css_classes' => 'primary',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'metric' => '{\"margin\":\"2px 2px 0px 0px\",\"padding\":\"0px 0px 1px 1px\"}',
                         'align' => '',
-                        'image' => '/b/u/bunny_2.jpeg',
-                        'mobile_image' => '/k/i/kitten_2.jpeg',
-                        'alt_tag' => 'bunny?',
-                        'title_tag' => 'BUNNIES!',
+                        'image' => '/m/a/magento_1.jpeg',
+                        'mobile_image' => '/a/u/austin_2.jpeg',
+                        'alt_tag' => 'magento?',
+                        'title_tag' => 'MAGENTO!',
                         'has_lightbox' => '1',
                         'show_caption' => '1'
                     ]
@@ -390,21 +390,37 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'image_with_mobile.json',
                 'image_with_mobile.html'
             ],
-            'image with less options' => [
+            'image with alt tag and no mobile' => [
                 [
                     'image' => [
                         'entity_id' => 5,
                         'css_classes' => '',
                         'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
                         'align' => '',
-                        'image' => '/b/u/bunny_1.jpeg',
-                        'alt_tag' => 'bunny?',
+                        'image' => '/m/a/magento_1.jpeg',
+                        'alt_tag' => 'magento?',
                         'has_lightbox' => '0',
                         'show_caption' => '0'
                     ]
                 ],
-                'image_with_less_options.json',
-                'image_with_less_options.html'
+                'image_with_primary.json',
+                'image_with_primary.html'
+            ],
+            'image with caption and no mobile' => [
+                [
+                    'image' => [
+                        'entity_id' => 5,
+                        'css_classes' => '',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => '',
+                        'image' => '/m/a/magento_1.jpeg',
+                        'title_tag' => 'MAGENTO!',
+                        'has_lightbox' => '0',
+                        'show_caption' => '1'
+                    ]
+                ],
+                'image_with_caption.json',
+                'image_with_caption.html'
             ],
             'accordions' => [
                 [
