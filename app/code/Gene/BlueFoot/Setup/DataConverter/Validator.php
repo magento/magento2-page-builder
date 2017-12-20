@@ -39,8 +39,7 @@ class Validator
             $structure = $this->serializer->unserialize($json);
 
             // Determine if the object has items with a key of type or contentType
-            $valid = count($structure) > 0
-                && (isset($structure['type']) || isset($structure['contentType']));
+            $valid = count($structure) > 0 && (isset($structure['type']) || isset($structure['contentType']));
 
             // If we're validating an entire stage verify the first item is of type row
             if ($valid && $isStage && isset($structure['type'])) {

@@ -8,7 +8,7 @@ namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 
 /**
- * Render non BlueFoot content type to html content type with embedded data
+ * Render custom content type to PageBuilder format
  */
 class Custom implements RendererInterface
 {
@@ -17,7 +17,6 @@ class Custom implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-
         return '<div data-role="custom"></div>';
     }
 }
