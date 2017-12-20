@@ -64,6 +64,9 @@
             <waitForLoadingMaskToDisappear stepKey="waitForSearchResult"/>
             <click selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" stepKey="clickCmsPageLinkRow"/>
             <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), '{{BlueFootTextContentBlock.cmsPageLinkName}}')]" stepKey="waitForPageSelectionModalToClose"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForPageSelectionModalToClose2"/>
+            <waitForElementVisible selector="#insert_button" stepKey="waitForInsertButtonVisible"/>
+            <moveMouseOver selector="#insert_button" stepKey="onMouseOverInsertButton"/>
             <click selector="#insert_button" stepKey="clickInsertWidget"/>
             <waitForElementNotVisible selector="#insert_button" stepKey="waitForInsertWidgetModalToClose"/>
             <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
