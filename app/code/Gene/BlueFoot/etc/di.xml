@@ -91,6 +91,8 @@
                 <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
                 <item name="code" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Code</item>
                 <item name="newsletter" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter</item>
+                <item name="tabs" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs</item>
+                <item name="tabs_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem</item>
             </argument>
         </arguments>
     </type>
@@ -119,6 +121,11 @@
             <argument name="path" xsi:type="string">children/button_items</argument>
         </arguments>
     </virtualType>
+    <virtualType name="TabsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+        <arguments>
+            <argument name="path" xsi:type="string">children/tabs_items</argument>
+        </arguments>
+    </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
@@ -129,6 +136,7 @@
                 <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
                 <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
                 <item name="accordion" xsi:type="object">AccordionChildrenExtractor</item>
+                <item name="tabs" xsi:type="object">TabsChildrenExtractor</item>
             </argument>
         </arguments>
     </type>
@@ -334,6 +342,31 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ButtonItemEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="TabsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="tabs_item" xsi:type="string">tabs_item</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">TabsEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="TabsItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="textarea" xsi:type="string">textarea</item>
+                <item name="title" xsi:type="string">title</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">TabsItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
