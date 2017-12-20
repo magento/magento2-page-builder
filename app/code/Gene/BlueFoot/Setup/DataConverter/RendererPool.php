@@ -34,6 +34,9 @@ class RendererPool
      */
     public function getRender($contentType)
     {
-        return $this->renderers[$contentType];
+        if (isset($this->renderers[$contentType])) {
+            return $this->renderers[$contentType];
+        }
+        return $this->renderers['default'];
     }
 }
