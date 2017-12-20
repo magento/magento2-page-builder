@@ -111,13 +111,31 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName)
     {
         foreach ($contentTypes as $contentTypesCode => $contentTypeData) {
-            $this->saveContentType($contentTypesCode, $contentTypeData);
+            if ($this->isArrayOfChildren($contentTypeData)) {
+                foreach ($contentTypeData as $contentType) {
+                    $this->saveContentType($contentTypesCode, $contentType);
+                }
+            } else {
+                $this->saveContentType($contentTypesCode, $contentTypeData);
+            }
         }
 
         $this->assertEquals(
             file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
             self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
         );
+    }
+
+    /**
+     * Detect if the child array only has numeric keys, if so it contains numerous entities to create
+     *
+     * @param array $array
+     *
+     * @return bool
+     */
+    private function isArrayOfChildren(array $array)
+    {
+        return count(array_filter(array_keys($array), 'is_string')) === 0;
     }
 
     /**
@@ -387,6 +405,46 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'image_with_less_options.json',
                 'image_with_less_options.html'
+            ],
+            'accordions' => [
+                [
+                    'accordion' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                    ],
+                    'accordion_item' => [
+                        'entity_id' => 2,
+                        'title' => 'Accordion Title',
+                        'textarea' => '<p>Accordion Contents</p>',
+                        'open_on_load' => 0
+                    ]
+                ],
+                'accordions.json',
+                'accordions.html'
+            ],
+            'accordions with multiple children with open on load' => [
+                [
+                    'accordion' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                    ],
+                    'accordion_item' => [
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Title 1',
+                            'textarea' => '<p>Content 1</p>',
+                            'open_on_load' => 0
+                        ],
+                        [
+                            'entity_id' => 3,
+                            'title' => 'Title 2',
+                            'textarea' => '<p>Content 2</p>',
+                            'open_on_load' => 1
+                        ]
+                    ]
+                ],
+                'accordions_open_on_load.json',
+                'accordions_open_on_load.html'
             ],
             'buttons' => [
                 [

@@ -85,6 +85,8 @@
                 <item name="video" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Video</item>
                 <item name="slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Slider</item>
                 <item name="slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem</item>
+                <item name="accordion" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion</item>
+                <item name="accordion_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem</item>
                 <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
             </argument>
         </arguments>
@@ -104,6 +106,11 @@
             <argument name="path" xsi:type="string">children/slider_items</argument>
         </arguments>
     </virtualType>
+    <virtualType name="AccordionChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+        <arguments>
+            <argument name="path" xsi:type="string">children/accordion_items</argument>
+        </arguments>
+    </virtualType>
     <virtualType name="ButtonsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/button_items</argument>
@@ -118,6 +125,7 @@
                 <item name="advanced_slider" xsi:type="object">AdvancedSliderChildrenExtractor</item>
                 <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
                 <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
+                <item name="accordion" xsi:type="object">AccordionChildrenExtractor</item>
             </argument>
         </arguments>
     </type>
@@ -262,6 +270,27 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SliderItemEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="AccordionEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader" />
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">AccordionEntityHydrator</argument>
+            <argument name="accordionItemAttributeLoader" xsi:type="object">AccordionItemEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="AccordionItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="title" xsi:type="string">title</item>
+                <item name="textarea" xsi:type="string">textarea</item>
+                <item name="open_on_load" xsi:type="string">open_on_load</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">AccordionItemEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea">
