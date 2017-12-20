@@ -85,6 +85,7 @@
                 <item name="video" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Video</item>
                 <item name="slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Slider</item>
                 <item name="slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem</item>
+                <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
             </argument>
         </arguments>
     </type>
@@ -306,6 +307,20 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
         <arguments>
             <argument name="entityHydrator" xsi:type="object">VideoEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="MapEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEntityHydrator">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="map" xsi:type="string">map</item>
+                <item name="map_height" xsi:type="string">map_height</item>
+                <item name="map_width" xsi:type="string">map_width</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Map">
+        <arguments>
+            <argument name="entityHydrator" xsi:type="object">MapEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">

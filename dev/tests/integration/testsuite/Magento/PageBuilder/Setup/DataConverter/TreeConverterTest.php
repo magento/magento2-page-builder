@@ -544,6 +544,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'video.json',
                 'video.html'
             ],
+            'map' => [
+                [
+                    'map' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                        'align' => 'center',
+                        'map' => '50.821392, -0.139439, 8',
+                        'map_height' => '300px',
+                        'map_width' => '300px'
+                    ]
+                ],
+                'map.json',
+                'map.html'
+            ],
         ];
     }
 
