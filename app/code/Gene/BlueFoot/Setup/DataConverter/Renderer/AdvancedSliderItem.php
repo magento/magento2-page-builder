@@ -47,12 +47,14 @@ class AdvancedSliderItem implements RendererInterface
             'class' => $cssClasses
         ];
 
-        $formData = $itemData['formData'];
-        $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
+        if (isset($itemData['formData'])) {
+            $formData = $itemData['formData'];
+            $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
 
-        $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+            $style = $this->styleExtractor->extractStyle($formData);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);

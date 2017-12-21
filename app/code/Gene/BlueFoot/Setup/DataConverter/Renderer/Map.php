@@ -52,17 +52,19 @@ class Map implements RendererInterface
                 . '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
         ];
 
-        $formData = $itemData['formData'];
-        if (isset($eavData['map_width'])) {
-            $formData['width'] = $eavData['map_width'];
-        }
-        if (isset($eavData['map_height'])) {
-            $formData['height'] = $eavData['map_height'];
-        }
+        if (isset($itemData['formData'])) {
+            $formData = $itemData['formData'];
+            if (isset($eavData['map_width'])) {
+                $formData['width'] = $eavData['map_width'];
+            }
+            if (isset($eavData['map_height'])) {
+                $formData['height'] = $eavData['map_height'];
+            }
 
-        $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+            $style = $this->styleExtractor->extractStyle($formData);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<iframe';

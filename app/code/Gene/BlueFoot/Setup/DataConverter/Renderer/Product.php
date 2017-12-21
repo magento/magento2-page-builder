@@ -8,11 +8,13 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
- * Render advanced slider to PageBuilder format
+ * Render product to PageBuilder format
  */
-class AdvancedSlider implements RendererInterface
+class Product implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -24,32 +26,36 @@ class AdvancedSlider implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @var ProductRepositoryInterface
+     */
+    private $productRepository;
+
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader
+        EavAttributeLoaderInterface $eavAttributeLoader,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
+        $this->productRepository = $productRepository;
     }
 
     /**
      * {@inheritdoc}
+     * @throws NoSuchEntityException
      */
     public function render(array $itemData, array $additionalData = [])
     {
         $eavData = $this->eavAttributeLoader->load($itemData);
 
+        $productSku = $this->productRepository->getById($eavData['product_id'])->getSku();
+
         $rootElementAttributes = [
-            'data-role' => 'advanced-slider',
-            'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',
-            'data-autoplay-speed' => isset($eavData['autoplay_speed']) ? $eavData['autoplay_speed'] : '',
-            'data-fade' => isset($eavData['fade']) ? $eavData['fade'] : '',
-            'data-is-infinite' => isset($eavData['is_infinite']) ? $eavData['is_infinite'] : '',
-            'data-show-arrows' => isset($eavData['show_arrows']) ? $eavData['show_arrows'] : '',
-            'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
-            'data-advanced-settings' => isset($eavData['slider_advanced_settings'])
-                ? $eavData['slider_advanced_settings'] : '',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'data-role' => 'products',
+            'class' => $eavData['css_classes'] ?? '',
+            'data-view-mode' => $eavData['product_display'] ?? '',
+            'data-sku' => $productSku
         ];
 
         if (isset($itemData['formData'])) {
@@ -63,7 +69,7 @@ class AdvancedSlider implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $additionalData['children'] . '</div>';
+        $rootElementHtml .= '></div>';
 
         return $rootElementHtml;
     }

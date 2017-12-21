@@ -45,9 +45,11 @@ class Anchor implements RendererInterface
             'id' => $eavData['anchor_id']
         ];
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<span';

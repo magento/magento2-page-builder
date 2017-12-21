@@ -57,9 +57,11 @@ class Block implements RendererInterface
             'data-identifier' => $block->getIdentifier()
         ];
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<div';

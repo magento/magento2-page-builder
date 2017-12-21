@@ -45,7 +45,7 @@ class Video implements RendererInterface
             'src' => $eavData['video_url']
         ];
 
-        $formData = $itemData['formData'];
+        $formData = $itemData['formData'] ?? [];
         if (isset($eavData['video_width'])) {
             $formData['width'] = $eavData['video_width'];
         }

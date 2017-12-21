@@ -44,9 +44,11 @@ class Code implements RendererInterface
             'class' => $itemData['formData']['css_classes'] ?? '',
         ];
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<pre';

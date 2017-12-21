@@ -49,9 +49,11 @@ class Image implements RendererInterface
             $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity';
         }
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<figure' . $this->printAttributes($rootElementAttributes);

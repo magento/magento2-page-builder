@@ -46,9 +46,11 @@ class AccordionItem implements RendererInterface
             'data-open-on-load' => $eavData['open_on_load'] ? "1" : "0"
         ];
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<div';

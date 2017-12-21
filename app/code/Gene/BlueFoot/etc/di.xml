@@ -96,6 +96,7 @@
                 <item name="search" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Search</item>
                 <item name="static_block" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Block</item>
                 <item name="driver" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Driver</item>
+                <item name="product" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Product</item>
             </argument>
         </arguments>
     </type>
@@ -407,6 +408,19 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Driver">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">DriverEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="ProductEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="product_display" xsi:type="string">product_display</item>
+                <item name="product_id" xsi:type="string">product_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Product">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">ProductEntityHydrator</argument>
         </arguments>
     </type>
     <type name="Magento\Cms\Block\Page">

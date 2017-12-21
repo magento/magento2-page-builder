@@ -44,7 +44,7 @@ class Divider implements RendererInterface
             'class' => $eavData['css_classes'] ?? '',
         ];
 
-        $formData = $itemData['formData'];
+        $formData = $itemData['formData'] ?? [];
         $formData += [
             'border_color' => $eavData['color'] ?? '',
             'border_width' => $eavData['hr_height'] ?? '',
@@ -52,7 +52,6 @@ class Divider implements RendererInterface
         ];
 
         $style = $this->styleExtractor->extractStyle($formData);
-
         if ($style) {
             $rootElementAttributes['style'] = $style;
         }

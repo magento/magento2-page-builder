@@ -46,7 +46,7 @@ class SliderItem implements RendererInterface
             'class' => $cssClasses
         ];
 
-        $formData = $itemData['formData'];
+        $formData = $itemData['formData'] ?? [];
         $formData['background_image'] = isset($eavData['image']) ? $eavData['image'] : '';
 
         $style = $this->styleExtractor->extractStyle($formData);
