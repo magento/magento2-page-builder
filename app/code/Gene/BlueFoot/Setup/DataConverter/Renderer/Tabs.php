@@ -59,26 +59,17 @@ class Tabs implements RendererInterface
 
         $rootElementHtml .= (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div></div>';
 
-        return $this->replaceTabIds($rootElementHtml);
+        return $rootElementHtml;
     }
 
+    /**
+     * Generate the data-mage-init attribute and div tag
+     *
+     * @return string
+     */
     private function getMageInit() {
         return '<div class="product data items" data-mage-init="{&quot;tabs&quot;:{&quot;openedState&quot;:' .
             '&quot;active&quot;,&quot;collapsibleElement&quot;:&quot;[data-collapsible=true]&quot;,' .
             '&quot;content&quot;:&quot;[data-content=true]&quot;}}">';
-    }
-    private function replaceTabIds($rootElementHtml) {
-        $count = substr_count($rootElementHtml, 'pagebuilder_tab');
-        $tab_count = 0;
-        for ($i = $count; $i > 0; $i-=2) {
-            $rootElementHtml = preg_replace(
-                '/pagebuilder_tab"/',
-                'pagebuilder_tab' . $tab_count . '"',
-                $rootElementHtml,
-                2
-            );
-            $tab_count++;
-        }
-        return $rootElementHtml;
     }
 }

@@ -58,7 +58,7 @@ class TreeConverter
             $jsonTree = [$jsonTree];
         }
         foreach ($jsonTree as $treeItem) {
-            $html .= $this->convertTreeItem($treeItem);
+            $html .= $this->convertTreeItem($treeItem, 0);
         }
         return $html;
     }
@@ -67,9 +67,10 @@ class TreeConverter
      * Render content type item
      *
      * @param array $item
+     * @param int $childIndex
      * @return string
      */
-    private function convertTreeItem($item)
+    private function convertTreeItem($item, $childIndex)
     {
         $contentType = isset($item['type']) ? $item['type'] : $item['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
@@ -77,11 +78,13 @@ class TreeConverter
         $children = $childrenExtractor->extract($item);
         if (!empty($children)) {
             $childrenHtml = '';
+            $childIndex = 0;
             foreach ($children as $childItem) {
-                $childrenHtml .= $this->convertTreeItem($childItem);
+                $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
+                $childIndex++;
             }
             return $renderer->render($item, ['children' => $childrenHtml]);
         }
-        return $renderer->render($item);
+        return $renderer->render($item, ['childIndex' => $childIndex]);
     }
 }
