@@ -10,7 +10,7 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render code to PageBuilder format
+ * Render newsletter to PageBuilder format
  */
 class Newsletter implements RendererInterface
 {
@@ -42,10 +42,10 @@ class Newsletter implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'newsletter',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-button-text' => isset($eavData['button_text']) ? $eavData['button_text'] : '',
-            'data-label-text' => isset($eavData['label']) ? $eavData['label'] : '',
-            'data-title' => isset($eavData['title']) ? $eavData['title'] : '',
-            'data-placeholder' => isset($eavData['placeholder']) ? $eavData['placeholder'] : '',
+            'data-button-text' => $eavData['button_text'] ?? '',
+            'data-label-text' => $eavData['label'] ?? '',
+            'data-title' => $eavData['title'] ?? '',
+            'data-placeholder' => $eavData['placeholder'] ?? '',
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);
