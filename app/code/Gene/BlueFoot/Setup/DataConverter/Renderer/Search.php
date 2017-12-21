@@ -42,7 +42,7 @@ class Search implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'search',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-placeholder' => $eavData['placeholder'] ?? '',
+            'data-placeholder' => $eavData['placeholder'] ?? 'Browse the catalog',
         ];
 
         if (isset($itemData['formData'])) {
