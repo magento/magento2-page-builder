@@ -28,7 +28,7 @@ class Accordion implements RendererInterface
     /**
      * @var EavAttributeLoaderInterface
      */
-    private $accordionItemAttributeLoader;
+    private $accordionEavAttributeLoader;
 
     /**
      * @var Json
@@ -38,12 +38,12 @@ class Accordion implements RendererInterface
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader,
-        EavAttributeLoaderInterface $accordionItemAttributeLoader,
+        EavAttributeLoaderInterface $accordionEavAttributeLoader,
         Json $serializer
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->accordionItemAttributeLoader = $accordionItemAttributeLoader;
+        $this->accordionEavAttributeLoader = $accordionEavAttributeLoader;
         $this->serializer = $serializer;
     }
 
@@ -105,7 +105,7 @@ class Accordion implements RendererInterface
     {
         $active = [];
         foreach ($children as $index => $child) {
-            $eavData = $this->accordionItemAttributeLoader->hydrate($child);
+            $eavData = $this->accordionEavAttributeLoader->hydrate($child);
             if (isset($eavData['open_on_load']) && $eavData['open_on_load']) {
                 $active[] = $index;
             }
