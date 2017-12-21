@@ -89,6 +89,11 @@
                 <item name="accordion" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion</item>
                 <item name="accordion_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem</item>
                 <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
+                <item name="code" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Code</item>
+                <item name="newsletter" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter</item>
+                <item name="tabs" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs</item>
+                <item name="tabs_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem</item>
+                <item name="search" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Search</item>
                 <item name="driver" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Driver</item>
             </argument>
         </arguments>
@@ -118,6 +123,11 @@
             <argument name="path" xsi:type="string">children/button_items</argument>
         </arguments>
     </virtualType>
+    <virtualType name="TabsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+        <arguments>
+            <argument name="path" xsi:type="string">children/tabs_items</argument>
+        </arguments>
+    </virtualType>
     <type name="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
@@ -128,6 +138,7 @@
                 <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
                 <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
                 <item name="accordion" xsi:type="object">AccordionChildrenExtractor</item>
+                <item name="tabs" xsi:type="object">TabsChildrenExtractor</item>
             </argument>
         </arguments>
     </type>
@@ -335,6 +346,31 @@
             <argument name="eavAttributeLoader" xsi:type="object">ButtonItemEntityHydrator</argument>
         </arguments>
     </type>
+    <virtualType name="TabsEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="tabs_item" xsi:type="string">tabs_item</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">TabsEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="TabsItemEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="textarea" xsi:type="string">textarea</item>
+                <item name="title" xsi:type="string">title</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">TabsItemEntityHydrator</argument>
+        </arguments>
+    </type>
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">VideoEntityHydrator</argument>
@@ -377,5 +413,44 @@
     </type>
     <type name="Magento\Cms\Block\Block">
         <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Block" />
+    </type>
+    <virtualType name="CodeEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="html" xsi:type="string">html</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Code">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">CodeEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="NewsletterEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="button_text" xsi:type="string">button_text</item>
+                <item name="label" xsi:type="string">label</item>
+                <item name="title" xsi:type="string">title</item>
+                <item name="placeholder" xsi:type="string">placeholder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">NewsletterEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="SearchEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="placeholder" xsi:type="string">placeholder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Search">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">SearchEntityHydrator</argument>
+        </arguments>
     </type>
 </config>

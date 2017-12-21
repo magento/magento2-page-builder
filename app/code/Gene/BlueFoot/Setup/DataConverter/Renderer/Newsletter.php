@@ -10,9 +10,9 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render video to PageBuilder format
+ * Render newsletter to PageBuilder format
  */
-class Video implements RendererInterface
+class Newsletter implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -40,30 +40,25 @@ class Video implements RendererInterface
         $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
         $rootElementAttributes = [
-            'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? '',
-            'src' => $eavData['video_url']
+            'data-role' => 'newsletter',
+            'class' => $itemData['formData']['css_classes'] ?? '',
+            'data-button-text' => $eavData['button_text'] ?? '',
+            'data-label-text' => $eavData['label'] ?? '',
+            'data-title' => $eavData['title'] ?? '',
+            'data-placeholder' => $eavData['placeholder'] ?? '',
         ];
 
-        $formData = $itemData['formData'];
-        if (isset($eavData['video_width'])) {
-            $formData['width'] = $eavData['video_width'];
-        }
-
-        if (isset($eavData['video_width'])) {
-            $formData['height'] = $eavData['video_height'];
-        }
-
-        $style = $this->styleExtractor->extractStyle($formData);
+        $style = $this->styleExtractor->extractStyle($itemData['formData']);
         if ($style) {
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></iframe>';
+
+        $rootElementHtml .= '></div>';
 
         return $rootElementHtml;
     }

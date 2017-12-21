@@ -220,12 +220,25 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         'entity_id' => 5,
                         'css_classes' => '',
                         'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => '',
+                        'align' => 'center',
                         'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                     ]
                 ],
                 'html.json',
                 'html.html'
+            ],
+            'code' => [
+                [
+                    'html' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'code-one code-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'left',
+                        'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                    ]
+                ],
+                'code.json',
+                'code.html'
             ],
             'anchor' => [
                 [
@@ -603,13 +616,55 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'slider_no_link_text.json',
                 'slider_no_link_text.html'
             ],
+            'tabs with no items' => [
+                [
+                    'tabs' => [
+                        'tabs_items' => 0,
+                    ]
+                ],
+                'tabs_with_no_items.json',
+                'tabs_with_no_items.html'
+            ],
+            'tabs with items' => [
+                [
+                    'tabs' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'primary',
+                        'metric' => '{\"margin\":\"5px 0px 0px 0px\",\"padding\":\"0px 0px 5px 0px\"}',
+                        'tabs_items' => 3
+                    ],
+                    'tabs_item' => [
+                        [
+                            'entity_id' => 2,
+                            'css_classes' => 'secondary',
+                            'title' => 'Item 1',
+                            'textarea' => '<p><strong>Item 1</strong></p>',
+                            'metric' => '{\"margin\":\"0px 0px 0px 5px\",\"padding\":\"0px 5px 0px 0px\"}',
+                        ],
+                        [
+                            'entity_id' => 3,
+                            'css_classes' => 'secondary',
+                            'title' => 'Item 2',
+                            'textarea' => '<p><em>Item 2</em></p>',
+                            'metric' => '{\"margin\":\"0px 0px 10px 0px\",\"padding\":\"10px 0px 0px 0px\"}',
+                        ],
+                        [
+                            'entity_id' => 4,
+                            'css_classes' => 'secondary',
+                            'title' => 'Item 3',
+                            'textarea' => '<p><span style="text-decoration: underline;">Item 3</span></p>',
+                            'metric' => '{\"margin\":\"0px 0px 0px 15px\",\"padding\":\"15px 0px 0px 0px\"}',
+                        ]
+                    ]
+                ],
+                'tabs_with_items.json',
+                'tabs_with_items.html'
+            ],
             'video' => [
                 [
                     'video' => [
                         'entity_id' => 5,
                         'css_classes' => 'primary',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => 'center',
                         'video_url' => 'https://www.youtube.com',
                         'video_width' => '640px',
                         'video_height' => '480px'
@@ -632,6 +687,35 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'map.json',
                 'map.html'
+            ],
+            'newsletter' => [
+                [
+                    'newsletter' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'newsletter-one newsletter-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'center',
+                        'title' => 'Title',
+                        'button_text' => 'Button Text',
+                        'label' => 'Label',
+                        'placeholder' => 'Placeholder',
+                    ]
+                ],
+                'newsletter.json',
+                'newsletter.html'
+            ],
+            'search' => [
+                [
+                    'search' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'search-one search-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'center',
+                        'placeholder' => 'Placeholder',
+                    ]
+                ],
+                'search.json',
+                'search.html'
             ],
             'custom' => [
                 [],

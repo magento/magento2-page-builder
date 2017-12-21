@@ -10,9 +10,9 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render video to PageBuilder format
+ * Render code to PageBuilder format
  */
-class Video implements RendererInterface
+class Code implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -40,30 +40,20 @@ class Video implements RendererInterface
         $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
         $rootElementAttributes = [
-            'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? '',
-            'src' => $eavData['video_url']
+            'data-role' => 'code',
+            'class' => $itemData['formData']['css_classes'] ?? '',
         ];
 
-        $formData = $itemData['formData'];
-        if (isset($eavData['video_width'])) {
-            $formData['width'] = $eavData['video_width'];
-        }
-
-        if (isset($eavData['video_width'])) {
-            $formData['height'] = $eavData['video_height'];
-        }
-
-        $style = $this->styleExtractor->extractStyle($formData);
+        $style = $this->styleExtractor->extractStyle($itemData['formData']);
         if ($style) {
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""';
+        $rootElementHtml = '<pre';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></iframe>';
+        $rootElementHtml .= '><code>' . $eavData['html'] . '</code></pre>';
 
         return $rootElementHtml;
     }

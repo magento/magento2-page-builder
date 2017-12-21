@@ -10,9 +10,9 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render video to PageBuilder format
+ * Render tab item to PageBuilder format
  */
-class Video implements RendererInterface
+class TabsItem implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -39,31 +39,27 @@ class Video implements RendererInterface
     {
         $eavData = $this->eavAttributeLoader->hydrate($itemData);
 
+        $cssClasses = $eavData['css_classes'] ?? '';
+        $cssClasses .= isset($eavData['css_classes']) ? ' data item title' : 'data item title';
+
         $rootElementAttributes = [
-            'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? '',
-            'src' => $eavData['video_url']
+            'class' => $cssClasses
         ];
 
-        $formData = $itemData['formData'];
-        if (isset($eavData['video_width'])) {
-            $formData['width'] = $eavData['video_width'];
-        }
-
-        if (isset($eavData['video_width'])) {
-            $formData['height'] = $eavData['video_height'];
-        }
-
-        $style = $this->styleExtractor->extractStyle($formData);
+        $style = $this->styleExtractor->extractStyle($itemData['formData']);
         if ($style) {
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""';
+        $rootElementHtml = '<div data-collapsible="true"';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></iframe>';
+
+        $rootElementHtml .= '><a class="data switch" tabindex="-1" data-toggle="switch" href="#pagebuilder_tab">';
+        $rootElementHtml .= $eavData['title'] . '</a></div>';
+        $rootElementHtml .= '<div class="data item content" data-content="true" id="pagebuilder_tab">';
+        $rootElementHtml .= $eavData['textarea'] . '</div>';
 
         return $rootElementHtml;
     }
