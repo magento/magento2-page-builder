@@ -5,7 +5,7 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
-class StyleConverter
+class ColorConverter
 {
     /**
      * Convert a hex value into it's corresponding RGB values
@@ -14,7 +14,7 @@ class StyleConverter
      *
      * @return string
      */
-    public function convertHexToRgb($hex)
+    public function convert($hex)
     {
         list($r, $g, $b) = sscanf(ltrim($hex, '#'), "%02x%02x%02x");
         return "rgb($r, $g, $b)";
