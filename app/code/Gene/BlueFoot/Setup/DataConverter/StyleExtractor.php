@@ -45,7 +45,8 @@ class StyleExtractor implements StyleExtractorInterface
                 ? ('{{media url=' . $formData['background_image'] . '}}') : '',
             'border-color' => isset($formData['border_color'])
                 ? $this->colorConverter->convert($formData['border_color']) : '',
-            'border-width' => $formData['border_width'] ?? ''
+            'border-width' => $formData['border_width'] ?? '',
+            'display' => $formData['display'] ?? ''
         ];
 
         if (isset($formData['metric']) && $formData['metric']) {

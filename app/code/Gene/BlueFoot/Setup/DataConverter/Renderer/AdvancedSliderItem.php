@@ -47,20 +47,18 @@ class AdvancedSliderItem implements RendererInterface
             'class' => $cssClasses
         ];
 
-        if (isset($itemData['formData'])) {
-            $formData = $itemData['formData'];
-            $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
+        $formData = $itemData['formData'] ?? [];
+        $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
 
-            $style = $this->styleExtractor->extractStyle($formData);
-            if ($style) {
-                $rootElementAttributes['style'] = $style;
-            }
+        $style = $this->styleExtractor->extractStyle($formData);
+        if ($style) {
+            $rootElementAttributes['style'] = $style;
         }
 
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
 
         $innerDivElement1Attributes = [];
-        if ($formData['align']) {
+        if (isset($formData['align'])) {
             $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
 
@@ -69,7 +67,7 @@ class AdvancedSliderItem implements RendererInterface
             . '><div';
 
         $innerDivElement2Attributes = [];
-        if ($formData['align']) {
+        if (isset($formData['align'])) {
             $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
         $innerDivElement2AttributeCssClasses = '';

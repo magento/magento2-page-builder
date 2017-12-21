@@ -31,8 +31,9 @@ class Row implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'row',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'style' => ''
         ];
+
+        $formData = $itemData['formData'] ?? [];
 
         if (!empty($itemData['children'])) {
             $columnChildrenCount = array_reduce($itemData['children'], function ($result, $child) {
@@ -43,15 +44,13 @@ class Row implements RendererInterface
             }, 0);
 
             if ($columnChildrenCount === count($itemData['children'])) {
-                $rootElementAttributes['style'] = 'display: flex; ';
+                $formData['display'] = 'flex';
             }
         }
 
-        if (isset($itemData['formData'])) {
-            $style = $this->styleExtractor->extractStyle($itemData['formData']);
-            if ($style) {
-                $rootElementAttributes['style'] .= $style;
-            }
+        $style = $this->styleExtractor->extractStyle($formData);
+        if ($style) {
+            $rootElementAttributes['style'] = $style;
         }
 
         $rootElementHtml = '<div';

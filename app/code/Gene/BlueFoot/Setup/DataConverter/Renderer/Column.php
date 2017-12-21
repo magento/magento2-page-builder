@@ -31,7 +31,6 @@ class Column implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'column',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'style' => ''
         ];
 
         if (isset($itemData['formData'])) {
