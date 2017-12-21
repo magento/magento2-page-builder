@@ -48,6 +48,7 @@ class ProductList implements RendererInterface
             'class' => $itemData['formData']['css_classes'] ?? '',
             'data-category-id' => $eavData['category_id'],
             'data-product-count' => $eavData['product_count'] ?? 4,
+            'data-hide-out-of-stock' => $eavData['hide_out_of_stock'] ?? 0,
         ];
 
         $style = $this->styleExtractor->extractStyle($itemData['formData']);
