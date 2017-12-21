@@ -54,50 +54,68 @@ class Image implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<figure';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
-        $rootElementHtml .= '><a href="{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}"';
-        if (isset($eavData['title_tag'])) {
-            $rootElementHtml .= ' title="' . $eavData['title_tag'] . '"';
-        }
+        $rootElementHtml = '<figure' . $this->printAttributes($rootElementAttributes);
 
-        if (isset($eavData['has_lightbox']) && $eavData['has_lightbox'] == 1) {
-            $rootElementHtml .= ' class="bluefoot-lightbox"';
-        }
+        $linkAttributes = [
+            'href' => '{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}',
+            'title' => $eavData['title_tag'] ?? '',
+            'class' => (isset($eavData['has_lightbox']) && $eavData['has_lightbox'] == 1) ?
+                'bluefoot-lightbox' : '',
+        ];
 
-        $rootElementHtml .= '><img src="{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}"';
+        $imageAttributes = [
+            'src' => '{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}',
+            'alt' => $eavData['alt_tag'] ?? '',
+            'title' => $eavData['title_tag'] ?? ''
+        ];
 
-        if (isset($eavData['alt_tag'])) {
-            $rootElementHtml .= ' alt="' . $eavData['alt_tag'] . '"';
-        }
-
-        if (isset($eavData['title_tag'])) {
-            $rootElementHtml .= ' title="' . $eavData['title_tag'] . '"';
-        }
-
+        $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
-            $rootElementHtml .= ' class="bluefoot-mobile-hidden"><img class="bluefoot-mobile-only"' .
-                ' src="{{media url=wysiwyg/bluefoot' . $eavData['mobile_image'] . '}}"';
-            if (isset($eavData['alt_tag'])) {
-                $rootElementHtml .= ' alt="' . $eavData['alt_tag'] . '"';
-            }
+            $mobileImageAttributes = [
+                'src' => '{{media url=wysiwyg/bluefoot' . $eavData['mobile_image'] . '}}',
+                'alt' => $eavData['alt_tag'] ?? '',
+                'title' => $eavData['title_tag'] ?? ''
+            ];
+            $imageAttributes['class'] = 'bluefoot-mobile-hidden';
 
-            if (isset($eavData['title_tag'])) {
-                $rootElementHtml .= ' title="' . $eavData['title_tag'] . '">';
-            }
-        } else {
-            $rootElementHtml .= '>';
+            $mobileImageHtml = '<img'
+                . $this->printAttributes($mobileImageAttributes)
+                . ' class="bluefoot-mobile-only">';
         }
-        $rootElementHtml .= '</a>';
 
+        $imageHtml = '<img'
+            . $this->printAttributes($imageAttributes)
+            . '>';
+
+        $captionHtml = '';
         if (isset($eavData['show_caption']) && $eavData['show_caption'] == 1) {
-            $rootElementHtml .= '<figcaption>' . $eavData['title_tag'] . '</figcaption>';
+            $captionHtml .= '<figcaption>' . $eavData['title_tag'] . '</figcaption>';
         }
 
-        $rootElementHtml .= '</figure>';
+        $rootElementHtml .= '><a'
+            . $this->printAttributes($linkAttributes)
+            . '>'
+            . $imageHtml
+            . $mobileImageHtml
+            . '</a>'
+            . $captionHtml
+            . '</figure>';
 
         return $rootElementHtml;
+    }
+
+    /**
+     * Print HTML attributes
+     *
+     * @param array $elementAttributes
+     * @return string
+     */
+    private function printAttributes($elementAttributes): string
+    {
+        $elementAttributesHtml = '';
+        foreach ($elementAttributes as $attributeName => $attributeValue) {
+            $elementAttributesHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        return $elementAttributesHtml;
     }
 }
