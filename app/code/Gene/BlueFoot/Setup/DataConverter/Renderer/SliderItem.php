@@ -57,7 +57,7 @@ class SliderItem implements RendererInterface
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
 
         $innerDivElement1Attributes = [];
-        if ($formData['align']) {
+        if (isset($formData['align'])) {
             $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
 
@@ -66,7 +66,7 @@ class SliderItem implements RendererInterface
             . '><div';
 
         $innerDivElement2Attributes = [];
-        if ($formData['align']) {
+        if (isset($formData['align'])) {
             $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
         $innerDivElement2Attributes['class'] = 'pagebuilder-content';
