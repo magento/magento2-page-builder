@@ -52,7 +52,7 @@ class Accordion implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         $rootElementAttributes = [
             'data-role' => 'accordion',
@@ -105,7 +105,7 @@ class Accordion implements RendererInterface
     {
         $active = [];
         foreach ($children as $index => $child) {
-            $eavData = $this->accordionEavAttributeLoader->hydrate($child);
+            $eavData = $this->accordionEavAttributeLoader->load($child);
             if (isset($eavData['open_on_load']) && $eavData['open_on_load']) {
                 $active[] = $index;
             }

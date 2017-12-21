@@ -48,7 +48,7 @@ class ConfigurableEavLoader implements EavAttributeLoaderInterface
     /**
      * @inheritdoc
      */
-    public function hydrate(array $data)
+    public function load(array $data)
     {
         $eavData = [];
         if (isset($data['entityId'])) {

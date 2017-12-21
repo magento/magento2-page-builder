@@ -37,7 +37,7 @@ class TabsItem implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         $cssClasses = $eavData['css_classes'] ?? '';
         $cssClasses .= isset($eavData['css_classes']) ? ' data item title' : 'data item title';

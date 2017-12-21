@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Render individual content types to their new format
+ */
 interface RendererInterface
 {
     /**

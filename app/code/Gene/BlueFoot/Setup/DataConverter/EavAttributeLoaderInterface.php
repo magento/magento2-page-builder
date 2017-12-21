@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Load EAV data from an array of structural item data
+ */
 interface EavAttributeLoaderInterface
 {
     /**
@@ -13,5 +16,5 @@ interface EavAttributeLoaderInterface
      * @param array $data
      * @return array
      */
-    public function hydrate(array $data);
+    public function load(array $data);
 }

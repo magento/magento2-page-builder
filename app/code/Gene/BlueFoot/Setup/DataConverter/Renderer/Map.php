@@ -37,7 +37,7 @@ class Map implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         $srcParts = explode(', ', $eavData['map']);
         $rootElementAttributes = [

@@ -5,6 +5,9 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+/**
+ * Extract styles from an object of form data to be used in the new mark up
+ */
 interface StyleExtractorInterface
 {
     /**

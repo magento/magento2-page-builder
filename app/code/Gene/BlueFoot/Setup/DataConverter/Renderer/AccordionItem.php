@@ -37,7 +37,7 @@ class AccordionItem implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         // data-role is not present on the accordion item as it's no longer it's own type
         $rootElementAttributes = [

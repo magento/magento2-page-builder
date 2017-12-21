@@ -47,7 +47,7 @@ class Block implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         $block = $this->blockRepository->getById($eavData['block_id']);
 

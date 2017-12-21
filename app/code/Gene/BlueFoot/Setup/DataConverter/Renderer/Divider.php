@@ -37,7 +37,7 @@ class Divider implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->hydrate($itemData);
+        $eavData = $this->eavAttributeLoader->load($itemData);
 
         $rootElementAttributes = [
             'data-role' => 'divider',
