@@ -17,36 +17,43 @@ class StyleExtractor implements StyleExtractorInterface
      */
     private $serializer;
 
+    /**
+     * @var ColorConverter
+     */
+    private $colorConverter;
+
     public function __construct(
-        Json $serializer
+        Json $serializer,
+        ColorConverter $colorConverter
     ) {
         $this->serializer = $serializer;
+        $this->colorConverter = $colorConverter;
     }
 
     /**
      * @inheritdoc
      */
-    public function extractStyle(array $formData, array $additionalStyles = [])
+    public function extractStyle(array $formData)
     {
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
             'width' => isset($formData['width']) ? $this->normalizeSizeDimension($formData['width']) : '',
             'height' => isset($formData['height']) ? $this->normalizeSizeDimension($formData['height']) : '',
             'background-color' => isset($formData['background_color'])
-                ? '#' . $formData['background_color'] : '',
+                ? $this->colorConverter->convert($formData['background_color']) : '',
             'background-image' => !empty($formData['background_image'])
-                ? ('{{media url=' . $formData['background_image'] . '}}') : ''
+                ? ('{{media url=' . $formData['background_image'] . '}}') : '',
+            'border-color' => isset($formData['border_color'])
+                ? $this->colorConverter->convert($formData['border_color']) : '',
+            'border-width' => $formData['border_width'] ?? ''
         ];
+
         if (isset($formData['metric']) && $formData['metric']) {
             $metric = $this->serializer->unserialize($formData['metric']);
             $styleAttributes['margin'] = isset($metric['margin']) ?
                 $this->extractMarginPadding($metric['margin']) : '';
             $styleAttributes['padding'] = isset($metric['padding']) ?
                 $this->extractMarginPadding($metric['padding']) : '';
-        }
-
-        if (!empty($additionalStyles)) {
-            $styleAttributes = array_merge($styleAttributes, $additionalStyles);
         }
 
         $styleString = '';

@@ -8,10 +8,9 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
-use Gene\BlueFoot\Setup\DataConverter\StyleConverter;
 
 /**
- * Render driver item to PageBuilder format
+ * Render divider item to PageBuilder format
  */
 class Divider implements RendererInterface
 {
@@ -25,19 +24,12 @@ class Divider implements RendererInterface
      */
     private $eavAttributeLoader;
 
-    /**
-     * @var StyleConverter
-     */
-    private $styleConverter;
-
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader,
-        StyleConverter $styleConverter
+        EavAttributeLoaderInterface $eavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->styleConverter = $styleConverter;
     }
 
     /**
@@ -50,20 +42,19 @@ class Divider implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'divider',
             'class' => $eavData['css_classes'] ?? '',
-            'style' => ''
         ];
 
-        $style = $this->styleExtractor->extractStyle(
-            $itemData['formData'],
-            [
-                'border-color' =>
-                    isset($eavData['color']) ? $this->styleConverter->convertHexToRgb($eavData['color']) : '',
-                'border-width' => isset($eavData['hr_height']) ? $eavData['hr_height'] : '',
-                'width' => isset($eavData['hr_width']) ? $eavData['hr_width'] : ''
-            ]
-        );
+        $formData = $itemData['formData'];
+        $formData += [
+            'border_color' => $eavData['color'] ?? '',
+            'border_width' => $eavData['hr_height'] ?? '',
+            'width' => $eavData['hr_width'] ?? ''
+        ];
+
+        $style = $this->styleExtractor->extractStyle($formData);
+
         if ($style) {
-            $rootElementAttributes['style'] .= $style;
+            $rootElementAttributes['style'] = $style;
         }
 
         $rootElementHtml = '<hr';
