@@ -788,6 +788,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'search.json',
                 'search.html'
             ],
+            'search_no_placeholder' => [
+                [
+                    'search' => [
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'search-no-placeholder-one search-no-placeholder-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'placeholder' => '',
+                        ]
+                    ]
+                ],
+                'search_no_placeholder.json',
+                'search_no_placeholder.html'
+            ],
             'block' => [
                 [
                     'static_block' => [
