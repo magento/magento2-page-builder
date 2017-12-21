@@ -53,8 +53,7 @@ class AccordionItem implements RendererInterface
 
         $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue !== false && $attributeValue !== null
-                ? " $attributeName=\"$attributeValue\"" : '';
+            $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
         $rootElementHtml .= '><div data-role="trigger"><span>' . $eavData['title'] . '</span></div></div>'
         . '<div data-content="true" class="accordion-content">' . $eavData['textarea'] . '</div>';

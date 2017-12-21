@@ -115,13 +115,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             $this->$callSetupEntity();
         }
 
-        foreach ($contentTypes as $contentTypesCode => $contentTypeData) {
-            if ($this->isArrayOfChildren($contentTypeData)) {
-                foreach ($contentTypeData as $contentType) {
-                    $this->saveContentType($contentTypesCode, $contentType);
-                }
-            } else {
-                $this->saveContentType($contentTypesCode, $contentTypeData);
+        foreach ($contentTypes as $contentTypesCode => $contentTypesData) {
+            foreach ($contentTypesData as $contentType) {
+                $this->saveContentType($contentTypesCode, $contentType);
             }
         }
 
@@ -129,18 +125,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
             self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
         );
-    }
-
-    /**
-     * Detect if the child array only has numeric keys, if so it contains numerous entities to create
-     *
-     * @param array $array
-     *
-     * @return bool
-     */
-    private function isArrayOfChildren(array $array)
-    {
-        return count(array_filter(array_keys($array), 'is_string')) === 0;
     }
 
     /**
@@ -157,12 +141,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'row with column and heading' => [
                 [
                     'heading' => [
-                        'entity_id' => 1,
-                        'title' => 'Heading title',
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'heading_type' => 'h4',
+                        [
+                            'entity_id' => 1,
+                            'title' => 'Heading title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'heading_type' => 'h4',
+                        ]
                     ]
                 ],
                 'row_with_column_and_heading.json',
@@ -181,12 +167,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'heading' => [
                 [
                     'heading' => [
-                        'entity_id' => 1,
-                        'title' => 'Heading title',
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'heading_type' => 'h2',
+                        [
+                            'entity_id' => 1,
+                            'title' => 'Heading title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'heading_type' => 'h2',
+                        ]
                     ]
                 ],
                 'heading.json',
@@ -195,12 +183,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'row column and heading' => [
                 [
                     'heading' => [
-                        'entity_id' => 1,
-                        'title' => 'Heading title',
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'heading_type' => 'h4',
+                        [
+                            'entity_id' => 1,
+                            'title' => 'Heading title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'heading_type' => 'h4',
+                        ]
                     ]
                 ],
                 'row_column_heading.json',
@@ -209,11 +199,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'textarea' => [
                 [
                     'textarea' => [
-                        'entity_id' => 5,
-                        'css_classes' => '',
-                        'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
-                        'align' => 'right',
-                        'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => '',
+                            'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
+                            'align' => 'right',
+                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                        ]
                     ]
                 ],
                 'textarea.json',
@@ -222,11 +214,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'html' => [
                 [
                     'html' => [
-                        'entity_id' => 5,
-                        'css_classes' => '',
-                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => 'center',
-                        'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => '',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                        ]
                     ]
                 ],
                 'html.json',
@@ -235,11 +229,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'code' => [
                 [
                     'html' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'code-one code-two',
-                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => 'left',
-                        'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'code-one code-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'left',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                        ]
                     ]
                 ],
                 'code.json',
@@ -248,11 +244,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'anchor' => [
                 [
                     'anchor' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => 'left',
-                        'anchor_id' => 'anchor-identifier',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                            'align' => 'left',
+                            'anchor_id' => 'anchor-identifier',
+                        ]
                     ]
                 ],
                 'anchor.json',
@@ -261,11 +259,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'divider' => [
                 [
                     'hr' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'color' => '9e6767',
-                        'hr_height' => '22px',
-                        'hr_width' => '100px'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'color' => '9e6767',
+                            'hr_height' => '22px',
+                            'hr_width' => '100px'
+                        ]
                     ]
                 ],
                 'divider.json',
@@ -274,28 +274,32 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'advanced slider' => [
                 [
                     'advanced_slider' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'autoplay' => '0',
-                        'autoplay_speed' => '0',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '0',
-                        'show_dots' => '0',
-                        'slider_advanced_settings' => '{}',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'autoplay' => '0',
+                            'autoplay_speed' => '0',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '0',
+                            'show_dots' => '0',
+                            'slider_advanced_settings' => '{}',
+                        ]
                     ],
                     'advanced_slider_item' => [
-                        'entity_id' => 2,
-                        'title' => 'Slide title',
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'has_overlay' => '0',
-                        'link_text' => 'Domain',
-                        'link_url' => 'http://domain.com/',
-                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Slide title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'has_overlay' => '0',
+                            'link_text' => 'Domain',
+                            'link_url' => 'http://domain.com/',
+                            'textarea' => '<p>Slide <strong>content</strong></p>',
+                        ]
                     ]
                 ],
                 'advanced_slider.json',
@@ -304,29 +308,33 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'advanced slider image appearance' => [
                 [
                     'advanced_slider' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'autoplay' => '1',
-                        'autoplay_speed' => '500',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '1',
-                        'show_dots' => '0',
-                        'slider_advanced_settings' => '',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'autoplay' => '1',
+                            'autoplay_speed' => '500',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '1',
+                            'show_dots' => '0',
+                            'slider_advanced_settings' => '',
+                        ]
                     ],
                     'advanced_slider_item' => [
-                        'entity_id' => 2,
-                        'title' => 'Slide title',
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'has_overlay' => '0',
-                        'link_text' => 'Domain',
-                        'link_url' => 'http://domain.com/',
-                        'textarea' => '<p>Slide <strong>content</strong></p>',
-                        'background_image' => '/m/a/magento.png'
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Slide title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'has_overlay' => '0',
+                            'link_text' => 'Domain',
+                            'link_url' => 'http://domain.com/',
+                            'textarea' => '<p>Slide <strong>content</strong></p>',
+                            'background_image' => '/m/a/magento.png'
+                        ]
                     ]
                 ],
                 'advanced_slider_image_appearance.json',
@@ -335,27 +343,31 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'advanced slider no link text' => [
                 [
                     'advanced_slider' => [
-                        'entity_id' => 1,
-                        'css_classes' => '',
-                        'metric' => '',
-                        'align' => '',
-                        'autoplay' => '1',
-                        'autoplay_speed' => '500',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '1',
-                        'show_dots' => '0',
-                        'slider_advanced_settings' => '',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => '',
+                            'metric' => '',
+                            'align' => '',
+                            'autoplay' => '1',
+                            'autoplay_speed' => '500',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '1',
+                            'show_dots' => '0',
+                            'slider_advanced_settings' => '',
+                        ]
                     ],
                     'advanced_slider_item' => [
-                        'entity_id' => 2,
-                        'title' => 'Slide title',
-                        'css_classes' => '',
-                        'metric' => '{}',
-                        'align' => '',
-                        'has_overlay' => '0',
-                        'link_url' => 'http://domain.com/',
-                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Slide title',
+                            'css_classes' => '',
+                            'metric' => '{}',
+                            'align' => '',
+                            'has_overlay' => '0',
+                            'link_url' => 'http://domain.com/',
+                            'textarea' => '<p>Slide <strong>content</strong></p>',
+                        ]
                     ]
                 ],
                 'advanced_slider_no_link_text.json',
@@ -364,27 +376,31 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'advanced slider overlay' => [
                 [
                     'advanced_slider' => [
-                        'entity_id' => 1,
-                        'css_classes' => '',
-                        'metric' => '',
-                        'align' => '',
-                        'autoplay' => '1',
-                        'autoplay_speed' => '500',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '1',
-                        'show_dots' => '0',
-                        'slider_advanced_settings' => '',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => '',
+                            'metric' => '',
+                            'align' => '',
+                            'autoplay' => '1',
+                            'autoplay_speed' => '500',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '1',
+                            'show_dots' => '0',
+                            'slider_advanced_settings' => '',
+                        ]
                     ],
                     'advanced_slider_item' => [
-                        'entity_id' => 2,
-                        'title' => 'Slide title',
-                        'css_classes' => '',
-                        'metric' => '{}',
-                        'align' => '',
-                        'has_overlay' => '1',
-                        'link_url' => 'http://domain.com/',
-                        'textarea' => '<p>Slide <strong>content</strong></p>',
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Slide title',
+                            'css_classes' => '',
+                            'metric' => '{}',
+                            'align' => '',
+                            'has_overlay' => '1',
+                            'link_url' => 'http://domain.com/',
+                            'textarea' => '<p>Slide <strong>content</strong></p>',
+                        ]
                     ]
                 ],
                 'advanced_slider_overlay.json',
@@ -393,16 +409,18 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'image with all options and mobile' => [
                 [
                     'image' => [
-                        'entity_id' => 5,
-                        'css_classes' => 'primary',
-                        'metric' => '{\"margin\":\"2px 2px 0px 0px\",\"padding\":\"0px 0px 1px 1px\"}',
-                        'align' => '',
-                        'image' => '/m/a/magento_1.jpeg',
-                        'mobile_image' => '/a/u/austin_2.jpeg',
-                        'alt_tag' => 'magento?',
-                        'title_tag' => 'MAGENTO!',
-                        'has_lightbox' => '1',
-                        'show_caption' => '1'
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => 'primary',
+                            'metric' => '{\"margin\":\"2px 2px 0px 0px\",\"padding\":\"0px 0px 1px 1px\"}',
+                            'align' => '',
+                            'image' => '/m/a/magento_1.jpeg',
+                            'mobile_image' => '/a/u/austin_2.jpeg',
+                            'alt_tag' => 'magento?',
+                            'title_tag' => 'MAGENTO!',
+                            'has_lightbox' => '1',
+                            'show_caption' => '1'
+                        ]
                     ]
                 ],
                 'image_with_mobile.json',
@@ -411,14 +429,16 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'image with alt tag and no mobile' => [
                 [
                     'image' => [
-                        'entity_id' => 5,
-                        'css_classes' => '',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => '',
-                        'image' => '/m/a/magento_1.jpeg',
-                        'alt_tag' => 'magento?',
-                        'has_lightbox' => '0',
-                        'show_caption' => '0'
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => '',
+                            'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                            'align' => '',
+                            'image' => '/m/a/magento_1.jpeg',
+                            'alt_tag' => 'magento?',
+                            'has_lightbox' => '0',
+                            'show_caption' => '0'
+                        ]
                     ]
                 ],
                 'image_with_primary.json',
@@ -427,14 +447,16 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'image with caption and no mobile' => [
                 [
                     'image' => [
-                        'entity_id' => 5,
-                        'css_classes' => '',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => '',
-                        'image' => '/m/a/magento_1.jpeg',
-                        'title_tag' => 'MAGENTO!',
-                        'has_lightbox' => '0',
-                        'show_caption' => '1'
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => '',
+                            'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                            'align' => '',
+                            'image' => '/m/a/magento_1.jpeg',
+                            'title_tag' => 'MAGENTO!',
+                            'has_lightbox' => '0',
+                            'show_caption' => '1'
+                        ]
                     ]
                 ],
                 'image_with_caption.json',
@@ -443,14 +465,18 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'accordions' => [
                 [
                     'accordion' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                        ]
                     ],
                     'accordion_item' => [
-                        'entity_id' => 2,
-                        'title' => 'Accordion Title',
-                        'textarea' => '<p>Accordion Contents</p>',
-                        'open_on_load' => 0
+                        [
+                            'entity_id' => 2,
+                            'title' => 'Accordion Title',
+                            'textarea' => '<p>Accordion Contents</p>',
+                            'open_on_load' => 0
+                        ]
                     ]
                 ],
                 'accordions.json',
@@ -459,8 +485,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'accordions with multiple children with open on load' => [
                 [
                     'accordion' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                        ]
                     ],
                     'accordion_item' => [
                         [
@@ -483,19 +511,23 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'buttons' => [
                 [
                     'buttons' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'button_items' => '1',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'button_items' => '1',
+                        ]
                     ],
                     'button_item' => [
-                        'entity_id' => 2,
-                        'css_classes' => 'three four',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'link_text' => 'Domain.com',
-                        'link_url' => 'http://domain.com/',
+                        [
+                            'entity_id' => 2,
+                            'css_classes' => 'three four',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'link_text' => 'Domain.com',
+                            'link_url' => 'http://domain.com/',
+                        ]
                     ]
                 ],
                 'buttons.json',
@@ -504,9 +536,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'buttons empty' => [
                 [
                     'buttons' => [
-                        'entity_id' => 1,
-                        'metric' => '',
-                        'align' => '',
+                        [
+                            'entity_id' => 1,
+                            'metric' => '',
+                            'align' => '',
+                        ]
                     ]
                 ],
                 'buttons_empty.json',
@@ -515,16 +549,20 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'buttons no link text' => [
                 [
                     'buttons' => [
-                        'entity_id' => 1,
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'button_items' => '1',
+                        [
+                            'entity_id' => 1,
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'button_items' => '1',
+                        ]
                     ],
                     'button_item' => [
-                        'entity_id' => 2,
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'link_url' => 'http://domain.com/',
+                        [
+                            'entity_id' => 2,
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'link_url' => 'http://domain.com/',
+                        ]
                     ]
                 ],
                 'buttons_no_link_text.json',
@@ -533,16 +571,20 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'buttons no link url' => [
                 [
                     'buttons' => [
-                        'entity_id' => 1,
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'button_items' => '1',
+                        [
+                            'entity_id' => 1,
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'button_items' => '1',
+                        ]
                     ],
                     'button_item' => [
-                        'entity_id' => 2,
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => '',
-                        'link_text' => 'Domain.com',
+                        [
+                            'entity_id' => 2,
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => '',
+                            'link_text' => 'Domain.com',
+                        ]
                     ]
                 ],
                 'buttons_no_link_url.json',
@@ -551,27 +593,31 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'slider' => [
                 [
                     'slider' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'left',
-                        'autoplay' => '0',
-                        'autoplay_speed' => '0',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '0',
-                        'show_dots' => '0',
-                        'slider_items' => '0',
-                        'slider_advanced_settings' => '{}',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'left',
+                            'autoplay' => '0',
+                            'autoplay_speed' => '0',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '0',
+                            'show_dots' => '0',
+                            'slider_items' => '0',
+                            'slider_advanced_settings' => '{}',
+                        ]
                     ],
                     'slider_item' => [
-                        'entity_id' => 2,
-                        'css_classes' => 'three four',
-                        'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
-                        'align' => 'center',
-                        'title_tag' => 'Title',
-                        'image' => '/m/a/magento.png',
-                        'link_url' => 'http://domain.com/',
+                        [
+                            'entity_id' => 2,
+                            'css_classes' => 'three four',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'title_tag' => 'Title',
+                            'image' => '/m/a/magento.png',
+                            'link_url' => 'http://domain.com/',
+                        ]
                     ]
                 ],
                 'slider.json',
@@ -580,20 +626,24 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'slider no link url' => [
                 [
                     'slider' => [
-                        'entity_id' => 1,
-                        'autoplay' => '0',
-                        'autoplay_speed' => '0',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '0',
-                        'show_dots' => '0',
-                        'slider_items' => '0',
-                        'slider_advanced_settings' => '{}',
+                        [
+                            'entity_id' => 1,
+                            'autoplay' => '0',
+                            'autoplay_speed' => '0',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '0',
+                            'show_dots' => '0',
+                            'slider_items' => '0',
+                            'slider_advanced_settings' => '{}',
+                        ]
                     ],
                     'slider_item' => [
-                        'entity_id' => 2,
-                        'title_tag' => 'Title',
-                        'image' => '/m/a/magento.png',
+                        [
+                            'entity_id' => 2,
+                            'title_tag' => 'Title',
+                            'image' => '/m/a/magento.png',
+                        ]
                     ]
                 ],
                 'slider_no_link_url.json',
@@ -602,20 +652,24 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'slider no link text' => [
                 [
                     'slider' => [
-                        'entity_id' => 1,
-                        'autoplay' => '0',
-                        'autoplay_speed' => '0',
-                        'fade' => '0',
-                        'is_infinite' => '0',
-                        'show_arrows' => '0',
-                        'show_dots' => '0',
-                        'slider_items' => '0',
-                        'slider_advanced_settings' => '{}',
+                        [
+                            'entity_id' => 1,
+                            'autoplay' => '0',
+                            'autoplay_speed' => '0',
+                            'fade' => '0',
+                            'is_infinite' => '0',
+                            'show_arrows' => '0',
+                            'show_dots' => '0',
+                            'slider_items' => '0',
+                            'slider_advanced_settings' => '{}',
+                        ]
                     ],
                     'slider_item' => [
-                        'entity_id' => 2,
-                        'image' => '/m/a/magento.png',
-                        'link_url' => 'http://domain.com/',
+                        [
+                            'entity_id' => 2,
+                            'image' => '/m/a/magento.png',
+                            'link_url' => 'http://domain.com/',
+                        ]
                     ]
                 ],
                 'slider_no_link_text.json',
@@ -624,7 +678,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'tabs with no items' => [
                 [
                     'tabs' => [
-                        'tabs_items' => 0,
+                        [
+                            'tabs_items' => 0,
+                        ]
                     ]
                 ],
                 'tabs_with_no_items.json',
@@ -633,10 +689,12 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'tabs with items' => [
                 [
                     'tabs' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'primary',
-                        'metric' => '{\"margin\":\"5px 0px 0px 0px\",\"padding\":\"0px 0px 5px 0px\"}',
-                        'tabs_items' => 3
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'primary',
+                            'metric' => '{\"margin\":\"5px 0px 0px 0px\",\"padding\":\"0px 0px 5px 0px\"}',
+                            'tabs_items' => 3
+                        ]
                     ],
                     'tabs_item' => [
                         [
@@ -668,11 +726,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'video' => [
                 [
                     'video' => [
-                        'entity_id' => 5,
-                        'css_classes' => 'primary',
-                        'video_url' => 'https://www.youtube.com',
-                        'video_width' => '640px',
-                        'video_height' => '480px'
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => 'primary',
+                            'video_url' => 'https://www.youtube.com',
+                            'video_width' => '640px',
+                            'video_height' => '480px'
+                        ]
                     ]
                 ],
                 'video.json',
@@ -681,13 +741,15 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'map' => [
                 [
                     'map' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => 'center',
-                        'map' => '50.821392, -0.139439, 8',
-                        'map_height' => '300px',
-                        'map_width' => '300px'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
+                            'align' => 'center',
+                            'map' => '50.821392, -0.139439, 8',
+                            'map_height' => '300px',
+                            'map_width' => '300px'
+                        ]
                     ]
                 ],
                 'map.json',
@@ -696,14 +758,16 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'newsletter' => [
                 [
                     'newsletter' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'newsletter-one newsletter-two',
-                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => 'center',
-                        'title' => 'Title',
-                        'button_text' => 'Button Text',
-                        'label' => 'Label',
-                        'placeholder' => 'Placeholder',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'newsletter-one newsletter-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'title' => 'Title',
+                            'button_text' => 'Button Text',
+                            'label' => 'Label',
+                            'placeholder' => 'Placeholder',
+                        ]
                     ]
                 ],
                 'newsletter.json',
@@ -712,11 +776,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'search' => [
                 [
                     'search' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'search-one search-two',
-                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => 'center',
-                        'placeholder' => 'Placeholder',
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'search-one search-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'placeholder' => 'Placeholder',
+                        ]
                     ]
                 ],
                 'search.json',
@@ -725,11 +791,13 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'block' => [
                 [
                     'static_block' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'block-one block-two',
-                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
-                        'align' => 'center',
-                        'block_id' => '10'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'block-one block-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'block_id' => '10'
+                        ]
                     ]
                 ],
                 'block.json',
@@ -744,14 +812,16 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'driver' => [
                 [
                     'driver' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'alt_tag' => 'Alternative text',
-                        'image' => '/m/a/magento.png',
-                        'link_text' => 'Domain',
-                        'link_url' => 'http://domain.com/',
-                        'target_blank' => '0',
-                        'title_tag' => 'Title'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'alt_tag' => 'Alternative text',
+                            'image' => '/m/a/magento.png',
+                            'link_text' => 'Domain',
+                            'link_url' => 'http://domain.com/',
+                            'target_blank' => '0',
+                            'title_tag' => 'Title'
+                        ]
                     ]
                 ],
                 'driver.json',
@@ -760,15 +830,17 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'driver mobile image' => [
                 [
                     'driver' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'alt_tag' => 'Alternative text',
-                        'image' => '/m/a/magento1.png',
-                        'mobile_image' => '/m/a/magento2.png',
-                        'link_text' => 'Domain',
-                        'link_url' => 'http://domain.com/',
-                        'target_blank' => '0',
-                        'title_tag' => 'Title'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'alt_tag' => 'Alternative text',
+                            'image' => '/m/a/magento1.png',
+                            'mobile_image' => '/m/a/magento2.png',
+                            'link_text' => 'Domain',
+                            'link_url' => 'http://domain.com/',
+                            'target_blank' => '0',
+                            'title_tag' => 'Title'
+                        ]
                     ]
                 ],
                 'driver_mobile_image.json',
@@ -777,13 +849,15 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'driver no link text' => [
                 [
                     'driver' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'alt_tag' => 'Alternative text',
-                        'image' => '/m/a/magento.png',
-                        'link_url' => 'http://domain.com/',
-                        'target_blank' => '0',
-                        'title_tag' => 'Title'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'alt_tag' => 'Alternative text',
+                            'image' => '/m/a/magento.png',
+                            'link_url' => 'http://domain.com/',
+                            'target_blank' => '0',
+                            'title_tag' => 'Title'
+                        ]
                     ]
                 ],
                 'driver_no_link_text.json',
@@ -792,13 +866,15 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             'driver open in new window' => [
                 [
                     'driver' => [
-                        'entity_id' => 1,
-                        'css_classes' => 'one two',
-                        'alt_tag' => 'Alternative text',
-                        'image' => '/m/a/magento.png',
-                        'link_url' => 'http://domain.com/',
-                        'target_blank' => '1',
-                        'title_tag' => 'Title'
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'alt_tag' => 'Alternative text',
+                            'image' => '/m/a/magento.png',
+                            'link_url' => 'http://domain.com/',
+                            'target_blank' => '1',
+                            'title_tag' => 'Title'
+                        ]
                     ]
                 ],
                 'driver_new_window.json',
