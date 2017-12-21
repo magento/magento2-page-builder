@@ -665,8 +665,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     'video' => [
                         'entity_id' => 5,
                         'css_classes' => 'primary',
-                        'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
-                        'align' => 'center',
                         'video_url' => 'https://www.youtube.com',
                         'video_width' => '640px',
                         'video_height' => '480px'

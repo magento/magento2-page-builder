@@ -41,31 +41,29 @@ class Video implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? ''
+            'class' => $eavData['css_classes'] ?? '',
+            'src' => $eavData['video_url']
         ];
 
-        $eavStyle = '';
+        $formData = $itemData['formData'];
         if (isset($eavData['video_width'])) {
-            $eavStyle .= 'width: ' . $eavData['video_width'] . "; ";
+            $formData['width'] = $eavData['video_width'];
         }
 
-        if (isset($eavData['video_height'])) {
-            $eavStyle .= 'height: ' . $eavData['video_height'] . "; ";
+        if (isset($eavData['video_width'])) {
+            $formData['height'] = $eavData['video_height'];
         }
-        $rootElementAttributes['style'] = $eavStyle;
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
+        $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] .= $style;
+            $rootElementAttributes['style'] = $style;
         }
-        $rootElementAttributes['style'] = rtrim($rootElementAttributes['style']);
 
         $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= ' src="' . $eavData['video_url'] . '">';
-        $rootElementHtml .= '</iframe>';
+        $rootElementHtml .= '></iframe>';
 
         return $rootElementHtml;
     }
