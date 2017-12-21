@@ -26,10 +26,11 @@ class Validator
     }
 
     /**
-     * Check if a JSON string is a valid BlueFoot content
+     * Check if a JSON string is a valid BlueFoot content, if we require an entire stage we will validate the
+     * first child is a row
      *
      * @param string $json
-     * @param bool $isStage if we require an entire stage we will validate the first child is a row
+     * @param bool $isStage
      * @return bool
      * @throws \InvalidArgumentException
      */
@@ -38,16 +39,23 @@ class Validator
         try {
             $structure = $this->serializer->unserialize($json);
 
-            // Determine if the object has items with a key of type or contentType
-            $valid = count($structure) > 0 && (isset($structure['type']) || isset($structure['contentType']));
-
-            // If we're validating an entire stage verify the first item is of type row
-            if ($valid && $isStage && isset($structure['type'])) {
-                return $structure['type'] === 'row';
+            $firstContentType = $structure;
+            if (count($firstContentType) > 0
+                && (!isset($firstContentType['type']) && !isset($firstContentType['contentType']))
+            ) {
+                $firstContentType = current($firstContentType);
             }
 
+            // Determine if the object has items with a key of type or contentType
+            $valid = count($firstContentType) > 0
+                && (isset($firstContentType['type']) || isset($firstContentType['contentType']));
+
+            // If we're validating an entire stage verify the first item is of type row
+            if ($valid && $isStage && isset($firstContentType['type'])) {
+                $valid = $firstContentType['type'] === 'row';
+            }
             return $valid;
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $exception) {
             return false;
         }
     }
