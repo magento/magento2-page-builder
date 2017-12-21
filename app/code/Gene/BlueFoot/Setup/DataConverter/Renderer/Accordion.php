@@ -28,7 +28,7 @@ class Accordion implements RendererInterface
     /**
      * @var EavAttributeLoaderInterface
      */
-    private $accordionEavAttributeLoader;
+    private $itemEavAttributeLoader;
 
     /**
      * @var Json
@@ -38,12 +38,12 @@ class Accordion implements RendererInterface
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader,
-        EavAttributeLoaderInterface $accordionEavAttributeLoader,
+        EavAttributeLoaderInterface $itemEavAttributeLoader,
         Json $serializer
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->accordionEavAttributeLoader = $accordionEavAttributeLoader;
+        $this->itemEavAttributeLoader = $itemEavAttributeLoader;
         $this->serializer = $serializer;
     }
 
@@ -56,7 +56,7 @@ class Accordion implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'accordion',
-            'data-mage-init' => $this->getMageInit($itemData),
+            'data-mage-init' => $this->getMageInitValue($itemData),
             'class' => 'pagebuilder-accordion ' . ($eavData['css_classes'] ?? '')
         ];
         $rootElementAttributes['class'] = rtrim($rootElementAttributes['class']);
@@ -78,36 +78,38 @@ class Accordion implements RendererInterface
     }
 
     /**
-     * Generate the data-mage-init attribute
+     * Get data-mage-init attribute value
      *
      * @param array $itemData
-     *
      * @return string
      */
-    private function getMageInit(array $itemData)
+    private function getMageInitValue(array $itemData)
     {
-        $children = (isset($itemData['children']['accordion_items']) ? $itemData['children']['accordion_items'] : null);
-        return htmlentities($this->serializer->serialize([
-            "accordion" => [
-                "active" => (!empty($children) ? $this->getActive($children) : [0]),
-                "collapsibleElement" => "[data-collapsible=true]",
-                "content" => "[data-content=true]"
-            ]
-        ]));
+        $children = isset($itemData['children']['accordion_items']) ? $itemData['children']['accordion_items'] : null;
+        return htmlentities(
+            $this->serializer->serialize(
+                [
+                    'accordion' => [
+                        'active' => !empty($children) ? $this->getActiveItem($children) : [0],
+                        'collapsibleElement' => '[data-collapsible=true]',
+                        'content' => '[data-content=true]'
+                    ]
+                ]
+            )
+        );
     }
 
     /**
      * Determine which accordion items are active
      *
      * @param array $children
-     *
      * @return array
      */
-    private function getActive(array $children)
+    private function getActiveItem(array $children)
     {
         $active = [];
         foreach ($children as $index => $child) {
-            $eavData = $this->accordionEavAttributeLoader->load($child);
+            $eavData = $this->itemEavAttributeLoader->load($child);
             if (isset($eavData['open_on_load']) && $eavData['open_on_load']) {
                 $active[] = $index;
             }

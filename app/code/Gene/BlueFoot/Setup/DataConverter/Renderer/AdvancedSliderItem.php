@@ -58,7 +58,7 @@ class AdvancedSliderItem implements RendererInterface
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
 
         $innerDivElement1Attributes = [];
-        if (isset($formData['align'])) {
+        if (isset($formData['align']) && $formData['align']) {
             $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
 
@@ -67,7 +67,7 @@ class AdvancedSliderItem implements RendererInterface
             . '><div';
 
         $innerDivElement2Attributes = [];
-        if (isset($formData['align'])) {
+        if (isset($formData['align']) && $formData['align']) {
             $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
         $innerDivElement2AttributeCssClasses = '';

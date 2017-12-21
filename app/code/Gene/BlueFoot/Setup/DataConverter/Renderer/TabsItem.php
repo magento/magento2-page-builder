@@ -38,10 +38,6 @@ class TabsItem implements RendererInterface
     public function render(array $itemData, array $additionalData = [])
     {
         $eavData = $this->eavAttributeLoader->load($itemData);
-        $childIndex = '';
-        if (isset($additionalData['childIndex'])) {
-            $childIndex = $additionalData['childIndex'];
-        }
 
         $cssClasses = $eavData['css_classes'] ?? '';
         $cssClasses .= isset($eavData['css_classes']) ? ' data item title' : 'data item title';
@@ -62,11 +58,18 @@ class TabsItem implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $pagetabIndex = "pagebuilder_tab" . $childIndex;
-        $rootElementHtml .= '><a class="data switch" tabindex="-1" data-toggle="switch" href="#' . $pagetabIndex . '">';
-        $rootElementHtml .= $eavData['title'] . '</a></div>';
-        $rootElementHtml .= '<div class="data item content" data-content="true" id="' . $pagetabIndex . '">';
-        $rootElementHtml .= $eavData['textarea'] . '</div>';
+        $tabIndex = 'pagebuilder_tab' . ($additionalData['childIndex'] ?? '');
+
+        $rootElementHtml .= '><a class="data switch" tabindex="-1" data-toggle="switch" href="#'
+            . $tabIndex
+            . '">'
+            . $eavData['title']
+            . '</a></div>'
+            . '<div class="data item content" data-content="true" id="'
+            . $tabIndex
+            . '">'
+            . $eavData['textarea']
+            . '</div>';
 
         return $rootElementHtml;
     }
