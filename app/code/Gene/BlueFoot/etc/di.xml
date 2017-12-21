@@ -94,6 +94,7 @@
                 <item name="tabs" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs</item>
                 <item name="tabs_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem</item>
                 <item name="search" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Search</item>
+                <item name="static_block" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Block</item>
             </argument>
         </arguments>
     </type>
@@ -432,6 +433,18 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Search">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SearchEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="BlockEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="block_id" xsi:type="string">block_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Block">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">BlockEntityHydrator</argument>
         </arguments>
     </type>
 </config>

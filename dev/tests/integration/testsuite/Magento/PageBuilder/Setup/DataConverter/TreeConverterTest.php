@@ -103,13 +103,18 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param $contentTypes
-     * @param $jsonFormatFileName
-     * @param $masterFormatFileName
+     * @param array $contentTypes
+     * @param string$jsonFormatFileName
+     * @param string $masterFormatFileName
+     * @param callable|null $callSetupEntity
      * @dataProvider convertDataProvider
      */
-    public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName)
+    public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName, $callSetupEntity = null)
     {
+        if ($callSetupEntity) {
+            $this->$callSetupEntity();
+        }
+
         foreach ($contentTypes as $contentTypesCode => $contentTypeData) {
             if ($this->isArrayOfChildren($contentTypeData)) {
                 foreach ($contentTypeData as $contentType) {
@@ -719,12 +724,48 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'search.json',
                 'search.html'
             ],
+            'block' => [
+                [
+                    'static_block' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'block-one block-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'center',
+                        'block_id' => '10'
+                    ]
+                ],
+                'block.json',
+                'block.html',
+                'createCmsBlock'
+            ],
             'custom' => [
                 [],
                 'custom.json',
                 'custom.html'
             ],
         ];
+    }
+
+    private function createCmsBlock()
+    {
+        /** @var \Magento\Cms\Api\BlockRepositoryInterface $blockRepository */
+        $blockRepository = self::$objectManager->create(\Magento\Cms\Api\BlockRepositoryInterface::class);
+
+        /** @var \Magento\Cms\Api\Data\BlockInterfaceFactory $blockFactory */
+        $blockFactory = self::$objectManager->create(\Magento\Cms\Api\Data\BlockInterfaceFactory::class);
+
+        $block = $blockFactory->create(
+            [
+                'data' => [
+                    'block_id' => 10,
+                    'title' => 'Block title',
+                    'identifier' => 'Identifier',
+                    'content' => 'Content'
+                ]
+            ]
+        );
+
+        $blockRepository->save($block);
     }
 
     /**
