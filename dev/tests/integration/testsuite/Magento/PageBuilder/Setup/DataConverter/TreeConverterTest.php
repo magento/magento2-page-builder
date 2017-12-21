@@ -638,6 +638,69 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'custom.json',
                 'custom.html'
             ],
+            'driver' => [
+                [
+                    'driver' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'alt_tag' => 'Alternative text',
+                        'image' => '/m/a/magento.png',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'target_blank' => '0',
+                        'title_tag' => 'Title'
+                    ]
+                ],
+                'driver.json',
+                'driver.html'
+            ],
+            'driver mobile image' => [
+                [
+                    'driver' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'alt_tag' => 'Alternative text',
+                        'image' => '/m/a/magento1.png',
+                        'mobile_image' => '/m/a/magento2.png',
+                        'link_text' => 'Domain',
+                        'link_url' => 'http://domain.com/',
+                        'target_blank' => '0',
+                        'title_tag' => 'Title'
+                    ]
+                ],
+                'driver_mobile_image.json',
+                'driver_mobile_image.html'
+            ],
+            'driver no link text' => [
+                [
+                    'driver' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'alt_tag' => 'Alternative text',
+                        'image' => '/m/a/magento.png',
+                        'link_url' => 'http://domain.com/',
+                        'target_blank' => '0',
+                        'title_tag' => 'Title'
+                    ]
+                ],
+                'driver_no_link_text.json',
+                'driver_no_link_text.html'
+            ],
+            'driver open in new window' => [
+                [
+                    'driver' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'one two',
+                        'alt_tag' => 'Alternative text',
+                        'image' => '/m/a/magento.png',
+                        'link_url' => 'http://domain.com/',
+                        'target_blank' => '1',
+                        'title_tag' => 'Title'
+                    ]
+                ],
+                'driver_new_window.json',
+                'driver_new_window.html'
+            ],
         ];
     }
 
