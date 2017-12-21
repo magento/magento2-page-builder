@@ -59,7 +59,7 @@ class Video implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""';
+        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
