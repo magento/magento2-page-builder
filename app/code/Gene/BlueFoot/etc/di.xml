@@ -96,6 +96,7 @@
                 <item name="search" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Search</item>
                 <item name="static_block" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Block</item>
                 <item name="driver" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Driver</item>
+                <item name="product_list" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ProductList</item>
                 <item name="product" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Product</item>
             </argument>
         </arguments>
@@ -478,6 +479,20 @@
     <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Block">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">BlockEntityHydrator</argument>
+        </arguments>
+    </type>
+    <virtualType name="ProductListEntityHydrator" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavLoader">
+        <arguments>
+            <argument name="additionalEavAttributes" xsi:type="array">
+                <item name="category_id" xsi:type="string">category_id</item>
+                <item name="hide_out_of_stock" xsi:type="string">hide_out_of_stock</item>
+                <item name="product_count" xsi:type="string">product_count</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ProductList">
+        <arguments>
+            <argument name="eavAttributeLoader" xsi:type="object">ProductListEntityHydrator</argument>
         </arguments>
     </type>
 </config>

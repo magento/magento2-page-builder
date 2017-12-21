@@ -895,9 +895,29 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'product.html',
                 'createProduct'
             ],
+            'product list' => [
+                [
+                    'product_list' => [
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'productlist-one productlist-two',
+                            'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                            'align' => 'center',
+                            'category_id' => 10,
+                            'product_count' => 3,
+                            'hide_out_of_stock' => 1,
+                        ]
+                    ]
+                ],
+                'product_list.json',
+                'product_list.html'
+            ],
         ];
     }
 
+    /**
+     * Creates and saves a CMS Block to database
+     */
     private function createCmsBlock()
     {
         /** @var \Magento\Cms\Api\BlockRepositoryInterface $blockRepository */
