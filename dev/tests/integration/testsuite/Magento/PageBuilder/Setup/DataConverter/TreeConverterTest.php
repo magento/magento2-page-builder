@@ -706,6 +706,19 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'newsletter.json',
                 'newsletter.html'
             ],
+            'search' => [
+                [
+                    'search' => [
+                        'entity_id' => 1,
+                        'css_classes' => 'search-one search-two',
+                        'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
+                        'align' => 'center',
+                        'placeholder' => 'Placeholder',
+                    ]
+                ],
+                'search.json',
+                'search.html'
+            ],
             'custom' => [
                 [],
                 'custom.json',
