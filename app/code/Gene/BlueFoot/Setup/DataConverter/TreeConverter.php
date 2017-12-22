@@ -107,10 +107,12 @@ class TreeConverter
      */
     private function processItemRendering($renderer, array $itemData, array $additionalData)
     {
+        $defaultRenderer = $this->rendererPool->getRender('default');
         try {
             $html = $renderer->render($itemData, $additionalData);
-        } catch (\InvalidArgumentException | NoSuchEntityException $exception) {
-            $defaultRenderer = $this->rendererPool->getRender('default');
+        } catch (\InvalidArgumentException $exception) {
+            $html = $defaultRenderer->render($itemData, $additionalData);
+        } catch (NoSuchEntityException $exception) {
             $html = $defaultRenderer->render($itemData, $additionalData);
         }
 
