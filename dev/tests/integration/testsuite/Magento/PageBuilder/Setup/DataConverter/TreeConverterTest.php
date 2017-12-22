@@ -164,6 +164,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'two_columns.json',
                 'two_columns.html'
             ],
+            'column with mapped widths' => [
+                [],
+                'mapped_columns.json',
+                'mapped_columns.html'
+            ],
             'heading' => [
                 [
                     'heading' => [

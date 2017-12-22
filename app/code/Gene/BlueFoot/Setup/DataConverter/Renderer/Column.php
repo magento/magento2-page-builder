@@ -34,6 +34,18 @@ class Column implements RendererInterface
         ];
 
         if (isset($itemData['formData'])) {
+            // Map column sizes to suitable sizes for columns we don't yet support
+            $columnWidthMapping = [
+                '0.250' => '0.167',
+                '0.750' => '0.825'
+            ];
+
+            if (isset($itemData['formData']['width'])
+                && isset($columnWidthMapping[$itemData['formData']['width']])
+            ) {
+                $itemData['formData']['width'] = $columnWidthMapping[$itemData['formData']['width']];
+            }
+
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
                 $rootElementAttributes['style'] = $style;
