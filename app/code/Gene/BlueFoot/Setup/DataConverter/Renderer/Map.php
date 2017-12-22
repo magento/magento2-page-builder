@@ -39,7 +39,7 @@ class Map implements RendererInterface
     {
         $eavData = $this->eavAttributeLoader->load($itemData);
 
-        $srcParts = explode(',', ',,');
+        $srcParts = explode(',', $eavData['map'] ?? ',,');
         $rootElementAttributes = [
             'data-role' => 'map',
             'class' => $eavData['css_classes'] ?? '',
