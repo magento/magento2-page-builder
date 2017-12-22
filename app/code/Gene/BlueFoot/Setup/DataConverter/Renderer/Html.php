@@ -55,7 +55,7 @@ class Html implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $eavData['html'] . '</div>';
+        $rootElementHtml .= '>' . ($eavData['html'] ?? '') . '</div>';
 
         return $rootElementHtml;
     }

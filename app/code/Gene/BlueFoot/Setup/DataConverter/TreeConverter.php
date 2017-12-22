@@ -6,6 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Exception\NoSuchEntityException as NoSuchEntityExceptionLocalized;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
@@ -112,6 +113,8 @@ class TreeConverter
         } catch (\InvalidArgumentException $exception) {
             $html = $defaultRenderer->render($itemData, $additionalData);
         } catch (NoSuchEntityException $exception) {
+            $html = $defaultRenderer->render($itemData, $additionalData);
+        } catch (NoSuchEntityExceptionLocalized $exception) {
             $html = $defaultRenderer->render($itemData, $additionalData);
         }
 
