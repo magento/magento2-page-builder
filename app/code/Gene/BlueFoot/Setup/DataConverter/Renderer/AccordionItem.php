@@ -37,7 +37,10 @@ class AccordionItem implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->load($itemData);
+        if (!isset($itemData['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         // data-role is not present on the accordion item as it's no longer it's own type
         $rootElementAttributes = [

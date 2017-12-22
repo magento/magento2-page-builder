@@ -108,6 +108,17 @@ class TreeConverter
     private function processItemRendering($renderer, array $itemData, array $additionalData)
     {
         $defaultRenderer = $this->rendererPool->getRender('default');
+
+        // Do not migrate content type if entity is missing required attributes
+        set_error_handler(
+            function ()  {
+                restore_error_handler();
+                throw new \UnexpectedValueException('Entity data is invalid.');
+            },
+            E_NOTICE
+        );
+        restore_error_handler();
+
         try {
             $html = $renderer->render($itemData, $additionalData);
         } catch (\InvalidArgumentException $exception) {

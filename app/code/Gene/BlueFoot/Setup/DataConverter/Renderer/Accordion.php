@@ -52,7 +52,10 @@ class Accordion implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->load($itemData);
+        if (!isset($itemData['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
             'data-role' => 'accordion',
@@ -109,7 +112,10 @@ class Accordion implements RendererInterface
     {
         $active = [];
         foreach ($children as $index => $child) {
-            $eavData = $this->itemEavAttributeLoader->load($child);
+            if (!isset($child['entityId'])) {
+                throw new \InvalidArgumentException('entityId is missing.');
+            }
+            $eavData = $this->itemEavAttributeLoader->load($child['entityId']);
             if (isset($eavData['open_on_load']) && $eavData['open_on_load']) {
                 $active[] = $index;
             }

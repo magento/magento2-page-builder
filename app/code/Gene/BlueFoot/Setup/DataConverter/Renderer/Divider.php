@@ -37,7 +37,10 @@ class Divider implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->load($itemData);
+        if (!isset($itemData['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
             'data-role' => 'divider',

@@ -13,7 +13,7 @@ use Gene\BlueFoot\Model\EntityRepository;
  *
  * @see \Gene\BlueFoot\Setup\DataConverter\Renderer\Heading for example of configuration
  */
-class ConfigurableEavLoader implements EavAttributeLoaderInterface
+class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
 {
     /**
      * @var EntityRepository
@@ -48,14 +48,10 @@ class ConfigurableEavLoader implements EavAttributeLoaderInterface
     /**
      * @inheritdoc
      */
-    public function load(array $data)
+    public function load($entityId)
     {
-        if (!isset($data['entityId'])) {
-            throw new \InvalidArgumentException('entityId is missing.');
-        }
-
         $eavData = [];
-        $entity = $this->entityRepository->getById($data['entityId']);
+        $entity = $this->entityRepository->getById($entityId);
         foreach ($this->eavAttributeNames as $attributeName) {
             if ($entity->hasData($attributeName)) {
                 $eavData[$attributeName] = $entity->getDataByKey($attributeName);

@@ -55,7 +55,10 @@ class Product implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->load($itemData);
+        if (!isset($itemData['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         if (!isset($eavData['product_id'])) {
             throw new NoSuchEntityException('product_id is missing.');

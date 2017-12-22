@@ -15,10 +15,9 @@ interface EavAttributeLoaderInterface
     /**
      * Hydrate BlueFoot data object with additional data from EAV
      *
-     * @param array $data
+     * @param int $entityId
      * @return array
-     * @throws \InvalidArgumentException
      * @throws NoSuchEntityException
      */
-    public function load(array $data);
+    public function load($entityId);
 }

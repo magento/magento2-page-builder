@@ -37,7 +37,10 @@ class Map implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
-        $eavData = $this->eavAttributeLoader->load($itemData);
+        if (!isset($itemData['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $srcParts = explode(',', $eavData['map'] ?? ',,');
         $srcParts = count($srcParts) === 3 ? $srcParts : ['', '', ''];

@@ -16,6 +16,7 @@ interface RendererInterface
      * @param array $itemData
      * @param array $additionalData
      * @return string
+     * @throws \InvalidArgumentException
      * @throws NoSuchEntityException
      */
     public function render(array $itemData, array $additionalData = []);
