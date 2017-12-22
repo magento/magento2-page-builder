@@ -50,11 +50,11 @@ class Video implements RendererInterface
 
         $formData = $itemData['formData'] ?? [];
         if (isset($eavData['video_width'])) {
-            $formData['width'] = $this->validSizeDimension($eavData['video_width']);
+            $formData['width'] = $this->normalizeSizeDimension($eavData['video_width']);
         }
 
         if (isset($eavData['video_width'])) {
-            $formData['height'] = $this->validSizeDimension($eavData['video_height']);
+            $formData['height'] = $this->normalizeSizeDimension($eavData['video_height']);
         }
 
         $style = $this->styleExtractor->extractStyle($formData);
@@ -72,12 +72,12 @@ class Video implements RendererInterface
     }
 
     /**
-     * Checks if width/height is valid
+     * Normalize value for width/height
      *
      * @param string $value
      * @return string
      */
-    private function validSizeDimension($value)
+    private function normalizeSizeDimension($value)
     {
         if (strpos($value, 'px') !== false || strpos($value, '%') !== false) {
             return $value;
