@@ -694,6 +694,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 [
                     'tabs' => [
                         [
+                            'entity_id' => 1,
                             'tabs_items' => 0,
                         ]
                     ]
@@ -941,6 +942,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'product_list.json',
                 'product_list.html'
+            ],
+            'non existent entity' => [
+                [],
+                'non_existent_entity.json',
+                'non_existent_entity.html'
             ],
         ];
     }

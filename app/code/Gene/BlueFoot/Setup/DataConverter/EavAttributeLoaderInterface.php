@@ -5,6 +5,8 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+
 /**
  * Load EAV data from an array of structural item data
  */
@@ -15,6 +17,8 @@ interface EavAttributeLoaderInterface
      *
      * @param array $data
      * @return array
+     * @throws \InvalidArgumentException
+     * @throws NoSuchEntityException
      */
     public function load(array $data);
 }

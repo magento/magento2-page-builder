@@ -50,21 +50,23 @@ class ConfigurableEavLoader implements EavAttributeLoaderInterface
      */
     public function load(array $data)
     {
-        $eavData = [];
-        if (isset($data['entityId'])) {
-            $entity = $this->entityRepository->getById($data['entityId']);
-            foreach ($this->eavAttributeNames as $attributeName) {
-                if ($entity->hasData($attributeName)) {
-                    $eavData[$attributeName] = $entity->getDataByKey($attributeName);
+        if (!isset($data['entityId'])) {
+            throw new \InvalidArgumentException('entityId is missing.');
+        }
 
-                    // Replace source model values with labels
-                    $this->blueFootEntityAttribute->loadByCode('gene_bluefoot_entity', $attributeName);
-                    if ($this->blueFootEntityAttribute->usesSource()) {
-                        foreach ($this->blueFootEntityAttribute->getOptions() as $sourceOption) {
-                            if ($sourceOption->getValue() === $eavData[$attributeName]) {
-                                $eavData[$attributeName] = $sourceOption->getLabel();
-                                break;
-                            }
+        $eavData = [];
+        $entity = $this->entityRepository->getById($data['entityId']);
+        foreach ($this->eavAttributeNames as $attributeName) {
+            if ($entity->hasData($attributeName)) {
+                $eavData[$attributeName] = $entity->getDataByKey($attributeName);
+
+                // Replace source model values with labels
+                $this->blueFootEntityAttribute->loadByCode('gene_bluefoot_entity', $attributeName);
+                if ($this->blueFootEntityAttribute->usesSource()) {
+                    foreach ($this->blueFootEntityAttribute->getOptions() as $sourceOption) {
+                        if ($sourceOption->getValue() === $eavData[$attributeName]) {
+                            $eavData[$attributeName] = $sourceOption->getLabel();
+                            break;
                         }
                     }
                 }

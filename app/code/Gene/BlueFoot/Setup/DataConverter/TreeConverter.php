@@ -6,6 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
@@ -64,18 +65,18 @@ class TreeConverter
     }
 
     /**
-     * Render content type item
+     * Convert content type item
      *
-     * @param array $item
+     * @param array $itemData
      * @param int $childIndex
      * @return string
      */
-    private function convertTreeItem($item, $childIndex)
+    private function convertTreeItem($itemData, $childIndex)
     {
-        $contentType = isset($item['type']) ? $item['type'] : $item['contentType'];
+        $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
         $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
-        $children = $childrenExtractor->extract($item);
+        $children = $childrenExtractor->extract($itemData);
         if (!empty($children)) {
             $childrenHtml = '';
             $childIndex = 0;
@@ -83,8 +84,36 @@ class TreeConverter
                 $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
                 $childIndex++;
             }
-            return $renderer->render($item, ['children' => $childrenHtml]);
+            return $this->processItemRendering(
+                $renderer,
+                $itemData,
+                ['children' => $childrenHtml]
+            );
         }
-        return $renderer->render($item, ['childIndex' => $childIndex]);
+        return $this->processItemRendering(
+            $renderer,
+            $itemData,
+            ['childIndex' => $childIndex]
+        );
+    }
+
+    /**
+     * Process item rendering
+     *
+     * @param RendererInterface $renderer
+     * @param array $itemData
+     * @param array $additionalData
+     * @return string
+     */
+    private function processItemRendering($renderer, array $itemData, array $additionalData)
+    {
+        try {
+            $html = $renderer->render($itemData, $additionalData);
+        } catch (\InvalidArgumentException | NoSuchEntityException $exception) {
+            $defaultRenderer = $this->rendererPool->getRender('default');
+            $html = $defaultRenderer->render($itemData, $additionalData);
+        }
+
+        return $html;
     }
 }
