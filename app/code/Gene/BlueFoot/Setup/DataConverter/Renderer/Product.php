@@ -52,7 +52,6 @@ class Product implements RendererInterface
 
     /**
      * {@inheritdoc}
-     * @throws NoSuchEntityException
      */
     public function render(array $itemData, array $additionalData = [])
     {
