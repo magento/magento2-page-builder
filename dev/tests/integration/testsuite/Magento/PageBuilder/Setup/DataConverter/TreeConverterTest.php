@@ -744,7 +744,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'tabs_with_items.json',
                 'tabs_with_items.html'
             ],
-            'video' => [
+            'video with px' => [
                 [
                     'video' => [
                         [
@@ -756,8 +756,38 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         ]
                     ]
                 ],
-                'video.json',
-                'video.html'
+                'video_px.json',
+                'video_px.html'
+            ],
+            'video with percent' => [
+                [
+                    'video' => [
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => 'primary',
+                            'video_url' => 'https://www.youtube.com',
+                            'video_width' => '75%',
+                            'video_height' => '25%'
+                        ]
+                    ]
+                ],
+                'video_percent.json',
+                'video_percent.html'
+            ],
+            'video with invalid sizes' => [
+                [
+                    'video' => [
+                        [
+                            'entity_id' => 5,
+                            'css_classes' => 'primary',
+                            'video_url' => 'https://www.youtube.com',
+                            'video_width' => '600',
+                            'video_height' => '600'
+                        ]
+                    ]
+                ],
+                'video_invalid_size.json',
+                'video_invalid_size.html'
             ],
             'map' => [
                 [
