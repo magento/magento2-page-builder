@@ -61,19 +61,15 @@ class Driver implements RendererInterface
         ];
 
         $imageAttributes = [
-            'src' => '{{media url=' . $eavData['image'] . '}}',
+            'src' => '{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
             'title' => $eavData['title_tag'] ?? ''
         ];
 
-        $imageHtml = '<img'
-            . $this->printAttributes($imageAttributes)
-            . ' />';
-
         $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
-                'src' => '{{media url=' . $eavData['mobile_image'] . '}}',
+                'src' => '{{media url=wysiwyg/bluefoot' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? ''
             ];
@@ -81,8 +77,12 @@ class Driver implements RendererInterface
 
             $mobileImageHtml = '<img'
                 . $this->printAttributes($mobileImageAttributes)
-                . ' class="bluefoot-mobile-only" />';
+                . ' class="bluefoot-mobile-only">';
         }
+
+        $imageHtml = '<img'
+            . $this->printAttributes($imageAttributes)
+            . '>';
 
         $descriptionHtml = '';
         if (isset($eavData['link_text'])) {

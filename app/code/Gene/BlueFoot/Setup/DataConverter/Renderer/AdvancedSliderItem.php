@@ -87,7 +87,7 @@ class AdvancedSliderItem implements RendererInterface
             $rootElementHtml .= '<a class="button" href="'
                 . ($eavData['link_url'] ?? '')
                 . '"><span><span>'
-                . ($eavData['link_text'] ?? '')
+                . $eavData['link_text']
                 . '</span></span></a>';
         }
         $rootElementHtml .= '</div></div></div>';
