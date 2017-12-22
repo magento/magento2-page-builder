@@ -41,7 +41,7 @@ class Code implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'code',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => $eavData['css_classes'] ?? '',
         ];
 
         if (isset($itemData['formData'])) {
@@ -55,7 +55,7 @@ class Code implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><code>' . $eavData['html'] . '</code></pre>';
+        $rootElementHtml .= '><code>' . ($eavData['html'] ?? '') . '</code></pre>';
 
         return $rootElementHtml;
     }
