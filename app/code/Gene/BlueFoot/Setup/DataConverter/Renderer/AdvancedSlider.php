@@ -49,10 +49,10 @@ class AdvancedSlider implements RendererInterface
             'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
             'data-advanced-settings' => isset($eavData['slider_advanced_settings'])
                 ? $eavData['slider_advanced_settings'] : '',
+            'class' => $itemData['formData']['css_classes'] ?? '',
         ];
 
         if (isset($itemData['formData'])) {
-            $rootElementHtml['class'] = $itemData['formData']['css_classes'] ?? '';
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
                 $rootElementAttributes['style'] = $style;
