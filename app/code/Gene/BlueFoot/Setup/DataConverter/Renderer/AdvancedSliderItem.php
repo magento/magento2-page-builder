@@ -79,15 +79,15 @@ class AdvancedSliderItem implements RendererInterface
 
         $rootElementHtml .= $this->printAttributes($innerDivElement2Attributes)
             . '><h3>'
-            . $eavData['title']
+            . ($eavData['title'] ?? '')
             . '</h3><div class="slider-content">'
-            . $eavData['textarea']
+            . ($eavData['textarea'] ?? '')
             . '</div>';
         if (isset($eavData['link_text'])) {
             $rootElementHtml .= '<a class="button" href="'
-                . $eavData['link_url']
+                . ($eavData['link_url'] ?? '')
                 . '"><span><span>'
-                . $eavData['link_text']
+                . ($eavData['link_text'] ?? '')
                 . '</span></span></a>';
         }
         $rootElementHtml .= '</div></div></div>';
