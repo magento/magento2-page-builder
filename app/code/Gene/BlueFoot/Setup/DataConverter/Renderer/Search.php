@@ -41,11 +41,11 @@ class Search implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'search',
+            'class' => $itemData['formData']['css_classes'] ?? '',
             'data-placeholder' => $eavData['placeholder'] ?? 'Browse the catalog...',
         ];
 
         if (isset($itemData['formData'])) {
-            $rootElementHtml['class'] = $itemData['formData']['css_classes'] ?? '';
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
                 $rootElementAttributes['style'] = $style;
