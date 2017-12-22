@@ -8,8 +8,10 @@ namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
 use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
 use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
-use Magento\Cms\Api\BlockRepositoryInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Cms\Api\Data\BlockInterface;
+use Magento\Framework\EntityManager\MetadataPool;
+use Gene\BlueFoot\Setup\DataConverter\NoSuchEntityException;
 
 /**
  * Render block to PageBuilder format
@@ -27,18 +29,25 @@ class Block implements RendererInterface
     private $eavAttributeLoader;
 
     /**
-     * @var BlockRepositoryInterface
+     * @var ResourceConnection
      */
-    private $blockRepository;
+    private $resourceConnection;
+
+    /**
+     * @var MetadataPool
+     */
+    private $metadataPool;
 
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader,
-        BlockRepositoryInterface $blockRepository
+        ResourceConnection $resourceConnection,
+        MetadataPool $metadataPool
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->blockRepository = $blockRepository;
+        $this->resourceConnection = $resourceConnection;
+        $this->metadataPool = $metadataPool;
     }
 
     /**
@@ -49,12 +58,23 @@ class Block implements RendererInterface
     {
         $eavData = $this->eavAttributeLoader->load($itemData);
 
-        $block = $this->blockRepository->getById($eavData['block_id']);
+        if (!isset($eavData['block_id'])) {
+            throw new NoSuchEntityException('block_id is missing.');
+        }
+        $connection = $this->resourceConnection->getConnection();
+        $blockMetadata = $this->metadataPool->getMetadata(BlockInterface::class);
+        $select = $connection->select()
+            ->from('cms_block', ['identifier'])
+            ->where($blockMetadata->getIdentifierField() . ' = ?', (int) $eavData['block_id']);
+        $blockIdentifier = $connection->fetchOne($select);
+        if (!$blockIdentifier) {
+            throw new NoSuchEntityException('Product with id ' . $eavData['block_id'] . 'does not exist.');
+        }
 
         $rootElementAttributes = [
             'data-role' => 'block',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-identifier' => $block->getIdentifier()
+            'data-identifier' => $blockIdentifier
         ];
 
         if (isset($itemData['formData'])) {

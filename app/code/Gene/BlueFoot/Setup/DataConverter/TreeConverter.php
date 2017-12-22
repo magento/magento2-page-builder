@@ -6,7 +6,6 @@
 namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
