@@ -228,7 +228,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             ],
             'code' => [
                 [
-                    'html' => [
+                    'code' => [
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
@@ -270,6 +270,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'divider.json',
                 'divider.html'
+            ],
+            'divider width in percentage' => [
+                [
+                    'hr' => [
+                        [
+                            'entity_id' => 1,
+                            'css_classes' => 'one two',
+                            'color' => '9e6767',
+                            'hr_height' => '22px',
+                            'hr_width' => '50%'
+                        ]
+                    ]
+                ],
+                'divider_width_in_percentage.json',
+                'divider_width_in_percentage.html'
             ],
             'advanced slider' => [
                 [
