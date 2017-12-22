@@ -5,6 +5,7 @@
 import {DataObject} from "../../component/data-store";
 import Config from "../../component/config";
 import {toDataUrl} from "../../utils/directives";
+import _ from "underscore";
 
 interface FromDomResult {
     [key: string]: any;
@@ -21,11 +22,14 @@ export default class StyleAttributeMapper {
         let result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                let value = data[key];
+                let value: any = data[key];
                 if (value === '') {
                     return;
                 }
-                if (key === 'min_height' || key === 'border_width') {
+                if (key === 'color' && (value === 'default' || value === 'Default')) {
+                    value = 'inherit';
+                }
+                if (key === 'min_height' || key === 'border_width' || key === 'border_radius') {
                     value = value.replace('px', '') + 'px';
                 }
                 if (key === 'background_repeat') {
@@ -42,7 +46,6 @@ export default class StyleAttributeMapper {
                         directive = '{{media url=' + mediaPath[1] + '}}';
                     value = 'url(\'' + toDataUrl(directive) + '\')';
                 }
-
                 if (key === 'margins_and_padding') {
                     result['margin'] = `${value.margin.top}px ${value.margin.right}px`
                         + ` ${value.margin.bottom}px ${value.margin.left}px`;
@@ -50,7 +53,6 @@ export default class StyleAttributeMapper {
                         + ` ${value.padding.bottom}px ${value.padding.left}px`;
                     return;
                 }
-
                 result[this.fromSnakeToCamelCase(key)] = value;
             }
         );
@@ -67,11 +69,20 @@ export default class StyleAttributeMapper {
         let result: FromDomResult = {};
         Object.keys(data).map(
             (key: any) => {
-                let value = data[key];
+                let value: any = data[key];
+                if (value === '') {
+                    return;
+                }
                 if (key === 'border-top-width') {
                     key = 'border-width';
                 }
-                if (key === 'min-height' || key === 'border-width') {
+                if (key === 'border-top-style') {
+                    key = 'border';
+                }
+                if (key === 'border-top-left-radius') {
+                    key = 'border-radius';
+                }
+                if (key === 'min-height' || key === 'border-width' || key === 'border-radius') {
                     value = value.replace('px', '');
                 }
                 if (key === 'background-repeat-y') {
@@ -92,12 +103,18 @@ export default class StyleAttributeMapper {
                     key = 'border-color';
                 }
                 if (key === 'background-color' || key === 'border-color') {
-                    const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
-                    let matches = regexp.exec(value);
-                    value = '#'
-                        + this.fromIntToHex(parseInt(matches[1]))
-                        + this.fromIntToHex(parseInt(matches[2]))
-                        + this.fromIntToHex(parseInt(matches[3]));
+                    if (value === 'initial') {
+                        value = '';
+                    } else {
+                        value = this.convertRgbToHex(value);
+                    }
+                }
+                if (key === 'color') {
+                    if (value === 'inherit') {
+                        value = 'Default';
+                    } else {
+                        value = this.convertRgbToHex(value);
+                    }
                 }
                 if (key === 'background-image') {
                     // Replace the location.href if it exists and decode the value
@@ -111,7 +128,6 @@ export default class StyleAttributeMapper {
                         };
                     value = [image];
                 }
-
                 if (key.startsWith('margin') || key.startsWith('padding')) {
                     const spacingObj = {margin: {}, padding: {}};
                     let [attributeType, attributeDirection] = key.split('-');
@@ -119,7 +135,6 @@ export default class StyleAttributeMapper {
                     result['margins_and_padding'][attributeType] = _.extend(result['margins_and_padding'][attributeType], {[attributeDirection]: value.replace('px', '')});
                     return;
                 }
-
                 result[key.replace('-', '_')] = value;
             }
         );
@@ -150,5 +165,25 @@ export default class StyleAttributeMapper {
     private fromIntToHex(value: number): string {
         let hex = value.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
+    }
+
+    /**
+     * Convert from string to hex
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    private convertRgbToHex(value: string) {
+        if (value) {
+            const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
+            let matches = regexp.exec(value);
+            if (matches) {
+                return '#'
+                    + this.fromIntToHex(parseInt(matches[1]))
+                    + this.fromIntToHex(parseInt(matches[2]))
+                    + this.fromIntToHex(parseInt(matches[3]));
+            }
+        }
+        return value;
     }
 }
