@@ -10,8 +10,6 @@ use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
 use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-
-
 /**
  * Render product list to PageBuilder format
  */
