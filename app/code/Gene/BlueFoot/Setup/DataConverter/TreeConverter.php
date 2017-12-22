@@ -109,22 +109,21 @@ class TreeConverter
     {
         $defaultRenderer = $this->rendererPool->getRender('default');
 
-        // Do not migrate content type if entity is missing required attributes
-        set_error_handler(
-            function () use ($itemData)  {
-                restore_error_handler();
-                throw new \UnexpectedValueException(
-                    'Entity data is invalid: "'
-                    . $this->serializer->serialize($itemData)
-                    . '".'
-                );
-            },
-            E_NOTICE
-        );
-        restore_error_handler();
-
         try {
+            // Do not migrate content type if entity is missing required attributes
+            set_error_handler(
+                function () use ($itemData)  {
+                    restore_error_handler();
+                    throw new \UnexpectedValueException(
+                        'Entity data is invalid: "'
+                        . $this->serializer->serialize($itemData)
+                        . '".'
+                    );
+                },
+                E_NOTICE
+            );
             $html = $renderer->render($itemData, $additionalData);
+            restore_error_handler();
         } catch (\InvalidArgumentException $exception) {
             $html = $defaultRenderer->render($itemData, $additionalData);
         } catch (NoSuchEntityException $exception) {
