@@ -46,6 +46,7 @@ class SliderItem implements RendererInterface
         $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
 
         $rootElementAttributes = [
+            'data-role' => 'slide',
             'class' => $cssClasses
         ];
 
