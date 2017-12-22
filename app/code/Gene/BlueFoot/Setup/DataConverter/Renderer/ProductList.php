@@ -44,14 +44,16 @@ class ProductList implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'product_list',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-category-id' => $eavData['category_id'],
+            'data-category-id' => $eavData['category_id'] ?? '',
             'data-product-count' => $eavData['product_count'] ?? 4,
             'data-hide-out-of-stock' => $eavData['hide_out_of_stock'] ?? 0,
         ];
 
-        $style = $this->styleExtractor->extractStyle($itemData['formData']);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+        if (isset($itemData['formData'])) {
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($style) {
+                $rootElementAttributes['style'] = $style;
+            }
         }
 
         $rootElementHtml = '<div';
