@@ -55,21 +55,24 @@ class Tabs implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $this->getMageInit();
-
-        $rootElementHtml .= (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div></div>';
+        $rootElementHtml .= '><div class="product data items" data-mage-init="'
+            . $this->getMageInitValue()
+            . '">'
+            . (isset($additionalData['children']) ? $additionalData['children'] : '')
+            . '</div></div>';
 
         return $rootElementHtml;
     }
 
     /**
-     * Generate the data-mage-init attribute and div tag
+     * Get data-mage-init attribute value
      *
      * @return string
      */
-    private function getMageInit() {
-        return '<div class="product data items" data-mage-init="{&quot;tabs&quot;:{&quot;openedState&quot;:' .
+    private function getMageInitValue()
+    {
+        return '{&quot;tabs&quot;:{&quot;openedState&quot;:' .
             '&quot;active&quot;,&quot;collapsibleElement&quot;:&quot;[data-collapsible=true]&quot;,' .
-            '&quot;content&quot;:&quot;[data-content=true]&quot;}}">';
+            '&quot;content&quot;:&quot;[data-content=true]&quot;}}';
     }
 }
