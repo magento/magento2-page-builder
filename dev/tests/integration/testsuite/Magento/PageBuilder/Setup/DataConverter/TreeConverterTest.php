@@ -201,7 +201,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     'textarea' => [
                         [
                             'entity_id' => 5,
-                            'css_classes' => '',
+                            'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
                             'align' => 'right',
                             'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',

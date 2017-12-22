@@ -41,7 +41,7 @@ class Textarea implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'text',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => $eavData['css_classes'] ?? '',
         ];
 
         if (isset($itemData['formData'])) {
