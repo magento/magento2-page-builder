@@ -65,8 +65,14 @@ class Slider implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $additionalData['children'] . '</div>';
+        $rootElementHtml .= '>';
 
+        if(isset($additionalData['children'])) {
+            $rootElementHtml .=  $additionalData['children'];
+        }
+
+        $rootElementHtml .= '</div>';
+        
         return $rootElementHtml;
     }
 }
