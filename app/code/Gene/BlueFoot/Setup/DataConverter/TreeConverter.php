@@ -111,9 +111,13 @@ class TreeConverter
 
         // Do not migrate content type if entity is missing required attributes
         set_error_handler(
-            function ()  {
+            function () use ($itemData)  {
                 restore_error_handler();
-                throw new \UnexpectedValueException('Entity data is invalid.');
+                throw new \UnexpectedValueException(
+                    'Entity data is invalid: "'
+                    . $this->serializer->serialize($itemData)
+                    . '".'
+                );
             },
             E_NOTICE
         );
