@@ -6,6 +6,7 @@
 namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Gene\BlueFoot\Model\EntityRepository;
+use Gene\BlueFoot\Model\AttributeFactory;
 
 /**
  * Using dependency injection, a virtual type can extend this class and be used by your renderer, to configure
@@ -26,23 +27,21 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
     private $eavAttributeNames = ['css_classes'];
 
     /**
-     * @var \Gene\BlueFoot\Model\Attribute
+     * @var AttributeFactory
      */
-    private $blueFootEntityAttribute;
+    private $attributeFactory;
 
-    /**
-     * @param EntityRepository $entityRepository
-     * @param \Gene\BlueFoot\Model\Attribute $blueFootEntityAttribute
-     * @param string[] $additionalEavAttributes
-     */
     public function __construct(
         EntityRepository $entityRepository,
-        \Gene\BlueFoot\Model\Attribute $blueFootEntityAttribute,
+        AttributeFactory $attributeFactory,
         array $additionalEavAttributes = []
     ) {
         $this->entityRepository = $entityRepository;
-        $this->blueFootEntityAttribute = $blueFootEntityAttribute;
-        $this->eavAttributeNames = array_merge($this->eavAttributeNames, $additionalEavAttributes);
+        $this->attributeFactory = $attributeFactory;
+        $this->eavAttributeNames = array_merge(
+            $this->eavAttributeNames,
+            $additionalEavAttributes
+        );
     }
 
     /**
@@ -57,9 +56,11 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
                 $eavData[$attributeName] = $entity->getDataByKey($attributeName);
 
                 // Replace source model values with labels
-                $this->blueFootEntityAttribute->loadByCode('gene_bluefoot_entity', $attributeName);
-                if ($this->blueFootEntityAttribute->usesSource()) {
-                    foreach ($this->blueFootEntityAttribute->getOptions() as $sourceOption) {
+                $attribute = $this->attributeFactory->create()
+                    ->loadByCode('gene_bluefoot_entity', $attributeName);
+                $attribute->loadByCode('gene_bluefoot_entity', $attributeName);
+                if ($attribute->usesSource()) {
+                    foreach ($attribute->getOptions() as $sourceOption) {
                         if ($sourceOption->getValue() === $eavData[$attributeName]) {
                             $eavData[$attributeName] = $sourceOption->getLabel();
                             break;
