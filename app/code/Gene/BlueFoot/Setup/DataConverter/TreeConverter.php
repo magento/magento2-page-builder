@@ -29,20 +29,28 @@ class TreeConverter
     private $serializer;
 
     /**
+     * @var array
+     */
+    private $unseparatableContentTypes;
+
+    /**
      * Constructor
      *
      * @param RendererPool $rendererPool
      * @param ChildrenExtractorPool $childrenExtractorPool
      * @param Json $serializer
+     * @param array $unseparatableContentTypes
      */
     public function __construct(
         RendererPool $rendererPool,
         ChildrenExtractorPool $childrenExtractorPool,
-        Json $serializer
+        Json $serializer,
+        array $unseparatableContentTypes = []
     ) {
         $this->rendererPool = $rendererPool;
         $this->childrenExtractorPool = $childrenExtractorPool;
         $this->serializer = $serializer;
+        $this->unseparatableContentTypes = $unseparatableContentTypes;
     }
 
     /**
@@ -80,15 +88,23 @@ class TreeConverter
         if (!empty($children)) {
             $childrenHtml = '';
             $childIndex = 0;
-            foreach ($children as $childItem) {
-                $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
-                $childIndex++;
+            try {
+                foreach ($children as $childItem) {
+                    $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
+                    $childIndex++;
+                }
+                return $this->processItemRendering(
+                    $renderer,
+                    $itemData,
+                    ['children' => $childrenHtml]
+                );
+            } catch (UnableToMigrateWithOutParentException $exception) {
+                $defaultRenderer = $this->rendererPool->getRender('default');
+                return $this->processItemRendering(
+                    $defaultRenderer,
+                    $itemData
+                );
             }
-            return $this->processItemRendering(
-                $renderer,
-                $itemData,
-                ['children' => $childrenHtml]
-            );
         }
         return $this->processItemRendering(
             $renderer,
@@ -102,10 +118,10 @@ class TreeConverter
      *
      * @param RendererInterface $renderer
      * @param array $itemData
-     * @param array $additionalData
+     * @param array $itemAdditionalData
      * @return string
      */
-    private function processItemRendering($renderer, array $itemData, array $additionalData)
+    private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = [])
     {
         $defaultRenderer = $this->rendererPool->getRender('default');
 
@@ -122,16 +138,52 @@ class TreeConverter
                 },
                 E_NOTICE
             );
-            $html = $renderer->render($itemData, $additionalData);
+            $html = $renderer->render($itemData, $itemAdditionalData);
             restore_error_handler();
         } catch (\InvalidArgumentException $exception) {
-            $html = $defaultRenderer->render($itemData, $additionalData);
+            if ($this->isUnseparatableContentType($itemData)) {
+                throw new UnableToMigrateWithOutParentException(
+                    'Content type can not be migrated with out parent.',
+                    null,
+                    $exception
+                );
+            }
+            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
         } catch (NoSuchEntityException $exception) {
-            $html = $defaultRenderer->render($itemData, $additionalData);
+            if ($this->isUnseparatableContentType($itemData)) {
+                throw new UnableToMigrateWithOutParentException(
+                    'Content type can not be migrated with out parent.',
+                    null,
+                    $exception
+                );
+            }
+            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
         } catch (NoSuchEntityExceptionLocalized $exception) {
-            $html = $defaultRenderer->render($itemData, $additionalData);
+            if ($this->isUnseparatableContentType($itemData)) {
+                throw new UnableToMigrateWithOutParentException(
+                    'Content type can not be migrated with out parent.',
+                    null,
+                    $exception
+                );
+            }
+            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
         }
 
         return $html;
+    }
+
+    /**
+     * Check whether content type is unseparatable, can not be part of another content type and parent content type
+     * can not contain content types of different type
+     *
+     * @param array $itemData
+     * @return bool
+     */
+    private function isUnseparatableContentType(array $itemData)
+    {
+        return in_array(
+            isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'],
+            $this->unseparatableContentTypes
+        );
     }
 }
