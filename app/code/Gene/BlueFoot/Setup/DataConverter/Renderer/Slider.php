@@ -54,7 +54,7 @@ class Slider implements RendererInterface
             'data-slides-to-show' => isset($eavData['slides_to_show']) ? $eavData['slides_to_show'] : '',
             'data-advanced-settings' => isset($eavData['slider_advanced_settings'])
                 ? $eavData['slider_advanced_settings'] : '',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => $eavData['css_classes'] ?? '',
         ];
 
         if (isset($itemData['formData'])) {
