@@ -8,6 +8,6 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 /**
  * Unable to content type entity with out parent content type
  */
-class UnableToMigrateWithOutParentException extends \Exception
+class UnableMigrateWithOutParentException extends \Exception
 {
 }
