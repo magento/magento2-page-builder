@@ -51,7 +51,7 @@ class SliderItem implements RendererInterface
         ];
 
         $formData = $itemData['formData'] ?? [];
-        $formData['background_image'] = isset($eavData['image']) ? $eavData['image'] : '';
+        $formData['background_image'] = $eavData['image'] ?? '';
 
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
@@ -80,7 +80,7 @@ class SliderItem implements RendererInterface
             . ($eavData['title_tag'] ?? '')
             . '</h3><div class="slider-content">'
             . '</div>';
-        if (isset($eavData['link_text']) && isset($eavData['title_tag'])) {
+        if (isset($eavData['link_url']) && isset($eavData['title_tag'])) {
             $rootElementHtml .= '<a class="button" href="'
                 . $eavData['link_url']
                 . '"><span><span>'
