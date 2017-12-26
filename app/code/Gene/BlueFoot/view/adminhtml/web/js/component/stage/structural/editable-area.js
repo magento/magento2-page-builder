@@ -95,7 +95,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
 
       var store = this.stage.store,
           instance = child.constructor,
-          duplicate = new instance(child.parent, child.stage, child.config),
+          duplicate = new instance(child.parent, child.stage, child.config, child.getData(), child.appearance),
           index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
 
       store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate

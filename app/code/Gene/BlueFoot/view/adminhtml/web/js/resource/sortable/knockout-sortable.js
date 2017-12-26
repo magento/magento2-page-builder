@@ -18,18 +18,15 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
     var Sortable = {
         defaults: {
             tolerance: 'pointer',
-            cursorAt: {
-                top: 0,
-                left: 0
-            },
             cursor: 'move',
             connectWith: '.bluefoot-sortable',
             helper: function (event, element) {
-                var ele = jQuery('<div />');
+                var ele;
                 if (element.children().first().hasClass('bluefoot-entity')) {
+                    ele = jQuery('<div />');
                     ele.addClass('bluefoot-entity-helper').data('sorting', true);
                 } else {
-                    ele.addClass('bluefoot-structure-helper').data('sorting', true);
+                    ele = element.css('opacity', 0.5);
                 }
                 return ele;
             },
@@ -39,7 +36,6 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                     if (clone.hasClass('bluefoot-draggable-block')) {
                         return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
                     }
-
                     return jQuery('<div />').addClass('bluefoot-placeholder-sortable');
                 },
                 update: function (clone, ui) {
@@ -144,6 +140,8 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 eventData['block'] = block;
                 block.stage.emit('sortingStop', eventData);
             }
+
+            ui.item.css('opacity', 1);
         },
 
         /**
