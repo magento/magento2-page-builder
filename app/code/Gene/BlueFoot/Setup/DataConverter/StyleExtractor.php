@@ -42,7 +42,7 @@ class StyleExtractor implements StyleExtractorInterface
             'background-color' => isset($formData['background_color'])
                 ? $this->colorConverter->convert($formData['background_color']) : '',
             'background-image' => !empty($formData['background_image'])
-                ? ('url(\'{{media url=wysiwyg/bluefoot' . $formData['background_image'] . '}}\')') : '',
+                ? ('url(\'{{media url=media/gene-cms' . $formData['background_image'] . '}}\')') : '',
             'border-color' => isset($formData['border_color'])
                 ? $this->colorConverter->convert($formData['border_color']) : '',
             'border-width' => $formData['border_width'] ?? '',

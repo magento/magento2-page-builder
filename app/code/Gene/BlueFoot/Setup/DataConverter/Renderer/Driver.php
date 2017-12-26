@@ -64,7 +64,7 @@ class Driver implements RendererInterface
         ];
 
         $imageAttributes = [
-            'src' => '{{media url=wysiwyg/bluefoot' . $eavData['image'] . '}}',
+            'src' => '{{media url=media/gene-cms' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
             'title' => $eavData['title_tag'] ?? ''
         ];
@@ -72,7 +72,7 @@ class Driver implements RendererInterface
         $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
-                'src' => '{{media url=wysiwyg/bluefoot' . $eavData['mobile_image'] . '}}',
+                'src' => '{{media url=media/gene-cms' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? ''
             ];
