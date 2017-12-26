@@ -138,14 +138,6 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
      * @returns {DataObject}
      */
 
-    /**
-     * Get attributes for an block
-     * Example {'data-role': 'element'}
-     *
-     * @param extra
-     * @returns {}
-     */
-
 
     _proto.getAttributes = function getAttributes(extra) {
       if (extra === void 0) {
@@ -172,7 +164,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     _createClass(Structural, [{
       key: "options",
       get: function get() {
-        return [new _option.Option(this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(this, 'edit', '<i></i>', (0, _translate)('Edit'), this.onOptionEdit, ['edit-block'], 50), new _option.Option(this, 'duplicate', '<i></i>', (0, _translate)('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60), new _option.Option(this, 'remove', '<i></i>', (0, _translate)('Remove'), this.onOptionRemove, ['remove-structural'], 100)];
+        return [new _option.Option(this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(this, 'edit', '<i></i>', (0, _translate)('Edit'), this.onOptionEdit, ['edit-block'], 50), new _option.Option(this, 'duplicate', '<i class="icon-bluefoot-copy"></i>', (0, _translate)('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60), new _option.Option(this, 'remove', '<i></i>', (0, _translate)('Remove'), this.onOptionRemove, ['remove-structural'], 100)];
       }
       /**
        * Retrieve the template for the structural
