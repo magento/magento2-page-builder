@@ -1013,6 +1013,26 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                         ]
+                    ],
+                    'slider' => [
+                        [
+                            'entity_id' => 1,
+                        ]
+                    ],
+                    'buttons' => [
+                        [
+                            'entity_id' => 1,
+                        ]
+                    ],
+                    'tabs' => [
+                        [
+                            'entity_id' => 1,
+                        ]
+                    ],
+                    'accordion' => [
+                        [
+                            'entity_id' => 1,
+                        ]
                     ]
                 ],
                 'non_existent_entity.json',
