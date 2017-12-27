@@ -1,4 +1,4 @@
-define(["knockout", "./block"], function (_knockout, _block) {
+define(["knockout", "underscore", "./block", "../../format/style-attribute-mapper", "../../format/style-attribute-filter"], function (_knockout, _underscore, _block, _styleAttributeMapper, _styleAttributeFilter) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -17,41 +17,31 @@ define(["knockout", "./block"], function (_knockout, _block) {
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.rowStyles = void 0;
-      _this.rowClasses = void 0;
+      var styleAttributeMapper = new _styleAttributeMapper();
+      var styleAttributeFilter = new _styleAttributeFilter();
       _this.rowStyles = _knockout.computed(function () {
-        var data = _this.data;
-        var backgroundImage = data.background_image && _typeof(data.background_image()[0]) === 'object' ? 'url(' + data.background_image()[0].url + ')' : '';
-        var margin, padding;
+        // Extract data values our of observable functions
+        var styles = styleAttributeMapper.toDom(styleAttributeFilter.filter(_underscore.mapObject(_this.data, function (value) {
+          if (_knockout.isObservable(value)) {
+            return value();
+          }
 
-        if (data.margins_and_padding && _typeof(data.margins_and_padding()) === 'object') {
-          var m = data.margins_and_padding().margin;
-          var p = data.margins_and_padding().padding;
-          margin = m.top + "px " + m.right + "px " + m.bottom + "px " + m.left + "px";
-          padding = p.top + "px " + p.right + "px " + p.bottom + "px " + p.left + "px";
-        } else {
-          margin = '';
-          padding = '';
+          return value;
+        }))); // The style attribute mapper converts images to directives, override it to include the correct URL
+
+        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === 'object') {
+          styles['backgroundImage'] = 'url(' + _this.data.background_image()[0].url + ')';
         }
 
-        return {
-          backgroundImage: backgroundImage,
-          margin: margin,
-          padding: padding,
-          backgroundAttachment: data.background_attachment(),
-          backgroundColor: data.background_color(),
-          backgroundPosition: data.background_position(),
-          backgroundRepeat: data.background_repeat(),
-          backgroundSize: data.background_size(),
-          border: data.border(),
-          borderColor: data.border_color(),
-          borderRadius: data.border_radius(),
-          borderWidth: data,
-          color: data.color,
-          textAlign: data.text_align()
-        };
-      });
-      _this.rowClasses = _knockout.computed(function () {
-        return _this.data.css_classes();
+        return styles;
+      }); // Force the rowStyles to update on changes to stored style attribute data
+
+      Object.keys(styleAttributeFilter.allowedAttributes).forEach(function (key) {
+        if (_knockout.isObservable(_this.data[key])) {
+          _this.data[key].subscribe(function () {
+            _this.rowStyles.notifySubscribers();
+          });
+        }
       });
       return _this;
     }

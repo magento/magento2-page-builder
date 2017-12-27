@@ -4,13 +4,14 @@
  */
 
 import ko from "knockout";
+import _ from "underscore";
 import PreviewBlock from "./block";
 import Block from "../block"
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import StyleAttributeFilter from "../../format/style-attribute-filter";
 
 export default class Row extends PreviewBlock {
     rowStyles: KnockoutComputed<{}>;
-    rowClasses: KnockoutComputed<{}>;
-
 
     /**
      * @param {Block} parent
@@ -18,39 +19,37 @@ export default class Row extends PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
+        const styleAttributeMapper = new StyleAttributeMapper();
+        const styleAttributeFilter = new StyleAttributeFilter();
+
         this.rowStyles = ko.computed(() => {
-            const data = this.data;
-            const backgroundImage = data.background_image && typeof data.background_image()[0] === 'object' ?
-                'url(' + data.background_image()[0].url + ')' : '';
-            let margin, padding;
-            if (data.margins_and_padding && typeof data.margins_and_padding() === 'object' ) {
-                let m = data.margins_and_padding().margin;
-                let p = data.margins_and_padding().padding;
-                margin = `${m.top}px ${m.right}px ${m.bottom}px ${m.left}px`;
-                padding = `${p.top}px ${p.right}px ${p.bottom}px ${p.left}px`;
-            } else {
-                margin = '';
-                padding = '';
+            // Extract data values our of observable functions
+            let styles = styleAttributeMapper.toDom(
+                styleAttributeFilter.filter(
+                    _.mapObject(this.data, (value) => {
+                        if (ko.isObservable(value)) {
+                            return value();
+                        }
+                        return value;
+                    })
+                )
+            );
+
+            // The style attribute mapper converts images to directives, override it to include the correct URL
+            if (this.data.background_image && typeof this.data.background_image()[0] === 'object') {
+                styles['backgroundImage'] = 'url(' + this.data.background_image()[0].url + ')';
             }
-            return {
-                backgroundImage,
-                margin,
-                padding,
-                backgroundAttachment: data.background_attachment(),
-                backgroundColor: data.background_color(),
-                backgroundPosition: data.background_position(),
-                backgroundRepeat: data.background_repeat(),
-                backgroundSize: data.background_size(),
-                border: data.border(),
-                borderColor: data.border_color(),
-                borderRadius: data.border_radius(),
-                borderWidth: data,
-                color: data.color,
-                textAlign: data.text_align()
-            };
-        })
-        this.rowClasses = ko.computed(() => {
-            return this.data.css_classes();
-        })
+
+            return styles;
+        });
+
+        // Force the rowStyles to update on changes to stored style attribute data
+        Object.keys(styleAttributeFilter.allowedAttributes).forEach((key) => {
+            if (ko.isObservable(this.data[key])) {
+                this.data[key].subscribe(() => {
+                    this.rowStyles.notifySubscribers();
+                });
+            }
+        });
     }
 }
