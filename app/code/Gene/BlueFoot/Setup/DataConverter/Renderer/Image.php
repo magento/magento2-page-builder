@@ -62,14 +62,14 @@ class Image implements RendererInterface
         $rootElementHtml = '<figure' . $this->printAttributes($rootElementAttributes);
 
         $linkAttributes = [
-            'href' => '{{media url=media/gene-cms' . $eavData['image'] . '}}',
+            'href' => '{{media url=gene-cms' . $eavData['image'] . '}}',
             'title' => $eavData['title_tag'] ?? '',
             'class' => (isset($eavData['has_lightbox']) && $eavData['has_lightbox'] == 1) ?
                 'bluefoot-lightbox' : '',
         ];
 
         $imageAttributes = [
-            'src' => '{{media url=media/gene-cms' . $eavData['image'] . '}}',
+            'src' => '{{media url=gene-cms' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
             'title' => $eavData['title_tag'] ?? ''
         ];
@@ -77,7 +77,7 @@ class Image implements RendererInterface
         $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
-                'src' => '{{media url=media/gene-cms' . $eavData['mobile_image'] . '}}',
+                'src' => '{{media url=gene-cms' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? ''
             ];
