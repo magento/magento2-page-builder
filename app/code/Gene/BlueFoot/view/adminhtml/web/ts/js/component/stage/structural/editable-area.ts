@@ -97,10 +97,9 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      */
     duplicateChild(child: Structural, autoAppend: boolean = true): Structural {
         const store = this.stage.store,
-            instance = child.constructor as typeof Structural,
-            duplicate = new instance(child.parent, child.stage, child.config),
+            instance = child.constructor as typeof Block,
+            duplicate = new instance(child.parent, child.stage, child.config, child.getData(), child.appearance),
             index = child.parent.children.indexOf(child) + 1 || null;
-
         // Copy the data from the data store
         store.update(
             duplicate.id, 
@@ -110,6 +109,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
         // Duplicate the instances children into the new duplicate
         if (child.children().length > 0) {
             child.children().forEach((subChild: Structural, index: number) => {
+
                 duplicate.addChild(
                     duplicate.duplicateChild(subChild, false),
                     index

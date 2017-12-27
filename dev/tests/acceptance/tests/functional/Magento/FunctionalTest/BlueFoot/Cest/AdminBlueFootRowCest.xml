@@ -50,6 +50,17 @@
             </actionGroup>
             <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" stepKey="seeElementRow"/>
         </test>
+        <test name="InitializeWithRow">
+            <annotations>
+                <title value="Row exists on initialise"/>
+                <description value="The stage should contain a row on initialise."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-82841"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <wait time="1" stepKey="wait"/>
+            <seeElement selector="{{BlueFootRowSection.row}}" stepKey="seeElementRow"/>
+        </test>
         <test name="CanRemoveRow">
             <annotations>
                 <title value="Can remove a row"/>
@@ -72,10 +83,16 @@
                 <testCaseId value="MAGETWO-82859"/>
                 <group value="bluefoot"/>
             </annotations>
-            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="2" stepKey="seeTwoRows"/>
             <actionGroup ref="removeBlueFootRow" stepKey="removeRow"/>
-            <seeElement selector="{{BlueFootActionsSection.unableToRemoveTitle}}" stepKey="seeUnableToRemoveTitle" />
-            <click selector="{{BlueFootActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
+            <moveMouseOver selector="{{BlueFootRowSection.row}}" stepKey="onMouseOverRow"/>
+            <seeElement selector="{{BlueFootRowSection.rowOptionsMenu}}" stepKey="seeRowOptionsMenu"/>
+            <click selector="{{BlueFootActionsSection.contentBlockDelete}}" stepKey="clickRemoveBlockButton"/>
+            <seeElement selector="{{BlueFootActionsSection.contentBlockDeleteDisabled}}" stepKey="seeDisabledRemoveBlockButton" />
             <wait time="1" stepKey="wait2"/>
             <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="1" stepKey="seeOneRow1"/>
         </test>
@@ -314,6 +331,76 @@
             <seeElement selector="{{RowsOnFrontend.rowMargin}}" stepKey="seeRowMarginStyle"/>
             <seeElement selector="{{RowsOnFrontend.rowPadding}}" stepKey="seeRowPaddingStyle"/>
             <seeElement selector="{{RowsOnFrontend.rowClass}}" stepKey="seeRowClass"/>
+        </test>
+        <test name="CanAddUnlimitedRows">
+            <annotations>
+                <title value="Can add unlimited rows"/>
+                <description value="The user should be able to unlimited rows. For testing we use 20 rows"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-85692"/>
+                <group value="bluefoot"/>
+            </annotations>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage6">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage7">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage8">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage9">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage10">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage11">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage12">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage13">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage14">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage15">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage16">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage17">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage18">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage19">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage20">
+                <argument name="contentBlockType" value="BlueFootRowContentBlock"/>
+            </actionGroup>
+            <seeNumberOfElements selector="{{BlueFootRowSection.allRows}}" userInput="21" stepKey="seeElementRow"/>
         </test>
     </cest>
 </config>
