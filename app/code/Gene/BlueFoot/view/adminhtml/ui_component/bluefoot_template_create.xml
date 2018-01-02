@@ -3,7 +3,9 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">bluefoot_template_create.bluefoot_template_create_data_source</item>
-            <item name="deps" xsi:type="string">bluefoot_template_create.bluefoot_template_create_data_source</item>
+            <deps>
+				<dep>bluefoot_template_create.bluefoot_template_create_data_source</dep>
+			</deps>
         </item>
         <item name="config" xsi:type="array">
             <dataScope>data</dataScope>
@@ -22,8 +24,8 @@
 
     <dataSource name="bluefoot_template_create_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Gene\BlueFoot\Ui\DataProvider\Template\DataProvider</argument>
-            <argument name="name" xsi:type="string">bluefoot_template_create_data_source</argument>
+            <class>Gene\BlueFoot\Ui\DataProvider\Template\DataProvider</class>
+            <name>bluefoot_template_create_data_source</name>
             <argument name="primaryFieldName" xsi:type="string">template_id</argument>
             <argument name="requestFieldName" xsi:type="string">template_id</argument>
             <argument name="data" xsi:type="array">
@@ -34,7 +36,7 @@
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                <component>Magento_Ui/js/form/provider</component>
             </item>
         </argument>
     </dataSource>
@@ -43,7 +45,7 @@
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">false</item>
-                <item name="label" xsi:type="string" translate="true">Template Information</item>
+                <label>Template Information</label>
                 <sort_order>10</sort_order>
             </item>
         </argument>
@@ -51,15 +53,15 @@
         <field name="name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Name</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <dataType>text</dataType>
+                    <label>Name</label>
+                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
                     <sort_order>10</sort_order>
-                    <item name="dataScope" xsi:type="string">name</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <dataScope>name</dataScope>
+                	<validation>
+                    	<rule name="required-entry" xsi:type="boolean">true</rule>
+                	</validation>
                 </item>
             </argument>
         </field>
@@ -67,18 +69,18 @@
         <field name="preview" class="Gene\BlueFoot\Ui\Component\Form\Element\DataType\TemplatePreview">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Template Preview</item>
+                    <label>Template Preview</label>
                     <item name="visible" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <dataType>text</dataType>
+                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
-                    <item name="dataScope" xsi:type="string">preview</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <dataScope>preview</dataScope>
+                	<validation>
+                    	<rule name="required-entry" xsi:type="boolean">true</rule>
+                	</validation>
                 </item>
                 <item name="js_config" xsi:type="array">
-                    <item name="component" xsi:type="string">Gene_BlueFoot/js/component/core/template/preview</item>
+                    <component>Gene_BlueFoot/js/component/core/template/preview</component>
                     <item name="template" xsi:type="string">Gene_BlueFoot/component/core/template/preview</item>
                     <item name="stageNameSpace" xsi:type="string">bluefoot_template_manager.bluefoot_template_manager</item>
                 </item>

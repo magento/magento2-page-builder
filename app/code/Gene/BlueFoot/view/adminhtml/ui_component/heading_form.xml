@@ -9,7 +9,9 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">heading_form.heading_form_data_source</item>
-            <item name="deps" xsi:type="string">heading_form.heading_form_data_source</item>
+            <deps>
+				<dep>heading_form.heading_form_data_source</dep>
+			</deps>
         </item>
         <label>Heading</label>
         <item name="config" xsi:type="array">
@@ -28,20 +30,20 @@
     <dataSource name="heading_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <argument name="name" xsi:type="string">heading_form_data_source</argument>
+            <name>heading_form_data_source</name>
             <primaryFieldName/>
             <requestFieldName/>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
+                <component>Gene_BlueFoot/js/form/provider</component>
             </item>
         </argument>
     </dataSource>
     <fieldset name="general">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string"/>
+                <label/>
             </item>
         </argument>
         <field name="heading_type">
@@ -69,32 +71,32 @@
                     </item>
                 </item>
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
+                    <dataType>text</dataType>
                     <label>Heading Type</label>
-                    <item name="formElement" xsi:type="string">select</item>
+                    <formElement>select</formElement>
                     <item name="source" xsi:type="string">page</item>
                     <sort_order>1</sort_order>
-                    <item name="dataScope" xsi:type="string">heading_type</item>
+                    <dataScope>heading_type</dataScope>
                     <item name="default" xsi:type="string">h2</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                	<validation>
+                    	<rule name="required-entry" xsi:type="boolean">true</rule>
+                	</validation>
                 </item>
             </argument>
         </field>
         <field name="title">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
+                    <dataType>text</dataType>
                     <label>Title</label>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
                     <sort_order>10</sort_order>
-                    <item name="dataScope" xsi:type="string">title</item>
+                    <dataScope>title</dataScope>
                     <item name="default" xsi:type="string" translate="true">Header</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                	<validation>
+                    	<rule name="required-entry" xsi:type="boolean">true</rule>
+                	</validation>
                 </item>
             </argument>
         </field>

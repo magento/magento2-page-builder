@@ -9,9 +9,11 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">slider_form.slider_form_data_source</item>
-            <item name="deps" xsi:type="string">slider_form.slider_form_data_source</item>
+            <deps>
+				<dep>slider_form.slider_form_data_source</dep>
+			</deps>
         </item>
-        <item name="label" xsi:type="string" translate="true">Slider</item>
+        <label>Slider</label>
         <item name="config" xsi:type="array">
             <dataScope>data</dataScope>
             <namespace>slider_form</namespace>
@@ -27,35 +29,35 @@
     </settings>
     <dataSource name="slider_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
-            <argument name="name" xsi:type="string">slider_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string" />
-            <argument name="requestFieldName" xsi:type="string" />
+            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
+            <name>slider_form_data_source</name>
+            <primaryFieldName/>
+            <requestFieldName/>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
+                <component>Gene_BlueFoot/js/form/provider</component>
             </item>
         </argument>
     </dataSource>
     <fieldset name="general">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string"/>
+                <label/>
             </item>
         </argument>
         <field name="heading_type">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Slider Form</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <dataType>text</dataType>
+                    <label>Slider Form</label>
+                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
                     <sort_order>20</sort_order>
-                    <item name="dataScope" xsi:type="string">heading_type</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <dataScope>heading_type</dataScope>
+                	<validation>
+                    	<rule name="required-entry" xsi:type="boolean">true</rule>
+                	</validation>
                 </item>
             </argument>
         </field>
@@ -89,15 +91,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <item name="label" xsi:type="string" translate="true">Left</item>
+                                <label>Left</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <item name="label" xsi:type="string" translate="true">Center</item>
+                                <label>Center</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <item name="label" xsi:type="string" translate="true">Right</item>
+                                <label>Right</label>
                             </option>
                         </options>
                     </settings>
