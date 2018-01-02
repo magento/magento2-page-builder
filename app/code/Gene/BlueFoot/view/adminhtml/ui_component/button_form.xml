@@ -9,12 +9,14 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">button_form.button_form_data_source</item>
-            <item name="deps" xsi:type="string">button_form.button_form_data_source</item>
+            <deps>
+				<dep>button_form.button_form_data_source</dep>
+			</deps>
         </item>
-        <item name="label" xsi:type="string" translate="true">Button</item>
+        <label>Button</label>
         <item name="config" xsi:type="array">
-            <item name="dataScope" xsi:type="string">data</item>
-            <item name="namespace" xsi:type="string">button_form</item>
+            <dataScope>data</dataScope>
+            <namespace>button_form</namespace>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
@@ -27,10 +29,10 @@
     </settings>
     <dataSource name="button_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
-            <argument name="name" xsi:type="string">button_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string" />
-            <argument name="requestFieldName" xsi:type="string" />
+            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
+            <name>button_form_data_source</name>
+            <primaryFieldName/>
+            <requestFieldName/>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -47,7 +49,7 @@
         <container name="buttons" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Gene_BlueFoot/dynamic-rows/grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Buttons</item>
+                    <label>Buttons</label>
                     <item name="fallbackResetTpl" xsi:type="string">Magento_Backend/form/element/helper/fallback-reset-link</item>
                     <item name="componentType" xsi:type="string">dynamicRows</item>
                     <item name="recordTemplate" xsi:type="string">record</item>
@@ -140,15 +142,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <item name="label" xsi:type="string" translate="true">Left</item>
+                                <label>Left</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <item name="label" xsi:type="string" translate="true">Center</item>
+                                <label>Center</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <item name="label" xsi:type="string" translate="true">Right</item>
+                                <label>Right</label>
                             </option>
                         </options>
                     </settings>

@@ -9,12 +9,14 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">row_form.row_form_data_source</item>
-            <item name="deps" xsi:type="string">row_form.row_form_data_source</item>
+            <deps>
+				<dep>row_form.row_form_data_source</dep>
+			</deps>
         </item>
-        <item name="label" xsi:type="string" translate="true">Row</item>
+        <label>Row</label>
         <item name="config" xsi:type="array">
-            <item name="dataScope" xsi:type="string">data</item>
-            <item name="namespace" xsi:type="string">row_form</item>
+            <dataScope>data</dataScope>
+            <namespace>row_form</namespace>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
@@ -27,10 +29,10 @@
     </settings>
     <dataSource name="row_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
-            <argument name="name" xsi:type="string">row_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string" />
-            <argument name="requestFieldName" xsi:type="string" />
+            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
+            <name>row_form_data_source</name>
+            <primaryFieldName/>
+            <requestFieldName/>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -84,15 +86,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left top</item>
-                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
+                                <label>Top Aligned</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center center</item>
-                                <item name="label" xsi:type="string" translate="true">Centered</item>
+                                <label>Centered</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">left bottom</item>
-                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
+                                <label>Bottom Aligned</label>
                             </option>
                         </options>
                     </settings>
@@ -115,15 +117,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">auto</item>
-                                <item name="label" xsi:type="string" translate="true">Auto</item>
+                                <label>Auto</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">cover</item>
-                                <item name="label" xsi:type="string" translate="true">Cover</item>
+                                <label>Cover</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">contain</item>
-                                <item name="label" xsi:type="string" translate="true">Contain</item>
+                                <label>Contain</label>
                             </option>
                         </options>
                     </settings>
@@ -169,11 +171,11 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">scroll</item>
-                                <item name="label" xsi:type="string" translate="true">Scroll</item>
+                                <label>Scroll</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">fixed</item>
-                                <item name="label" xsi:type="string" translate="true">Fixed</item>
+                                <label>Fixed</label>
                             </option>
                         </options>
                     </settings>
@@ -264,19 +266,19 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
+                                <label>Default</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <item name="label" xsi:type="string" translate="true">Left</item>
+                                <label>Left</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <item name="label" xsi:type="string" translate="true">Center</item>
+                                <label>Center</label>
                             </option>
                             <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <item name="label" xsi:type="string" translate="true">Right</item>
+                                <label>Right</label>
                             </option>
                         </options>
                     </settings>
@@ -302,39 +304,39 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">none</item>
-                                <item name="label" xsi:type="string" translate="true">None</item>
+                                <label>None</label>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">dotted</item>
-                                <item name="label" xsi:type="string" translate="true">Dotted</item>
+                                <label>Dotted</label>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">dashed</item>
-                                <item name="label" xsi:type="string" translate="true">Dashed</item>
+                                <label>Dashed</label>
                             </option>
                             <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">solid</item>
-                                <item name="label" xsi:type="string" translate="true">Solid</item>
+                                <label>Solid</label>
                             </option>
                             <option name="4" xsi:type="array">
                                 <item name="value" xsi:type="string">double</item>
-                                <item name="label" xsi:type="string" translate="true">Double</item>
+                                <label>Double</label>
                             </option>
                             <option name="5" xsi:type="array">
                                 <item name="value" xsi:type="string">groove</item>
-                                <item name="label" xsi:type="string" translate="true">Groove</item>
+                                <label>Groove</label>
                             </option>
                             <option name="6" xsi:type="array">
                                 <item name="value" xsi:type="string">ridge</item>
-                                <item name="label" xsi:type="string" translate="true">Ridge</item>
+                                <label>Ridge</label>
                             </option>
                             <option name="7" xsi:type="array">
                                 <item name="value" xsi:type="string">inset</item>
-                                <item name="label" xsi:type="string" translate="true">Inset</item>
+                                <label>Inset</label>
                             </option>
                             <option name="8" xsi:type="array">
                                 <item name="value" xsi:type="string">outset</item>
-                                <item name="label" xsi:type="string" translate="true">Outset</item>
+                                <label>Outset</label>
                             </option>
                         </options>
                     </settings>
