@@ -105,26 +105,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
      */
     public function getTemplateData()
     {
-        $templates = $this->templateCollection->create();
-        $templates->setOrder(
-            'pinned',
-            \Magento\Framework\Data\Collection::SORT_ORDER_DESC
-        );
-
-        if ($templates->getSize()) {
-            $templateData = [];
-            foreach ($templates as $template) {
-                $templateData[] = [
-                    'id' => $template->getId(),
-                    'name' => $template->getData('name'),
-                    'preview' => $template->getData('preview'),
-                    'structure' => $template->getData('structure'),
-                    'pinned' => (bool)$template->getData('pinned')
-                ];
-            }
-            return $templateData;
-        }
-
         return [];
     }
 
