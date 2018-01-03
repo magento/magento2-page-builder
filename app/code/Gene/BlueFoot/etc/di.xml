@@ -15,16 +15,7 @@
     <preference for="Gene\BlueFoot\Api\Data\EntitySearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
     <preference for="Gene\BlueFoot\Api\EntityRepositoryInterface" type="Gene\BlueFoot\Model\EntityRepository" />
 
-    <preference for="Gene\BlueFoot\Api\Data\ContentBlockInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock" />
-    <preference for="Gene\BlueFoot\Api\Data\ContentBlockSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
-    <preference for="Gene\BlueFoot\Api\ContentBlockRepositoryInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlockRepository" />
-
-    <preference for="Gene\BlueFoot\Api\Data\ContentBlockGroupInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\Group" />
-    <preference for="Gene\BlueFoot\Api\Data\ContentBlockGroupSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
-    <preference for="Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface" type="Gene\BlueFoot\Model\Attribute\ContentBlock\GroupRepository" />
-
     <preference for="Gene\BlueFoot\Api\Data\AttributeInterface" type="Gene\BlueFoot\Model\Attribute" />
-    <preference for="Gene\BlueFoot\Api\AttributeRepositoryInterface" type="Gene\BlueFoot\Model\Attribute\Repository" />
     <preference for="Gene\BlueFoot\Api\AttributeGroupRepositoryInterface" type="Gene\BlueFoot\Model\AttributeGroupRepository" />
 
     <preference for="Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface" type="Gene\BlueFoot\Setup\DataConverter\StyleExtractor" />
@@ -39,14 +30,6 @@
 
     <type name="Magento\Framework\View\Element\UiComponent\Config\Converter">
         <plugin name="gene_bluefoot_ui_injector" type="Gene\BlueFoot\Plugin\UiPlugin" sortOrder="1" />
-    </type>
-
-    <type name="Magento\Eav\Model\Entity\AttributeCache">
-        <arguments>
-            <argument name="unsupportedTypes" xsi:type="array">
-                <item name="gene_bluefoot_entity" xsi:type="string">gene_bluefoot_entity</item>
-            </argument>
-        </arguments>
     </type>
 
     <type name="Gene\BlueFoot\Observer\SaveEntity">
