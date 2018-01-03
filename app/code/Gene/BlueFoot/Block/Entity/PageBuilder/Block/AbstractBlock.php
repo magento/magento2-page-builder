@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 
 /**
  * Class Base
- *
- * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class AbstractBlock extends \Magento\Framework\View\Element\Template
 {

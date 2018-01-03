@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Template;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 
 /**
  * Class Save
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage\Widget
- *
- * @author Aidan Threadgold <aidan@gene.co.ul=k>
  */
 class Save extends \Magento\Backend\App\Action
 {

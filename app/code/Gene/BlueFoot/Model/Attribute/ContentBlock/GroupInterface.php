@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\ContentBlock;
 
 /**
  * Interface GroupInterface
- *
- * @package Gene\BlueFoot\Model\Attribute\ContentBlock
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 interface GroupInterface
 {

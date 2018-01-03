@@ -1,4 +1,8 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * Mock localStorage for persistence and testing side effects.
  */
 

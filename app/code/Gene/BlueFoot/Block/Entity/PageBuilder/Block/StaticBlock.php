@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 
 /**
  * Class StaticBlock
- *
- * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
- *
- * @author  Hob Adams <hob@gene.co.uk>
  */
 class StaticBlock extends AbstractBlock
 {

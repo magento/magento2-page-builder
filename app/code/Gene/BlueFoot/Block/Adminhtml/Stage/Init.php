@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Adminhtml\Stage;
 
 use Magento\Framework\UrlInterface;
 
 /**
  * Class Init
- *
- * @package Gene\BlueFoot\Block\Adminhtml\Stage
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Init extends \Magento\Backend\Block\Template
 {

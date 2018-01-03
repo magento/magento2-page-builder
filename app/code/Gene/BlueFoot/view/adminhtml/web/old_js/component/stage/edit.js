@@ -4,7 +4,6 @@
  *
  * This file creates a new UI Component which is used for the actual edit panel
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

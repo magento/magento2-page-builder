@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\ContentBlock;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -7,8 +11,6 @@ use Magento\Framework\UrlInterface;
 
 /**
  * Class Actions
- * @package Gene\BlueFoot\Ui\Component\Listing\Column\ContentBlock
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class Actions extends \Magento\Ui\Component\Listing\Columns\Column
 {

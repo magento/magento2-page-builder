@@ -1,7 +1,6 @@
 /**
  * Child Entity UI Component
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

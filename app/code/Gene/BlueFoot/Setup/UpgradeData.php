@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Setup;
 
 use Magento\Framework\Setup\UpgradeDataInterface;
@@ -10,7 +13,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 /**
  * Class UpgradeData
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class UpgradeData implements UpgradeDataInterface
 {

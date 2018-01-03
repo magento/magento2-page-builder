@@ -1,6 +1,5 @@
 /*
  * BlueFoot Accordion JS
- * @author Hob Adams <hob@gene.co.uk>
  *
  * Very basic accordion plugin stripped down to be used with the BlueFoot
  */

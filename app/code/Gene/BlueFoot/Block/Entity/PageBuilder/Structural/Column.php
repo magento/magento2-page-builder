@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Structural;
 
 /**
  * Class Column
- *
- * @package Gene\BlueFoot\Block\Entity\PageBuilder\Structural
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Column
 {

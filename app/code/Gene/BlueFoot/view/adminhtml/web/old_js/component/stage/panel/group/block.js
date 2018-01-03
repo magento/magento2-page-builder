@@ -2,7 +2,6 @@
  * - Block.js
  * A block that resides inside a group within the panel
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/event-emitter',

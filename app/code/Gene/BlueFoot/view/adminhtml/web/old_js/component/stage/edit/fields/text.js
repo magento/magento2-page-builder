@@ -2,7 +2,6 @@
  * - Text.js
  * Abstract Field class for our fields
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define(['jquery', 'bluefoot/widget/abstract'], function (jQuery, AbstractField) {
 

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Installer;
 
 /**
  * Class File
- *
- * @package Gene\BlueFoot\Model\Installer
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class File extends \Magento\Framework\Model\AbstractModel
 {

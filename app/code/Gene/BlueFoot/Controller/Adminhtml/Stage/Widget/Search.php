@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Widget;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -7,10 +10,6 @@ use Magento\Catalog\Api\ProductRepositoryInterface as ProductRepository;
 
 /**
  * Class Search
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage\Widget
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Search extends \Magento\Backend\App\Action
 {

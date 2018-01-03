@@ -1,5 +1,4 @@
 /**
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([], function () {
 

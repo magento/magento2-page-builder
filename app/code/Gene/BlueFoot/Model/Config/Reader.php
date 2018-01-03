@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Config;
 
 /**
  * Class Reader
- *
- * @package Gene\BlueFoot\Model\Config
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {

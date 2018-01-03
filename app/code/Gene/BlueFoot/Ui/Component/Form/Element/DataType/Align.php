@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
  * Class Align
  *
- * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
  */
 class Align extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {

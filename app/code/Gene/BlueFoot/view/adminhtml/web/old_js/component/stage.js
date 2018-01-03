@@ -2,7 +2,6 @@
  * - Stage.js
  * Handles building the stage and events
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/stage/structural/editable-area',

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage;
 
 /**
  * Class Config
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Config extends \Magento\Backend\App\Action
 {

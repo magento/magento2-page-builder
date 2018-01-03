@@ -2,7 +2,6 @@
  * - Column.js
  * Structural column elements
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

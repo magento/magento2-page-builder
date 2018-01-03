@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model;
 
 use Gene\BlueFoot\Api\Data\EntityInterface;
@@ -8,10 +11,6 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Entity
- *
- * @package Gene\BlueFoot\Model
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInterface, IdentityInterface
 {

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Entity;
 
 /**
  * Class Frontend
- *
- * @package Gene\BlueFoot\Model\Entity
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Frontend extends \Magento\Framework\Model\AbstractModel
 {

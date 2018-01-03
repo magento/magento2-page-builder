@@ -1,6 +1,5 @@
 /**
  * Redactor implementation for knockout
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     "knockout",

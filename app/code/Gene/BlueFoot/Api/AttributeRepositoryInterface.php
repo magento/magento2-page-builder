@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Api;
 
 /**
  * Interface AttributeRepositoryInterface
- *
- * @package Magento\Catalog\Api
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 interface AttributeRepositoryInterface extends \Magento\Framework\Api\MetadataServiceInterface
 {

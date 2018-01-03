@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Stage;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -8,10 +11,6 @@ use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Build
- *
- * @package Gene\BlueFoot\Model\Stage
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Build extends \Magento\Framework\Model\AbstractModel
 {

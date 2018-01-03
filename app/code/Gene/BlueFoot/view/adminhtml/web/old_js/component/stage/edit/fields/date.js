@@ -2,7 +2,6 @@
  * - Date.js
  * Render a date field
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define(['jquery', 'bluefoot/hook', 'bluefoot/widget/abstract'], function (jQuery, Hook, AbstractField) {
 

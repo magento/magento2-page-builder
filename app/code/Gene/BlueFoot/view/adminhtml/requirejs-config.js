@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 var config = {
     paths: {
         'bluefoot/async': 'Gene_BlueFoot/js/resource/requirejs/async',

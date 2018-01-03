@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
@@ -14,10 +17,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class ContentBlockRepository
- *
- * @package Gene\BlueFoot\Model\Attribute
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class ContentBlockRepository implements ContentBlockRepositoryInterface
 {

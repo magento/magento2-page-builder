@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Helper\Widget;
 
 /**
  * Class Video
- *
- * @package Gene\BlueFoot\Helper\Widget
- *
- * @author Chloe Langford <chloe@gene.co.uk>
  */
 class Video extends \Magento\Framework\App\Helper\AbstractHelper
 {

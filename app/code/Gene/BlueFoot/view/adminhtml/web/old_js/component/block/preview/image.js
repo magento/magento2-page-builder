@@ -2,7 +2,6 @@
  * - Image.js
  * Image class for preview areas of a block
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

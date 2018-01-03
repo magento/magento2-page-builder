@@ -1,7 +1,6 @@
 /**
  * Live Edit system
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

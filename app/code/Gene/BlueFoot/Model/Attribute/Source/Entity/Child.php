@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\Source\Entity;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Child
- *
- * @package Gene\BlueFoot\Model\Attribute\Source\Entity
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {

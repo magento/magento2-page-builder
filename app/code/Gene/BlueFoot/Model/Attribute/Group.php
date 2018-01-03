@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute;
 
 use Magento\Framework\Api\AttributeValueFactory;
 
 /**
  * Class Group
- *
- * @package Magento\Catalog\Model\Product\Attribute
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Group extends \Magento\Eav\Model\Entity\Attribute\Group
 {

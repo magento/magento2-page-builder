@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\Data\Widget;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 
 /**
  * Class Category
- *
- * @package Gene\BlueFoot\Model\Attribute\Data\Widget
- *
- * @author Hob Adams <hob@gene.co.uk>
  */
 class Category extends \Gene\BlueFoot\Model\Attribute\Data\AbstractWidget implements
     \Gene\BlueFoot\Model\Attribute\Data\WidgetInterface

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Template;
 
 /**
  * Class Delete
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage\Widget
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Delete extends \Magento\Backend\App\Action
 {

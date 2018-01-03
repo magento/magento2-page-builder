@@ -2,7 +2,6 @@
  * - Save.js
  * Handles saving the data from within the stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/config',

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model;
 
 /**
  * Class Widget
- *
- * @package Gene\BlueFoot\Model
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Widget extends \Magento\Framework\Model\AbstractModel
 {

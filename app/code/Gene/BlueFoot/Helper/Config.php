@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Helper;
 
 use Magento\Framework\UrlInterface;
 
 /**
  * Class Config
- *
- * @package Gene\BlueFoot\Helper
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {

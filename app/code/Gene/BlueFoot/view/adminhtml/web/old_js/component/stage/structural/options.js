@@ -2,7 +2,6 @@
  * - Options.js
  * Options for various elements
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'underscore',

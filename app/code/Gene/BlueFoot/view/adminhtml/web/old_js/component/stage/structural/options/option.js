@@ -2,7 +2,6 @@
  * - Options.js
  * A single option for a structural block or entity
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko'

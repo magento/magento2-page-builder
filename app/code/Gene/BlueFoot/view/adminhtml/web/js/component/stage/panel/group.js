@@ -1,8 +1,12 @@
 define(["knockout"], function (_knockout) {
   /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
    * Group Class
    *
-   * @author Dave Macaulay <dmacaulay@magento.com>
    */
   var Group =
   /*#__PURE__*/

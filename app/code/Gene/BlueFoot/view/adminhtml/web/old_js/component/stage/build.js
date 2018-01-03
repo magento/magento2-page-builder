@@ -2,7 +2,6 @@
  * - Build.js
  * Handles rebuilding the stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/event-emitter',

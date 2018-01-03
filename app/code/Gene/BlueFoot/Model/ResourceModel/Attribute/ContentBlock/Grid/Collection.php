@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Grid;
 
 /**
  * Class Collection
- *
- * @package Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Grid
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Collection extends \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Collection
 {

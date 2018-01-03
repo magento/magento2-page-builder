@@ -2,7 +2,6 @@
  * - Group.js
  * Group within the panel on the left side
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

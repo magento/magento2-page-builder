@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Stage\Source\Row;
 
 /**
  * Class Template
- *
- * @package Gene\BlueFoot\Model\Stage\Source\Row
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Template extends \Magento\Framework\Model\AbstractModel
 {

@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Installer;
 
 use Gene\BlueFoot\Setup\EntitySetupFactory;
 
 /**
  * Class Install
- *
- * @package Gene\BlueFoot\Model\Installer
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Install extends \Magento\Framework\Model\AbstractModel
 {

@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\DataProvider\Attribute;
 
 use \Gene\BlueFoot\Model\ResourceModel\Attribute\CollectionFactory;
 
 /**
  * Class AttributeDataProvider
- *
- * @package Gene\BlueFoot\Ui\DataProvider\ContentBlock
- *
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class AttributeDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {

@@ -1,7 +1,6 @@
 /*
  * BlueFoot Tabs JS
  * Very basic tabs js
- * @author Hob Adams <hob@gene.co.uk>
  */
 (function (jQuery) {
     jQuery.fn.bluefootTabs = function (options) {

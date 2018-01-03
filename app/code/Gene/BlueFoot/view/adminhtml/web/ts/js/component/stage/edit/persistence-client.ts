@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 import {ModalComponent} from "../edit";
 import DataStore from "../../data-store";
 

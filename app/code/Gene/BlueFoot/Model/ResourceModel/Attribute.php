@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel;
 
 use Magento\Framework\Model\AbstractModel;
 
 /**
  * Class Attribute
- *
- * @package Gene\BlueFoot\Model\ResourceModel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {

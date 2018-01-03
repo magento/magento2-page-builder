@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog;
 
 /**
  * Class Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog\Single
  *
- * @author Hob Adams <hob@gene.co.uk>
  */
 class Single extends AbstractCatalogBlock
 {

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\ContentBlock;
 
 use Gene\BlueFoot\Api\Data;
@@ -15,10 +18,6 @@ use Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\Group\CollectionFac
 
 /**
  * Class GroupRepository
- *
- * @package Gene\BlueFoot\Model\Attribute\ContentBlock
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class GroupRepository implements ContentBlockGroupRepositoryInterface
 {

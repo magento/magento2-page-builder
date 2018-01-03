@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Setup;
 
 use Magento\Framework\Setup\UninstallInterface;
@@ -9,7 +12,6 @@ use Magento\Framework\Setup\ModuleContextInterface;
 /**
  * Class Uninstall
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Uninstall implements UninstallInterface
 {

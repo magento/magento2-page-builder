@@ -1,7 +1,6 @@
 /**
  * Design Options UI Component
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/element/abstract',

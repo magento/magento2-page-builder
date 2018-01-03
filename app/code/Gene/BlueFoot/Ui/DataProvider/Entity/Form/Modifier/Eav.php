@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier;
 
 use Gene\BlueFoot\Api\Data\AttributeInterface as BlueFootAttributeInterface;
@@ -33,10 +36,6 @@ use Gene\BlueFoot\Model\AttributeFactory;
 
 /**
  * Class Eav
- *
- * @package Gene\BlueFoot\Ui\DataProvider\Entity\Form\Modifier
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier
 {

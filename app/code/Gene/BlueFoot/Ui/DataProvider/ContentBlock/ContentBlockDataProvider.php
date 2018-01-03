@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\DataProvider\ContentBlock;
 
 use \Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock\CollectionFactory;
 
 /**
  * Class ContentBlockDataProvider
- *
- * @package Gene\BlueFoot\Ui\DataProvider\ContentBlock
- *
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class ContentBlockDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {

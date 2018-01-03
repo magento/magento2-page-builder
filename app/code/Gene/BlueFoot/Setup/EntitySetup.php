@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Setup;
 
 use Magento\Eav\Model\Config;
@@ -11,10 +14,6 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;
 
 /**
  * Class EntitySetup
- *
- * @package Gene\BlueFoot\Setup
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class EntitySetup extends EavSetup
 {

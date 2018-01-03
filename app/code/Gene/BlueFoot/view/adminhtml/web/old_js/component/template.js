@@ -1,6 +1,5 @@
 /**
  * Template Manager modal ui component
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'Magento_Ui/js/modal/modal-component',

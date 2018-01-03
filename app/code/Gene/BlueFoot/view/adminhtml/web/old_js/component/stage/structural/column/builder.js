@@ -1,6 +1,5 @@
 /**
  * Add column based on a selected size.
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'ko',

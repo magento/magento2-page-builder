@@ -2,7 +2,6 @@
  * - Inline.js
  * Inline block, handles blocks which can be edited inline
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'underscore',

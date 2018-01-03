@@ -1,6 +1,5 @@
 /**
  * Magento Variables plugin for Redactor
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define(["jquery", "mage/translate", "bluefoot/config"], function(jQuery, $t, Config) {
 

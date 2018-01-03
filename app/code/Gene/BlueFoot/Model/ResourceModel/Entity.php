@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel;
 
 /**
  * Class Entity
- *
- * @package Gene\BlueFoot\Model\ResourceModel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 {

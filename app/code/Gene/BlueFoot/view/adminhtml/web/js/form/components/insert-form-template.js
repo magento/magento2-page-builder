@@ -1,6 +1,5 @@
 /**
  * Dynamically load in the form to create a template
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/components/insert-form',

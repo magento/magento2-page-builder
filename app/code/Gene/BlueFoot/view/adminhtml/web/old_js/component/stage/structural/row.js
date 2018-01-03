@@ -2,7 +2,6 @@
  * - Row.js
  * Structural row elements
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/stage/structural/abstract',

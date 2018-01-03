@@ -2,7 +2,6 @@
  * - Edit/Instance.js
  * Handles all interactions with the panel
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'uiComponent',

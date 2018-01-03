@@ -2,7 +2,6 @@
  * - Options/Column.js
  * Handles the column logic
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

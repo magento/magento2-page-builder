@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\ContentBlock;
 
 use Gene\BlueFoot\Api\Data\ContentBlockGroupInterface;
@@ -7,10 +10,6 @@ use Magento\Framework\DataObject\IdentityInterface;
 
 /**
  * Class Group
- *
- * @package Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Group extends \Magento\Framework\Model\AbstractModel implements ContentBlockGroupInterface, IdentityInterface
 {

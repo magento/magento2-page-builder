@@ -1,6 +1,5 @@
 /*
  * BlueFoot Normalise Heights JS
- * @author Hob Adams <hob@gene.co.uk>
  *
  * Plugin to normalise the heights of blocks within a container
  *

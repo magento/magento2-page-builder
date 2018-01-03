@@ -1,7 +1,10 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * JS Unit Test for stage/save.js
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',

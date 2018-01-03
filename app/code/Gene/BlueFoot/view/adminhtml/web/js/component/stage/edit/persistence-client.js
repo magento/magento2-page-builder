@@ -1,5 +1,10 @@
 define([], function () {
   /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
    * PersistenceClient
    *
    * Acts as the data provider client between our system and the UI component system

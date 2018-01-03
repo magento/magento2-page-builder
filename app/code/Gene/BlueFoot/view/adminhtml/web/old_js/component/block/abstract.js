@@ -2,7 +2,6 @@
  * - Abstract.js
  * Abstract class for all content / page builder blocks that are added to the stage
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'underscore',

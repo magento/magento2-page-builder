@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Installer;
 
 /**
  * Class Index
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Installer
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Index extends \Magento\Backend\App\Action
 {

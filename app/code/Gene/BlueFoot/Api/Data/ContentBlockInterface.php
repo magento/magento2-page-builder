@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Api\Data;
 
 /**
  * Interface ContentBlockInterface
- *
- * @package Gene\BlueFoot\Api\Data
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 interface ContentBlockInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 {

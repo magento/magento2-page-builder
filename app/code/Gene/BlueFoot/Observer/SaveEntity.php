@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 /**
  * Class SaveEntity
- *
- * @package Gene\BlueFoot\Observer
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class SaveEntity implements ObserverInterface
 {

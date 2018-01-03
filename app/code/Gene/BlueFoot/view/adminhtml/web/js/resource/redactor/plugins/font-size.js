@@ -1,7 +1,6 @@
 /**
  * Font size for Redactor
  *
- * @author Aidan Threadgold <aidan@gene.co.uk> & Dave Macaulay <dave@gene.co.uk>
  */
 define(["jquery", "mage/translate"], function(jQuery, $t) {
     /**

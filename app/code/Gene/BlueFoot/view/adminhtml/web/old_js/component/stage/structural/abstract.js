@@ -2,7 +2,6 @@
  * - Abstract.js
  * Abstract for the structural blocks (rows & columns)
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/stage/structural/editable-area',

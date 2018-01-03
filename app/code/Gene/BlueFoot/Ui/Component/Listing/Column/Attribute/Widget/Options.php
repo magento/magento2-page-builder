@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Widget;
 
 use Magento\Framework\Data\OptionSourceInterface;
@@ -7,8 +10,6 @@ use Magento\Framework\Data\OptionSourceInterface;
 /**
  * Class Options
  *
- * @package Gene\BlueFoot\Ui\Component\Listing\Column\Attribute\Widget
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class Options implements OptionSourceInterface
 {

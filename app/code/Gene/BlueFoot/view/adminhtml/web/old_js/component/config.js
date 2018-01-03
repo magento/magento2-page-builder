@@ -2,7 +2,6 @@
  * - Config.js
  * Handles retrieve the configuration from the server
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'underscore',

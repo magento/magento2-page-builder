@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block;
 
 /**
  * Class Gene\BlueFoot\Block\Entity\PageBuilder\Block\Newsletter
  *
- * @author Hob Adams <hob@gene.co.uk>
  */
 class Newsletter extends \Magento\Newsletter\Block\Subscribe
 {

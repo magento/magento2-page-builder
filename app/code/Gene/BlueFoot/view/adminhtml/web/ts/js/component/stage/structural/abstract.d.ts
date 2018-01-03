@@ -6,7 +6,6 @@ import Stage from "../../stage";
 /**
  * StructuralInterface
  *
- * @author Dave Macaulay <dmacaulay@magento.com>
  */
 export interface Structural extends EditableAreaInterface {
     parent: EditableArea;

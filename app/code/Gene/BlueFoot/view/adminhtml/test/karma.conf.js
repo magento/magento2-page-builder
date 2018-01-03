@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 // Karma configuration
 // Generated on Wed Feb 08 2017 11:58:29 GMT-0600 (CST)
 // Updated on Wed Feb 22 2017

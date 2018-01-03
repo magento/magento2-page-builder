@@ -2,7 +2,6 @@
  * - Common.js
  * Common functions required in more than one file
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([], function () {
 

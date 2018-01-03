@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel\Attribute;
 
 /**
  * Class ContentBlock
- *
- * @package Gene\BlueFoot\Model\ResourceModel\Attribute
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 {

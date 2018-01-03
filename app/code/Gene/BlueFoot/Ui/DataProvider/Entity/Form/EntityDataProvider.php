@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\DataProvider\Entity\Form;
 
 use Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory;
@@ -10,7 +13,6 @@ use Magento\Ui\DataProvider\Modifier\PoolInterface;
 /**
  * Class EntityDataProvider
  *
- * @package Gene\BlueFoot\Ui\DataProvider\Entity\Form
  */
 class EntityDataProvider extends AbstractDataProvider
 {

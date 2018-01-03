@@ -1,6 +1,5 @@
 /**
  * Magento Widget selector
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 
 define([

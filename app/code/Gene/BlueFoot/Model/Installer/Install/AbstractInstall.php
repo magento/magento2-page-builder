@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Installer\Install;
 
 use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
@@ -8,10 +11,6 @@ use Gene\BlueFoot\Setup\EntitySetup;
 
 /**
  * Class Attribute
- *
- * @package Gene\BlueFoot\Model\Installer
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {

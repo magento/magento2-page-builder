@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Plugin;
 
 /**
  * Class UiPlugin
- *
- * @package Gene\BlueFoot\Plugin
- *
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class UiPlugin
 {

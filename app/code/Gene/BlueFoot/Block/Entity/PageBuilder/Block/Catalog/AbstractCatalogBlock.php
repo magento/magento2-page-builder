@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Entity\PageBuilder\Block\Catalog;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 
 /**
  * Class Base
- *
- * @package Gene\BlueFoot\Block\Entity\PageBuilder\Block
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class AbstractCatalogBlock extends \Magento\Catalog\Block\Product\ListProduct
 {

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Stage\Save\Parser;
 
 /**
  * Class Element
- *
- * @package Gene\BlueFoot\Model\Stage\Save\Parser
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Element
 {

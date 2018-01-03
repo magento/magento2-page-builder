@@ -3,7 +3,6 @@
  * Force it to be an "optgroup" field and override the filteroptionslist action to make an ajax call
  * to retrieve our data.
  *
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'underscore',

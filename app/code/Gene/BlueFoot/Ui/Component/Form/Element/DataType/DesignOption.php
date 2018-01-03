@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Ui\Component\Form\Element\DataType;
 
 /**
  * Class DesignOption
- *
- * @package Gene\BlueFoot\Ui\Component\Form\Element\DataType
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class DesignOption extends \Magento\Ui\Component\Form\Element\DataType\AbstractDataType
 {

@@ -2,7 +2,6 @@
  * - Ajax.js
  * Handles all Ajax communication between the app and the server
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define(['jquery'], function (jQuery) {
 

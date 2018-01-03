@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute;
 
 use Magento\Framework\Exception\InputException;
@@ -7,10 +10,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Repository
- *
- * @package Gene\BlueFoot\Model\Attribute
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Repository implements \Gene\BlueFoot\Api\AttributeRepositoryInterface
 {

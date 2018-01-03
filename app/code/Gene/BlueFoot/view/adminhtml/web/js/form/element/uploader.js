@@ -1,6 +1,5 @@
 /**
  * Media Gallery and image uploader field
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 
 define([

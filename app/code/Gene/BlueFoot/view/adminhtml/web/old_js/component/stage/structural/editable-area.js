@@ -1,7 +1,6 @@
 /**
  * - editable-area.js
  *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/event-emitter',
