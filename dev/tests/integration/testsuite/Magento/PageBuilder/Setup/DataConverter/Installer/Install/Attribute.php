@@ -5,7 +5,6 @@
  */
 namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
 
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
@@ -52,9 +51,7 @@ class Attribute extends AbstractInstall
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
-     * @param \Magento\Framework\Filesystem\Io\File                        $ioFile
-     * @param \Magento\Framework\Module\Dir\Reader                         $moduleReader
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository           $contentBlockRepository
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -64,9 +61,7 @@ class Attribute extends AbstractInstall
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
-        \Magento\Framework\Filesystem\Io\File $ioFile,
-        \Magento\Framework\Module\Dir\Reader $moduleReader,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository $contentBlockRepository,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -76,9 +71,7 @@ class Attribute extends AbstractInstall
             $registry,
             $entitySetupFactory,
             $entity,
-            $ioFile,
-            $moduleReader,
-            $contentBlockRepositoryInterface,
+            $contentBlockRepository,
             $resource,
             $resourceCollection
         );
