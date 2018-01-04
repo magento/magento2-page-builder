@@ -8,6 +8,7 @@ import $t from 'mage/translate';
 import _ from "underscore";
 import Block from "./block";
 
+/*eslint-disable */
 export default class Row extends Block {
 
     /**

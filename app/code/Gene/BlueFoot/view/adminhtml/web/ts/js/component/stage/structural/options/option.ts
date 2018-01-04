@@ -6,6 +6,7 @@
 import { Structural } from "../abstract.d";
 import { OptionInterface } from "./option.d";
 
+/*eslint-disable */
 export class Option implements OptionInterface {
     parent: Structural;
     code: string;

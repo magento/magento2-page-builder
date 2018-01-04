@@ -5,6 +5,7 @@
 
 import ReadInterface from "../read-interface";
 
+/*eslint-disable */
 export default class Code implements ReadInterface {
     /**
      * Read heading type and title from the element

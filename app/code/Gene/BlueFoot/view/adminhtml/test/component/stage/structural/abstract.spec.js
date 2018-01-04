@@ -13,8 +13,10 @@ define([
     'bluefoot/stage/edit',
     'mageUtils'
 ], function (ko, EventEmitter, AbstractStructural, Edit, utils) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/structural/abstract", function () {
         var abstract, parent, stage;
+
         beforeEach(function () {
             parent = Object.assign(
                 new EventEmitter(),
@@ -52,6 +54,7 @@ define([
 
         it("duplicate copies data into new instance", function (done) {
             var mockData = {'testDuplicate': 1};
+
             abstract.data(mockData);
             abstract.duplicate(false, abstract, function (duplicate) {
                 expect(duplicate.data()).toEqual(mockData);
@@ -63,6 +66,7 @@ define([
             var mockChildDuplicate = {
                 'childDuplicate': 1
             };
+
             abstract.children.push({
                 duplicate: function ($data, structural, callbackFn) {
                     return callbackFn(mockChildDuplicate);
@@ -76,10 +80,11 @@ define([
 
         it("duplicate data duplicates data correctly", function () {
             var testData = {'testData': 1};
-            abstract.data(testData);
             var duplicate = {
                 data: ko.observable({})
             };
+
+            abstract.data(testData);
             abstract.duplicateData(duplicate);
             expect(duplicate.data()).toEqual(testData);
         });
@@ -94,6 +99,7 @@ define([
             var removeChild = 1,
                 input = [removeChild, 2],
                 expected = [2];
+
             abstract.children(input);
             expect(abstract.children()).toEqual(input);
             abstract.removeChild(removeChild);
@@ -101,9 +107,11 @@ define([
         });
 
         it("remove calls blockRemoved event", function (done) {
+            var structural;
+
             parent.addChild(abstract);
             expect(parent.children()[0]).toEqual(abstract);
-            var structural = {
+            structural = {
                 parent: parent
             };
             parent.on('blockRemoved', function () {
@@ -119,8 +127,9 @@ define([
         });
 
         it("can update wrapper style with object", function () {
-            expect(abstract.wrapperStyle()).toEqual({});
             var testData = {'testKey': 'testValue'};
+
+            expect(abstract.wrapperStyle()).toEqual({});
             abstract.updateWrapperStyle(testData);
             expect(abstract.wrapperStyle()).toEqual(testData);
         });

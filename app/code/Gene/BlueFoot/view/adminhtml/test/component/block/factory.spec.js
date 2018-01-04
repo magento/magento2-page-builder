@@ -10,9 +10,11 @@ define([
     'ko',
     'bluefoot/block/factory'
 ], function (ko, BlockFactory) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/component/block/factory", function () {
         var stage, mockBlockConfig,
             blockFactory = new BlockFactory();
+
         beforeEach(function () {
             stage = {
                 save: {

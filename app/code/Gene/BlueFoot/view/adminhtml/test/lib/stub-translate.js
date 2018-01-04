@@ -4,6 +4,7 @@
  *
  */
 define(function() {
+    'use strict';
     return function $t(str) {
         return str;
     };

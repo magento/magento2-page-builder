@@ -3,6 +3,8 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /*eslint-disable */
   var Panel = _uiComponent.extend({
     componentTemplate: 'Gene_BlueFoot/component/stage/panel.html',
     stage: null,

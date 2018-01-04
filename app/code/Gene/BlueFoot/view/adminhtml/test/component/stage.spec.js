@@ -11,9 +11,10 @@ define([
     'bluefoot/stage',
     'bluefoot/stage/structural/row'
 ], function (ko, Stage, Row) {
-
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage", function () {
         var stageId, stageContent, stage, parent;
+
         beforeEach(function () {
             parent = {
                 confirmationDialog: function(options) {
@@ -45,6 +46,7 @@ define([
             var removeChild = 1,
                 input = [removeChild, 2],
                 expected = [2];
+
             stage.stageContent(input);
             expect(stage.stageContent()).toEqual(input);
             stage.removeChild(removeChild);

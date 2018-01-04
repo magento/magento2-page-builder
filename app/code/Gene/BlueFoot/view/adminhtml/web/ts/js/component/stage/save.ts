@@ -15,6 +15,8 @@ import decodeAllDataUrlsInString from "../../utils/directives";
  *
  * @param {KnockoutObservableArray<Structural>} tree
  */
+
+/*eslint-disable */
 export default class Save {
     rootTemplate: string = 'Gene_BlueFoot/component/block/render/root.html';
 

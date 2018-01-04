@@ -12,8 +12,10 @@ define([
     'bluefoot/config',
     'hyperscript'
 ], function (ko, Build, Config, h) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/build", function () {
         var parent, stage, build;
+
         beforeEach(function () {
             parent = {
                 addColumn: function () {}
@@ -29,6 +31,7 @@ define([
         it("parseStructure detects valid stage element", function () {
             var mockStructure = '<div ' + Config.getValue('dataRoleAttributeName') + '="stage"></div>',
                 structure = build.parseStructure(mockStructure);
+
             expect(structure.constructor.name).toEqual('HTMLDivElement');
             expect(structure.getAttribute(Config.getValue('dataRoleAttributeName'))).toEqual('stage');
         });
@@ -36,6 +39,7 @@ define([
         it("parseStructure returns false on invalid structure", function () {
             var mockStructure = '<div data-invalid-role="stage"></div>',
                 structure = build.parseStructure(mockStructure);
+
             expect(structure).toEqual(false);
         });
 
@@ -46,11 +50,14 @@ define([
         it("getElementData returns valid object", function () {
             var element = document.createElement('div'),
                 script = document.createElement('script'),
-                mockData = {'mockData': true};
+                mockData = {'mockData': true},
+                parsed;
+
             script.setAttribute('type', 'text/advanced-cms-data');
             script.innerHTML = JSON.stringify(mockData);
             element.append(script);
-            var parsed = build.getElementData(element);
+            parsed = build.getElementData(element);
+
             expect(parsed).toEqual(jasmine.any(Object));
             expect(parsed).toEqual(mockData);
         });
@@ -58,21 +65,26 @@ define([
         it("getElementData returns empty object on invalid element", function () {
             var element = document.createElement('div'),
                 parsed = build.getElementData(element);
+
             expect(parsed).toEqual(jasmine.any(Object));
             expect(parsed).toEqual({});
         });
 
         it("parseAndBuildElement returns Promise", function () {
             var parentData = {},
-                mockParent = {};
+                mockParent = {},
+                element,
+                buildElement;
+
             parentData[Config.getValue('dataRoleAttributeName')] = 'stage';
-            var element = h('div', parentData);
-            var buildElement = build.parseAndBuildElement(element, mockParent);
+            element = h('div', parentData);
+            buildElement = build.parseAndBuildElement(element, mockParent);
             expect(buildElement).toEqual(jasmine.any(Promise));
         });
 
         it("parseAndBuildElement requires data role attribute to be present", function (done) {
             var element = h('div');
+
             build.parseAndBuildElement(element).then(function () {
                 done(new Error('parseAndBuildElement should reject when data role attribute isn\'t present.'));
             }, function (error) {
@@ -83,14 +95,17 @@ define([
 
         it("getElementChildren will retrieve direct children successfully", function () {
             var parentData = {},
-                childData = {};
+                childData = {},
+                element,
+                children;
+
             parentData[Config.getValue('dataRoleAttributeName')] = 'stage';
             childData[Config.getValue('dataRoleAttributeName')] = 'row';
-            var element = h('div', parentData,
+            element = h('div', parentData,
                 h('div', childData),
                 h('div', childData)
             );
-            var children = build.getElementChildren(element);
+            children = build.getElementChildren(element);
             expect(children).toEqual(jasmine.any(Array));
             expect(children.length).toEqual(2);
             expect(children[0].getAttribute(Config.getValue('dataRoleAttributeName'))).toEqual('row');
@@ -99,10 +114,13 @@ define([
 
         it("getElementChildren will retrieve deeper children successfully", function () {
             var parentData = {},
-                childData = {};
+                childData = {},
+                element,
+                children;
+
             parentData[Config.getValue('dataRoleAttributeName')] = 'stage';
             childData[Config.getValue('dataRoleAttributeName')] = 'deep-child';
-            var element = h('div', parentData,
+            element = h('div', parentData,
                 h('div',
                     h('div',
                         h('div', childData),
@@ -110,7 +128,7 @@ define([
                     )
                 )
             );
-            var children = build.getElementChildren(element);
+            children = build.getElementChildren(element);
             expect(children).toEqual(jasmine.any(Array));
             expect(children.length).toEqual(2);
             expect(children[0].getAttribute(Config.getValue('dataRoleAttributeName'))).toEqual('deep-child');
@@ -120,6 +138,7 @@ define([
         it("getElementChildren will always return an array on invalid element", function () {
             var invalidElement = h('div'),
                 children = build.getElementChildren(invalidElement);
+
             expect(children).toEqual(jasmine.any(Array));
         });
 
@@ -128,6 +147,7 @@ define([
                 addRow: function () {},
                 addColumn: function () {}
             };
+
             expect(build.buildElement('stage', {}, mockParent)).toEqual(jasmine.any(Promise));
             expect(build.buildElement('row', {}, mockParent)).toEqual(jasmine.any(Promise));
             expect(build.buildElement('column', {}, mockParent)).toEqual(jasmine.any(Promise));

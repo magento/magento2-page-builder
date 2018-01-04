@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 define([], function () {
+    'use strict';
     return {
         dataRoleAttributeName: 'data-role',
         config_url: '/testConfig',

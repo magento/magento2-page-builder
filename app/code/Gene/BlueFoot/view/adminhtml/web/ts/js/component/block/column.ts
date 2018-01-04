@@ -5,6 +5,7 @@
 
 import Block from "./block";
 
+/*eslint-disable */
 export default class Column extends Block {
 
 }

@@ -4,6 +4,7 @@
  * Very basic accordion plugin stripped down to be used with the BlueFoot
  */
 (function (jQuery) {
+    'use strict';
     jQuery.fn.bluefootAccordion = function (options) {
 
         var opts = jQuery.extend( {}, jQuery.fn.bluefootAccordion.defaults, options );

@@ -4,6 +4,8 @@
  */
 
 define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
+    'use strict';
+    /*eslint-disable */
 
     /**
      * Retrieve the view model for an element
@@ -86,10 +88,8 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
          * @param element
          * @param valueAccessor
          * @param allBindingsAccessor
-         * @param data
-         * @param context
          */
-        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function (element, valueAccessor, allBindingsAccessor) {
             // Initialize draggable on all children of the element
             Draggable.init(jQuery(element), valueAccessor);
 

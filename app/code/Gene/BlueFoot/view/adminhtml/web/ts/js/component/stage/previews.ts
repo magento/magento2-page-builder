@@ -8,6 +8,7 @@ import PreviewBlock from '../block/preview/block';
 import Block from "../block/block";
 import loadModule from 'Gene_BlueFoot/js/component/loader';
 
+/*eslint-disable */
 let previews: Array<any> = [];
 
 /**

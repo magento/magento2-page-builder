@@ -10,6 +10,7 @@ import "Gene_BlueFoot/js/resource/slick/slick";
 import _, {Dictionary} from "underscore";
 import Structural from "../../stage/structural/abstract";
 
+/*eslint-disable */
 export default class AdvancedSlider extends PreviewBlock {
     element: Element;
     ready: boolean = false;

@@ -9,6 +9,7 @@ import $ from "jquery";
 import _ from "underscore";
 import "tabs";
 
+/*eslint-disable */
 export default class Tabs extends Block {
     element: Element;
     renderCounter: number = 0;

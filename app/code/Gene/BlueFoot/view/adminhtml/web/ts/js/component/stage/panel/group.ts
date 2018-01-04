@@ -8,6 +8,8 @@ import ko from 'knockout';
  * Group Class
  *
  */
+
+/*eslint-disable */
 export class Group {
     id: KnockoutObservable<number> = ko.observable();
     code: KnockoutObservable<string> = ko.observable('');

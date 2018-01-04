@@ -5,6 +5,9 @@
 
 define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _) {
 
+    'use strict';
+    /*eslint-disable */
+
     /**
      * Retrieve the view model for an element
      *
@@ -26,6 +29,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
             connectWith: '.bluefoot-sortable',
             helper: function (event, element) {
                 var ele = jQuery('<div />');
+
                 if (element.children().first().hasClass('bluefoot-entity')) {
                     ele.addClass('bluefoot-entity-helper').data('sorting', true);
                 } else {
@@ -42,7 +46,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
 
                     return jQuery('<div />').addClass('bluefoot-placeholder-sortable');
                 },
-                update: function (clone, ui) {
+                update: function () {
                     return;
                 }
             },
@@ -154,7 +158,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 newParentEl = blockEl.parent()[0],
                 newIndex = blockEl.index();
 
-            if (blockEl && (newParentEl === this)) {
+            if (blockEl && newParentEl === this) {
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
@@ -168,6 +172,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
 
                         // Force refresh of the parent
                         var data = getViewModelFromUi(ui).parent.children().slice(0);
+
                         getViewModelFromUi(ui).parent.children([]);
                         getViewModelFromUi(ui).parent.children(data);
                         return;
@@ -211,15 +216,16 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
          * @returns {*}
          */
         onSortChange: function (event, ui) {
-            var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name;
-                currentInstance = getViewModelFromUi(ui);
+            var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
+                currentInstance = getViewModelFromUi(ui),
+                allowedParents;
 
             // If the registry contains a reference to the drag element view model use that instead 
             if (require("uiRegistry").get('dragElementViewModel')) {
                 currentInstance = require("uiRegistry").get('dragElementViewModel');
             }
             
-            var allowedParents = currentInstance.config.allowed_parents;
+            allowedParents = currentInstance.config.allowed_parents;
 
             // Verify if the currently dragged block is accepted by the hovered parent
             if (parentContainerName && Array.isArray(allowedParents)) {  
@@ -277,7 +283,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
          * @param data
          * @param context
          */
-        init: function(element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function(element, valueAccessor) {
             // Initialize draggable on all children of the element
             Sortable.init(jQuery(element), valueAccessor);
         }

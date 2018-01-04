@@ -14,6 +14,7 @@ import AttributeReaderComposite from '../format/read/composite';
 import Stage from "../stage";
 import EditableArea from "./structural/editable-area";
 
+/*eslint-disable */
 export default class Build extends EventEmitter {
     fieldValue: string;
     stage: Stage;

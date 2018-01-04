@@ -7,6 +7,7 @@ import _ from 'underscore';
 import $ from 'jquery';
 import cmsConfig from 'advanced-cms-init-config';
 
+/*eslint-disable */
 export default class Config {
     private static initConfig: any = cmsConfig;
     private static config: any = {

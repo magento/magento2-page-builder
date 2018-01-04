@@ -11,6 +11,9 @@ import $ from 'jquery';
  * @param {JQuery} element
  * @returns {JQuery}
  */
+
+
+/*eslint-disable */
 export default function filterHtml(element: JQuery): JQuery {
     const isWhiteSpaceOrComment = function() {
         return this.nodeType == Node.COMMENT_NODE

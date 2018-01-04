@@ -4,6 +4,8 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
   /**
    * Block Class
    */
+
+  /*eslint-disable */
   var Block =
   /*#__PURE__*/
   function (_EventEmitter) {

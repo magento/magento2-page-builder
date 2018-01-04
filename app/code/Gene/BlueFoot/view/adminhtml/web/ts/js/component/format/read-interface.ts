@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+/*eslint-disable */
 export interface ReadInterface {
     /**
      * Read data from the element

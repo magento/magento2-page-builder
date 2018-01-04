@@ -1,6 +1,7 @@
 define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery", "./block/factory", "./config"], function (_editableArea, _underscore, _dataStore, _translate, _save, _jquery, _factory, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /*eslint-disable */
   var Stage =
   /*#__PURE__*/
   function (_EditableArea) {

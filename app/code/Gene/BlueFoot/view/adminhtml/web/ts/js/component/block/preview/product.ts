@@ -9,6 +9,7 @@ import PreviewBlock from "./block";
 import Config from "../../config";
 import {Dictionary} from "underscore";
 
+/*eslint-disable */
 export default class Product extends PreviewBlock {
 
     /**

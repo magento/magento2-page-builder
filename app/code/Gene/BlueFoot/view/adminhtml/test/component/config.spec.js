@@ -10,7 +10,7 @@ define([
     'bluefoot/config',
     'advanced-cms-init-config'
 ], function (Config, initConfig) {
-
+    'use strict';
     describe("Gene_BlueFoot/js/component/core/config", function () {
 
         // Functions that should exist in the class
@@ -38,6 +38,7 @@ define([
             'getColumnDefinitionByBreakpoint'
         ];
 
+        /*eslint-disable */
         for (var i = 0; i < shouldExistFn.length; i++) {
             var fn = shouldExistFn[i];
             it(fn + ' fn exists', function () {
@@ -63,18 +64,18 @@ define([
                 Config.setInitConfig(initConfig);
             });
             it('can load entities', function (done) {
-                Config.loadEntities([1], 1, function (config) {
+                Config.loadEntities([1], 1, function () {
                     expect(Config.getEntity(1)).toBeDefined();
                     done();
                 });
             });
         });
-
         describe('getContentTypeConfig', function () {
             it('can retrieve content type config', function () {
                 var mockContentType = {
                     slug: 'test'
                 };
+
                 Config._setInitConfig('contentTypes', {
                     'testContentType': mockContentType
                 });
@@ -82,15 +83,15 @@ define([
             });
             it('will return false if not found', function () {
                 expect(Config.getContentTypeConfig('falseContentType')).toEqual(false);
-            })
+            /*eslint-enable */
+            });
         });
-
         describe('getConfig', function () {
             it('can retrieve config', function () {
                 Config._setConfig('getConfigTest', true);
                 expect(Config.getConfig().getConfigTest).toEqual(true);
             });
-        })
+        });
 
         describe('getValue', function () {
             it('can retrieve value from _config', function () {
@@ -110,6 +111,7 @@ define([
         describe('deleteValue', function () {
             it('can remove a valid from config', function () {
                 var mockData = [{test: true}];
+
                 Config._setConfig('removeFromConfig', mockData);
                 expect(Config.getValue('removeFromConfig').length).toEqual(1);
                 Config.deleteValue('removeFromConfig', 'test', true);
@@ -118,6 +120,7 @@ define([
 
             it('doesn\'t error when value is incorrect', function () {
                 var mockData = [{test: false}];
+
                 Config._setConfig('removeFromConfig', mockData);
                 expect(function () {
                     Config.deleteValue('removeFromConfig', 'test', true)
@@ -128,6 +131,7 @@ define([
         describe('mergeValues', function () {
             it('can merge values into config', function () {
                 var mockData = {merged: true};
+
                 Config.resetConfig();
                 Config._setConfig('testConfig', [{original: true}]);
                 Config.mergeValues('testConfig', mockData);

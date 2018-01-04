@@ -18,6 +18,7 @@ define(function (require) {
     //     require('./template')
     // );
     var ids = 0;
+
     return {
         /**
          * Removes the incoming value from array in case

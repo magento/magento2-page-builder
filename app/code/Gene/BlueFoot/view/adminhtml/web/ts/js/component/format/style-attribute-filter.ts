@@ -4,6 +4,7 @@
  */
 import {DataObject} from "../data-store";
 
+/*eslint-disable */
 export default class StyleAttributeFilter {
     // Allowed style attributes
     allowedAttributes: Array<string> = [

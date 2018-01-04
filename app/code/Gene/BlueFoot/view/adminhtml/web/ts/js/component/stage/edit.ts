@@ -9,6 +9,7 @@ import DataStore from "../data-store";
 import $t from "mage/translate";
 import PersistenceClient from "./edit/persistence-client";
 
+/*eslint-disable */
 export interface FormComponent {
     destroy(): void;
 }

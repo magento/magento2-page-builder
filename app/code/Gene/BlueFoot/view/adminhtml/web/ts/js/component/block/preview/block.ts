@@ -11,6 +11,7 @@ interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
 
+/*eslint-disable */
 export default class PreviewBlock {
     parent: Block;
     config: any;

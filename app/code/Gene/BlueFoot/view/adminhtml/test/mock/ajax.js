@@ -3,9 +3,11 @@
  * See COPYING.txt for license details.
  */
 define(['test/data/mock-requests'], function (requests) {
+    'use strict';
 
     /**
-     * Define wrapping methods for the Ajax functions of your choice, this is in place if the system, or another developer
+     * Define wrapping methods for the Ajax functions of your choice,
+     * this is in place if the system, or another developer
      * needs to make changes to the Ajax components the system uses.
      *
      * @constructor
@@ -24,6 +26,8 @@ define(['test/data/mock-requests'], function (requests) {
      * @param failedCallback
      * @param dataType
      */
+
+    /* eslint-disable */
     Ajax.prototype.get = function (url, parameters, successCallback, doneCallback, failedCallback, dataType) {
         parameters = parameters || {};
         parameters.form_key = InitConfig.form_key;
@@ -68,9 +72,11 @@ define(['test/data/mock-requests'], function (requests) {
         if (typeof requests[url] === 'function') {
             setTimeout(function () {
                 var mockRequest = requests[url](parameters);
+
                 if (mockRequest.success && typeof successCallback === 'function') {
                     var response = mockRequest.responseText;
-                    if (dataType == 'json') {
+
+                    if (dataType === 'json') {
                         response = JSON.parse(response);
                     }
                     successCallback(response);

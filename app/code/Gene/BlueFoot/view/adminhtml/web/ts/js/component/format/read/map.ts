@@ -8,6 +8,7 @@ import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 
+/*eslint-disable */
 export default class Tabs implements ReadInterface {
 
     /**

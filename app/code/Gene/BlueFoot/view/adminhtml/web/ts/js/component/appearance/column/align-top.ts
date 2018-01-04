@@ -6,6 +6,7 @@
 import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
 
+/*eslint-disable */
 export default class AlignTop implements AppearanceInterface {
     /**
      * Apply align top appearance

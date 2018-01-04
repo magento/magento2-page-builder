@@ -3,6 +3,8 @@ define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loade
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /*eslint-disable */
   var previews = [];
   /**
    * Load all preview instances into our cache

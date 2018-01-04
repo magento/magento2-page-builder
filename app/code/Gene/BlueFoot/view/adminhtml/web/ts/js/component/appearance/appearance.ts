@@ -6,6 +6,7 @@
 import {DataObject} from "../component/data-store";
 import AppearanceInterface from "../component/appearance/appearance-interface";
 
+/*eslint-disable */
 interface AppearanceList {
     [key: string]: AppearanceInterface;
 }

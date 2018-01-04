@@ -8,6 +8,7 @@ import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
 
+/*eslint-disable */
 export default class Search extends PreviewBlock {
     /**
      * PreviewBlock constructor

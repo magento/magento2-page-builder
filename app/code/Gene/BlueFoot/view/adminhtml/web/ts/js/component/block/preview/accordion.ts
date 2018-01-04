@@ -8,6 +8,7 @@ import Block from "./block";
 import ko from "knockout";
 import $ from "jquery";
 
+/*eslint-disable */
 export default class Accordion extends Block {
     element: Element;
     renderCounter: number = 0;

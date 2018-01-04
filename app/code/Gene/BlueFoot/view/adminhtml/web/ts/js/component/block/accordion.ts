@@ -11,6 +11,7 @@ interface AccordionDataObject {
     open_on_load: string;
 }
 
+/*eslint-disable */
 export default class Accordion extends Block {
 
     /**

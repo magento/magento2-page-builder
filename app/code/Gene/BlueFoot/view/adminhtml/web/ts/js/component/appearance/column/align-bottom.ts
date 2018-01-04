@@ -6,6 +6,7 @@
 import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
 
+/*eslint-disable */
 export default class AlignBottom implements AppearanceInterface {
     /**
      * Apply align bottom appearance

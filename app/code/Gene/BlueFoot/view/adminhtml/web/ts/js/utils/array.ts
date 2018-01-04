@@ -6,6 +6,7 @@
  * @param toIndex
  * @returns {Array<any>}
  */
+/*eslint-disable */
 export function moveArrayItem(array: Array<any> | KnockoutObservableArray<any>, fromIndex: number, toIndex: number): Array<any> | KnockoutObservableArray<any> {
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
     return array;

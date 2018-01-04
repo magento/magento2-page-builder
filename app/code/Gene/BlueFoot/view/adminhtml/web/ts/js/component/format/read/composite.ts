@@ -9,6 +9,7 @@ import Config from "../../config";
 import ReadInterface from "../read-interface";
 import {DataObject} from "../../data-store";
 
+/*eslint-disable */
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
     private contentTypeConfig: any;

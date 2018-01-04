@@ -10,6 +10,8 @@ define(["jquery"], function (_jquery) {
    * @param {JQuery} element
    * @returns {JQuery}
    */
+
+  /*eslint-disable */
   function filterHtml(element) {
     var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
       return this.nodeType == Node.COMMENT_NODE || this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/);

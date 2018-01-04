@@ -7,6 +7,7 @@ import ReadInterface from "../read-interface";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 
+/*eslint-disable */
 export default class Tabs implements ReadInterface {
 
     /**

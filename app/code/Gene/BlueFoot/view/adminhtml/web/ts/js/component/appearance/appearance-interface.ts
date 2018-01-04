@@ -5,6 +5,7 @@
 
 import {DataObject} from "../data-store";
 
+/*eslint-disable */
 export interface AppearanceInterface {
     /**
      * Apply appearance

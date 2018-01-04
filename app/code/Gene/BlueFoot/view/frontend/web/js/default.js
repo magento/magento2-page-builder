@@ -3,7 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+define(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+    'use strict';
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 

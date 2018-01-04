@@ -12,6 +12,7 @@ define([
     'bluefoot/config',
     'mageUtils'
 ], function (ko, Column, Config, utils) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/structural/column", function () {
         var column, parent, stage;
         beforeEach(function () {
@@ -41,6 +42,7 @@ define([
 
         it("copys column data to on duplicate", function () {
             var duplicate = new Column(parent, stage);
+
             column.data(['testData']);
             column.duplicateData(duplicate);
             expect(duplicate.data()).toEqual(['testData']);
@@ -48,14 +50,17 @@ define([
 
         it("can add column inside self", function () {
             var newColumn = column.addColumn();
+
             expect(column.children()).toContain(newColumn);
         });
 
         it("can insert a column to the left of an item", function () {
             var existingColumn = new Column(parent, stage),
-                internalColumn = new Column(parent, stage);
+                internalColumn = new Column(parent, stage),
+                newColumn;
+
             existingColumn.parent.addChild(internalColumn);
-            var newColumn = column.insertColumnAtIndex('left', existingColumn);
+            newColumn = column.insertColumnAtIndex('left', existingColumn);
             expect(existingColumn.parent.children()).toContain(newColumn);
             expect(existingColumn.parent.children()[0]).toEqual(newColumn);
         });

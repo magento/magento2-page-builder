@@ -9,6 +9,7 @@ import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
 
+/*eslint-disable */
 export default class Code extends PreviewBlock {
     /**
      * Constructor

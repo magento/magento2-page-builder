@@ -5,6 +5,7 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /*eslint-disable */
   var EditableArea =
   /*#__PURE__*/
   function (_EventEmitter) {

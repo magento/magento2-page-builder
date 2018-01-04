@@ -1,6 +1,7 @@
 define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscore"], function (_block, _jquery, _slick, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /*eslint-disable */
   var AdvancedSlider =
   /*#__PURE__*/
   function (_PreviewBlock) {

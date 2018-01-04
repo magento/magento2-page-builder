@@ -5,6 +5,7 @@
  *
  */
 (function (jQuery) {
+    'use strict';
     jQuery.fn.bluefootNormaliseHeights = function (options) {
 
         var opts = jQuery.extend( {}, jQuery.fn.bluefootNormaliseHeights.defaults, options );
@@ -21,6 +22,7 @@
                 // Loop through each container
                 container.each(function(){
                     var block = jQuery(this).find(opts.block);
+                    
                     // Reset heights
                     block.height('');
                     // Only run if there is more than one 'block'

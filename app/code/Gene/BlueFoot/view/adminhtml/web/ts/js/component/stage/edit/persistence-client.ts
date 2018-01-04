@@ -10,6 +10,8 @@ import DataStore from "../../data-store";
  *
  * Acts as the data provider client between our system and the UI component system
  */
+
+/*eslint-disable */
 export default class PersistenceClient {
     modal: ModalComponent;
     store: DataStore;

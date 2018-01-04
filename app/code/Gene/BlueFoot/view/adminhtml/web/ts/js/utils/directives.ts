@@ -14,6 +14,7 @@ const mimeType = 'text/magento-directive';
  * @param {string} url
  * @returns {boolean}
  */
+/*eslint-disable */
 function isDirectiveDataUrl(url: string): boolean {
     return url.indexOf('data:' + mimeType) === 0;
 }

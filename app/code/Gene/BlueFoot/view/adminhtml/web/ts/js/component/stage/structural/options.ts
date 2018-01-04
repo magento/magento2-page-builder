@@ -8,6 +8,7 @@ import { Structural } from './abstract.d';
 import _ from 'underscore';
 import ko from 'knockout';
 
+/*eslint-disable */
 export class Options {
     parent: Structural;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);

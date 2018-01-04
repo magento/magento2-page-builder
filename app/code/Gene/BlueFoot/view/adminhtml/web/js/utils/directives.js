@@ -16,6 +16,8 @@ define([], function () {
    * @returns {boolean}
    */
 
+  /*eslint-disable */
+
   function isDirectiveDataUrl(url) {
     return url.indexOf('data:' + mimeType) === 0;
   }

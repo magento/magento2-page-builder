@@ -3,6 +3,8 @@
  * Very basic tabs js
  */
 (function (jQuery) {
+    'use strict';
+
     jQuery.fn.bluefootTabs = function (options) {
 
         var opts = jQuery.extend( {}, jQuery.fn.bluefootTabs.defaults, options );
@@ -19,6 +21,7 @@
 
                 /* Add Active class to the new element */
                 var target = jQuery(this).data('tab');
+
                 jQuery(target).addClass('active');
                 jQuery(this).addClass('active');
 

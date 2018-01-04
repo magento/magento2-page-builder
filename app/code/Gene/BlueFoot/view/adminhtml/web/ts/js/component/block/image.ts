@@ -7,6 +7,7 @@ import Block from "./block";
 import Config from "../config";
 import _ from 'underscore';
 
+/*eslint-disable */
 export default class Image extends Block {
 
     /**

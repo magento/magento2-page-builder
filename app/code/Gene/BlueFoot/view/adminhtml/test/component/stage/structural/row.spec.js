@@ -12,8 +12,10 @@ define([
     'bluefoot/config',
     'mageUtils'
 ], function (ko, Row, Config, utils) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/structural/row", function () {
         var row, parent, stage;
+
         beforeEach(function () {
             parent = {
                 confirmationDialog: function (options) {

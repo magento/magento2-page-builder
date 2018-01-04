@@ -7,6 +7,7 @@
 // Updated on Wed Feb 22 2017
 
 module.exports = function(config) {
+    'use strict';
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -66,7 +67,8 @@ module.exports = function(config) {
 
 
         // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR
+        // || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_INFO,
 
 
@@ -86,6 +88,6 @@ module.exports = function(config) {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: Infinity
-    })
-}
+    });
+};
 

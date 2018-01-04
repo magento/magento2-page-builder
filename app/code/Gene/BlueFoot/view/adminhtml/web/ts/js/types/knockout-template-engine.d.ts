@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+/*eslint-disable */
 declare let koTemplateEngine: {
     waitForFinishRender(): Promise<void>
 };

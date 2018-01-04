@@ -1,6 +1,7 @@
 define(["knockout", "./block", "../../config"], function (_knockout, _block, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /*eslint-disable */
   var Search =
   /*#__PURE__*/
   function (_PreviewBlock) {

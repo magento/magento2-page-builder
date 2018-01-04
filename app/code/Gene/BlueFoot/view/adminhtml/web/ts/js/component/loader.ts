@@ -5,6 +5,7 @@
 
 import requireJs from 'require';
 
+/*eslint-disable */
 export default function load(dependencies: string[], factory: Function, onError?: Function) {
     requireJs(dependencies, factory, onError);
 }

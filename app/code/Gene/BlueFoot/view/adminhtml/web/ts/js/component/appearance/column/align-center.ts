@@ -6,7 +6,9 @@
 import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
 
+/*eslint-disable */
 export default class AlignCenter implements AppearanceInterface {
+
     /**
      * Apply align middle appearance
      *
