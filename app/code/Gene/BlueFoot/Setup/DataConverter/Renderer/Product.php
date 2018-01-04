@@ -61,7 +61,7 @@ class Product implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         if (!isset($eavData['product_id'])) {
-            throw new NoSuchEntityException('product_id is missing.');
+            throw new NoSuchEntityException(__('product_id is missing.'));
         }
         $connection = $this->resourceConnection->getConnection();
         $productMetadata = $this->metadataPool->getMetadata(ProductInterface::class);
@@ -70,7 +70,7 @@ class Product implements RendererInterface
             ->where($productMetadata->getIdentifierField() . ' = ?', (int) $eavData['product_id']);
         $productSku = $connection->fetchOne($select);
         if (!$productSku) {
-            throw new NoSuchEntityException('Product with id ' . $eavData['product_id'] . 'does not exist.');
+            throw new NoSuchEntityException(__('Product with id ' . $eavData['product_id'] . 'does not exist.'));
         }
 
         $rootElementAttributes = [

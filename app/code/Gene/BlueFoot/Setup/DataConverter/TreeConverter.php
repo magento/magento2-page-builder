@@ -178,14 +178,14 @@ class TreeConverter
 
     /**
      * Throw UnableMigrateWithOutParentException
-     * 
+     *
      * @param $exception
      * @throws UnableMigrateWithOutParentException
      */
     private function throwUnableMigrateWithOutParentException($exception)
     {
         throw new UnableMigrateWithOutParentException(
-            'Content type can not be migrated with out parent.',
+            __('Content type can not be migrated with out parent.'),
             null,
             $exception
         );
