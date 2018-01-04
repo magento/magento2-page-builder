@@ -9,18 +9,16 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">newsletter_form.newsletter_form_data_source</item>
-            <deps>
-				<dep>newsletter_form.newsletter_form_data_source</dep>
-			</deps>
         </item>
-        <label>Newsletter</label>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>newsletter_form</namespace>
-        </item>
+        <item name="label" xsi:type="string" translate="true">Newsletter</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>newsletter_form.newsletter_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>newsletter_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -28,74 +26,72 @@
         </buttons>
     </settings>
     <dataSource name="newsletter_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>newsletter_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="newsletter_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <label/>
-            </item>
-        </argument>
-        <field name="button_text">
+        <settings>
+            <label/>
+        </settings>
+        <field name="button_text" formElement="input" sortOrder="10">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Button Text</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>10</sort_order>
-                    <dataScope>button_text</dataScope>
                 </item>
             </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Button Text</label>
+                <dataScope>button_text</dataScope>
+            </settings>
         </field>
-        <field name="label_text">
+        <field name="label_text" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Label</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>20</sort_order>
-                    <dataScope>label_text</dataScope>
                 </item>
             </argument>
+            <settings>
+                <dataScope>label_text</dataScope>
+                <dataType>text</dataType>
+                <label translate="true">Label</label>
+            </settings>
         </field>
-        <field name="placeholder">
+        <field name="placeholder" sortOrder="30" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Placeholder</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>30</sort_order>
-                    <dataScope>placeholder</dataScope>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Placeholder</label>
+                <dataType>text</dataType>
+                <dataScope>placeholder</dataScope>
+            </settings>
         </field>
-        <field name="title">
+        <field name="title" formElement="input" sortOrder="40">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Title</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>40</sort_order>
-                    <dataScope>title</dataScope>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
                 </item>
             </argument>
+            <settings>
+                <dataScope>title</dataScope>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
     </fieldset>
     <fieldset name="advanced">
@@ -127,15 +123,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>

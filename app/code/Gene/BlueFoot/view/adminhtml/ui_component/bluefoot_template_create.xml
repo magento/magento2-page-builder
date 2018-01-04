@@ -1,96 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">bluefoot_template_create.bluefoot_template_create_data_source</item>
-            <deps>
-				<dep>bluefoot_template_create.bluefoot_template_create_data_source</dep>
-			</deps>
         </item>
         <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>bluefoot_template_create</namespace>
             <item name="toolbarContainer" xsi:type="string">${ $.parentName }</item>
             <item name="externalProvider" xsi:type="string">${ $.ns }.bluefoot_template_create</item>
             <item name="formSubmitType" xsi:type="string">ajax</item>
             <item name="autoRender" xsi:type="boolean">false</item>
         </item>
-        <item name="buttons" xsi:type="array">
-            <item name="close" xsi:type="string">Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button\CloseButton</item>
-            <item name="save" xsi:type="string">Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button\SaveButton</item>
-        </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
 
+    <settings>
+        <deps>
+            <dep>bluefoot_template_create.bluefoot_template_create_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>bluefoot_template_create</namespace>
+        <buttons>
+            <button name="save" class="Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button\CloseButton"/>
+            <button name="close" class="Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button\SaveButton"/>
+        </buttons>
+    </settings>
+
     <dataSource name="bluefoot_template_create_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Ui\DataProvider\Template\DataProvider</class>
-            <name>bluefoot_template_create_data_source</name>
-            <argument name="primaryFieldName" xsi:type="string">template_id</argument>
-            <argument name="requestFieldName" xsi:type="string">template_id</argument>
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="bluefoot/stage/template_save"/>
-                </item>
-            </argument>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Magento_Ui/js/form/provider</component>
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
             </item>
         </argument>
+        <settings>
+            <submitUrl path="bluefoot/stage/template_save"/>
+        </settings>
+        <dataProvider name="bluefoot_template_create_data_source" class="Gene\BlueFoot\Ui\DataProvider\Template\DataProvider">
+            <settings>
+                <requestFieldName>template_id</requestFieldName>
+                <primaryFieldName>template_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+
     </dataSource>
 
-    <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="collapsible" xsi:type="boolean">false</item>
-                <label>Template Information</label>
-                <sort_order>10</sort_order>
-            </item>
-        </argument>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">Template Information</label>
+            <collapsible>false</collapsible>
+        </settings>
 
-        <field name="name">
+        <field name="name" formElement="input" sortOrder="10">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Name</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
-                    <sort_order>10</sort_order>
-                    <dataScope>name</dataScope>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Name</label>
+                <dataType>text</dataType>
+                <dataScope>name</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
 
-        <field name="preview" class="Gene\BlueFoot\Ui\Component\Form\Element\DataType\TemplatePreview">
+        <field name="preview" class="Gene\BlueFoot\Ui\Component\Form\Element\DataType\TemplatePreview" formElement="input" component="Gene_BlueFoot/js/component/core/template/preview">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <label>Template Preview</label>
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <dataType>text</dataType>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">bluefoot_template_create_data_source</item>
-                    <dataScope>preview</dataScope>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
                 </item>
                 <item name="js_config" xsi:type="array">
-                    <component>Gene_BlueFoot/js/component/core/template/preview</component>
                     <item name="template" xsi:type="string">Gene_BlueFoot/component/core/template/preview</item>
                     <item name="stageNameSpace" xsi:type="string">bluefoot_template_manager.bluefoot_template_manager</item>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Template Preview</label>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <dataScope>preview</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
     </fieldset>
 </form>

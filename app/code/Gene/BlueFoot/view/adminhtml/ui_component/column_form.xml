@@ -9,17 +9,15 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">column_form.column_form_data_source</item>
-            <deps>
-				<dep>column_form.column_form_data_source</dep>
-			</deps>
-        </item>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>column_form</namespace>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>column_form.column_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>column_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -27,17 +25,17 @@
         </buttons>
     </settings>
     <dataSource name="column_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>column_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="column_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="appearance">
         <settings>
@@ -54,9 +52,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Width</label>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -64,27 +62,27 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">16.7%</item>
-                                <label>1/6</label>
+                                <item name="label" xsi:type="string" translate="true">1/6</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">33%</item>
-                                <label>1/3</label>
+                                <item name="label" xsi:type="string" translate="true">1/3</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">50%</item>
-                                <label>1/2</label>
+                                <item name="label" xsi:type="string" translate="true">1/2</item>
                             </option>
                             <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">66%</item>
-                                <label>2/3</label>
+                                <item name="label" xsi:type="string" translate="true">2/3</item>
                             </option>
                             <option name="4" xsi:type="array">
                                 <item name="value" xsi:type="string">82.5%</item>
-                                <label>5/6</label>
+                                <item name="label" xsi:type="string" translate="true">5/6</item>
                             </option>
                             <option name="5" xsi:type="array">
                                 <item name="value" xsi:type="string">100%</item>
-                                <label>1</label>
+                                <item name="label" xsi:type="string" translate="true">1</item>
                             </option>
                         </options>
                     </settings>
@@ -100,9 +98,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Appearance</label>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -110,15 +108,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">align-top</item>
-                                <label>Top Aligned</label>
+                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">align-center</item>
-                                <label>Centered</label>
+                                <item name="label" xsi:type="string" translate="true">Centered</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">align-bottom</item>
-                                <label>Bottom Aligned</label>
+                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
                             </option>
                         </options>
                     </settings>
@@ -174,9 +172,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Position</label>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -184,15 +182,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left top</item>
-                                <label>Top Aligned</label>
+                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center center</item>
-                                <label>Centered</label>
+                                <item name="label" xsi:type="string" translate="true">Centered</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">left bottom</item>
-                                <label>Bottom Aligned</label>
+                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
                             </option>
                         </options>
                     </settings>
@@ -208,9 +206,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Size</label>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -218,15 +216,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">auto</item>
-                                <label>Auto</label>
+                                <item name="label" xsi:type="string" translate="true">Auto</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">cover</item>
-                                <label>Cover</label>
+                                <item name="label" xsi:type="string" translate="true">Cover</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">contain</item>
-                                <label>Contain</label>
+                                <item name="label" xsi:type="string" translate="true">Contain</item>
                             </option>
                         </options>
                     </settings>
@@ -243,9 +241,9 @@
                 <dataType>boolean</dataType>
                 <label translate="true">Background Repeat</label>
                 <dataScope>background_repeat</dataScope>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <checkbox>
@@ -268,9 +266,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Attachment</label>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <select>
@@ -278,11 +276,11 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">scroll</item>
-                                <label>Scroll</label>
+                                <item name="label" xsi:type="string" translate="true">Scroll</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">fixed</item>
-                                <label>Fixed</label>
+                                <item name="label" xsi:type="string" translate="true">Fixed</item>
                             </option>
                         </options>
                     </settings>
@@ -319,15 +317,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>

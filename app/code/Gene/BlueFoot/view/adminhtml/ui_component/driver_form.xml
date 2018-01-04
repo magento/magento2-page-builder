@@ -9,18 +9,17 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">driver_form.driver_form_data_source</item>
-            <deps>
-				<dep>driver_form.driver_form_data_source</dep>
-			</deps>
         </item>
-        <label>Driver</label>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>driver_form</namespace>
-        </item>
+        <item name="label" xsi:type="string" translate="true">Driver</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>driver_form.driver_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>driver_form</namespace>
+
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -28,17 +27,17 @@
         </buttons>
     </settings>
     <dataSource name="driver_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>driver_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="driver_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
         <settings>
@@ -51,9 +50,9 @@
                 <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
                 <label translate="true">Image</label>
                 <componentType>fileUploader</componentType>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <fileUploader>
@@ -192,15 +191,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>

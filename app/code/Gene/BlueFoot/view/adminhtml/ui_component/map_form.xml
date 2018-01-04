@@ -9,18 +9,16 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">map_form.map_form_data_source</item>
-            <deps>
-				<dep>map_form.map_form_data_source</dep>
-			</deps>
         </item>
-        <label>Map</label>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>map_form</namespace>
-        </item>
+        <item name="label" xsi:type="string" translate="true">Map</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>map_form.map_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>map_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -28,24 +26,22 @@
         </buttons>
     </settings>
     <dataSource name="map_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>map_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="map_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <label/>
-            </item>
-        </argument>
+        <settings>
+            <label/>
+        </settings>
         <field name="position" sortOrder="1" formElement="input" component="Gene_BlueFoot/js/form/element/map">
             <settings>
                 <label>Position</label>
@@ -112,15 +108,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>

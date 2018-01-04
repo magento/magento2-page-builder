@@ -9,18 +9,16 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">text_form.text_form_data_source</item>
-            <deps>
-				<dep>text_form.text_form_data_source</dep>
-			</deps>
         </item>
-        <label>Text</label>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>text_form</namespace>
-        </item>
+        <item name="label" xsi:type="string" translate="true">Text</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>text_form.text_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>text_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -28,24 +26,27 @@
         </buttons>
     </settings>
     <dataSource name="text_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>text_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="text_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <label/>
+                <item name="label" xsi:type="string"/>
             </item>
         </argument>
+        <settings>
+            <label/>
+        </settings>
         <field name="content" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -104,15 +105,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>
