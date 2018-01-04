@@ -20,7 +20,7 @@ class ResetButton implements ButtonProviderInterface
      *
      * @param $targetName
      */
-    public function __construct($targetName)
+    public function __construct(string $targetName)
     {
         $this->targetName = $targetName;
     }

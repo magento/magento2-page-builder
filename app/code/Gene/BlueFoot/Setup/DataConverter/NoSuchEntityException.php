@@ -8,6 +8,6 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 /**
  * Failed to load entity exception
  */
-class NoSuchEntityException extends \Exception
+class NoSuchEntityException extends \Magento\Framework\Exception\LocalizedException
 {
 }
