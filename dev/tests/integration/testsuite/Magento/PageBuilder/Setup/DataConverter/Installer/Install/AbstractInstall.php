@@ -5,7 +5,6 @@
  */
 namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
 
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
@@ -15,7 +14,7 @@ use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var \Gene\BlueFoot\Setup\EntitySetupFactory
+     * @var \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory
      */
     protected $entitySetupFactory;
 
@@ -24,18 +23,9 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      */
     protected $entityType;
 
-    /**
-     * @var \Magento\Framework\Filesystem\Io\File
-     */
-    protected $ioFile;
 
     /**
-     * @var \Magento\Framework\Module\Dir\Reader
-     */
-    protected $moduleReader;
-
-    /**
-     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository
      */
     protected $contentBlockRepository;
 
@@ -66,9 +56,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry                                  $registry
      * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
-     * @param \Magento\Framework\Filesystem\Io\File                        $ioFile
-     * @param \Magento\Framework\Module\Dir\Reader                         $moduleReader
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository           $contentBlockRepository
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
      * @param array                                                        $data
@@ -78,9 +66,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
-        \Magento\Framework\Filesystem\Io\File $ioFile,
-        \Magento\Framework\Module\Dir\Reader $moduleReader,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository $contentBlockRepository,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -88,9 +74,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->entitySetupFactory = $entitySetupFactory;
-        $this->ioFile = $ioFile;
-        $this->moduleReader = $moduleReader;
-        $this->contentBlockRepository = $contentBlockRepositoryInterface;
+        $this->contentBlockRepository = $contentBlockRepository;
 
         $this->entity = $entity;
 

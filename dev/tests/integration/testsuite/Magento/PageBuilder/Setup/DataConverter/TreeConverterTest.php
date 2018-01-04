@@ -36,7 +36,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         'gene_bluefoot_entity_varchar',
         'gene_bluefoot_eav_attribute',
         'gene_bluefoot_entity_type',
-        'gene_bluefoot_entity_type_group',
         'gene_bluefoot_stage_template',
         'gene_bluefoot_entity'
     ];
@@ -1114,9 +1113,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         /** @var \Gene\BlueFoot\Model\Entity */
         $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
 
-        /** @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface $contentBlockRepository */
+        /** @var \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = self::$objectManager->create(
-            \Gene\BlueFoot\Api\ContentBlockRepositoryInterface::class
+            \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository::class
         );
 
         /** @var \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock */
@@ -1144,7 +1143,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $entity->setData($data);
 
         /** @var \Gene\BlueFoot\Api\EntityRepositoryInterface $entityRepository */
-        $entityRepository = self::$objectManager->create(\Gene\BlueFoot\Api\EntityRepositoryInterface::class);
+        $entityRepository = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\Model\EntityRepository::class);
 
         $entityRepository->save($entity);
 

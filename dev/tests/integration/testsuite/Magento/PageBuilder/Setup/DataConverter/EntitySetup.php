@@ -59,7 +59,7 @@ class EntitySetup extends EavSetup
                 'table'                       => 'gene_bluefoot_entity',
                 'increment_model'             => 'Magento\Eav\Model\Entity\Increment\NumericValue',
                 'additional_attribute_table'  => 'gene_bluefoot_eav_attribute',
-                'entity_attribute_collection' => 'Gene\BlueFoot\Model\ResourceModel\Attribute\Collection',
+                'entity_attribute_collection' => 'Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\Collection',
                 'attributes'                  => [
                     'title'                => [
                         'type'         => 'varchar',
