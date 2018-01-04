@@ -28,20 +28,6 @@ interface EntityInterface
     public function getId();
 
     /**
-     * Return the front-end for the entity
-     *
-     * @return mixed
-     */
-    public function getFrontend();
-
-    /**
-     * Get the associated content block
-     *
-     * @return mixed
-     */
-    public function getContentBlock();
-
-    /**
      * Set ID
      *
      * @param int $id

@@ -107,7 +107,6 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
             case 'child_entity':
                 $object->setBackendType('text');
                 $object->setBackendModel('Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend');
-                $object->setSourceModel('Gene\BlueFoot\Model\Attribute\Source\Entity\Child');
         }
 
         return $this;
