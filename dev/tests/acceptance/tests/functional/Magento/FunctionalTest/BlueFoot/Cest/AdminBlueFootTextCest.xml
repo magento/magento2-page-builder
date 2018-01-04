@@ -48,12 +48,13 @@
                 <argument name="contentBlockType" value="BlueFootTextContentBlock"/>
             </actionGroup>
             <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-            <waitForElementVisible selector="#text_form_content_magentovariable" stepKey="waitForVariableButton"/>
-            <click selector="#text_form_content_magentovariable" stepKey="clickInsertVariableButton"/>
+            <waitForElementVisible selector="div.modal-content div[aria-label='Insert Variable']" stepKey="waitForVariableButton"/>
+            <click selector="div.modal-content div[aria-label='Insert Variable']" stepKey="clickInsertVariableWidget"/>
             <waitForLoadingMaskToDisappear stepKey="waitForVariablesSpinner"/>
-            <click selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" stepKey="clickBaseUnsecureUrl"/>
-            <waitForElementNotVisible selector="//ul[@class='insert-variable']/li/a[contains(text(), 'Base Unsecure URL')]" stepKey="waitForVariableModalToClose"/>
-            <click selector="#text_form_content_magentowidget" stepKey="clickInsertWidgetButton"/>
+            <checkOption selector="input[value='default:web/unsecure/base_url']" stepKey="checkBaseUrl"/>
+            <click selector="#insert_variable" stepKey="clickInsertVariableButton"/>
+            <waitForElementNotVisible selector="#insert_variable" stepKey="waitForVariableModalToClose"/>
+            <click selector="div.modal-content div[aria-label='Insert Widget']" stepKey="clickInsertWidgetWidget"/>
             <waitForElementVisible selector="#select_widget_type" stepKey="waitForWidgetSelectVisible"/>
             <selectOption selector="#select_widget_type" userInput="Magento\Cms\Block\Widget\Page\Link" stepKey="selectCMSPageLinkWidget"/>
             <waitForLoadingMaskToDisappear stepKey="waitForCMSPageLinkWidgetForm"/>

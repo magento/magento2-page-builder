@@ -67,6 +67,7 @@
             <dontSee selector="div.ui-tabs" userInput="Tab 2 Content" stepKey="dontSeeTab2ContentOnStage"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
+            <waitForElementVisible selector="div[data-role='tabs'] div[role='tab'] a" stepKey="waitForTabsElementVisible"/>
             <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 1" stepKey="seeTab1TitleOnStorefront"/>
             <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 2" stepKey="seeTab2TitleOnStorefront"/>
             <see selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="seeTab1ContentOnStorefront"/>

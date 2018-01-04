@@ -13,8 +13,8 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.title}}" userInput="{{BlueFootBlockIdentifierProperty.value}}" stepKey="fillFieldTitle"/>
         <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.identifier}}" userInput="{{BlueFootBlockIdentifierProperty.value}}" stepKey="fillFieldIdentifier"/>
-        <waitForElementVisible time="1" selector="{{CmsNewBlockBlockBasicFieldsSection.wysiwyg_hr_element}}" stepKey="waitForWysiwyg" />
-        <click selector="{{CmsNewBlockBlockBasicFieldsSection.wysiwyg_hr_element}}" stepKey="fillFieldContent"/>
+        <click selector="{{BlockWYSIWYGSection.ShowHideBtn}}" stepKey="clickShowHideEditorButton"/>
+        <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" userInput="&lt;hr /&gt;" stepKey="fillFieldContent"/>
         <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="clickSaveBlock"/>
     </actionGroup>
 </config>
