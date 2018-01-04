@@ -9,18 +9,16 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">heading_form.heading_form_data_source</item>
-            <deps>
-				<dep>heading_form.heading_form_data_source</dep>
-			</deps>
         </item>
-        <label>Heading</label>
-        <item name="config" xsi:type="array">
-            <dataScope>data</dataScope>
-            <namespace>heading_form</namespace>
-        </item>
+        <item name="label" xsi:type="string" translate="true">Heading</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>heading_form.heading_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>heading_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -28,77 +26,81 @@
         </buttons>
     </settings>
     <dataSource name="heading_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <class>Gene\BlueFoot\Model\ContentBlock\DataProvider</class>
-            <name>heading_form_data_source</name>
-            <primaryFieldName/>
-            <requestFieldName/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <component>Gene_BlueFoot/js/form/provider</component>
+                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="heading_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <label/>
-            </item>
-        </argument>
-        <field name="heading_type">
+        <settings>
+            <label/>
+        </settings>
+        <field name="heading_type" formElement="select" sortOrder="1">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="array">
-                    <item name="h2" xsi:type="array">
-                        <item name="value" xsi:type="string">h2</item>
-                        <item name="label" xsi:type="string" translate="false">H2</item>
-                    </item>
-                    <item name="h3" xsi:type="array">
-                        <item name="value" xsi:type="string">h3</item>
-                        <item name="label" xsi:type="string" translate="false">H3</item>
-                    </item>
-                    <item name="h4" xsi:type="array">
-                        <item name="value" xsi:type="string">h4</item>
-                        <item name="label" xsi:type="string" translate="false">H4</item>
-                    </item>
-                    <item name="h5" xsi:type="array">
-                        <item name="value" xsi:type="string">h5</item>
-                        <item name="label" xsi:type="string" translate="false">H5</item>
-                    </item>
-                    <item name="h6" xsi:type="array">
-                        <item name="value" xsi:type="string">h6</item>
-                        <item name="label" xsi:type="string" translate="false">H6</item>
-                    </item>
-                </item>
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Heading Type</label>
-                    <formElement>select</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>1</sort_order>
-                    <dataScope>heading_type</dataScope>
                     <item name="default" xsi:type="string">h2</item>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Heading Type</label>
+                <dataType>text</dataType>
+                <dataScope>heading_type</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="h2" xsi:type="array">
+                                <item name="value" xsi:type="string">h2</item>
+                                <item name="label" xsi:type="string" translate="false">H2</item>
+                            </option>
+                            <option name="h3" xsi:type="array">
+                                <item name="value" xsi:type="string">h3</item>
+                                <item name="label" xsi:type="string" translate="false">H3</item>
+                            </option>
+                            <option name="h4" xsi:type="array">
+                                <item name="value" xsi:type="string">h4</item>
+                                <item name="label" xsi:type="string" translate="false">H4</item>
+                            </option>
+                            <option name="h5" xsi:type="array">
+                                <item name="value" xsi:type="string">h5</item>
+                                <item name="label" xsi:type="string" translate="false">H5</item>
+                            </option>
+                            <option name="h6" xsi:type="array">
+                                <item name="value" xsi:type="string">h6</item>
+                                <item name="label" xsi:type="string" translate="false">H6</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
         </field>
-        <field name="title">
+        <field name="title" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <dataType>text</dataType>
-                    <label>Title</label>
-                    <formElement>input</formElement>
                     <item name="source" xsi:type="string">page</item>
-                    <sort_order>10</sort_order>
-                    <dataScope>title</dataScope>
                     <item name="default" xsi:type="string" translate="true">Header</item>
-                	<validation>
-                    	<rule name="required-entry" xsi:type="boolean">true</rule>
-                	</validation>
                 </item>
             </argument>
+            <settings>
+                <dataScope>title</dataScope>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
     </fieldset>
     <fieldset name="advanced">
@@ -130,15 +132,15 @@
                         <options>
                             <option name="0" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
-                                <label>Left</label>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
-                                <label>Center</label>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
-                                <label>Right</label>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>
