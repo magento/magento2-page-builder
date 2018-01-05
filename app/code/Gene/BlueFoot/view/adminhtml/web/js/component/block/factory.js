@@ -3,6 +3,9 @@ define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"]
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  'use strict';
+  /*eslint-disable */
+
 
   /**
    * Retrieve the block instance from the config object

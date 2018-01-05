@@ -5,7 +5,10 @@ define(["../stage/structural/options/option", "mage/translate", "underscore", ".
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  'use strict';
   /*eslint-disable */
+
+
   var Row =
   /*#__PURE__*/
   function (_Block) {

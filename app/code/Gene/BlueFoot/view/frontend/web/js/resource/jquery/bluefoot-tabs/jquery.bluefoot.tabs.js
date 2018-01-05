@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 /*
  * BlueFoot Tabs JS
  * Very basic tabs js

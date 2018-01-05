@@ -8,7 +8,7 @@ import ko from 'knockout';
  * Group Class
  *
  */
-
+'use strict';
 /*eslint-disable */
 export class Group {
     id: KnockoutObservable<number> = ko.observable();

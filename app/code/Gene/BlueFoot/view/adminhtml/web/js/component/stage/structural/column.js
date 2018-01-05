@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["./abstract", "../../config", "../../../utils/array", "./options/option", "knockout"], function (_abstract, _config, _array, _option, _knockout) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 

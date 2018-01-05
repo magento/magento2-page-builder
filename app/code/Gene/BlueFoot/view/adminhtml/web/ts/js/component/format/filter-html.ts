@@ -12,7 +12,7 @@ import $ from 'jquery';
  * @returns {JQuery}
  */
 
-
+'use strict';
 /*eslint-disable */
 export default function filterHtml(element: JQuery): JQuery {
     const isWhiteSpaceOrComment = function() {

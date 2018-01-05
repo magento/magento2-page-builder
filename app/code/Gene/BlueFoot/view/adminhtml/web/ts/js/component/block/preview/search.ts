@@ -7,7 +7,7 @@ import ko from "knockout";
 import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
-
+'use strict';
 /*eslint-disable */
 export default class Search extends PreviewBlock {
     /**

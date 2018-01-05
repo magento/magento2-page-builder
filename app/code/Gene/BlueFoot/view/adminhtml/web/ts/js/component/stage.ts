@@ -15,7 +15,7 @@ import $ from 'jquery';
 import createBlock from "./block/factory";
 import Config from "./config";
 import Block from "./block/block";
-
+'use strict';
 /*eslint-disable */
 export default class Stage extends EditableArea implements StageInterface {
     parent: any;

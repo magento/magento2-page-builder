@@ -8,7 +8,7 @@ import ko from "knockout";
 import $ from "jquery";
 import _ from "underscore";
 import "mage/backend/tabs";
-
+'use strict';
 /*eslint-disable */
 export default class Map extends Block {
     element: Element;

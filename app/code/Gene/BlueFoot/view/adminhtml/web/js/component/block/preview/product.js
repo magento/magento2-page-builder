@@ -1,7 +1,10 @@
 define(["./block", "../../config"], function (_block, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  'use strict';
   /*eslint-disable */
+
+
   var Product =
   /*#__PURE__*/
   function (_PreviewBlock) {

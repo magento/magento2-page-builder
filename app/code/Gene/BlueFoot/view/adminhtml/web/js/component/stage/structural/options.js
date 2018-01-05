@@ -3,8 +3,10 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-
+  'use strict';
   /*eslint-disable */
+
+
   var Options =
   /*#__PURE__*/
   function () {

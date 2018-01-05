@@ -13,6 +13,7 @@ define([
     'hyperscript'
 ], function (ko, Build, Config, h) {
     'use strict';
+    /*eslint-disable */
     describe("Gene_BlueFoot/js/component/stage/build", function () {
         var parent, stage, build;
 

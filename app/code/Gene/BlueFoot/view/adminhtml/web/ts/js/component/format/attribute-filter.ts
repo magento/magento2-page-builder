@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 import {DataObject} from "../data-store";
-
+'use strict';
 /*eslint-disable */
 export default class AttributeFilter {
     // Allowed data attributes

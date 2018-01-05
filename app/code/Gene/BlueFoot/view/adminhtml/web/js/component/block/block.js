@@ -5,7 +5,10 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  'use strict';
   /*eslint-disable */
+
+
   var Block =
   /*#__PURE__*/
   function (_Structural) {

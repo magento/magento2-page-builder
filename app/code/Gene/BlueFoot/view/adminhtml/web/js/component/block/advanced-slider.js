@@ -1,7 +1,10 @@
 define(["./block", "../config", "../block/factory"], function (_block, _config, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  'use strict';
   /*eslint-disable */
+
+
   var AdvancedSlider =
   /*#__PURE__*/
   function (_Block) {

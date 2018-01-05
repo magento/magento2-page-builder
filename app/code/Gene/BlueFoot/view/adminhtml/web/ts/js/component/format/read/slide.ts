@@ -7,7 +7,7 @@ import ReadInterface from "../read-interface";
 import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
-
+'use strict';
 /*eslint-disable */
 interface SlideObject {
     link_text: string;

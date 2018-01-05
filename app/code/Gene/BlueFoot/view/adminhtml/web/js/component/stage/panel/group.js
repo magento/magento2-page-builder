@@ -8,8 +8,10 @@ define(["knockout"], function (_knockout) {
    * Group Class
    *
    */
-
+  'use strict';
   /*eslint-disable */
+
+
   var Group =
   /*#__PURE__*/
   function () {

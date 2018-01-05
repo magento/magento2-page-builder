@@ -5,7 +5,7 @@
 
 import Block from "./block";
 import ko from "knockout";
-
+'use strict';
 /*eslint-disable */
 export default class Buttons extends Block {
     constructor(parent: Block, config: object) {

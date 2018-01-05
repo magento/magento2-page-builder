@@ -8,7 +8,7 @@ import ko from "knockout";
 import $ from "jquery";
 import _ from "underscore";
 import "tabs";
-
+'use strict';
 /*eslint-disable */
 export default class Tabs extends Block {
     element: Element;

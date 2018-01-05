@@ -15,6 +15,7 @@ define([
     'use strict';
     describe("Gene_BlueFoot/js/component/stage/structural/column", function () {
         var column, parent, stage;
+
         beforeEach(function () {
             parent = {
                 confirmationDialog: function (options) {

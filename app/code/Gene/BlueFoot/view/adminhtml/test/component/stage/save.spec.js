@@ -48,7 +48,7 @@ define([
             var nonObservable = {};
 
             expect(function () {
-                save.observe([nonObservable])
+                save.observe([nonObservable]);
             }).toThrow();
         });
 

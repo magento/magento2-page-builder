@@ -8,7 +8,7 @@ import _, {Dictionary} from "underscore";
 import Block from "../block";
 import PreviewBlock from "./block";
 import Config from "../../config";
-
+'use strict';
 /*eslint-disable */
 export default class ContentBlock extends PreviewBlock {
     /**

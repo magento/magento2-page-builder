@@ -6,7 +6,7 @@
 import loadModule from 'Gene_BlueFoot/js/component/loader';
 import {DataObject} from "../data-store";
 import Appearance from "./appearance";
-
+'use strict';
 /*eslint-disable */
 export default class AppearanceFactory {
     /**

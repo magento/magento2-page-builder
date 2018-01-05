@@ -3,6 +3,8 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  'use strict';
+
   /*eslint-disable */
   var PreviewBlock =
   /*#__PURE__*/

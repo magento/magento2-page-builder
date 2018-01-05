@@ -17,7 +17,7 @@ import ko from 'knockout';
 
 import mageUtils from 'mageUtils';
 import $t from 'mage/translate';
-
+'use strict';
 /*eslint-disable */
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
     id: string = mageUtils.uniqueid();

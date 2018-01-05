@@ -7,7 +7,7 @@ import AccordionBlock from "../accordion";
 import Block from "./block";
 import ko from "knockout";
 import $ from "jquery";
-
+'use strict';
 /*eslint-disable */
 export default class Accordion extends Block {
     element: Element;

@@ -8,7 +8,7 @@ import {Dictionary} from "underscore";
 import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
-
+'use strict';
 /*eslint-disable */
 export default class Code extends PreviewBlock {
     /**

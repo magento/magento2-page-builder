@@ -1,7 +1,10 @@
 define(["underscore", "../event-emitter", "../config", "../block/factory", "../format/read/composite"], function (_, _eventEmitter, _config, _factory, _composite) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  'use strict';
   /*eslint-disable */
+
+
   var Build =
   /*#__PURE__*/
   function (_EventEmitter) {

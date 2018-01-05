@@ -19,7 +19,7 @@ import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
 import {DataObject} from "../../data-store";
 import Appearance from "../../appearance/appearance";
-
+'use strict';
 /*eslint-disable */
 export default class Structural extends EditableArea implements StructuralInterface {
     parent: EditableArea;

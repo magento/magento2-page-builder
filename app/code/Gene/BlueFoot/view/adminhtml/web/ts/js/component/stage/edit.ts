@@ -8,7 +8,7 @@ import registry from "uiRegistry";
 import DataStore from "../data-store";
 import $t from "mage/translate";
 import PersistenceClient from "./edit/persistence-client";
-
+'use strict';
 /*eslint-disable */
 export interface FormComponent {
     destroy(): void;

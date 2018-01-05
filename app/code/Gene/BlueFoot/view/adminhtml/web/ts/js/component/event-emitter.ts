@@ -5,7 +5,7 @@
 
 import { EventEmitterInterface } from 'event-emitter.d';
 import $ from 'jquery';
-
+'use strict';
 /*eslint-disable */
 export default class EventEmitter implements EventEmitterInterface {
     private events: JQuery.PlainObject = $({});

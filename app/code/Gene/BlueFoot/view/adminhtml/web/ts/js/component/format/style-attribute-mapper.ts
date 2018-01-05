@@ -10,7 +10,7 @@ import _ from "underscore";
 interface FromDomResult {
     [key: string]: any;
 }
-
+'use strict';
 /*eslint-disable */
 export default class StyleAttributeMapper {
     /**

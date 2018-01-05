@@ -4,7 +4,7 @@
  */
 
 import ReadInterface from "../read-interface";
-
+'use strict';
 /*eslint-disable */
 export default class Html implements ReadInterface {
     /**

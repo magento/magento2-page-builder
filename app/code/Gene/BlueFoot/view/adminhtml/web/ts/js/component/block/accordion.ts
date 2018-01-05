@@ -10,7 +10,7 @@ interface AccordionDataObject {
     content: string;
     open_on_load: string;
 }
-
+'use strict';
 /*eslint-disable */
 export default class Accordion extends Block {
 

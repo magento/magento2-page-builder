@@ -11,6 +11,7 @@ define([
     'advanced-cms-init-config'
 ], function (Config, initConfig) {
     'use strict';
+    /*eslint-disable */
     describe("Gene_BlueFoot/js/component/core/config", function () {
 
         // Functions that should exist in the class
@@ -38,13 +39,13 @@ define([
             'getColumnDefinitionByBreakpoint'
         ];
 
-        /*eslint-disable */
         for (var i = 0; i < shouldExistFn.length; i++) {
             var fn = shouldExistFn[i];
+
             it(fn + ' fn exists', function () {
                 expect(typeof Config[fn]).toEqual('function');
             });
-        }
+        };
 
         describe('setInitConfig & getInitConfig', function () {
             it('can set & retrieve init config', function () {
@@ -70,6 +71,7 @@ define([
                 });
             });
         });
+
         describe('getContentTypeConfig', function () {
             it('can retrieve content type config', function () {
                 var mockContentType = {
@@ -83,9 +85,9 @@ define([
             });
             it('will return false if not found', function () {
                 expect(Config.getContentTypeConfig('falseContentType')).toEqual(false);
-            /*eslint-enable */
             });
         });
+
         describe('getConfig', function () {
             it('can retrieve config', function () {
                 Config._setConfig('getConfigTest', true);

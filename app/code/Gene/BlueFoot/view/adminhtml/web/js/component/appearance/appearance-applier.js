@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 define([], function () {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.

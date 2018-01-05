@@ -6,7 +6,7 @@
 import EventEmitter from "./event-emitter";
 import EditableArea from "./stage/structural/editable-area";
 import _ from "underscore";
-
+'use strict';
 /*eslint-disable */
 interface DataStoreEvent {
     state: State

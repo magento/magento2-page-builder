@@ -7,7 +7,7 @@ import { OptionInterface } from './options/option.d';
 import { Structural } from './abstract.d';
 import _ from 'underscore';
 import ko from 'knockout';
-
+'use strict';
 /*eslint-disable */
 export class Options {
     parent: Structural;

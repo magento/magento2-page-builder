@@ -6,7 +6,7 @@
 import _, {Dictionary} from "underscore";
 import ko from "knockout";
 import Block from "../block";
-
+'use strict';
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }

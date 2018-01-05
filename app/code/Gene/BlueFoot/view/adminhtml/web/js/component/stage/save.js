@@ -9,8 +9,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
    *
    * @param {KnockoutObservableArray<Structural>} tree
    */
-
+  'use strict';
   /*eslint-disable */
+
+
   var Save =
   /*#__PURE__*/
   function () {

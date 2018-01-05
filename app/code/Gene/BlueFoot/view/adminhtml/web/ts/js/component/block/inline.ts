@@ -4,7 +4,7 @@
  */
 
 import Block from "./block";
-
+'use strict';
 /*eslint-disable */
 export default class InlineBlock extends Block {
     editOnInsert: boolean = false;

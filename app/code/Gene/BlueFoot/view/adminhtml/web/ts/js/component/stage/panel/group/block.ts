@@ -8,7 +8,7 @@ import ko from 'knockout';
 /**
  * Block Class
  */
-
+'use strict';
 /*eslint-disable */
 export class Block extends EventEmitter {
     config: ContentBlockConfig;
