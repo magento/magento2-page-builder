@@ -1,10 +1,10 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute;
 
-/**
- * Class Collection
- */
 class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection
 {
     /**
@@ -91,7 +91,9 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
             ['main_table' => $this->getResource()->getMainTable()]
         )->where(
             'main_table.entity_type_id=?',
-            $this->eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
+            $this->eavEntityFactory->create()->setType(
+                \Magento\PageBuilder\Setup\DataConverter\Model\Entity::ENTITY
+            )->getTypeId()
         )->join(
             ['additional_table' => $this->getTable('gene_bluefoot_eav_attribute')],
             'additional_table.attribute_id = main_table.attribute_id'

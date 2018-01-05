@@ -29,16 +29,11 @@ class InstallData implements InstallDataInterface
     protected $eavConfig;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository
-     */
-    protected $contentBlockRepository;
-
-    /**
      * InstallData constructor.
      *
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                  $entitySetupFactory
-     * @param \Magento\PageBuilder\Setup\DataConverter\Installer\Install  $installer
-     * @param \Magento\Eav\Model\Config                                $eavConfig
+     * @param EntitySetupFactory $entitySetupFactory
+     * @param Installer\Install $installer
+     * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
         \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory $entitySetupFactory,
@@ -58,7 +53,7 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        /** @var \Gene\BlueFoot\Setup\EntitySetup $entitySetup */
+        /** @var \Magento\PageBuilder\Setup\DataConverter\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Run a fresh installation if no previous version is present

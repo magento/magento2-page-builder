@@ -1104,24 +1104,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $contentTypeCode
-     * @param array $data
-     * @return int
+     * Save a content type into the database
+     *
+     * @param $contentTypeCode
+     * @param $data
+     *
+     * @return mixed
+     * @throws \Exception
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function saveContentType($contentTypeCode, $data)
     {
-        /** @var \Gene\BlueFoot\Model\Entity */
-        $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
+        /** @var \Magento\PageBuilder\Setup\DataConverter\Model\Entity */
+        $entity = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\Model\Entity::class);
 
-        /** @var \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = self::$objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository::class
-        );
-
-        /** @var \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock */
-        $contentBlock = $contentBlockRepository->getByIdentifier($contentTypeCode);
-
-        $data['attribute_set_id'] = $contentBlock->getId();
+        $data['attribute_set_id'] = $this->getContentBlockId($contentTypeCode);
 
         /** @var \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository */
         $attributeRepository = self::$objectManager->create(\Magento\Eav\Api\AttributeRepositoryInterface::class);
@@ -1142,11 +1139,46 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entity->setData($data);
 
-        /** @var \Gene\BlueFoot\Api\EntityRepositoryInterface $entityRepository */
-        $entityRepository = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\Model\EntityRepository::class);
-
-        $entityRepository->save($entity);
+        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entityResource */
+        $entityResource = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity::class
+        );
+        $entityResource->save($entity);
 
         return $entity->getId();
+    }
+
+    /**
+     * @param $contentTypeCode
+     *
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function getContentBlockId($contentTypeCode)
+    {
+        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory */
+        $contentBlockFactory = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory::class
+        );
+        $contentBlock = $contentBlockFactory->create();
+
+        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
+        $contentBlockResource = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock::class
+        );
+        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlock $contentBlock */
+        $contentBlockResource->load(
+            $contentBlock,
+            $contentTypeCode,
+            'entity_type.identifier'
+        );
+        if (!$contentBlock->getId()) {
+            throw \Magento\Framework\Exception\NoSuchEntityException::singleField(
+                'identifier',
+                $contentTypeCode
+            );
+        }
+
+        return $contentBlock->getId();
     }
 }

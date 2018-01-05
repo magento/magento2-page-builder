@@ -1,31 +1,31 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute;
 
-/**
- * Class ContentBlock
- */
 class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 {
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity
      */
     protected $entity;
 
     /**
      * ContentBlock constructor.
      *
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context              $context
+     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
-     * @param \Magento\Eav\Model\Config                                      $eavConfig
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                      $entity
-     * @param null                                                           $connectionName
+     * @param \Magento\Eav\Model\Config $eavConfig
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
+     * @param null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Config $eavConfig,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
         $connectionName = null
     ) {
         parent::__construct($context, $attrGroupFactory, $eavConfig, $connectionName);
@@ -34,13 +34,12 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
     }
 
     /**
-     * During building up the load select add a join for the entity type data
-     *
-     * @param string                                 $field
-     * @param mixed                                  $value
+     * @param string $field
+     * @param mixed $value
      * @param \Magento\Framework\Model\AbstractModel $object
      *
      * @return \Magento\Framework\DB\Select
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _getLoadSelect($field, $value, $object)
     {

@@ -8,9 +8,6 @@ namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
-/**
- * Class Attribute
- */
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {
     /**
@@ -23,12 +20,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      */
     protected $entityType;
 
-
-    /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository
-     */
-    protected $contentBlockRepository;
-
     /**
      * @var array
      */
@@ -40,7 +31,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected $installData = null;
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -50,31 +41,47 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected $modelFields;
 
     /**
-     * Attribute constructor.
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory
+     */
+    private $contentBlockFactory;
+
+    /**
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock
+     */
+    private $contentBlockResource;
+
+    /**
+     * AbstractInstall constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
-     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository           $contentBlockRepository
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param EntitySetupFactory $entitySetupFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
+     *
+     * @throws \Exception
+     * @throws \Zend_Json_Exception
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
-        \Magento\PageBuilder\Setup\DataConverter\Model\ContentBlockRepository $contentBlockRepository,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
+        $this->contentBlockFactory = $contentBlockFactory;
+        $this->contentBlockResource = $contentBlockResource;
         $this->entitySetupFactory = $entitySetupFactory;
-        $this->contentBlockRepository = $contentBlockRepository;
 
         $this->entity = $entity;
 
@@ -152,7 +159,12 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected function contentBlockExists($identifier)
     {
         try {
-            $contentBlock = $this->contentBlockRepository->getByIdentifier($identifier);
+            $contentBlock = $this->contentBlockFactory->create();
+            $this->contentBlockResource->load(
+                $contentBlock,
+                $identifier,
+                'entity_type.identifier'
+            );
             if ($contentBlock->getId()) {
                 return true;
             }

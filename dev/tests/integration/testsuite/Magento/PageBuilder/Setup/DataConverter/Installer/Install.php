@@ -7,9 +7,6 @@ namespace Magento\PageBuilder\Setup\DataConverter\Installer;
 
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 
-/**
- * Class Install
- */
 class Install extends \Magento\Framework\Model\AbstractModel
 {
     /**
@@ -28,7 +25,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
     protected $contentBlockInstall;
 
     /**
-     * @var \Gene\BlueFoot\Setup\EntitySetupFactory
+     * @var \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory
      */
     protected $entitySetupFactory;
 
