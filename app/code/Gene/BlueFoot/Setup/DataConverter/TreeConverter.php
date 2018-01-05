@@ -7,6 +7,7 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Exception\NoSuchEntityException as NoSuchEntityExceptionLocalized;
+use Gene\BlueFoot\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
