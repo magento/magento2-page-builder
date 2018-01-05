@@ -2,9 +2,8 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
-define(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
-    'use strict';
+/*eslint-disable */
+requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
     $(document).ready(function() {
         $('.bluefoot-lightbox').fancybox();
 
