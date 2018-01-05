@@ -1,14 +1,10 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock;
 
-/**
- * Class Collection
- *
- * @package Gene\BlueFoot\Model\ResourceModel\Attribute\ContentBlock
- *
- * @author Dave Macaulay <dave@gene.co.uk>
- */
 class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\Collection
 {
     /**
@@ -41,7 +37,9 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\C
 
         // Set the entity type filter to only show content blocks
         $this->setEntityTypeFilter(
-            $eavEntityFactory->create()->setType(\Gene\BlueFoot\Model\Entity::ENTITY)->getTypeId()
+            $eavEntityFactory->create()->setType(
+                \Magento\PageBuilder\Setup\DataConverter\Model\Entity::ENTITY
+            )->getTypeId()
         );
     }
 

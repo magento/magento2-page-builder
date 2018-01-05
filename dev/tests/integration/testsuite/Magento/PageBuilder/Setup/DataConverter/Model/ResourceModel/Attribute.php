@@ -1,77 +1,43 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel;
 
 use Magento\Framework\Model\AbstractModel;
 
-/**
- * Class Attribute
- */
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {
-    /**
-     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
-     */
-    protected $configInterface;
-
     /**
      * Attribute constructor.
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface        $storeManager
      * @param \Magento\Eav\Model\ResourceModel\Entity\Type      $eavEntityType
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface       $configInterface
      * @param null                                              $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType,
-        \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         $connectionName = null
     ) {
         parent::__construct($context, $storeManager, $eavEntityType, $connectionName);
-        $this->configInterface = $configInterface;
     }
 
     /**
-     * Validate attribute data before save
+     * @param AbstractModel $object
      *
-     * @param EntityAttribute|AbstractModel $object
      * @return $this
+     * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _beforeSave(AbstractModel $object)
     {
         parent::_beforeSave($object);
-        $this->_saveWidget($object);
         $this->_saveAdditional($object);
         $this->_saveInputType($object);
-        return $this;
-    }
-
-    /**
-     * Save a widget against an attribute
-     *
-     * @param \Magento\Framework\Model\AbstractModel $object
-     *
-     * @return $this
-     * @throws \Exception
-     */
-    protected function _saveWidget(AbstractModel $object)
-    {
-        if ($widget = $object->getWidget()) {
-            if ($widgetInstance = $this->configInterface->getWidget($widget)) {
-                $object->setDataModel((isset($widgetInstance['data_model']) ? $widgetInstance['data_model'] : ''));
-                $object->setFrontendInput($widgetInstance['input_type']);
-                $object->setWidget($widgetInstance['alias']);
-            } else {
-                throw new \Exception('Unable to load widget for ' . $widget);
-            }
-        } elseif ($object->getOrigData('widget')) {
-            $object->setDataModel('');
-        }
-
         return $this;
     }
 

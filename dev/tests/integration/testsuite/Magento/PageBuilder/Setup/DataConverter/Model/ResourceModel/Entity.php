@@ -1,10 +1,10 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel;
 
-/**
- * Class Entity
- */
 class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 {
     /**
@@ -54,7 +54,7 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
     public function getEntityType()
     {
         if (empty($this->_type)) {
-            $this->setType(\Gene\BlueFoot\Model\Entity::ENTITY);
+            $this->setType(\Magento\PageBuilder\Setup\DataConverter\Model\Entity::ENTITY);
         }
         return parent::getEntityType();
     }
@@ -65,6 +65,6 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
      */
     public function getMainTable()
     {
-        return \Gene\BlueFoot\Model\Entity::ENTITY;
+        return \Magento\PageBuilder\Setup\DataConverter\Model\Entity::ENTITY;
     }
 }
