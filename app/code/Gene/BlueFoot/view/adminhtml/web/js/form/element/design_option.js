@@ -1,4 +1,4 @@
-/*eslint-disable vars-on-top, strict */
+/*eslint-disable vars-on-top, strict, max-len */
 
 /**
  * Design Options UI Component

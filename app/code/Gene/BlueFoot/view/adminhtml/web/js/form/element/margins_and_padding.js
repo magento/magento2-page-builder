@@ -99,7 +99,7 @@ define([
          * @param value
          * @private
          */
-        _updateObservables(value) {
+        _updateObservables: function(value) {
             if (value && _.isObject(value)) {
                 _.each(value, function(attributeData, attributeType) {
                     _.each(attributeData, function(attributeValue, attributeDirection) {

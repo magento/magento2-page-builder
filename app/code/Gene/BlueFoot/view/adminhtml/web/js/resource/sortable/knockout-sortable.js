@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery) {
+define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
     /**
      * Retrieve the view model for an element
