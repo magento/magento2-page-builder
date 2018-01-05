@@ -1,3 +1,4 @@
+/*eslint-disable */
 /*!
  * Media helper for fancyBox
  * version: 1.0.6 (Fri, 14 Jun 2013)

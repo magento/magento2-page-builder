@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _) {
+define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
     'use strict';
     /*eslint-disable */
