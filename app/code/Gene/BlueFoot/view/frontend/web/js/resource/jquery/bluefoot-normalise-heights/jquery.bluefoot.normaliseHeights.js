@@ -4,7 +4,6 @@
  * BlueFoot Normalise Heights JS
  *
  * Plugin to normalise the heights of blocks within a container
- *
  */
 (function (jQuery) {
     'use strict';

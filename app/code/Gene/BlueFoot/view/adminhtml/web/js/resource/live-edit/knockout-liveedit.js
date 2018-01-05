@@ -1,7 +1,6 @@
 /*eslint-disable vars-on-top, strict*/
 /**
  * Live Edit system
- *
  */
 define([
     'ko',

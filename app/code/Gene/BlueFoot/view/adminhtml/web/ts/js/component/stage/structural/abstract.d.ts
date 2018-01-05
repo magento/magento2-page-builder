@@ -4,8 +4,11 @@ import { OptionInterface } from "./options/option.d";
 import Stage from "../../stage";
 
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * StructuralInterface
- *
  */
 export interface Structural extends EditableAreaInterface {
     parent: EditableArea;

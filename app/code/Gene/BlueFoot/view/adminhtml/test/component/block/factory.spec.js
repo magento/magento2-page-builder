@@ -4,7 +4,6 @@
  */
 /**
  * JS Unit Test for stage/component/block/factory.js
- *
  */
 define([
     'ko',

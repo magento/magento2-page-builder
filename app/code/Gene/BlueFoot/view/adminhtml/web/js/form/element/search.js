@@ -4,7 +4,6 @@
  * Extend the core ui-select field.
  * Force it to be an "optgroup" field and override the filteroptionslist action to make an ajax call
  * to retrieve our data.
- *
  */
 define([
     'underscore',

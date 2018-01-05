@@ -4,7 +4,6 @@
  */
 /**
  * JS Unit Test for hook.js
- *
  */
 define([
    'web/js/component/hook'

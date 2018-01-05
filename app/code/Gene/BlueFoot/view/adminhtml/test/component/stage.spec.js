@@ -4,7 +4,6 @@
  */
 /**
  * JS Unit Test for stage.js
- *
  */
 define([
     'ko',

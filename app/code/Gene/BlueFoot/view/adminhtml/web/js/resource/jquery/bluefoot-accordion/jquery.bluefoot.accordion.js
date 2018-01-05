@@ -1,7 +1,9 @@
 /*eslint-disable*/
 /*
- * BlueFoot Accordion JS
- *
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/*
  * Very basic accordion plugin stripped down to be used with the BlueFoot
  */
 (function (jQuery) {

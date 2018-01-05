@@ -7,6 +7,9 @@ namespace Gene\BlueFoot\Ui\DataProvider\Template;
 
 use Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory;
 
+/**
+ * Class DataProvider
+ */
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     /**

@@ -5,7 +5,7 @@ define([], function () {
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
   'use strict';

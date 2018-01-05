@@ -1,7 +1,6 @@
 /*eslint-disable vars-on-top, strict */
 /**
  * Map UI Component
- *
  */
 define([
     'Magento_Ui/js/form/element/abstract',

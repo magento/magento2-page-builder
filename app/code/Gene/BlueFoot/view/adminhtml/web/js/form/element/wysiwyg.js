@@ -2,7 +2,6 @@
 
 /**
  * WYSIWYG UI Component
- *
  */
 define([
     'underscore',

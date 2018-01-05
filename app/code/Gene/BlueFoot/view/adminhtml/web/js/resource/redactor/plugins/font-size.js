@@ -1,7 +1,6 @@
 /*eslint-disable vars-on-top, strict*/
 /**
  * Font size for Redactor
- *
  */
 define(["jquery", "mage/translate"], function(jQuery, $t) {
     /**

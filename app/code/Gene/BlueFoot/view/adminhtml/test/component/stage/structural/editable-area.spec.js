@@ -4,7 +4,6 @@
  */
 /**
  * JS Unit Test for stage/structural/editable-area.js
- *
  */
 define([
     'ko',

@@ -3,7 +3,6 @@
 /**
  * - insert-form.js
  * Override core functionality of insert form to enable BlueFoot caching and dynamically generated UI components
- *
  */
 define([
     'Magento_Ui/js/form/components/insert-form',

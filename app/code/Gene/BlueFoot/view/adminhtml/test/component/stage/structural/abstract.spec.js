@@ -4,7 +4,6 @@
  */
 /**
  * JS Unit Test for stage/structural/abstract.js
- *
  */
 define([
     'ko',

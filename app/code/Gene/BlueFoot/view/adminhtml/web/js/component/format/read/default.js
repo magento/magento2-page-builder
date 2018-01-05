@@ -1,7 +1,7 @@
 /*eslint-disable */
 define(["underscore", "../style-attribute-mapper", "../attribute-mapper"], function (_underscore, _styleAttributeMapper, _attributeMapper) {
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
   'use strict';

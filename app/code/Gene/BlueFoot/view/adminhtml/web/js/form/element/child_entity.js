@@ -2,7 +2,6 @@
 
 /**
  * Child Entity UI Component
- *
  */
 define([
     'ko',

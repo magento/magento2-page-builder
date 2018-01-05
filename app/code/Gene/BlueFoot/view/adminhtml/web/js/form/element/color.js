@@ -2,7 +2,6 @@
 
 /**
  * Colour UI Component
- *
  */
 define([
     'Magento_Ui/js/form/element/abstract',

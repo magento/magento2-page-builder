@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 /**
  * Group Class
- *
  */
 'use strict';
 

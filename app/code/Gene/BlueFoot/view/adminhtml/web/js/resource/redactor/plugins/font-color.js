@@ -1,7 +1,6 @@
 /*eslint-disable vars-on-top, strict, max-len*/
 /**
  * Font color for Redactor
- *
  */
 define([
     'jquery',
