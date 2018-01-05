@@ -5,7 +5,7 @@
 
 import PreviewBlock from "./block";
 'use strict';
-/*eslint-disable */
+
 export default class Image extends PreviewBlock {
 
     /**

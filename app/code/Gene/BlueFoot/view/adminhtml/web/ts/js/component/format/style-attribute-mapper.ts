@@ -11,7 +11,7 @@ interface FromDomResult {
     [key: string]: any;
 }
 'use strict';
-/*eslint-disable */
+
 export default class StyleAttributeMapper {
     /**
      * Map style attribute keys to DOM key names and normalize values

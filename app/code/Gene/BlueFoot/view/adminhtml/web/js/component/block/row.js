@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["../stage/structural/options/option", "mage/translate", "underscore", "./block"], function (_option, _translate, _underscore, _block) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -6,8 +7,6 @@ define(["../stage/structural/options/option", "mage/translate", "underscore", ".
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   'use strict';
-  /*eslint-disable */
-
 
   var Row =
   /*#__PURE__*/

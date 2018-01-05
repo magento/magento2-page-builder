@@ -1,3 +1,4 @@
+/*eslint-disable */
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -10,8 +11,6 @@ define([], function () {
    * Acts as the data provider client between our system and the UI component system
    */
   'use strict';
-  /*eslint-disable */
-
 
   var PersistenceClient =
   /*#__PURE__*/

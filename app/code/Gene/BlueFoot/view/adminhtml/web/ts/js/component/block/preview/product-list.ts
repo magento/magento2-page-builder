@@ -9,7 +9,7 @@ import PreviewBlock from "./block";
 import Config from "../../config";
 import {Dictionary} from "underscore";
 'use strict';
-/*eslint-disable */
+
 export default class ProductList extends PreviewBlock {
     /**
      * Product constructor

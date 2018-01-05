@@ -16,7 +16,7 @@ import { load as loadPreviews } from "./previews";
 import "ko-draggable";
 import "ko-sortable";
 'use strict';
-/*eslint-disable */
+
 export default class Panel extends uiComponent implements PanelInterface {
     componentTemplate: string = 'Gene_BlueFoot/component/stage/panel.html';
     stage: StageInterface;

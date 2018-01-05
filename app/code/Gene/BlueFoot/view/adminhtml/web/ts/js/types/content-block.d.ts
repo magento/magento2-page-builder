@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable */
+
 interface ContentBlockConfig {
     label: string;
     name: string;

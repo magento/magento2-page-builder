@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable */
+
 declare module 'advanced-cms-init-config' {
     let initConfig: any;
     export = initConfig;

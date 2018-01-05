@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["../../event-emitter", "../../block/factory", "../../../utils/array", "underscore", "knockout", "mageUtils", "mage/translate"], function (_eventEmitter, _factory, _array, _underscore, _knockout, _mageUtils, _translate) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -6,8 +7,6 @@ define(["../../event-emitter", "../../block/factory", "../../../utils/array", "u
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   'use strict';
-  /*eslint-disable */
-
 
   var EditableArea =
   /*#__PURE__*/

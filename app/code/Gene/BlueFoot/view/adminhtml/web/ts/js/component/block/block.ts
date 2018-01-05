@@ -18,7 +18,7 @@ interface FieldDefaults {
     [key: string]: any;
 }
 'use strict';
-/*eslint-disable */
+
 export default class Block extends Structural implements BlockInterface {
     title: string;
     editOnInsert: boolean = true;

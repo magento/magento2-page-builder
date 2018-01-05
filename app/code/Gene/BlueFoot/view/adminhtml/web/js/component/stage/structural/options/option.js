@@ -1,3 +1,4 @@
+/*eslint-disable */
 define([], function () {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -8,8 +9,6 @@ define([], function () {
    * See COPYING.txt for license details.
    */
   'use strict';
-  /*eslint-disable */
-
 
   var Option =
   /*#__PURE__*/

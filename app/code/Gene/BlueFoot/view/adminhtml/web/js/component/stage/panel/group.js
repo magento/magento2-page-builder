@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["knockout"], function (_knockout) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,8 +10,6 @@ define(["knockout"], function (_knockout) {
    *
    */
   'use strict';
-  /*eslint-disable */
-
 
   var Group =
   /*#__PURE__*/

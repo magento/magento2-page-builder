@@ -4,7 +4,7 @@
  */
 import {DataObject} from "../component/data-store";
 'use strict';
-/*eslint-disable */
+
 export default class AttributeMapper {
     // Attribute name mapping
     attributeNameMapping: DataObject = {

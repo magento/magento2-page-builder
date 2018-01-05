@@ -7,7 +7,7 @@ import Block from "./block";
 import Config from "../config";
 import createBlock from "../block/factory";
 'use strict';
-/*eslint-disable */
+
 export default class AdvancedSlider extends Block {
 
     /**

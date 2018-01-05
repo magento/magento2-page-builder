@@ -1,3 +1,4 @@
+/*eslint-disable */
 define([], function () {
   "use strict";
 
@@ -6,7 +7,5 @@ define([], function () {
    * See COPYING.txt for license details.
    */
   'use strict';
-  /*eslint-disable */
-
 });
 //# sourceMappingURL=appearance-interface.js.map

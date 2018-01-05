@@ -1,9 +1,8 @@
+/*eslint-disable */
 define(["underscore", "jquery", "advanced-cms-init-config"], function (_underscore, _jquery, _advancedCmsInitConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   'use strict';
-  /*eslint-disable */
-
 
   var Config =
   /*#__PURE__*/

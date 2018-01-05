@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["underscore", "knockout"], function (_underscore, _knockout) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -5,7 +6,6 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
 
   'use strict';
 
-  /*eslint-disable */
   var PreviewBlock =
   /*#__PURE__*/
   function () {

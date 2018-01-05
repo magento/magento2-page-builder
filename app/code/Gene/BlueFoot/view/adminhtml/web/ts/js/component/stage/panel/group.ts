@@ -9,7 +9,7 @@ import ko from 'knockout';
  *
  */
 'use strict';
-/*eslint-disable */
+
 export class Group {
     id: KnockoutObservable<number> = ko.observable();
     code: KnockoutObservable<string> = ko.observable('');

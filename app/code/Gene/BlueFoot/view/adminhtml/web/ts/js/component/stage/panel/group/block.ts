@@ -9,7 +9,7 @@ import ko from 'knockout';
  * Block Class
  */
 'use strict';
-/*eslint-disable */
+
 export class Block extends EventEmitter {
     config: ContentBlockConfig;
     identifier: KnockoutObservable<string> = ko.observable('');

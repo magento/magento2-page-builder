@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["../stage/structural/abstract", "../stage/previews", "underscore"], function (_abstract, _previews, _underscore) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -6,8 +7,6 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   'use strict';
-  /*eslint-disable */
-
 
   var Block =
   /*#__PURE__*/

@@ -9,7 +9,7 @@ import {DataObject} from "../../data-store";
 import StyleAttributeMapper from "../style-attribute-mapper";
 import AttributeMapper from "../attribute-mapper";
 'use strict';
-/*eslint-disable */
+
 export default class Default implements ReadInterface {
     styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
     attributeMapper: AttributeMapper = new AttributeMapper();

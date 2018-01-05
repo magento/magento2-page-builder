@@ -5,7 +5,7 @@
 
 import Block from "./block";
 'use strict';
-/*eslint-disable */
+
 export default class Column extends Block {
 
 }

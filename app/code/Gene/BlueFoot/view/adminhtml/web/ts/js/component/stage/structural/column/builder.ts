@@ -6,7 +6,7 @@
 import ko from 'knockout';
 import Config from "../../../config";
 'use strict';
-/*eslint-disable */
+
 export class ColumnBuilder {
     position: KnockoutObservable<string> = ko.observable('');
     visible: KnockoutObservable<boolean> = ko.observable(false);

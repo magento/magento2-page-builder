@@ -9,7 +9,7 @@ import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
 'use strict';
-/*eslint-disable */
+
 export default class Slide extends PreviewBlock {
     backgroundImageStyle: KnockoutComputed<{}>;
 

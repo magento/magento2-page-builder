@@ -1,11 +1,10 @@
+/*eslint-disable */
 define(["../../component/config", "../../utils/directives", "underscore"], function (_config, _directives, _underscore) {
   /**
    * Copyright © 2013-2017 Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
   'use strict';
-  /*eslint-disable */
-
 
   var StyleAttributeMapper =
   /*#__PURE__*/

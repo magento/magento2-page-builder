@@ -1,9 +1,8 @@
+/*eslint-disable */
 define(["./block", "knockout"], function (_block, _knockout) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   'use strict';
-  /*eslint-disable */
-
 
   var Buttons =
   /*#__PURE__*/

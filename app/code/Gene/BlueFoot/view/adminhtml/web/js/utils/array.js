@@ -1,3 +1,4 @@
+/*eslint-disable */
 define([], function () {
   /**
    * Move an array item within the current array
@@ -7,8 +8,6 @@ define([], function () {
    * @param toIndex
    * @returns {Array<any>}
    */
-
-  /*eslint-disable */
   function moveArrayItem(array, fromIndex, toIndex) {
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
     return array;

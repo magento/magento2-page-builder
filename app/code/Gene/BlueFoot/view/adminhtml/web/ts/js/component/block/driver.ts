@@ -7,7 +7,7 @@ import Block from "./block";
 import Config from "../config";
 import _ from 'underscore';
 'use strict';
-/*eslint-disable */
+
 export default class Driver extends Block {
 
     /**

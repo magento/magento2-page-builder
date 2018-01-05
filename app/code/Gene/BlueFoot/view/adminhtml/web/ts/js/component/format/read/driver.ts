@@ -8,7 +8,7 @@ import Config from "../../../component/config";
 import _ from 'underscore';
 import {DataObject} from "../../data-store";
 'use strict';
-/*eslint-disable */
+
 interface ImageObject {
     name: string;
     size: number;

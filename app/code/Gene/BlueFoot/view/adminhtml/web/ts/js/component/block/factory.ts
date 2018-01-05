@@ -9,7 +9,7 @@ import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import AppearanceFactory from "../appearance/appearance-factory";
 'use strict';
-/*eslint-disable */
+
 interface ConfigObject {
     component?: string;
     [key: string]: any
