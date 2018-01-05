@@ -1,5 +1,8 @@
 /*eslint-disable vars-on-top, strict */
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Extend the core ui-select field.
  * Force it to be an "optgroup" field and override the filteroptionslist action to make an ajax call

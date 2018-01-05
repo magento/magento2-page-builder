@@ -1,6 +1,9 @@
 /*eslint-disable vars-on-top, strict, no-alert */
 /*global MediabrowserUtility, Aviary, featherEditor */
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Media Gallery and image uploader field
  */

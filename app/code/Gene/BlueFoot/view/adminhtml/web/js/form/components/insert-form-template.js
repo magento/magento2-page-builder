@@ -1,5 +1,8 @@
 /*eslint-disable vars-on-top, strict */
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Dynamically load in the form to create a template
  */

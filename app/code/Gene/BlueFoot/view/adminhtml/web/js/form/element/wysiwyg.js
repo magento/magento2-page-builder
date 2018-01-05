@@ -1,5 +1,8 @@
 /*eslint-disable vars-on-top, strict, max-len */
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * WYSIWYG UI Component
  */

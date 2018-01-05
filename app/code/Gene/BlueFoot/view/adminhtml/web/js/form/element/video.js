@@ -1,5 +1,8 @@
 /*eslint-disable vars-on-top, strict, no-useless-escape */
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Video UI Component
  */

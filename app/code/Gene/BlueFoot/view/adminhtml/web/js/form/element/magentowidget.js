@@ -1,6 +1,9 @@
 /*eslint-disable vars-on-top, strict, no-useless-escape, max-len*/
 /*global Base64, tinyMCE*/
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Magento Widget selector
  */
