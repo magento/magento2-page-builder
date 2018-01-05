@@ -1,11 +1,12 @@
+/*eslint-disable vars-on-top, strict, no-useless-escape */
+
 /**
  * Video UI Component
  *
  */
 define([
     'Magento_Ui/js/form/element/abstract',
-    'jquery'
-], function (AbstractField, $) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField.extend({

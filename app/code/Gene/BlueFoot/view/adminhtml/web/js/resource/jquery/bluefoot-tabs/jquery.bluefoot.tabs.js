@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /*
  * BlueFoot Tabs JS
  * Very basic tabs js
@@ -19,6 +20,7 @@
 
                 /* Add Active class to the new element */
                 var target = jQuery(this).data('tab');
+
                 jQuery(target).addClass('active');
                 jQuery(this).addClass('active');
 

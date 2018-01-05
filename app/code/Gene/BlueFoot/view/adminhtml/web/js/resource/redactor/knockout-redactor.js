@@ -1,3 +1,4 @@
+/*eslint-disable vars-on-top, strict, max-len, no-unused-vars */
 /**
  * Redactor implementation for knockout
  */
@@ -8,7 +9,7 @@ define([
     "Gene_BlueFoot/js/resource/redactor/plugins/magentovars",
     "Gene_BlueFoot/js/resource/redactor/plugins/font-size",
     "Gene_BlueFoot/js/resource/redactor/plugins/font-color"
-], function (ko, jQuery, Redactor) {
+], function (ko, jQuery) {
 
     // Attach redactor plugins based on arguments passed to this function.
     for (var i=3; i < arguments.length; i++) {
@@ -37,6 +38,7 @@ define([
                 // Strip HTML from the value
                 if (options.stripHtml) {
                     var tmp = document.createElement("DIV");
+
                     tmp.innerHTML = newValue;
                     newValue = tmp.textContent || tmp.innerText || "";
                 }
@@ -54,11 +56,12 @@ define([
              * Update a value on a binded element
              *
              * @param key
-             * @param value
+             * @param val
              */
-            function updateValue(key, value) {
+            function updateValue(key, val) {
                 var original = options.bind();
-                original[key] = value;
+
+                original[key] = val;
                 options.bind(original);
             }
 
@@ -76,7 +79,7 @@ define([
             // Inline edit update
             if (typeof options.clickToEdit === 'boolean' && options.clickToEdit === true) {
                 // Set the value and hide redactor on click-out
-                options.callbacks.blur = function (e) {
+                options.callbacks.blur = function () {
                     value( this.code.get() );
 
                     this.core.destroy();
@@ -87,13 +90,13 @@ define([
                     this.$element.addClass('redactor-click-to-edit');
 
                     this.$element.parent().removeClass('redactor-active');
-                }
+                };
             }
 
             // Update any default values needed
             if (options.default) {
                 jQuery.each(options.default, function (key, defaultValue) {
-                    if (typeof options.bind()[key] === 'undefined' || options.bind()[key] == '') {
+                    if (typeof options.bind()[key] === 'undefined' || options.bind()[key] === '') {
                         updateValue(key, defaultValue);
                     }
                 });
@@ -103,7 +106,7 @@ define([
 
             // Attach our own event to inject spaces - as there is an event further down which is preventing spaces from being added.
             jQuery(element).keydown(function(e) {
-                if(e.which == 32) {
+                if(e.which === 32) {
                     jQuery(this).redactor('insert.raw', '&nbsp;');
                     e.preventDefault();
                     return false;

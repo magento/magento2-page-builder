@@ -1,12 +1,11 @@
+/*eslint-disable vars-on-top, strict */
 /**
  * Align UI Component
  *
  */
 define([
     'Magento_Ui/js/form/element/abstract',
-    'underscore',
-    'mage/translate'
-], function (AbstractField, _, $t) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField;

@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * Extend the core ui-select field.
  * Force it to be an "optgroup" field and override the filteroptionslist action to make an ajax call

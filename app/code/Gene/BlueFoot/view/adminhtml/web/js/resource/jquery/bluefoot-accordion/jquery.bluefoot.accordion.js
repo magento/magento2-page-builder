@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /*
  * BlueFoot Accordion JS
  *

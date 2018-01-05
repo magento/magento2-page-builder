@@ -1,8 +1,11 @@
+/*eslint-disable vars-on-top, strict, max-len */
+
 /**
  * WYSIWYG UI Component
  *
  */
 define([
+    'underscore',
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
     'Magento_Ui/js/modal/confirm',
@@ -17,7 +20,7 @@ define([
     'Gene_BlueFoot/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
-], function (Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
+], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
 
     /**
@@ -58,6 +61,7 @@ define([
          */
         initObservable: function () {
             var self = this;
+
             this._super()
                 .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
 
@@ -86,10 +90,10 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
+            var buildInstance = new Build(this.initialValue);
+
             this.domNode = node;
             this.bindBlueFootButton(node);
-
-            var buildInstance = new Build(this.initialValue);
             if (buildInstance.canBuild()) {
                 this.loading(true);
                 return this.buildBlueFoot(false, buildInstance);
@@ -127,6 +131,7 @@ define([
          */
         buildBlueFoot: function (event, buildInstance) {
             var self = this;
+
             if (event) {
                 event.stopPropagation();
             }
@@ -166,11 +171,11 @@ define([
          * @returns {null}
          */
         confirmationDialog: function (options) {
-            if (options.actions && (
+            if (options.actions &&
                 ['always', 'confirm', 'cancel'].some(function (action) {
                     return typeof options.actions[action] === 'function';
                 })
-            )) {
+            ) {
                 confirmationPrompt(options);
             } else {
                 throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');

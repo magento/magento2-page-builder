@@ -1,3 +1,4 @@
+/*eslint-disable*/
 (function($){
 	var initLayout = function() {
 		var hash = window.location.hash.replace('#', '');

@@ -1,13 +1,14 @@
+/*eslint-disable vars-on-top, strict */
 /**
  * Map UI Component
  *
  */
 define([
     'Magento_Ui/js/form/element/abstract',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',
     'underscore',
     'mage/translate',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
-], function (AbstractField, _, $t) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField.extend({
@@ -35,9 +36,8 @@ define([
             startValue = this.value().split(',');
 
             var centerLatlng = new google.maps.LatLng(startValue[0], startValue[1]);
-
             var mapOptions = {
-                zoom: parseInt(startValue[2]),
+                zoom: parseInt(startValue[2], 10),
                 center: centerLatlng,
                 scrollwheel: false,
                 disableDoubleClickZoom: true,
@@ -92,21 +92,25 @@ define([
             this.value(this.exportValue());
         },
         onUpdate: function () {
+            var google = window.google || {};
+
             this._super();
 
             if (!this.map || this.value() === ''|| this.value() === this.exportValue()) {
                 return;
             }
 
-            // Convert the value into an arrayv
+            // Convert the value into an arrav
             var value  = this.value().split(','),
                 latLng = new google.maps.LatLng(value[0], value[1]);
+
             this.marker.setPosition(latLng);
-            this.map.setZoom(parseInt(value[2]));
+            this.map.setZoom(parseInt(value[2], 10));
             this.map.setCenter(latLng);
         },
         exportValue: function (latLng) {
             var curLatLng = latLng ? latLng : this.marker.getPosition();
+
             return curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom();
         }
     });

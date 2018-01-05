@@ -42,6 +42,7 @@ define([
 
         it("can add column inside self", function () {
             var newColumn = row.addColumn();
+
             expect(row.children()).toContain(newColumn);
         });
     });

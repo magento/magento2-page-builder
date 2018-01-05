@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * - insert-form.js
  * Override core functionality of insert form to enable BlueFoot caching and dynamically generated UI components
@@ -8,8 +10,9 @@ define([
     'mageUtils',
     'jquery',
     'bluefoot/config',
-    'uiRegistry'
-], function (InsertForm, utils, $, Config, registry) {
+    'uiRegistry',
+    'underscore'
+], function (InsertForm, utils, $, Config, registry, _) {
     'use strict';
 
     return InsertForm.extend({
@@ -43,9 +46,12 @@ define([
             // Destroy the adapter on the newly created sub form to not mess with other forms
             var internalForm,
                 insideInterval = setInterval(function () {
-                    if (internalForm = registry.get(this.ns + '_form.' + this.ns + '_form')) {
+                    try {
+                        internalForm = registry.get(this.ns + '_form.' + this.ns + '_form');
                         clearInterval(insideInterval);
                         internalForm.destroyAdapter();
+                    }catch(e) {
+                        //Catch a failure to get form from registry
                     }
                 }.bind(this), 5);
 
@@ -141,6 +147,7 @@ define([
         saveForm: function (data) {
             // Store the main form data
             var storeData = data.split(this.formPath).join('EDIT_FORM_PATH_PLACERHOLDER');
+
             storeData = storeData.split(this.ns).join('GENERATED_NAME_PLACEHOLDER');
             Config.addForm(this.editingEntity.config.code, storeData);
         },
@@ -152,9 +159,11 @@ define([
          * @param caller
          */
         loadForm: function (code) {
-            code = code || this.editingEntity.config.code;
             var loadedForm;
-            if (loadedForm = Config.loadForm(code)) {
+
+            code = code || this.editingEntity.config.code;
+            try {
+                loadedForm = Config.loadForm(code);
                 // Replace the form path place holder with the new form path
                 loadedForm = loadedForm.split('EDIT_FORM_PATH_PLACERHOLDER').join(this.formPath);
                 loadedForm = loadedForm.split('GENERATED_NAME_PLACEHOLDER').join(this.ns);
@@ -165,6 +174,8 @@ define([
                     this.onRender(loadedForm);
                 }.bind(this), 0);
                 return true;
+            }catch(e) {
+                //Catch a failure to load form
             }
 
             return false;
@@ -178,12 +189,15 @@ define([
         setData: function () {
             var dataProvider,
                 interval = setInterval(function () {
-                    if (dataProvider = registry.get(this.provider)) {
+                    try {
+                        dataProvider = registry.get(this.provider);
                         clearInterval(interval);
                         dataProvider.set('data.entity', this.editingEntity.data());
 
                         // Update the containers title
                         this.containers[0].setTitle($.mage.__('Edit') + ' ' + this.editingEntity.config.name);
+                    }catch(e) {
+                        //Catch a failure to get provider from registry
                     }
                 }.bind(this), 5);
         },
@@ -197,10 +211,12 @@ define([
          */
         save: function (redirect, closeModal) {
             var form = registry.get(this.ns + '_form.' + this.ns + '_form');
+
             form.validate();
 
             if (!form.additionalInvalid && !form.source.get('params.invalid')) {
                 var entityData = form.source.get('data.entity');
+
                 this.editingEntity.data(entityData);
 
                 // Destroy the original instance of the source

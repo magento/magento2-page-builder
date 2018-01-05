@@ -1,3 +1,6 @@
+/*eslint-disable vars-on-top, strict*/
+/*global FORM_KEY */
+
 (function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
@@ -24,11 +27,8 @@
          *
          * @param element
          * @param valueAccessor
-         * @param allBindingsAccessor
-         * @param data
-         * @param context
          */
-        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function (element, valueAccessor) {
             var value = ko.unwrap(valueAccessor()),
                 originalSuccess = value.success,
                 options = {

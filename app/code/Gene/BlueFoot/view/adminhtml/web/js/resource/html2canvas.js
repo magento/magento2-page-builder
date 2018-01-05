@@ -1,3 +1,4 @@
+/*eslint-disable */
 /*
  html2canvas 0.4.1 <http://html2canvas.hertzen.com>
  Copyright (c) 2013 Niklas von Hertzen

@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * Child Entity UI Component
  *
@@ -51,6 +53,7 @@ define([
          */
         getChildBlockTypeConfig: function () {
             var config = this.getFieldConfig();
+
             return Config.getContentTypeConfig(config.child_block_type);
         },
 
@@ -61,7 +64,7 @@ define([
          */
         removeChild: function (child) {
             this.value(ko.utils.arrayFilter(this.value(), function (filterChild) {
-                return child.id != filterChild.id;
+                return child.id !== filterChild.id;
             }));
         },
 
@@ -82,13 +85,16 @@ define([
          */
         addEntity: function () {
             var config = this.getChildBlockTypeConfig();
+
             if (config) {
                 // Create a new block and temporarily push it into childEntities
                 // We update the actual values on save
                 var panelBlockInstance = new PanelBlock(config, false);
+
                 require([panelBlockInstance.getBlockInstance()], function (BlockInstance) {
                     // Create a new block with no stage associated
                     var block = new BlockInstance(this, false, config);
+
                     this.value.push(block);
                     return block.edit();
                 }.bind(this));
@@ -105,7 +111,7 @@ define([
          * @param ui
          * @param sortableInstance
          */
-        onSortStart: function (sortableThis, event, ui, sortableInstance) {
+        onSortStart: function (sortableThis, event, ui) {
             ui.item.show();
             ui.item.addClass('bluefoot-sorting-original');
             ui.helper.css({width: '', height: ''});
@@ -122,7 +128,7 @@ define([
          * @param sortableInstance
          * @returns {boolean}
          */
-        onSortUpdate: function (sortableThis, event, ui, sortableInstance) {
+        onSortUpdate: function (sortableThis, event, ui) {
             var item = ui.item,
                 parentEl = ui.item.parent()[0],
                 newIndex = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
@@ -130,10 +136,10 @@ define([
             ui.item.removeClass('bluefoot-sorting-original');
 
             // Only run the event once
-            if (item && (sortableThis === parentEl)) {
+            if (item && sortableThis === parentEl) {
 
                 // The element hasn't moved
-                if (this.originalIndex == newIndex) {
+                if (this.originalIndex === newIndex) {
                     return false;
                 }
                 // Move the array item to that new index
@@ -151,6 +157,7 @@ define([
          */
         refreshValue: function () {
             var data = this.value().slice(0);
+
             this.value([]);
             this.value(data);
         }

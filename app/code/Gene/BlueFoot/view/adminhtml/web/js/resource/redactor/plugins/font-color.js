@@ -1,3 +1,4 @@
+/*eslint-disable vars-on-top, strict, max-len*/
 /**
  * Font color for Redactor
  *
@@ -17,6 +18,7 @@ define([
 
                     // Attach the button
                     var button = this.button.addAfter('fontSize', 'fontColor', $t('Color'));
+
                     this.button.setIcon(button, '<div class="redactor-color-picker"></div>');
                     this.button.addCallback(button, this.fontColor.showColorPicker.bind(this));
 
@@ -32,14 +34,16 @@ define([
                 showColorPicker: function () {
                     var element = this.selection.element(),
                         color = '000000';
+
                     if (jQuery(element).css('color')) {
                         color = this.fontColor.convertToHex(jQuery(element).css('color'));
                     }
                     this.events.blured = true;
                     var button = this.button.get('fontColor');
+
                     jQuery(button).ColorPicker({
                         color: '#' + color,
-                        onChange: function (hsb, hex, rgb) {
+                        onChange: function (hsb, hex) {
                             this.events.blured = true;
                             this.fontColor.setFontColor(hex);
                         }.bind(this),
@@ -58,7 +62,7 @@ define([
                  */
                 convertToHex: function (rgb) {
                     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-                    return (rgb && rgb.length === 4) ?
+                    return rgb && rgb.length === 4 ?
                         ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
                         ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
                         ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
@@ -69,7 +73,7 @@ define([
                  *
                  * @param event
                  */
-                handleChange: function (event) {
+                handleChange: function () {
                     var element = this.selection.element(),
                         color = '000000',
                         button = this.button.get('fontColor');
@@ -91,6 +95,7 @@ define([
                     if (c) {
                         this.inline.format('span', 'style', 'color: #' + c, 'add');
                         var button = this.button.get('fontColor');
+
                         this.button.setIcon(button, '<div class="redactor-color-picker" style="background-color: #' + c + ';"></div>');
                     }
                 }

@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * Tags UI Component
  *

@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * Redactor form element
  */
@@ -6,7 +8,7 @@ define([
     'underscore',
     'mage/translate',
     'bluefoot/ko-redactor'
-], function (AbstractField, _, $t) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField.extend({

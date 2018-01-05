@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict */
+
 /**
  * Colour UI Component
  *
@@ -34,7 +36,7 @@ define([
             // Attach the color picker
             $(element).ColorPicker({
                 color: this.value(),
-                onChange: function (hsb, hex, rgb) {
+                onChange: function (hsb, hex) {
                     this.value(hex);
                 }.bind(this)
             });
@@ -46,7 +48,7 @@ define([
         updateTextColor: function () {
             if (this.value()) {
                 this.value(this.value().replace('#', ''));
-                this.textColor((parseInt(this.value(), 16) > 0xffffff / 1.75) ? '#000000' : '#FFFFFF');
+                this.textColor(parseInt(this.value(), 16) > 0xffffff / 1.75 ? '#000000' : '#FFFFFF');
             }
         }
 

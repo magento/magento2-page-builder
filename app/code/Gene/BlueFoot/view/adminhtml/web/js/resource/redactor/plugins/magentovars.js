@@ -1,3 +1,5 @@
+/*eslint-disable vars-on-top, strict*/
+/*global Variables, MagentovariablePlugin */
 /**
  * Magento Variables plugin for Redactor
  */
@@ -28,6 +30,7 @@ define(["jquery", "mage/translate", "bluefoot/config"], function(jQuery, $t, Con
             return {
                 init: function () {
                     var button = this.button.add('magentoVars', $t('Variables'));
+
                     this.button.addCallback(button, this.magentoVars.show);
                     this.button.setIcon(button, '<i class="fa fa-code"></i>');
                 },
