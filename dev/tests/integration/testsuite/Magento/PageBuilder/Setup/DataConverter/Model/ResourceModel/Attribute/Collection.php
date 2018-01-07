@@ -53,7 +53,8 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
      */
     protected function _construct()
     {
-        $this->_init('Gene\BlueFoot\Model\Attribute', 'Gene\BlueFoot\Model\ResourceModel\Attribute');
+        $this->_init('Magento\PageBuilder\Setup\DataConverter\Model\Attribute',
+            'Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute');
     }
 
     /**
