@@ -11,8 +11,7 @@ use Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface;
 /**
  * Class Attribute
  */
-class Attribute extends \Magento\Eav\Model\Attribute implements
-    \Gene\BlueFoot\Api\Data\AttributeInterface
+class Attribute extends \Magento\Eav\Model\Attribute
 {
     /**
      * Name of the module

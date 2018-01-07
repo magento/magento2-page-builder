@@ -12,6 +12,13 @@ use Magento\Framework\Controller\ResultFactory;
  */
 class Upload extends \Magento\Backend\App\Action
 {
+    const UPLOAD_DIR = 'wysiwyg' . DIRECTORY_SEPARATOR . 'bluefoot';
+
+    /**
+     * @var \Magento\Framework\Filesystem\DirectoryList
+     */
+    protected $directoryList;
+
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
@@ -23,11 +30,6 @@ class Upload extends \Magento\Backend\App\Action
     private $uploaderFactory;
 
     /**
-     * @var \Gene\BlueFoot\Helper\Config
-     */
-    private $configHelper;
-
-    /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     private $storeManager;
@@ -37,23 +39,23 @@ class Upload extends \Magento\Backend\App\Action
      *
      * @param \Magento\Backend\App\Action\Context              $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Gene\BlueFoot\Helper\Config                     $configHelper
      * @param \Magento\Store\Model\StoreManagerInterface       $storeManager
      * @param \Magento\Framework\File\UploaderFactory          $uploaderFactory
+     * @param \Magento\Framework\Filesystem\DirectoryList      $directoryList
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Gene\BlueFoot\Helper\Config $configHelper,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\File\UploaderFactory $uploaderFactory
+        \Magento\Framework\File\UploaderFactory $uploaderFactory,
+        \Magento\Framework\Filesystem\DirectoryList $directoryList
     ) {
         parent::__construct($context);
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->configHelper = $configHelper;
         $this->storeManager = $storeManager;
         $this->uploaderFactory = $uploaderFactory;
+        $this->directoryList = $directoryList;
     }
 
     /**
@@ -86,15 +88,25 @@ class Upload extends \Magento\Backend\App\Action
             $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
             $fileUploader->setAllowCreateFolders(true);
 
-            $result = $fileUploader->save($this->configHelper->getUploadDir());
+            $result = $fileUploader->save($this->getUploadDir());
 
             $result['url'] = $this->storeManager->getStore()
                     ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .
-                $this->getFilePath(\Gene\BlueFoot\Helper\Config::UPLOAD_DIR, $result['file']);
+                $this->getFilePath(self::UPLOAD_DIR, $result['file']);
 
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
+    }
+
+    /**
+     * Return the upload directory
+     *
+     * @return string
+     */
+    private function getUploadDir()
+    {
+        return $this->directoryList->getPath('media') . DIRECTORY_SEPARATOR . self::UPLOAD_DIR;
     }
 }

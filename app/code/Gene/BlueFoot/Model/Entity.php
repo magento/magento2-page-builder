@@ -5,15 +5,29 @@
  */
 namespace Gene\BlueFoot\Model;
 
-use Gene\BlueFoot\Api\Data\EntityInterface;
-use Magento\Framework\DataObject\IdentityInterface;
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Reflection\DataObjectProcessor;
+use Gene\BlueFoot\Model\ResourceModel\Entity as ResourceEntity;
+use Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory as EntityCollectionFactory;
 
 /**
  * Class Entity
  */
-class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInterface, IdentityInterface
+class Entity extends \Magento\Framework\Model\AbstractModel
 {
+    /**
+     * Return the entity name
+     */
+    const ENTITY = 'gene_bluefoot_entity';
+
+    /**
+     * Return the cache tag
+     */
+    const CACHE_TAG = 'gene_bluefoot_entity';
+
     /**
      * Entity constructor.
      *
@@ -34,7 +48,7 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     }
 
     /**
-     * Initialize customer model
+     * Initialize entity model
      *
      * @return void
      */
