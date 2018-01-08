@@ -86,9 +86,12 @@ class Init extends \Magento\Backend\Block\Template
             'init_button_class'                => '.init-gene-bluefoot',
             'media_url'                        =>
                 $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
+            'config_url'                       => $this->urlBuilder->getUrl('bluefoot/stage/config'),
+            'data_update_url'                  => $this->urlBuilder->getUrl('bluefoot/stage/preview'),
             'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
             'template_delete_url'              => $this->urlBuilder->getUrl('bluefoot/stage/template_delete'),
             'template_pin_url'                 => $this->urlBuilder->getUrl('bluefoot/stage/template_pin'),
+            'preview_url'                      => $this->frontendUrlBuilder->getUrl('bluefoot/contenttype/preview'),
             'edit_panel_cache_key'             => $editCacheKey,
             'edit_panel_cache'                 =>
                 $this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Forms::TYPE_IDENTIFIER),
