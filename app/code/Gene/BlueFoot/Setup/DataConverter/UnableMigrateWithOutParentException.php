@@ -8,6 +8,6 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 /**
  * Unable to content type entity with out parent content type
  */
-class UnableMigrateWithOutParentException extends \Exception
+class UnableMigrateWithOutParentException extends \Magento\Framework\Exception\LocalizedException
 {
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -10,16 +10,16 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">products_list_form.products_list_form_data_source</item>
-            <item name="deps" xsi:type="string">products_list_form.products_list_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Product List</item>
-        <item name="config" xsi:type="array">
-            <item name="dataScope" xsi:type="string">data</item>
-            <item name="namespace" xsi:type="string">products_list_form</item>
-        </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
+        <deps>
+            <dep>products_list_form.products_list_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>products_list_form</namespace>
         <buttons>
             <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -27,24 +27,22 @@
         </buttons>
     </settings>
     <dataSource name="products_list_form_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Gene\BlueFoot\Model\ContentBlock\DataProvider</argument>
-            <argument name="name" xsi:type="string">products_list_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string"/>
-            <argument name="requestFieldName" xsi:type="string"/>
-        </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
             </item>
         </argument>
+        <dataProvider name="products_list_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
     </dataSource>
     <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string"/>
-            </item>
-        </argument>
+        <settings>
+            <label/>
+        </settings>
         <field name="category_id" sortOrder="10" formElement="input">
             <settings>
                 <dataType>text</dataType>
@@ -57,34 +55,9 @@
         </field>
     </fieldset>
     <fieldset name="display">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string">Display</item>
-            </item>
-        </argument>
-        <!--<field name="show_out_of_stock" sortOrder="1" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">true</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>string</dataType>
-                <label translate="true">Hide out of stock products</label>
-                <dataScope>hide_out_of_stock</dataScope>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="string">false</map>
-                            <map name="true" xsi:type="string">true</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>-->
+        <settings>
+            <label translate="true">Display</label>
+        </settings>
         <field name="product_count" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -145,7 +118,7 @@
         <field name="margins_and_padding" sortOrder="20" formElement="input"
                component="Gene_BlueFoot/js/form/element/margins_and_padding">
             <settings>
-                <label>Margins and Padding</label>
+                <label translate="true">Margins and Padding</label>
             </settings>
         </field>
     </fieldset>

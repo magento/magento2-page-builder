@@ -1,7 +1,6 @@
+/*eslint-disable vars-on-top, strict*/
 /**
  * Live Edit system
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',
@@ -41,6 +40,7 @@ define([
      */
     LiveEditOption.prototype.updateValue = function (value) {
         var data = this.context.data();
+
         data[this.key] = value;
         this.context.data(data);
     };
@@ -95,7 +95,7 @@ define([
          * @param bindingContext
          * @returns {boolean}
          */
-        init: function (element, valueAccessor, allBindingsAccessor, context, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, context) {
             if (typeof valueAccessor().fields === 'undefined') {
                 return false;
             }
@@ -113,7 +113,6 @@ define([
             if (validFields.length > 0) {
                 new LiveEdit(element, validFields, context);
             }
-        }
-    }
-
+        },
+    };
 });

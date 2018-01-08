@@ -1,4 +1,9 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 define([], function () {
+    'use strict';
     return {
         /**
          * /testConfig mock request for testing config.js
@@ -19,5 +24,5 @@ define([], function () {
                 responseText: '{"success":true}'
             };
         }
-    }
+    };
 });

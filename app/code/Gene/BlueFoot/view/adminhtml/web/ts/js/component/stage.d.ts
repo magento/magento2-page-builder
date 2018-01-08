@@ -1,10 +1,9 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import { EditableAreaInterface } from 'stage/structural/editable-area.d';
-import Row from './stage/structural/row';
 import DataStore from "./data-store";
 import Build from "./stage/build";
 

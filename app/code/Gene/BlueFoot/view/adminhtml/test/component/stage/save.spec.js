@@ -1,15 +1,19 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * JS Unit Test for stage/save.js
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',
     'bluefoot/stage/save',
     'bluefoot/config'
 ], function (ko, Save, Config) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/save", function () {
         var stage, save, stageData, valueFn;
+
         beforeEach(function () {
             stageData = ko.observable({
                 'test': 1
@@ -31,8 +35,9 @@ define([
         });
 
         it("will run observe knockout observable", function () {
-            spyOn(save, "update");
             var observable = ko.observable('testValue');
+
+            spyOn(save, "update");
             save.observe(observable);
             observable('newValue');
             expect(save.update).toHaveBeenCalled();
@@ -40,8 +45,9 @@ define([
 
         it ("will throw error if non observable is passed to observe fn", function () {
             var nonObservable = {};
+
             expect(function () {
-                save.observe([nonObservable])
+                save.observe([nonObservable]);
             }).toThrow();
         });
 
@@ -69,9 +75,10 @@ define([
 
         it ("serialize stage element contains valid <script /> entity data", function (done) {
             save.serializeStage().then(function (structure) {
+                var entityData = JSON.parse(structure.childNodes.item(0).innerHTML);
+
                 expect(structure.childNodes.length).toEqual(1);
                 expect(structure.childNodes.item(0).tagName).toEqual('SCRIPT');
-                var entityData = JSON.parse(structure.childNodes.item(0).innerHTML);
                 expect(entityData).toEqual(jasmine.any(Object));
                 expect(entityData).toEqual(stageData());
                 done();
@@ -92,6 +99,7 @@ define([
                     dataEntityData: [data]
                 };
             var builtDataArray = save.buildData(object);
+
             expect(builtDataArray.length).toEqual(1);
             expect(builtDataArray[0].constructor.name).toEqual('HTMLScriptElement');
             expect(JSON.parse(builtDataArray[0].innerHTML)).toEqual(data());
@@ -103,6 +111,7 @@ define([
                     dataEntityData: [data]
                 };
             var builtDataArray = save.buildData(object, {'child': true});
+
             expect(builtDataArray.length).toEqual(2);
         });
 
@@ -113,6 +122,7 @@ define([
                     dataEntityData: [mainData, subsequentData]
                 };
             var objectData = save.retrieveObjectData(object);
+
             expect(objectData).toEqual(jasmine.any(Object));
             expect(objectData['mockData']).toBeTruthy();
             expect(objectData['subsequentData']).toBeTruthy();
@@ -125,6 +135,7 @@ define([
                     dataEntityDataIgnore: ['ignored']
                 };
             var objectData = save.retrieveObjectData(object);
+
             expect(objectData).toEqual(jasmine.any(Object));
             expect(objectData['mockData']).toBeTruthy();
             expect(objectData['ignored']).toBeUndefined();
@@ -132,6 +143,7 @@ define([
 
         it ("buildStructureElement returns valid HTMLDivElement", function () {
             var element = save.buildStructureElement({}, []);
+
             expect(element.constructor.name).toEqual('HTMLDivElement');
         });
 
@@ -139,6 +151,7 @@ define([
             var element = save.buildStructureElement({
                 'data-test': 'test'
             }, []);
+
             expect(element.hasAttribute('data-test')).toBeTruthy();
             expect(element.getAttribute('data-test')).toEqual('test');
         });
@@ -146,6 +159,7 @@ define([
         it ("buildStructureElement inserts child elements", function () {
             var children = [document.createElement('div')],
                 element = save.buildStructureElement({}, children);
+
             expect(element.childNodes.length).toEqual(1);
         });
 
@@ -168,6 +182,7 @@ define([
 
         it ("retrieveChildren returns valid Array when no children are present", function (done) {
             var children = [];
+
             save.serializeChildren(children).then(function (result) {
                 expect(result).toEqual(jasmine.any(Array));
                 expect(result.length).toEqual(0);
@@ -177,16 +192,17 @@ define([
 
         it ("serializeChildren throws error on invalid serializeChildren value", function (done) {
             var children = [{'invalidObject': true}];
-            save.serializeChildren(children).then(function (result) {
+
+            save.serializeChildren(children).then(function () {
                 done(new Error('serializeChildren should throw error'));
-            }, function (error) {
+            }, function () {
                 done();
             });
         });
 
         it("deleted items are recorded in save.deleted", function () {
             save.delete('testDelete');
-            expect(save.deleted[0]).toEqual('testDelete')
+            expect(save.deleted[0]).toEqual('testDelete');
         });
     });
 });

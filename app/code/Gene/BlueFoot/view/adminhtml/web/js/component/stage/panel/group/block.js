@@ -1,9 +1,12 @@
+/*eslint-disable */
 define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockout) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
    * Block Class
    */
+  'use strict';
+
   var Block =
   /*#__PURE__*/
   function (_EventEmitter) {

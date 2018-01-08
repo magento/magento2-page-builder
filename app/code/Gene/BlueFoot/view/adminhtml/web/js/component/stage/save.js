@@ -1,6 +1,7 @@
+/*eslint-disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../../component/format/filter-html", "../../utils/directives"], function (_jquery, _knockout, _engine, _filterHtml, _directives) {
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
 
@@ -9,6 +10,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
    *
    * @param {KnockoutObservableArray<Structural>} tree
    */
+  'use strict';
+
   var Save =
   /*#__PURE__*/
   function () {

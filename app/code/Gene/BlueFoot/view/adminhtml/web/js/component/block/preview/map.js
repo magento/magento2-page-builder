@@ -1,5 +1,8 @@
+/*eslint-disable */
 define(["./block", "knockout", "mage/backend/tabs"], function (_block, _knockout, _tabs) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+  'use strict';
 
   var Map =
   /*#__PURE__*/

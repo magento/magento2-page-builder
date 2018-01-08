@@ -1,11 +1,12 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import _ from 'underscore';
 import $ from 'jquery';
 import cmsConfig from 'advanced-cms-init-config';
+'use strict';
 
 export default class Config {
     private static initConfig: any = cmsConfig;

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel\Setup;
 
 /**
  * Class PropertyMapper
- *
- * @package Gene\BlueFoot\Model\ResourceModel\Setup
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstract
 {

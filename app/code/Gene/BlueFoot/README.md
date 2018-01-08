@@ -1,0 +1,3 @@
+Magento PageBuilder provides an easy to use interface for building content throughout the Magento application. This functionality can be enabled / disabled from the "Content Management" section of the websites settings.
+
+We do not provide backwards compatibility with legacy BlueFoot API's, the module does however ship with migration scripts allowing legacy BlueFoot users to migrate their content to Magento Page Builder.

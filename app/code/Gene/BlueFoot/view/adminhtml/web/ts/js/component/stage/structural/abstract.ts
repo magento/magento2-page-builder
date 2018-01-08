@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -19,6 +19,7 @@ import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
 import {DataObject} from "../../data-store";
 import Appearance from "../../appearance/appearance";
+'use strict';
 
 export default class Structural extends EditableArea implements StructuralInterface {
     parent: EditableArea;

@@ -1,3 +1,4 @@
+/*eslint-disable */
 define([], function () {
   /**
    * Move an array item within the current array

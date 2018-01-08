@@ -1,9 +1,15 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 import EventEmitter from "../../../event-emitter";
 import ko from 'knockout';
 
 /**
  * Block Class
  */
+'use strict';
+
 export class Block extends EventEmitter {
     config: ContentBlockConfig;
     identifier: KnockoutObservable<string> = ko.observable('');

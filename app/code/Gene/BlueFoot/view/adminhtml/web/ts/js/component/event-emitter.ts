@@ -1,10 +1,11 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import { EventEmitterInterface } from 'event-emitter.d';
 import $ from 'jquery';
+'use strict';
 
 export default class EventEmitter implements EventEmitterInterface {
     private events: JQuery.PlainObject = $({});

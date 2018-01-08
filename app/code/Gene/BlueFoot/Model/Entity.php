@@ -1,70 +1,54 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model;
 
-use Gene\BlueFoot\Api\Data\EntityInterface;
-use Magento\Framework\DataObject\IdentityInterface;
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Reflection\DataObjectProcessor;
+use Gene\BlueFoot\Model\ResourceModel\Entity as ResourceEntity;
+use Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory as EntityCollectionFactory;
 
 /**
  * Class Entity
- *
- * @package Gene\BlueFoot\Model
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
-class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInterface, IdentityInterface
+class Entity extends \Magento\Framework\Model\AbstractModel
 {
-     /**
-     * @var \Gene\BlueFoot\Model\Entity\FrontendFactory
+    /**
+     * Return the entity name
      */
-    protected $frontend;
+    const ENTITY = 'gene_bluefoot_entity';
 
     /**
-     * @var \Gene\BlueFoot\Model\Entity\Frontend
+     * Return the cache tag
      */
-    protected $frontendInstance = null;
-
-    /**
-     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
-     */
-    protected $contentBlock;
-
-    /**
-     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
-     */
-    protected $contentBlockRepository;
+    const CACHE_TAG = 'gene_bluefoot_entity';
 
     /**
      * Entity constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Model\Entity\FrontendFactory                  $frontend
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory           $contentBlockFactory
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Gene\BlueFoot\Model\Entity\FrontendFactory $frontend,
-        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-        $this->frontend = $frontend;
-        $this->contentBlock = $contentBlockFactory;
-        $this->contentBlockRepository = $contentBlockRepositoryInterface;
     }
 
     /**
-     * Initialize customer model
+     * Initialize entity model
      *
      * @return void
      */
@@ -81,44 +65,5 @@ class Entity extends \Magento\Framework\Model\AbstractModel implements EntityInt
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
-    }
-
-    /**
-     * Return the front-end model
-     *
-     * @return mixed
-     */
-    public function getFrontend()
-    {
-        if ($this->getId()) {
-            if ($this->frontendInstance === null) {
-                $this->frontendInstance = $this->frontend->create();
-                $this->frontendInstance->setEntity($this);
-            }
-            return $this->frontendInstance;
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the content block for the entity
-     *
-     * @return $this|bool
-     */
-    public function getContentBlock()
-    {
-        if ($attributeSetId = $this->getAttributeSetId()) {
-            try {
-                $contentBlock = $this->contentBlockRepository->getById($attributeSetId);
-                if ($contentBlock->getId()) {
-                    return $contentBlock;
-                }
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
-
-        return false;
     }
 }

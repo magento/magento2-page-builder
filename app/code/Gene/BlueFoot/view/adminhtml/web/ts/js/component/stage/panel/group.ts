@@ -1,10 +1,14 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 import ko from 'knockout';
 
 /**
  * Group Class
- *
- * @author Dave Macaulay <dmacaulay@magento.com>
  */
+'use strict';
+
 export class Group {
     id: KnockoutObservable<number> = ko.observable();
     code: KnockoutObservable<string> = ko.observable('');

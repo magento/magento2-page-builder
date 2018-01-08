@@ -1,15 +1,19 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * JS Unit Test for hook.js
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
    'web/js/component/hook'
 ], function (Hook) {
+    'use strict';
 
     /**
      * Test the hook component of BlueFoot
      */
+    /*eslint-disable */
     describe('Gene_BlueFoot/js/component/core/hook', function () {
 
         it('attach fn exists', function () {
@@ -108,7 +112,7 @@ define([
             });
 
             it('cannot trigger hooks when disabled', function (done) {
-                Hook.attach('testing-run-hook', function ($hook) {
+                Hook.attach('testing-run-hook', function () {
                     fail('triggered hook while disabled');
                 });
                 Hook.disable();
@@ -118,7 +122,7 @@ define([
             });
 
             it('still runs complete function when disabled', function (done) {
-                Hook.attach('testing-run-hook', function ($hook) {
+                Hook.attach('testing-run-hook', function () {
                     fail('triggered hook while disabled');
                 });
                 Hook.disable();
@@ -131,6 +135,7 @@ define([
             it('can trigger hooks after being disabled and reenabled', function (done) {
                 var disabled = false;
                 var context = {};
+
                 Hook.attach('testing-run-hook', function ($hook) {
                     if (disabled) {
                         fail('triggered hook while disabled');
@@ -156,6 +161,7 @@ define([
 
             it('still runs complete function with no hooks', function (done) {
                 var params = {};
+
                 Hook.trigger('nonexistent-hook', params, function complete (args) {
                     expect(args).toBe(params);
                     done();
@@ -163,11 +169,11 @@ define([
             });
             it('fails silently with no hooks', function () {
                 expect(function() {
-                    Hook.trigger('nonexistent-hook')
+                    Hook.trigger('nonexistent-hook');
                 }).not.toThrow();
             });
             it('still runs whitelisted hooks when disabled', function (done) {
-                Hook.attach('testing-run-hook', function ($hook) {
+                Hook.attach('testing-run-hook', function () {
                     fail('triggered hook while disabled');
                 });
                 Hook.attach('whitelisted-hook', function ($hook) {

@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Element;
 
 /**
  * Class Editor
- *
- * @package Gene\BlueFoot\Block\Element
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {

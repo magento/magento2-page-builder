@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -7,6 +7,7 @@ import AccordionBlock from "../accordion";
 import Block from "./block";
 import ko from "knockout";
 import $ from "jquery";
+'use strict';
 
 export default class Accordion extends Block {
     element: Element;

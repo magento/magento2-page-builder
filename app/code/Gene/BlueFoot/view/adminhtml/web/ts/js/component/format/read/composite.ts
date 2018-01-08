@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -8,6 +8,7 @@ import loadComponent from 'Gene_BlueFoot/js/component/loader';
 import Config from "../../config";
 import ReadInterface from "../read-interface";
 import {DataObject} from "../../data-store";
+'use strict';
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types

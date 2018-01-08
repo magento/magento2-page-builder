@@ -1,3 +1,8 @@
+/*
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/*eslint-disable*/
 (function($){
 	var initLayout = function() {
 		var hash = window.location.hash.replace('#', '');

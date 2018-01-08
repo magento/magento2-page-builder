@@ -1,8 +1,11 @@
+/*eslint-disable */
 define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader, _appearance) {
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  'use strict';
+
   var AppearanceFactory =
   /*#__PURE__*/
   function () {

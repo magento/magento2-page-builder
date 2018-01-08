@@ -1,15 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\ResourceModel;
 
 use Magento\Framework\Model\AbstractModel;
 
 /**
  * Class Attribute
- *
- * @package Gene\BlueFoot\Model\ResourceModel
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {
@@ -108,7 +107,6 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
             case 'child_entity':
                 $object->setBackendType('text');
                 $object->setBackendModel('Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend');
-                $object->setSourceModel('Gene\BlueFoot\Model\Attribute\Source\Entity\Child');
         }
 
         return $this;

@@ -7,6 +7,7 @@ namespace Gene\BlueFoot\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Exception\NoSuchEntityException as NoSuchEntityExceptionLocalized;
+use Gene\BlueFoot\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
@@ -178,14 +179,14 @@ class TreeConverter
 
     /**
      * Throw UnableMigrateWithOutParentException
-     * 
+     *
      * @param $exception
      * @throws UnableMigrateWithOutParentException
      */
     private function throwUnableMigrateWithOutParentException($exception)
     {
         throw new UnableMigrateWithOutParentException(
-            'Content type can not be migrated with out parent.',
+            __('Content type can not be migrated with out parent.'),
             null,
             $exception
         );

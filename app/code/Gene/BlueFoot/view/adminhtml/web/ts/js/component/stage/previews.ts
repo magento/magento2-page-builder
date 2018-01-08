@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -7,6 +7,7 @@ import Config from '../config';
 import PreviewBlock from '../block/preview/block';
 import Block from "../block/block";
 import loadModule from 'Gene_BlueFoot/js/component/loader';
+'use strict';
 
 let previews: Array<any> = [];
 

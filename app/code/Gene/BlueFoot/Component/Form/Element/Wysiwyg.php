@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Component\Form\Element;
 
 use Magento\Backend\Block\Widget\Button;
@@ -14,10 +17,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Wysiwyg
- *
- * @package Gene\BlueFoot\Component\Form\Element
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {

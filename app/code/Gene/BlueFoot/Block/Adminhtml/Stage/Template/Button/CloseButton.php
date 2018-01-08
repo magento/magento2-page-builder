@@ -1,13 +1,14 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Class CloseButton
- * @package Gene\BlueFoot\Block\Adminhtml\Stage\Template\Button
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class CloseButton implements ButtonProviderInterface
 {

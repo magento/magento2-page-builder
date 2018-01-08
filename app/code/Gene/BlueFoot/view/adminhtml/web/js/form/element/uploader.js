@@ -1,6 +1,11 @@
+/*eslint-disable vars-on-top, strict, no-alert */
+/*global MediabrowserUtility, Aviary, featherEditor */
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Media Gallery and image uploader field
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 
 define([
@@ -37,7 +42,8 @@ define([
                 regex = /___directive\/([a-z0-9A-Z]*)(,)?(?=\/)/g,
                 match = regex.exec(val);
 
-            // Find the base64 encoded string and decode it - returns a string similar to {{media url="wysiwyg/1470306531.png"}}
+            // Find the base64 encoded string and decode it - returns
+            // a string similar to {{media url="wysiwyg/1470306531.png"}}
             if (Array.isArray(match) && typeof match[1] === 'string') {
                 var decodedString = atob(match[1]),
                     urlMatches = /url="(.*)"/g.exec(decodedString);
@@ -87,7 +93,7 @@ define([
          * @param data
          * @param errorMessage
          */
-        attachmentError: function(data, errorMessage) {
+        attachmentError: function() {
             alert($t("Your image could not be uploaded"));
         },
 
@@ -132,6 +138,7 @@ define([
          */
         launchEditor: function () {
             var url = this.value();
+
             if (url.indexOf('http') === -1) {
                 url = document.location.origin + url;
             }

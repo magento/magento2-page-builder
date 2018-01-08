@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -15,6 +15,7 @@ import { load as loadPreviews } from "./previews";
 
 import "ko-draggable";
 import "ko-sortable";
+'use strict';
 
 export default class Panel extends uiComponent implements PanelInterface {
     componentTemplate: string = 'Gene_BlueFoot/component/stage/panel.html';

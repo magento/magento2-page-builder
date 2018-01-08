@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /*
 * jQuery UI Tag-it!
 *

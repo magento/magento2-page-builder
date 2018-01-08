@@ -1,13 +1,12 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Cache;
 
 /**
  * Class Config
- *
- * @package Gene\BlueFoot\Model\Cache
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Config extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
 {

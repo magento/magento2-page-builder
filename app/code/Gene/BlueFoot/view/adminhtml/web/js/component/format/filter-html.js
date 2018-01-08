@@ -1,6 +1,7 @@
+/*eslint-disable */
 define(["jquery"], function (_jquery) {
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
 
@@ -10,6 +11,8 @@ define(["jquery"], function (_jquery) {
    * @param {JQuery} element
    * @returns {JQuery}
    */
+  'use strict';
+
   function filterHtml(element) {
     var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
       return this.nodeType == Node.COMMENT_NODE || this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/);

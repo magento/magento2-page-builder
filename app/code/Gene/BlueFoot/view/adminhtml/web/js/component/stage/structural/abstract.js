@@ -1,9 +1,12 @@
+/*eslint-disable */
 define(["underscore", "knockout", "mage/translate", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../../format/attribute-filter", "../../format/attribute-mapper", "../../appearance/appearance"], function (_underscore, _knockout, _translate, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearance) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+  'use strict';
 
   var Structural =
   /*#__PURE__*/

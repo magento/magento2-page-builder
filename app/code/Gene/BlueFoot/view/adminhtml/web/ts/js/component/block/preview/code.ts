@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -8,6 +8,7 @@ import {Dictionary} from "underscore";
 import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
+'use strict';
 
 export default class Code extends PreviewBlock {
     /**

@@ -6,9 +6,6 @@
 
 namespace Gene\BlueFoot\Model\Stage;
 
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
-
 class Config extends \Magento\Framework\Model\AbstractModel
 {
     const DEFAULT_COMPONENT = 'Gene_BlueFoot/js/component/block/block';
@@ -30,11 +27,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     private $templateCollection;
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
-     */
-    private $entity;
-
-    /**
      * @var Config\UiComponentConfig
      */
     private $uiComponentConfig;
@@ -47,7 +39,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
      * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity $entity
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
@@ -59,7 +50,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
@@ -68,7 +58,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
         $this->configInterface = $configInterface;
         $this->layoutFactory = $layoutFactory;
         $this->templateCollection = $templateCollectionFactory;
-        $this->entity = $entity;
         $this->uiComponentConfig = $uiComponentConfig;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

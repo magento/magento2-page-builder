@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Template;
 
 use Magento\Framework\View\Element\Template;
@@ -8,10 +11,6 @@ use Magento\Ui\Component\Wrapper\UiComponent;
 
 /**
  * Class Edit
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage\Form
- *
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 class Form extends \Magento\Backend\App\Action
 {

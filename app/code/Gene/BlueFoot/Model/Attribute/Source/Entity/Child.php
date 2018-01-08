@@ -1,59 +1,24 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Model\Attribute\Source\Entity;
-
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 
 /**
  * Class Child
- *
- * @package Gene\BlueFoot\Model\Attribute\Source\Entity
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
-    /**
-     * @var \Gene\BlueFoot\Model\ContentBlockFactory
-     */
-    protected $contentBlock;
-
-    /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory
-     */
-    protected $entityCollection;
-
     /**
      * @var null|array
      */
     protected $possibleEntities = null;
 
     /**
-     * @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface
-     */
-    protected $contentBlockRepository;
-
-    /**
      * @var null|array
      */
     protected $options = null;
-
-    /**
-     * Child constructor.
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory          $contentBlockFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface          $contentBlockRepositoryInterface
-     */
-    public function __construct(
-        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity\CollectionFactory $collectionFactory,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface
-    ) {
-        $this->contentBlock = $contentBlockFactory;
-        $this->entityCollection = $collectionFactory;
-        $this->contentBlockRepository = $contentBlockRepositoryInterface;
-    }
 
     /**
      * Return the options available from the source model
@@ -64,7 +29,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     {
         if ($this->options === null) {
             $entities = $this->getPossibleEntities();
-            $entityValues = array();
+            $entityValues = [];
 
             if ($entities) {
                 /* @var $entity \Gene\BlueFoot\Model\Entity */
@@ -86,7 +51,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
      */
     public function getOptionArray()
     {
-        $options = array();
+        $options = [];
         foreach ($this->getAllOptions() as $option) {
             $options[$option['value']] = $option['label'];
         }
@@ -112,54 +77,12 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     }
 
     /**
-     * Get the allowed type of child entities
-     *
-     * @return $this|bool
-     */
-    public function getAllowedContentBlock()
-    {
-        $attribute = $this->getAttribute();
-        $additionalData = $attribute->getAdditional();
-
-        $typeId = (isset($additionalData['entity_allowed_block_type']) ?
-            $additionalData['entity_allowed_block_type'] :
-            false);
-
-        if ($typeId) {
-            try {
-                $typeModel = $this->contentBlockRepository->getById($typeId);
-                if ($typeModel->getId()) {
-                    return $typeModel;
-                }
-            } catch (\NoSuchEntityException $e) {
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Get the possible entities for the field
      *
-     * @return array|\Gene\BlueFoot\Model\ResourceModel\Entity\Collection|null
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return array
      */
     public function getPossibleEntities()
     {
-        if ($this->possibleEntities === null) {
-            $contentBlock = $this->getAllowedContentBlock();
-            if ($contentBlock && $contentBlock->getId()) {
-                $entities = $this->entityCollection->create();
-                $entities->addAttributeToSelect('title', 'left');
-                $entities->addFieldToFilter('attribute_set_id', array('eq' => $contentBlock->getId()));
-
-                $this->possibleEntities = $entities;
-            } else {
-                $this->possibleEntities = [];
-            }
-        }
-
-        return $this->possibleEntities;
+        return [];
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -8,6 +8,7 @@ import registry from "uiRegistry";
 import DataStore from "../data-store";
 import $t from "mage/translate";
 import PersistenceClient from "./edit/persistence-client";
+'use strict';
 
 export interface FormComponent {
     destroy(): void;

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Gene\BlueFoot\Controller\Adminhtml\Stage\Render;
 
 use Magento\Framework\View\Element\Template;
@@ -11,10 +14,6 @@ use Magento\Framework\View\Element\UiComponentFactory;
 
 /**
  * Class Edit
- *
- * @package Gene\BlueFoot\Controller\Adminhtml\Stage\Render
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 class Edit extends AbstractAction
 {

@@ -1,8 +1,11 @@
+/*eslint-disable */
 define(["underscore", "Gene_BlueFoot/js/component/loader", "../../config"], function (_underscore, _loader, _config) {
   /**
-   * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+   * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  'use strict';
+
   var AttributeReaderComposite =
   /*#__PURE__*/
   function () {

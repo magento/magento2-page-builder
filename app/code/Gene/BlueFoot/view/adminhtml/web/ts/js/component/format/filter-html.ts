@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -11,6 +11,9 @@ import $ from 'jquery';
  * @param {JQuery} element
  * @returns {JQuery}
  */
+
+'use strict';
+
 export default function filterHtml(element: JQuery): JQuery {
     const isWhiteSpaceOrComment = function() {
         return this.nodeType == Node.COMMENT_NODE

@@ -1,11 +1,12 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import EventEmitter from "./event-emitter";
 import EditableArea from "./stage/structural/editable-area";
 import _ from "underscore";
+'use strict';
 
 interface DataStoreEvent {
     state: State

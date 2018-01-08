@@ -1,19 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
 
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
-use Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
-/**
- * Class ContentBlock
- *
- * @package Gene\BlueFoot\Model\Installer
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
- */
 class ContentBlock extends AbstractInstall
 {
     /**
@@ -27,17 +21,7 @@ class ContentBlock extends AbstractInstall
     protected $unresolvedAdditionalData = [];
 
     /**
-     * @var \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface
-     */
-    protected $contentBlockGroupRepository;
-
-    /**
-     * @var \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory
-     */
-    protected $contentBlockGroupFactory;
-
-    /**
-     * @var \Gene\BlueFoot\Model\Attribute\ContentBlockFactory
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory
      */
     protected $contentBlockFactory;
 
@@ -57,36 +41,33 @@ class ContentBlock extends AbstractInstall
     protected $eavAttributeGroupFactory;
 
     /**
-     * Attribute constructor.
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock
+     */
+    private $contentBlockResource;
+
+    /**
+     * ContentBlock constructor.
      *
-     * @param \Magento\Framework\Model\Context                                    $context
-     * @param \Magento\Framework\Registry                                         $registry
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                             $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                           $entity
-     * @param \Magento\Framework\Filesystem\Io\File                               $ioFile
-     * @param \Magento\Framework\Module\Dir\Reader                                $moduleReader
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface                  $contentBlockRepositoryInterface
-     * @param \Gene\BlueFoot\Api\ContentBlockGroupRepositoryInterface             $contentBlockGroupRepositoryInterface
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory            $groupFactory
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlockFactory                  $contentBlockFactory
-     * @param \Magento\Eav\Model\Entity\AttributeFactory                          $eavAttributeFactory
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param EntitySetupFactory $entitySetupFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
+     * @param \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory
-     * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory                    $eavAttributeGroupFactory
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null        $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null                  $resourceCollection
-     * @param array                                                               $data
+     * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
-        \Magento\Framework\Filesystem\Io\File $ioFile,
-        \Magento\Framework\Module\Dir\Reader $moduleReader,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
-        ContentBlockGroupRepositoryInterface $contentBlockGroupRepositoryInterface,
-        \Gene\BlueFoot\Model\Attribute\ContentBlock\GroupFactory $groupFactory,
-        \Gene\BlueFoot\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory,
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory,
@@ -99,17 +80,15 @@ class ContentBlock extends AbstractInstall
             $registry,
             $entitySetupFactory,
             $entity,
-            $ioFile,
-            $moduleReader,
-            $contentBlockRepositoryInterface,
+            $contentBlockFactory,
+            $contentBlockResource,
             $resource,
-            $resourceCollection
+            $resourceCollection,
+            $data
         );
 
-        $this->contentBlockGroupRepository = $contentBlockGroupRepositoryInterface;
-        $this->contentBlockGroupFactory = $groupFactory;
-
         $this->contentBlockFactory = $contentBlockFactory;
+        $this->contentBlockResource = $contentBlockResource;
 
         $this->eavAttributeFactory = $eavAttributeFactory;
         $this->eavAttributeCollectionFactory = $eavAttributeCollectionFactory;
@@ -177,42 +156,31 @@ class ContentBlock extends AbstractInstall
                     'block ' . $contentBlockIdentifier . ': ' . implode(', ', $missingAttributes));
             }
 
-            /* @var $contentBlock \Gene\BlueFoot\Model\Attribute\ContentBlock\Interceptor */
+            /* @var $contentBlock \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlock */
             $contentBlock = $this->contentBlockFactory->create();
 
             // Pass the data from the installation json into the new content block model
             $contentBlock->setData($contentBlockDataObject->getData());
 
-            // Find or create the group for this content block
-            $groupId = 0;
-            /* @var $group \Gene\BlueFoot\Model\Attribute\ContentBlock\Group */
-            if ($group = $this->findOrCreateGroup($contentBlockData['group'])) {
-                $groupId = $group->getId();
-            }
-
-            // Set the group ID for display in the page builder
-            $contentBlock->setGroupId($groupId);
-
-            // Save before adding in the groups
-            $contentBlock->save();
+            // Save the content block
+            $this->contentBlockResource->save($contentBlock);
 
             // Build up the attributes and groups
-            $contentBlock->setGroups($this->buildGroups($contentBlock, $attributeGroups));
+            $contentBlock->setGroups($this->_buildGroups($contentBlock, $attributeGroups));
 
-            $contentBlock->save();
+            $this->contentBlockResource->save($contentBlock);
         }
 
         return $this;
     }
 
     /**
-     * Create multiple content blocks
-     *
-     * @param             $contentBlocks
-     * @param             $installData
+     * @param $contentBlocks
+     * @param $installData
      * @param EntitySetup $eavSetup
      *
      * @return $this
+     * @throws \Exception
      */
     public function createContentBlocks($contentBlocks, $installData, EntitySetup $eavSetup)
     {
@@ -232,58 +200,23 @@ class ContentBlock extends AbstractInstall
     }
 
     /**
-     * Find or create a group for the content block
-     *
-     * @param $groupCode
-     *
-     * @return bool
-     */
-    protected function findOrCreateGroup($groupCode)
-    {
-        try {
-            if ($group = $this->contentBlockGroupRepository->getByCode($groupCode)) {
-                return $group;
-            }
-        } catch (\Exception $e) {
-            // If the group isn't found, create the group below
-        }
-
-        $group = $this->contentBlockGroupFactory->create();
-        $group->addData([
-            'code'       => $groupCode,
-            'name'       => ucwords($groupCode),
-            'sort_order' => 99,
-            'icon'       => '<i class="fa fa-chevron-down"></i>'
-        ]);
-
-        if ($group->save()) {
-            return $group;
-        }
-
-        return false;
-    }
-
-    /**
-     * Build the groups for the content block
-     *
-     * @param \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock
-     * @param                                             $attributeGroups
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlock $contentBlock
+     * @param $attributeGroups
      *
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function buildGroups(\Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock, $attributeGroups)
-    {
+    protected function _buildGroups(
+        \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlock $contentBlock,
+        $attributeGroups
+    ) {
         $newGroups = [];
         foreach ($attributeGroups as $group) {
             $groupAttributes = isset($group['attributes']) ? $group['attributes'] : [];
             unset($group['attributes']);
-
             // Create the group
             $groupObject = $this->eavAttributeGroupFactory->create();
             $groupObject->setData($group);
             $groupObject->setAttributeSetId($contentBlock->getAttributeSetId());
-
             $attributeCodes = [];
             foreach ($groupAttributes as $gAttribute) {
                 $attrCode = isset($gAttribute['attribute_code']) ? $gAttribute['attribute_code'] : false;
@@ -291,13 +224,11 @@ class ContentBlock extends AbstractInstall
                     $attributeCodes[] = $attrCode;
                 }
             }
-
             if (count($attributeCodes) > 0) {
                 $groupAttributesCollection = $this->eavAttributeCollectionFactory->create()
                     ->setCodeFilter($attributeCodes)
                     ->setEntityTypeFilter($this->getEntityTypeId())
                     ->load();
-
                 $modelAttributeArray = [];
                 foreach ($groupAttributesCollection as $gAttribute) {
                     $newAttribute = $this->eavAttributeFactory->create()
@@ -305,14 +236,12 @@ class ContentBlock extends AbstractInstall
                         ->setAttributeSetId($contentBlock->getAttributeSetId())
                         ->setEntityTypeId($this->getEntityTypeId())
                         ->setSortOrder($gAttribute->getSortOrder());
-
                     $modelAttributeArray[] = $newAttribute;
                 }
                 $groupObject->setAttributes($modelAttributeArray);
                 $newGroups[] = $groupObject;
             }
         }
-
         return $newGroups;
     }
 }

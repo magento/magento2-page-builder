@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -10,6 +10,7 @@ interface AccordionDataObject {
     content: string;
     open_on_load: string;
 }
+'use strict';
 
 export default class Accordion extends Block {
 

@@ -1,10 +1,11 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import Block from "./block";
 import ko from "knockout";
+'use strict';
 
 export default class Buttons extends Block {
     constructor(parent: Block, config: object) {

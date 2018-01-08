@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
 
-use Gene\BlueFoot\Api\ContentBlockRepositoryInterface;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
 use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
 
-/**
- * Class Attribute
- *
- * @package Gene\BlueFoot\Model\Installer
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
- */
 class Attribute extends AbstractInstall
 {
     /**
@@ -21,7 +16,7 @@ class Attribute extends AbstractInstall
     protected $unresolvedAdditionalData = [];
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -49,25 +44,21 @@ class Attribute extends AbstractInstall
     /**
      * Attribute constructor.
      *
-     * @param \Magento\Framework\Model\Context                             $context
-     * @param \Magento\Framework\Registry                                  $registry
-     * @param \Gene\BlueFoot\Setup\EntitySetupFactory                      $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity                    $entity
-     * @param \Magento\Framework\Filesystem\Io\File                        $ioFile
-     * @param \Magento\Framework\Module\Dir\Reader                         $moduleReader
-     * @param \Gene\BlueFoot\Api\ContentBlockRepositoryInterface           $contentBlockRepositoryInterface
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param EntitySetupFactory $entitySetupFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
-     * @param array                                                        $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
-        \Magento\Framework\Filesystem\Io\File $ioFile,
-        \Magento\Framework\Module\Dir\Reader $moduleReader,
-        ContentBlockRepositoryInterface $contentBlockRepositoryInterface,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -77,11 +68,11 @@ class Attribute extends AbstractInstall
             $registry,
             $entitySetupFactory,
             $entity,
-            $ioFile,
-            $moduleReader,
-            $contentBlockRepositoryInterface,
+            $contentBlockFactory,
+            $contentBlockResource,
             $resource,
-            $resourceCollection
+            $resourceCollection,
+            $data
         );
 
         $this->entity = $entity;

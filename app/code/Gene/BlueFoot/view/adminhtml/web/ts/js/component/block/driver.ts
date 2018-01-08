@@ -1,11 +1,12 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import Block from "./block";
 import Config from "../config";
 import _ from 'underscore';
+'use strict';
 
 export default class Driver extends Block {
 

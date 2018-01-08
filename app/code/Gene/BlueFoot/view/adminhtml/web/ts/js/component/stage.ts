@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -15,6 +15,7 @@ import $ from 'jquery';
 import createBlock from "./block/factory";
 import Config from "./config";
 import Block from "./block/block";
+'use strict';
 
 export default class Stage extends EditableArea implements StageInterface {
     parent: any;

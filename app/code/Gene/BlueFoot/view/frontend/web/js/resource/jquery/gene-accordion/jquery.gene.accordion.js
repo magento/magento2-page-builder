@@ -1,10 +1,12 @@
+/*eslint-disable */
+
 /*
  * Gene Accordion JS
- * @author Hob Adams <hob@gene.co.uk>
  *
  * Very basic accordion plugin stripped down to be used with the BlueFoot
  */
 (function (jQuery) {
+    'use strict';
     jQuery.fn.geneAccordion = function (options) {
 
         var opts = jQuery.extend( {}, jQuery.fn.geneAccordion.defaults, options );

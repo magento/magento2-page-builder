@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 var allTestFiles = [];
 var pathOverrides = {
     'jquery': 'test/lib/jquery',
@@ -14,26 +18,31 @@ var pathOverrides = {
     'bluefoot/utils/persistence': 'test/mock/persistence',
     'bluefoot/utils/array': 'web/js/utils/array'
 };
-var TEST_REGEXP = /(spec|test)\.js$/i
-var SRC_REGEXP = /^\/base\/web\//
+var TEST_REGEXP = /(spec|test)\.js$/i;
+var SRC_REGEXP = /^\/base\/web\//;
 
+/* eslint-disable */
 // Get a list of all the test files to include
 Object.keys(window.__karma__.files).forEach(function (file) {
+    'use strict';
     if (SRC_REGEXP.test(file)) {
         // get first subdirectory to establish all future path mappings
         var basedir = file.replace(SRC_REGEXP, '').split('/')[0];
+
         pathOverrides[basedir] = basedir;
     } else if (TEST_REGEXP.test(file)) {
         // Normalize paths to RequireJS module names.
         // If you require sub-dependencies of test files to be loaded as-is (requiring file extension)
         // then do not normalize the paths
-        var normalizedTestModule = file.replace(/^\/base\/|\.js$/g, '')
-        allTestFiles.push(normalizedTestModule)
+        var normalizedTestModule = file.replace(/^\/base\/|\.js$/g, '');
+
+        allTestFiles.push(normalizedTestModule);
     }
 });
 
 // Object.assign shim for old browsers
 var assign = Object.assign || function (target, source) {
+    'use strict';
     for (var key in source) {
         if (source.hasOwnProperty(key)) {
             target[key] = source[key];
@@ -45,7 +54,7 @@ var assign = Object.assign || function (target, source) {
 // reuse requirejs-config values included above this
 // but (cheaply) replace the root module path with the test server path
 var testConfig = JSON.parse(
-    JSON.stringify(config)
+    JSON.stringify(require.config)
         .replace(/Gene_BlueFoot/g, 'web')
 );
 

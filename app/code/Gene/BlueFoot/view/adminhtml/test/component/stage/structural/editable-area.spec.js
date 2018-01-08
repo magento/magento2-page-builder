@@ -1,7 +1,9 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * JS Unit Test for stage/structural/editable-area.js
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'ko',
@@ -9,9 +11,11 @@ define([
     'bluefoot/stage/structural/editable-area',
     'bluefoot/block/factory'
 ], function (ko, EventEmitter, EditableArea, BlockFactory) {
+    'use strict';
     describe("Gene_BlueFoot/js/component/stage/structural/editable-area", function () {
         var editable, observable, stage, event, mockBlockConfig,
             blockFactory = new BlockFactory();
+
         beforeEach(function () {
             stage = {
                 save: {

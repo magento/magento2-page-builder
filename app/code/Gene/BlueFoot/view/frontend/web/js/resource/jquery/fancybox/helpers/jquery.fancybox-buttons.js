@@ -1,3 +1,4 @@
+/*eslint-disable */
  /*!
  * Buttons helper for fancyBox
  * version: 1.0.5 (Mon, 15 Oct 2012)
@@ -11,7 +12,6 @@
  *             }
  *         }
  *     });
- *
  */
 (function ($) {
 	//Shortcut for fancyBox object

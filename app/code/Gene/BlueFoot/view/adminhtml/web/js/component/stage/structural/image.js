@@ -1,3 +1,4 @@
+/*eslint-disable */
 define(["./abstract", "./column", "./options/option", "ko-resizable"], function (_abstract, _column, _option, _koResizable) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 

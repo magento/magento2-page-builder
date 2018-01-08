@@ -1,3 +1,4 @@
+/*eslint-disable */
 /*
 	Redactor II
 	Version 1.2.5

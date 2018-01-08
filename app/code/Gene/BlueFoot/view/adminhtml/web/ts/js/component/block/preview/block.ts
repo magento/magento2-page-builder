@@ -1,15 +1,16 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import _, {Dictionary} from "underscore";
 import ko from "knockout";
 import Block from "../block";
-
+'use strict';
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
+
 
 export default class PreviewBlock {
     parent: Block;

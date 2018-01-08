@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 import {ModalComponent} from "../edit";
 import DataStore from "../../data-store";
 
@@ -6,6 +10,8 @@ import DataStore from "../../data-store";
  *
  * Acts as the data provider client between our system and the UI component system
  */
+'use strict';
+
 export default class PersistenceClient {
     modal: ModalComponent;
     store: DataStore;

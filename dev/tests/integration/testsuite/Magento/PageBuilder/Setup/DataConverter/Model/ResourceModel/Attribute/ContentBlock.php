@@ -1,0 +1,111 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute;
+
+class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
+{
+    /**
+     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity
+     */
+    protected $entity;
+
+    /**
+     * ContentBlock constructor.
+     *
+     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
+     * @param \Magento\Eav\Model\Config $eavConfig
+     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
+     * @param null $connectionName
+     */
+    public function __construct(
+        \Magento\Framework\Model\ResourceModel\Db\Context $context,
+        \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory,
+        \Magento\Eav\Model\Config $eavConfig,
+        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
+        $connectionName = null
+    ) {
+        parent::__construct($context, $attrGroupFactory, $eavConfig, $connectionName);
+
+        $this->entity = $entity;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @param \Magento\Framework\Model\AbstractModel $object
+     *
+     * @return \Magento\Framework\DB\Select
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getLoadSelect($field, $value, $object)
+    {
+        $select = $this->getConnection()->select()->from($this->getMainTable());
+        $select->joinLeft(
+            ['entity_type' => $this->getTable('gene_bluefoot_entity_type')],
+            'eav_attribute_set.attribute_set_id = entity_type.attribute_set_id',
+            '*'
+        );
+
+        // If the field isn't directly specifying which table to join on assume the main table
+        if (!strpos($field, '.')) {
+            $field = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), $field));
+        } else {
+            $field = $this->getConnection()->quoteIdentifier($field);
+        }
+
+        $select->where($field . '=?', $value);
+        return $select;
+    }
+
+    /**
+     * Ensure the BlueFoot entity type ID is set on the row
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     *
+     * @return $this
+     */
+    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    {
+        if (!$object->getEntityTypeId() && ($entityType = $this->entity->getEntityType())) {
+            $object->setEntityTypeId($entityType->getEntityTypeId());
+        }
+
+        return parent::_beforeSave($object);
+    }
+
+    /**
+     * Copy and presented data over to the entity type table
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return $this
+     */
+    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
+    {
+        // Build up our data to be updated
+        $updateData = [];
+        $tableColumns = $this->getConnection()->describeTable($this->getTable('gene_bluefoot_entity_type'));
+        $objectData = $object->getData();
+        foreach ($tableColumns as $key => $data) {
+            if (array_key_exists($key, $objectData)) {
+                $updateData[$key] = $object->getData($key);
+            }
+        }
+
+        // Force remove the type_id, add the attribute_set_id
+        unset($updateData['type_id']);
+        $updateData['attribute_set_id'] = $object->getAttributeSetId();
+        $updateData['name'] = $object->getAttributeSetName();
+
+        // Insert on duplicate
+        $this->getConnection()->insertOnDuplicate(
+            $this->getTable('gene_bluefoot_entity_type'),
+            $updateData
+        );
+
+        return parent::_afterSave($object);
+    }
+}

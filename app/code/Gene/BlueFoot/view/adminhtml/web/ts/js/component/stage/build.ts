@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -9,12 +9,11 @@ import EventEmitter from '../event-emitter';
 import Config from '../config';
 import createBlock from '../block/factory';
 import {EditableAreaInterface} from './structural/editable-area.d';
-import {RowInterface} from './structural/row.d';
-import {ColumnInterface} from './structural/column.d';
 import Block from '../block/block';
 import AttributeReaderComposite from '../format/read/composite';
 import Stage from "../stage";
 import EditableArea from "./structural/editable-area";
+'use strict';
 
 export default class Build extends EventEmitter {
     fieldValue: string;

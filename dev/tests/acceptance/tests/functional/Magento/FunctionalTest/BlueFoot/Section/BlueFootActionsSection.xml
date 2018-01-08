@@ -158,7 +158,7 @@
         <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
         <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
-        <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
+        <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='{{arg2}}'][style*='.{{arg3}}']" parameterized="true"/>
     </section>
     <section name="AdvancedForm">
         <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
@@ -206,14 +206,14 @@
     </section>
     <section name="ImageOnFrontend">
         <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
-        <element name="imageSource" type="button" selector="img.bluefoot-mobile-hidden[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="imageSource" type="button" selector="img.bluefoot-mobile-hidden[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
         <element name="imageHasLightbox" type="button" selector="[data-role='image'] a.bluefoot-lightbox"/>
         <element name="imageHasAltText" type="button" selector="img.bluefoot-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
         <element name="imageHasTitleTag" type="button" selector="img.bluefoot-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
-        <element name="mobileImageSource" type="button" selector="img.bluefoot-mobile-only[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.bluefoot-mobile-only[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
         <element name="imageHasCaption" type="button" selector="figcaption"/>
         <element name="fancyboxOpen" type="button" selector=".fancybox-overlay"/>
-        <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src^='{{arg1}}{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
     </section>
     <section name="MapInAdmin">
         <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>

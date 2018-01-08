@@ -18,12 +18,12 @@ class Configurable implements ChildrenExtractorInterface
     private $path;
 
     /**
-     * Constructor
+     * Configurable constructor.
      *
-     * @param $path
+     * @param string $path
      */
     public function __construct(
-        $path
+        string $path
     ) {
         $this->path = $path;
     }

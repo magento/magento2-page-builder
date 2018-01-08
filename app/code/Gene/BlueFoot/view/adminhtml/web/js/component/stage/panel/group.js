@@ -1,9 +1,16 @@
+/*eslint-disable */
 define(["knockout"], function (_knockout) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
   /**
    * Group Class
    *
-   * @author Dave Macaulay <dmacaulay@magento.com>
    */
+  'use strict';
+
   var Group =
   /*#__PURE__*/
   function () {

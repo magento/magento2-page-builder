@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /**
  *
  * Color picker

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -7,6 +7,7 @@ import { Option } from "../stage/structural/options/option";
 import $t from 'mage/translate';
 import _ from "underscore";
 import Block from "./block";
+'use strict';
 
 export default class Row extends Block {
 

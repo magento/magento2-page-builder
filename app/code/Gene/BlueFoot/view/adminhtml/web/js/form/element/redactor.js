@@ -1,13 +1,17 @@
+/*eslint-disable vars-on-top, strict */
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Redactor form element
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/element/abstract',
     'underscore',
     'mage/translate',
     'bluefoot/ko-redactor'
-], function (AbstractField, _, $t) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField.extend({

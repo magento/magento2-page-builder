@@ -1,4 +1,8 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * MIME type to use in place of the image
  * @type {string}
  */
@@ -10,6 +14,7 @@ const mimeType = 'text/magento-directive';
  * @param {string} url
  * @returns {boolean}
  */
+
 function isDirectiveDataUrl(url: string): boolean {
     return url.indexOf('data:' + mimeType) === 0;
 }

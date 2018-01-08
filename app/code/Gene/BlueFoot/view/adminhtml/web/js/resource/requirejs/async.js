@@ -1,3 +1,4 @@
+/*eslint-disable */
 /** @license
  * RequireJS plugin for async dependency load like JSONP and Google Maps
  * Author: Miller Medeiros

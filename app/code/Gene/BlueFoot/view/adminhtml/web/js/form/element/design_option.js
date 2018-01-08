@@ -1,7 +1,10 @@
+/*eslint-disable vars-on-top, strict, max-len */
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Design Options UI Component
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/element/abstract',
@@ -70,6 +73,7 @@ define([
 
             if (this.initialValue) {
                 var obj = JSON.parse(this.initialValue);
+
                 this.marginTop(obj.margin[0]);
                 this.marginRight(obj.margin[1]);
                 this.marginBottom(obj.margin[2]);
@@ -133,7 +137,7 @@ define([
             // Attach the color picker
             $(element).ColorPicker({
                 color: this[field](),
-                onChange: function (hsb, hex, rgb) {
+                onChange: function (hsb, hex) {
                     this[field](hex);
                 }.bind(this)
             });
@@ -145,7 +149,7 @@ define([
         updateBorderTextColor: function () {
             if (this.borderColor()) {
                 this.borderColor(this.borderColor().replace('#', ''));
-                this.borderTextColor((parseInt(this.borderColor(), 16) > 0xffffff / 1.75) ? '#000000' : '#FFFFFF');
+                this.borderTextColor(parseInt(this.borderColor(), 16) > 0xffffff / 1.75 ? '#000000' : '#FFFFFF');
             }
         },
 
@@ -155,7 +159,7 @@ define([
         updateBackgroundTextColor: function () {
             if (this.backgroundColor()) {
                 this.backgroundColor(this.backgroundColor().replace('#', ''));
-                this.backgroundTextColor((parseInt(this.backgroundColor(), 16) > 0xffffff / 1.75) ? '#000000' : '#FFFFFF');
+                this.backgroundTextColor(parseInt(this.backgroundColor(), 16) > 0xffffff / 1.75 ? '#000000' : '#FFFFFF');
             }
         },
 

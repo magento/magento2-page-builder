@@ -1,5 +1,7 @@
+/*eslint-disable vars-on-top, strict*/
+
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -89,7 +91,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
          * @param data
          * @param context
          */
-        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function (element, valueAccessor, allBindingsAccessor) {
             // Initialize draggable on all children of the element
             Draggable.init(jQuery(element), valueAccessor);
 

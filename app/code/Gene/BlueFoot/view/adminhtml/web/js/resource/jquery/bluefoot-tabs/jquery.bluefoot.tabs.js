@@ -1,7 +1,10 @@
+/*eslint-disable*/
 /*
- * BlueFoot Tabs JS
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/*
  * Very basic tabs js
- * @author Hob Adams <hob@gene.co.uk>
  */
 (function (jQuery) {
     jQuery.fn.bluefootTabs = function (options) {
@@ -20,6 +23,7 @@
 
                 /* Add Active class to the new element */
                 var target = jQuery(this).data('tab');
+
                 jQuery(target).addClass('active');
                 jQuery(this).addClass('active');
 

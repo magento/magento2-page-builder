@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -8,6 +8,7 @@ import Block from './block';
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import AppearanceFactory from "../appearance/appearance-factory";
+'use strict';
 
 interface ConfigObject {
     component?: string;

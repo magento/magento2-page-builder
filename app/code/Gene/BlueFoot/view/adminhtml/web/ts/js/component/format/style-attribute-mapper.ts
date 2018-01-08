@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 import {DataObject} from "../../component/data-store";
@@ -10,6 +10,7 @@ import _ from "underscore";
 interface FromDomResult {
     [key: string]: any;
 }
+'use strict';
 
 export default class StyleAttributeMapper {
     /**

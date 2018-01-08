@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
@@ -8,10 +11,6 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 
 /**
  * Class InstallSchema
- *
- * @package Gene\BlueFoot\Setup
- *
- * @author  Dave Macaulay <dave@gene.co.uk>
  */
 class InstallSchema implements InstallSchemaInterface
 {
@@ -546,44 +545,6 @@ class InstallSchema implements InstallSchemaInterface
         $installer->getConnection()->createTable($table);
 
         /**
-         * Create table 'gene_bluefoot_entity_type_group'
-         */
-        $table = $installer->getConnection()->newTable(
-            $installer->getTable('gene_bluefoot_entity_type_group')
-        )->addColumn(
-            'group_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-            'Rewrite Id'
-        )->addColumn(
-            'code',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            ['nullable' => false],
-            'Lowercase name for group'
-        )->addColumn(
-            'name',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            ['nullable' => false],
-            'Name of group'
-        )->addColumn(
-            'icon',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            ['nullable' => true],
-            'Icon for group'
-        )->addColumn(
-            'sort_order',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['nullable' => true, 'default' => 0, 'unsigned' => true],
-            'Sort Order'
-        );
-        $installer->getConnection()->createTable($table);
-
-        /**
          * Create table 'gene_bluefoot_entity_type'
          */
         $table = $installer->getConnection()->newTable(
@@ -632,23 +593,6 @@ class InstallSchema implements InstallSchemaInterface
             'attribute_set_id',
             $installer->getTable('eav_attribute_set'),
             'attribute_set_id',
-            \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-        )->addColumn(
-            'group_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['nullable' => false, 'unsigned' => true],
-            'Group ID'
-        )->addForeignKey(
-            $installer->getFkName(
-                'gene_bluefoot_entity_type',
-                'group_id',
-                'gene_bluefoot_entity_type_group',
-                'group_id'
-            ),
-            'group_id',
-            $installer->getTable('gene_bluefoot_entity_type_group'),
-            'group_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         )->addColumn(
             'name',

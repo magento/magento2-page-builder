@@ -1,16 +1,22 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * JS Unit Test for hook.js
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'bluefoot/event-emitter'
 ], function (EventEmitter) {
+    'use strict';
+
     /**
      * Test the hook component of BlueFoot
      */
+    /*eslint-disable */
     describe('Gene_BlueFoot/js/component/event-emitter', function () {
         var eventEmitter;
+
         beforeEach(function () {
             eventEmitter = new EventEmitter();
         });
@@ -26,6 +32,7 @@ define([
 
         it('wont fire removed listener', function () {
             var testEventFn = jasmine.createSpy();
+
             eventEmitter.on('testEvent', testEventFn);
             eventEmitter.off('testEvent');
             eventEmitter.emit('testEvent');
@@ -34,6 +41,7 @@ define([
 
         it('once() will only fire event once', function () {
             var testEventFn = jasmine.createSpy();
+
             eventEmitter.once('testEvent', testEventFn);
             eventEmitter.emit('testEvent');
             eventEmitter.emit('testEvent');

@@ -1,9 +1,10 @@
+/*eslint-disable*/
 /*
- * BlueFoot Normalise Heights JS
- * @author Hob Adams <hob@gene.co.uk>
- *
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/*
  * Plugin to normalise the heights of blocks within a container
- *
  */
 (function (jQuery) {
     jQuery.fn.bluefootNormaliseHeights = function (options) {

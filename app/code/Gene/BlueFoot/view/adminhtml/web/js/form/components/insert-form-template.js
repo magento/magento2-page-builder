@@ -1,14 +1,19 @@
+/*eslint-disable vars-on-top, strict */
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Dynamically load in the form to create a template
- * @author Aidan Threadgold <aidan@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/components/insert-form',
     'mageUtils',
     'jquery',
     'bluefoot/config',
-    'uiRegistry'
-], function (InsertForm, utils, $, Config, registry) {
+    'uiRegistry',
+    'underscore'
+], function (InsertForm, utils, $, Config, registry, _) {
     'use strict';
 
     return InsertForm.extend({
@@ -45,9 +50,12 @@ define([
             // Destroy the adapter on the newly created sub form to not mess with other forms
             var internalForm,
                 insideInterval = setInterval(function () {
-                    if (internalForm = registry.get(this.ns + '_form.' + this.ns + '_form')) {
+                    try {
+                        internalForm = registry.get(this.ns + '_form.' + this.ns + '_form');
                         clearInterval(insideInterval);
                         internalForm.destroyAdapter();
+                    }catch(e) {
+                        //Catch a failure to get form from registry
                     }
                 }.bind(this), 5);
 
@@ -112,11 +120,13 @@ define([
             // Validate the form
             var form = registry.get(this.formNameSpace),
                 modal = registry.get(this.managerModalNameSpace);
+
             form.validate();
 
             if (!form.additionalInvalid && !form.source.get('params.invalid')) {
                 // Get form data and stage structure
                 var entityData = form.source.data;
+
                 entityData.form_key = window.FORM_KEY;
                 entityData.structure = modal.getStageStructure();
 
@@ -129,6 +139,7 @@ define([
                     url: form.source.submit_url,
                     data: entityData
                 });
+
                 request.done(function() {
                     // Destroy the original instance of the source
                     form.destroyAdapter();

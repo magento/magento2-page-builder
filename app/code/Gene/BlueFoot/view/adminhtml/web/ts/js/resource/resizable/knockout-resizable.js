@@ -1,13 +1,18 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQuery, Config) {
+    'use strict';
+    /*eslint-disable */
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},
-        smallestColumn = {breakpoint: 1};
+        smallestColumn = {breakpoint: 1},
+        largestPercentage,
+        smallestPercentage,
+        Resizable;
 
     // Determine the largest and smallest columns
     for (var i = 0; i < allowedSizes.length; i++) {
@@ -19,10 +24,10 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
         }
     }
 
-    var largestPercentage = parseFloat(largestColumn.breakpoint).toFixed(3),
-        smallestPercentage = parseFloat(smallestColumn.breakpoint).toFixed(3);
+    largestPercentage = parseFloat(largestColumn.breakpoint).toFixed(3);
+    smallestPercentage = parseFloat(smallestColumn.breakpoint).toFixed(3);
 
-    var Resizable = {
+    Resizable = {
         extendedConfig: {},
         currentColumn: null,
         startingWidth: 0,
@@ -30,19 +35,26 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
 
         init: function (element, extendedConfig) {
             var context = this;
+
             this.extendedConfig = extendedConfig;
 
             jQuery(element)
                 .on('mousemove', function (event) {
+                    var currentElement,
+                        ghostWidth,
+                        ghost,
+                        biggestWidth,
+                        smallestWidth;
+
                     if (!context.currentColumn) {
                         return;
                     }
 
-                    var element = jQuery("#" + context.currentColumn.id),
-                        ghostWidth = context.startingWidth + (event.clientX - context.startingX),
-                        ghost = element.find(".bluefoot-resize-ghost"),
-                        biggestWidth = Math.floor(element.parent().outerWidth() * largestPercentage) - 6,
-                        smallestWidth = Math.floor(element.parent().outerWidth() * smallestPercentage) - 6;
+                    currentElement = jQuery("#" + context.currentColumn.id),
+                    ghostWidth = context.startingWidth + (event.clientX - context.startingX),
+                    ghost = currentElement.find(".bluefoot-resize-ghost"),
+                    biggestWidth = Math.floor(element.parent().outerWidth() * largestPercentage) - 6,
+                    smallestWidth = Math.floor(element.parent().outerWidth() * smallestPercentage) - 6;
 
                     // Stop the ghost width exceeding that of the container
                     if (ghostWidth >= biggestWidth) {
@@ -59,7 +71,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
                             breakpoint = Math.floor(element.parent().outerWidth() * percentage);
 
                         // Stop the loop once we hit a valid breakpoint
-                        if (ghostWidth >= (breakpoint - 15) && ghostWidth <= (breakpoint + 15)) {
+                        if (ghostWidth >= breakpoint - 15 && ghostWidth <= breakpoint + 15) {
                             element.find('.bluefoot-resize-size').text(size.label);
                             context.currentColumn.columnDefinition(size);
 
@@ -69,7 +81,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
                         }
                     });
                 })
-                .on('mousedown', extendedConfig.handle, function (event, ui) {
+                .on('mousedown', extendedConfig.handle, function (event) {
                     context.currentColumn = ko.dataFor(this);
                     context.startingWidth = jQuery(this.parentNode).outerWidth();
                     context.startingX = event.clientX;
@@ -101,7 +113,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
 
                     return true;
                 })
-                .on('mouseup', function (event, ui) {
+                .on('mouseup', function () {
                     // Disable user select on mouse down
                     if (context.currentColumn && typeof context.currentColumn.stage !== 'undefined') {
                         context.currentColumn.stage.userSelect(true);
@@ -132,7 +144,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
          * @param data
          * @param context
          */
-        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
+        init: function (element, valueAccessor) {
             Resizable.init(element, valueAccessor());
         }
 

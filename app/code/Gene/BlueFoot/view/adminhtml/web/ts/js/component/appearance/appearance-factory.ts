@@ -1,11 +1,12 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 import loadModule from 'Gene_BlueFoot/js/component/loader';
 import {DataObject} from "../data-store";
 import Appearance from "./appearance";
+'use strict';
 
 export default class AppearanceFactory {
     /**

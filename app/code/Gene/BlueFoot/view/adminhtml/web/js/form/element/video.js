@@ -1,12 +1,14 @@
+/*eslint-disable vars-on-top, strict, no-useless-escape */
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /**
  * Video UI Component
- *
- * @author Dave Macaulay <dave@gene.co.uk>
  */
 define([
     'Magento_Ui/js/form/element/abstract',
-    'jquery'
-], function (AbstractField, $) {
+], function (AbstractField) {
     'use strict';
 
     return AbstractField.extend({

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -17,6 +17,7 @@ import Appearance from "../../component/appearance/appearance";
 interface FieldDefaults {
     [key: string]: any;
 }
+'use strict';
 
 export default class Block extends Structural implements BlockInterface {
     title: string;

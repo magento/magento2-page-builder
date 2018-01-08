@@ -5,7 +5,7 @@
  */
 namespace Gene\BlueFoot\Setup\DataConverter;
 
-use Gene\BlueFoot\Model\EntityRepository;
+use Gene\BlueFoot\Model\EntityFactory;
 use Gene\BlueFoot\Model\AttributeFactory;
 
 /**
@@ -17,9 +17,9 @@ use Gene\BlueFoot\Model\AttributeFactory;
 class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
 {
     /**
-     * @var EntityRepository
+     * @var EntityFactory
      */
-    private $entityRepository;
+    private $entityFactory;
 
     /**
      * @var string[]
@@ -32,11 +32,11 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
     private $attributeFactory;
 
     public function __construct(
-        EntityRepository $entityRepository,
+        EntityFactory $entityFactory,
         AttributeFactory $attributeFactory,
         array $additionalEavAttributes = []
     ) {
-        $this->entityRepository = $entityRepository;
+        $this->entityFactory = $entityFactory;
         $this->attributeFactory = $attributeFactory;
         $this->eavAttributeNames = array_merge(
             $this->eavAttributeNames,
@@ -50,7 +50,8 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
     public function load($entityId)
     {
         $eavData = [];
-        $entity = $this->entityRepository->getById($entityId);
+        $entity = $this->entityFactory->create();
+        $entity->load($entityId);
         foreach ($this->eavAttributeNames as $attributeName) {
             if ($entity->hasData($attributeName)) {
                 $eavData[$attributeName] = $entity->getDataByKey($attributeName);

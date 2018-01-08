@@ -1,7 +1,6 @@
+/*eslint-disable vars-on-top, strict*/
 /**
  * Font size for Redactor
- *
- * @author Aidan Threadgold <aidan@gene.co.uk> & Dave Macaulay <dave@gene.co.uk>
  */
 define(["jquery", "mage/translate"], function(jQuery, $t) {
     /**
@@ -13,6 +12,7 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                 init: function () {
                     // Build font sizes dropdown
                     var sizes = [10, 12, 14, 16, 18, 20, 24, 28, 30],
+                        context = this,
                         dropdown = {
                             reset: {
                                 title: $t('Reset'),
@@ -20,8 +20,7 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                                     context.fontSize.setFontSize(0);
                                 }
                             }
-                        },
-                        context = this;
+                        };
 
                     jQuery.each(sizes, function(i, size) {
                         dropdown['s' + size] = {
@@ -34,6 +33,7 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
 
                     // Attach the button
                     var button = this.button.addFirst('fontSize', $t('Size'));
+
                     this.button.addDropdown(button, dropdown);
                     this.button.setIcon(button, '14px');
 
@@ -48,14 +48,14 @@ define(["jquery", "mage/translate"], function(jQuery, $t) {
                  *
                  * @param event
                  */
-                handleChange: function (event) {
+                handleChange: function () {
                     var element = this.selection.element(),
                         fontSize = 14,
                         button = this.button.get('fontSize');
 
                     if (button) {
                         if (jQuery(element).css('fontSize')) {
-                            fontSize = parseInt(jQuery(element).css('fontSize'));
+                            fontSize = parseInt(jQuery(element).css('fontSize'), 10);
                         }
                         this.button.setIcon(button, fontSize + 'px');
                     }
