@@ -6,7 +6,7 @@ import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
     // Allowed style attributes
-    allowedAttributes: DataObject = [
+    allowedAttributes: Array<string> = [
         'width',
         'height',
         'min_height',
@@ -34,10 +34,7 @@ export default class StyleAttributeFilter {
         'color',
         'border',
         'margins_and_padding'
-    ].reduce((acc: any, next: string) => {
-        acc[next] = true;
-        return acc;
-    }, {});
+    ]
 
     /**
      * Filter allowed attributes from object
@@ -47,11 +44,13 @@ export default class StyleAttributeFilter {
      */
     filter(data: DataObject): DataObject {
         let result: DataObject = {};
-        for (let key in data) {
-            if (this.allowedAttributes[key]) {
-                result[key] = data[key];
+        Object.keys(data).map(
+            (key: string) => {
+                if (Object.values(this.allowedAttributes).indexOf(key) > -1) {
+                    result[key] = data[key];
+                }
             }
-        }
+        );
         return result;
     }
 }

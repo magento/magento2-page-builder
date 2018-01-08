@@ -6,7 +6,7 @@ import {DataObject} from "../data-store";
 
 export default class AttributeFilter {
     // Allowed data attributes
-    allowedAttributes: DataObject = [
+    allowAttributes: Array<string> = [
         'name',
         'appearance',
         'id',
@@ -32,10 +32,7 @@ export default class AttributeFilter {
         'has_overlay_background',
         'enable_parallax',
         'parallax_speed'
-    ].reduce((acc: any, next: string) => {
-        acc[next] = true;
-        return acc;
-    }, {});
+    ]
 
     /**
      * Filter allowed attributes from object
@@ -44,12 +41,14 @@ export default class AttributeFilter {
      * @returns {DataObject}
      */
     filter(data: DataObject): DataObject {
-        let result: DataObject = {};
-        for (let key in data) {
-            if (this.allowedAttributes[key]) {
-                result[key] = data[key];
+        let attributes: DataObject = {};
+        Object.keys(data).map(
+            (key: string) => {
+                if (this.allowAttributes.includes(key)) {
+                    attributes[key] = data[key];
+                }
             }
-        }
-        return result;
+        );
+        return attributes;
     }
 }

@@ -55,7 +55,6 @@ export default class Structural extends EditableArea implements StructuralInterf
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
         this.appearance = appearance;
-
         this.parent = parent;
         this.config = config;
     }
@@ -69,7 +68,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         return [
             new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
             new Option(this, 'edit', '<i></i>', $t('Edit'), this.onOptionEdit, ['edit-block'], 50),
-            new Option(this, 'duplicate', '<i></i>', $t('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60),
+            new Option(this, 'duplicate', '<i class="icon-bluefoot-copy"></i>', $t('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60),
             new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove, ['remove-structural'], 100)
         ];
     }
@@ -166,14 +165,6 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Example {'data-role': 'element'}
      *
      * @returns {DataObject}
-     */
-
-    /**
-     * Get attributes for an block
-     * Example {'data-role': 'element'}
-     *
-     * @param extra
-     * @returns {}
      */
     getAttributes(extra = {}) {
         let data: DataObject = this.getData();
