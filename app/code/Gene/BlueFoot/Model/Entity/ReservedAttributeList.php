@@ -13,7 +13,7 @@ class ReservedAttributeList
     /**
      * @var string[]
      */
-    protected $reservedAttributes;
+    private $reservedAttributes;
 
     /**
      * ReservedAttributeList constructor.

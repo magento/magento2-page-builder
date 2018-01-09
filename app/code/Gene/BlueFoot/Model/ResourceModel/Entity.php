@@ -35,7 +35,7 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
      */
     protected function _getDefaultAttributeModel()
     {
-        return 'Gene\BlueFoot\Model\ResourceModel\Attribute';
+        return \Gene\BlueFoot\Model\ResourceModel\Attribute::class;
     }
 
     /**
@@ -64,7 +64,6 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 
     /**
      * @return string
-     * @todo work out why we have to do this
      */
     public function getMainTable()
     {

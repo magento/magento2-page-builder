@@ -17,7 +17,7 @@ interface ConfigInterface
 
     /**
      * @param string $name
-     * 
+     *
      * @return array
      */
     public function getGroup($name);
