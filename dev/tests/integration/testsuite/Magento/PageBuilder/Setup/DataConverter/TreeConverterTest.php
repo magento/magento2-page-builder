@@ -50,10 +50,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallSchema::class);
+        $installSchema = self::$objectManager->create(\Magento\TestPageBuilderDataMigration\InstallSchema::class);
 
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallData::class);
+        $installData = self::$objectManager->create(\Magento\TestPageBuilderDataMigration\InstallData::class);
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
         $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
@@ -113,8 +113,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $contentTypes,
         $jsonFormatFileName,
         $masterFormatFileName,
-        $callSetupEntity = null,
-        $expectedException = null
+        $callSetupEntity = null
     ) {
         if ($callSetupEntity) {
             $this->$callSetupEntity();
@@ -124,11 +123,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             foreach ($contentTypesData as $contentType) {
                 $this->saveContentType($contentTypesCode, $contentType);
             }
-        }
-
-        if ($expectedException != null) {
-            $this->expectException(get_class($expectedException));
-            $this->expectExceptionMessage($expectedException->getMessage());
         }
 
         $this->assertEquals(
@@ -1016,7 +1010,47 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'product_list.json',
                 'product_list.html'
-            ],
+            ]
+        ];
+    }
+
+    /**
+     * @param array $contentTypes
+     * @param string$jsonFormatFileName
+     * @param string $masterFormatFileName
+     * @param callable|null $callSetupEntity
+     * @param \Exception|null $expectedException
+     * @dataProvider convertExceptionDataProvider
+     */
+    public function testConvertException(
+        $contentTypes,
+        $jsonFormatFileName,
+        $masterFormatFileName,
+        $expectedException = null
+    ) {
+        foreach ($contentTypes as $contentTypesCode => $contentTypesData) {
+            foreach ($contentTypesData as $contentType) {
+                $this->saveContentType($contentTypesCode, $contentType);
+            }
+        }
+
+        if ($expectedException != null) {
+            $this->expectException(get_class($expectedException));
+            $this->expectExceptionMessage($expectedException->getMessage());
+        }
+
+        $this->assertEquals(
+            file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
+            self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function convertExceptionDataProvider()
+    {
+        return [
             'non existent entity' => [
                 [
                     'advanced_slider' => [
@@ -1047,9 +1081,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'non_existent_entity.json',
                 'non_existent_entity.html',
-                null,
                 new \UnexpectedValueException('Entity data is invalid: "{"contentType":"textarea","entityId":"1000000","formData":{"align":"","metric":""}}".')
-            ],
+            ]
         ];
     }
 
@@ -1128,8 +1161,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      */
     private function saveContentType($contentTypeCode, $data)
     {
-        /** @var \Magento\PageBuilder\Setup\DataConverter\Model\Entity */
-        $entity = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\Model\Entity::class);
+        /** @var \Gene\BlueFoot\Model\Entity */
+        $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
 
         $data['attribute_set_id'] = $this->getContentBlockId($contentTypeCode);
 
@@ -1152,9 +1185,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entity->setData($data);
 
-        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entityResource */
+        /* @var \Gene\BlueFoot\Model\ResourceModel\Entity $entityResource */
         $entityResource = self::$objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity::class
+            \Gene\BlueFoot\Model\ResourceModel\Entity::class
         );
         $entityResource->save($entity);
 
@@ -1169,17 +1202,17 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      */
     private function getContentBlockId($contentTypeCode)
     {
-        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory */
+        /* @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory */
         $contentBlockFactory = self::$objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory::class
+            \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory::class
         );
         $contentBlock = $contentBlockFactory->create();
 
-        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
+        /* @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
         $contentBlockResource = self::$objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock::class
+            \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
         );
-        /* @var \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlock $contentBlock */
+        /* @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock */
         $contentBlockResource->load(
             $contentBlock,
             $contentTypeCode,

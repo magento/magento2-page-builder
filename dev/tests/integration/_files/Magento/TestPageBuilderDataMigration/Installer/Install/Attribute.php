@@ -3,20 +3,20 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Setup\DataConverter\Installer\Install;
+namespace Magento\TestPageBuilderDataMigration\Installer\Install;
 
-use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
-use Magento\PageBuilder\Setup\DataConverter\EntitySetup;
+use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
+use Magento\TestPageBuilderDataMigration\EntitySetup;
 
 class Attribute extends AbstractInstall
 {
     /**
      * @var array
      */
-    protected $unresolvedAdditionalData = [];
+    private $unresolvedAdditionalData = [];
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity
+     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -25,7 +25,7 @@ class Attribute extends AbstractInstall
      *
      * @var array
      */
-    protected $fieldMapping = [
+    private $fieldMapping = [
         'global'          => 'is_global',
         'data_model'      => 'data',
         'backend_model'   => 'backend',
@@ -47,7 +47,7 @@ class Attribute extends AbstractInstall
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
-     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity
+     * @param \Gene\BlueFoot\Model\ResourceModel\Entity $entity
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -56,9 +56,9 @@ class Attribute extends AbstractInstall
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Entity $entity,
-        \Magento\PageBuilder\Setup\DataConverter\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
+        \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []

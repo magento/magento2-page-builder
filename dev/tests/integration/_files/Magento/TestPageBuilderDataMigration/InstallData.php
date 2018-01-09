@@ -1,6 +1,9 @@
 <?php
-
-namespace Magento\PageBuilder\Setup\DataConverter;
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Magento\TestPageBuilderDataMigration;
 
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -19,7 +22,7 @@ class InstallData implements InstallDataInterface
     protected $entitySetupFactory;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Installer\Install
+     * @var \Magento\TestPageBuilderDataMigration\Installer\Install
      */
     protected $installer;
 
@@ -36,8 +39,8 @@ class InstallData implements InstallDataInterface
      * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
-        \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory $entitySetupFactory,
-        \Magento\PageBuilder\Setup\DataConverter\Installer\Install $installer,
+        \Magento\TestPageBuilderDataMigration\EntitySetupFactory $entitySetupFactory,
+        \Magento\TestPageBuilderDataMigration\Installer\Install $installer,
         \Magento\Eav\Model\Config $eavConfig
     ) {
         $this->entitySetupFactory = $entitySetupFactory;
@@ -53,11 +56,10 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        /** @var \Magento\PageBuilder\Setup\DataConverter\EntitySetup $entitySetup */
+        /** @var \Magento\TestPageBuilderDataMigration\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Run a fresh installation if no previous version is present
-        $setup->startSetup();
         $entitySetup->installEntities();
         $entitySetup->cleanCache();
 

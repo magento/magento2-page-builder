@@ -21,7 +21,7 @@ class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
         $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
             [
                 'default' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Unmigrated($serializer),
-                'custom' => new \Magento\PageBuilder\Setup\DataConverter\Renderer\Custom()
+                'custom' => new \Magento\TestPageBuilderDataMigration\Renderer\Custom()
             ]
         );
         $childrenExtractorPool = new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool(
