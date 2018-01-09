@@ -95,14 +95,14 @@ class Edit extends AbstractAction
 
         // Replace the contentblock_entity_form tag with our custom namespace
         $response = str_replace(
-            array(
+            [
                 'contentblock_entity_form',
                 \Gene\BlueFoot\Block\Adminhtml\Entity\Edit\Button\Generic::BLUEFOOT_TARGET_NAME_PLACEHOLDER
-            ),
-            array(
+            ],
+            [
                 $namespace . '_form',
                 $editFormPath
-            ),
+            ],
             $response
         );
 

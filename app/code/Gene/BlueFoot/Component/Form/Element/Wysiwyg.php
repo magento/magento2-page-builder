@@ -5,15 +5,11 @@
  */
 namespace Gene\BlueFoot\Component\Form\Element;
 
-use Magento\Backend\Block\Widget\Button;
-use Magento\Framework\Data\Form;
 use Magento\Framework\Data\FormFactory;
-use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-
 
 /**
  * Class Wysiwyg

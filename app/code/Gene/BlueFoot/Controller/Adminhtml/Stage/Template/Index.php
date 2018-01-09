@@ -13,17 +13,17 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $resultJsonFactory;
+    private $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory
      */
-    protected $templateFactory;
+    private $templateFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    private $storeManager;
 
     /**
      * Index constructor.
@@ -81,7 +81,7 @@ class Index extends \Magento\Backend\App\Action
      * @param string $path
      * @return string
      */
-    public function getPreviewUrl($path)
+    private function getPreviewUrl($path)
     {
         return
             $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .

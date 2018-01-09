@@ -66,7 +66,7 @@ class Upload extends \Magento\Backend\App\Action
      *
      * @return string
      */
-    public function getFilePath($path, $imageName)
+    private function getFilePath($path, $imageName)
     {
         return rtrim($path, '/') . '/' . ltrim($imageName, '/');
     }
@@ -93,7 +93,6 @@ class Upload extends \Magento\Backend\App\Action
             $result['url'] = $this->storeManager->getStore()
                     ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .
                 $this->getFilePath(self::UPLOAD_DIR, $result['file']);
-
         } catch (\Exception $e) {
             $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }

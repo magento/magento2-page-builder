@@ -15,7 +15,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     /**
      * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\Collection
      */
-    protected $collection;
+    private $collection;
 
     public function __construct(
         $name,

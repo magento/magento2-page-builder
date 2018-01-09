@@ -15,22 +15,22 @@ class Save extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $resultJsonFactory;
+    private $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\TemplateFactory
      */
-    protected $template;
+    private $template;
 
     /**
      * @var \Magento\Framework\Filesystem
      */
-    protected $fileSystem;
+    private $fileSystem;
 
     /**
      * @var \Magento\Framework\App\Filesystem\DirectoryList
      */
-    protected $directoryList;
+    private $directoryList;
 
     /**
      * Save constructor.
@@ -56,6 +56,8 @@ class Save extends \Magento\Backend\App\Action
 
     /**
      * Allow users to save templates to be rebuilt on the front-end
+     *
+     * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute()
     {
@@ -87,7 +89,7 @@ class Save extends \Magento\Backend\App\Action
             $template->addData([
                 'name' => $postData['name'],
                 'structure' => $postData['structure'],
-                'pinned' => (bool) 0, //$postData['pinned'],
+                'pinned' => (bool) 0,
                 'preview' => $fileName
             ]);
 

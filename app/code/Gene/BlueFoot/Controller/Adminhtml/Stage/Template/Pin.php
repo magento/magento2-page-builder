@@ -13,12 +13,12 @@ class Pin extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $resultJsonFactory;
+    private $resultJsonFactory;
 
     /**
      * @var \Gene\BlueFoot\Model\Stage\TemplateFactory
      */
-    protected $template;
+    private $template;
 
     /**
      * Pin constructor.
@@ -41,7 +41,7 @@ class Pin extends \Magento\Backend\App\Action
     /**
      * Allow a user to delete a template
      *
-     * @return $this
+     * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute()
     {
