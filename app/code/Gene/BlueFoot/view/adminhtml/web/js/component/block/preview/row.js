@@ -17,6 +17,7 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.rowStyles = void 0;
+      _this.getChildren = void 0;
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       _this.rowStyles = _knockout.computed(function () {
@@ -43,6 +44,53 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
           });
         }
       });
+      _this.getChildren = _knockout.computed(function () {
+        var groupedChildren = [];
+        var columnGroup = [];
+        Object.keys(parent.children()).map(function (key) {
+          var children = parent.children()[key];
+
+          if (children.constructor.name === 'Column') {
+            columnGroup.push(children);
+          } else {
+            if (columnGroup.length > 0) {
+              groupedChildren.push(columnGroup);
+              groupedChildren.push(children);
+              columnGroup = [];
+            } else {
+              groupedChildren.push(children);
+            }
+          }
+
+          console.log(groupedChildren);
+        });
+
+        if (columnGroup.length > 0) {
+          groupedChildren.push(columnGroup);
+        }
+
+        return groupedChildren;
+      }); // ko.bindingHandlers.wrapColumns = {
+      //     init: function(elem, valueAccessor) {
+      //
+      //         console.log(parent.children());
+      //
+      //         // Get name of child and render if columns
+      //         Object.getOwnPropertyNames(parent.children()).forEach(
+      //             function (val, index, array) {
+      //                 if ( (parent.children()[val].constructor.name === 'Column') ) {
+      //                     this.isColumn = true;
+      //                 } else {
+      //                     this.isColumn = false;
+      //                 }
+      //             }
+      //         );
+      //         // Let bindings proceed as normal *only if* my value is false
+      //         // var shouldAllowBindings = ko.unwrap(valueAccessor());
+      //         // return { controlsDescendantBindings: !shouldAllowBindings };
+      //     }
+      // }
+
       return _this;
     }
 

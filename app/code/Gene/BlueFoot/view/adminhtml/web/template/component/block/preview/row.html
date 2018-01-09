@@ -1,8 +1,21 @@
 <div class="bluefoot-structure bluefoot-row">
     <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <div data-bind="style: preview.rowStyles">
-        <!-- ko template: previewChildTemplate --><!-- /ko -->
-        <div class="bluefoot-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here, or add columns')">
+    <div data-bind="style: preview.rowStyles, foreach: preview.getChildren">
+        <!-- ko if: $data instanceof Array -->
+        <div class="element-children" data-bind="sortable: { sortableClass: $parent.config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof $parent.preview !== 'undefined' && typeof $parent.preview.afterChildrenRender === 'function') { $parent.preview.afterChildrenRender(element) } }">
+            <!-- ko foreach: { data: $data, as: 'child' } -->
+                <div class="bluefoot-structure-wrapper" data-bind="template: child.previewTemplate, attr: {id: child.id}"></div>
+                <!-- remove css: widthClasses from above element -->
+            <!-- /ko -->
         </div>
+        <!-- /ko -->
+        <!-- ko ifnot: $data instanceof Array -->
+        <div class="element-children" data-bind="sortable: { sortableClass: $parent.config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof $parent.preview !== 'undefined' && typeof $parent.preview.afterChildrenRender === 'function') { $parent.preview.afterChildrenRender(element) } }">
+            <!-- ko foreach: { data: $data, as: 'child' } -->
+                <div class="bluefoot-structure-wrapper" data-bind="template: child.previewTemplate, attr: {id: child.id}"></div>
+            <!-- /ko -->
+        </div>
+        <div class="bluefoot-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here, or add columns')"></div>
+        <!-- /ko -->
     </div>
 </div>

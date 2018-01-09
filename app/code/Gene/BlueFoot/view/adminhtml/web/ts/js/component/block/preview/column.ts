@@ -12,7 +12,6 @@ import StyleAttributeFilter from "../../format/style-attribute-filter";
 
 export default class Row extends PreviewBlock {
     columnStyles: KnockoutComputed<{}>;
-    // afterColumnRenders: KnockoutComputed<{}>;
 
     /**
      * @param {Block} parent
@@ -41,7 +40,7 @@ export default class Row extends PreviewBlock {
                 styles['backgroundImage'] = 'url(' + this.data.background_image()[0].url + ')';
             }
 
-            styles['flex-grow'] = 1;
+            // styles['flex-grow'] = 1;
 
             return styles;
         });
@@ -56,13 +55,13 @@ export default class Row extends PreviewBlock {
         });
 
         this.afterColumnRenders = () => {
-            // Not wrapping correctly here, but does if ran once after all elements render
-            jQuery('.row-container').find('.bluefoot-column').parent('.bluefoot-structure-wrapper').addClass('column-flex');
-            jQuery('.row-container').each(function(index) {
-                if ( jQuery(this).find('.column-flex').parent('.column-flex-wrapper').length === 0 ) {
-                    jQuery(this).find('.column-flex').wrapAll('<div class="column-flex-wrapper" style="display: flex">');
-                }
-            });
+            // // Not wrapping correctly here, but does if ran once after all elements render
+            // jQuery('.row-container').find('.bluefoot-column').parent('.bluefoot-structure-wrapper').addClass('column-flex');
+            // jQuery('.row-container').each(function(index) {
+            //     if ( jQuery(this).find('.column-flex').parent('.column-flex-wrapper').length === 0 ) {
+            //         jQuery(this).find('.column-flex').wrapAll('<div class="column-flex-wrapper" style="display: flex">');
+            //     }
+            // });
         };
     }
 }

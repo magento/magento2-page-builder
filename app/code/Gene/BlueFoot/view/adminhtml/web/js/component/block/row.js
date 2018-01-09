@@ -39,6 +39,15 @@ define(["underscore", "./block"], function (_underscore, _block) {
 
       return _underscore.extend(_Block.prototype.getStyle.call(this), styleAttributes);
     };
+    /**
+     * Retrieve the preview child template
+     *
+     * @returns {string}
+     */
+    // get previewWrapperTemplate(): string {
+    //     return 'Gene_BlueFoot/component/block/preview/wrapper.html';
+    // }
+
 
     return Row;
   }(_block);

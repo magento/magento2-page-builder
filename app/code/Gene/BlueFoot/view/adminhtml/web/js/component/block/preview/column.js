@@ -8,8 +8,6 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
   function (_PreviewBlock) {
     _inheritsLoose(Row, _PreviewBlock);
 
-    // afterColumnRenders: KnockoutComputed<{}>;
-
     /**
      * @param {Block} parent
      * @param {Object} config
@@ -33,9 +31,9 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
 
         if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === 'object') {
           styles['backgroundImage'] = 'url(' + _this.data.background_image()[0].url + ')';
-        }
+        } // styles['flex-grow'] = 1;
 
-        styles['flex-grow'] = 1;
+
         return styles;
       }); // Force the columnStyles to update on changes to stored style attribute data
 
@@ -47,14 +45,13 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
         }
       });
 
-      _this.afterColumnRenders = function () {
-        // Not wrapping correctly here, but does if ran once after all elements render
-        jQuery('.row-container').find('.bluefoot-column').parent('.bluefoot-structure-wrapper').addClass('column-flex');
-        jQuery('.row-container').each(function (index) {
-          if (jQuery(this).find('.column-flex').parent('.column-flex-wrapper').length === 0) {
-            jQuery(this).find('.column-flex').wrapAll('<div class="column-flex-wrapper" style="display: flex">');
-          }
-        });
+      _this.afterColumnRenders = function () {// // Not wrapping correctly here, but does if ran once after all elements render
+        // jQuery('.row-container').find('.bluefoot-column').parent('.bluefoot-structure-wrapper').addClass('column-flex');
+        // jQuery('.row-container').each(function(index) {
+        //     if ( jQuery(this).find('.column-flex').parent('.column-flex-wrapper').length === 0 ) {
+        //         jQuery(this).find('.column-flex').wrapAll('<div class="column-flex-wrapper" style="display: flex">');
+        //     }
+        // });
       };
 
       return _this;

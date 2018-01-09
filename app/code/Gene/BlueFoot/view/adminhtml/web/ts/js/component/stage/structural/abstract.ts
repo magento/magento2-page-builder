@@ -93,6 +93,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Retrieve the preview child template
+     *
+     * @returns {string}
+     */
+    get previewWrapperTemplate(): string {
+        return 'Gene_BlueFoot/component/block/preview/wrapper.html';
+    }
+
+    /**
      * Retrieve the child template
      *
      * @returns {string}

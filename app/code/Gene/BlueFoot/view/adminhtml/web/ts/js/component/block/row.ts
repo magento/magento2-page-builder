@@ -31,4 +31,15 @@ export default class Row extends Block {
         }
         return _.extend(super.getStyle(), styleAttributes);
     }
+
+
+
+    /**
+     * Retrieve the preview child template
+     *
+     * @returns {string}
+     */
+    // get previewWrapperTemplate(): string {
+    //     return 'Gene_BlueFoot/component/block/preview/wrapper.html';
+    // }
 }

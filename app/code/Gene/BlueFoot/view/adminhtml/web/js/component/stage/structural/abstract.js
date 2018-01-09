@@ -197,6 +197,17 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
         return 'Gene_BlueFoot/component/block/preview/children.html';
       }
       /**
+       * Retrieve the preview child template
+       *
+       * @returns {string}
+       */
+
+    }, {
+      key: "previewWrapperTemplate",
+      get: function get() {
+        return 'Gene_BlueFoot/component/block/preview/wrapper.html';
+      }
+      /**
        * Retrieve the child template
        *
        * @returns {string}
