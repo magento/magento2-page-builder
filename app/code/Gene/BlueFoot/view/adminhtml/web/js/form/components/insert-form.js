@@ -1,8 +1,8 @@
-/*eslint-disable vars-on-top, strict */
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+/*eslint-disable vars-on-top, strict */
 /**
  * - insert-form.js
  * Override core functionality of insert form to enable BlueFoot caching and dynamically generated UI components

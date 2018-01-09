@@ -1,8 +1,8 @@
-/*eslint-disable vars-on-top, strict, max-len, max-depth */
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+/*eslint-disable vars-on-top, strict, max-len, max-depth */
 
 define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 

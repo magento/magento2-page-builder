@@ -1,12 +1,13 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import EditableArea from './editable-area';
 import { EditableAreaInterface } from "./editable-area.d";
 import { OptionInterface } from "./options/option.d";
 import Stage from "../../stage";
 
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 /**
  * StructuralInterface
  */
