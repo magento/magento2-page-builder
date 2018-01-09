@@ -15,7 +15,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
     /**
      * @var \Gene\BlueFoot\Model\Config\ConfigInterface
      */
-    protected $configInterface;
+    private $configInterface;
 
     /**
      * Attribute constructor.
@@ -106,7 +106,7 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
         switch ($object->getFrontendInput()) {
             case 'child_entity':
                 $object->setBackendType('text');
-                $object->setBackendModel('Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend');
+                $object->setBackendModel(\Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class);
         }
 
         return $this;

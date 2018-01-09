@@ -40,7 +40,7 @@ class Validator
             $structure = $this->serializer->unserialize($json);
 
             $firstContentType = $structure;
-            if (count($firstContentType) > 0
+            if (!empty($firstContentType)
                 && (!isset($firstContentType['type']) && !isset($firstContentType['contentType']))
             ) {
                 $firstContentType = current($firstContentType);

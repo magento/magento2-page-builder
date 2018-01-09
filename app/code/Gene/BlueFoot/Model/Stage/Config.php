@@ -22,11 +22,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     private $layoutFactory;
 
     /**
-     * @var \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory
-     */
-    private $templateCollection;
-
-    /**
      * @var Config\UiComponentConfig
      */
     private $uiComponentConfig;
@@ -38,7 +33,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry $registry
      * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
@@ -49,7 +43,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Stage\Template\CollectionFactory $templateCollectionFactory,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
@@ -57,7 +50,6 @@ class Config extends \Magento\Framework\Model\AbstractModel
     ) {
         $this->configInterface = $configInterface;
         $this->layoutFactory = $layoutFactory;
-        $this->templateCollection = $templateCollectionFactory;
         $this->uiComponentConfig = $uiComponentConfig;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

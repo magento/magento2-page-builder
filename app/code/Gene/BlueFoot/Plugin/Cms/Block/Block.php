@@ -29,6 +29,8 @@ class Block
      * @param \Magento\Cms\Block\Block $subject
      * @param string $output
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterToHtml(\Magento\Cms\Block\Block $subject, $output)
     {

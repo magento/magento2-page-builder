@@ -70,7 +70,7 @@ class Slider implements RendererInterface
         }
         $rootElementHtml .= '>';
 
-        if(isset($additionalData['children'])) {
+        if (isset($additionalData['children'])) {
             $rootElementHtml .=  $additionalData['children'];
         }
 

@@ -62,16 +62,15 @@ class ComponentRenderer
      * @param BlockFactory $blockFactory
      * @param UiComponentFactory $uiComponentFactory
      * @param UiComponentContextFactory $contextFactory
-     * @param Context $context
      * @param UiComponentConfig $uiComponentConfig
      * @param ButtonFactory $buttonFactory
+     * @param Layout $layout
      */
     public function __construct(
         Structure $structure,
         BlockFactory $blockFactory,
         UiComponentFactory $uiComponentFactory,
         UiComponentContextFactory $contextFactory,
-        Context $context,
         UiComponentConfig $uiComponentConfig,
         ButtonFactory $buttonFactory,
         Layout $layout

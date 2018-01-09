@@ -130,7 +130,7 @@ class TreeConverter
         try {
             // Do not migrate content type if entity is missing required attributes
             set_error_handler(
-                function () use ($itemData)  {
+                function () use ($itemData) {
                     restore_error_handler();
                     throw new \UnexpectedValueException(
                         'Entity data is invalid: "'

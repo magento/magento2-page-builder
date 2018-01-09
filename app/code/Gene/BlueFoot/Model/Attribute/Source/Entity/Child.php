@@ -13,12 +13,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     /**
      * @var null|array
      */
-    protected $possibleEntities = null;
-
-    /**
-     * @var null|array
-     */
-    protected $options = null;
+    private $options = null;
 
     /**
      * Return the options available from the source model
@@ -36,7 +31,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
                 foreach ($entities as $entity) {
                     $label = ($entity->getTitle() ?
                             $entity->getTitle() : '{no title}') . ' [ID: ' . $entity->getId() . ']';
-                    $entityValues[] = array('label' => $label, 'value' => $entity->getId());
+                    $entityValues[] = ['label' => $label, 'value' => $entity->getId()];
                 }
             }
 
@@ -62,7 +57,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     /**
      * @param int|string $value
      *
-     * @return bool
+     * @return string|bool
      */
     public function getOptionText($value)
     {

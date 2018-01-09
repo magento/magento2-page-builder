@@ -125,7 +125,7 @@ class Attribute extends \Magento\Eav\Model\Attribute
      */
     protected function _construct()
     {
-        $this->_init('Gene\BlueFoot\Model\ResourceModel\Attribute');
+        $this->_init(\Gene\BlueFoot\Model\ResourceModel\Attribute::class);
     }
 
     /**
