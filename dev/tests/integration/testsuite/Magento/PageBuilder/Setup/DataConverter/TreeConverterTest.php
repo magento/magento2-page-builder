@@ -106,10 +106,16 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param string$jsonFormatFileName
      * @param string $masterFormatFileName
      * @param callable|null $callSetupEntity
+     * @param \Exception|null $expectedException
      * @dataProvider convertDataProvider
      */
-    public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName, $callSetupEntity = null)
-    {
+    public function testConvert(
+        $contentTypes,
+        $jsonFormatFileName,
+        $masterFormatFileName,
+        $callSetupEntity = null,
+        $expectedException = null
+    ) {
         if ($callSetupEntity) {
             $this->$callSetupEntity();
         }
@@ -118,6 +124,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             foreach ($contentTypesData as $contentType) {
                 $this->saveContentType($contentTypesCode, $contentType);
             }
+        }
+
+        if ($expectedException != null) {
+            $this->expectException(get_class($expectedException));
+            $this->expectExceptionMessage($expectedException->getMessage());
         }
 
         $this->assertEquals(
@@ -1035,7 +1046,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'non_existent_entity.json',
-                'non_existent_entity.html'
+                'non_existent_entity.html',
+                null,
+                new \UnexpectedValueException('Entity data is invalid: "{"contentType":"textarea","entityId":"1000000","formData":{"align":"","metric":""}}".')
             ],
         ];
     }
