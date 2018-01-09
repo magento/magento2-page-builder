@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 /*eslint-disable vars-on-top, strict, max-len, max-nested-callbacks*/
 define(["ko", "jquery", "Gene_BlueFoot/js/component/config"], function (ko, jQuery, Config) {
 

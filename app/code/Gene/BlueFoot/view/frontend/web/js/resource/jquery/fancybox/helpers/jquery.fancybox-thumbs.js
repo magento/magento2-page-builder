@@ -1,4 +1,3 @@
-/*eslint-disable */
  /*!
  * Thumbnail helper for fancyBox
  * version: 1.0.7 (Mon, 01 Oct 2012)
@@ -13,6 +12,7 @@
  *             }
  *         }
  *     });
+ *
  */
 (function ($) {
 	//Shortcut for fancyBox object

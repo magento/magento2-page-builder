@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 /*!
  * fancyBox - jQuery Plugin
  * version: 2.1.5 (Fri, 14 Jun 2013)
@@ -9,6 +7,7 @@
  * License: www.fancyapps.com/fancybox/#license
  *
  * Copyright 2012 Janis Skarnelis - janis@fancyapps.com
+ *
  */
 
 (function (window, document, $, undefined) {
