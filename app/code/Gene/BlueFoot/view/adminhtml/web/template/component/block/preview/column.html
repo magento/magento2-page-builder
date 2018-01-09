@@ -1,9 +1,11 @@
-<div data-bind="style: preview.columnStyles, afterRender: function (ele) { preview.afterColumnRenders(ele) }" class="bluefoot-structure bluefoot-column">
-    <div class="bluefoot-column-resize-handle"></div>
+<div class="bluefoot-structure-wrapper" data-bind="attr: {id: child.id}, style: preview.columnStyles">
+    <div data-bind="afterRender: function (ele) { preview.afterColumnRenders(ele) }" class="bluefoot-structure bluefoot-column">
+        <div class="bluefoot-column-resize-handle"></div>
 
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <!-- ko template: previewChildTemplate --><!-- /ko -->
+        <!-- ko template: optionsInstance.template --><!-- /ko -->
+        <!-- ko template: previewChildTemplate --><!-- /ko -->
 
-    <div class="bluefoot-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')">
+        <div class="bluefoot-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')">
+        </div>
     </div>
 </div>

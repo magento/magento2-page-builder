@@ -1,21 +1,25 @@
 <div class="bluefoot-structure bluefoot-row">
     <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <div data-bind="style: preview.rowStyles, foreach: preview.getChildren">
-        <!-- ko if: $data instanceof Array -->
-        <div class="element-children" data-bind="sortable: { sortableClass: $parent.config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof $parent.preview !== 'undefined' && typeof $parent.preview.afterChildrenRender === 'function') { $parent.preview.afterChildrenRender(element) } }">
-            <!-- ko foreach: { data: $data, as: 'child' } -->
+    <div data-bind="style: preview.rowStyles">
+        <div class="element-children" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof preview !== 'undefined' && typeof preview.afterChildrenRender === 'function') { preview.afterChildrenRender(element) } }">
+            <!-- ko foreach: preview.getChildren -->
+                <!-- ko if: $data instanceof Array -->
+                <div style="display: flex; border: 5px solid #000;">
+                    <!-- ko foreach: { data: $data, as: 'child' } -->
+                    <!-- ko template: child.previewTemplate --><!-- /ko -->
+                    <!-- remove css: widthClasses from above element -->
+                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
+
+                <!-- ko ifnot: $data instanceof Array -->
+                <!-- ko foreach: { data: $data, as: 'child' } -->
                 <div class="bluefoot-structure-wrapper" data-bind="template: child.previewTemplate, attr: {id: child.id}"></div>
                 <!-- remove css: widthClasses from above element -->
-            <!-- /ko -->
-        </div>
-        <!-- /ko -->
-        <!-- ko ifnot: $data instanceof Array -->
-        <div class="element-children" data-bind="sortable: { sortableClass: $parent.config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof $parent.preview !== 'undefined' && typeof $parent.preview.afterChildrenRender === 'function') { $parent.preview.afterChildrenRender(element) } }">
-            <!-- ko foreach: { data: $data, as: 'child' } -->
-                <div class="bluefoot-structure-wrapper" data-bind="template: child.previewTemplate, attr: {id: child.id}"></div>
+                <!-- /ko -->
+                <!-- /ko -->
             <!-- /ko -->
         </div>
         <div class="bluefoot-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here, or add columns')"></div>
-        <!-- /ko -->
     </div>
 </div>

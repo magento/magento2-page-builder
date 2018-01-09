@@ -57,24 +57,20 @@ export default class Row extends PreviewBlock {
             let groupedChildren:any = [];
             let columnGroup:any = [];
 
-            Object.keys(parent.children()).map(
-                (key: string) => {
-                    let children:any = parent.children()[key];
-
-                    if ( (children.constructor.name === 'Column') ) {
-                        columnGroup.push(children);
+            _.each(parent.children(), (child) => {
+                // console.log(child);
+                if (child.config.name === 'column') {
+                    columnGroup.push(child);
+                } else {
+                    if (columnGroup.length > 0) {
+                        groupedChildren.push(columnGroup);
+                        groupedChildren.push(child);
+                        columnGroup = [];
                     } else {
-                        if (columnGroup.length > 0) {
-                            groupedChildren.push(columnGroup);
-                            groupedChildren.push(children);
-                            columnGroup = [];
-                        } else {
-                             groupedChildren.push(children);
-                        }
+                        groupedChildren.push(child);
                     }
-                    console.log(groupedChildren);
                 }
-            );
+            });
 
             if (columnGroup.length > 0) {
                 groupedChildren.push(columnGroup);
@@ -82,26 +78,5 @@ export default class Row extends PreviewBlock {
 
             return groupedChildren;
         });
-
-        // ko.bindingHandlers.wrapColumns = {
-        //     init: function(elem, valueAccessor) {
-        //
-        //         console.log(parent.children());
-        //
-        //         // Get name of child and render if columns
-        //         Object.getOwnPropertyNames(parent.children()).forEach(
-        //             function (val, index, array) {
-        //                 if ( (parent.children()[val].constructor.name === 'Column') ) {
-        //                     this.isColumn = true;
-        //                 } else {
-        //                     this.isColumn = false;
-        //                 }
-        //             }
-        //         );
-        //         // Let bindings proceed as normal *only if* my value is false
-        //         // var shouldAllowBindings = ko.unwrap(valueAccessor());
-        //         // return { controlsDescendantBindings: !shouldAllowBindings };
-        //     }
-        // }
     }
 }
