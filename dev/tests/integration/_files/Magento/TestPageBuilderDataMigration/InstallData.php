@@ -60,7 +60,6 @@ class InstallData implements InstallDataInterface
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Run a fresh installation if no previous version is present
-        $setup->startSetup();
         $entitySetup->installEntities();
         $entitySetup->cleanCache();
 
