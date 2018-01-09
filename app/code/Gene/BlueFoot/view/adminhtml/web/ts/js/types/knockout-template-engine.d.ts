@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-
 declare let koTemplateEngine: {
     waitForFinishRender(): Promise<void>
 };

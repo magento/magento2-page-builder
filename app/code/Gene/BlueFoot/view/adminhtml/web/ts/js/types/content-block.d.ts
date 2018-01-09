@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-
 interface ContentBlockConfig {
     label: string;
     name: string;
