@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["underscore", "../event-emitter", "../config", "../block/factory", "../format/read/composite"], function (_, _eventEmitter, _config, _factory, _composite) {
+define(["underscore", "../block/factory", "../config", "../event-emitter", "../format/read/composite"], function (_, _factory, _config, _eventEmitter, _composite) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Build =
   /*#__PURE__*/
@@ -13,11 +11,11 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       var _this;
 
       _this = _EventEmitter.call(this) || this;
+      _this.attributeReaderComposite = void 0;
       _this.fieldValue = void 0;
       _this.stage = void 0;
       _this.stageElement = void 0;
       _this.stageDocument = void 0;
-      _this.attributeReaderComposite = void 0;
       _this.attributeReaderComposite = new _composite();
       _this.fieldValue = fieldValue;
       return _this;
@@ -33,11 +31,11 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
 
     _proto.canBuild = function canBuild() {
       // Create a document with a role of stage to wrap the contents
-      this.stageDocument = document.createElement('div');
-      this.stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
-      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
+      this.stageDocument = document.createElement("div");
+      this.stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
+      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn"t it"s not compatible with our system
 
-      return !!this.stageDocument.querySelector('[' + _config.getValueAsString('dataRoleAttributeName') + '="row"]');
+      return !!this.stageDocument.querySelector("[" + _config.getValueAsString("dataRoleAttributeName") + "='row']");
     };
     /**
      * Build the stage
@@ -53,7 +51,7 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       return this.buildElement(this.stageDocument, this.stage);
     };
     /**
-     * Build an element and it's children into the stage
+     * Build an element and it"s children into the stage
      *
      * @param {Element} element
      * @param {EditableArea} parent
@@ -64,13 +62,13 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
     _proto.buildElement = function buildElement(element, parent) {
       var _this2 = this;
 
-      if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
-        var childPromises = [],
-            childElements = [],
-            children = this.getElementChildren(element);
+      if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+        var childPromises = [];
+        var childElements = [];
+        var elementChildren = this.getElementChildren(element);
 
-        if (children.length > 0) {
-          _.forEach(children, function (childElement) {
+        if (elementChildren.length > 0) {
+          _.forEach(elementChildren, function (childElement) {
             childPromises.push(_this2.createBlock(childElement, _this2.stage));
             childElements.push(childElement);
           });
@@ -99,10 +97,9 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
       var _this3 = this;
 
       parent = parent || this.stage;
-      var self = this,
-          role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
+      var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
       return this.getElementData(element).then(function (data) {
-        return (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, _this3.stage, data);
+        return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, _this3.stage, data);
       });
     };
     /**
@@ -135,9 +132,9 @@ define(["underscore", "../event-emitter", "../config", "../block/factory", "../f
         var children = []; // Find direct children of the element
 
         _.forEach(element.childNodes, function (child) {
-          // Only search elements which tagName's and not script tags
-          if (child.tagName && child.tagName != 'SCRIPT') {
-            if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
+          // Only search elements which tagName"s and not script tags
+          if (child.tagName && child.tagName !== "SCRIPT") {
+            if (child.hasAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
               children.push(child);
             } else {
               children = _this4.getElementChildren(child);

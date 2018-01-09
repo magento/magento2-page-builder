@@ -2,8 +2,6 @@
 define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  'use strict';
-
   var Image =
   /*#__PURE__*/
   function (_PreviewBlock) {
@@ -21,7 +19,7 @@ define(["./block"], function (_block) {
      * @returns {any}
      */
     _proto.getPreviewImageAttributes = function getPreviewImageAttributes() {
-      if (this.data.image() == "" || this.data.image() == undefined) {
+      if (this.data.image() === "" || this.data.image() === undefined || this.data.image()[0] === undefined) {
         return {
           style: "visibility: hidden"
         };
@@ -40,7 +38,7 @@ define(["./block"], function (_block) {
 
 
     _proto.getPreviewIconAttributes = function getPreviewIconAttributes() {
-      if (this.data.image() == "" || this.data.image() == undefined) {
+      if (this.data.image() === "" || this.data.image() === undefined) {
         return {
           class: "icon-bluefoot-image",
           style: "visibility: visible"

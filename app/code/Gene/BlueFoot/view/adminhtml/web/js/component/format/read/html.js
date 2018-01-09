@@ -4,8 +4,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Html =
   /*#__PURE__*/
   function () {
@@ -22,7 +20,7 @@ define([], function () {
     _proto.read = function read(element) {
       return new Promise(function (resolve) {
         resolve({
-          'html': element.innerHTML
+          html: element.innerHTML
         });
       });
     };

@@ -4,8 +4,6 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Buttons =
   /*#__PURE__*/
   function () {
@@ -21,13 +19,13 @@ define(["underscore"], function (_underscore) {
      */
     _proto.read = function read(element) {
       var response = {
-        'buttons': []
+        buttons: []
       }; // Iterate through the tabs and retrieve their content
 
-      _underscore.forEach(element.querySelectorAll('a'), function (node, index) {
+      _underscore.forEach(element.querySelectorAll("a"), function (node, index) {
         response.buttons[index] = {
-          text: node.firstChild.innerText,
-          link: node.getAttribute('href')
+          link: node.getAttribute("href"),
+          text: node.firstChild.innerText
         };
       });
 

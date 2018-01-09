@@ -1,11 +1,9 @@
 /*eslint-disable */
-define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (_uiRegistry, _translate, _persistenceClient) {
+define(["mage/translate", "uiRegistry", "./edit/persistence-client"], function (_translate, _uiRegistry, _persistenceClient) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Edit =
   /*#__PURE__*/
   function () {
@@ -16,8 +14,8 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
      * @param {DataStore} store
      */
     function Edit(instance, store) {
-      this.modal = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal');
-      this.insertForm = _uiRegistry.get('bluefoot_modal_form.bluefoot_modal_form.modal.insert_form');
+      this.modal = _uiRegistry.get("bluefoot_modal_form.bluefoot_modal_form.modal");
+      this.insertForm = _uiRegistry.get("bluefoot_modal_form.bluefoot_modal_form.modal.insert_form");
       this.instance = void 0;
       this.store = void 0;
       this.instance = instance;
@@ -44,7 +42,7 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
 
 
     _proto.getFormComponent = function getFormComponent() {
-      return _uiRegistry.get('component_' + this.instance.config.form);
+      return _uiRegistry.get("component_" + this.instance.config.form);
     };
     /**
      * Render the form
@@ -62,7 +60,7 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
 
 
     _proto.setTitle = function setTitle() {
-      this.modal.setTitle((0, _translate)('Edit ' + this.instance.config.label));
+      this.modal.setTitle((0, _translate)("Edit " + this.instance.config.label));
     };
     /**
      * Set the data provider client to be the current instance
@@ -74,18 +72,18 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
 
       var formName = this.instance.config.form; // Destroy the last data provider so a new instance is created
 
-      if (_uiRegistry.get('_pagebuilder_last_provider')) {
-        _uiRegistry.remove(_uiRegistry.get('_pagebuilder_last_provider'));
+      if (_uiRegistry.get("_pagebuilder_last_provider")) {
+        _uiRegistry.remove(_uiRegistry.get("_pagebuilder_last_provider"));
       } // Set the current edited instances data into the registry
 
 
-      _uiRegistry.set('_pagebuilder_edit_data', this.store.get(this.instance.id)); // Retrieve the component
+      _uiRegistry.set("_pagebuilder_edit_data", this.store.get(this.instance.id)); // Retrieve the component
 
 
-      _uiRegistry.get(formName + '.' + formName, function (component) {
+      _uiRegistry.get(formName + "." + formName, function (component) {
         var provider = _uiRegistry.get(component.provider);
 
-        _uiRegistry.set('_pagebuilder_last_provider', component.provider); // Set the data provider client to our persistence client
+        _uiRegistry.set("_pagebuilder_last_provider", component.provider); // Set the data provider client to our persistence client
 
 
         provider.client = new _persistenceClient(_this.modal, _this.store, _this.instance.id);
@@ -100,7 +98,7 @@ define(["uiRegistry", "mage/translate", "./edit/persistence-client"], function (
 
     _proto.getFormComponentInstance = function getFormComponentInstance() {
       var formName = this.instance.config.form;
-      return _uiRegistry.get(formName + '.' + formName);
+      return _uiRegistry.get(formName + "." + formName);
     };
     /**
      * Destroy the inserted component

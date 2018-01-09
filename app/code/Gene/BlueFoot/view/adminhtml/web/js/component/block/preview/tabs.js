@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "knockout", "jquery", "underscore", "tabs"], function (_block, _knockout, _jquery, _underscore, _tabs) {
+define(["jquery", "knockout", "tabs", "underscore", "./block"], function (_jquery, _knockout, _tabs, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Tabs =
   /*#__PURE__*/
@@ -12,7 +10,7 @@ define(["./block", "knockout", "jquery", "underscore", "tabs"], function (_block
     function Tabs(parent, config) {
       var _this;
 
-      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
+      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they"ll get populated later
 
       _this.element = void 0;
       _this.renderCounter = 0;
@@ -20,7 +18,7 @@ define(["./block", "knockout", "jquery", "underscore", "tabs"], function (_block
 
       _this.data.tabs.subscribe(function (data) {
         _this.renderCounter = 0;
-        (0, _jquery)(_this.element).tabs('destroy');
+        (0, _jquery)(_this.element).tabs("destroy");
       });
 
       return _this;

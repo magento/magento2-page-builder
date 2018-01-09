@@ -4,8 +4,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Tabs =
   /*#__PURE__*/
   function () {
@@ -22,9 +20,9 @@ define([], function () {
     _proto.read = function read(element) {
       var pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
 
-      if (element.getAttribute('src') && pattern.test(element.getAttribute('src'))) {
+      if (element.getAttribute("src") && pattern.test(element.getAttribute("src"))) {
         return Promise.resolve({
-          'position': pattern.exec(element.getAttribute('src')).slice(1).join(',')
+          position: pattern.exec(element.getAttribute("src")).slice(1).join(",")
         });
       }
     };

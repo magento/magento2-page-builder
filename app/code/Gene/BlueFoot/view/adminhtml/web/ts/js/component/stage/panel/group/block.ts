@@ -2,20 +2,19 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import ko from "knockout";
 import EventEmitter from "../../../event-emitter";
-import ko from 'knockout';
 
 /**
  * Block Class
  */
-'use strict';
 
 export class Block extends EventEmitter {
-    config: ContentBlockConfig;
-    identifier: KnockoutObservable<string> = ko.observable('');
-    label: KnockoutObservable<string> = ko.observable('');
-    icon: KnockoutObservable<string> = ko.observable('');
-    droppable: boolean = true;
+    public config: ContentBlockConfig;
+    public droppable: boolean = true;
+    public icon: KnockoutObservable<string> = ko.observable("");
+    public identifier: KnockoutObservable<string> = ko.observable("");
+    public label: KnockoutObservable<string> = ko.observable("");
 
     /**
      * Block Constructor
@@ -36,7 +35,7 @@ export class Block extends EventEmitter {
      *
      * @returns {string}
      */
-    getDraggableConfig() {
-        return this.config.allowed_parents.map(function(value, index) {return '.' + value + '-container'}).join(', ');
+    public getDraggableConfig() {
+        return this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", ");
     }
 }

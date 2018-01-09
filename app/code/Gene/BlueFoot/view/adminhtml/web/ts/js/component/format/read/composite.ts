@@ -3,19 +3,18 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
-import loadComponent from 'Gene_BlueFoot/js/component/loader';
+import loadComponent from "Gene_BlueFoot/js/component/loader";
+import _ from "underscore";
 import Config from "../../config";
-import ReadInterface from "../read-interface";
 import {DataObject} from "../../data-store";
-'use strict';
+import ReadInterface from "../read-interface";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
     private contentTypeConfig: any;
 
     constructor() {
-        this.contentTypeConfig = Config.getInitConfig('contentTypes');
+        this.contentTypeConfig = Config.getInitConfig("contentTypes");
     }
 
     /**
@@ -24,27 +23,28 @@ export default class AttributeReaderComposite implements ReadInterface {
      * @param element
      * @returns {Promise<any>}
      */
-    read (element: HTMLElement): Promise<any> {
-        let result: DataObject = {};
-        return new Promise((resolve: Function, reject: Function) => {
+    public read(element: HTMLElement): Promise<any> {
+        const result: DataObject = {};
+        return new Promise((resolve: (result: object) => void, reject: (e: string) => void) => {
             const role = element.dataset.role;
             if (!this.contentTypeConfig.hasOwnProperty(role)) {
                 resolve(result);
             } else {
                 try {
-                    loadComponent(this.contentTypeConfig[role]['readers'], (...readers: any[]) => {
-                        let readerPromises: Array<Promise<any>> = [];
-                        for (let i = 0; i < readers.length; i++) {
-                            let reader = new readers[i]();
+                    const readersKey = "readers";
+                    loadComponent(this.contentTypeConfig[role][readersKey], (...readers: any[]) => {
+                        const readerPromises: Array<Promise<any>> = [];
+                        for (const aReader of readers) {
+                            const reader = new aReader();
                             readerPromises.push(reader.read(element));
                         }
-                        Promise.all(readerPromises).then(readersData => {
+                        Promise.all(readerPromises).then((readersData) => {
                             readersData.forEach((data) => {
                                 _.extend(result, data);
                             });
                             resolve(result);
                         }).catch((error) => {
-                            console.error(error);
+                            console.error( error );
                         });
                     });
                 } catch (e) {

@@ -3,35 +3,20 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
+import _ from "underscore";
 import Config from "../config";
-import _ from 'underscore';
-'use strict';
+import Block from "./block";
 
 export default class Driver extends Block {
-
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {Array} image
-     * @returns {string}
-     */
-    private getImageUrl(image: []){
-        let imageUrl = image[0]['url'],
-            mediaUrl = Config.getInitConfig('media_url'),
-            mediaPath = imageUrl.split(mediaUrl),
-            directive = '{{media url=' + mediaPath[1] + '}}';
-        return directive;
-    }
 
     /**
      * Does the driver have a mobile image?
      *
      * @returns {boolean}
      */
-    hasMobileImage() {
-        let data = this.getData();
-        return !(data.mobile_image == "" || data.mobile_image == undefined || _.isEmpty(data.mobile_image[0]));
+    public hasMobileImage() {
+        const data = this.getData();
+        return !(data.mobile_image === "" || data.mobile_image === undefined || _.isEmpty(data.mobile_image[0]));
     }
 
     /**
@@ -39,9 +24,9 @@ export default class Driver extends Block {
      *
      * @returns {any}
      */
-    getMainImageAttributes() {
-        let data = this.getData();
-        if (data.image == "" || data.image == undefined) {
+    public getMainImageAttributes() {
+        const data = this.getData();
+        if (data.image === "" || data.image === undefined) {
             return {};
         }
         if (_.isEmpty(data.image[0])) {
@@ -55,14 +40,29 @@ export default class Driver extends Block {
      *
      * @returns {any}
      */
-    getMobileImageAttributes() {
-        let data = this.getData();
-        if (data.mobile_image == "" || data.mobile_image == undefined) {
+    public getMobileImageAttributes() {
+        const data = this.getData();
+        if (data.mobile_image === "" || data.mobile_image === undefined) {
             return {};
         }
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
         return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
+    }
+
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {Array} image
+     * @returns {string}
+     */
+    private getImageUrl(image: []) {
+        const url = "url";
+        const imageUrl = image[0][url];
+        const mediaUrl = Config.getInitConfig("media_url");
+        const mediaPath = imageUrl.split(mediaUrl);
+        const directive = "{{media url=" + mediaPath[1] + "}}";
+        return directive;
     }
 }

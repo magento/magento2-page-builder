@@ -5,17 +5,16 @@
 
 import { Structural } from "../abstract.d";
 import { OptionInterface } from "./option.d";
-'use strict';
 
 export class Option implements OptionInterface {
-    parent: Structural;
-    code: string;
-    icon: string;
-    title: string;
-    action: Function | false = false;
-    classes: string;
-    sort: number;
-    _template: string;
+    public action: () => void | false;
+    public classes: string;
+    public code: string;
+    public icon: string;
+    public parent: Structural;
+    public sort: number;
+    public title: string;
+    public Template: string;
 
     /**
      * Option constructor
@@ -34,22 +33,22 @@ export class Option implements OptionInterface {
         code: string,
         icon: string,
         title: string,
-        action: Function | false,
-        classes: Array<string>,
+        action: () => void | false,
+        classes: string[],
         sort: number,
-        template?: string
+        template?: string,
     ) {
         this.parent = parent;
         this.code = code;
         this.icon = icon;
         this.title = title;
         this.action = action;
-        this.classes = classes.join(' ');
+        this.classes = classes.join(" ");
         this.sort = sort;
-        this._template = template;
+        this.Template = template;
     }
 
     get template(): string {
-        return this._template || null;
+        return this.Template || null;
     }
 }

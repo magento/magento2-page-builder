@@ -3,10 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-
 declare let mageUtils: {
-    uniqueid(size?: number): string
+    uniqueid(size?: number): string,
 };
-declare module 'mageUtils' {
+declare module "mageUtils" {
     export = mageUtils;
 }

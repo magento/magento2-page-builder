@@ -4,10 +4,6 @@
  */
 
 import ReadInterface from "../read-interface";
-import Config from "../../../component/config";
-import _ from 'underscore';
-import {DataObject} from "../../data-store";
-'use strict';
 
 interface SlideObject {
     link_text: string;
@@ -27,12 +23,14 @@ export default class Slide implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<SlideObject> {
-        let target = element.firstChild,
-            response: SlideObject = {
-            link_text: element.querySelector('a') !== null ? element.querySelector('a').firstChild.firstChild.innerText : "",
-            link_url: element.querySelector('a') !== null ? element.querySelector('a').getAttribute('href'): "",
-            title: element.querySelector('h3').innerText,
-            content: element.querySelector('h3').nextSibling.innerHTML
+        const target = element.firstChild;
+        const response: SlideObject = {
+            content: element.querySelector("h3").nextSibling.innerHTML,
+            link_text: element.querySelector("a") !== null ?
+                element.querySelector("a").firstChild.firstChild.innerText : "",
+            link_url: element.querySelector("a") !== null ?
+                element.querySelector("a").getAttribute("href") : "",
+            title: element.querySelector("h3").innerText,
         };
 
         return Promise.resolve(response);

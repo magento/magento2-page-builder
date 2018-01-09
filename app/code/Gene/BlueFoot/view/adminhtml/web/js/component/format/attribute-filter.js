@@ -4,13 +4,11 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var AttributeFilter =
   /*#__PURE__*/
   function () {
     function AttributeFilter() {
-      this.allowAttributes = ['name', 'appearance', 'id', 'src', 'button_text', 'label_text', 'placeholder', 'title', 'identifier', 'view_mode', 'sku', 'position', 'category_id', 'product_count', 'show_out_of_stock', 'autoplay', 'autoplay_speed', 'fade', 'is_infinite', 'show_arrows', 'show_dots', 'advanced_settings', 'has_overlay_background', 'enable_parallax', 'parallax_speed'];
+      this.allowAttributes = ["name", "appearance", "id", "src", "button_text", "label_text", "placeholder", "title", "identifier", "view_mode", "sku", "position", "category_id", "product_count", "show_out_of_stock", "autoplay", "autoplay_speed", "fade", "is_infinite", "show_arrows", "show_dots", "advanced_settings", "has_overlay_background", "enable_parallax", "parallax_speed"];
     }
 
     var _proto = AttributeFilter.prototype;

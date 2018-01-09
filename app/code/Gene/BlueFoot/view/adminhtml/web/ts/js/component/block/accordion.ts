@@ -6,11 +6,10 @@
 import Block from "./block";
 
 interface AccordionDataObject {
-    title: string;
     content: string;
     open_on_load: string;
+    title: string;
 }
-'use strict';
 
 export default class Accordion extends Block {
 
@@ -19,15 +18,15 @@ export default class Accordion extends Block {
      *
      * @returns {{accordion: {collapsibleElement: string; content: string}}}
      */
-    getMageInit() {
+    public getMageInit() {
         return JSON.stringify(
             {
-                "accordion": {
-                    "active": this.getActive(),
-                    "collapsibleElement": "[data-collapsible=true]",
-                    "content": "[data-content=true]"
-                }
-            }
+                accordion: {
+                    active: this.getActive(),
+                    collapsibleElement: "[data-collapsible=true]",
+                    content: "[data-content=true]",
+                },
+            },
         );
     }
 
@@ -36,12 +35,12 @@ export default class Accordion extends Block {
      *
      * @returns {number[]|[]}
      */
-    getActive() {
+    public getActive() {
         if (this.getData().items) {
-            let items = this.getData().items as AccordionDataObject[],
-                activeItems = items.map(
+            const items = this.getData().items as AccordionDataObject[];
+            const activeItems = items.map(
                     (item, index) =>
-                        item.open_on_load === "1" ? index : null
+                        item.open_on_load === "1" ? index : null,
                 ).filter((item) => {
                     return item !== null;
                 });

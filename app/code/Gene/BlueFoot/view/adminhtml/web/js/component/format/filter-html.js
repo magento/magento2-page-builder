@@ -11,23 +11,21 @@ define(["jquery"], function (_jquery) {
    * @param {JQuery} element
    * @returns {JQuery}
    */
-  'use strict';
-
   function filterHtml(element) {
     var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-      return this.nodeType == Node.COMMENT_NODE || this.nodeType == Node.TEXT_NODE && this.data.match(/^\s+$/);
+      return this.nodeType === Node.COMMENT_NODE || this.nodeType === Node.TEXT_NODE && this.data.match(/^\s+$/);
     };
 
-    element.find('[data-bind]').each(function (index, value) {
-      (0, _jquery)(value).removeAttr('data-bind');
+    element.find("[data-bind]").each(function (index, value) {
+      (0, _jquery)(value).removeAttr("data-bind");
     });
     element.contents().filter(isWhiteSpaceOrComment).remove();
-    element.find('*').each(function (index, value) {
-      if (value.tagName !== 'IFRAME') {
+    element.find("*").each(function (index, value) {
+      if (value.tagName !== "IFRAME") {
         (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
       }
     });
-    element.find('[data-wrapper]').each(function (index, value) {
+    element.find("[data-wrapper]").each(function (index, value) {
       (0, _jquery)(value).parent().append((0, _jquery)(value).children());
       (0, _jquery)(value).remove();
     });

@@ -4,7 +4,6 @@ define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"]
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
 
   /**
    * Retrieve the block instance from the config object
@@ -13,7 +12,7 @@ define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"]
    * @returns {any|string}
    */
   function getBlockComponentPath(config) {
-    return config.component || 'Gene_BlueFoot/js/component/block/block';
+    return config.component || "Gene_BlueFoot/js/component/block/block";
   }
   /**
    * Create a new instance of a block

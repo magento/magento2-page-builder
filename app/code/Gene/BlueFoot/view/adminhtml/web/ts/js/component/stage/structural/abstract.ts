@@ -3,38 +3,37 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
-import ko from 'knockout';
-import $t from 'mage/translate';
-import Stage from '../../stage';
-import EditableArea from './editable-area';
-import { Structural as StructuralInterface } from "./abstract.d";
-import { Options } from "./options";
-import { Option } from "./options/option";
-import { ColumnBuilder } from "./column/builder";
-import Edit from "../edit";
-import StyleAttributeFilter from "../../format/style-attribute-filter";
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import ko from "knockout";
+import $t from "mage/translate";
+import _ from "underscore";
+import Appearance from "../../appearance/appearance";
+import {DataObject} from "../../data-store";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
-import {DataObject} from "../../data-store";
-import Appearance from "../../appearance/appearance";
-'use strict';
+import StyleAttributeFilter from "../../format/style-attribute-filter";
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import Stage from "../../stage";
+import Edit from "../edit";
+import { Structural as StructuralInterface } from "./abstract.d";
+import { ColumnBuilder } from "./column/builder";
+import EditableArea from "./editable-area";
+import { Options } from "./options";
+import { Option } from "./options/option";
 
 export default class Structural extends EditableArea implements StructuralInterface {
-    parent: EditableArea;
-    title: string;
-    config: any;
-    wrapperStyle: KnockoutObservable<object> = ko.observable({width: '100%'});
-    edit: Edit;
-    optionsInstance: Options = new Options(this, this.options);
-    children: KnockoutObservableArray<Structural> = ko.observableArray([]);
-    columnBuilder: ColumnBuilder = new ColumnBuilder();
-    styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
-    styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
-    attributeFilter: AttributeFilter = new AttributeFilter();
-    attributeMapper: AttributeMapper =  new AttributeMapper();
-    appearance: Appearance;
+    public appearance: Appearance;
+    public attributeFilter: AttributeFilter = new AttributeFilter();
+    public attributeMapper: AttributeMapper =  new AttributeMapper();
+    public config: any;
+    public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
+    public columnBuilder: ColumnBuilder = new ColumnBuilder();
+    public edit: Edit;
+    public optionsInstance: Options = new Options(this, this.options);
+    public parent: EditableArea;
+    public styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    public styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
+    public title: string;
+    public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
 
     /**
      * Abstract structural constructor
@@ -48,7 +47,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         parent: EditableArea,
         stage: Stage,
         config: any = {},
-        appearance: Appearance = new Appearance({})
+        appearance: Appearance = new Appearance({}),
     ) {
         super(stage);
         this.setChildren(this.children);
@@ -65,12 +64,13 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {Array<Option>}
      */
-    get options(): Array<Option> {
+    get options(): Option[] {
         return [
-            new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
-            new Option(this, 'edit', '<i></i>', $t('Edit'), this.onOptionEdit, ['edit-block'], 50),
-            new Option(this, 'duplicate', '<i class="icon-bluefoot-copy"></i>', $t('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60),
-            new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove, ['remove-structural'], 100)
+            new Option(this, "move", "<i></i>", $t("Move"), false, ["move-structural"], 10),
+            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
+            new Option(this, "duplicate", "<i class='icon-bluefoot-copy'></i>",
+                $t("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60),
+            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 100),
         ];
     }
 
@@ -80,7 +80,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {string}
      */
     get template(): string {
-        return 'Gene_BlueFoot/component/stage/structural/abstract.html';
+        return "Gene_BlueFoot/component/stage/structural/abstract.html";
     }
 
     /**
@@ -89,7 +89,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {string}
      */
     get previewChildTemplate(): string {
-        return 'Gene_BlueFoot/component/block/preview/children.html';
+        return "Gene_BlueFoot/component/block/preview/children.html";
     }
 
     /**
@@ -98,52 +98,53 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {string}
      */
     get renderChildTemplate(): string {
-        return 'Gene_BlueFoot/component/block/render/children.html';
+        return "Gene_BlueFoot/component/block/render/children.html";
     }
 
     /**
      * Handle user editing an instance
      */
-    onOptionEdit(): void {
+    public onOptionEdit(): void {
         this.edit.open();
     }
 
     /**
      * Handle duplicate of items
      */
-    onOptionDuplicate(): void {
+    public onOptionDuplicate(): void {
         this.parent.duplicateChild(this);
     }
 
     /**
      * Handle block removal
      */
-    onOptionRemove(): void {
+    public onOptionRemove(): void {
         this.stage.parent.confirmationDialog({
-            title: $t('Confirm Item Removal'),
-            content: $t('Are you sure you want to remove this item? The data within this item is not recoverable once removed.'),
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element
-                    this.parent.emit('blockRemoved', {
-                        block: this
+                    this.parent.emit("blockRemoved", {
+                        block: this,
                     });
-                }
-            }
+                },
+            },
+            content: $t("Are you sure you want to remove this item? " +
+                "The data within this item is not recoverable once removed."),
+            title: $t("Confirm Item Removal"),
         });
     }
 
     /**
      * Get css classes for an block
-     * Example {'class-name': true}
+     * Example {"class-name": true}
      *
      * @returns {DataObject}
      */
-    getCss() {
-        let cssClasses = {};
-        if ('css_classes' in this.getData() && this.getData().css_classes != '') {
-            this.getData().css_classes.split(' ').map(
-                (value, index) => cssClasses[value] = true
+    public getCss() {
+        const cssClasses: any = {};
+        if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
+            this.getData().css_classes.split(" ").map(
+                (value: any, index: number) => cssClasses[value] = true,
             );
         }
         return cssClasses;
@@ -151,11 +152,11 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Get stype properties for an block
-     * Example {'backgroundColor': '#cccccc'}
+     * Example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
-    getStyle() {
+    public getStyle() {
         let styleAttributes = this.getData();
         styleAttributes = this.appearance.add(styleAttributes);
         return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
@@ -163,16 +164,16 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Get attributes for an block
-     * Example {'data-role': 'element'}
+     * Example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
-    getAttributes(extra = {}) {
-        let data: DataObject = this.getData();
+    public getAttributes(extra = {}) {
+        const data: DataObject = this.getData();
         _.extend(data, this.config);
         return _.extend(
             this.attributeMapper.toDom(this.attributeFilter.filter(data)),
-            extra
+            extra,
         );
     }
 
@@ -181,7 +182,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {DataObject}
      */
-    getData() {
+    public getData() {
         return this.stage.store.get(this.id);
     }
 }

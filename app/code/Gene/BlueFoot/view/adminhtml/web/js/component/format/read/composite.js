@@ -1,18 +1,16 @@
 /*eslint-disable */
-define(["underscore", "Gene_BlueFoot/js/component/loader", "../../config"], function (_underscore, _loader, _config) {
+define(["Gene_BlueFoot/js/component/loader", "underscore", "../../config"], function (_loader, _underscore, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var AttributeReaderComposite =
   /*#__PURE__*/
   function () {
     // Configuration for content types
     function AttributeReaderComposite() {
       this.contentTypeConfig = void 0;
-      this.contentTypeConfig = _config.getInitConfig('contentTypes');
+      this.contentTypeConfig = _config.getInitConfig("contentTypes");
     }
     /**
      * Read data from the element
@@ -35,15 +33,17 @@ define(["underscore", "Gene_BlueFoot/js/component/loader", "../../config"], func
           resolve(result);
         } else {
           try {
-            (0, _loader)(_this.contentTypeConfig[role]['readers'], function () {
+            var readersKey = "readers";
+            (0, _loader)(_this.contentTypeConfig[role][readersKey], function () {
               var readerPromises = [];
 
               for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
                 readers[_key] = arguments[_key];
               }
 
-              for (var i = 0; i < readers.length; i++) {
-                var reader = new readers[i]();
+              for (var _i = 0; _i < readers.length; _i++) {
+                var aReader = readers[_i];
+                var reader = new aReader();
                 readerPromises.push(reader.read(element));
               }
 

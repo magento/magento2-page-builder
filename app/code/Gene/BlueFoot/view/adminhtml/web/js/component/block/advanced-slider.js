@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "../config", "../block/factory"], function (_block, _config, _factory) {
+define(["../block/factory", "../config", "./block"], function (_factory, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var AdvancedSlider =
   /*#__PURE__*/
@@ -21,7 +19,8 @@ define(["./block", "../config", "../block/factory"], function (_block, _config, 
     _proto.addSlide = function addSlide() {
       var _this = this;
 
-      (0, _factory)(_config.getInitConfig('contentTypes')['slide'], this.parent, this.stage, {}).then(function (slide) {
+      var slideKey = "slide";
+      (0, _factory)(_config.getInitConfig("contentTypes")[slideKey], this.parent, this.stage, {}).then(function (slide) {
         _this.addChild(slide);
 
         slide.edit.open();

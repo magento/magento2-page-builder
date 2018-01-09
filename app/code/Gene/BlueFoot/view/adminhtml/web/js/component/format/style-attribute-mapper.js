@@ -1,11 +1,9 @@
 /*eslint-disable */
-define(["../../component/config", "../../utils/directives", "underscore"], function (_config, _directives, _underscore) {
+define(["underscore", "../../component/config", "../../utils/directives"], function (_underscore, _config, _directives) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var StyleAttributeMapper =
   /*#__PURE__*/
   function () {
@@ -26,39 +24,43 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (value === '') {
+        if (value === "") {
           return;
         }
 
-        if (key === 'color' && (value === 'default' || value === 'Default')) {
-          value = 'inherit';
+        if (key === "color" && (value === "default" || value === "Default")) {
+          value = "inherit";
         }
 
-        if (key === 'min_height' || key === 'border_width' || key === 'border_radius') {
-          value = value.replace('px', '') + 'px';
+        if (key === "min_height" || key === "border_width" || key === "border_radius") {
+          value = value.replace("px", "") + "px";
         }
 
-        if (key === 'background_repeat') {
-          value = value === "1" ? 'repeat' : 'no-repeat';
+        if (key === "background_repeat") {
+          value = value === "1" ? "repeat" : "no-repeat";
         }
 
-        if (key === 'background_repeat-x' || key === 'background_repeat-y') {
-          value = '';
+        if (key === "background_repeat-x" || key === "background_repeat-y") {
+          value = "";
         }
 
-        if (key === 'background_image' && Array.isArray(value) && value[0] != undefined) {
+        if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
-          var imageUrl = value[0]['url'],
-              mediaUrl = _config.getInitConfig('media_url'),
-              mediaPath = imageUrl.split(mediaUrl),
-              directive = '{{media url=' + mediaPath[1] + '}}';
+          var url = "url";
+          var imageUrl = value[0][url];
 
-          value = 'url(\'' + (0, _directives.toDataUrl)(directive) + '\')';
+          var mediaUrl = _config.getInitConfig("media_url");
+
+          var mediaPath = imageUrl.split(mediaUrl);
+          var directive = "{{media url=" + mediaPath[1] + "}}";
+          value = "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";
         }
 
-        if (key === 'margins_and_padding') {
-          result['margin'] = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
-          result['padding'] = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
+        if (key === "margins_and_padding") {
+          var margin = "margin";
+          var padding = "padding";
+          result[margin] = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
+          result[padding] = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
           return;
         }
 
@@ -81,81 +83,81 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
       Object.keys(data).map(function (key) {
         var value = data[key];
 
-        if (value === '') {
+        if (value === "") {
           return;
         }
 
-        if (key === 'border-top-width') {
-          key = 'border-width';
+        if (key === "border-top-width") {
+          key = "border-width";
         }
 
-        if (key === 'border-top-style') {
-          key = 'border';
+        if (key === "border-top-style") {
+          key = "border";
         }
 
-        if (key === 'border-top-left-radius') {
-          key = 'border-radius';
+        if (key === "border-top-left-radius") {
+          key = "border-radius";
         }
 
-        if (key === 'min-height' || key === 'border-width' || key === 'border-radius') {
-          value = value.replace('px', '');
+        if (key === "min-height" || key === "border-width" || key === "border-radius") {
+          value = value.replace("px", "");
         }
 
-        if (key === 'background-repeat-y') {
-          key = 'background-repeat';
-          value = value === 'repeat' ? '1' : '0';
+        if (key === "background-repeat-y") {
+          key = "background-repeat";
+          value = value === "repeat" ? "1" : "0";
         }
 
-        if (key === 'background-position-y') {
-          key = 'background-position';
+        if (key === "background-position-y") {
+          key = "background-position";
 
-          if (value === 'top') {
-            value = 'left top';
-          } else if (value === 'bottom') {
-            value = 'left bottom';
+          if (value === "top") {
+            value = "left top";
+          } else if (value === "bottom") {
+            value = "left bottom";
           } else {
-            value = 'center center';
+            value = "center center";
           }
         }
 
-        if (key === 'border-top-color') {
-          key = 'border-color';
+        if (key === "border-top-color") {
+          key = "border-color";
         }
 
-        if (key === 'background-color' || key === 'border-color') {
-          if (value === 'initial') {
-            value = '';
-          } else {
-            value = _this2.convertRgbToHex(value);
-          }
-        }
-
-        if (key === 'color') {
-          if (value === 'inherit') {
-            value = 'Default';
+        if (key === "background-color" || key === "border-color") {
+          if (value === "initial") {
+            value = "";
           } else {
             value = _this2.convertRgbToHex(value);
           }
         }
 
-        if (key === 'background-image') {
+        if (key === "color") {
+          if (value === "inherit") {
+            value = "Default";
+          } else {
+            value = _this2.convertRgbToHex(value);
+          }
+        }
+
+        if (key === "background-image") {
           // Replace the location.href if it exists and decode the value
-          value = decodeURIComponent(value.replace(window.location.href, ''));
+          value = decodeURIComponent(value.replace(window.location.href, ""));
 
           var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
               url = _$exec[1],
-              type = _$exec[2],
-              image = {
-            "name": url.split('/').pop(),
-            "size": 0,
-            "type": "image/" + type,
-            "url": _config.getInitConfig('media_url') + url
-          };
+              type = _$exec[2];
 
+          var image = {
+            name: url.split("/").pop(),
+            size: 0,
+            type: "image/" + type,
+            url: _config.getInitConfig("media_url") + url
+          };
           value = [image];
         }
 
-        if (key.startsWith('margin') || key.startsWith('padding')) {
+        if (key.startsWith("margin") || key.startsWith("padding")) {
           var _$extend;
 
           var spacingObj = {
@@ -163,16 +165,17 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
             padding: {}
           };
 
-          var _key$split = key.split('-'),
+          var _key$split = key.split("-"),
               attributeType = _key$split[0],
               attributeDirection = _key$split[1];
 
-          result['margins_and_padding'] = result['margins_and_padding'] || spacingObj;
-          result['margins_and_padding'][attributeType] = _underscore.extend(result['margins_and_padding'][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace('px', ''), _$extend));
+          var marginsAndPadding = "margins_and_padding";
+          result[marginsAndPadding] = result[marginsAndPadding] || spacingObj;
+          result[marginsAndPadding][attributeType] = _underscore.extend(result[marginsAndPadding][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace("px", ""), _$extend));
           return;
         }
 
-        result[key.replace('-', '_')] = value;
+        result[key.replace("-", "_")] = value;
       });
       return result;
     };
@@ -184,9 +187,9 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
      */
 
 
-    _proto.fromSnakeToCamelCase = function fromSnakeToCamelCase(string) {
-      var parts = string.split(/[_-]/);
-      var newString = '';
+    _proto.fromSnakeToCamelCase = function fromSnakeToCamelCase(currentString) {
+      var parts = currentString.split(/[_-]/);
+      var newString = "";
 
       for (var i = 1; i < parts.length; i++) {
         newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
@@ -204,7 +207,7 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
 
     _proto.fromIntToHex = function fromIntToHex(value) {
       var hex = value.toString(16);
-      return hex.length == 1 ? '0' + hex : hex;
+      return hex.length === 1 ? "0" + hex : hex;
     };
     /**
      * Convert from string to hex
@@ -220,7 +223,7 @@ define(["../../component/config", "../../utils/directives", "underscore"], funct
         var matches = regexp.exec(value);
 
         if (matches) {
-          return '#' + this.fromIntToHex(parseInt(matches[1])) + this.fromIntToHex(parseInt(matches[2])) + this.fromIntToHex(parseInt(matches[3]));
+          return "#" + this.fromIntToHex(parseInt(matches[1], 10)) + this.fromIntToHex(parseInt(matches[2], 10)) + this.fromIntToHex(parseInt(matches[3], 10));
         }
       }
 

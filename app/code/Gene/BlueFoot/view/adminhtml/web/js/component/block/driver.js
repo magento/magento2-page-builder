@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "../config", "underscore"], function (_block, _config, _underscore) {
+define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Driver =
   /*#__PURE__*/
@@ -16,29 +14,13 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     var _proto = Driver.prototype;
 
     /**
-     * Retrieve the image URL with directive
-     *
-     * @param {Array} image
-     * @returns {string}
-     */
-    _proto.getImageUrl = function getImageUrl(image) {
-      var imageUrl = image[0]['url'],
-          mediaUrl = _config.getInitConfig('media_url'),
-          mediaPath = imageUrl.split(mediaUrl),
-          directive = '{{media url=' + mediaPath[1] + '}}';
-
-      return directive;
-    };
-    /**
      * Does the driver have a mobile image?
      *
      * @returns {boolean}
      */
-
-
     _proto.hasMobileImage = function hasMobileImage() {
       var data = this.getData();
-      return !(data.mobile_image == "" || data.mobile_image == undefined || _underscore.isEmpty(data.mobile_image[0]));
+      return !(data.mobile_image === "" || data.mobile_image === undefined || _underscore.isEmpty(data.mobile_image[0]));
     };
     /**
      * Get the desktop (main) image attributes for the render
@@ -50,7 +32,7 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
 
-      if (data.image == "" || data.image == undefined) {
+      if (data.image === "" || data.image === undefined) {
         return {};
       }
 
@@ -74,7 +56,7 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     _proto.getMobileImageAttributes = function getMobileImageAttributes() {
       var data = this.getData();
 
-      if (data.mobile_image == "" || data.mobile_image == undefined) {
+      if (data.mobile_image === "" || data.mobile_image === undefined) {
         return {};
       }
 
@@ -87,6 +69,24 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
         alt: data.alt,
         title: data.title_tag
       };
+    };
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {Array} image
+     * @returns {string}
+     */
+
+
+    _proto.getImageUrl = function getImageUrl(image) {
+      var url = "url";
+      var imageUrl = image[0][url];
+
+      var mediaUrl = _config.getInitConfig("media_url");
+
+      var mediaPath = imageUrl.split(mediaUrl);
+      var directive = "{{media url=" + mediaPath[1] + "}}";
+      return directive;
     };
 
     return Driver;

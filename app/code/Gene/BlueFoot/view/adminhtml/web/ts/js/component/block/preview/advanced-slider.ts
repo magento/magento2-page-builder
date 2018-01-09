@@ -3,28 +3,26 @@
  * See COPYING.txt for license details.
  */
 
+import "Gene_BlueFoot/js/resource/slick/slick";
+import $ from "jquery";
+import _, {Dictionary} from "underscore";
 import Block from "../block";
 import PreviewBlock from "./block";
-import $ from "jquery";
-import "Gene_BlueFoot/js/resource/slick/slick";
-import _, {Dictionary} from "underscore";
-import Structural from "../../stage/structural/abstract";
-'use strict';
 
 export default class AdvancedSlider extends PreviewBlock {
-    element: Element;
-    ready: boolean = false;
+    public element: Element;
+    public ready: boolean = false;
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
      * @type {(() => any) & _.Cancelable}
      */
-    buildSlick = _.debounce(() => {
+    public buildSlick = _.debounce(() => {
         _.delay(() => {
             if (this.element && this.element.children.length > 0) {
                 try {
-                    $(this.element).slick('unslick');
+                    $(this.element).slick("unslick");
                 } catch (e) {
                     // This may error
                 }
@@ -49,23 +47,24 @@ export default class AdvancedSlider extends PreviewBlock {
      *
      * @param {Element} element
      */
-    afterChildrenRender(element: Element) {
+    public afterChildrenRender(element: Element) {
         this.element = element;
     }
 
     /**
      * Build the slack config object
      *
-     * @returns {{autoplay: boolean; autoplaySpeed: (any | number); fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
+     * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
+     * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
         return {
-            autoplay: this.data.autoplay() === '1',
+            arrows: this.data.show_arrows() === "1",
+            autoplay: this.data.autoplay() === "1",
             autoplaySpeed: this.data.autoplay_speed(),
-            fade: this.data.fade() === '1',
-            infinite: this.data.is_infinite() === '1',
-            arrows: this.data.show_arrows() === '1',
-            dots: this.data.show_dots() === '1'
-        }
+            dots: this.data.show_dots() === "1",
+            fade: this.data.fade() === "1",
+            infinite: this.data.is_infinite() === "1",
+        };
     }
 }

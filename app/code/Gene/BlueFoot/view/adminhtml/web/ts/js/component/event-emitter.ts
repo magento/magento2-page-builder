@@ -3,9 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import { EventEmitterInterface } from 'event-emitter.d';
-import $ from 'jquery';
-'use strict';
+import { EventEmitterInterface } from "event-emitter.d";
+import $ from "jquery";
 
 export default class EventEmitter implements EventEmitterInterface {
     private events: JQuery.PlainObject = $({});
@@ -13,7 +12,7 @@ export default class EventEmitter implements EventEmitterInterface {
     /**
      * Trigger / emit an event
      */
-    emit(...args: any[]) {
+    public emit(...args: any[]) {
         return this.events.trigger.apply(this.events, args);
     }
 
@@ -22,10 +21,10 @@ export default class EventEmitter implements EventEmitterInterface {
      *
      * @returns {any}
      */
-    addListener(eventName: string, handler: Function) {
+    public addListener(eventName: string, handler: () => void) {
         return this.events.on(eventName, handler);
     }
-    on(...args: any[]) {
+    public on(...args: any[]) {
         return this.addListener.apply(this, args);
     }
 
@@ -34,17 +33,17 @@ export default class EventEmitter implements EventEmitterInterface {
      *
      * @returns {any}
      */
-    removeListener(eventName: string, handler: Function) {
+    public removeListener(eventName: string, handler: () => void) {
         return this.events.off(eventName, handler);
     }
-    off(...args: any[]) {
+    public off(...args: any[]) {
         return this.removeListener.apply(this, args);
     }
 
     /**
      * Run an event callback once
      */
-    once(...args: any[]) {
+    public once(...args: any[]) {
         return this.events.one.apply(this.events, args);
     }
 }

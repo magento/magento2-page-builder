@@ -10,8 +10,6 @@ define([], function () {
    *
    * Acts as the data provider client between our system and the UI component system
    */
-  'use strict';
-
   var PersistenceClient =
   /*#__PURE__*/
   function () {

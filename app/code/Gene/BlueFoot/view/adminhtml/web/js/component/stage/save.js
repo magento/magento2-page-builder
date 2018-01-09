@@ -10,13 +10,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
    *
    * @param {KnockoutObservableArray<Structural>} tree
    */
-  'use strict';
-
   var Save =
   /*#__PURE__*/
   function () {
     function Save() {
-      this.rootTemplate = 'Gene_BlueFoot/component/block/render/root.html';
+      this.rootTemplate = "Gene_BlueFoot/component/block/render/root.html";
     }
 
     var _proto = Save.prototype;
@@ -30,23 +28,23 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
     _proto.renderTree = function renderTree(tree) {
       var _this = this;
 
-      var element = (0, _jquery)('<div>');
+      var element = (0, _jquery)("<div>");
       return new Promise(function (resolve, reject) {
         _engine.waitForFinishRender().then(function () {
-          var filtered = (0, _filterHtml)(element),
-              output = (0, _directives)(filtered.html());
+          var filtered = (0, _filterHtml)(element);
+          var output = (0, _directives)(filtered.html());
           resolve(output);
           element.remove();
         });
 
         _knockout.applyBindingsToNode(element[0], {
           template: {
-            name: _this.rootTemplate,
             data: {
               getChildren: function getChildren() {
                 return tree;
               }
-            }
+            },
+            name: _this.rootTemplate
           }
         });
       });

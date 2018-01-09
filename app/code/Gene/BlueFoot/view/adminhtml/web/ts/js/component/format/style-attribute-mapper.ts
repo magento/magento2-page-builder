@@ -2,15 +2,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../../component/data-store";
-import Config from "../../component/config";
-import {toDataUrl} from "../../utils/directives";
 import _ from "underscore";
+import Config from "../../component/config";
+import {DataObject} from "../../component/data-store";
+import {toDataUrl} from "../../utils/directives";
 
 interface FromDomResult {
     [key: string]: any;
 }
-'use strict';
 
 export default class StyleAttributeMapper {
     /**
@@ -19,43 +18,46 @@ export default class StyleAttributeMapper {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    toDom(data: DataObject): DataObject {
-        let result: DataObject = {};
+    public toDom(data: DataObject): DataObject {
+        const result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
-                if (value === '') {
+                if (value === "") {
                     return;
                 }
-                if (key === 'color' && (value === 'default' || value === 'Default')) {
-                    value = 'inherit';
+                if (key === "color" && (value === "default" || value === "Default")) {
+                    value = "inherit";
                 }
-                if (key === 'min_height' || key === 'border_width' || key === 'border_radius') {
-                    value = value.replace('px', '') + 'px';
+                if (key === "min_height" || key === "border_width" || key === "border_radius") {
+                    value = value.replace("px", "") + "px";
                 }
-                if (key === 'background_repeat') {
-                    value = value === "1" ? 'repeat' : 'no-repeat';
+                if (key === "background_repeat") {
+                    value = value === "1" ? "repeat" : "no-repeat";
                 }
-                if (key === 'background_repeat-x' || key === 'background_repeat-y') {
-                    value = '';
+                if (key === "background_repeat-x" || key === "background_repeat-y") {
+                    value = "";
                 }
-                if (key === 'background_image' && Array.isArray(value) && value[0] != undefined) {
+                if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
                     // convert to media directive
-                    let imageUrl = value[0]['url'],
-                        mediaUrl = Config.getInitConfig('media_url'),
-                        mediaPath = imageUrl.split(mediaUrl),
-                        directive = '{{media url=' + mediaPath[1] + '}}';
-                    value = 'url(\'' + toDataUrl(directive) + '\')';
+                    const url = "url";
+                    const imageUrl = value[0][url];
+                    const mediaUrl = Config.getInitConfig("media_url");
+                    const mediaPath = imageUrl.split(mediaUrl);
+                    const directive = "{{media url=" + mediaPath[1] + "}}";
+                    value = "url(\'" + toDataUrl(directive) + "\')";
                 }
-                if (key === 'margins_and_padding') {
-                    result['margin'] = `${value.margin.top}px ${value.margin.right}px`
+                if (key === "margins_and_padding") {
+                    const margin = "margin";
+                    const padding = "padding";
+                    result[margin] = `${value.margin.top}px ${value.margin.right}px`
                         + ` ${value.margin.bottom}px ${value.margin.left}px`;
-                    result['padding'] = `${value.padding.top}px ${value.padding.right}px`
+                    result[padding] = `${value.padding.top}px ${value.padding.right}px`
                         + ` ${value.padding.bottom}px ${value.padding.left}px`;
                     return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
-            }
+            },
         );
         return result;
     }
@@ -67,77 +69,79 @@ export default class StyleAttributeMapper {
      * @returns {DataObject}
      */
     public fromDom(data: DataObject): DataObject {
-        let result: FromDomResult = {};
+        const result: FromDomResult = {};
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
-                if (value === '') {
+                if (value === "") {
                     return;
                 }
-                if (key === 'border-top-width') {
-                    key = 'border-width';
+                if (key === "border-top-width") {
+                    key = "border-width";
                 }
-                if (key === 'border-top-style') {
-                    key = 'border';
+                if (key === "border-top-style") {
+                    key = "border";
                 }
-                if (key === 'border-top-left-radius') {
-                    key = 'border-radius';
+                if (key === "border-top-left-radius") {
+                    key = "border-radius";
                 }
-                if (key === 'min-height' || key === 'border-width' || key === 'border-radius') {
-                    value = value.replace('px', '');
+                if (key === "min-height" || key === "border-width" || key === "border-radius") {
+                    value = value.replace("px", "");
                 }
-                if (key === 'background-repeat-y') {
-                    key = 'background-repeat';
-                    value = value === 'repeat' ? '1' : '0';
+                if (key === "background-repeat-y") {
+                    key = "background-repeat";
+                    value = value === "repeat" ? "1" : "0";
                 }
-                if (key === 'background-position-y') {
-                    key = 'background-position';
-                    if (value === 'top') {
-                        value = 'left top';
-                    } else if (value === 'bottom') {
-                        value = 'left bottom'
+                if (key === "background-position-y") {
+                    key = "background-position";
+                    if (value === "top") {
+                        value = "left top";
+                    } else if (value === "bottom") {
+                        value = "left bottom";
                     } else {
-                        value = 'center center';
+                        value = "center center";
                     }
                 }
-                if (key === 'border-top-color') {
-                    key = 'border-color';
+                if (key === "border-top-color") {
+                    key = "border-color";
                 }
-                if (key === 'background-color' || key === 'border-color') {
-                    if (value === 'initial') {
-                        value = '';
-                    } else {
-                        value = this.convertRgbToHex(value);
-                    }
-                }
-                if (key === 'color') {
-                    if (value === 'inherit') {
-                        value = 'Default';
+                if (key === "background-color" || key === "border-color") {
+                    if (value === "initial") {
+                        value = "";
                     } else {
                         value = this.convertRgbToHex(value);
                     }
                 }
-                if (key === 'background-image') {
+                if (key === "color") {
+                    if (value === "inherit") {
+                        value = "Default";
+                    } else {
+                        value = this.convertRgbToHex(value);
+                    }
+                }
+                if (key === "background-image") {
                     // Replace the location.href if it exists and decode the value
-                    value = decodeURIComponent((value as string).replace(window.location.href, ''));
-                    const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
-                        image = {
-                            "name": url.split('/').pop(),
-                            "size": 0,
-                            "type": "image/" + type,
-                            "url": Config.getInitConfig('media_url') + url
+                    value = decodeURIComponent((value as string).replace(window.location.href, ""));
+                    const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value);
+                    const image = {
+                            name: url.split("/").pop(),
+                            size: 0,
+                            type: "image/" + type,
+                            url: Config.getInitConfig("media_url") + url,
                         };
                     value = [image];
                 }
-                if (key.startsWith('margin') || key.startsWith('padding')) {
+                if (key.startsWith("margin") || key.startsWith("padding")) {
                     const spacingObj = {margin: {}, padding: {}};
-                    let [attributeType, attributeDirection] = key.split('-');
-                    result['margins_and_padding'] = result['margins_and_padding'] || spacingObj;
-                    result['margins_and_padding'][attributeType] = _.extend(result['margins_and_padding'][attributeType], {[attributeDirection]: value.replace('px', '')});
+                    const [attributeType, attributeDirection] = key.split("-");
+                    const marginsAndPadding = "margins_and_padding";
+                    result[marginsAndPadding] = result[marginsAndPadding] || spacingObj;
+                    result[marginsAndPadding][attributeType] = _.extend(result[marginsAndPadding][attributeType],
+                        {[attributeDirection]: value.replace("px", "")});
                     return;
                 }
-                result[key.replace('-', '_')] = value;
-            }
+                result[key.replace("-", "_")] = value;
+            },
         );
         return result;
     }
@@ -148,9 +152,9 @@ export default class StyleAttributeMapper {
      * @param {string} string
      * @returns {string}
      */
-    private fromSnakeToCamelCase(string: string): string {
-        let parts: Array<string> = string.split(/[_-]/);
-        let newString: string = '';
+    private fromSnakeToCamelCase(currentString: string): string {
+        const parts: string[] = currentString.split(/[_-]/);
+        let newString: string = "";
         for (let i = 1; i < parts.length; i++) {
             newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
         }
@@ -164,8 +168,8 @@ export default class StyleAttributeMapper {
      * @returns {string}
      */
     private fromIntToHex(value: number): string {
-        let hex = value.toString(16);
-        return hex.length == 1 ? '0' + hex : hex;
+        const hex = value.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
     }
 
     /**
@@ -177,12 +181,12 @@ export default class StyleAttributeMapper {
     private convertRgbToHex(value: string) {
         if (value) {
             const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
-            let matches = regexp.exec(value);
+            const matches = regexp.exec(value);
             if (matches) {
-                return '#'
-                    + this.fromIntToHex(parseInt(matches[1]))
-                    + this.fromIntToHex(parseInt(matches[2]))
-                    + this.fromIntToHex(parseInt(matches[3]));
+                return "#"
+                    + this.fromIntToHex(parseInt(matches[1], 10))
+                    + this.fromIntToHex(parseInt(matches[2], 10))
+                    + this.fromIntToHex(parseInt(matches[3], 10));
             }
         }
         return value;

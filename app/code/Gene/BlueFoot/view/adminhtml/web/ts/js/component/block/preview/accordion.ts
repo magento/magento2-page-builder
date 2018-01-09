@@ -3,24 +3,23 @@
  * See COPYING.txt for license details.
  */
 
-import AccordionBlock from "../accordion";
-import Block from "./block";
-import ko from "knockout";
 import $ from "jquery";
-'use strict';
+import ko from "knockout";
+import require from "require";
+import Block from "./block";
 
 export default class Accordion extends Block {
-    element: Element;
-    renderCounter: number = 0;
+    public element: Element;
+    public renderCounter: number = 0;
 
     constructor(parent: Block, config: object) {
         super(parent, config);
 
-        // Declare our tabs, they'll get populated later
+        // Declare our tabs, they"ll get populated later
         this.data.items = ko.observableArray([]);
         this.data.items.subscribe((data) => {
             this.renderCounter = 0;
-            $(this.element).accordion('destroy');
+            $(this.element).accordion("destroy");
         });
     }
 
@@ -29,20 +28,20 @@ export default class Accordion extends Block {
      *
      * @param {Element} element
      */
-    onContainerRender(element: Element) {
+    public onContainerRender(element: Element) {
         this.element = element;
     }
 
     /**
      * Callback after an item has been rendered, wait until all tabs have been rendered to init the widget
      */
-    onItemRender() {
+    public onItemRender() {
         ++this.renderCounter;
-        if (this.data.items().length == this.renderCounter) {
-            require(['jquery', 'accordion'], ($) => {
+        if (this.data.items().length === this.renderCounter) {
+            require(["accordion"], () => {
                 _.delay(
                     () => $(this.element).accordion({ active: this.parent.getActive() }),
-                    50
+                    50,
                 );
             });
             this.renderCounter = 0;

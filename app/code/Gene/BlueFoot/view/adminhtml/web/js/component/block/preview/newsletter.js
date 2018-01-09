@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["knockout", "./block", "../../config"], function (_knockout, _block, _config) {
+define(["knockout", "../../config", "./block"], function (_knockout, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Newsletter =
   /*#__PURE__*/
@@ -20,24 +18,24 @@ define(["knockout", "./block", "../../config"], function (_knockout, _block, _co
 
       _this = _PreviewBlock.call(this, parent, config) || this;
 
-      _this.updateDataValue('html', _knockout.observable(''));
+      _this.updateDataValue("html", _knockout.observable(""));
 
       _this.parent.stage.store.subscribe(function (data) {
-        if (_this.data.title() === '') {
+        if (_this.data.title() === "") {
           return;
         }
 
-        var url = _config.getInitConfig('preview_url'),
-            requestData = {
-          role: _this.config.name,
-          'button_text': _this.data.button_text,
-          'label_text': _this.data.label_text,
-          'placeholder': _this.data.placeholder,
-          'title': _this.data.title
-        };
+        var url = _config.getInitConfig("preview_url");
 
+        var requestData = {
+          button_text: _this.data.button_text,
+          label_text: _this.data.label_text,
+          placeholder: _this.data.placeholder,
+          role: _this.config.name,
+          title: _this.data.title
+        };
         jQuery.post(url, requestData, function (response) {
-          _this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
+          _this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
         });
       }, _this.parent.id);
 

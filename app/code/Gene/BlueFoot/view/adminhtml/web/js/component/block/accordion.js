@@ -2,8 +2,6 @@
 define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  'use strict';
-
   var Accordion =
   /*#__PURE__*/
   function (_Block) {
@@ -22,10 +20,10 @@ define(["./block"], function (_block) {
      */
     _proto.getMageInit = function getMageInit() {
       return JSON.stringify({
-        "accordion": {
-          "active": this.getActive(),
-          "collapsibleElement": "[data-collapsible=true]",
-          "content": "[data-content=true]"
+        accordion: {
+          active: this.getActive(),
+          collapsibleElement: "[data-collapsible=true]",
+          content: "[data-content=true]"
         }
       });
     };
@@ -38,8 +36,8 @@ define(["./block"], function (_block) {
 
     _proto.getActive = function getActive() {
       if (this.getData().items) {
-        var items = this.getData().items,
-            activeItems = items.map(function (item, index) {
+        var items = this.getData().items;
+        var activeItems = items.map(function (item, index) {
           return item.open_on_load === "1" ? index : null;
         }).filter(function (item) {
           return item !== null;

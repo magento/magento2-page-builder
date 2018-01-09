@@ -4,10 +4,6 @@
  */
 
 import ReadInterface from "../read-interface";
-import Config from "../../../component/config";
-import _ from 'underscore';
-import {DataObject} from "../../data-store";
-'use strict';
 
 export default class Tabs implements ReadInterface {
 
@@ -18,10 +14,10 @@ export default class Tabs implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        let pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
-        if (element.getAttribute('src') && pattern.test(element.getAttribute('src'))) {
+        const pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
+        if (element.getAttribute("src") && pattern.test(element.getAttribute("src"))) {
             return Promise.resolve({
-                'position': pattern.exec(element.getAttribute('src')).slice(1).join(',')
+                position: pattern.exec(element.getAttribute("src")).slice(1).join(","),
             });
         }
     }

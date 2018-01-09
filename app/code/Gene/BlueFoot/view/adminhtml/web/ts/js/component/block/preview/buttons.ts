@@ -3,9 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
 import ko from "knockout";
-'use strict';
+import Block from "./block";
 
 export default class Buttons extends Block {
     constructor(parent: Block, config: object) {

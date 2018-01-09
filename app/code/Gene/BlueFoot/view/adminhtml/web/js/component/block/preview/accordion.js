@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "knockout", "jquery"], function (_block, _knockout, _jquery) {
+define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockout, _require, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Accordion =
   /*#__PURE__*/
@@ -12,7 +10,7 @@ define(["./block", "knockout", "jquery"], function (_block, _knockout, _jquery) 
     function Accordion(parent, config) {
       var _this;
 
-      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
+      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they"ll get populated later
 
       _this.element = void 0;
       _this.renderCounter = 0;
@@ -20,7 +18,7 @@ define(["./block", "knockout", "jquery"], function (_block, _knockout, _jquery) 
 
       _this.data.items.subscribe(function (data) {
         _this.renderCounter = 0;
-        (0, _jquery)(_this.element).accordion('destroy');
+        (0, _jquery)(_this.element).accordion("destroy");
       });
 
       return _this;
@@ -47,15 +45,14 @@ define(["./block", "knockout", "jquery"], function (_block, _knockout, _jquery) 
 
       ++this.renderCounter;
 
-      if (this.data.items().length == this.renderCounter) {
-        require(['jquery', 'accordion'], function ($) {
+      if (this.data.items().length === this.renderCounter) {
+        (0, _require)(["accordion"], function () {
           _.delay(function () {
-            return $(_this2.element).accordion({
+            return (0, _jquery)(_this2.element).accordion({
               active: _this2.parent.getActive()
             });
           }, 50);
         });
-
         this.renderCounter = 0;
       }
     };

@@ -1,31 +1,29 @@
 /*eslint-disable */
-define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "./panel/group/block", "./previews", "ko-draggable", "ko-sortable"], function (_uiComponent, _underscore, _knockout, _config, _group, _block, _previews, _koDraggable, _koSortable) {
+define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", "../config", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _uiComponent, _underscore, _config, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Panel = _uiComponent.extend({
-    componentTemplate: 'Gene_BlueFoot/component/stage/panel.html',
+    componentTemplate: "Gene_BlueFoot/component/stage/panel.html",
+    defaults: {
+      groups: [],
+      isCollapsed: false,
+      isVisible: false,
+      originalScrollTop: false,
+      searchResults: [],
+      searchValue: "",
+      searching: false,
+      stage: false
+    },
+    groups: _knockout.observableArray([]),
+    isCollapsed: null,
+    isVisible: null,
     stage: null,
-    searchValue: _knockout.observable(''),
+    searchValue: _knockout.observable(""),
     searching: _knockout.observable(false),
     searchResults: _knockout.observableArray([]),
-    groups: _knockout.observableArray([]),
     originalScrollTop: 0,
-    defaults: {
-      isVisible: false,
-      isCollapsed: false,
-      groups: [],
-      searchValue: '',
-      searching: false,
-      searchResults: [],
-      stage: false,
-      originalScrollTop: false
-    },
-    isVisible: null,
-    isCollapsed: null,
     initialize: function initialize() {
       this._super();
 
@@ -35,7 +33,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
       var _this = this;
 
       this.stage = stage;
-      stage.on('stageReady', function () {
+      stage.on("stageReady", function () {
         _this.populateContentBlocks();
 
         _this.isVisible(true);
@@ -45,20 +43,20 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
       return this.componentTemplate;
     },
     initObservable: function initObservable() {
-      this._super().observe('isVisible isCollapsed groups searchValue searching searchResults');
+      this._super().observe("isVisible isCollapsed groups searchValue searching searchResults");
 
       return this;
     },
     search: function search(self, event) {
       this.searchValue(event.currentTarget.value.toLowerCase());
 
-      if (this.searchValue() === '') {
+      if (this.searchValue() === "") {
         this.searching(false);
       } else {
         this.searching(true);
-        this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig('contentTypes'), function (contentBlock) {
-          var regEx = new RegExp('\\b' + self.searchValue(), 'gi');
-          var matches = contentBlock.label.toLowerCase().match(regEx) ? true : false;
+        this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig("contentTypes"), function (contentBlock) {
+          var regEx = new RegExp("\\b" + self.searchValue(), "gi");
+          var matches = !!contentBlock.label.toLowerCase().match(regEx);
           return matches && contentBlock.is_visible === true;
         }), function (contentBlock, identifier) {
           // Create a new instance of GroupBlock for each result
@@ -69,8 +67,9 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
     populateContentBlocks: function populateContentBlocks() {
       var _this2 = this;
 
-      var groups = _config.getInitConfig('groups'),
-          contentBlocks = _config.getInitConfig('contentTypes'); // Verify the configuration contains the required information
+      var groups = _config.getInitConfig("groups");
+
+      var contentBlocks = _config.getInitConfig("contentTypes"); // Verify the configuration contains the required information
 
 
       if (groups && contentBlocks) {
@@ -96,7 +95,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
           this.groups()[0].active(true);
         }
       } else {
-        console.warn('Configuration is not properly initialized, please check the Ajax response.');
+        console.warn("Configuration is not properly initialized, please check the Ajax response.");
       }
     },
     fullScreen: function fullScreen() {
@@ -120,7 +119,7 @@ define(["uiComponent", "underscore", "knockout", "../config", "./panel/group", "
       this.isCollapsed(!this.isCollapsed());
     },
     clearSearch: function clearSearch() {
-      this.searchValue('');
+      this.searchValue("");
       this.searching(false);
     }
   });

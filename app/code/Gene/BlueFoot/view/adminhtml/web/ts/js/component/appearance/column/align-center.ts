@@ -5,7 +5,6 @@
 
 import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
-'use strict';
 
 export default class AlignCenter implements AppearanceInterface {
 
@@ -15,8 +14,9 @@ export default class AlignCenter implements AppearanceInterface {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    add(data: DataObject): DataObject {
-        data['align_self'] = 'center';
+    public add(data: DataObject): DataObject {
+        const alignSelf = "align_self";
+        data[alignSelf] = "center";
         return data;
     }
 }

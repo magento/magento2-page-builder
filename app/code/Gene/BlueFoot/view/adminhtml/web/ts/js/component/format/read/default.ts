@@ -3,16 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
-import {ReadInterface} from "../read-interface";
+import _ from "underscore";
 import {DataObject} from "../../data-store";
-import StyleAttributeMapper from "../style-attribute-mapper";
 import AttributeMapper from "../attribute-mapper";
-'use strict';
+import {ReadInterface} from "../read-interface";
+import StyleAttributeMapper from "../style-attribute-mapper";
 
 export default class Default implements ReadInterface {
-    styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
-    attributeMapper: AttributeMapper = new AttributeMapper();
+    public attributeMapper: AttributeMapper = new AttributeMapper();
+    public styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
      * Read data, style and css properties from the element
@@ -20,19 +19,19 @@ export default class Default implements ReadInterface {
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
-    public read (element: HTMLElement): Promise<any> {
-        let data: DataObject = {};
+    public read(element: HTMLElement): Promise<any> {
+        const data: DataObject = {};
+        const styleAttributes: DataObject = {};
 
-        let styleAttributes: DataObject = {};
         for (let i = 0; i < element.style.length; i ++) {
             const property = element.style.item(i);
 
-            if (element.style[property] !== '') {
+            if (element.style[property] !== "") {
                 styleAttributes[property] = element.style[property];
             }
         }
 
-        let attributes: DataObject = {};
+        const attributes: DataObject = {};
         Array.prototype.slice.call(element.attributes).forEach((item: {name: string, value: string}) => {
             attributes[item.name] = item.value;
         });
@@ -40,19 +39,20 @@ export default class Default implements ReadInterface {
         _.extend(
             data,
             this.attributeMapper.fromDom(attributes),
-            this.styleAttributeMapper.fromDom(styleAttributes)
+            this.styleAttributeMapper.fromDom(styleAttributes),
         );
 
-        Object.keys(element.dataset).map(key => {
-            if (element.dataset[key] !== '') {
-                data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.dataset[key];
+        Object.keys(element.dataset).map((key) => {
+            if (element.dataset[key] !== "") {
+                data[key.split(/(?=[A-Z])/).join("_").toLowerCase()] = element.dataset[key];
             }
         });
 
         // Copy the css classes into the data store
-        data['css_classes'] = element.className || "";
+        const cssClasses = "css_classes";
+        data[cssClasses] = element.className || "";
 
-        return new Promise((resolve: Function) => {
+        return new Promise((resolve: (data: object) => void) => {
             resolve(data);
         });
     }

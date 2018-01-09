@@ -3,16 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from 'Gene_BlueFoot/js/component/loader';
-import Block from './block';
+import loadModule from "Gene_BlueFoot/js/component/loader";
+import AppearanceFactory from "../appearance/appearance-factory";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
-import AppearanceFactory from "../appearance/appearance-factory";
-'use strict';
+import Block from "./block";
 
 interface ConfigObject {
     component?: string;
-    [key: string]: any
+    [key: string]: any;
 }
 
 /**
@@ -22,7 +21,7 @@ interface ConfigObject {
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigObject): string {
-    return config.component || 'Gene_BlueFoot/js/component/block/block';
+    return config.component || "Gene_BlueFoot/js/component/block/block";
 }
 
 /**
@@ -34,11 +33,12 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @param formData
  * @returns {Promise<BlockInterface>}
  */
-export default function createBlock(config: ConfigObject, parent: EditableArea, stage: Stage, formData?: object): Promise<Block> {
+export default function createBlock(config: ConfigObject, parent: EditableArea,
+                                    stage: Stage, formData?: object): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
     const appearanceFactory: AppearanceFactory = new AppearanceFactory();
-    return new Promise((resolve: Function, reject: Function) => {
+    return new Promise((resolve: (blockComponent: any) => void, reject: (e: Error) => void) => {
         appearanceFactory.create(config)
             .then((appearance) => {
                 loadModule([getBlockComponentPath(config)], (blockComponent: any) => {

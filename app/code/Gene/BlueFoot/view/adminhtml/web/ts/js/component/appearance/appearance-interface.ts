@@ -4,7 +4,6 @@
  */
 
 import {DataObject} from "../data-store";
-'use strict';
 
 export interface AppearanceInterface {
     /**

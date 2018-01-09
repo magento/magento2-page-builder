@@ -4,7 +4,6 @@
  */
 
 import ReadInterface from "../read-interface";
-'use strict';
 
 export default class Heading implements ReadInterface {
     /**
@@ -14,12 +13,12 @@ export default class Heading implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        return new Promise((resolve: Function) => {
+        return new Promise((resolve: (object: object) => void) => {
             resolve(
                 {
-                    'heading_type': element.nodeName.toLowerCase(),
-                    'title': element.innerText
-                }
+                    heading_type: element.nodeName.toLowerCase(),
+                    title: element.innerText,
+                },
             );
         });
     }

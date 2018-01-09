@@ -1,11 +1,9 @@
 /*eslint-disable */
-define(["underscore", "knockout"], function (_underscore, _knockout) {
+define(["knockout", "underscore"], function (_knockout, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Options =
   /*#__PURE__*/
   function () {
@@ -17,30 +15,20 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
      */
     function Options(parent, options) {
       this.parent = void 0;
+      this.template = "Gene_BlueFoot/component/stage/structural/options.html";
       this.options = _knockout.observableArray([]);
-      this.template = 'Gene_BlueFoot/component/stage/structural/options.html';
       this.parent = parent;
       this.options(options);
       this.sort();
     }
-    /**
-     * Sort the options
-     */
-
-
-    var _proto = Options.prototype;
-
-    _proto.sort = function sort() {
-      this.options.sort(function (a, b) {
-        return a.sort === b.sort ? 0 : a.sort < b.sort ? -1 : 1;
-      });
-    };
     /**
      * Add an option into the options array
      *
      * @param option
      */
 
+
+    var _proto = Options.prototype;
 
     _proto.addOption = function addOption(option) {
       this.options.push(option);
@@ -58,6 +46,16 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
         code: code
       })));
       this.sort();
+    };
+    /**
+     * Sort the options
+     */
+
+
+    _proto.sort = function sort() {
+      this.options.sort(function (a, b) {
+        return a.sort === b.sort ? 0 : a.sort < b.sort ? -1 : 1;
+      });
     };
 
     return Options;

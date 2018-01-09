@@ -4,8 +4,6 @@ define(["knockout", "./block"], function (_knockout, _block) {
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  'use strict';
-
   var Slide =
   /*#__PURE__*/
   function (_PreviewBlock) {
@@ -21,9 +19,9 @@ define(["knockout", "./block"], function (_knockout, _block) {
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.backgroundImageStyle = void 0;
       _this.backgroundImageStyle = _knockout.computed(function () {
-        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === 'object') {
+        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
           return {
-            backgroundImage: 'url(' + _this.data.background_image()[0].url + ')'
+            backgroundImage: "url(" + _this.data.background_image()[0].url + ")"
           };
         }
 

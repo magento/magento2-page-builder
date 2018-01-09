@@ -8,8 +8,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Option =
   /*#__PURE__*/
   function () {
@@ -26,28 +24,28 @@ define([], function () {
      * @param template
      */
     function Option(parent, code, icon, title, action, classes, sort, template) {
-      this.parent = void 0;
+      this.action = void 0;
+      this.classes = void 0;
       this.code = void 0;
       this.icon = void 0;
-      this.title = void 0;
-      this.action = false;
-      this.classes = void 0;
+      this.parent = void 0;
       this.sort = void 0;
-      this._template = void 0;
+      this.title = void 0;
+      this.Template = void 0;
       this.parent = parent;
       this.code = code;
       this.icon = icon;
       this.title = title;
       this.action = action;
-      this.classes = classes.join(' ');
+      this.classes = classes.join(" ");
       this.sort = sort;
-      this._template = template;
+      this.Template = template;
     }
 
     _createClass(Option, [{
       key: "template",
       get: function get() {
-        return this._template || null;
+        return this.Template || null;
       }
     }]);
 

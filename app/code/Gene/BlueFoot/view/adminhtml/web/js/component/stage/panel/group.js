@@ -7,10 +7,7 @@ define(["knockout"], function (_knockout) {
 
   /**
    * Group Class
-   *
    */
-  'use strict';
-
   var Group =
   /*#__PURE__*/
   function () {
@@ -29,9 +26,9 @@ define(["knockout"], function (_knockout) {
       }
 
       this.id = _knockout.observable();
-      this.code = _knockout.observable('');
-      this.label = _knockout.observable('');
-      this.icon = _knockout.observable('');
+      this.code = _knockout.observable("");
+      this.label = _knockout.observable("");
+      this.icon = _knockout.observable("");
       this.sort = _knockout.observable();
       this.blocks = _knockout.observableArray([]);
       this.active = _knockout.observable(false);

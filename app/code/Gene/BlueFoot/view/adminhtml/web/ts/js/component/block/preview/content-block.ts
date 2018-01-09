@@ -5,10 +5,9 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import Config from "../../config";
 import Block from "../block";
 import PreviewBlock from "./block";
-import Config from "../../config";
-'use strict';
 
 export default class ContentBlock extends PreviewBlock {
     /**
@@ -19,19 +18,19 @@ export default class ContentBlock extends PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
-        this.updateDataValue('html', ko.observable(''));
+        this.updateDataValue("html", ko.observable(""));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                if (data.identifier === '') {
+                if (data.identifier === "") {
                     return;
                 }
-                const url = Config.getInitConfig('preview_url'),
-                    requestData = {identifier: data.identifier, role: this.config.name};
+                const url = Config.getInitConfig("preview_url");
+                const requestData = {identifier: data.identifier, role: this.config.name};
                 jQuery.post(url, requestData, (response) => {
-                    this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
+                    this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
                 });
             },
-            this.parent.id
+            this.parent.id,
         );
     }
 }

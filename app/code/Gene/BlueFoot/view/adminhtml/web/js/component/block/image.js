@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "../config", "underscore"], function (_block, _config, _underscore) {
+define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Image =
   /*#__PURE__*/
@@ -16,30 +14,14 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     var _proto = Image.prototype;
 
     /**
-     * Retrieve the image URL with directive
-     *
-     * @param {{}} image
-     * @returns {string}
-     */
-    _proto.getImageUrl = function getImageUrl(image) {
-      var imageUrl = image[0]['url'],
-          mediaUrl = _config.getInitConfig('media_url'),
-          mediaPath = imageUrl.split(mediaUrl),
-          directive = '{{media url=' + mediaPath[1] + '}}';
-
-      return directive;
-    };
-    /**
      * Get the desktop (main) image attributes for the render
      *
      * @returns {any}
      */
-
-
     _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
 
-      if (data.image == "" || data.image == undefined) {
+      if (data.image === "" || data.image === undefined) {
         return {};
       } else if (_underscore.isEmpty(data.image[0])) {
         return;
@@ -61,7 +43,7 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     _proto.getMobileImageAttributes = function getMobileImageAttributes() {
       var data = this.getData();
 
-      if (data.mobile_image == "" || data.mobile_image == undefined) {
+      if (data.mobile_image === "" || data.mobile_image === undefined) {
         return {};
       } else if (_underscore.isEmpty(data.mobile_image[0])) {
         return;
@@ -83,16 +65,16 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
     _proto.getImageAttributes = function getImageAttributes() {
       var data = this.getData();
 
-      if (data.image == "" || data.image == undefined) {
+      if (data.image === "" || data.image === undefined) {
         return {};
       } else if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
       return {
+        class: data.lightbox === "Yes" ? "bluefoot-lightbox" : "",
         href: this.getImageUrl(data.image),
-        title: data.title_tag,
-        class: data.lightbox == "Yes" ? "bluefoot-lightbox" : ""
+        title: data.title_tag
       };
     };
     /**
@@ -104,7 +86,25 @@ define(["./block", "../config", "underscore"], function (_block, _config, _under
 
     _proto.getCaption = function getCaption() {
       var data = this.getData();
-      return data.show_caption == "Yes" ? data.title_tag : "";
+      return data.show_caption === "Yes" ? data.title_tag : "";
+    };
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {{}} image
+     * @returns {string}
+     */
+
+
+    _proto.getImageUrl = function getImageUrl(image) {
+      var url = "url";
+      var imageUrl = image[0][url];
+
+      var mediaUrl = _config.getInitConfig("mediaUrl");
+
+      var mediaPath = imageUrl.split(mediaUrl);
+      var directive = "{{media url=" + mediaPath[1] + "}}";
+      return directive;
     };
 
     return Image;

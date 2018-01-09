@@ -3,11 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ReadInterface from "../read-interface";
-import Config from "../../../component/config";
-import _ from 'underscore';
+import _ from "underscore";
 import {DataObject} from "../../data-store";
-'use strict';
+import ReadInterface from "../read-interface";
 
 export default class Accordion implements ReadInterface {
 
@@ -18,18 +16,18 @@ export default class Accordion implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        let response: DataObject = {
-            'items': []
+        const response: DataObject = {
+            items: [],
         };
 
         // Iterate through the tabs and retrieve their content
-        _.forEach(element.querySelectorAll('[data-collapsible="true"]'), (node, index) => {
+        _.forEach(element.querySelectorAll("[data-collapsible='true']"), (node, index) => {
             response.items[index] = {
-                title: node.firstChild.firstChild.innerHTML,
                 content: node.nextSibling.innerHTML,
-                open_on_load: node.getAttribute('data-open-on-load'),
-                record_id: index
-            }
+                open_on_load: node.getAttribute("data-open-on-load"),
+                record_id: index,
+                title: node.firstChild.firstChild.innerHTML,
+            };
         });
 
         return Promise.resolve(response);

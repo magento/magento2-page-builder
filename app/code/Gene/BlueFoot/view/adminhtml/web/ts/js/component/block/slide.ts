@@ -4,7 +4,6 @@
  */
 
 import Block from "./block";
-'use strict';
 
 export default class Slide extends Block {
 

@@ -1,12 +1,10 @@
 /*eslint-disable */
-define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockout) {
+define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitter) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
    * Block Class
    */
-  'use strict';
-
   var Block =
   /*#__PURE__*/
   function (_EventEmitter) {
@@ -23,10 +21,10 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
 
       _this = _EventEmitter.call(this) || this;
       _this.config = void 0;
-      _this.identifier = _knockout.observable('');
-      _this.label = _knockout.observable('');
-      _this.icon = _knockout.observable('');
       _this.droppable = true;
+      _this.icon = _knockout.observable("");
+      _this.identifier = _knockout.observable("");
+      _this.label = _knockout.observable("");
       _this.config = config;
 
       _this.identifier(identifier);
@@ -48,8 +46,8 @@ define(["../../../event-emitter", "knockout"], function (_eventEmitter, _knockou
 
     _proto.getDraggableConfig = function getDraggableConfig() {
       return this.config.allowed_parents.map(function (value, index) {
-        return '.' + value + '-container';
-      }).join(', ');
+        return "." + value + "-container";
+      }).join(", ");
     };
 
     return Block;

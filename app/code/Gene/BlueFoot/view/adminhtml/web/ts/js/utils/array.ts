@@ -7,7 +7,8 @@
  * @returns {Array<any>}
  */
 
-export function moveArrayItem(array: Array<any> | KnockoutObservableArray<any>, fromIndex: number, toIndex: number): Array<any> | KnockoutObservableArray<any> {
+export function moveArrayItem(array: any[] | KnockoutObservableArray <any>, fromIndex: number,
+                              toIndex: number): any[] | KnockoutObservableArray <any> {
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
     return array;
 }
@@ -20,7 +21,8 @@ export function moveArrayItem(array: Array<any> | KnockoutObservableArray<any>, 
  * @param toIndex
  * @returns {Array<any>}
  */
-export function moveArrayItemIntoArray(item: any, array: Array<any> | KnockoutObservableArray<any>, toIndex: number): Array<any> | KnockoutObservableArray<any> {
+export function moveArrayItemIntoArray(item: any, array: any[] | KnockoutObservableArray <any>,
+                                       toIndex: number): any[] | KnockoutObservableArray <any> {
     array.splice(toIndex, 0, item);
     return array;
 }
@@ -32,10 +34,11 @@ export function moveArrayItemIntoArray(item: any, array: Array<any> | KnockoutOb
  * @param item
  * @returns {Array<any>}
  */
-export function removeArrayItem(array: Array<any> | KnockoutObservableArray<any>, item: any): Array<any> | KnockoutObservableArray<any> {
-    let index = array.indexOf(item);
+export function removeArrayItem(array: any[] | KnockoutObservableArray <any>,
+                                item: any): any[] | KnockoutObservableArray <any> {
+    const index = array.indexOf(item);
 
-    if (~index) {
+    if (index > -1) {
         array.splice(index, 1);
     }
 

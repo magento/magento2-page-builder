@@ -3,22 +3,21 @@
  * See COPYING.txt for license details.
  */
 
-import $ from 'jquery';
-import ko from 'knockout';
+import $ from "jquery";
+import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import Structural from "./structural/abstract";
-import filterHtml from '../../component/format/filter-html';
+import filterHtml from "../../component/format/filter-html";
 import decodeAllDataUrlsInString from "../../utils/directives";
+import Structural from "./structural/abstract";
 
 /**
  * Render the tree into a string
  *
  * @param {KnockoutObservableArray<Structural>} tree
  */
-'use strict';
 
 export default class Save {
-    rootTemplate: string = 'Gene_BlueFoot/component/block/render/root.html';
+    public rootTemplate: string = "Gene_BlueFoot/component/block/render/root.html";
 
     /**
      * Render a tree of content types instances stored in knockout
@@ -26,12 +25,12 @@ export default class Save {
      * @param {KnockoutObservableArray<Structural>} tree
      * @returns {Promise<string>}
      */
-    renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
-        let element = $('<div>');
+    public renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
+        const element = $("<div>");
         return new Promise((resolve, reject) => {
             engine.waitForFinishRender().then(() => {
-                const filtered: JQuery = filterHtml(element),
-                    output = decodeAllDataUrlsInString(filtered.html());
+                const filtered: JQuery = filterHtml(element);
+                const output = decodeAllDataUrlsInString(filtered.html());
                 resolve(output);
                 element.remove();
             });
@@ -39,10 +38,10 @@ export default class Save {
                 element[0],
                 {
                     template: {
+                        data: {getChildren: () => tree},
                         name: this.rootTemplate,
-                        data: {getChildren: () => tree}
-                    }
-                }
+                    },
+                },
             );
         });
     }

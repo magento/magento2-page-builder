@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "../../config"], function (_block, _config) {
+define(["../../config", "./block"], function (_config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var ProductList =
   /*#__PURE__*/
@@ -20,24 +18,24 @@ define(["./block", "../../config"], function (_block, _config) {
 
       _this = _PreviewBlock.call(this, parent, config) || this;
 
-      _this.updateDataValue('html', '');
+      _this.updateDataValue("html", "");
 
       _this.parent.stage.store.subscribe(function (data) {
-        if (_this.data.category_id() === '') {
+        if (_this.data.category_id() === "") {
           return;
         }
 
-        var url = _config.getInitConfig('preview_url'),
-            requestData = {
-          role: _this.config.name,
-          product_count: data.product_count,
-          hide_out_of_stock: data.hide_out_of_stock,
-          category_id: data.category_id,
-          is_preview: true
-        };
+        var url = _config.getInitConfig("preview_url");
 
+        var requestData = {
+          category_id: data.category_id,
+          hide_out_of_stock: data.hide_out_of_stock,
+          is_preview: true,
+          product_count: data.product_count,
+          role: _this.config.name
+        };
         jQuery.post(url, requestData, function (response) {
-          _this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
+          _this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
         });
       }, _this.parent.id);
 

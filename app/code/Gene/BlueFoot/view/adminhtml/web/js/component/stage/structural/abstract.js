@@ -1,12 +1,10 @@
 /*eslint-disable */
-define(["underscore", "knockout", "mage/translate", "./editable-area", "./options", "./options/option", "./column/builder", "../edit", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../../format/attribute-filter", "../../format/attribute-mapper", "../../appearance/appearance"], function (_underscore, _knockout, _translate, _editableArea, _options, _option, _builder, _edit, _styleAttributeFilter, _styleAttributeMapper, _attributeFilter, _attributeMapper, _appearance) {
+define(["knockout", "mage/translate", "underscore", "../../appearance/appearance", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./column/builder", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _appearance, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _builder, _editableArea, _options, _option) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Structural =
   /*#__PURE__*/
@@ -33,21 +31,21 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
       }
 
       _this = _EditableArea.call(this, stage) || this;
-      _this.parent = void 0;
-      _this.title = void 0;
-      _this.config = void 0;
-      _this.wrapperStyle = _knockout.observable({
-        width: '100%'
-      });
-      _this.edit = void 0;
-      _this.optionsInstance = new _options.Options(_this, _this.options);
-      _this.children = _knockout.observableArray([]);
-      _this.columnBuilder = new _builder.ColumnBuilder();
-      _this.styleAttributeFilter = new _styleAttributeFilter();
-      _this.styleAttributeMapper = new _styleAttributeMapper();
+      _this.appearance = void 0;
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
-      _this.appearance = void 0;
+      _this.config = void 0;
+      _this.children = _knockout.observableArray([]);
+      _this.columnBuilder = new _builder.ColumnBuilder();
+      _this.edit = void 0;
+      _this.optionsInstance = new _options.Options(_this, _this.options);
+      _this.parent = void 0;
+      _this.styleAttributeFilter = new _styleAttributeFilter();
+      _this.styleAttributeMapper = new _styleAttributeMapper();
+      _this.title = void 0;
+      _this.wrapperStyle = _knockout.observable({
+        width: "100%"
+      });
 
       _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 
@@ -90,21 +88,21 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
       var _this2 = this;
 
       this.stage.parent.confirmationDialog({
-        title: (0, _translate)('Confirm Item Removal'),
-        content: (0, _translate)('Are you sure you want to remove this item? The data within this item is not recoverable once removed.'),
         actions: {
           confirm: function confirm() {
             // Call the parent to remove the child element
-            _this2.parent.emit('blockRemoved', {
+            _this2.parent.emit("blockRemoved", {
               block: _this2
             });
           }
-        }
+        },
+        content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
+        title: (0, _translate)("Confirm Item Removal")
       });
     };
     /**
      * Get css classes for an block
-     * Example {'class-name': true}
+     * Example {"class-name": true}
      *
      * @returns {DataObject}
      */
@@ -113,8 +111,8 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     _proto.getCss = function getCss() {
       var cssClasses = {};
 
-      if ('css_classes' in this.getData() && this.getData().css_classes != '') {
-        this.getData().css_classes.split(' ').map(function (value, index) {
+      if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
+        this.getData().css_classes.split(" ").map(function (value, index) {
           return cssClasses[value] = true;
         });
       }
@@ -123,7 +121,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     };
     /**
      * Get stype properties for an block
-     * Example {'backgroundColor': '#cccccc'}
+     * Example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
@@ -136,7 +134,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     };
     /**
      * Get attributes for an block
-     * Example {'data-role': 'element'}
+     * Example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
@@ -167,7 +165,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     _createClass(Structural, [{
       key: "options",
       get: function get() {
-        return [new _option.Option(this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-structural'], 10), new _option.Option(this, 'edit', '<i></i>', (0, _translate)('Edit'), this.onOptionEdit, ['edit-block'], 50), new _option.Option(this, 'duplicate', '<i class="icon-bluefoot-copy"></i>', (0, _translate)('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60), new _option.Option(this, 'remove', '<i></i>', (0, _translate)('Remove'), this.onOptionRemove, ['remove-structural'], 100)];
+        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), false, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-bluefoot-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
       }
       /**
        * Retrieve the template for the structural
@@ -178,7 +176,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     }, {
       key: "template",
       get: function get() {
-        return 'Gene_BlueFoot/component/stage/structural/abstract.html';
+        return "Gene_BlueFoot/component/stage/structural/abstract.html";
       }
       /**
        * Retrieve the preview child template
@@ -189,7 +187,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     }, {
       key: "previewChildTemplate",
       get: function get() {
-        return 'Gene_BlueFoot/component/block/preview/children.html';
+        return "Gene_BlueFoot/component/block/preview/children.html";
       }
       /**
        * Retrieve the child template
@@ -200,7 +198,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
     }, {
       key: "renderChildTemplate",
       get: function get() {
-        return 'Gene_BlueFoot/component/block/render/children.html';
+        return "Gene_BlueFoot/component/block/render/children.html";
       }
     }]);
 

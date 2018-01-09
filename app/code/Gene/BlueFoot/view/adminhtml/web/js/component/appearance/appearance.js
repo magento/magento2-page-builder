@@ -4,8 +4,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Appearance =
   /*#__PURE__*/
   function () {
@@ -23,12 +21,14 @@ define([], function () {
     var _proto = Appearance.prototype;
 
     _proto.add = function add(data) {
-      if (data['appearance'] !== undefined) {
-        if (this.appearances[data['appearance']] === undefined) {
-          console.error('No appearances specified for content type.');
+      var appearance = "appearance";
+
+      if (data[appearance] !== undefined) {
+        if (this.appearances[data[appearance]] === undefined) {
+          console.error("No appearances specified for content type.");
         }
 
-        return this.appearances[data['appearance']].add(data);
+        return this.appearances[data[appearance]].add(data);
       }
 
       return data;

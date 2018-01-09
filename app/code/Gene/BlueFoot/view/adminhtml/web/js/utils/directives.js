@@ -9,7 +9,7 @@ define([], function () {
    * MIME type to use in place of the image
    * @type {string}
    */
-  var mimeType = 'text/magento-directive';
+  var mimeType = "text/magento-directive";
   /**
    * Determine if a URL is a directive of our type
    *
@@ -18,7 +18,7 @@ define([], function () {
    */
 
   function isDirectiveDataUrl(url) {
-    return url.indexOf('data:' + mimeType) === 0;
+    return url.indexOf("data:" + mimeType) === 0;
   }
   /**
    * Convert a directive into our data URI
@@ -28,10 +28,10 @@ define([], function () {
 
 
   function toDataUrl(directive) {
-    return 'data:' + mimeType + ',' + encodeURIComponent(directive);
+    return "data:" + mimeType + "," + encodeURIComponent(directive);
   }
   /**
-   * Convert a URI to it's directive equivalent
+   * Convert a URI to it"s directive equivalent
    * @param {string} url
    * @returns {string}
    */
@@ -39,22 +39,21 @@ define([], function () {
 
   function fromDataUrl(url) {
     if (!isDirectiveDataUrl(url)) {
-      throw Error(url + ' is not a magento directive data url');
+      throw Error(url + " is not a magento directive data url");
     }
 
     return decodeURIComponent(url.split(mimeType + ",")[1]);
   }
   /**
    * Decode all data URIs present in a string
-   *
    * @param {string} str
    * @returns {string}
    */
 
 
   function decodeAllDataUrlsInString(str) {
-    return str.replace(new RegExp('url\\s*\\(\\s*(?:&quot;|\'|")?(data:' + mimeType + ',.+?)(?:&quot;|\'|")?\\s*\\)', 'g'), function (match, url) {
-      return 'url(\'' + fromDataUrl(url) + '\')';
+    return str.replace(new RegExp("url\\s*\\(\\s*(?:&quot;|\'|\")?(data:" + mimeType + ",.+?)(?:&quot;|\'|\")?\\s*\\)", "g"), function (match, url) {
+      return "url(\'" + fromDataUrl(url) + "\')";
     });
   }
 

@@ -3,9 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import requireJs from 'require';
-'use strict';
+import requireJs from "require";
 
-export default function load(dependencies: string[], factory: Function, onError?: Function) {
+export default function load(dependencies: string[], factory: () => void, onError?: () => void) {
     requireJs(dependencies, factory, onError);
 }

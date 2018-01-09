@@ -2,8 +2,6 @@
 define(["./event-emitter"], function (_eventEmitter) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  'use strict';
-
   var DataStore =
   /*#__PURE__*/
   function (_EventEmitter) {
@@ -23,17 +21,17 @@ define(["./event-emitter"], function (_eventEmitter) {
 
     /**
      * Retrieve data from the state for an editable area
-     * 
-     * @param id 
+     *
+     * @param id
      */
     _proto.get = function get(id) {
       return this.state.get(id) || {};
     };
     /**
      * Update the state for an individual editable area
-     * 
-     * @param id 
-     * @param data 
+     *
+     * @param id
+     * @param data
      */
 
 
@@ -41,7 +39,7 @@ define(["./event-emitter"], function (_eventEmitter) {
       var previousState = this.state.get(id);
 
       if (previousState && previousState === data) {
-        console.warn("Warning: You updated " + id + " with the same object as before. This will break the ability to rollback");
+        console.warn("Warning: You updated " + id + " with the same object as before." + "This will break the ability to rollback");
       }
 
       var storeData = Object.assign({}, data);
@@ -64,10 +62,10 @@ define(["./event-emitter"], function (_eventEmitter) {
     };
     /**
      * Update an individual key within an objects state
-     * 
-     * @param id 
-     * @param data 
-     * @param key 
+     *
+     * @param id
+     * @param data
+     * @param key
      */
 
 
@@ -78,8 +76,8 @@ define(["./event-emitter"], function (_eventEmitter) {
     };
     /**
      * Rollback an item to a previous state
-     * 
-     * @param id 
+     *
+     * @param id
      */
 
 
@@ -95,8 +93,8 @@ define(["./event-emitter"], function (_eventEmitter) {
     };
     /**
      * Remove an object from the state
-     * 
-     * @param id 
+     *
+     * @param id
      */
 
 
@@ -106,33 +104,33 @@ define(["./event-emitter"], function (_eventEmitter) {
     };
     /**
      * Subscribe to data changes on an editable area
-     * 
-     * @param handler 
-     * @param id 
+     *
+     * @param handler
+     * @param id
      */
 
 
     _proto.subscribe = function subscribe(handler, id) {
-      var eventName = id ? 'state_' + id : 'state';
+      var eventName = id ? "state_" + id : "state";
       this.on(eventName, function (event, data) {
         handler(data.state, event);
       });
     };
     /**
-     * Emit state updates through events 
-     * 
-     * @param id
-     * @param data 
+     * Emit state updates through events
+     *
+     * @param i
+     * @param data
      */
 
 
     _proto.emitState = function emitState(id, data) {
-      this.emit('state', {
+      this.emit("state", {
         state: this.state
       });
 
       if (id) {
-        this.emit('state_' + id, {
+        this.emit("state_" + id, {
           state: data
         });
       }

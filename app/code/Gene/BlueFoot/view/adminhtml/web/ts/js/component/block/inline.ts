@@ -4,8 +4,7 @@
  */
 
 import Block from "./block";
-'use strict';
 
 export default class InlineBlock extends Block {
-    editOnInsert: boolean = false;
+    public editOnInsert: boolean = false;
 }

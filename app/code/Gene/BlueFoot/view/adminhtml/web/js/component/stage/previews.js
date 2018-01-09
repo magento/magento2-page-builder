@@ -1,11 +1,9 @@
 /*eslint-disable */
-define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loader"], function (_config, _block, _loader) {
+define(["Gene_BlueFoot/js/component/loader", "../block/preview/block", "../config"], function (_loader, _block, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var previews = [];
   /**
    * Load all preview instances into our cache
@@ -14,13 +12,13 @@ define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loade
   function load() {
     var contentBlocks = _config.getInitConfig("contentTypes");
 
-    var blocksToLoad = [],
-        blockCodes = []; // @todo should be string, but TS complains
+    var blocksToLoad = [];
+    var blockCodes = []; // @todo should be string, but TS complains
 
     Object.keys(contentBlocks).forEach(function (blockKey) {
       var block = contentBlocks[blockKey];
 
-      if (typeof block.preview_component === 'string') {
+      if (typeof block.preview_component === "string") {
         blockCodes.push(blockKey);
         blocksToLoad.push(block.preview_component);
       }
@@ -49,7 +47,7 @@ define(["../config", "../block/preview/block", "Gene_BlueFoot/js/component/loade
     var code = blockConfig.name;
     var instance;
 
-    if (typeof previews[code] === 'undefined') {
+    if (typeof previews[code] === "undefined") {
       instance = _block;
     } else {
       instance = previews[code];

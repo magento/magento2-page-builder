@@ -2,20 +2,19 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {ModalComponent} from "../edit";
 import DataStore from "../../data-store";
+import {ModalComponent} from "../edit";
 
 /**
  * PersistenceClient
  *
  * Acts as the data provider client between our system and the UI component system
  */
-'use strict';
 
 export default class PersistenceClient {
-    modal: ModalComponent;
-    store: DataStore;
-    id: string;
+    private modal: ModalComponent;
+    private store: DataStore;
+    private id: string;
 
     /**
      * @param {ModalComponent} modal
@@ -34,7 +33,7 @@ export default class PersistenceClient {
      * @param data
      * @param options
      */
-    save(data: any, options: any): void {
+    public save(data: any, options: any): void {
         this.store.update(this.id, data);
         this.modal.closeModal();
     }

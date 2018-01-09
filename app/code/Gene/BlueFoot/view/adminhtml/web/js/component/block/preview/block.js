@@ -1,10 +1,8 @@
 /*eslint-disable */
-define(["underscore", "knockout"], function (_underscore, _knockout) {
+define(["knockout", "underscore"], function (_knockout, _underscore) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  'use strict';
 
   var PreviewBlock =
   /*#__PURE__*/
@@ -26,7 +24,7 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
 
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
-          _this.updateDataValue(key, '');
+          _this.updateDataValue(key, "");
         });
       } // Subscribe to this blocks data in the store
 
@@ -53,7 +51,7 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
      * @param value
      */
     _proto.updateDataValue = function updateDataValue(key, value) {
-      if (typeof this.data[key] !== 'undefined' && _knockout.isObservable(this.data[key])) {
+      if (typeof this.data[key] !== "undefined" && _knockout.isObservable(this.data[key])) {
         this.data[key](value);
       } else {
         if (_underscore.isArray(value)) {
@@ -71,7 +69,7 @@ define(["underscore", "knockout"], function (_underscore, _knockout) {
           return this.config.preview_template;
         }
 
-        return '';
+        return "";
       }
     }]);
 

@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["knockout", "bluefoot/highlight", "./block"], function (_knockout, _highlight, _block) {
+define(["bluefoot/highlight", "knockout", "./block"], function (_highlight, _knockout, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Code =
   /*#__PURE__*/
@@ -20,10 +18,10 @@ define(["knockout", "bluefoot/highlight", "./block"], function (_knockout, _high
 
       _this = _PreviewBlock.call(this, parent, config) || this;
 
-      _this.updateDataValue('html', _knockout.observable(''));
+      _this.updateDataValue("html", _knockout.observable(""));
 
       _this.parent.stage.store.subscribe(function (data) {
-        _this.updateDataValue('html', _highlight.highlight('html', _this.data.snippet()).value);
+        _this.updateDataValue("html", _highlight.highlight("html", _this.data.snippet()).value);
       }, _this.parent.id);
 
       return _this;

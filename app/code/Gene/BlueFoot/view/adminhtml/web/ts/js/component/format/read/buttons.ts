@@ -3,11 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ReadInterface from "../read-interface";
-import Config from "../../../component/config";
-import _ from 'underscore';
+import _ from "underscore";
 import {DataObject} from "../../data-store";
-'use strict';
+import ReadInterface from "../read-interface";
 
 export default class Buttons implements ReadInterface {
 
@@ -18,16 +16,16 @@ export default class Buttons implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        let response: DataObject = {
-            'buttons': []
+        const response: DataObject = {
+            buttons: [],
         };
 
         // Iterate through the tabs and retrieve their content
-        _.forEach(element.querySelectorAll('a'), (node, index) => {
+        _.forEach(element.querySelectorAll("a"), (node, index) => {
             response.buttons[index] = {
+                link: node.getAttribute("href"),
                 text: node.firstChild.innerText,
-                link: node.getAttribute('href'),
-            }
+            };
         });
 
         return Promise.resolve(response);

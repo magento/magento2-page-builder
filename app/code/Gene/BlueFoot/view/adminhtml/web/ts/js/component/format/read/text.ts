@@ -4,7 +4,6 @@
  */
 
 import ReadInterface from "../read-interface";
-'use strict';
 
 export default class Text implements ReadInterface {
     /**
@@ -14,11 +13,11 @@ export default class Text implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        return new Promise((resolve: Function) => {
+        return new Promise((resolve: (Object: object) => void) => {
             resolve(
                 {
-                    'content': element.innerHTML
-                }
+                    content: element.innerHTML,
+                },
             );
         });
     }

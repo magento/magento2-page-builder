@@ -5,7 +5,6 @@
 
 import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
-'use strict';
 
 export default class AlignBottom implements AppearanceInterface {
     /**
@@ -14,8 +13,9 @@ export default class AlignBottom implements AppearanceInterface {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    add(data: DataObject): DataObject {
-        data['align_self'] = 'flex-end';
+    public add(data: DataObject): DataObject {
+        const alignSelf = "align_self";
+        data[alignSelf] = "flex-end";
         return data;
     }
 }

@@ -4,8 +4,6 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Tabs =
   /*#__PURE__*/
   function () {
@@ -21,14 +19,14 @@ define(["underscore"], function (_underscore) {
      */
     _proto.read = function read(element) {
       var response = {
-        'tabs': []
+        tabs: []
       }; // Iterate through the tabs and retrieve their content
 
-      _underscore.forEach(element.querySelectorAll('.title'), function (node, index) {
+      _underscore.forEach(element.querySelectorAll(".title"), function (node, index) {
         response.tabs[index] = {
-          title: node.firstChild.innerHTML,
           content: node.nextSibling.innerHTML,
-          record_id: index
+          record_id: index,
+          title: node.firstChild.innerHTML
         };
       });
 

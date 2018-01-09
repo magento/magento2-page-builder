@@ -4,8 +4,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var AlignBottom =
   /*#__PURE__*/
   function () {
@@ -20,7 +18,8 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.add = function add(data) {
-      data['align_self'] = 'flex-end';
+      var alignSelf = "align_self";
+      data[alignSelf] = "flex-end";
       return data;
     };
 

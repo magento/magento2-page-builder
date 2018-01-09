@@ -3,27 +3,26 @@
  * See COPYING.txt for license details.
  */
 
-import ko from 'knockout';
+import ko from "knockout";
 import Config from "../../../config";
-'use strict';
 
 export class ColumnBuilder {
-    position: KnockoutObservable<string> = ko.observable('');
-    visible: KnockoutObservable<boolean> = ko.observable(false);
-    sizes: KnockoutObservableArray<object> = ko.observableArray([]);
-    template: string = 'Gene_BlueFoot/component/stage/structural/column/builder.html';
+    public position: KnockoutObservable<string> = ko.observable("");
+    public sizes: KnockoutObservableArray<object> = ko.observableArray([]);
+    public template: string = "Gene_BlueFoot/component/stage/structural/column/builder.html";
+    public visible: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * ColumnBuilder constructor
      */
     constructor() {
         const columnOptions = Config.getInitConfig("column_definitions");
-        
-        for (let i = 0; i < columnOptions.length; i++) {
-            if (columnOptions[i].displayed === true) {
+
+        for (const columnOption of columnOptions) {
+            if (columnOption.displayed === true) {
                 this.sizes.push({
-                    label: columnOptions[i].label,
-                    className: columnOptions[i].className
+                    className: columnOption.className,
+                    label: columnOption.label,
                 });
             }
         }
@@ -32,35 +31,35 @@ export class ColumnBuilder {
     /**
      * Show the builder from the column options scope
      */
-    showFromOption() {
-        this.position('top');
+    public showFromOption() {
+        this.position("top");
         this.visible(true);
-    };
+    }
 
     /**
      * Change the visibility to visible
      */
-    show() {
+    public show() {
         this.visible(true);
-    };
+    }
 
     /**
      * Change the visibility to hidden
      */
-    hide() {
+    public hide() {
         this.visible(false);
-    };
+    }
 
     /**
-     * Proxy to the correct parent's add column function
+     * Proxy to the correct parent"s add column function
      */
-    addColumn(parents: any, data: any) {
+    public addColumn(parents: any, data: any) {
         // Nest a column (within a column or on a row)
-        if (this.position() == 'top') {
+        if (this.position() === "top") {
             parents[1].addColumn(data);
         } else {
             // Add to left or right side of current column
             parents[1].insertColumnAtIndex(this.position(), parents[1], data);
         }
-    };
+    }
 }

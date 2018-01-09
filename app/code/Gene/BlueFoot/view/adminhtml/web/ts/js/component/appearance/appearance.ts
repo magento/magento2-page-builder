@@ -3,9 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../component/data-store";
 import AppearanceInterface from "../component/appearance/appearance-interface";
-'use strict';
+import {DataObject} from "../component/data-store";
 
 interface AppearanceList {
     [key: string]: AppearanceInterface;
@@ -13,7 +12,7 @@ interface AppearanceList {
 
 export default class Appearance {
     // List of type appearances
-    appearances: AppearanceList;
+    public appearances: AppearanceList;
 
     constructor(appearances: AppearanceList) {
         this.appearances = appearances;
@@ -23,12 +22,13 @@ export default class Appearance {
      * @param data
      * @returns {DataObject}
      */
-    add(data: DataObject): DataObject {
-        if (data['appearance'] !== undefined) {
-            if (this.appearances[data['appearance']] === undefined) {
-                console.error('No appearances specified for content type.');
+    public add(data: DataObject): DataObject {
+        const appearance = "appearance";
+        if (data[appearance] !== undefined) {
+            if (this.appearances[data[appearance]] === undefined) {
+                console.error( "No appearances specified for content type." );
             }
-            return this.appearances[data['appearance']].add(data);
+            return this.appearances[data[appearance]].add(data);
         }
         return data;
     }

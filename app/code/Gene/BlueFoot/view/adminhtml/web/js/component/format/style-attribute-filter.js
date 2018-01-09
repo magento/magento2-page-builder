@@ -4,13 +4,11 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var StyleAttributeFilter =
   /*#__PURE__*/
   function () {
     function StyleAttributeFilter() {
-      this.allowedAttributes = ['width', 'height', 'min_height', 'background_color', 'background_image', 'background_size', 'background_attachment', 'background_repeat', 'background_position', 'border_style', 'border_width', 'border_color', 'border_radius', 'margin_top', 'margin_right', 'margin_bottom', 'margin_left', 'padding_top', 'padding_right', 'padding_bottom', 'padding_left', 'display', 'align_self', 'text_align', 'color', 'border', 'margins_and_padding'];
+      this.allowedAttributes = ["align_self", "background_color", "background_image", "background_size", "background_attachment", "background_repeat", "background_position", "border", "border_style", "border_width", "border_color", "border_radius", "color", "display", "height", "min_height", "margin_bottom", "margin_left", "margin_right", "margin_top", "padding_bottom", "padding_left", "padding_right", "padding_top", "text_align", "margins_and_padding", "width"];
     }
 
     var _proto = StyleAttributeFilter.prototype;

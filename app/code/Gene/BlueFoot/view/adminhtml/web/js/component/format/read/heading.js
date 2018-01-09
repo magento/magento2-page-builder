@@ -4,8 +4,6 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Heading =
   /*#__PURE__*/
   function () {
@@ -22,8 +20,8 @@ define([], function () {
     _proto.read = function read(element) {
       return new Promise(function (resolve) {
         resolve({
-          'heading_type': element.nodeName.toLowerCase(),
-          'title': element.innerText
+          heading_type: element.nodeName.toLowerCase(),
+          title: element.innerText
         });
       });
     };

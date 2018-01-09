@@ -4,8 +4,6 @@ define(["../../../component/config"], function (_config) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Image =
   /*#__PURE__*/
   function () {
@@ -21,16 +19,17 @@ define(["../../../component/config"], function (_config) {
      */
     _proto.read = function read(element) {
       var response = {
-        'image': this.generateImageObject(element.querySelector('img:nth-child(1)').getAttribute('src')),
-        'mobile_image': "",
-        'alt': element.querySelector('img:nth-child(1)').getAttribute('alt'),
-        'title_tag': element.querySelector('a').getAttribute('title'),
-        'lightbox': !!element.querySelector('a.bluefoot-lightbox') ? "Yes" : "No",
-        'show_caption': !!element.querySelector('figcaption') ? "Yes" : "No"
+        alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
+        image: this.generateImageObject(element.querySelector("img:nth-child(1)").getAttribute("src")),
+        lightbox: !!element.querySelector("a.bluefoot-lightbox") ? "Yes" : "No",
+        mobile_image: "",
+        show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
+        title_tag: element.querySelector("a").getAttribute("title")
       }; // Detect if there is a mobile image and update the response
 
-      if (element.querySelector('img:nth-child(2)') && element.querySelector('img:nth-child(2)').getAttribute('src')) {
-        response['mobile_image'] = this.generateImageObject(element.querySelector('img:nth-child(2)').getAttribute('src'));
+      if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
+        var mobileImage = "mobile_image";
+        response[mobileImage] = this.generateImageObject(element.querySelector("img:nth-child(2)").getAttribute("src"));
       }
 
       return Promise.resolve(response);
@@ -51,10 +50,10 @@ define(["../../../component/config"], function (_config) {
             _type = _$exec[2];
 
         return [{
-          "name": _url.split('/').pop(),
-          "size": 0,
-          "type": "image/" + _type,
-          "url": _config.getInitConfig('media_url') + _url
+          name: _url.split("/").pop(),
+          size: 0,
+          type: "image/" + _type,
+          url: _config.getInitConfig("media_url") + _url
         }];
       }
 

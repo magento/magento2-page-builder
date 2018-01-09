@@ -1,12 +1,10 @@
 /*eslint-disable */
-define(["../stage/structural/abstract", "../stage/previews", "underscore"], function (_abstract, _previews, _underscore) {
+define(["underscore", "../stage/previews", "../stage/structural/abstract"], function (_underscore, _previews, _abstract) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Block =
   /*#__PURE__*/
@@ -57,7 +55,7 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
           return this.config.preview_template;
         }
 
-        return 'Gene_BlueFoot/component/block/preview/abstract.html';
+        return "Gene_BlueFoot/component/block/preview/abstract.html";
       }
       /**
        * Retrieve the render template
@@ -72,7 +70,7 @@ define(["../stage/structural/abstract", "../stage/previews", "underscore"], func
           return this.config.render_template;
         }
 
-        return 'Gene_BlueFoot/component/block/render/abstract.html';
+        return "Gene_BlueFoot/component/block/render/abstract.html";
       }
     }]);
 

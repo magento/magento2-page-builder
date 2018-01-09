@@ -3,11 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import { Option } from "../stage/structural/options/option";
-import $t from 'mage/translate';
+import $t from "mage/translate";
 import _ from "underscore";
+import { Option } from "../stage/structural/options/option";
 import Block from "./block";
-'use strict';
 
 export default class Row extends Block {
 
@@ -16,34 +15,38 @@ export default class Row extends Block {
      *
      * @returns {Array<Option>}
      */
-    get options(): Array<Option> {
+    get options(): Option[] {
         let removeOption;
         if (this.stage.children().length < 2) {
-            removeOption = new Option(this, 'remove', '<i></i>', $t('Remove'), function() { return; }, ['remove-structural disabled'], 100);
+            removeOption = new Option(this, "remove", "<i></i>",
+                $t("Remove"), () => { return; }, ["remove-structural disabled"], 100);
         } else {
-            removeOption = new Option(this, 'remove', '<i></i>', $t('Remove'), this.onOptionRemove, ['remove-structural'], 100);
+            removeOption = new Option(this, "remove", "<i></i>",
+                $t("Remove"), this.onOptionRemove, ["remove-structural"], 100);
         }
         return [
-            new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-structural'], 10),
-            new Option(this, 'edit', '<i></i>', $t('Edit'), this.onOptionEdit, ['edit-block'], 50),
-            new Option(this, 'duplicate', '<i class="icon-bluefoot-copy"></i>', $t('Duplicate'), this.onOptionDuplicate, ['duplicate-structural'], 60),
-            removeOption
+            new Option(this, "move", "<i></i>", $t("Move"), false, ["move-structural"], 10),
+            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
+            new Option(this, "duplicate", "<i class='icon-bluefoot-copy'></i>",
+                $t("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60),
+            removeOption,
         ];
     }
 
     /**
      * Get stype properties for an block
-     * Example {'backgroundColor': '#cccccc'}
+     * Example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
-    getStyle() {
-        const children:any = this.children();
-        let styleAttributes:any  = {},
-            isAllColumns:boolean = true;
+    public getStyle() {
+        const children: any = this.children();
+        const styleAttributes: any  = {};
+        let isAllColumns: boolean = true;
+
         if (children.length !== 0) {
-            for (let i = 0; i < children.length; i++) {
-                if (children[i].config.name !== 'column') {
+            for (const child of children) {
+                if (child.config.name !== "column") {
                     isAllColumns = false;
                 }
             }
@@ -51,7 +54,8 @@ export default class Row extends Block {
             isAllColumns = false;
         }
         if (isAllColumns) {
-            styleAttributes['display'] = 'flex';
+            const display = "display";
+            styleAttributes[display] = "flex";
         }
         return _.extend(super.getStyle(), styleAttributes);
     }

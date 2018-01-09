@@ -3,10 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ReadInterface from "../read-interface";
-import _ from 'underscore';
+import _ from "underscore";
 import {DataObject} from "../../data-store";
-'use strict';
+import ReadInterface from "../read-interface";
 
 export default class Tabs implements ReadInterface {
 
@@ -17,17 +16,17 @@ export default class Tabs implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        let response: DataObject = {
-            'tabs': []
+        const response: DataObject = {
+            tabs: [],
         };
 
         // Iterate through the tabs and retrieve their content
-        _.forEach(element.querySelectorAll('.title'), (node, index) => {
+        _.forEach(element.querySelectorAll(".title"), (node, index) => {
             response.tabs[index] = {
-                title: node.firstChild.innerHTML,
                 content: node.nextSibling.innerHTML,
-                record_id: index
-            }
+                record_id: index,
+                title: node.firstChild.innerHTML,
+            };
         });
 
         return Promise.resolve(response);

@@ -2,22 +2,21 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import ko from 'knockout';
+import ko from "knockout";
 
 /**
  * Group Class
  */
-'use strict';
 
 export class Group {
-    id: KnockoutObservable<number> = ko.observable();
-    code: KnockoutObservable<string> = ko.observable('');
-    label: KnockoutObservable<string> = ko.observable('');
-    icon: KnockoutObservable<string> = ko.observable('');
-    sort: KnockoutObservable<number> = ko.observable();
-    blocks: KnockoutObservableArray<Array<any>> = ko.observableArray([]);
-    active: KnockoutObservable<boolean> = ko.observable(false);
-    hidden: KnockoutObservable<boolean> = ko.observable(false);
+    public id: KnockoutObservable<number> = ko.observable();
+    public code: KnockoutObservable<string> = ko.observable("");
+    public label: KnockoutObservable<string> = ko.observable("");
+    public icon: KnockoutObservable<string> = ko.observable("");
+    public sort: KnockoutObservable<number> = ko.observable();
+    public blocks: KnockoutObservableArray<[any]> = ko.observableArray([]);
+    public active: KnockoutObservable<boolean> = ko.observable(false);
+    public hidden: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Group constructor
@@ -28,7 +27,7 @@ export class Group {
      *
      * @todo change group type
      */
-    constructor(id: number, group: any, blocks: Array<any> = []) {
+    constructor(id: number, group: any, blocks: any[] = []) {
         this.id(id);
         this.code(group.code);
         this.label(group.label);
@@ -40,7 +39,7 @@ export class Group {
     /**
      * Toggle the group
      */
-    toggle() {
+    public toggle() {
         this.active(!this.active());
     }
 }

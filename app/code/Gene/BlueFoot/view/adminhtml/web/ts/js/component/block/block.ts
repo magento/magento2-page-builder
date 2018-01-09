@@ -3,27 +3,25 @@
  * See COPYING.txt for license details.
  */
 
-import Structural from '../stage/structural/abstract';
-import EditableArea from '../stage/structural/editable-area'
-import Stage from '../stage';
-import { Block as BlockInterface } from './block.d';
-import getPreviewInstance from "../stage/previews";
-import PreviewBlock from "./preview/block";
-import $t from "mage/translate";
 import _ from "underscore";
-import {ConfigContentBlock, ConfigFieldConfig} from "../config";
 import Appearance from "../../component/appearance/appearance";
+import {ConfigContentBlock, ConfigFieldConfig} from "../config";
+import Stage from "../stage";
+import getPreviewInstance from "../stage/previews";
+import Structural from "../stage/structural/abstract";
+import EditableArea from "../stage/structural/editable-area";
+import { Block as BlockInterface } from "./block.d";
+import PreviewBlock from "./preview/block";
 
 interface FieldDefaults {
     [key: string]: any;
 }
-'use strict';
 
 export default class Block extends Structural implements BlockInterface {
-    title: string;
-    editOnInsert: boolean = true;
-    preview: PreviewBlock;
-    childEntityKeys: Array<string> = [];
+    public title: string;
+    public editOnInsert: boolean = true;
+    public preview: PreviewBlock;
+    public childEntityKeys: string[] = [];
 
     /**
      * Block constructor
@@ -39,16 +37,16 @@ export default class Block extends Structural implements BlockInterface {
 
         this.preview = getPreviewInstance(this, config);
 
-        let defaults: FieldDefaults = {};
+        const defaults: FieldDefaults = {};
         if (config.fields) {
             _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
                 defaults[key] = field.default;
-            })
+            });
         }
 
         this.stage.store.update(
             this.id,
-            _.extend(defaults, formData)
+            _.extend(defaults, formData),
         );
     }
 
@@ -61,7 +59,7 @@ export default class Block extends Structural implements BlockInterface {
         if (this.config.preview_template) {
             return this.config.preview_template;
         }
-        return 'Gene_BlueFoot/component/block/preview/abstract.html';
+        return "Gene_BlueFoot/component/block/preview/abstract.html";
     }
 
     /**
@@ -73,6 +71,6 @@ export default class Block extends Structural implements BlockInterface {
         if (this.config.render_template) {
             return this.config.render_template;
         }
-        return 'Gene_BlueFoot/component/block/render/abstract.html';
+        return "Gene_BlueFoot/component/block/render/abstract.html";
     }
 }

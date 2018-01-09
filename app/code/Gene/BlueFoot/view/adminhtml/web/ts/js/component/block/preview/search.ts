@@ -4,10 +4,10 @@
  */
 
 import ko from "knockout";
+import {Dictionary} from "underscore";
+import Config from "../../config";
 import Block from "../block";
 import PreviewBlock from "./block";
-import Config from "../../config";
-'use strict';
 
 export default class Search extends PreviewBlock {
     /**
@@ -17,24 +17,24 @@ export default class Search extends PreviewBlock {
      * @param {Object} config
      */
     constructor(parent: Block, config: object) {
-        super(parent, config)
-        this.updateDataValue('html', ko.observable(''));
+        super(parent, config);
+        this.updateDataValue("html", ko.observable(""));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                if (this.data.placeholder() === '') {
+                if (this.data.placeholder() === "") {
                     return;
                 }
-                const url = Config.getInitConfig('preview_url'),
-                    requestData = {
-                        role: this.config.name,
-                        'placeholder': this.data.placeholder
-                    };
+                const url = Config.getInitConfig("preview_url");
+                const requestData = {
+                    placeholder: this.data.placeholder,
+                    role: this.config.name,
+                };
 
                 jQuery.post(url, requestData, (response) => {
-                    this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
+                    this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
                 });
             },
-            this.parent.id
+            this.parent.id,
         );
     }
 }

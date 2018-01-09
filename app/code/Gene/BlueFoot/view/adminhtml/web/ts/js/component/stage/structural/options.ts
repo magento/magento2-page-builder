@@ -3,16 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import { OptionInterface } from './options/option.d';
-import { Structural } from './abstract.d';
-import _ from 'underscore';
-import ko from 'knockout';
-'use strict';
+import ko from "knockout";
+import _ from "underscore";
+import { Structural } from "./abstract.d";
+import { OptionInterface } from "./options/option.d";
 
 export class Options {
-    parent: Structural;
+    public parent: Structural;
+    public template: string = "Gene_BlueFoot/component/stage/structural/options.html";
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
-    template: string = 'Gene_BlueFoot/component/stage/structural/options.html';
 
     /**
      * Options constructor
@@ -20,19 +19,10 @@ export class Options {
      * @param parent
      * @param options
      */
-    constructor(parent: Structural, options: Array<OptionInterface>) {
+    constructor(parent: Structural, options: OptionInterface[]) {
         this.parent = parent;
         this.options(options);
         this.sort();
-    }
-
-    /**
-     * Sort the options
-     */
-    private sort(): void {
-        this.options.sort(function (a, b) {
-            return a.sort === b.sort ? 0 : (a.sort < b.sort ? -1 : 1)
-        });
     }
 
     /**
@@ -40,7 +30,7 @@ export class Options {
      *
      * @param option
      */
-    addOption(option: OptionInterface) {
+    public addOption(option: OptionInterface) {
         this.options.push(option);
         this.sort();
     }
@@ -50,10 +40,19 @@ export class Options {
      *
      * @param code
      */
-    removeOption(code: string) {
+    public removeOption(code: string) {
         this.options(_.without(this.options(), _.findWhere(this.options(), {
-            code: code
+            code,
         })));
         this.sort();
+    }
+
+    /**
+     * Sort the options
+     */
+    private sort(): void {
+        this.options.sort((a, b) => {
+            return a.sort === b.sort ? 0 : (a.sort < b.sort ? -1 : 1);
+        });
     }
 }

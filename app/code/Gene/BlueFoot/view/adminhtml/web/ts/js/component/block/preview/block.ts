@@ -3,19 +3,18 @@
  * See COPYING.txt for license details.
  */
 
-import _, {Dictionary} from "underscore";
 import ko from "knockout";
+import _, {Dictionary} from "underscore";
 import Block from "../block";
-'use strict';
+
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
 
-
 export default class PreviewBlock {
-    parent: Block;
-    config: any;
-    data: PreviewData = {};
+    public parent: Block;
+    public config: any;
+    public data: PreviewData = {};
 
     /**
      * PreviewBlock constructor
@@ -30,7 +29,7 @@ export default class PreviewBlock {
         // Create an empty observable for all fields
         if (this.config.fields) {
             _.keys(this.config.fields).forEach((key: string) => {
-                this.updateDataValue(key, '');
+                this.updateDataValue(key, "");
             });
         }
 
@@ -41,7 +40,7 @@ export default class PreviewBlock {
                     this.updateDataValue(key, value);
                 });
             },
-            this.parent.id
+            this.parent.id,
         );
     }
 
@@ -55,7 +54,7 @@ export default class PreviewBlock {
             return this.config.preview_template;
         }
 
-        return '';
+        return "";
     }
 
     /**
@@ -65,7 +64,7 @@ export default class PreviewBlock {
      * @param value
      */
     protected updateDataValue(key: string, value: any) {
-        if (typeof this.data[key] !== 'undefined' && ko.isObservable(this.data[key])) {
+        if (typeof this.data[key] !== "undefined" && ko.isObservable(this.data[key])) {
             this.data[key](value);
         } else {
             if (_.isArray(value)) {

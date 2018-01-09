@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/translate", "./stage/save", "jquery", "./block/factory", "./config"], function (_editableArea, _underscore, _dataStore, _translate, _save, _jquery, _factory, _config) {
+define(["jquery", "mage/translate", "underscore", "./block/factory", "./config", "./data-store", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _factory, _config, _dataStore, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var Stage =
   /*#__PURE__*/
@@ -19,19 +17,19 @@ define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      _this.parent = void 0;
-      _this.stage = void 0;
       _this.active = true;
-      _this.showBorders = void 0;
-      _this.userSelect = void 0;
+      _this.config = {
+        name: "stage"
+      };
       _this.loading = void 0;
       _this.originalScrollTop = void 0;
-      _this.serializeRole = 'stage';
-      _this.store = void 0;
+      _this.parent = void 0;
       _this.save = new _save();
-      _this.config = {
-        name: 'stage'
-      };
+      _this.serializeRole = "stage";
+      _this.showBorders = void 0;
+      _this.stage = void 0;
+      _this.store = void 0;
+      _this.userSelect = void 0;
 
       _this.setChildren(stageContent);
 
@@ -45,21 +43,21 @@ define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/
       _this.store = new _dataStore(); // Any store state changes trigger a stage update event
 
       _this.store.subscribe(function () {
-        return _this.emit('stageUpdated');
+        return _this.emit("stageUpdated");
       });
 
-      _underscore.bindAll(_this, 'onSortingStart', 'onSortingStop');
+      _underscore.bindAll(_this, "onSortingStart", "onSortingStop");
 
-      _this.on('sortingStart', _this.onSortingStart);
+      _this.on("sortingStart", _this.onSortingStart);
 
-      _this.on('sortingStop', _this.onSortingStop);
+      _this.on("sortingStop", _this.onSortingStop);
       /**
        * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
        * can occur concurrently.
-        */
+       */
 
 
-      _this.on('stageUpdated', _underscore.debounce(function () {
+      _this.on("stageUpdated", _underscore.debounce(function () {
         _this.save.renderTree(stageContent).then(function (renderedOutput) {
           return _this.parent.value(renderedOutput);
         });
@@ -85,16 +83,18 @@ define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/
         buildInstance.buildStage(this).then(self.ready.bind(self)).catch(function (error) {
           // Inform the user that an issue has occurred
           self.parent.alertDialog({
-            title: (0, _translate)('Advanced CMS Error'),
-            content: (0, _translate)("An error has occurred while initiating the content area.")
+            content: (0, _translate)("An error has occurred while initiating the content area."),
+            title: (0, _translate)("Advanced CMS Error")
           });
-          self.emit('stageError', error);
+          self.emit("stageError", error);
           console.error(error);
         });
       } else {
         // Add an initial row to the stage if the stage is currently empty
-        if (typeof _config.getInitConfig('contentTypes')['row'] !== 'undefined') {
-          (0, _factory)(_config.getInitConfig('contentTypes')['row'], this, this, {}).then(function (row) {
+        var Row = "row";
+
+        if (typeof _config.getInitConfig("contentTypes")[Row] !== "undefined") {
+          (0, _factory)(_config.getInitConfig("contentTypes")[Row], this, this, {}).then(function (row) {
             _this2.addChild(row);
           });
         }
@@ -108,7 +108,7 @@ define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/
 
 
     _proto.ready = function ready() {
-      this.emit('stageReady');
+      this.emit("stageReady");
       this.children.valueHasMutated();
       this.loading(false);
     };
@@ -168,10 +168,10 @@ define(["./stage/structural/editable-area", "underscore", "./data-store", "mage/
 
 
     _proto.removeChild = function removeChild(child) {
-      if (this.children().length == 1) {
+      if (this.children().length === 1) {
         this.parent.alertDialog({
-          title: (0, _translate)('Unable to Remove'),
-          content: (0, _translate)('You are not able to remove the final row from the content.')
+          content: (0, _translate)("You are not able to remove the final row from the content."),
+          title: (0, _translate)("Unable to Remove")
         });
         return;
       }

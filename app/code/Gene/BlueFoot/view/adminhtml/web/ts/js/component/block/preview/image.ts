@@ -4,7 +4,6 @@
  */
 
 import PreviewBlock from "./block";
-'use strict';
 
 export default class Image extends PreviewBlock {
 
@@ -13,8 +12,8 @@ export default class Image extends PreviewBlock {
      *
      * @returns {any}
      */
-    getPreviewImageAttributes() {
-        if (this.data.image() == "" || this.data.image() == undefined) {
+    public getPreviewImageAttributes() {
+        if (this.data.image() === "" || this.data.image() === undefined || this.data.image()[0] === undefined) {
             return {style: "visibility: hidden"};
         }
         return {src: this.data.image()[0].url, style: "visibility: visible; width: 20%"};
@@ -25,8 +24,8 @@ export default class Image extends PreviewBlock {
      *
      * @returns {any}
      */
-    getPreviewIconAttributes() {
-        if (this.data.image() == "" || this.data.image() == undefined) {
+    public getPreviewIconAttributes() {
+        if (this.data.image() === "" || this.data.image() === undefined) {
             return {class: "icon-bluefoot-image", style: "visibility: visible"};
         }
         return {style: "visibility: hidden"};

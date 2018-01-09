@@ -1,8 +1,6 @@
 /*eslint-disable */
-define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscore"], function (_block, _jquery, _slick, _underscore) {
+define(["Gene_BlueFoot/js/resource/slick/slick", "jquery", "underscore", "./block"], function (_slick, _jquery, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  'use strict';
 
   var AdvancedSlider =
   /*#__PURE__*/
@@ -29,7 +27,7 @@ define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscor
         _underscore.delay(function () {
           if (_this.element && _this.element.children.length > 0) {
             try {
-              (0, _jquery)(_this.element).slick('unslick');
+              (0, _jquery)(_this.element).slick("unslick");
             } catch (e) {// This may error
             }
 
@@ -58,18 +56,19 @@ define(["./block", "jquery", "Gene_BlueFoot/js/resource/slick/slick", "underscor
     /**
      * Build the slack config object
      *
-     * @returns {{autoplay: boolean; autoplaySpeed: (any | number); fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
+     * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
+     * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
 
 
     _proto.buildSlickConfig = function buildSlickConfig() {
       return {
-        autoplay: this.data.autoplay() === '1',
+        arrows: this.data.show_arrows() === "1",
+        autoplay: this.data.autoplay() === "1",
         autoplaySpeed: this.data.autoplay_speed(),
-        fade: this.data.fade() === '1',
-        infinite: this.data.is_infinite() === '1',
-        arrows: this.data.show_arrows() === '1',
-        dots: this.data.show_dots() === '1'
+        dots: this.data.show_dots() === "1",
+        fade: this.data.fade() === "1",
+        infinite: this.data.is_infinite() === "1"
       };
     };
 

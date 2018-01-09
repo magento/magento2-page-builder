@@ -4,8 +4,6 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader,
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var AppearanceFactory =
   /*#__PURE__*/
   function () {
@@ -24,8 +22,10 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader,
 
       return new Promise(function (resolve, reject) {
         try {
-          if (data['appearances'].length) {
-            (0, _loader)(data['appearances'], function () {
+          var appearanceKey = "appearances";
+
+          if (data[appearanceKey].length) {
+            (0, _loader)(data[appearanceKey], function () {
               for (var _len = arguments.length, components = new Array(_len), _key = 0; _key < _len; _key++) {
                 components[_key] = arguments[_key];
               }
@@ -52,7 +52,7 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader,
       var appearanceComponents = {};
       Object.keys(components).map(function (key) {
         var component = components[key];
-        var componentName = component.name.split(/(?=[A-Z])/).join('-').toLowerCase();
+        var componentName = component.name.split(/(?=[A-Z])/).join("-").toLowerCase();
         appearanceComponents[componentName] = new component();
       });
       return appearanceComponents;

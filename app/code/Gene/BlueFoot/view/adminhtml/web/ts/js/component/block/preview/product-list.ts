@@ -3,12 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
+import {Dictionary} from "underscore";
+import Config from "../../config";
 import Block from "../block";
 import PreviewBlock from "./block";
-import Config from "../../config";
-import {Dictionary} from "underscore";
-'use strict';
 
 export default class ProductList extends PreviewBlock {
     /**
@@ -18,27 +16,27 @@ export default class ProductList extends PreviewBlock {
      * @param {Object} config
      */
     constructor(parent: Block, config: object) {
-        super(parent, config)
-        this.updateDataValue('html', '');
+        super(parent, config);
+        this.updateDataValue("html", "");
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                if (this.data.category_id() === '') {
+                if (this.data.category_id() === "") {
                     return;
                 }
-                const url = Config.getInitConfig('preview_url'),
-                    requestData = {
-                        role: this.config.name,
-                        product_count: data.product_count,
-                        hide_out_of_stock: data.hide_out_of_stock,
-                        category_id: data.category_id,
-                        is_preview: true
-                    };
+                const url = Config.getInitConfig("preview_url");
+                const requestData = {
+                    category_id: data.category_id,
+                    hide_out_of_stock: data.hide_out_of_stock,
+                    is_preview: true,
+                    product_count: data.product_count,
+                    role: this.config.name,
+                };
 
                 jQuery.post(url, requestData, (response) => {
-                    this.updateDataValue('html', response.content !== undefined ? response.content.trim() : '');
+                    this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
                 });
             },
-            this.parent.id
+            this.parent.id,
         );
     }
 }

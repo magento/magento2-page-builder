@@ -3,12 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import hljs from "bluefoot/highlight";
 import ko from "knockout";
 import {Dictionary} from "underscore";
-import hljs from "bluefoot/highlight";
 import Block from "../block";
 import PreviewBlock from "./block";
-'use strict';
 
 export default class Code extends PreviewBlock {
     /**
@@ -19,12 +18,12 @@ export default class Code extends PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
-        this.updateDataValue('html', ko.observable(''));
+        this.updateDataValue("html", ko.observable(""));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
-                this.updateDataValue('html', hljs.highlight('html', this.data.snippet()).value);
+                this.updateDataValue("html", hljs.highlight("html", this.data.snippet()).value);
             },
-            this.parent.id
+            this.parent.id,
         );
     }
 }

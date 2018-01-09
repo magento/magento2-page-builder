@@ -3,37 +3,36 @@
  * See COPYING.txt for license details.
  */
 import {DataObject} from "../data-store";
-'use strict';
 
 export default class AttributeFilter {
     // Allowed data attributes
-    allowAttributes: Array<string> = [
-        'name',
-        'appearance',
-        'id',
-        'src',
-        'button_text',
-        'label_text',
-        'placeholder',
-        'title',
-        'identifier',
-        'view_mode',
-        'sku',
-        'position',
-        'category_id',
-        'product_count',
-        'show_out_of_stock',
-        'autoplay',
-        'autoplay_speed',
-        'fade',
-        'is_infinite',
-        'show_arrows',
-        'show_dots',
-        'advanced_settings',
-        'has_overlay_background',
-        'enable_parallax',
-        'parallax_speed'
-    ]
+    public allowAttributes: string[] = [
+        "name",
+        "appearance",
+        "id",
+        "src",
+        "button_text",
+        "label_text",
+        "placeholder",
+        "title",
+        "identifier",
+        "view_mode",
+        "sku",
+        "position",
+        "category_id",
+        "product_count",
+        "show_out_of_stock",
+        "autoplay",
+        "autoplay_speed",
+        "fade",
+        "is_infinite",
+        "show_arrows",
+        "show_dots",
+        "advanced_settings",
+        "has_overlay_background",
+        "enable_parallax",
+        "parallax_speed",
+    ];
 
     /**
      * Filter allowed attributes from object
@@ -41,14 +40,14 @@ export default class AttributeFilter {
      * @param {DataObject} data
      * @returns {DataObject}
      */
-    filter(data: DataObject): DataObject {
-        let attributes: DataObject = {};
+    public filter(data: DataObject): DataObject {
+        const attributes: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
                 if (this.allowAttributes.includes(key)) {
                     attributes[key] = data[key];
                 }
-            }
+            },
         );
         return attributes;
     }

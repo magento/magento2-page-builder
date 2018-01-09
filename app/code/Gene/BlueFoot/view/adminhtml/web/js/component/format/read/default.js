@@ -1,17 +1,15 @@
 /*eslint-disable */
-define(["underscore", "../style-attribute-mapper", "../attribute-mapper"], function (_underscore, _styleAttributeMapper, _attributeMapper) {
+define(["underscore", "../attribute-mapper", "../style-attribute-mapper"], function (_underscore, _attributeMapper, _styleAttributeMapper) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  'use strict';
-
   var Default =
   /*#__PURE__*/
   function () {
     function Default() {
-      this.styleAttributeMapper = new _styleAttributeMapper();
       this.attributeMapper = new _attributeMapper();
+      this.styleAttributeMapper = new _styleAttributeMapper();
     }
 
     var _proto = Default.prototype;
@@ -29,7 +27,7 @@ define(["underscore", "../style-attribute-mapper", "../attribute-mapper"], funct
       for (var i = 0; i < element.style.length; i++) {
         var property = element.style.item(i);
 
-        if (element.style[property] !== '') {
+        if (element.style[property] !== "") {
           styleAttributes[property] = element.style[property];
         }
       }
@@ -42,12 +40,13 @@ define(["underscore", "../style-attribute-mapper", "../attribute-mapper"], funct
       _underscore.extend(data, this.attributeMapper.fromDom(attributes), this.styleAttributeMapper.fromDom(styleAttributes));
 
       Object.keys(element.dataset).map(function (key) {
-        if (element.dataset[key] !== '') {
-          data[key.split(/(?=[A-Z])/).join('_').toLowerCase()] = element.dataset[key];
+        if (element.dataset[key] !== "") {
+          data[key.split(/(?=[A-Z])/).join("_").toLowerCase()] = element.dataset[key];
         }
       }); // Copy the css classes into the data store
 
-      data['css_classes'] = element.className || "";
+      var cssClasses = "css_classes";
+      data[cssClasses] = element.className || "";
       return new Promise(function (resolve) {
         resolve(data);
       });
