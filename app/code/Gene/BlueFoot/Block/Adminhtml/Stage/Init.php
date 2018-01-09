@@ -12,8 +12,6 @@ use Magento\Framework\UrlInterface;
  */
 class Init extends \Magento\Backend\Block\Template
 {
-    const BLUEFOOT_EDIT_CACHE_KEY = 'BLUEFOOT_EDIT_CACHE_KEY';
-
     /**
      * @var \Magento\Framework\UrlInterface
      */
@@ -23,16 +21,6 @@ class Init extends \Magento\Backend\Block\Template
      * @var \Gene\BlueFoot\Model\Stage\Config
      */
     protected $stageConfig;
-
-    /**
-     * @var \Magento\Framework\App\CacheInterface
-     */
-    protected $cacheManager;
-
-    /**
-     * @var \Magento\Framework\App\Cache\StateInterface
-     */
-    protected $cacheState;
 
     /**
      * @var \Magento\Framework\Url
@@ -49,8 +37,6 @@ class Init extends \Magento\Backend\Block\Template
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Gene\BlueFoot\Model\Stage\Config $stageConfig,
-        \Magento\Framework\App\CacheInterface $cacheManager,
-        \Magento\Framework\App\Cache\StateInterface $cacheState,
         \Magento\Framework\Url $frontendUrlBuilder,
         array $data = []
     ) {
@@ -58,8 +44,6 @@ class Init extends \Magento\Backend\Block\Template
         $this->urlBuilder = $context->getUrlBuilder();
         $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->stageConfig = $stageConfig;
-        $this->cacheManager = $cacheManager;
-        $this->cacheState = $cacheState;
     }
 
     /**
@@ -69,32 +53,13 @@ class Init extends \Magento\Backend\Block\Template
      */
     public function getConfig()
     {
-        // Retrieve the cache key for the bluefoot edit panel
-        $editCacheKey = $this->cacheManager->load(self::BLUEFOOT_EDIT_CACHE_KEY);
-        if (!$editCacheKey) {
-            $editCacheKey = uniqid('bluefoot-edit-', true);
-            $this->cacheManager->save(
-                $editCacheKey,
-                self::BLUEFOOT_EDIT_CACHE_KEY,
-                [\Gene\BlueFoot\Model\Cache\Forms::CACHE_TAG]
-            );
-        }
-
         $config = new \Magento\Framework\DataObject();
         $config->addData([
             'form_key'                         => $this->formKey->getFormKey(),
             'init_button_class'                => '.init-gene-bluefoot',
             'media_url'                        =>
                 $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-            'config_url'                       => $this->urlBuilder->getUrl('bluefoot/stage/config'),
-            'data_update_url'                  => $this->urlBuilder->getUrl('bluefoot/stage/preview'),
-            'template_save_url'                => $this->urlBuilder->getUrl('bluefoot/stage/template_save'),
-            'template_delete_url'              => $this->urlBuilder->getUrl('bluefoot/stage/template_delete'),
-            'template_pin_url'                 => $this->urlBuilder->getUrl('bluefoot/stage/template_pin'),
             'preview_url'                      => $this->frontendUrlBuilder->getUrl('bluefoot/contenttype/preview'),
-            'edit_panel_cache_key'             => $editCacheKey,
-            'edit_panel_cache'                 =>
-                $this->cacheState->isEnabled(\Gene\BlueFoot\Model\Cache\Forms::TYPE_IDENTIFIER),
             'columns'                          => 6,
 
             /* Define the different column options to be given in the UI */
