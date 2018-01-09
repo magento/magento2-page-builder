@@ -3,14 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Setup\DataConverter\Model\Attribute;
+namespace Magento\TestPageBuilderDataMigration\Model\Attribute;
 
 use Magento\Framework\Api\AttributeValueFactory;
 
 class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
 {
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\EntityFactory
+     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\EntityFactory
      */
     protected $entityFactory;
 
@@ -33,7 +33,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute
-     * @param \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\EntityFactory $entityFactory
+     * @param \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -47,7 +47,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute,
-        \Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\EntityFactory $entityFactory,
+        \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -77,7 +77,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
      */
     protected function _construct()
     {
-        $this->_init('Magento\PageBuilder\Setup\DataConverter\Model\ResourceModel\Attribute\ContentBlock');
+        $this->_init('Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock');
     }
 
     /**

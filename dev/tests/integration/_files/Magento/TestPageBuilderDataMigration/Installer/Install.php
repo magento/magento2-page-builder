@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Setup\DataConverter\Installer;
+namespace Magento\TestPageBuilderDataMigration\Installer;
 
-use Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory;
+use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
 
 class Install extends \Magento\Framework\Model\AbstractModel
 {
@@ -15,17 +15,17 @@ class Install extends \Magento\Framework\Model\AbstractModel
     protected $installData = null;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Installer\Install\Attribute
+     * @var \Magento\TestPageBuilderDataMigration\Installer\Install\Attribute
      */
     protected $attributeInstall;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Installer\Install\ContentBlock
+     * @var \Magento\TestPageBuilderDataMigration\Installer\Install\ContentBlock
      */
     protected $contentBlockInstall;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\EntitySetupFactory
+     * @var \Magento\TestPageBuilderDataMigration\EntitySetupFactory
      */
     protected $entitySetupFactory;
 
@@ -34,8 +34,8 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context                                                  $context
      * @param \Magento\Framework\Registry                                                       $registry
-     * @param \Magento\PageBuilder\Setup\DataConverter\Installer\Install\Attribute             $attribute
-     * @param \Magento\PageBuilder\Setup\DataConverter\Installer\Install\ContentBlock          $contentBlock
+     * @param \Magento\TestPageBuilderDataMigration\Installer\Install\Attribute             $attribute
+     * @param \Magento\TestPageBuilderDataMigration\Installer\Install\ContentBlock          $contentBlock
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                      $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null                                $resourceCollection
      * @param array                                                                         $data
