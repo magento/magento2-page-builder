@@ -70,7 +70,7 @@ class Product implements RendererInterface
             ->where($productMetadata->getIdentifierField() . ' = ?', (int) $eavData['product_id']);
         $productSku = $connection->fetchOne($select);
         if (!$productSku) {
-            throw new NoSuchEntityException(__('Product with id ' . $eavData['product_id'] . 'does not exist.'));
+            throw new NoSuchEntityException(__('Product with id %1 does not exist.', $eavData['product_id']));
         }
 
         $rootElementAttributes = [

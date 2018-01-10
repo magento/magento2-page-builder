@@ -70,7 +70,7 @@ class Block implements RendererInterface
             ->where($blockMetadata->getIdentifierField() . ' = ?', (int) $eavData['block_id']);
         $blockIdentifier = $connection->fetchOne($select);
         if (!$blockIdentifier) {
-            throw new NoSuchEntityException(__('Block with id ' . $eavData['block_id'] . 'does not exist.'));
+            throw new NoSuchEntityException(__('Block with id %1 does not exist.', $eavData['block_id']));
         }
 
         $rootElementAttributes = [
