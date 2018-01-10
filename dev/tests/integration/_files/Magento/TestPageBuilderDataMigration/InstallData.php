@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestModulePageBuilderDataMigration\Setup;
+namespace Magento\TestPageBuilderDataMigration;
 
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -22,7 +22,7 @@ class InstallData implements InstallDataInterface
     protected $entitySetupFactory;
 
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install
+     * @var \Magento\TestPageBuilderDataMigration\Installer\Install
      */
     protected $installer;
 
@@ -32,30 +32,15 @@ class InstallData implements InstallDataInterface
     protected $eavConfig;
 
     /**
-     * @var array
-     */
-    private static $dropTableNames = [
-        'gene_bluefoot_entity_datetime',
-        'gene_bluefoot_entity_decimal',
-        'gene_bluefoot_entity_int',
-        'gene_bluefoot_entity_text',
-        'gene_bluefoot_entity_varchar',
-        'gene_bluefoot_eav_attribute',
-        'gene_bluefoot_entity_type',
-        'gene_bluefoot_stage_template',
-        'gene_bluefoot_entity'
-    ];
-
-    /**
      * InstallData constructor.
      *
      * @param EntitySetupFactory $entitySetupFactory
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install $installer
+     * @param Installer\Install $installer
      * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
-        \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory $entitySetupFactory,
-        \Magento\TestModulePageBuilderDataMigration\Model\Install $installer,
+        \Magento\TestPageBuilderDataMigration\EntitySetupFactory $entitySetupFactory,
+        \Magento\TestPageBuilderDataMigration\Installer\Install $installer,
         \Magento\Eav\Model\Config $eavConfig
     ) {
         $this->entitySetupFactory = $entitySetupFactory;
@@ -71,7 +56,7 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        /** @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup $entitySetup */
+        /** @var \Magento\TestPageBuilderDataMigration\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Run a fresh installation if no previous version is present
@@ -1778,7 +1763,7 @@ class InstallData implements InstallDataInterface
       "frontend_input": "child_entity",
       "frontend_label": ["Accordion Items"],
       "frontend_class": null,
-      "source_model": null,
+      "source_model": "gene_bluefoot\/attribute_source_entity_child",
       "is_required": "1",
       "is_user_defined": "1",
       "is_unique": "0",
@@ -1805,7 +1790,7 @@ class InstallData implements InstallDataInterface
       "frontend_input": "child_entity",
       "frontend_label": ["Slides"],
       "frontend_class": null,
-      "source_model": null,
+      "source_model": "gene_bluefoot\/attribute_source_entity_child",
       "is_required": "0",
       "is_user_defined": "1",
       "is_unique": "0",
@@ -1938,7 +1923,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "search\/app\/collection",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_app_list",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -1992,7 +1977,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "search\/app\/entity",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_app_single",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -2055,7 +2040,7 @@ class InstallData implements InstallDataInterface
     {
       "attribute_code": "background_image",
       "attribute_model": null,
-      "backend_model": null,
+      "backend_model": "gene_bluefoot\/attribute_backend_image",
       "backend_type": "text",
       "backend_table": null,
       "frontend_model": null,
@@ -2100,7 +2085,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "search\/staticblock",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_staticblock",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -2116,7 +2101,7 @@ class InstallData implements InstallDataInterface
       "frontend_input": "child_entity",
       "frontend_label": ["Buttons"],
       "frontend_class": null,
-      "source_model": null,
+      "source_model": "gene_bluefoot\/attribute_source_entity_child",
       "is_required": "0",
       "is_user_defined": "1",
       "is_unique": "0",
@@ -2181,7 +2166,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "search\/category",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_category",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -2483,7 +2468,7 @@ class InstallData implements InstallDataInterface
     {
       "attribute_code": "image",
       "attribute_model": null,
-      "backend_model": null,
+      "backend_model": "gene_bluefoot\/attribute_backend_image",
       "backend_type": "text",
       "backend_table": null,
       "frontend_model": null,
@@ -2636,7 +2621,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "map",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_map",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -2699,7 +2684,7 @@ class InstallData implements InstallDataInterface
     {
       "attribute_code": "mobile_image",
       "attribute_model": null,
-      "backend_model": null,
+      "backend_model": "gene_bluefoot\/attribute_backend_image",
       "backend_type": "text",
       "backend_table": null,
       "frontend_model": null,
@@ -2866,7 +2851,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "search\/product",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_product",
       "template": null,
       "list_template": null,
       "additional_data": [],
@@ -2963,7 +2948,7 @@ class InstallData implements InstallDataInterface
       "frontend_input": "child_entity",
       "frontend_label": ["Slides"],
       "frontend_class": null,
-      "source_model": null,
+      "source_model": "gene_bluefoot\/attribute_source_entity_child",
       "is_required": "0",
       "is_user_defined": "1",
       "is_unique": "0",
@@ -3071,7 +3056,7 @@ class InstallData implements InstallDataInterface
       "frontend_input": "child_entity",
       "frontend_label": ["Tabs"],
       "frontend_class": null,
-      "source_model": null,
+      "source_model": "gene_bluefoot\/attribute_source_entity_child",
       "is_required": "0",
       "is_user_defined": "1",
       "is_unique": "0",
@@ -3244,7 +3229,7 @@ class InstallData implements InstallDataInterface
       "content_scope": "0",
       "frontend_input_renderer": null,
       "widget": "video",
-      "data_model": null,
+      "data_model": "gene_bluefoot\/attribute_data_widget_video",
       "template": null,
       "list_template": null,
       "additional_data": [],
