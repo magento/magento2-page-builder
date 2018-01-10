@@ -17,7 +17,7 @@ class InstallSchema implements InstallSchemaInterface
     /**
      * Install tables
      *
-     * @param \Magento\Framework\Setup\SchemaSetupInterface   $setup
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
      * @param \Magento\Framework\Setup\ModuleContextInterface $context
      *
      * @throws \Zend_Db_Exception

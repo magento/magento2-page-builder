@@ -64,7 +64,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param array $data
      *
      * @throws \Exception
-     * @throws \Zend_Json_Exception
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -76,8 +75,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->contentBlockFactory = $contentBlockFactory;
@@ -113,7 +111,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     /**
      * Determine whether an attribute already exists
      *
-     * @param             $attributeCode
+     * @param int|string $attributeCode
      * @param EntitySetup $eavSetup
      *
      * @return mixed
@@ -126,7 +124,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     /**
      * Determine whether an attribute exists, or will exist by the time the installation has finished
      *
-     * @param             $attributeCode
+     * @param int|string $attributeCode
      * @param EntitySetup $eavSetup
      *
      * @return bool
@@ -223,9 +221,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 
     /**
      * Load in the class mappings from various json strings
-     *
-     * @throws \Exception
-     * @throws \Zend_Json_Exception
      */
     private function getClassMapping()
     {
