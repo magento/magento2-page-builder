@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\ResourceModel;
+namespace Magento\TestPageBuilderDataMigration\Model\ResourceModel;
 
 class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 {

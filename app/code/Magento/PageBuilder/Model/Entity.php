@@ -10,12 +10,12 @@ class Entity extends \Magento\Framework\Model\AbstractModel
     /**
      * Return the entity name
      */
-    const ENTITY = 'gene_pagebuilder_entity';
+    const ENTITY = 'gene_bluefoot_entity';
 
     /**
      * Return the cache tag
      */
-    const CACHE_TAG = 'gene_pagebuilder_entity';
+    const CACHE_TAG = 'gene_bluefoot_entity';
 
     /**
      * Initialize entity model

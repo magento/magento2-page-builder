@@ -33,7 +33,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute
-     * @param \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory
+     * @param \Magento\PageBuilder\Model\ResourceModel\EntityFactory $entityFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -47,7 +47,7 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute,
-        \Gene\BlueFoot\Model\ResourceModel\EntityFactory $entityFactory,
+        \Magento\PageBuilder\Model\ResourceModel\EntityFactory $entityFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []

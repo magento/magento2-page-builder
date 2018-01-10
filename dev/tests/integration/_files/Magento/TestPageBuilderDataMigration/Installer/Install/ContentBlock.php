@@ -51,7 +51,7 @@ class ContentBlock extends AbstractInstall
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
-     * @param \Gene\BlueFoot\Model\ResourceModel\Entity $entity
+     * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
      * @param \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
      * @param \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
      * @param \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory
@@ -65,7 +65,7 @@ class ContentBlock extends AbstractInstall
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Gene\BlueFoot\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
         \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
         \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,

@@ -5,7 +5,7 @@
  */
 namespace Magento\TestPageBuilderDataMigration\Renderer;
 
-use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 
 /**
  * Render custom content type to PageBuilder format

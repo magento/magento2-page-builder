@@ -58,8 +58,8 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
 
                 // Replace source model values with labels
                 $attribute = $this->attributeFactory->create()
-                    ->loadByCode('gene_pagebuilder_entity', $attributeName);
-                $attribute->loadByCode('gene_pagebuilder_entity', $attributeName);
+                    ->loadByCode('gene_bluefoot_entity', $attributeName);
+                $attribute->loadByCode('gene_bluefoot_entity', $attributeName);
                 if ($attribute->usesSource()) {
                     foreach ($attribute->getOptions() as $sourceOption) {
                         if ($sourceOption->getValue() === $eavData[$attributeName]) {

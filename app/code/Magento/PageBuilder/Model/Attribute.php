@@ -20,7 +20,7 @@ class Attribute extends \Magento\Eav\Model\Attribute
      *
      * @var string
      */
-    protected $_eventPrefix = 'gene_pagebuilder_entity_attribute';
+    protected $_eventPrefix = 'gene_bluefoot_entity_attribute';
 
     /**
      * Prefix of model events object

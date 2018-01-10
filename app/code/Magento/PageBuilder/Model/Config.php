@@ -17,7 +17,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     public function __construct(
         \Magento\PageBuilder\Model\Config\Reader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
-        $cacheId = 'gene_pagebuilder_content_types'
+        $cacheId = 'gene_bluefoot_content_types'
     ) {
         parent::__construct($reader, $cache, $cacheId);
     }
