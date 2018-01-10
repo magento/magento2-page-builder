@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderAccordionCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Accordion Configuration"/>
+            <group value="pagebuilder"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddAccordion">
+            <annotations>
+                <title value="Can add an Accordion"/>
+                <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84675"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAccordionOntoStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+            <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" stepKey="waitForAddItemsElementVisible"/>
+            <click selector="{{AccordionEditSection.addNewItem}}" stepKey="clickOnAddItemsElement"/>
+            <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" stepKey="waitForItemRow0TextVisible"/>
+            <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" stepKey="fillItemRow0TitleField"/>
+            <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" stepKey="fillItemRow0ContentField"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <grabFromCurrentUrl returnVariable="cmsPageUri" stepKey="grabFromCurrentUrl"/>
+            <amOnPage url="accordion{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" stepKey="seeAccordionTitleOnStorefront"/>
+            <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" stepKey="seeAccordionContentOnStorefront"/>
+        </test>
+        <test name="CanRemoveAccordion">
+            <annotations>
+                <title value="Remove accordion content block from stage"/>
+                <description value="A user should be able to remove accordion block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="accordion" stepKey="fillSearch"/>
+            <see userInput="Accordion" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockIntoStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderAccordionContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
+        <test name="AccordionHasAdvancedFormSection">
+            <annotations>
+                <title value="Accordion has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for accordion"/>
+                <severity value="CRITICAL"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragAccordionOntoStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
+    </cest>
+</config>
