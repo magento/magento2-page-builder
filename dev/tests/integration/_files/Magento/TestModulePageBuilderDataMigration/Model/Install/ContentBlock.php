@@ -3,10 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Installer\Install;
+namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 
-use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
-use Magento\TestPageBuilderDataMigration\EntitySetup;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 
 class ContentBlock extends AbstractInstall
 {
@@ -21,7 +21,7 @@ class ContentBlock extends AbstractInstall
     private $unresolvedAdditionalData = [];
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
      */
     protected $contentBlockFactory;
 
@@ -41,7 +41,7 @@ class ContentBlock extends AbstractInstall
     private $eavAttributeGroupFactory;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
      */
     protected $contentBlockResource;
 
@@ -52,8 +52,8 @@ class ContentBlock extends AbstractInstall
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
-     * @param \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
      * @param \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory
@@ -66,8 +66,8 @@ class ContentBlock extends AbstractInstall
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory,
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory,
@@ -156,7 +156,7 @@ class ContentBlock extends AbstractInstall
                     'block ' . $contentBlockIdentifier . ': ' . implode(', ', $missingAttributes));
             }
 
-            /* @var $contentBlock \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlock */
+            /* @var $contentBlock \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock */
             $contentBlock = $this->contentBlockFactory->create();
 
             // Pass the data from the installation json into the new content block model
@@ -200,13 +200,13 @@ class ContentBlock extends AbstractInstall
     }
 
     /**
-     * @param \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock
      * @param $attributeGroups
      *
      * @return array
      */
     private function buildGroups(
-        \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock,
         $attributeGroups
     ) {
         $newGroups = [];

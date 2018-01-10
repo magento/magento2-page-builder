@@ -3,10 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Installer\Install;
+namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 
-use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
-use Magento\TestPageBuilderDataMigration\EntitySetup;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 
 class Attribute extends AbstractInstall
 {
@@ -16,7 +16,7 @@ class Attribute extends AbstractInstall
     private $unresolvedAdditionalData = [];
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilder\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -57,8 +57,8 @@ class Attribute extends AbstractInstall
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []

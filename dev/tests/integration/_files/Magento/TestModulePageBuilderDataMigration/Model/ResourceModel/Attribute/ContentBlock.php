@@ -3,12 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute;
+namespace Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute;
 
 class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 {
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilder\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -18,14 +18,14 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Entity $entity
+     * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
      * @param null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Config $eavConfig,
-        \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
         $connectionName = null
     ) {
         parent::__construct($context, $attrGroupFactory, $eavConfig, $connectionName);

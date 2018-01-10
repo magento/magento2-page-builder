@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Installer;
+namespace Magento\TestModulePageBuilderDataMigration\Model;
 
-use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
 
 class Install extends \Magento\Framework\Model\AbstractModel
 {
@@ -15,17 +15,17 @@ class Install extends \Magento\Framework\Model\AbstractModel
     protected $installData = null;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Installer\Install\Attribute
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute
      */
     protected $attributeInstall;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Installer\Install\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock
      */
     protected $contentBlockInstall;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\EntitySetupFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory
      */
     protected $entitySetupFactory;
 
@@ -34,8 +34,8 @@ class Install extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context                                                  $context
      * @param \Magento\Framework\Registry                                                       $registry
-     * @param \Magento\TestPageBuilderDataMigration\Installer\Install\Attribute             $attribute
-     * @param \Magento\TestPageBuilderDataMigration\Installer\Install\ContentBlock          $contentBlock
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute             $attribute
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock          $contentBlock
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                      $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null                                $resourceCollection
      * @param array                                                                         $data

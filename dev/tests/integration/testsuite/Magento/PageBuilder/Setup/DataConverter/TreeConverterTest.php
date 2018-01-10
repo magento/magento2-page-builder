@@ -50,10 +50,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = self::$objectManager->create(\Magento\TestPageBuilderDataMigration\InstallSchema::class);
+        $installSchema = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class);
 
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = self::$objectManager->create(\Magento\TestPageBuilderDataMigration\InstallData::class);
+        $installData = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class);
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
         $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
@@ -1202,17 +1202,17 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      */
     private function getContentBlockId($contentTypeCode)
     {
-        /* @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory */
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory */
         $contentBlockFactory = self::$objectManager->create(
-            \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory::class
+            \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory::class
         );
         $contentBlock = $contentBlockFactory->create();
 
-        /* @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
         $contentBlockResource = self::$objectManager->create(
-            \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
+            \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
         );
-        /* @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock */
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock */
         $contentBlockResource->load(
             $contentBlock,
             $contentTypeCode,

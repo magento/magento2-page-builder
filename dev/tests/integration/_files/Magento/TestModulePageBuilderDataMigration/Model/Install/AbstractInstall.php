@@ -3,15 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Installer\Install;
+namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 
-use Magento\TestPageBuilderDataMigration\EntitySetupFactory;
-use Magento\TestPageBuilderDataMigration\EntitySetup;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
+use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var \Magento\TestPageBuilderDataMigration\EntitySetupFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory
      */
     protected $entitySetupFactory;
 
@@ -41,12 +41,12 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected $modelFields;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
      */
     protected $contentBlockFactory;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
      */
     protected $contentBlockResource;
 
@@ -57,8 +57,8 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
-     * @param \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -71,12 +71,13 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestPageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->contentBlockFactory = $contentBlockFactory;

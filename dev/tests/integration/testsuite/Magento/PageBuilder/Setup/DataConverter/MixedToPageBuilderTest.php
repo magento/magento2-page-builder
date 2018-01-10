@@ -11,33 +11,21 @@ use Magento\TestFramework\Helper\Bootstrap;
 class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * @var ObjectManagerInterface
+     */
+    private static $objectManager;
+    
+    /**
      * @param $originalContentFileName
      * @param $migratedContentFileName
      * @dataProvider convertDataProvider
      */
     public function testConvert($originalContentFileName, $migratedContentFileName)
     {
-        $serializer = new \Magento\Framework\Serialize\Serializer\Json();
-        $rendererPool = new \Magento\PageBuilder\Setup\DataConverter\RendererPool(
-            [
-                'default' => new \Magento\PageBuilder\Setup\DataConverter\Renderer\Unmigrated($serializer),
-                'custom' => new \Magento\TestPageBuilderDataMigration\Renderer\Custom()
-            ]
-        );
-        $childrenExtractorPool = new \Magento\PageBuilder\Setup\DataConverter\ChildrenExtractorPool(
-            [
-                'default' => new \Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Dummy()
-            ]
-        );
-        $treeConverter = new \Magento\PageBuilder\Setup\DataConverter\TreeConverter(
-            $rendererPool,
-            $childrenExtractorPool,
-            $serializer
-        );
-        $mixedToPageBuilderConverter = new \Magento\PageBuilder\Setup\DataConverter\MixedToPageBuilder(
-            $treeConverter,
-            new \Magento\PageBuilder\Setup\DataConverter\Validator($serializer)
-        );
+        self::$objectManager = Bootstrap::getObjectManager();
+        $mixedToPageBuilderConverter =
+            self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\MixedToPageBuilder::class);
+
         $this->assertEquals(
             file_get_contents(__DIR__ . '/../../_files/' . $migratedContentFileName),
             $mixedToPageBuilderConverter->convert(

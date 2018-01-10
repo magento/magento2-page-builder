@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration;
+namespace Magento\TestModulePageBuilderDataMigration\Setup;
 
 use Magento\Eav\Model\Config;
 use Magento\Eav\Model\Entity\Setup\Context;

@@ -3,14 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Model\Attribute;
+namespace Magento\TestModulePageBuilderDataMigration\Model\Attribute;
 
 use Magento\Framework\Api\AttributeValueFactory;
 
 class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
 {
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Model\ResourceModel\EntityFactory
+     * @var \Magento\PageBuilder\Model\ResourceModel\EntityFactory
      */
     protected $entityFactory;
 
@@ -73,11 +73,10 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
      * Initialize resource model
      *
      * @return void
-     * @codeCoverageIgnore
      */
     protected function _construct()
     {
-        $this->_init('Magento\TestPageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock');
+        $this->_init('Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock');
     }
 
     /**

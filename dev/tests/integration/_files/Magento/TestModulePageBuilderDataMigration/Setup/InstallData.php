@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration;
+namespace Magento\TestModulePageBuilderDataMigration\Setup;
 
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -22,7 +22,7 @@ class InstallData implements InstallDataInterface
     protected $entitySetupFactory;
 
     /**
-     * @var \Magento\TestPageBuilderDataMigration\Installer\Install
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install
      */
     protected $installer;
 
@@ -32,15 +32,30 @@ class InstallData implements InstallDataInterface
     protected $eavConfig;
 
     /**
+     * @var array
+     */
+    private static $dropTableNames = [
+        'gene_bluefoot_entity_datetime',
+        'gene_bluefoot_entity_decimal',
+        'gene_bluefoot_entity_int',
+        'gene_bluefoot_entity_text',
+        'gene_bluefoot_entity_varchar',
+        'gene_bluefoot_eav_attribute',
+        'gene_bluefoot_entity_type',
+        'gene_bluefoot_stage_template',
+        'gene_bluefoot_entity'
+    ];
+
+    /**
      * InstallData constructor.
      *
      * @param EntitySetupFactory $entitySetupFactory
-     * @param Installer\Install $installer
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install $installer
      * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
-        \Magento\TestPageBuilderDataMigration\EntitySetupFactory $entitySetupFactory,
-        \Magento\TestPageBuilderDataMigration\Installer\Install $installer,
+        \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory $entitySetupFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\Install $installer,
         \Magento\Eav\Model\Config $eavConfig
     ) {
         $this->entitySetupFactory = $entitySetupFactory;
@@ -56,7 +71,7 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        /** @var \Magento\TestPageBuilderDataMigration\EntitySetup $entitySetup */
+        /** @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup $entitySetup */
         $entitySetup = $this->entitySetupFactory->create(['setup' => $setup]);
 
         // Run a fresh installation if no previous version is present

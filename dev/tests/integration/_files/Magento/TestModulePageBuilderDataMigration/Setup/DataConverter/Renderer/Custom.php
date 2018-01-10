@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\TestPageBuilderDataMigration\Renderer;
+namespace Magento\TestModulePageBuilderDataMigration\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 
