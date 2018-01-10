@@ -35,11 +35,6 @@ class Attribute extends \Magento\Eav\Model\Attribute
     private $objectManager;
 
     /**
-     * @var \Magento\Framework\Indexer\IndexerRegistry
-     */
-    private $indexerRegistry;
-
-    /**
      * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
@@ -58,7 +53,6 @@ class Attribute extends \Magento\Eav\Model\Attribute
      * @param \Magento\Catalog\Model\Product\ReservedAttributeList $reservedAttributeList
      * @param \Magento\Framework\Locale\ResolverInterface $localeResolver
      * @param \Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
@@ -81,13 +75,12 @@ class Attribute extends \Magento\Eav\Model\Attribute
         \Magento\Catalog\Model\Product\ReservedAttributeList $reservedAttributeList,
         \Magento\Framework\Locale\ResolverInterface $localeResolver,
         DateTimeFormatterInterface $dateTimeFormatter,
-        \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->indexerRegistry = $indexerRegistry;
+        $this->objectManager = $objectManager;
         parent::__construct(
             $context,
             $registry,
@@ -109,7 +102,6 @@ class Attribute extends \Magento\Eav\Model\Attribute
             $resourceCollection,
             $data
         );
-        $this->objectManager = $objectManager;
     }
 
     /**
@@ -160,26 +152,5 @@ class Attribute extends \Magento\Eav\Model\Attribute
         }
 
         return null;
-    }
-
-    /**
-     * Check whether attribute is searchable in admin grid and it is allowed
-     *
-     * @return bool
-     */
-    public function canBeSearchableInGrid()
-    {
-        return $this->getData('is_searchable_in_grid') && in_array($this->getFrontendInput(), ['text', 'textarea']);
-    }
-
-    /**
-     * Check whether attribute is filterable in admin grid and it is allowed
-     *
-     * @return bool
-     */
-    public function canBeFilterableInGrid()
-    {
-        return $this->getData('is_filterable_in_grid')
-        && in_array($this->getFrontendInput(), ['text', 'date', 'select', 'boolean']);
     }
 }

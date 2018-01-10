@@ -22,7 +22,7 @@ class Entity extends \Magento\Framework\Model\AbstractModel
      *
      * @return void
      */
-    public function _construct()
+    protected function _construct()
     {
         $this->_init(\Magento\PageBuilder\Model\ResourceModel\Entity::class);
     }
