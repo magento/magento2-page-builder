@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable */
-
 var config = {
     paths: {
         'slick': 'Magento_PageBuilder/js/resource/jquery/slick/slick',

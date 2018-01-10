@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable */
+/*global requirejs */
 
 requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
     $(document).ready(function() {
