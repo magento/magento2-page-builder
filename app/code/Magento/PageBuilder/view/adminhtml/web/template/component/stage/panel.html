@@ -1,0 +1,57 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div id="pagebuilder-panel-wrapper" data-bind="css: {visible: isVisible(), collapsed: isCollapsed()}">
+    <div id="pagebuilder-panel">
+        <div class="search-blocks">
+            <label for="search-blocks-input"></label>
+            <a href="#" data-bind="click: clearSearch, attr: {title: $t('Clear Search')}, visible: searching()" class="close"></a>
+            <input type="text" id="search-blocks-input" name="search" data-bind="value: searchValue, event: {keyup: search}" placeholder="Find items" />
+        </div>
+        <ul id="search-results" data-bind="visible: searching() && searchResults().length > 0, foreach: searchResults, draggable">
+            <li data-bind="attr: {id: 'block-' + identifier }" class="pagebuilder-draggable-block">
+                <a href="javascript:void(0);" class="pagebuilder-panel-block">
+                    <span class="block-icon">
+                        <i data-bind="attr: {class: icon}"></i>
+                    </span>
+                    <span data-bind="text: label"></span>
+                </a>
+            </li>
+        </ul>
+        <div class="search-results-empty" data-bind="visible: searching() && searchResults().length == 0">
+            <div data-bind="text: $t('Nothing found');"></div>
+        </div>
+        <ul id="pagebuilder-panel-groups" data-bind="visible: !searching(), foreach: groups">
+            <li data-bind="attr: {id: 'group-' + id() }, event: { click: toggle }, css: { active: active }">
+                <div class="group-title">
+                    <h4 data-bind="text: label"></h4>
+                </div>
+                <div class="pagebuilder-panel-groups-child" data-bind="css: { hidden: hidden }">
+                    <div class="pagebuilder-panel-groups-blocks-wrapper">
+                        <ul class="pagebuilder-panel-groups-blocks" data-bind="foreach: blocks">
+                            <li data-bind="attr: {id: 'block-' + identifier() }, draggable: { connectToSortable: getDraggableConfig() }" class="pagebuilder-draggable-block">
+                                <a href="javascript:void(0);" class="pagebuilder-panel-block">
+                                    <span class="block-icon">
+                                        <i data-bind="attr: {class: icon}"></i>
+                                    </span>
+                                    <span data-bind="text: label"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="panel-controls">
+            <a href="#" data-bind="click: collapse" class="collapse">Collapse</a>
+            <a href="#" data-bind="click: fullScreen, attr: {title: $t('Full Screen')}" class="full-screen"></a>
+        </div>
+    </div>
+    <div class="expand" data-bind="visible: isCollapsed">
+        <a href="#" data-bind="click: collapse"></a>
+    </div>
+</div>

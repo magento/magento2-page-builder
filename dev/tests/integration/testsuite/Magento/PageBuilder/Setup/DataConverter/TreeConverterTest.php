@@ -21,7 +21,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     private static $dbAdapter;
 
     /**
-     * @var \Gene\BlueFoot\Setup\DataConverter\TreeConverter
+     * @var \Magento\PageBuilder\Setup\DataConverter\TreeConverter
      */
     private static $treeConverter;
 
@@ -93,7 +93,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $installData->install($moduleDataSetup, $moduleContext);
 
-        self::$treeConverter = self::$objectManager->create(\Gene\BlueFoot\Setup\DataConverter\TreeConverter::class);
+        self::$treeConverter = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\TreeConverter::class);
     }
 
     protected function setUp()
@@ -1161,8 +1161,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      */
     private function saveContentType($contentTypeCode, $data)
     {
-        /** @var \Gene\BlueFoot\Model\Entity */
-        $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
+        /** @var \Magento\PageBuilder\Model\Entity */
+        $entity = self::$objectManager->create(\Magento\PageBuilder\Model\Entity::class);
 
         $data['attribute_set_id'] = $this->getContentBlockId($contentTypeCode);
 
@@ -1185,9 +1185,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entity->setData($data);
 
-        /* @var \Gene\BlueFoot\Model\ResourceModel\Entity $entityResource */
+        /* @var \Magento\PageBuilder\Model\ResourceModel\Entity $entityResource */
         $entityResource = self::$objectManager->create(
-            \Gene\BlueFoot\Model\ResourceModel\Entity::class
+            \Magento\PageBuilder\Model\ResourceModel\Entity::class
         );
         $entityResource->save($entity);
 

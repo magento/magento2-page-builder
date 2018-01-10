@@ -1,6 +1,6 @@
 module.exports = () => {
-    const Build = require('::Gene_BlueFoot/js/component/stage/build');
-    const Stage = require('::Gene_BlueFoot/js/component/stage');
+    const Build = require('::Magento_PageBuilder/js/component/stage/build');
+    const Stage = require('::Magento_PageBuilder/js/component/stage');
 
     const fakeWysiwyg = new (require('wysiwyg'))();
     const ko = require('::ko');

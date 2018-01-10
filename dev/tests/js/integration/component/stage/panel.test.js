@@ -17,15 +17,15 @@ function initConfiguration() {
                 return {
                     "name": key,
                     "label": label,
-                    "icon": "icon-bluefoot-text",
+                    "icon": "icon-pagebuilder-text",
                     "form": "text_form",
                     "contentType": "",
                     "group": "general",
                     "fields": {"textarea": {"default": "Type your text here..."}},
                     "visible": visible || visible === undefined,
-                    "preview_template": "Gene_BlueFoot/component/block/preview/text.html",
-                    "preview_component": "Gene_BlueFoot/js/component/block/preview/block",
-                    "component": "Gene_BlueFoot/js/component/block/block"
+                    "preview_template": "Magento_PageBuilder/component/block/preview/text.html",
+                    "preview_component": "Magento_PageBuilder/js/component/block/preview/block",
+                    "component": "Magento_PageBuilder/js/component/block/block"
                 };
             };
 

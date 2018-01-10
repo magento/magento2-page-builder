@@ -2,7 +2,7 @@ const compositeReader = () => new (require('js/component/format/read/composite')
 
 beforeEach(() => {
     jest.mock('::advanced-cms-init-config', () => require('init-config'), {virtual: true});
-    jest.mock('::Gene_BlueFoot/js/component/loader', () => require('jest-magento2/fake-require'));
+    jest.mock('::Magento_PageBuilder/js/component/loader', () => require('jest-magento2/fake-require'));
 });
 describe('Composite reader of attributes', () => {
 

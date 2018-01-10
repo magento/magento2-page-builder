@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<?php
+/**
+ * Iterate through components generated in block class, populate the uiRegistry with their contents
+ * prefixed with component_. This allows to pre-load UI components into the browser rather than
+ * requiring a full HTTP request.
+ */
+$components = $block->getComponents();
+?>
+
+<?php if ($components): ?>
+    <script type="text/javascript">
+        require(['underscore', 'uiRegistry'], function (_, registry) {
+            _.each(<?php /* @noEscape */ echo json_encode($components) ?>, function (component, key) {
+                registry.set('component_' + key, component);
+            });
+        });
+    </script>
+<?php endif; ?>

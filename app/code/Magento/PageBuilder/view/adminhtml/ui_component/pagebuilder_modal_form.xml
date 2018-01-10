@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="label" xsi:type="string" translate="true">Edit</item>
+        <item name="template" xsi:type="string">templates/edit_form</item>
+    </argument>
+    <dataSource name="pagebuilder_modal_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="cms/page/save"/>
+        </settings>
+        <dataProvider name="pagebuilder_heading_form_data_source" class="Magento\Cms\Model\Page\DataProvider">
+            <settings>
+                <requestFieldName>no_id</requestFieldName>
+                <primaryFieldName>no_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <modal name="modal">
+        <settings>
+            <options>
+                <option name="title" xsi:type="string">Edit</option>
+            </options>
+        </settings>
+        <insertForm name="insert_form" component="Magento_Ui/js/form/components/insert-form">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">staging</item>
+                </item>
+            </argument>
+            <settings>
+                <ns>catalogstaging_category_update_remove_form</ns>
+                <externalProvider>${ $.ns }.catalogstaging_category_update_remove_form_data_source</externalProvider>
+                <toolbarContainer>${ $.parentName }</toolbarContainer>
+                <formSubmitType>ajax</formSubmitType>
+                <renderUrl path="mui/index/render_handle">
+                    <param name="handle">cmsstaging_page_update</param>
+                    <param name="buttons">1</param>
+                </renderUrl>
+            </settings>
+        </insertForm>
+    </modal>
+</container>
