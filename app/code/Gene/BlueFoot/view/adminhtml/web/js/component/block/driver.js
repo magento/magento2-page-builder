@@ -79,8 +79,7 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
 
 
     _proto.getImageUrl = function getImageUrl(image) {
-      var url = "url";
-      var imageUrl = image[0][url];
+      var imageUrl = image[0].url;
 
       var mediaUrl = _config.getInitConfig("media_url");
 

@@ -15,8 +15,7 @@ export default class AlignCenter implements AppearanceInterface {
      * @returns {DataObject}
      */
     public add(data: DataObject): DataObject {
-        const alignSelf = "align_self";
-        data[alignSelf] = "center";
+        data.align_self = "center";
         return data;
     }
 }

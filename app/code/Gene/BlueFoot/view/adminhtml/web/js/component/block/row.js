@@ -52,8 +52,7 @@ define(["mage/translate", "underscore", "../stage/structural/options/option", ".
       }
 
       if (isAllColumns) {
-        var display = "display";
-        styleAttributes[display] = "flex";
+        styleAttributes.display = "flex";
       }
 
       return _underscore.extend(_Block.prototype.getStyle.call(this), styleAttributes);

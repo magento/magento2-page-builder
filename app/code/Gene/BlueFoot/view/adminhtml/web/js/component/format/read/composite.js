@@ -33,8 +33,7 @@ define(["Gene_BlueFoot/js/component/loader", "underscore", "../../config"], func
           resolve(result);
         } else {
           try {
-            var readersKey = "readers";
-            (0, _loader)(_this.contentTypeConfig[role][readersKey], function () {
+            (0, _loader)(_this.contentTypeConfig[role].readers, function () {
               var readerPromises = [];
 
               for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -42,8 +41,8 @@ define(["Gene_BlueFoot/js/component/loader", "underscore", "../../config"], func
               }
 
               for (var _i = 0; _i < readers.length; _i++) {
-                var aReader = readers[_i];
-                var reader = new aReader();
+                var Reader = readers[_i];
+                var reader = new Reader();
                 readerPromises.push(reader.read(element));
               }
 

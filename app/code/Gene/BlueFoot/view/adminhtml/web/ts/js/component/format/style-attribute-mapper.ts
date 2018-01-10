@@ -40,19 +40,16 @@ export default class StyleAttributeMapper {
                 }
                 if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
                     // convert to media directive
-                    const url = "url";
-                    const imageUrl = value[0][url];
+                    const imageUrl = value[0].url;
                     const mediaUrl = Config.getInitConfig("media_url");
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    const margin = "margin";
-                    const padding = "padding";
-                    result[margin] = `${value.margin.top}px ${value.margin.right}px`
+                    result.margin = `${value.margin.top}px ${value.margin.right}px`
                         + ` ${value.margin.bottom}px ${value.margin.left}px`;
-                    result[padding] = `${value.padding.top}px ${value.padding.right}px`
+                    result.padding = `${value.padding.top}px ${value.padding.right}px`
                         + ` ${value.padding.bottom}px ${value.padding.left}px`;
                     return;
                 }
@@ -134,9 +131,8 @@ export default class StyleAttributeMapper {
                 if (key.startsWith("margin") || key.startsWith("padding")) {
                     const spacingObj = {margin: {}, padding: {}};
                     const [attributeType, attributeDirection] = key.split("-");
-                    const marginsAndPadding = "margins_and_padding";
-                    result[marginsAndPadding] = result[marginsAndPadding] || spacingObj;
-                    result[marginsAndPadding][attributeType] = _.extend(result[marginsAndPadding][attributeType],
+                    result.margins_and_padding = result.margins_and_padding || spacingObj;
+                    result.margins_and_padding[attributeType] = _.extend(result.margins_and_padding[attributeType],
                         {[attributeDirection]: value.replace("px", "")});
                     return;
                 }

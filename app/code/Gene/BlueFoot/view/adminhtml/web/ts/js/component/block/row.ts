@@ -54,8 +54,7 @@ export default class Row extends Block {
             isAllColumns = false;
         }
         if (isAllColumns) {
-            const display = "display";
-            styleAttributes[display] = "flex";
+            styleAttributes.display = "flex";
         }
         return _.extend(super.getStyle(), styleAttributes);
     }

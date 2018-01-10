@@ -91,10 +91,8 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
         });
       } else {
         // Add an initial row to the stage if the stage is currently empty
-        var Row = "row";
-
-        if (typeof _config.getInitConfig("contentTypes")[Row] !== "undefined") {
-          (0, _factory)(_config.getInitConfig("contentTypes")[Row], this, this, {}).then(function (row) {
+        if (typeof _config.getInitConfig("contentTypes").row !== "undefined") {
+          (0, _factory)(_config.getInitConfig("contentTypes").row, this, this, {}).then(function (row) {
             _this2.addChild(row);
           });
         }

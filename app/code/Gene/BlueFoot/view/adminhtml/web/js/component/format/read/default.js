@@ -45,8 +45,7 @@ define(["underscore", "../attribute-mapper", "../style-attribute-mapper"], funct
         }
       }); // Copy the css classes into the data store
 
-      var cssClasses = "css_classes";
-      data[cssClasses] = element.className || "";
+      data.css_classes = element.className || "";
       return new Promise(function (resolve) {
         resolve(data);
       });

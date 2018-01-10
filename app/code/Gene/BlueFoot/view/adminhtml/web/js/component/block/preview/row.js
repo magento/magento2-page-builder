@@ -21,25 +21,24 @@ define(["knockout", "./block"], function (_knockout, _block) {
       _this.rowClasses = void 0;
       _this.rowStyles = _knockout.computed(function () {
         var data = _this.data;
-        var backgroundImage = data.background_image && _typeof(data.background_image()[0]) === 'object' ? 'url(' + data.background_image()[0].url + ')' : '';
-        var margin, padding;
+        var backgroundImage = data.background_image && _typeof(data.background_image()[0]) === "object" ? "url(" + data.background_image()[0].url + ")" : "";
+        var margin;
+        var padding;
 
-        if (data.margins_and_padding && _typeof(data.margins_and_padding()) === 'object') {
+        if (data.margins_and_padding && _typeof(data.margins_and_padding()) === "object") {
           var m = data.margins_and_padding().margin;
           var p = data.margins_and_padding().padding;
           margin = m.top + "px " + m.right + "px " + m.bottom + "px " + m.left + "px";
           padding = p.top + "px " + p.right + "px " + p.bottom + "px " + p.left + "px";
         } else {
-          margin = '';
-          padding = '';
+          margin = "";
+          padding = "";
         }
 
         return {
-          backgroundImage: backgroundImage,
-          margin: margin,
-          padding: padding,
           backgroundAttachment: data.background_attachment(),
           backgroundColor: data.background_color(),
+          backgroundImage: backgroundImage,
           backgroundPosition: data.background_position(),
           backgroundRepeat: data.background_repeat(),
           backgroundSize: data.background_size(),
@@ -48,6 +47,8 @@ define(["knockout", "./block"], function (_knockout, _block) {
           borderRadius: data.border_radius() + "px",
           borderWidth: data.border_width() + "px",
           color: data.color(),
+          margin: margin,
+          padding: padding,
           textAlign: data.text_align()
         };
       });

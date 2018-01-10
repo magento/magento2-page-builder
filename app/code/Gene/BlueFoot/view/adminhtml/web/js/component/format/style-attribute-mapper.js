@@ -46,8 +46,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
 
         if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
-          var url = "url";
-          var imageUrl = value[0][url];
+          var imageUrl = value[0].url;
 
           var mediaUrl = _config.getInitConfig("media_url");
 
@@ -57,10 +56,8 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         }
 
         if (key === "margins_and_padding") {
-          var margin = "margin";
-          var padding = "padding";
-          result[margin] = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
-          result[padding] = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
+          result.margin = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
+          result.padding = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
           return;
         }
 
@@ -169,9 +166,8 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
               attributeType = _key$split[0],
               attributeDirection = _key$split[1];
 
-          var marginsAndPadding = "margins_and_padding";
-          result[marginsAndPadding] = result[marginsAndPadding] || spacingObj;
-          result[marginsAndPadding][attributeType] = _underscore.extend(result[marginsAndPadding][attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace("px", ""), _$extend));
+          result.margins_and_padding = result.margins_and_padding || spacingObj;
+          result.margins_and_padding[attributeType] = _underscore.extend(result.margins_and_padding[attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace("px", ""), _$extend));
           return;
         }
 

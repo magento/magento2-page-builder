@@ -23,12 +23,11 @@ export default class Appearance {
      * @returns {DataObject}
      */
     public add(data: DataObject): DataObject {
-        const appearance = "appearance";
-        if (data[appearance] !== undefined) {
-            if (this.appearances[data[appearance]] === undefined) {
+        if (data.appearance !== undefined) {
+            if (this.appearances[data.appearance] === undefined) {
                 console.error( "No appearances specified for content type." );
             }
-            return this.appearances[data[appearance]].add(data);
+            return this.appearances[data.appearance].add(data);
         }
         return data;
     }

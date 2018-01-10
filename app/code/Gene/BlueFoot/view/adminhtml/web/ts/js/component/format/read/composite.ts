@@ -31,11 +31,10 @@ export default class AttributeReaderComposite implements ReadInterface {
                 resolve(result);
             } else {
                 try {
-                    const readersKey = "readers";
-                    loadComponent(this.contentTypeConfig[role][readersKey], (...readers: any[]) => {
+                    loadComponent(this.contentTypeConfig[role].readers, (...readers: any[]) => {
                         const readerPromises: Array<Promise<any>> = [];
-                        for (const aReader of readers) {
-                            const reader = new aReader();
+                        for (const Reader of readers) {
+                            const reader = new Reader();
                             readerPromises.push(reader.read(element));
                         }
                         Promise.all(readerPromises).then((readersData) => {

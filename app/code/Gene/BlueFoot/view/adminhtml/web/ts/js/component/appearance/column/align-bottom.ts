@@ -14,8 +14,7 @@ export default class AlignBottom implements AppearanceInterface {
      * @returns {DataObject}
      */
     public add(data: DataObject): DataObject {
-        const alignSelf = "align_self";
-        data[alignSelf] = "flex-end";
+        data.align_self = "flex-end";
         return data;
     }
 }

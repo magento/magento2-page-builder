@@ -14,8 +14,7 @@ export default class AlignTop implements AppearanceInterface {
      * @returns {DataObject}
      */
     public add(data: DataObject): DataObject {
-        const alignSelf = "align_self";
-        data[alignSelf] = "flex-start";
+        data.align_self = "flex-start";
         return data;
     }
 }

@@ -24,7 +24,7 @@ export default class Default implements ReadInterface {
         const styleAttributes: DataObject = {};
 
         for (let i = 0; i < element.style.length; i ++) {
-            const property = element.style.item(i);
+            const property: any = element.style.item(i);
 
             if (element.style[property] !== "") {
                 styleAttributes[property] = element.style[property];
@@ -49,8 +49,7 @@ export default class Default implements ReadInterface {
         });
 
         // Copy the css classes into the data store
-        const cssClasses = "css_classes";
-        data[cssClasses] = element.className || "";
+        data.css_classes = element.className || "";
 
         return new Promise((resolve: (data: object) => void) => {
             resolve(data);

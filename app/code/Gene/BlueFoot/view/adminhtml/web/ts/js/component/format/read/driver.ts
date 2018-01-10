@@ -39,8 +39,7 @@ export default class Driver implements ReadInterface {
         // Detect if there is a mobile image and update the response
         if (element.querySelector("img:nth-child(2)")
             && element.querySelector("img:nth-child(2)").getAttribute("src")) {
-            const mobileImage = "mobile_image";
-            response[mobileImage] =
+            response.mobile_image =
                 this.generateImageObject(element.querySelector("img:nth-child(2)").getAttribute("src"));
         }
 

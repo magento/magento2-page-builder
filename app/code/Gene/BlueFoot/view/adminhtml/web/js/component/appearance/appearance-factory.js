@@ -22,10 +22,8 @@ define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader,
 
       return new Promise(function (resolve, reject) {
         try {
-          var appearanceKey = "appearances";
-
-          if (data[appearanceKey].length) {
-            (0, _loader)(data[appearanceKey], function () {
+          if (data.appearances.length) {
+            (0, _loader)(data.appearances, function () {
               for (var _len = arguments.length, components = new Array(_len), _key = 0; _key < _len; _key++) {
                 components[_key] = arguments[_key];
               }

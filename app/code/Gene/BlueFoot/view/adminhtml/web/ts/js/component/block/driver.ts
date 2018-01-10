@@ -57,9 +57,8 @@ export default class Driver extends Block {
      * @param {Array} image
      * @returns {string}
      */
-    private getImageUrl(image: []) {
-        const url = "url";
-        const imageUrl = image[0][url];
+    private getImageUrl(image: any[]) {
+        const imageUrl = image[0].url;
         const mediaUrl = Config.getInitConfig("media_url");
         const mediaPath = imageUrl.split(mediaUrl);
         const directive = "{{media url=" + mediaPath[1] + "}}";

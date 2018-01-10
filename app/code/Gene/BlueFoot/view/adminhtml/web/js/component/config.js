@@ -130,15 +130,14 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
 
     Config.updateTemplateValue = function updateTemplateValue(matchKey, matchValue, newValueKey, newValue) {
       var arr = [];
-      var templates = "templates";
-      Config.config[templates].forEach(function (item) {
+      Config.config.templates.forEach(function (item) {
         if (item[matchKey] === matchValue) {
           item[newValueKey] = newValue;
         }
 
         arr.push(item);
       });
-      Config.config[templates] = arr;
+      Config.config.templates = arr;
     };
     /**
      * Retrieve a specific config value from the plugin section
@@ -151,10 +150,9 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
 
     Config.getPluginConfig = function getPluginConfig(plugin, key) {
       var config = Config.initConfig;
-      var configKey = "config";
 
-      if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin][configKey] !== "undefined" && typeof config.plugins[plugin][configKey][key] !== "undefined") {
-        return config.plugins[plugin][configKey][key];
+      if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin].config !== "undefined" && typeof config.plugins[plugin].config[key] !== "undefined") {
+        return config.plugins[plugin].config[key];
       }
 
       return null;

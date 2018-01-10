@@ -122,14 +122,13 @@ export default class Config {
     public static updateTemplateValue(matchKey: string, matchValue: string,
                                       newValueKey: string | number, newValue: string) {
         const arr: any[] = [];
-        const templates = "templates";
-        Config.config[templates].forEach((item: any) => {
+        Config.config.templates.forEach((item: any) => {
             if (item[matchKey] === matchValue) {
                 item[newValueKey] = newValue;
             }
             arr.push(item);
         });
-        Config.config[templates] = arr;
+        Config.config.templates = arr;
     }
 
     /**
@@ -141,10 +140,9 @@ export default class Config {
      */
     public static getPluginConfig(plugin: string, key: string): object | null {
         const config = Config.initConfig;
-        const configKey = "config";
-        if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin][configKey] !== "undefined"
-            && typeof config.plugins[plugin][configKey][key] !== "undefined") {
-            return config.plugins[plugin][configKey][key];
+        if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin].config !== "undefined"
+            && typeof config.plugins[plugin].config[key] !== "undefined") {
+            return config.plugins[plugin].config[key];
         }
 
         return null;

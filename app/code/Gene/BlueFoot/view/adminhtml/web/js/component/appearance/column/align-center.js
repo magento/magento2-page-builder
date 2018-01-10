@@ -18,8 +18,7 @@ define([], function () {
      * @returns {DataObject}
      */
     _proto.add = function add(data) {
-      var alignSelf = "align_self";
-      data[alignSelf] = "center";
+      data.align_self = "center";
       return data;
     };
 

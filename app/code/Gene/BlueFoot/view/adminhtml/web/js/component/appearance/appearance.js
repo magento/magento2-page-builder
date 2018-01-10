@@ -21,14 +21,12 @@ define([], function () {
     var _proto = Appearance.prototype;
 
     _proto.add = function add(data) {
-      var appearance = "appearance";
-
-      if (data[appearance] !== undefined) {
-        if (this.appearances[data[appearance]] === undefined) {
+      if (data.appearance !== undefined) {
+        if (this.appearances[data.appearance] === undefined) {
           console.error("No appearances specified for content type.");
         }
 
-        return this.appearances[data[appearance]].add(data);
+        return this.appearances[data.appearance].add(data);
       }
 
       return data;

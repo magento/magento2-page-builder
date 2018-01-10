@@ -17,9 +17,8 @@ export default class AppearanceFactory {
     public create(data: DataObject): Promise<Appearance> {
         return new Promise((resolve: (Appearance: Appearance) => void, reject: (e: Error) => void) => {
             try {
-                const appearanceKey = "appearances";
-                if (data[appearanceKey].length) {
-                    loadModule(data[appearanceKey], (...components: object[]) => {
+                if (data.appearances.length) {
+                    loadModule(data.appearances, (...components: object[]) => {
                         resolve(new Appearance(this.createAppearanceComponents(components)));
                     });
                 } else {

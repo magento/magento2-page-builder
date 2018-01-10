@@ -13,8 +13,7 @@ export default class AdvancedSlider extends Block {
      * Add a slide into the slider
      */
     public addSlide() {
-        const slideKey = "slide";
-        createBlock(Config.getInitConfig("contentTypes")[slideKey],
+        createBlock(Config.getInitConfig("contentTypes").slide,
             this.parent, this.stage, {}).then((slide) => {
             this.addChild(slide);
             slide.edit.open();

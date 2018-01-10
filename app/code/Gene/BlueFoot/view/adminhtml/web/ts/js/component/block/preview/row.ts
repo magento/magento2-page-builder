@@ -4,13 +4,12 @@
  */
 
 import ko from "knockout";
+import Block from "../block";
 import PreviewBlock from "./block";
-import Block from "../block"
 
 export default class Row extends PreviewBlock {
-    rowStyles: KnockoutComputed<{}>;
-    rowClasses: KnockoutComputed<{}>;
-
+    public rowStyles: KnockoutComputed<{}>;
+    public rowClasses: KnockoutComputed<{}>;
 
     /**
      * @param {Block} parent
@@ -20,24 +19,23 @@ export default class Row extends PreviewBlock {
         super(parent, config);
         this.rowStyles = ko.computed(() => {
             const data = this.data;
-            const backgroundImage = data.background_image && typeof data.background_image()[0] === 'object' ?
-                'url(' + data.background_image()[0].url + ')' : '';
-            let margin, padding;
-            if (data.margins_and_padding && typeof data.margins_and_padding() === 'object' ) {
-                let m = data.margins_and_padding().margin;
-                let p = data.margins_and_padding().padding;
+            const backgroundImage = data.background_image && typeof data.background_image()[0] === "object" ?
+                "url(" + data.background_image()[0].url + ")" : "";
+            let margin;
+            let padding;
+            if (data.margins_and_padding && typeof data.margins_and_padding() === "object" ) {
+                const m = data.margins_and_padding().margin;
+                const p = data.margins_and_padding().padding;
                 margin = `${m.top}px ${m.right}px ${m.bottom}px ${m.left}px`;
                 padding = `${p.top}px ${p.right}px ${p.bottom}px ${p.left}px`;
             } else {
-                margin = '';
-                padding = '';
+                margin = "";
+                padding = "";
             }
             return {
-                backgroundImage,
-                margin,
-                padding,
                 backgroundAttachment: data.background_attachment(),
                 backgroundColor: data.background_color(),
+                backgroundImage,
                 backgroundPosition: data.background_position(),
                 backgroundRepeat: data.background_repeat(),
                 backgroundSize: data.background_size(),
@@ -46,11 +44,13 @@ export default class Row extends PreviewBlock {
                 borderRadius: `${data.border_radius()}px`,
                 borderWidth: `${data.border_width()}px`,
                 color: data.color(),
-                textAlign: data.text_align()
+                margin,
+                padding,
+                textAlign: data.text_align(),
             };
-        })
+        });
         this.rowClasses = ko.computed(() => {
             return this.data.css_classes();
-        })
+        });
     }
 }
