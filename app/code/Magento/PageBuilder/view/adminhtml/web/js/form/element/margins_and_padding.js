@@ -16,7 +16,7 @@ define([
 
     return Abstract.extend({
         defaults: {
-            elementTmpl: 'Gene_BlueFoot/form/element/margins_and_padding',
+            elementTmpl: 'Magento_PageBuilder/form/element/margins_and_padding',
             marginTop: defaultValue,
             marginRight: defaultValue,
             marginBottom: defaultValue,

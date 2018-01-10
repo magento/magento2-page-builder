@@ -3,14 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\ResourceModel;
+namespace Magento\PageBuilder\Model\ResourceModel;
 
 use Magento\Framework\Model\AbstractModel;
 
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {
     /**
-     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
      */
     private $configInterface;
 
@@ -20,14 +20,14 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface
      * @param string|null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType,
-        \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
+        \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface,
         $connectionName = null
     ) {
         parent::__construct($context, $storeManager, $eavEntityType, $connectionName);

@@ -8,12 +8,12 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", "Gene_BlueFoot/js/resource/dropzone/dropzone", "mage/translate"], factory);
+        define(["knockout", "jquery", "Magento_PageBuilder/js/resource/dropzone/dropzone", "mage/translate"], factory);
     } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
         // CommonJS module
         var ko = require("knockout"),
             jQuery = require("jquery"),
-            Dropzone = require("Gene_BlueFoot/js/resource/dropzone/dropzone"),
+            Dropzone = require("Magento_PageBuilder/js/resource/dropzone/dropzone"),
             translate = require("mage/translate");
 
         factory(ko, jQuery, Dropzone, translate);

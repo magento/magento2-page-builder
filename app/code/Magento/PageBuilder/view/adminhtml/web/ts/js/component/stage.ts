@@ -133,7 +133,7 @@ export default class Stage extends EditableArea implements StageInterface {
     }
 
     /**
-     * Determines if bluefoot is in fullscreen mode
+     * Determines if pagebuilder is in fullscreen mode
      *
      * @returns {boolean}
      */

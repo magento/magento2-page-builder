@@ -19,18 +19,18 @@
         <dataScope>data</dataScope>
         <namespace>column_form</namespace>
         <buttons>
-            <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
-            <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
-            <button name="close" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\CloseButton"/>
+            <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
+            <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
+            <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
     <dataSource name="column_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="column_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+        <dataProvider name="column_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -156,9 +156,9 @@
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
                         <maxFileSize>2097152</maxFileSize>
                         <uploaderConfig>
-                            <param xsi:type="string" name="url">bluefoot/contenttype/image_upload</param>
+                            <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
                         </uploaderConfig>
-                        <previewTmpl>Gene_BlueFoot/form/element/uploader/preview.html</previewTmpl>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview.html</previewTmpl>
                     </settings>
                 </fileUploader>
             </formElements>
@@ -332,7 +332,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Gene_BlueFoot/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>

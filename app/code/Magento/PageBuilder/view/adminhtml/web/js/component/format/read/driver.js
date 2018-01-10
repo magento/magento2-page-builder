@@ -37,7 +37,7 @@ define(["../../../component/config"], function (_config) {
       return Promise.resolve(response);
     };
     /**
-     * Generate the image object
+     * Magentorate the image object
      *
      * @param {string} src
      * @returns {ImageObject}

@@ -59,7 +59,7 @@ export default class Block extends Structural implements BlockInterface {
         if (this.config.preview_template) {
             return this.config.preview_template;
         }
-        return "Gene_BlueFoot/component/block/preview/abstract.html";
+        return "Magento_PageBuilder/component/block/preview/abstract.html";
     }
 
     /**
@@ -71,6 +71,6 @@ export default class Block extends Structural implements BlockInterface {
         if (this.config.render_template) {
             return this.config.render_template;
         }
-        return "Gene_BlueFoot/component/block/render/abstract.html";
+        return "Magento_PageBuilder/component/block/render/abstract.html";
     }
 }

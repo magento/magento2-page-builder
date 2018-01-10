@@ -10,7 +10,7 @@ import { OptionInterface } from "./options/option.d";
 
 export class Options {
     public parent: Structural;
-    public template: string = "Gene_BlueFoot/component/stage/structural/options.html";
+    public template: string = "Magento_PageBuilder/component/stage/structural/options.html";
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
     /**

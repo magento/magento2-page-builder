@@ -17,7 +17,7 @@ define(["./abstract", "../../config", "../../../utils/array", "./options/option"
       var _this;
 
       _this = _Structural.call(this, parent, stage) || this;
-      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/column.html';
+      _this.previewTemplate = 'Magento_PageBuilder/component/block/preview/column.html';
       _this.columnDefinition = _knockout.observable(_config.getInitConfig('column_definitions')[0]);
       _this.widthClasses = _knockout.computed(function () {
         return this.columnDefinition()['className'];

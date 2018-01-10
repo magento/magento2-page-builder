@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import "Gene_BlueFoot/js/resource/slick/slick";
+import "Magento_PageBuilder/js/resource/slick/slick";
 import $ from "jquery";
 import _, {Dictionary} from "underscore";
 import Block from "../block";

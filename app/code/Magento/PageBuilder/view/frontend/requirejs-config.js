@@ -7,10 +7,10 @@
 
 var config = {
     paths: {
-        'slick': 'Gene_BlueFoot/js/resource/jquery/slick/slick',
-        'fancybox': 'Gene_BlueFoot/js/resource/jquery/fancybox/jquery.fancybox.pack',
-        'highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
-        'bg-parallax': 'Gene_BlueFoot/js/resource/bg-parallax/bg-parallax.min'
+        'slick': 'Magento_PageBuilder/js/resource/jquery/slick/slick',
+        'fancybox': 'Magento_PageBuilder/js/resource/jquery/fancybox/jquery.fancybox.pack',
+        'highlight': 'Magento_PageBuilder/js/resource/highlight/highlight.pack',
+        'bg-parallax': 'Magento_PageBuilder/js/resource/bg-parallax/bg-parallax.min'
     },
     shim: {
         'slick': {

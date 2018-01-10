@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Config;
+namespace Magento\PageBuilder\Model\Config;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
@@ -21,8 +21,8 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * Constructor
      *
      * @param \Magento\Framework\Config\FileResolverInterface $fileResolver
-     * @param \Gene\BlueFoot\Model\Config\Converter $converter
-     * @param \Gene\BlueFoot\Model\Config\SchemaLocator $schemaLocator
+     * @param \Magento\PageBuilder\Model\Config\Converter $converter
+     * @param \Magento\PageBuilder\Model\Config\SchemaLocator $schemaLocator
      * @param \Magento\Framework\Config\ValidationStateInterface $validationState
      * @param string $fileName
      * @param array $idAttributes
@@ -31,8 +31,8 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      */
     public function __construct(
         \Magento\Framework\Config\FileResolverInterface $fileResolver,
-        \Gene\BlueFoot\Model\Config\Converter $converter,
-        \Gene\BlueFoot\Model\Config\SchemaLocator $schemaLocator,
+        \Magento\PageBuilder\Model\Config\Converter $converter,
+        \Magento\PageBuilder\Model\Config\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         $fileName = 'content_types.xml',
         $idAttributes = [],

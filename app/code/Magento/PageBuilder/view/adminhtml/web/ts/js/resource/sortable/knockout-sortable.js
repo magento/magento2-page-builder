@@ -27,31 +27,31 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                 left: 0
             },
             cursor: 'move',
-            connectWith: '.bluefoot-sortable',
+            connectWith: '.pagebuilder-sortable',
             helper: function (event, element) {
                 var ele = jQuery('<div />');
 
-                if (element.children().first().hasClass('bluefoot-entity')) {
-                    ele.addClass('bluefoot-entity-helper').data('sorting', true);
+                if (element.children().first().hasClass('pagebuilder-entity')) {
+                    ele.addClass('pagebuilder-entity-helper').data('sorting', true);
                 } else {
-                    ele.addClass('bluefoot-structure-helper').data('sorting', true);
+                    ele.addClass('pagebuilder-structure-helper').data('sorting', true);
                 }
                 return ele;
             },
             appendTo: document.body,
             placeholder: {
                 element: function (clone) {
-                    if (clone.hasClass('bluefoot-draggable-block')) {
-                        return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
+                    if (clone.hasClass('pagebuilder-draggable-block')) {
+                        return jQuery('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
                     }
 
-                    return jQuery('<div />').addClass('bluefoot-placeholder-sortable');
+                    return jQuery('<div />').addClass('pagebuilder-placeholder-sortable');
                 },
                 update: function () {
                     return;
                 }
             },
-            sortableClass: 'bluefoot-sortable'
+            sortableClass: 'pagebuilder-sortable'
         },
 
         /**

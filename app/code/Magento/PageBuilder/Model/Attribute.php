@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model;
+namespace Magento\PageBuilder\Model;
 
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface;
@@ -13,14 +13,14 @@ class Attribute extends \Magento\Eav\Model\Attribute
     /**
      * Name of the module
      */
-    const MODULE_NAME = 'Gene_BlueFoot';
+    const MODULE_NAME = 'Magento_PageBuilder';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix = 'gene_bluefoot_entity_attribute';
+    protected $_eventPrefix = 'gene_pagebuilder_entity_attribute';
 
     /**
      * Prefix of model events object
@@ -119,17 +119,17 @@ class Attribute extends \Magento\Eav\Model\Attribute
      */
     protected function _construct()
     {
-        $this->_init(\Gene\BlueFoot\Model\ResourceModel\Attribute::class);
+        $this->_init(\Magento\PageBuilder\Model\ResourceModel\Attribute::class);
     }
 
     /**
      * Get the data model for an entity
      *
-     * @param \Gene\BlueFoot\Model\Entity $entity
+     * @param \Magento\PageBuilder\Model\Entity $entity
      *
      * @return bool|mixed
      */
-    public function getDataModel(\Gene\BlueFoot\Model\Entity $entity)
+    public function getDataModel(\Magento\PageBuilder\Model\Entity $entity)
     {
         $model = $this->getData('data_model');
         if ($model) {

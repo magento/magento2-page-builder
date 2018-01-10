@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
+namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
@@ -25,7 +25,7 @@ class CloseButton implements ButtonProviderInterface
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'bluefoot_modal_form.bluefoot_modal_form.modal',
+                                'targetName' => 'pagebuilder_modal_form.pagebuilder_modal_form.modal',
                                 'actionName' => 'closeModal',
                                 'params' => [
                                     false,

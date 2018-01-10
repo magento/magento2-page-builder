@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
+namespace Magento\PageBuilder\Block\Adminhtml\ContentType;
 
-use Gene\BlueFoot\Model\Config\ConfigInterface;
+use Magento\PageBuilder\Model\Config\ConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 
 class ComponentList extends \Magento\Framework\View\Element\Template

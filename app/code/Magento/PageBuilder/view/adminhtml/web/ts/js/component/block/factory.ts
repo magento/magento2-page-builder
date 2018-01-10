@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Gene_BlueFoot/js/component/loader";
+import loadModule from "Magento_PageBuilder/js/component/loader";
 import AppearanceFactory from "../appearance/appearance-factory";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
@@ -21,7 +21,7 @@ interface ConfigObject {
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigObject): string {
-    return config.component || "Gene_BlueFoot/js/component/block/block";
+    return config.component || "Magento_PageBuilder/js/component/block/block";
 }
 
 /**

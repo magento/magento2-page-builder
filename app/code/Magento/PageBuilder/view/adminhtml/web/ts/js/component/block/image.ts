@@ -52,7 +52,7 @@ export default class Image extends Block {
             return;
         }
         return {
-            class: (data.lightbox === "Yes" ? "bluefoot-lightbox" : ""),
+            class: (data.lightbox === "Yes" ? "pagebuilder-lightbox" : ""),
             href: this.getImageUrl(data.image),
             title: data.title_tag,
         };

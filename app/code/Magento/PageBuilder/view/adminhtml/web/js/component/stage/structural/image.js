@@ -24,8 +24,8 @@ define(["./abstract", "./column", "./options/option", "ko-resizable"], function 
       var _this;
 
       _this = _Structural.call(this, parent, stage) || this;
-      _this.previewTemplate = 'Gene_BlueFoot/component/block/preview/image.html';
-      _this.renderTemplate = 'Gene_BlueFoot/component/block/render/image.html';
+      _this.previewTemplate = 'Magento_PageBuilder/component/block/preview/image.html';
+      _this.renderTemplate = 'Magento_PageBuilder/component/block/render/image.html';
       _this.config.name = 'row';
       return _this;
     }

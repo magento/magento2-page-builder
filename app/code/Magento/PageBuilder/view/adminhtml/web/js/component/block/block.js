@@ -55,7 +55,7 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
           return this.config.preview_template;
         }
 
-        return "Gene_BlueFoot/component/block/preview/abstract.html";
+        return "Magento_PageBuilder/component/block/preview/abstract.html";
       }
       /**
        * Retrieve the render template
@@ -70,7 +70,7 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
           return this.config.render_template;
         }
 
-        return "Gene_BlueFoot/component/block/render/abstract.html";
+        return "Magento_PageBuilder/component/block/render/abstract.html";
       }
     }]);
 

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Gene_BlueFoot/js/component/loader";
+import loadModule from "Magento_PageBuilder/js/component/loader";
 import Block from "../block/block";
 import PreviewBlock from "../block/preview/block";
 import Config from "../config";

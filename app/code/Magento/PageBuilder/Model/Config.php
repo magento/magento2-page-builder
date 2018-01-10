@@ -3,21 +3,21 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model;
+namespace Magento\PageBuilder\Model;
 
-class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Model\Config\ConfigInterface
+class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\Config\ConfigInterface
 {
     /**
      * Constructor
      *
-     * @param \Gene\BlueFoot\Model\Config\Reader $reader
+     * @param \Magento\PageBuilder\Model\Config\Reader $reader
      * @param \Magento\Framework\Config\CacheInterface $cache
      * @param string $cacheId
      */
     public function __construct(
-        \Gene\BlueFoot\Model\Config\Reader $reader,
+        \Magento\PageBuilder\Model\Config\Reader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
-        $cacheId = 'gene_bluefoot_content_types'
+        $cacheId = 'gene_pagebuilder_content_types'
     ) {
         parent::__construct($reader, $cache, $cacheId);
     }

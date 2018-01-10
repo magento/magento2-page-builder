@@ -3,22 +3,22 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Plugin\Cms\Block;
+namespace Magento\PageBuilder\Plugin\Cms\Block;
 
 class Page
 {
     /**
-     * @var \Gene\BlueFoot\Model\Template\Filter
+     * @var \Magento\PageBuilder\Model\Template\Filter
      */
     private $filter;
 
     /**
      * Constructor
      *
-     * @param \Gene\BlueFoot\Model\Template\Filter $filter
+     * @param \Magento\PageBuilder\Model\Template\Filter $filter
      */
     public function __construct(
-        \Gene\BlueFoot\Model\Template\Filter $filter
+        \Magento\PageBuilder\Model\Template\Filter $filter
     ) {
         $this->filter = $filter;
     }

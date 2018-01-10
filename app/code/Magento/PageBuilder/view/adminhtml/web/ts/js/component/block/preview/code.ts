@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import hljs from "bluefoot/highlight";
+import hljs from "pagebuilder/highlight";
 import ko from "knockout";
 import {Dictionary} from "underscore";
 import Block from "../block";

@@ -3,15 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Stage;
+namespace Magento\PageBuilder\Model\Stage;
 
 class Config extends \Magento\Framework\Model\AbstractModel
 {
-    const DEFAULT_COMPONENT = 'Gene_BlueFoot/js/component/block/block';
-    const DEFAULT_PREVIEW_COMPONENT = 'Gene_BlueFoot/js/component/block/preview/block';
+    const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/component/block/block';
+    const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/component/block/preview/block';
 
     /**
-     * @var \Gene\BlueFoot\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
      */
     private $configInterface;
 
@@ -30,7 +30,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
@@ -40,7 +40,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface,
+        \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,

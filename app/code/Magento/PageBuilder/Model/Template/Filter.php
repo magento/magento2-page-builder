@@ -3,12 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Template;
+namespace Magento\PageBuilder\Model\Template;
 
 class Filter
 {
     /**
-     * @var \Gene\BlueFoot\Model\Config
+     * @var \Magento\PageBuilder\Model\Config
      */
     private $config;
 
@@ -30,13 +30,13 @@ class Filter
     /**
      * Constructor
      *
-     * @param \Gene\BlueFoot\Model\Config $config
+     * @param \Magento\PageBuilder\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\Layout $layout
      */
     public function __construct(
-        \Gene\BlueFoot\Model\Config $config,
+        \Magento\PageBuilder\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\Layout $layout

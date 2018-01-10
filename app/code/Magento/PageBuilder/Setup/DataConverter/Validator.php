@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 
@@ -26,7 +26,7 @@ class Validator
     }
 
     /**
-     * Check if a JSON string is a valid BlueFoot content, if we require an entire stage we will validate the
+     * Check if a JSON string is a valid PageBuilder content, if we require an entire stage we will validate the
      * first child is a row
      *
      * @param string $json

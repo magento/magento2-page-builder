@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Controller\Adminhtml\ContentType\Image;
+namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
 use Magento\Framework\Controller\ResultFactory;
 
@@ -12,7 +12,7 @@ use Magento\Framework\Controller\ResultFactory;
  */
 class Upload extends \Magento\Backend\App\Action
 {
-    const UPLOAD_DIR = 'wysiwyg' . DIRECTORY_SEPARATOR . 'bluefoot';
+    const UPLOAD_DIR = 'wysiwyg' . DIRECTORY_SEPARATOR . 'pagebuilder';
 
     /**
      * @var \Magento\Framework\Filesystem\DirectoryList
@@ -94,7 +94,7 @@ class Upload extends \Magento\Backend\App\Action
                 'errorcode' => $e->getCode()
             ];
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON, ['data' => $result]);
+        return $this->resultJsonFactory->create()->setData($result);
     }
 
     /**

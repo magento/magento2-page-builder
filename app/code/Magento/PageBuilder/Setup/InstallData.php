@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Magento\PageBuilder\Setup;
 
 use Magento\Framework\Module\FullModuleList;
 use Magento\Framework\Setup\InstallDataInterface;
@@ -40,14 +40,14 @@ class InstallData implements InstallDataInterface
     }
 
     /**
-     * Detect if BlueFoot was previously installed and convert data to the new format
+     * Detect if PageBuilder was previously installed and convert data to the new format
      *
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
      * @param \Magento\Framework\Setup\ModuleContextInterface $context
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        //if ($this->fullModuleList->has('Gene_BlueFoot')) {
+        //if ($this->fullModuleList->has('Magento_PageBuilder')) {
             $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
         //}
     }

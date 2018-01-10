@@ -26,7 +26,7 @@ export default class Image extends PreviewBlock {
      */
     public getPreviewIconAttributes() {
         if (this.data.image() === "" || this.data.image() === undefined) {
-            return {class: "icon-bluefoot-image", style: "visibility: visible"};
+            return {class: "icon-pagebuilder-image", style: "visibility: visible"};
         }
         return {style: "visibility: hidden"};
     }

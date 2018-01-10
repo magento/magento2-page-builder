@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Config;
+namespace Magento\PageBuilder\Model\Config;
 
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {
@@ -27,7 +27,7 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
     public function __construct(
         \Magento\Framework\Module\Dir\Reader $moduleReader
     ) {
-        $etcDir = $moduleReader->getModuleDir('etc', 'Gene_BlueFoot');
+        $etcDir = $moduleReader->getModuleDir('etc', 'Magento_PageBuilder');
         $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'content_types.xsd';
         $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'content_types.xsd';
     }

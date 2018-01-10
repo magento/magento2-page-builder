@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Attribute\Source\Entity;
+namespace Magento\PageBuilder\Model\Attribute\Source\Entity;
 
 class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
@@ -24,7 +24,7 @@ class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
             $entityValues = [];
 
             if ($entities) {
-                /* @var $entity \Gene\BlueFoot\Model\Entity */
+                /* @var $entity \Magento\PageBuilder\Model\Entity */
                 foreach ($entities as $entity) {
                     $label = ($entity->getTitle() ?
                             $entity->getTitle() : '{no title}') . ' [ID: ' . $entity->getId() . ']';

@@ -16,16 +16,16 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'Gene_BlueFoot/js/component/stage',
-    'Gene_BlueFoot/js/component/stage/build',
-    'Gene_BlueFoot/js/component/stage/panel',
+    'Magento_PageBuilder/js/component/stage',
+    'Magento_PageBuilder/js/component/stage/build',
+    'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
 ], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
     'use strict';
 
     /**
-     * Extend the original WYSIWYG with added BlueFoot functionality
+     * Extend the original WYSIWYG with added PageBuilder functionality
      */
     return Wysiwyg.extend({
         defaults: {
@@ -94,10 +94,10 @@ define([
             var buildInstance = new Build(this.initialValue);
 
             this.domNode = node;
-            this.bindBlueFootButton(node);
+            this.bindPageBuilderButton(node);
             if (buildInstance.canBuild()) {
                 this.loading(true);
-                return this.buildBlueFoot(false, buildInstance);
+                return this.buildPageBuilder(false, buildInstance);
             }
 
             $(node).bindings({
@@ -116,21 +116,21 @@ define([
         },
 
         /**
-         * Bind a click event to the BlueFoot init button
+         * Bind a click event to the PageBuilder init button
          *
          * @param node
          */
-        bindBlueFootButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-gene-bluefoot').on('click', this.buildBlueFoot.bind(this));
+        bindPageBuilderButton: function (node) {
+            $(node).prevAll('.buttons-set').find('.init-gene-pagebuilder').on('click', this.buildPageBuilder.bind(this));
         },
 
         /**
-         * Handle a click event requesting that we build BlueFoot
+         * Handle a click event requesting that we build PageBuilder
          *
          * @param event
          * @param buildInstance
          */
-        buildBlueFoot: function (event, buildInstance) {
+        buildPageBuilder: function (event, buildInstance) {
             var self = this;
 
             if (event) {
@@ -157,12 +157,12 @@ define([
         },
 
         /**
-         * Return the BlueFoot stage templage
+         * Return the PageBuilder stage templage
          *
          * @returns {string}
          */
         getStageTemplate: function () {
-            return 'Gene_BlueFoot/component/stage.html';
+            return 'Magento_PageBuilder/component/stage.html';
         },
 
         /**

@@ -6,97 +6,97 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Ui\Component\Form\Element\Wysiwyg" type="Gene\BlueFoot\Component\Form\Element\Wysiwyg" />
-    <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Gene\BlueFoot\Component\Form\Element\Wysiwyg" />
-    <preference for="Magento\Framework\Data\Form\Element\Editor" type="Gene\BlueFoot\Block\Element\Editor" />
-    <preference for="Gene\BlueFoot\Model\Config\ConfigInterface" type="Gene\BlueFoot\Model\Config" />
-    <preference for="Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface" type="Gene\BlueFoot\Setup\DataConverter\StyleExtractor" />
+    <preference for="Magento\Ui\Component\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
+    <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
+    <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
+    <preference for="Magento\PageBuilder\Model\Config\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
+    <preference for="Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface" type="Magento\PageBuilder\Setup\DataConverter\StyleExtractor" />
     <type name="Magento\Cms\Block\Page">
-        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Page" />
+        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Page" />
     </type>
     <type name="Magento\Cms\Block\Block">
-        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Block" />
+        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Block" />
     </type>
     <type name="Magento\Eav\Model\Entity\Setup\PropertyMapper\Composite">
         <arguments>
             <argument name="propertyMappers" xsi:type="array">
-                <item name="bluefoot" xsi:type="string">Gene\BlueFoot\Model\ResourceModel\Setup\PropertyMapper</item>
+                <item name="pagebuilder" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Setup\PropertyMapper</item>
             </argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Model\Stage\Config\UiComponentConfig">
+    <type name="Magento\PageBuilder\Model\Stage\Config\UiComponentConfig">
         <arguments>
             <argument name="configFactory" xsi:type="object">uiComponentConfigFactory</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\RendererPool">
+    <type name="Magento\PageBuilder\Setup\DataConverter\RendererPool">
         <arguments>
             <argument name="renderers" xsi:type="array">
-                <item name="default" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Unmigrated</item>
-                <item name="row" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Row</item>
-                <item name="column" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Column</item>
-                <item name="heading" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Heading</item>
-                <item name="anchor" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor</item>
-                <item name="hr" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Divider</item>
-                <item name="textarea" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea</item>
-                <item name="html" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Html</item>
-                <item name="advanced_slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider</item>
-                <item name="advanced_slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
-                <item name="image" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Image</item>
-                <item name="buttons" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons</item>
-                <item name="button_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem</item>
-                <item name="video" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Video</item>
-                <item name="slider" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Slider</item>
-                <item name="slider_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem</item>
-                <item name="accordion" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion</item>
-                <item name="accordion_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem</item>
-                <item name="map" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Map</item>
-                <item name="code" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Code</item>
-                <item name="newsletter" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter</item>
-                <item name="tabs" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs</item>
-                <item name="tabs_item" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem</item>
-                <item name="search" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Search</item>
-                <item name="static_block" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Block</item>
-                <item name="driver" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Driver</item>
-                <item name="product_list" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\ProductList</item>
-                <item name="product" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\Renderer\Product</item>
+                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Unmigrated</item>
+                <item name="row" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Row</item>
+                <item name="column" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Column</item>
+                <item name="heading" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Heading</item>
+                <item name="anchor" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Anchor</item>
+                <item name="hr" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Divider</item>
+                <item name="textarea" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Textarea</item>
+                <item name="html" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Html</item>
+                <item name="advanced_slider" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider</item>
+                <item name="advanced_slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
+                <item name="image" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Image</item>
+                <item name="buttons" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Buttons</item>
+                <item name="button_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ButtonItem</item>
+                <item name="video" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Video</item>
+                <item name="slider" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Slider</item>
+                <item name="slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\SliderItem</item>
+                <item name="accordion" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Accordion</item>
+                <item name="accordion_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AccordionItem</item>
+                <item name="map" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Map</item>
+                <item name="code" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Code</item>
+                <item name="newsletter" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Newsletter</item>
+                <item name="tabs" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Tabs</item>
+                <item name="tabs_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\TabsItem</item>
+                <item name="search" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Search</item>
+                <item name="static_block" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Block</item>
+                <item name="driver" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Driver</item>
+                <item name="product_list" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ProductList</item>
+                <item name="product" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Product</item>
             </argument>
         </arguments>
     </type>
-    <virtualType name="ChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="ChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children</argument>
         </arguments>
     </virtualType>
-    <virtualType name="AdvancedSliderChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="AdvancedSliderChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/advanced_slider_items</argument>
         </arguments>
     </virtualType>
-    <virtualType name="SliderChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="SliderChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/slider_items</argument>
         </arguments>
     </virtualType>
-    <virtualType name="AccordionChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="AccordionChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/accordion_items</argument>
         </arguments>
     </virtualType>
-    <virtualType name="ButtonsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="ButtonsChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/button_items</argument>
         </arguments>
     </virtualType>
-    <virtualType name="TabsChildrenExtractor" type="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <virtualType name="TabsChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
         <arguments>
             <argument name="path" xsi:type="string">children/tabs_items</argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool">
+    <type name="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractorPool">
         <arguments>
             <argument name="extractors" xsi:type="array">
-                <item name="default" xsi:type="object">Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Dummy</item>
+                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Dummy</item>
                 <item name="row" xsi:type="object">ChildrenExtractor</item>
                 <item name="column" xsi:type="object">ChildrenExtractor</item>
                 <item name="advanced_slider" xsi:type="object">AdvancedSliderChildrenExtractor</item>
@@ -107,7 +107,7 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="HeadingEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="HeadingEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -115,21 +115,21 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="TextareaEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="TextareaEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="textarea" xsi:type="string">textarea</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="HtmlEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="HtmlEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="html" xsi:type="string">html</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="ImageEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="ImageEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="image" xsi:type="string">image</item>
@@ -141,7 +141,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="VideoEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="VideoEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="video_height" xsi:type="string">video_height</item>
@@ -150,24 +150,24 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Heading">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Heading">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">HeadingEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="AnchorEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="AnchorEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="anchor_id" xsi:type="string">anchor_id</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Anchor">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Anchor">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">AnchorEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="DividerEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="DividerEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="color" xsi:type="string">color</item>
@@ -176,12 +176,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Divider">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Divider">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">DividerEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="AdvancedSliderEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="AdvancedSliderEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="autoplay" xsi:type="string">autoplay</item>
@@ -194,12 +194,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSlider">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="AdvancedSliderItemEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="AdvancedSliderItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -211,12 +211,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AdvancedSliderItem">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="SliderEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="SliderEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="autoplay" xsi:type="string">autoplay</item>
@@ -229,12 +229,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Slider">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Slider">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SliderEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="SliderItemEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="SliderItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -245,19 +245,19 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\SliderItem">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\SliderItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SliderItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="AccordionEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader" />
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Accordion">
+    <virtualType name="AccordionEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader" />
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Accordion">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">AccordionEavAttributeLoader</argument>
             <argument name="itemEavAttributeLoader" xsi:type="object">AccordionItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="AccordionItemEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="AccordionItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="title" xsi:type="string">title</item>
@@ -266,39 +266,39 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\AccordionItem">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AccordionItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">AccordionItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Textarea">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Textarea">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">TextareaEavAttributeLoader</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Html">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Html">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">HtmlEavAttributeLoader</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Image">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Image">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ImageEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="ButtonsEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="ButtonsEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="button_items" xsi:type="string">button_items</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Buttons">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Buttons">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ButtonsEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="ButtonItemEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="ButtonItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="link_text" xsi:type="string">link_text</item>
@@ -306,24 +306,24 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ButtonItem">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\ButtonItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ButtonItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="TabsEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="TabsEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="tabs_item" xsi:type="string">tabs_item</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Tabs">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Tabs">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">TabsEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="TabsItemEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="TabsItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="textarea" xsi:type="string">textarea</item>
@@ -331,17 +331,17 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\TabsItem">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\TabsItem">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">TabsItemEavAttributeLoader</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Video">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Video">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">VideoEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="MapEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="MapEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="map" xsi:type="string">map</item>
@@ -350,12 +350,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Map">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Map">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">MapEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="DriverEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="DriverEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="alt_tag" xsi:type="string">alt_tag</item>
@@ -368,12 +368,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Driver">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Driver">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">DriverEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="ProductEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="ProductEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="product_display" xsi:type="string">product_display</item>
@@ -381,24 +381,24 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Product">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Product">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ProductEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="CodeEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="CodeEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="html" xsi:type="string">html</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Code">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Code">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">CodeEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="NewsletterEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="NewsletterEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="button_text" xsi:type="string">button_text</item>
@@ -408,36 +408,36 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Newsletter">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Newsletter">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">NewsletterEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="SearchEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="SearchEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="placeholder" xsi:type="string">placeholder</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Search">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Search">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SearchEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="BlockEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="BlockEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="block_id" xsi:type="string">block_id</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\Block">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Block">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">BlockEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="ProductListEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="ProductListEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="category_id" xsi:type="string">category_id</item>
@@ -446,12 +446,12 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Gene\BlueFoot\Setup\DataConverter\Renderer\ProductList">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\ProductList">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ProductListEavAttributeLoader</argument>
         </arguments>
     </type>
-    <type name="Gene\BlueFoot\Setup\DataConverter\TreeConverter">
+    <type name="Magento\PageBuilder\Setup\DataConverter\TreeConverter">
         <arguments>
             <argument name="unseparatableContentTypes" xsi:type="array">
                 <item name="advanced_slider_item" xsi:type="string">advanced_slider_item</item>

@@ -48,7 +48,7 @@ export default class Driver implements ReadInterface {
     }
 
     /**
-     * Generate the image object
+     * Magentorate the image object
      *
      * @param {string} src
      * @returns {ImageObject}

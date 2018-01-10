@@ -40,7 +40,7 @@ define(["./block"], function (_block) {
     _proto.getPreviewIconAttributes = function getPreviewIconAttributes() {
       if (this.data.image() === "" || this.data.image() === undefined) {
         return {
-          class: "icon-bluefoot-image",
+          class: "icon-pagebuilder-image",
           style: "visibility: visible"
         };
       }

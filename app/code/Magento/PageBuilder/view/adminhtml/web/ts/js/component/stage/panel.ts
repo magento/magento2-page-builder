@@ -16,7 +16,7 @@ import { Block as GroupBlock } from "./panel/group/block";
 import { load as loadPreviews } from "./previews";
 
 export default class Panel extends uiComponent implements PanelInterface {
-    public componentTemplate: string = "Gene_BlueFoot/component/stage/panel.html";
+    public componentTemplate: string = "Magento_PageBuilder/component/stage/panel.html";
     public defaults: object = {
         groups: [],
         isCollapsed: false,

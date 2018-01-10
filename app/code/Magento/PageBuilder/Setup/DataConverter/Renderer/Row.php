@@ -3,10 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
+namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
-use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
-use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
+use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
+use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
  * Render row to PageBuilder format

@@ -24,8 +24,8 @@ export interface InsertFormComponent {
 }
 
 export default class Edit {
-    public modal: ModalComponent = registry.get("bluefoot_modal_form.bluefoot_modal_form.modal");
-    public insertForm: InsertFormComponent = registry.get("bluefoot_modal_form.bluefoot_modal_form.modal.insert_form");
+    public modal: ModalComponent = registry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal");
+    public insertForm: InsertFormComponent = registry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal.insert_form");
     public instance: Structural;
     public store: DataStore;
 

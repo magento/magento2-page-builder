@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
 
@@ -39,7 +39,7 @@ class BlueFootToPageBuilder implements DataConverterInterface
     }
 
     /**
-     * Convert from legacy BlueFoot format into new storage format
+     * Convert from legacy PageBuilder format into new storage format
      *
      * @param string $value
      * @return string

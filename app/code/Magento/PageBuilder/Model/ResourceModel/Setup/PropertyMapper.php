@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\ResourceModel\Setup;
+namespace Magento\PageBuilder\Model\ResourceModel\Setup;
 
 class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstract
 {
@@ -18,7 +18,7 @@ class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstr
     public function map(array $input, $entityTypeId)
     {
         return [
-            /* Additional BlueFoot eav attribute table */
+            /* Additional PageBuilder eav attribute table */
             'content_scope'           => $this->_getValue($input, 'content_scope'),
             'frontend_input_renderer' => $this->_getValue($input, 'frontend_input_renderer'),
             'is_wysiwyg_enabled'      => $this->_getValue($input, 'is_wysiwyg_enabled'),

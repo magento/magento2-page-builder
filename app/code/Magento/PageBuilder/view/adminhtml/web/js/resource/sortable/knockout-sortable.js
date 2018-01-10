@@ -21,13 +21,13 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
         defaults: {
             tolerance: 'pointer',
             cursor: 'move',
-            connectWith: '.bluefoot-sortable',
+            connectWith: '.pagebuilder-sortable',
             helper: function (event, element) {
                 var ele;
 
-                if (element.children().first().hasClass('bluefoot-entity')) {
+                if (element.children().first().hasClass('pagebuilder-entity')) {
                     ele = jQuery('<div />');
-                    ele.addClass('bluefoot-entity-helper').data('sorting', true);
+                    ele.addClass('pagebuilder-entity-helper').data('sorting', true);
                 } else {
                     ele = element.css('opacity', 0.5);
                 }
@@ -36,16 +36,16 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
             appendTo: document.body,
             placeholder: {
                 element: function (clone) {
-                    if (clone.hasClass('bluefoot-draggable-block')) {
-                        return jQuery('<div />').addClass('bluefoot-draggable-block bluefoot-placeholder').append(clone.html());
+                    if (clone.hasClass('pagebuilder-draggable-block')) {
+                        return jQuery('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
                     }
-                    return jQuery('<div />').addClass('bluefoot-placeholder-sortable');
+                    return jQuery('<div />').addClass('pagebuilder-placeholder-sortable');
                 },
                 update: function () {
                     return;
                 }
             },
-            sortableClass: 'bluefoot-sortable'
+            sortableClass: 'pagebuilder-sortable'
         },
 
         /**
@@ -126,7 +126,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
          */
         onSortStop: function (event, ui) {
             // Always remove the sorting original class from an element
-            ui.item.removeClass('bluefoot-sorting-original');
+            ui.item.removeClass('pagebuilder-sorting-original');
 
             var block = getViewModelFromUi(ui),
                 eventData = {

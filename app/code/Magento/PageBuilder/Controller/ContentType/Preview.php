@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Controller\ContentType;
+namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
 
@@ -15,7 +15,7 @@ class Preview extends \Magento\Framework\App\Action\Action
     private $resultJsonFactory;
 
     /**
-     * @var \Gene\BlueFoot\Model\Config
+     * @var \Magento\PageBuilder\Model\Config
      */
     private $config;
 
@@ -29,13 +29,13 @@ class Preview extends \Magento\Framework\App\Action\Action
      *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Gene\BlueFoot\Model\Config $config
+     * @param \Magento\PageBuilder\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Gene\BlueFoot\Model\Config $config,
+        \Magento\PageBuilder\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory
     ) {
         parent::__construct($context);
@@ -81,6 +81,6 @@ class Preview extends \Magento\Framework\App\Action\Action
                 'errorcode' => $e->getCode()
             ];
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON, ['data' => $result]);
+        return $this->resultJsonFactory->create()->setData($result);
     }
 }

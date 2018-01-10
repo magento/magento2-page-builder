@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\Stage\Config;
+namespace Magento\PageBuilder\Model\Stage\Config;
 
 use Magento\Framework\Config\DataInterfaceFactory;
 use Magento\Ui\Config\Converter;

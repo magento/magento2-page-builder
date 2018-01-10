@@ -7,7 +7,7 @@
 
 <?php
 /**
- * @var \Gene\BlueFoot\Block\ContentType\ProductList $block
+ * @var \Magento\PageBuilder\Block\ContentType\ProductList $block
  */
 
 $uniqueIdentifier = uniqid();
@@ -18,7 +18,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 <?php if ($_productCollection !== false && $_productCollection->count()): ?>
     <?php
     $viewMode = 'grid';
-    $image = 'bluefoot_page_list';
+    $image = 'pagebuilder_page_list';
     $showDescription = false;
     $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     /**
@@ -26,8 +26,8 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
      */
     $pos = $block->getPositioned();
     ?>
-    <div id="bluefoot-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>"
-         class="products bluefoot-product-list <?php /* @escapeNotVerified */
+    <div id="pagebuilder-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>"
+         class="products pagebuilder-product-list <?php /* @escapeNotVerified */
          echo $viewMode; ?> products-<?php /* @escapeNotVerified */
          echo $viewMode; ?> <?php echo $block->escapeHtmlAttr($block->getClass()); ?>" style="<?php echo $block->escapeHtmlAttr($block->getStyle()); ?>">
         <?php $iterator = 1; ?>
@@ -54,7 +54,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         <?php
                         $_productNameStripped = $block->stripTags($_product->getName(), null, true);
                         ?>
-                        <div class="bluefoot-full-width bluefoot-normalise-heights">
+                        <div class="pagebuilder-full-width pagebuilder-normalise-heights">
                             <strong class="product name product-item-name">
                                 <a class="product-item-link"
                                    href="<?php /* @escapeNotVerified */
@@ -164,9 +164,9 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 
     <?php if (!$block->getIsPreview()) : ?>
     <script type="text/javascript">
-        require(['jquery', 'bluefoot/normalise-heights'], function (jQuery) {
+        require(['jquery', 'pagebuilder/normalise-heights'], function (jQuery) {
             jQuery(function () {
-                jQuery('#bluefoot-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>').bluefootNormaliseHeights();
+                jQuery('#pagebuilder-product-list-<?php /* @noEscape */ echo $uniqueIdentifier ?>').pagebuilderNormaliseHeights();
             });
         });
     </script>

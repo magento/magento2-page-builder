@@ -61,7 +61,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @returns {string}
      */
     get childTemplate(): string {
-        return "Gene_BlueFoot/component/block/render/children.html";
+        return "Magento_PageBuilder/component/block/render/children.html";
     }
 
     /**
@@ -228,7 +228,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     public onSortStart(event: Event, params: SortParams): void {
         const originalEle = jQuery(params.originalEle);
         originalEle.show();
-        originalEle.addClass("bluefoot-sorting-original");
+        originalEle.addClass("pagebuilder-sorting-original");
 
         // Reset the width & height of the helper
         jQuery(params.helper)

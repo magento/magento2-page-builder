@@ -20,18 +20,18 @@
         <dataScope>data</dataScope>
         <namespace>button_form</namespace>
         <buttons>
-            <button name="save" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\SaveButton"/>
-            <button name="reset" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ResetButton"/>
-            <button name="close" class="Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\CloseButton"/>
+            <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
+            <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
+            <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
     <dataSource name="button_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Gene_BlueFoot/js/form/provider</item>
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="button_form_data_source" class="Gene\BlueFoot\Model\ContentBlock\DataProvider">
+        <dataProvider name="button_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -42,7 +42,7 @@
         <settings>
             <label/>
         </settings>
-        <container name="buttons" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Gene_BlueFoot/dynamic-rows/grid">
+        <container name="buttons" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Magento_PageBuilder/dynamic-rows/grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Buttons</item>
@@ -153,7 +153,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Gene_BlueFoot/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>

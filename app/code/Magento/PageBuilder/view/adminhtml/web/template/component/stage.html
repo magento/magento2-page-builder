@@ -7,7 +7,7 @@
 
 <div class="admin__field" style="text-align: right">
     <button data-bind="text: $t('Template Manager'), click: function() { stage.openTemplateManager(); }"></button>
-    <i data-bind="click: function() { stage.goFullScreen(); }, css: {'icon-bluefoot-fullscreen': !isFullScreen(), 'icon-bluefoot-fullscreen-exit': isFullScreen()}"></i>
+    <i data-bind="click: function() { stage.goFullScreen(); }, css: {'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()}"></i>
 </div>
 <br />
 
@@ -15,9 +15,9 @@
     <!-- ko template: getTemplate() --><!-- /ko -->
 <!-- /ko -->
 
-<div class="bluefoot-stage" data-bind="attr: {id: stageId, 'data-role': stageActive() ? 'bluefoot-stage' : '' }, css: {'bluefoot-show-borders': showBorders, 'bluefoot-no-user-select': !userSelect(), 'panel-collapsed': panel.isCollapsed}">
-    <div class="bluefoot-stage-loading" data-bind="visible: $parent.loading">
-        <div class="bluefoot-emblem"></div>
+<div class="pagebuilder-stage" data-bind="attr: {id: stageId, 'data-role': stageActive() ? 'pagebuilder-stage' : '' }, css: {'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': panel.isCollapsed}">
+    <div class="pagebuilder-stage-loading" data-bind="visible: $parent.loading">
+        <div class="pagebuilder-emblem"></div>
         <p data-bind="text: $t('Please hold! we\'re just retrieving your content...')"></p>
         <span class="spinner">
            <!-- ko repeat: 8 -->
@@ -25,7 +25,7 @@
             <!-- /ko -->
         </span>
     </div>
-    <div class="bluefoot-canvas" data-bind="css: {active: !loading()}, foreach: stageContent, sortable: { sortableClass: 'stage-container', handle: '.move-structural', items: '.bluefoot-row-wrapper', connectWith: '.bluefoot-canvas' }">
-        <div class="bluefoot-row-wrapper" data-bind="template: previewTemplate, attr: {id: id}, style: wrapperStyle"></div>
+    <div class="pagebuilder-canvas" data-bind="css: {active: !loading()}, foreach: stageContent, sortable: { sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }">
+        <div class="pagebuilder-row-wrapper" data-bind="template: previewTemplate, attr: {id: id}, style: wrapperStyle"></div>
     </div>
 </div>

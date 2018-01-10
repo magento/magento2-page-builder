@@ -21,7 +21,7 @@ define(["../../../component/config"], function (_config) {
       var response = {
         alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
         image: this.generateImageObject(element.querySelector("img:nth-child(1)").getAttribute("src")),
-        lightbox: !!element.querySelector("a.bluefoot-lightbox") ? "Yes" : "No",
+        lightbox: !!element.querySelector("a.pagebuilder-lightbox") ? "Yes" : "No",
         mobile_image: "",
         show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
         title_tag: element.querySelector("a").getAttribute("title")
@@ -35,7 +35,7 @@ define(["../../../component/config"], function (_config) {
       return Promise.resolve(response);
     };
     /**
-     * Generate the image object
+     * Magentorate the image object
      *
      * @param {string} src
      * @returns {ImageObject}

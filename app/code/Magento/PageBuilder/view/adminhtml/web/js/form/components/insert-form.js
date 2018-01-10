@@ -6,13 +6,13 @@
 /*eslint-disable vars-on-top, strict */
 
 /**
- * Override core functionality of insert form to enable BlueFoot caching and dynamically generated UI components
+ * Override core functionality of insert form to enable PageBuilder caching and dynamically generated UI components
  */
 define([
     'Magento_Ui/js/form/components/insert-form',
     'mageUtils',
     'jquery',
-    'bluefoot/config',
+    'pagebuilder/config',
     'uiRegistry',
     'underscore'
 ], function (InsertForm, utils, $, Config, registry, _) {

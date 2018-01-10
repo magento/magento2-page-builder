@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 

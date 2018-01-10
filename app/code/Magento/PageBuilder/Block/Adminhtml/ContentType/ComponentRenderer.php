@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
+namespace Magento\PageBuilder\Block\Adminhtml\ContentType;
 
 use Magento\Framework\View\Layout\Data\Structure;
 use Magento\Framework\View\Element\Template\Context;
@@ -13,8 +13,8 @@ use Magento\Framework\View\Layout\Data\Structure as DataStructure;
 use Magento\Framework\View\Element\UiComponent\ContextFactory as UiComponentContextFactory;
 use Magento\Framework\View\Element\UiComponent\ContainerInterface;
 use Magento\Framework\View\Element\UiComponentInterface;
-use Gene\BlueFoot\Model\Stage\Config\UiComponentConfig;
-use Gene\BlueFoot\Block\Adminhtml\ContentType\Edit\ButtonFactory;
+use Magento\PageBuilder\Model\Stage\Config\UiComponentConfig;
+use Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ButtonFactory;
 use Magento\Framework\View\Layout;
 
 class ComponentRenderer

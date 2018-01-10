@@ -5,7 +5,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
    * See COPYING.txt for license details.
    */
   var Panel = _uiComponent.extend({
-    componentTemplate: "Gene_BlueFoot/component/stage/panel.html",
+    componentTemplate: "Magento_PageBuilder/component/stage/panel.html",
     defaults: {
       groups: [],
       isCollapsed: false,

@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor;
+namespace Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor;
 
-use Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorInterface;
+use Magento\PageBuilder\Setup\DataConverter\ChildrenExtractorInterface;
 
 /**
  * Children data extractor that can be configured with path to children data

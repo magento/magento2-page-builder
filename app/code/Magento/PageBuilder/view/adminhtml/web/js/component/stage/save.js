@@ -14,7 +14,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
   /*#__PURE__*/
   function () {
     function Save() {
-      this.rootTemplate = "Gene_BlueFoot/component/block/render/root.html";
+      this.rootTemplate = "Magento_PageBuilder/component/block/render/root.html";
     }
 
     var _proto = Save.prototype;

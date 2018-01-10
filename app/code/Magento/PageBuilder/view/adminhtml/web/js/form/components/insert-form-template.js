@@ -12,7 +12,7 @@ define([
     'Magento_Ui/js/form/components/insert-form',
     'mageUtils',
     'jquery',
-    'bluefoot/config',
+    'pagebuilder/config',
     'uiRegistry',
     'underscore'
 ], function (InsertForm, utils, $, Config, registry, _) {
@@ -149,7 +149,7 @@ define([
                     this.closeModal();
 
                     // Rebuild the list of templates
-                    registry.get(this.managerModalNameSpace + '.bluefoot_template_manager_content').rebuild();
+                    registry.get(this.managerModalNameSpace + '.pagebuilder_template_manager_content').rebuild();
                 }.bind(this));
             }
 

@@ -229,7 +229,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
     _proto.onSortStart = function onSortStart(event, params) {
       var originalEle = jQuery(params.originalEle);
       originalEle.show();
-      originalEle.addClass("bluefoot-sorting-original"); // Reset the width & height of the helper
+      originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper
 
       jQuery(params.helper).css({
         width: "",
@@ -256,7 +256,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
     _createClass(EditableArea, [{
       key: "childTemplate",
       get: function get() {
-        return "Gene_BlueFoot/component/block/render/children.html";
+        return "Magento_PageBuilder/component/block/render/children.html";
       }
     }]);
 

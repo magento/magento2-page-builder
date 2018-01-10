@@ -3,11 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Exception\NoSuchEntityException as NoSuchEntityExceptionLocalized;
-use Gene\BlueFoot\Setup\DataConverter\UnableMigrateWithOutParentException;
+use Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadComponent from "Gene_BlueFoot/js/component/loader";
+import loadComponent from "Magento_PageBuilder/js/component/loader";
 import _ from "underscore";
 import Config from "../../config";
 import {DataObject} from "../../data-store";

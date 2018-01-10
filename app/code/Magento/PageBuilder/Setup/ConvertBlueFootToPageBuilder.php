@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup;
+namespace Magento\PageBuilder\Setup;
 
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Cms\Api\Data\BlockInterface;
@@ -12,7 +12,7 @@ use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\DB\AggregatedFieldDataConverter;
 use Magento\Framework\DB\Select\QueryModifierFactory;
 use Magento\Framework\DB\FieldToConvert;
-use Gene\BlueFoot\Setup\DataConverter\Format;
+use Magento\PageBuilder\Setup\DataConverter\Format;
 
 class ConvertBlueFootToPageBuilder
 {

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderImageCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Image Configuration"/>
+            <group value="pagebuilder"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddImage">
+            <annotations>
+                <title value="Add an image content block into stage"/>
+                <description value="A user should be able to add an image into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84259"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+                <argument name="property" value="PageBuilderImagePropertyJpg"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
+                <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">
+                <argument name="property" value="PageBuilderImageAltTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
+                <argument name="property" value="PageBuilderImageTitleTagProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">
+                <argument name="property" value="PageBuilderImageLightboxProperty"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">
+                <argument name="property" value="PageBuilderImageShowCaptionProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
+            <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="seeImageLightboxLink"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
+            <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
+            <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
+            <click selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="clickMainImage"/>
+            <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
+            <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
+        </test>
+        <test name="CanRemoveImage">
+            <annotations>
+                <title value="Remove image content block from stage"/>
+                <description value="A user should be able to remove image block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderImageContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
+        <test name="ImageHasAdvancedFormSection">
+            <annotations>
+                <title value="Image has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for Image"/>
+                <severity value="CRITICAL"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
+    </cest>
+</config>

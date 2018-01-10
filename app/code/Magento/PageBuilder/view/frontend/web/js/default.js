@@ -7,7 +7,7 @@
 
 requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
     $(document).ready(function() {
-        $('.bluefoot-lightbox').fancybox();
+        $('.pagebuilder-lightbox').fancybox();
 
         $('pre code:not(.hljs)').each(function (i, block) {
             $(block).html(

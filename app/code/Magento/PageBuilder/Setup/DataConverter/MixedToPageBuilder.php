@@ -3,13 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
 
 /**
- * Convert mixed BlueFoot & PageBuilder content to Magento PageBuilder compatible HTML structures, this should be
- * utilised for 3rd party extensions outside of core that previously extended BlueFoot's functionality.
+ * Convert mixed PageBuilder & PageBuilder content to Magento PageBuilder compatible HTML structures, this should be
+ * utilised for 3rd party extensions outside of core that previously extended PageBuilder's functionality.
  */
 class MixedToPageBuilder implements DataConverterInterface
 {

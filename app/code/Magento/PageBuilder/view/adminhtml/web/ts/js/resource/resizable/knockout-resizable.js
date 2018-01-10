@@ -5,7 +5,7 @@
 
 /*eslint-disable */
 
-define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQuery, Config) {
+define(["ko", "jquery", 'Magento_PageBuilder/js/component/config'], function (ko, jQuery, Config) {
     'use strict';
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],
@@ -53,7 +53,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
 
                     currentElement = jQuery("#" + context.currentColumn.id),
                     ghostWidth = context.startingWidth + (event.clientX - context.startingX),
-                    ghost = currentElement.find(".bluefoot-resize-ghost"),
+                    ghost = currentElement.find(".pagebuilder-resize-ghost"),
                     biggestWidth = Math.floor(element.parent().outerWidth() * largestPercentage) - 6,
                     smallestWidth = Math.floor(element.parent().outerWidth() * smallestPercentage) - 6;
 
@@ -73,7 +73,7 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
 
                         // Stop the loop once we hit a valid breakpoint
                         if (ghostWidth >= breakpoint - 15 && ghostWidth <= breakpoint + 15) {
-                            element.find('.bluefoot-resize-size').text(size.label);
+                            element.find('.pagebuilder-resize-size').text(size.label);
                             context.currentColumn.columnDefinition(size);
 
                             // Force the parent to update it's children
@@ -86,16 +86,16 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
                     context.currentColumn = ko.dataFor(this);
                     context.startingWidth = jQuery(this.parentNode).outerWidth();
                     context.startingX = event.clientX;
-                    jQuery(this.parentNode.parentNode).addClass('bluefoot-resizing');
-                    jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('bluefoot-resize-ghost'));
-                    jQuery(this.parentNode.parentNode).find('.element-children').first().append(jQuery('<div />').addClass('bluefoot-resize-size'));
+                    jQuery(this.parentNode.parentNode).addClass('pagebuilder-resizing');
+                    jQuery(this.parentNode.parentNode).append(jQuery('<div />').addClass('pagebuilder-resize-ghost'));
+                    jQuery(this.parentNode.parentNode).find('.element-children').first().append(jQuery('<div />').addClass('pagebuilder-resize-size'));
 
                     // Disable user select on mouse down
                     if (context.currentColumn && typeof context.currentColumn.stage !== 'undefined') {
                         context.currentColumn.stage.userSelect(false);
                     }
 
-                    // If the mouse leaves the window kill the bluefoot resizing functionality
+                    // If the mouse leaves the window kill the pagebuilder resizing functionality
                     jQuery('body').mouseleave(function () {
                         // Disable user select on mouse down
                         if (context.currentColumn && typeof context.currentColumn.stage !== 'undefined') {
@@ -103,11 +103,11 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
                         }
 
                         context.currentColumn = null;
-                        jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
-                        jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {
+                        jQuery('.pagebuilder-resizing').removeClass('pagebuilder-resizing');
+                        jQuery('.pagebuilder-resize-ghost').fadeOut(200, function () {
                             jQuery(this).remove();
                         });
-                        jQuery('.bluefoot-resize-size').fadeOut(200, function () {
+                        jQuery('.pagebuilder-resize-size').fadeOut(200, function () {
                             jQuery(this).remove();
                         });
                     });
@@ -121,11 +121,11 @@ define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQue
                     }
 
                     context.currentColumn = null;
-                    jQuery('.bluefoot-resizing').removeClass('bluefoot-resizing');
-                    jQuery('.bluefoot-resize-ghost').fadeOut(200, function () {
+                    jQuery('.pagebuilder-resizing').removeClass('pagebuilder-resizing');
+                    jQuery('.pagebuilder-resize-ghost').fadeOut(200, function () {
                         jQuery(this).remove();
                     });
-                    jQuery('.bluefoot-resize-size').fadeOut(200, function () {
+                    jQuery('.pagebuilder-resize-size').fadeOut(200, function () {
                         jQuery(this).remove();
                     });
                     return true;

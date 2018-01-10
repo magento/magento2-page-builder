@@ -15,7 +15,7 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
      */
     function Options(parent, options) {
       this.parent = void 0;
-      this.template = "Gene_BlueFoot/component/stage/structural/options.html";
+      this.template = "Magento_PageBuilder/component/stage/structural/options.html";
       this.options = _knockout.observableArray([]);
       this.parent = parent;
       this.options(options);

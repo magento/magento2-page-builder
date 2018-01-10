@@ -5,38 +5,38 @@
 
 var config = {
     paths: {
-        'bluefoot/async': 'Gene_BlueFoot/js/resource/requirejs/async',
+        'pagebuilder/async': 'Magento_PageBuilder/js/resource/requirejs/async',
 
         /* Extra Resources Needed */
-        'bluefoot/html2canvas': 'Gene_BlueFoot/js/resource/html2canvas',
-        'bluefoot/highlight': 'Gene_BlueFoot/js/resource/highlight/highlight.pack',
-        'hyperscript': 'Gene_BlueFoot/js/resource/hyperscript/hyperscript',
-        'slick': 'Gene_BlueFoot/js/resource/slick/slick',
-        'xyperscript': 'Gene_BlueFoot/js/resource/xyperscript/xyperscript',
+        'pagebuilder/html2canvas': 'Magento_PageBuilder/js/resource/html2canvas',
+        'pagebuilder/highlight': 'Magento_PageBuilder/js/resource/highlight/highlight.pack',
+        'hyperscript': 'Magento_PageBuilder/js/resource/hyperscript/hyperscript',
+        'slick': 'Magento_PageBuilder/js/resource/slick/slick',
+        'xyperscript': 'Magento_PageBuilder/js/resource/xyperscript/xyperscript',
 
         /* Include our Knockout Sortable wrapper */
-        'ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
-        'ko-draggable': 'Gene_BlueFoot/js/resource/draggable/knockout-draggable',
-        'ko-resizable': 'Gene_BlueFoot/js/resource/resizable/knockout-resizable',
-        'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
-        'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
-        'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit'
+        'ko-sortable': 'Magento_PageBuilder/js/resource/sortable/knockout-sortable',
+        'ko-draggable': 'Magento_PageBuilder/js/resource/draggable/knockout-draggable',
+        'ko-resizable': 'Magento_PageBuilder/js/resource/resizable/knockout-resizable',
+        'pagebuilder/ko-dropzone': 'Magento_PageBuilder/js/resource/dropzone/knockout-dropzone',
+        'pagebuilder/ko-redactor': 'Magento_PageBuilder/js/resource/redactor/knockout-redactor',
+        'pagebuilder/ko-liveedit': 'Magento_PageBuilder/js/resource/live-edit/knockout-liveedit'
     },
     map: {
         '*': {
             /* Map the abstract widget to the input type widget */
-            'bluefoot/widget/abstract': 'bluefoot/field/abstract',
+            'pagebuilder/widget/abstract': 'pagebuilder/field/abstract',
 
             /* Utilities */
-            'bluefoot/utils': 'Gene_BlueFoot/js/utils',
-            'bluefoot/config': 'Gene_BlueFoot/js/component/config'
+            'pagebuilder/utils': 'Magento_PageBuilder/js/utils',
+            'pagebuilder/config': 'Magento_PageBuilder/js/component/config'
         }
     },
     shim: {
-        'bluefoot/ko-sortable': {
-            deps: ['jquery', 'jquery/ui', 'Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min']
+        'pagebuilder/ko-sortable': {
+            deps: ['jquery', 'jquery/ui', 'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min']
         },
-        'Gene_BlueFoot/js/resource/jquery-ui/jquery.ui.touch-punch.min': {
+        'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min': {
             deps: ['jquery/ui']
         }
     }

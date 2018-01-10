@@ -135,7 +135,7 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       }
     };
     /**
-     * Determines if bluefoot is in fullscreen mode
+     * Determines if pagebuilder is in fullscreen mode
      *
      * @returns {boolean}
      */

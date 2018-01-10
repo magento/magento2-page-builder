@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Block\Element;
+namespace Magento\PageBuilder\Block\Element;
 
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
@@ -20,16 +20,16 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Enable Advanced CMS'),
-                    'class' => 'gene-bluefoot init-gene-bluefoot action-default scalable action action-secondary',
-                    'id' => 'gene-bluefoot' . $this->getHtmlId()
+                    'class' => 'gene-pagebuilder init-gene-pagebuilder action-default scalable action action-secondary',
+                    'id' => 'gene-pagebuilder' . $this->getHtmlId()
                 ]
             );
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Disable Advanced CMS'),
-                    'class' => 'gene-bluefoot disable-gene-bluefoot',
+                    'class' => 'gene-pagebuilder disable-gene-pagebuilder',
                     'style' => 'display: none;',
-                    'id' => 'disable-gene-bluefoot' . $this->getHtmlId()
+                    'id' => 'disable-gene-pagebuilder' . $this->getHtmlId()
                 ]
             );
         }

@@ -6,4 +6,4 @@
 
 use \Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Gene_BlueFoot', __DIR__);
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Magento_PageBuilder', __DIR__);

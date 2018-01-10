@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter;
+namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -13,7 +13,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 interface EavAttributeLoaderInterface
 {
     /**
-     * Hydrate BlueFoot data object with additional data from EAV
+     * Hydrate PageBuilder data object with additional data from EAV
      *
      * @param int $entityId
      * @return array

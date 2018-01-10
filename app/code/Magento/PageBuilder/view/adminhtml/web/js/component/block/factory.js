@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"], function (_loader, _appearanceFactory) {
+define(["Magento_PageBuilder/js/component/loader", "../appearance/appearance-factory"], function (_loader, _appearanceFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,7 +12,7 @@ define(["Gene_BlueFoot/js/component/loader", "../appearance/appearance-factory"]
    * @returns {any|string}
    */
   function getBlockComponentPath(config) {
-    return config.component || "Gene_BlueFoot/js/component/block/block";
+    return config.component || "Magento_PageBuilder/js/component/block/block";
   }
   /**
    * Create a new instance of a block

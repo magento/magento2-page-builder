@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Gene_BlueFoot/js/resource/slick/slick", "jquery", "underscore", "./block"], function (_slick, _jquery, _underscore, _block) {
+define(["Magento_PageBuilder/js/resource/slick/slick", "jquery", "underscore", "./block"], function (_slick, _jquery, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var AdvancedSlider =

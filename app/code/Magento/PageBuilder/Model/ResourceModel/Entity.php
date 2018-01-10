@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\ResourceModel;
+namespace Magento\PageBuilder\Model\ResourceModel;
 
 class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
 {
@@ -22,7 +22,7 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
         $data = []
     ) {
         parent::__construct($context, $entitySnapshot, $entityRelationComposite, $data);
-        $this->setConnection('gene_bluefoot_entity_read', 'gene_bluefoot_entity_write');
+        $this->setConnection('gene_pagebuilder_entity_read', 'gene_pagebuilder_entity_write');
     }
 
     /**
@@ -32,7 +32,7 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
      */
     protected function _getDefaultAttributeModel()
     {
-        return \Gene\BlueFoot\Model\ResourceModel\Attribute::class;
+        return \Magento\PageBuilder\Model\ResourceModel\Attribute::class;
     }
 
     /**
@@ -54,7 +54,7 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
     public function getEntityType()
     {
         if (empty($this->_type)) {
-            $this->setType(\Gene\BlueFoot\Model\Entity::ENTITY);
+            $this->setType(\Magento\PageBuilder\Model\Entity::ENTITY);
         }
         return parent::getEntityType();
     }
@@ -64,6 +64,6 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
      */
     public function getMainTable()
     {
-        return \Gene\BlueFoot\Model\Entity::ENTITY;
+        return \Magento\PageBuilder\Model\Entity::ENTITY;
     }
 }

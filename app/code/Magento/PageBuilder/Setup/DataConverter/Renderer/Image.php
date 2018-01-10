@@ -3,11 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
+namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
-use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
-use Gene\BlueFoot\Setup\DataConverter\EavAttributeLoaderInterface;
-use Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface;
+use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
+use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
+use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
  * Render image to PageBuilder format
@@ -47,9 +47,9 @@ class Image implements RendererInterface
         ];
 
         if (isset($eavData['css_classes'])) {
-            $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity ' . $eavData['css_classes'];
+            $rootElementAttributes['class'] = 'pagebuilder-image pagebuilder-entity ' . $eavData['css_classes'];
         } else {
-            $rootElementAttributes['class'] = 'bluefoot-image bluefoot-entity';
+            $rootElementAttributes['class'] = 'pagebuilder-image pagebuilder-entity';
         }
 
         if (isset($itemData['formData'])) {
@@ -65,7 +65,7 @@ class Image implements RendererInterface
             'href' => '{{media url=gene-cms' . $eavData['image'] . '}}',
             'title' => $eavData['title_tag'] ?? '',
             'class' => (isset($eavData['has_lightbox']) && $eavData['has_lightbox'] == 1) ?
-                'bluefoot-lightbox' : '',
+                'pagebuilder-lightbox' : '',
         ];
 
         $imageAttributes = [
@@ -81,11 +81,11 @@ class Image implements RendererInterface
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? ''
             ];
-            $imageAttributes['class'] = 'bluefoot-mobile-hidden';
+            $imageAttributes['class'] = 'pagebuilder-mobile-hidden';
 
             $mobileImageHtml = '<img'
                 . $this->printAttributes($mobileImageAttributes)
-                . ' class="bluefoot-mobile-only">';
+                . ' class="pagebuilder-mobile-only">';
         }
 
         $imageHtml = '<img'

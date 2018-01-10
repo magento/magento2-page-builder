@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Gene_BlueFoot/js/component/loader", "./appearance"], function (_loader, _appearance) {
+define(["Magento_PageBuilder/js/component/loader", "./appearance"], function (_loader, _appearance) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

@@ -3,14 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Setup\DataConverter\Renderer;
+namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
-use Gene\BlueFoot\Setup\DataConverter\RendererInterface;
+use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\Framework\Serialize\Serializer\Json;
-use Gene\BlueFoot\Setup\DataConverter\Format;
+use Magento\PageBuilder\Setup\DataConverter\Format;
 
 /**
- * Render non BlueFoot content type to html content type with embedded data
+ * Render non PageBuilder content type to html content type with embedded data
  */
 class Unmigrated implements RendererInterface
 {

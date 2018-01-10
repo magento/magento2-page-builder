@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Block\Adminhtml\Stage;
+namespace Magento\PageBuilder\Block\Adminhtml\Stage;
 
 use Magento\Framework\UrlInterface;
 
@@ -20,7 +20,7 @@ class Init extends \Magento\Backend\Block\Template
     private $frontendUrlBuilder;
 
     /**
-     * @var \Gene\BlueFoot\Model\Stage\Config
+     * @var \Magento\PageBuilder\Model\Stage\Config
      */
     private $stageConfig;
 
@@ -28,13 +28,13 @@ class Init extends \Magento\Backend\Block\Template
      * Constructor
      *
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Gene\BlueFoot\Model\Stage\Config $stageConfig
+     * @param \Magento\PageBuilder\Model\Stage\Config $stageConfig
      * @param \Magento\Framework\Url $frontendUrlBuilder
      * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
-        \Gene\BlueFoot\Model\Stage\Config $stageConfig,
+        \Magento\PageBuilder\Model\Stage\Config $stageConfig,
         \Magento\Framework\Url $frontendUrlBuilder,
         array $data = []
     ) {
@@ -54,9 +54,9 @@ class Init extends \Magento\Backend\Block\Template
         $data = array_merge(
             [
                 'form_key' => $this->formKey->getFormKey(),
-                'init_button_class' => '.init-gene-bluefoot',
+                'init_button_class' => '.init-gene-pagebuilder',
                 'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-                'preview_url' => $this->frontendUrlBuilder->getUrl('bluefoot/contenttype/preview')
+                'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
             ],
             $this->stageConfig->getConfig()
         );

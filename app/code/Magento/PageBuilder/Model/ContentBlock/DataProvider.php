@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Gene\BlueFoot\Model\ContentBlock;
+namespace Magento\PageBuilder\Model\ContentBlock;
 
 /**
  * We populate our forms in the browser using JavaScript

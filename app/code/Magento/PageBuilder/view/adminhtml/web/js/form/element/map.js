@@ -15,7 +15,7 @@ define([
 
     return AbstractField.extend({
         defaults: {
-            elementTmpl: 'Gene_BlueFoot/form/element/map',
+            elementTmpl: 'Magento_PageBuilder/form/element/map',
             map: false,
             marker: false
         },
