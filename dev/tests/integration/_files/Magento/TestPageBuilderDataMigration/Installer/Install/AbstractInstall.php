@@ -87,8 +87,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 
         // Declare the model fields that require to be mapped
         $this->modelFields = ['backend_model', 'frontend_model', 'source_model', 'data_model'];
-
-        $this->loadClassMapping();
     }
 
     /**
@@ -228,25 +226,13 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @throws \Exception
      * @throws \Zend_Json_Exception
      */
-    protected function loadClassMapping()
+    private function getClassMapping()
     {
-        $this->classMapping = array_merge(
-            $this->classMapping,
-            [
-                "eav/entity_attribute_backend_array" => "Magento\\Eav\\Model\\Entity\\Attribute\\Backend\\ArrayBackend",
-                "eav/entity_attribute_source_boolean" => "Magento\\Eav\\Model\\Entity\\Attribute\\Source\\Boolean",
-                "eav/entity_attribute_source_table" => "Magento\\Eav\\Model\\Entity\\Attribute\\Source\\Table",
-                "gene_bluefoot/attribute_source_entity_child" => "Gene\\BlueFoot\\Model\\Attribute\\Source\\Entity\\Child",
-                "gene_bluefoot/attribute_backend_image" => "",
-                "gene_bluefoot/attribute_data_widget_app_list" => "",
-                "gene_bluefoot/attribute_data_widget_app_single" => "",
-                "gene_bluefoot/attribute_data_widget_staticblock" => "Gene\\BlueFoot\\Model\\Attribute\\Data\\Widget\\StaticBlock",
-                "gene_bluefoot/attribute_data_widget_category" => "Gene\\BlueFoot\\Model\\Attribute\\Data\\Widget\\Category",
-                "gene_bluefoot/attribute_data_widget_map" => "Gene\\BlueFoot\\Model\\Attribute\\Data\\Widget\\Map",
-                "gene_bluefoot/attribute_data_widget_product" => "Gene\\BlueFoot\\Model\\Attribute\\Data\\Widget\\Product",
-                "gene_bluefoot/attribute_data_widget_video" => "Gene\\BlueFoot\\Model\\Attribute\\Data\\Widget\\Video"
-            ]
-        );
+        return [
+            'eav/entity_attribute_backend_array' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
+            'eav/entity_attribute_source_boolean' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
+            'eav/entity_attribute_source_table' => \Magento\Eav\Model\Entity\Attribute\Source\Table::class,
+        ];
     }
 
     /**
@@ -259,8 +245,8 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     protected function mapClasses(&$data)
     {
         foreach ($this->modelFields as $field) {
-            if (isset($data[$field]) && isset($this->classMapping[$data[$field]])) {
-                $data[$field] = $this->classMapping[$data[$field]];
+            if (isset($data[$field]) && isset($this->getClassMapping()[$data[$field]])) {
+                $data[$field] = $this->getClassMapping()[$data[$field]];
             }
         }
 
