@@ -74,7 +74,7 @@
             <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
             <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
             <click selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="clickMainImage"/>
-            <waitForElementVisible time="10" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
+            <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
             <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
         </test>
         <test name="CanRemoveImage">
@@ -108,7 +108,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

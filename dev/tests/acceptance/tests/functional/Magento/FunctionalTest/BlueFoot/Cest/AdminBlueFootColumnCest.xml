@@ -114,10 +114,10 @@
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
             <seeElement selector="{{BlueFootActionsSection.editForm}}" stepKey="seeEditForm"/>
             <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-            <waitForElementNotVisible time="10" selector="{{BlueFootColumnSection.editFormSpinner}}" stepKey="waitForSpinner" />
-            <waitForElementVisible time="10" selector="{{BlueFootActionsSection.editFormCancel}}" stepKey="waitForEditFormCancel"/>
+            <waitForElementNotVisible time="2" selector="{{BlueFootColumnSection.editFormSpinner}}" stepKey="waitForSpinner" />
+            <waitForElementVisible time="2" selector="{{BlueFootActionsSection.editFormCancel}}" stepKey="waitForEditFormCancel"/>
             <click selector="{{BlueFootActionsSection.editFormCancel}}" stepKey="clickEditFormCancel"/>
-            <waitForElementNotVisible time="10" selector="{{BlueFootActionsSection.editForm}}" stepKey="waitClose" />
+            <waitForElementNotVisible time="2" selector="{{BlueFootActionsSection.editForm}}" stepKey="waitClose" />
             <dontSeeElement selector="{{BlueFootActionsSection.editForm}}" stepKey="dontSeeEditForm"/>
         </test>
         <test name="ColumnSettingsAppearOnFrontend">
@@ -150,21 +150,21 @@
                 <argument name="property" value="BlueFootBackgroundAppearanceProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
-            <wait time="10" stepKey="waitForClick10"/>
+            <wait time="1" stepKey="waitForClick10"/>
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
-            <wait time="10" stepKey="wait5"/>
+            <wait time="1" stepKey="wait5"/>
             <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
-            <wait time="10" stepKey="wait6"/>
+            <wait time="1" stepKey="wait6"/>
             <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
             <actionGroup ref="openBlueFootEditColumnPanel2" stepKey="openEditPanel2"/>
             <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
-            <wait time="10" stepKey="wait7"/>
+            <wait time="1" stepKey="wait7"/>
             <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
             <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" stepKey="amOnBlueFootPage"/>
@@ -212,7 +212,7 @@
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyCentered">
                 <argument name="property" value="BlueFootBackgroundAppearancePropertyCentered"/>
             </actionGroup>
-            <wait time="10" stepKey="wait1"/>
+            <wait time="1" stepKey="wait1"/>
             <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
             <actionGroup ref="openBlueFootEditColumnPanel3" stepKey="openEditPanel3"/>
             <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
@@ -253,20 +253,20 @@
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSizePropertyCover">
                 <argument name="property" value="BlueFootBackgroundSizeProperty"/>
             </actionGroup>
-            <wait time="10" stepKey="wait3"/>
+            <wait time="1" stepKey="wait3"/>
             <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBlueFootFile">
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
-            <wait time="10" stepKey="waitForClick{{property.fieldName}}"/>
+            <wait time="1" stepKey="waitForClick{{property.fieldName}}"/>
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
                 <argument name="property" value="BlueFootBackgroundAttachmentProperty"/>
             </actionGroup>
             <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
             <actionGroup ref="saveCmsPage" stepKey="saveCmsPage2"/>
             <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
-            <waitForElementVisible time="10" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
-            <waitForElementVisible time="10" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
+            <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
+            <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
             <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{BlueFootFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
             <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible" />
             <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
@@ -279,7 +279,7 @@
             <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
             <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
             <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
-            <waitForElementVisible time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
             <waitForElementVisible time="10" selector="{{BlueFootRowSection.row}}" stepKey="waitForBlueFootRow" />
@@ -340,7 +340,7 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
-            <wait time="10" stepKey="wait3"/>
+            <wait time="1" stepKey="wait3"/>
             <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
@@ -360,7 +360,7 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
-            <wait time="10" stepKey="wait1"/>
+            <wait time="1" stepKey="wait1"/>
             <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
                 <argument name="property" value="BlueFootAppearanceMinHeightProperty"/>
             </actionGroup>
@@ -368,12 +368,12 @@
                 <argument name="property" value="BlueFootBackgroundImageProperty"/>
             </actionGroup>
             <click selector="{{BlueFootColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
-            <wait time="10" stepKey="waitForDataStoreUpdate"/>
-            <waitForElementVisible time="10" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForSavePage" />
+            <wait time="1" stepKey="waitForDataStoreUpdate"/>
+            <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForSavePage" />
             <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
-            <wait time="10" stepKey="wait3"/>
+            <wait time="1" stepKey="wait3"/>
             <amOnPage url="{{BlueFootFirstColumnInStage.pageName}}" stepKey="amOnBlueFootPage"/>
-            <wait time="10" stepKey="wait5"/>
+            <wait time="5" stepKey="wait5"/>
             <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(_ENV.MAGENTO_BASE_URL,BlueFootBackgroundImageProperty.path,BlueFootBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
             <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
         </test>
@@ -415,7 +415,7 @@
             <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
                 <argument name="property" value="BlueFootBackgroundColorProperty_FF5A5F"/>
             </actionGroup>
-            <wait time="10" stepKey="wait1"/>
+            <wait time="1" stepKey="wait1"/>
             <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
             <actionGroup ref="openBlueFootEditColumnPanel3" stepKey="openEditPanel3"/>
             <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty3">
@@ -449,7 +449,7 @@
             <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
             <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
             <amOnPage variable="cmsPageUri" stepKey="navigateBackToEditPage"/>
-            <waitForElementVisible time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
             <waitForElementVisible time="10" selector="{{BlueFootRowSection.row}}" stepKey="waitForBlueFootRow" />
@@ -493,7 +493,7 @@
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragFirstColumn"/>
             <actionGroup ref="dragBlueFootColumnIntoStage" stepKey="dragSecondColumn"/>
             <actionGroup ref="openBlueFootEditColumnPanel" stepKey="openEditPanel"/>
-            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

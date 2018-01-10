@@ -40,7 +40,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
@@ -146,7 +146,7 @@
             <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{BlueFootPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-            <waitForElementVisible time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
             <seeElement selector='{{BlueFootActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStageAfterSave"/>
