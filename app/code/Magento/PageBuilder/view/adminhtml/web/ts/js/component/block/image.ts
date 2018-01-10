@@ -76,7 +76,7 @@ export default class Image extends Block {
      */
     private getImageUrl(image: any[]) {
         const imageUrl = image[0].url;
-        const mediaUrl = Config.getInitConfig("mediaUrl");
+        const mediaUrl = Config.getInitConfig("media_url");
         const mediaPath = imageUrl.split(mediaUrl);
         const directive = "{{media url=" + mediaPath[1] + "}}";
         return directive;

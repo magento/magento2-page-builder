@@ -99,7 +99,7 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
     _proto.getImageUrl = function getImageUrl(image) {
       var imageUrl = image[0].url;
 
-      var mediaUrl = _config.getInitConfig("mediaUrl");
+      var mediaUrl = _config.getInitConfig("media_url");
 
       var mediaPath = imageUrl.split(mediaUrl);
       var directive = "{{media url=" + mediaPath[1] + "}}";
