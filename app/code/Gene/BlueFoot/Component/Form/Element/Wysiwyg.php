@@ -11,21 +11,18 @@ use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-/**
- * Class Wysiwyg
- */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
     /**
-     * Wysiwyg constructor.
+     * Constructor
      *
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
-     * @param \Magento\Framework\Data\FormFactory                          $formFactory
-     * @param \Magento\Ui\Component\Wysiwyg\ConfigInterface                $wysiwygConfig
-     * @param \Magento\Catalog\Api\CategoryAttributeRepositoryInterface    $attrRepository
-     * @param array                                                        $components
-     * @param array                                                        $data
-     * @param array                                                        $config
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param \Magento\Ui\Component\Wysiwyg\ConfigInterface $wysiwygConfig
+     * @param \Magento\Catalog\Api\CategoryAttributeRepositoryInterface $attrRepository
+     * @param array $components
+     * @param array $data
+     * @param array $config
      */
     public function __construct(
         ContextInterface $context,
@@ -47,7 +44,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             }
         }
 
-        // Override the component for the WYSIWYG
         // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
         $data['config']['component'] = 'Gene_BlueFoot/js/form/element/wysiwyg';
 

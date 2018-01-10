@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Model;
 
-/**
- * Class Entity
- */
 class Entity extends \Magento\Framework\Model\AbstractModel
 {
     /**
@@ -28,15 +25,5 @@ class Entity extends \Magento\Framework\Model\AbstractModel
     public function _construct()
     {
         $this->_init(\Gene\BlueFoot\Model\ResourceModel\Entity::class);
-    }
-
-    /**
-     * Return the identities associated with the model
-     *
-     * @return array
-     */
-    public function getIdentities()
-    {
-        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 }

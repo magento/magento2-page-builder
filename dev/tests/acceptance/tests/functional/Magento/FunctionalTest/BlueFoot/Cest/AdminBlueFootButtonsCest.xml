@@ -44,9 +44,9 @@
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
             <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-            <waitForElement time="2" selector="{{ButtonsEditSection.addNewButton}}" stepKey="waitForAddButtonsElementVisible"/>
+            <waitForElement time="10" selector="{{ButtonsEditSection.addNewButton}}" stepKey="waitForAddButtonsElementVisible"/>
             <click selector="{{ButtonsEditSection.addNewButton}}" stepKey="clickOnAddButtonsElement"/>
-            <waitForElement time="2" selector="{{ButtonsEditSection.buttonText('0')}}" stepKey="waitForButtonRow0TextVisible"/>
+            <waitForElement time="10" selector="{{ButtonsEditSection.buttonText('0')}}" stepKey="waitForButtonRow0TextVisible"/>
             <fillField selector="{{ButtonsEditSection.buttonText('0')}}" userInput="{{BlueFootButtonsProperty.text}}" stepKey="fillButtonRow0TextField"/>
             <fillField selector="{{ButtonsEditSection.buttonLink('0')}}" userInput="{{BlueFootButtonsProperty.link}}" stepKey="fillButtonRow0LinkField"/>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -87,7 +87,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="BlueFootButtonsContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

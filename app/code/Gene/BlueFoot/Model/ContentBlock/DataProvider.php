@@ -6,8 +6,6 @@
 namespace Gene\BlueFoot\Model\ContentBlock;
 
 /**
- * Class DataProvider
- *
  * We populate our forms in the browser using JavaScript
  */
 class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider

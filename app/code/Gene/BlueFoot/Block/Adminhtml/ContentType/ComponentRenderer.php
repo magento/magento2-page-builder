@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
 
 use Magento\Framework\View\Layout\Data\Structure;
@@ -56,7 +55,7 @@ class ComponentRenderer
     private $layout;
 
     /**
-     * ComponentRenderer constructor.
+     * Constructor
      *
      * @param DataStructure $structure
      * @param BlockFactory $blockFactory

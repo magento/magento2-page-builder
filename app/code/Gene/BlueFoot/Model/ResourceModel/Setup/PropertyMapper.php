@@ -5,19 +5,14 @@
  */
 namespace Gene\BlueFoot\Model\ResourceModel\Setup;
 
-/**
- * Class PropertyMapper
- */
 class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstract
 {
     /**
      * Map input attribute properties to storage representation
      *
      * @param array $input
-     * @param int   $entityTypeId
-     *
+     * @param int $entityTypeId
      * @return array
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function map(array $input, $entityTypeId)

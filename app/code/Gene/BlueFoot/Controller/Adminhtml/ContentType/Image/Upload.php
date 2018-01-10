@@ -17,7 +17,7 @@ class Upload extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\Filesystem\DirectoryList
      */
-    protected $directoryList;
+    private $directoryList;
 
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
@@ -35,13 +35,13 @@ class Upload extends \Magento\Backend\App\Action
     private $storeManager;
 
     /**
-     * Upload constructor.
+     * Constructor
      *
-     * @param \Magento\Backend\App\Action\Context              $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Store\Model\StoreManagerInterface       $storeManager
-     * @param \Magento\Framework\File\UploaderFactory          $uploaderFactory
-     * @param \Magento\Framework\Filesystem\DirectoryList      $directoryList
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\File\UploaderFactory $uploaderFactory
+     * @param \Magento\Framework\Filesystem\DirectoryList $directoryList
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -51,7 +51,6 @@ class Upload extends \Magento\Backend\App\Action
         \Magento\Framework\Filesystem\DirectoryList $directoryList
     ) {
         parent::__construct($context);
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->storeManager = $storeManager;
         $this->uploaderFactory = $uploaderFactory;
@@ -63,7 +62,6 @@ class Upload extends \Magento\Backend\App\Action
      *
      * @param string $path
      * @param string $imageName
-     *
      * @return string
      */
     private function getFilePath($path, $imageName)
@@ -78,25 +76,25 @@ class Upload extends \Magento\Backend\App\Action
      */
     public function execute()
     {
+        $fieldName = $this->getRequest()->getParam('param_name');
+        $fileUploader = $this->uploaderFactory->create(['fileId' => $fieldName]);
+
+        // Set our parameters
+        $fileUploader->setFilesDispersion(true);
+        $fileUploader->setAllowRenameFiles(true);
+        $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
+        $fileUploader->setAllowCreateFolders(true);
         try {
-            $fieldName = $this->getRequest()->getParam('param_name');
-            $fileUploader = $this->uploaderFactory->create(['fileId' => $fieldName]);
-
-            // Set our parameters
-            $fileUploader->setFilesDispersion(true);
-            $fileUploader->setAllowRenameFiles(true);
-            $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
-            $fileUploader->setAllowCreateFolders(true);
-
             $result = $fileUploader->save($this->getUploadDir());
-
-            $result['url'] = $this->storeManager->getStore()
-                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) .
-                $this->getFilePath(self::UPLOAD_DIR, $result['file']);
+            $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $result['url'] = $baseUrl . $this->getFilePath(self::UPLOAD_DIR, $result['file']);
         } catch (\Exception $e) {
-            $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
+            $result = [
+                'error' => $e->getMessage(),
+                'errorcode' => $e->getCode()
+            ];
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON, ['data' => $result]);
     }
 
     /**

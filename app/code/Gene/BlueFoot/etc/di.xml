@@ -11,7 +11,12 @@
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Gene\BlueFoot\Block\Element\Editor" />
     <preference for="Gene\BlueFoot\Model\Config\ConfigInterface" type="Gene\BlueFoot\Model\Config" />
     <preference for="Gene\BlueFoot\Setup\DataConverter\StyleExtractorInterface" type="Gene\BlueFoot\Setup\DataConverter\StyleExtractor" />
-
+    <type name="Magento\Cms\Block\Page">
+        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Page" />
+    </type>
+    <type name="Magento\Cms\Block\Block">
+        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Block" />
+    </type>
     <type name="Magento\Eav\Model\Entity\Setup\PropertyMapper\Composite">
         <arguments>
             <argument name="propertyMappers" xsi:type="array">
@@ -380,12 +385,6 @@
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">ProductEavAttributeLoader</argument>
         </arguments>
-    </type>
-    <type name="Magento\Cms\Block\Page">
-        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Page" />
-    </type>
-    <type name="Magento\Cms\Block\Block">
-        <plugin name="filter_dynamic_blocks" type="Gene\BlueFoot\Plugin\Cms\Block\Block" />
     </type>
     <virtualType name="CodeEavAttributeLoader" type="Gene\BlueFoot\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>

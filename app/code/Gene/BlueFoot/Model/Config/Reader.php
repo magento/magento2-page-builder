@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Model\Config;
 
-/**
- * Class Reader
- */
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
     /**
@@ -21,16 +18,16 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
     ];
 
     /**
-     * Reader constructor.
+     * Constructor
      *
-     * @param \Magento\Framework\Config\FileResolverInterface    $fileResolver
-     * @param \Gene\BlueFoot\Model\Config\Converter              $converter
-     * @param \Gene\BlueFoot\Model\Config\SchemaLocator          $schemaLocator
+     * @param \Magento\Framework\Config\FileResolverInterface $fileResolver
+     * @param \Gene\BlueFoot\Model\Config\Converter $converter
+     * @param \Gene\BlueFoot\Model\Config\SchemaLocator $schemaLocator
      * @param \Magento\Framework\Config\ValidationStateInterface $validationState
-     * @param string                                             $fileName
-     * @param array                                              $idAttributes
-     * @param string                                             $domDocumentClass
-     * @param string                                             $defaultScope
+     * @param string $fileName
+     * @param array $idAttributes
+     * @param string $domDocumentClass
+     * @param string $defaultScope
      */
     public function __construct(
         \Magento\Framework\Config\FileResolverInterface $fileResolver,

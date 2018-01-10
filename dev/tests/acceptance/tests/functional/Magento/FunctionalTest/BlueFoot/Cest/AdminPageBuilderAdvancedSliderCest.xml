@@ -108,7 +108,7 @@
             <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
             <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
             <click selector="{{AdvancedSliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnAdvancedSlider"/>
-            <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
+            <waitForElementVisible time="10" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
             <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InAdvancedSlider"/>
             <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" stepKey="seeSlide2TitleDisplayed"/>
             <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" stepKey="seeSlide2ContentDisplayed"/>
@@ -149,7 +149,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

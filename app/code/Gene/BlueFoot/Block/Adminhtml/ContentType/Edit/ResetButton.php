@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Gene\BlueFoot\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
@@ -16,7 +15,7 @@ class ResetButton implements ButtonProviderInterface
     private $targetName;
 
     /**
-     * GenericButton constructor.
+     * Constructor
      *
      * @param $targetName
      */

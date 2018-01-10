@@ -45,9 +45,9 @@
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
             <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.addNewItem}}" stepKey="waitForAddItemsElementVisible"/>
+            <waitForElement time="10" selector="{{AccordionEditSection.addNewItem}}" stepKey="waitForAddItemsElementVisible"/>
             <click selector="{{AccordionEditSection.addNewItem}}" stepKey="clickOnAddItemsElement"/>
-            <waitForElement time="3" selector="{{AccordionEditSection.itemTitle('0')}}" stepKey="waitForItemRow0TextVisible"/>
+            <waitForElement time="10" selector="{{AccordionEditSection.itemTitle('0')}}" stepKey="waitForItemRow0TextVisible"/>
             <fillField selector="{{AccordionEditSection.itemTitle('0')}}" userInput="{{PageBuilderItemProperty.title}}" stepKey="fillItemRow0TitleField"/>
             <fillField selector="{{AccordionEditSection.itemContent('0')}}" userInput="{{PageBuilderItemProperty.content}}" stepKey="fillItemRow0ContentField"/>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -90,7 +90,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

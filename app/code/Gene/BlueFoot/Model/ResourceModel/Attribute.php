@@ -7,9 +7,6 @@ namespace Gene\BlueFoot\Model\ResourceModel;
 
 use Magento\Framework\Model\AbstractModel;
 
-/**
- * Class Attribute
- */
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {
     /**
@@ -18,13 +15,13 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
     private $configInterface;
 
     /**
-     * Attribute constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Magento\Store\Model\StoreManagerInterface        $storeManager
-     * @param \Magento\Eav\Model\ResourceModel\Entity\Type      $eavEntityType
-     * @param \Gene\BlueFoot\Model\Config\ConfigInterface       $configInterface
-     * @param null                                              $connectionName
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType
+     * @param \Gene\BlueFoot\Model\Config\ConfigInterface $configInterface
+     * @param string|null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,

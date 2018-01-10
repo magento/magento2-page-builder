@@ -48,13 +48,13 @@
             <fillField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="fillCategoryField"/>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+            <waitForElementVisible time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage2">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="5" selector="{{ProductListEditForm.categoryId}}" stepKey="waitForCategoryInputFieldVisible"/>
+            <waitForElementVisible time="10" selector="{{ProductListEditForm.categoryId}}" stepKey="waitForCategoryInputFieldVisible"/>
             <seeInField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="validateCategoryInputFieldValue"/>
             <amOnPage url="product-list{{BlueFootPageTitle.pageName}}" stepKey="amOnBlueFootPage"/>
             <waitForPageLoad stepKey="waitForCmsPageLoad"/>
@@ -97,7 +97,7 @@
             <actionGroup ref="openBlueFootEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
             </actionGroup>
-            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <waitForElementVisible time="10" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
             <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
             <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">

@@ -8,9 +8,6 @@ namespace Gene\BlueFoot\Model;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface;
 
-/**
- * Class Attribute
- */
 class Attribute extends \Magento\Eav\Model\Attribute
 {
     /**
@@ -35,38 +32,37 @@ class Attribute extends \Magento\Eav\Model\Attribute
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $objectManager;
+    private $objectManager;
 
     /**
      * @var \Magento\Framework\Indexer\IndexerRegistry
      */
-    protected $indexerRegistry;
+    private $indexerRegistry;
 
     /**
-     * Attribute constructor.
+     * Constructor
      *
-     * @param \Magento\Framework\Model\Context                              $context
-     * @param \Magento\Framework\Registry                                   $registry
-     * @param \Magento\Framework\Api\ExtensionAttributesFactory             $extensionFactory
-     * @param \Magento\Framework\Api\AttributeValueFactory                  $customAttributeFactory
-     * @param \Magento\Eav\Model\Config                                     $eavConfig
-     * @param \Magento\Eav\Model\Entity\TypeFactory                         $eavTypeFactory
-     * @param \Magento\Store\Model\StoreManagerInterface                    $storeManager
-     * @param \Magento\Eav\Model\ResourceModel\Helper                       $resourceHelper
-     * @param \Magento\Framework\Validator\UniversalFactory                 $universalFactory
-     * @param \Magento\Eav\Api\Data\AttributeOptionInterfaceFactory         $optionDataFactory
-     * @param \Magento\Framework\Reflection\DataObjectProcessor             $dataObjectProcessor
-     * @param \Magento\Framework\Api\DataObjectHelper                       $dataObjectHelper
-     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface          $localeDate
-     * @param \Magento\Catalog\Model\Product\ReservedAttributeList          $reservedAttributeList
-     * @param \Magento\Framework\Locale\ResolverInterface                   $localeResolver
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
+     * @param \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory
+     * @param \Magento\Eav\Model\Config $eavConfig
+     * @param \Magento\Eav\Model\Entity\TypeFactory $eavTypeFactory
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Eav\Model\ResourceModel\Helper $resourceHelper
+     * @param \Magento\Framework\Validator\UniversalFactory $universalFactory
+     * @param \Magento\Eav\Api\Data\AttributeOptionInterfaceFactory $optionDataFactory
+     * @param \Magento\Framework\Reflection\DataObjectProcessor $dataObjectProcessor
+     * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate
+     * @param \Magento\Catalog\Model\Product\ReservedAttributeList $reservedAttributeList
+     * @param \Magento\Framework\Locale\ResolverInterface $localeResolver
      * @param \Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Magento\Framework\Indexer\IndexerRegistry                    $indexerRegistry
-     * @param \Magento\Framework\ObjectManagerInterface                     $objectManager
-     * @param \Gene\BlueFoot\Model\Entity\ReservedAttributeList             $entityReservedAttributeList
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null  $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null            $resourceCollection
-     * @param array                                                         $data
+     * @param \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry
+     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -87,7 +83,6 @@ class Attribute extends \Magento\Eav\Model\Attribute
         DateTimeFormatterInterface $dateTimeFormatter,
         \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Gene\BlueFoot\Model\Entity\ReservedAttributeList $entityReservedAttributeList,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -114,7 +109,6 @@ class Attribute extends \Magento\Eav\Model\Attribute
             $resourceCollection,
             $data
         );
-        $this->reservedAttributeList = $entityReservedAttributeList;
         $this->objectManager = $objectManager;
     }
 
@@ -187,32 +181,5 @@ class Attribute extends \Magento\Eav\Model\Attribute
     {
         return $this->getData('is_filterable_in_grid')
         && in_array($this->getFrontendInput(), ['text', 'date', 'select', 'boolean']);
-    }
-
-    /**
-     * Don't serialize the class variables
-     *
-     * @return array
-     */
-    public function __sleep()
-    {
-        // Don't store the entity type in the cache
-        unset($this->_data['entity_type']);
-
-        return array_diff(
-            parent::__sleep(),
-            ['_objectManager', 'indexerRegistry']
-        );
-    }
-
-    /**
-     * Restore the entity_type
-     */
-    public function __wakeup()
-    {
-        parent::__wakeup();
-
-        // Restore the entity type into the data
-        $this->_data['entity_type'] = $this->getEntityType();
     }
 }

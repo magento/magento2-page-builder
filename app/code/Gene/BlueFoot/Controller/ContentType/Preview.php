@@ -81,6 +81,6 @@ class Preview extends \Magento\Framework\App\Action\Action
                 'errorcode' => $e->getCode()
             ];
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON, ['data' => $result]);
     }
 }

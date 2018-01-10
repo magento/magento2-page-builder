@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Block\Element;
 
-/**
- * Class Editor
- */
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
     /**

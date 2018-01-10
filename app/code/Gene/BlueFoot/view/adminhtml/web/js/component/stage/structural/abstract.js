@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../appearance/appearance", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./column/builder", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _appearance, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _builder, _editableArea, _options, _option) {
+define(["knockout", "mage/translate", "underscore", "../../appearance/appearance", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _appearance, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -36,7 +36,6 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
       _this.attributeMapper = new _attributeMapper();
       _this.config = void 0;
       _this.children = _knockout.observableArray([]);
-      _this.columnBuilder = new _builder.ColumnBuilder();
       _this.edit = void 0;
       _this.optionsInstance = new _options.Options(_this, _this.options);
       _this.parent = void 0;

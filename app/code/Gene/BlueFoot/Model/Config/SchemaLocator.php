@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Model\Config;
 
-/**
- * Class SchemaLocator
- */
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {
     /**
@@ -27,8 +24,9 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
     /**
      * @param \Magento\Framework\Module\Dir\Reader $moduleReader
      */
-    public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
-    {
+    public function __construct(
+        \Magento\Framework\Module\Dir\Reader $moduleReader
+    ) {
         $etcDir = $moduleReader->getModuleDir('etc', 'Gene_BlueFoot');
         $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'content_types.xsd';
         $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'content_types.xsd';

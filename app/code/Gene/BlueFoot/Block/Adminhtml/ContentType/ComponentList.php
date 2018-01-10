@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Gene\BlueFoot\Block\Adminhtml\ContentType;
 
 use Gene\BlueFoot\Model\Config\ConfigInterface;
@@ -22,7 +21,7 @@ class ComponentList extends \Magento\Framework\View\Element\Template
     private $componentRenderer;
 
     /**
-     * ComponentList constructor.
+     * Constructor
      *
      * @param Context $context
      * @param ConfigInterface $config

@@ -15,7 +15,6 @@ import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import Stage from "../../stage";
 import Edit from "../edit";
 import { Structural as StructuralInterface } from "./abstract.d";
-import { ColumnBuilder } from "./column/builder";
 import EditableArea from "./editable-area";
 import { Options } from "./options";
 import { Option } from "./options/option";
@@ -26,7 +25,6 @@ export default class Structural extends EditableArea implements StructuralInterf
     public attributeMapper: AttributeMapper =  new AttributeMapper();
     public config: any;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
-    public columnBuilder: ColumnBuilder = new ColumnBuilder();
     public edit: Edit;
     public optionsInstance: Options = new Options(this, this.options);
     public parent: EditableArea;

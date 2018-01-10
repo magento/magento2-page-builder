@@ -5,17 +5,14 @@
  */
 namespace Gene\BlueFoot\Model;
 
-/**
- * Class Config
- */
 class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Model\Config\ConfigInterface
 {
     /**
-     * Config constructor.
+     * Constructor
      *
-     * @param \Gene\BlueFoot\Model\Config\Reader       $reader
+     * @param \Gene\BlueFoot\Model\Config\Reader $reader
      * @param \Magento\Framework\Config\CacheInterface $cache
-     * @param string                                   $cacheId
+     * @param string $cacheId
      */
     public function __construct(
         \Gene\BlueFoot\Model\Config\Reader $reader,
@@ -35,7 +32,6 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
 
     /**
      * @param string $name
-     *
      * @return array
      */
     public function getGroup($name)
@@ -57,7 +53,6 @@ class Config extends \Magento\Framework\Config\Data implements \Gene\BlueFoot\Mo
      * Return a specific content block by it's identifier
      *
      * @param $name
-     *
      * @return array|mixed|null
      */
     public function getContentType($name)
