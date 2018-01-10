@@ -1,4 +1,4 @@
-const babelRc = require('./app/code/Gene/BlueFoot/view/adminhtml/ts/.babelrc.js');
+const babelRc = require('./app/code/Magento/PageBuilder/view/adminhtml/ts/.babelrc.js');
 const bebelJest = require('babel-jest');
 const jestMagento = require('jest-magento2');
 

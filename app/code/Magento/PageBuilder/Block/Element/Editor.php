@@ -20,16 +20,16 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Enable Advanced CMS'),
-                    'class' => 'gene-pagebuilder init-gene-pagebuilder action-default scalable action action-secondary',
-                    'id' => 'gene-pagebuilder' . $this->getHtmlId()
+                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action action-secondary',
+                    'id' => 'magento-pagebuilder' . $this->getHtmlId()
                 ]
             );
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Disable Advanced CMS'),
-                    'class' => 'gene-pagebuilder disable-gene-pagebuilder',
+                    'class' => 'magento-pagebuilder disable-magento-pagebuilder',
                     'style' => 'display: none;',
-                    'id' => 'disable-gene-pagebuilder' . $this->getHtmlId()
+                    'id' => 'disable-magento-pagebuilder' . $this->getHtmlId()
                 ]
             );
         }

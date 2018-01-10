@@ -121,7 +121,7 @@ define([
          * @param node
          */
         bindPageBuilderButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-gene-pagebuilder').on('click', this.buildPageBuilder.bind(this));
+            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').on('click', this.buildPageBuilder.bind(this));
         },
 
         /**

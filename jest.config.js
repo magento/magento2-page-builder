@@ -11,7 +11,7 @@ const jestConfig = jestMagento2.configure(
         modulePaths: [
             "<rootDir>/dev/tests/js/fakes",
             "<rootDir>/dev/tests/js/wrapper",
-            "<rootDir>/app/code/Gene/BlueFoot/view/adminhtml/ts",
+            "<rootDir>/app/code/Magento/PageBuilder/view/adminhtml/ts",
             "<rootDir>/node_modules"
         ],
         moduleFileExtensions: ["ts", "js", "json"],
@@ -25,7 +25,7 @@ const jestConfig = jestMagento2.configure(
         rootDir: __dirname,
         buildDir: buildDir,
         pathMapping: {
-            Gene_BlueFoot: path.join(__dirname, 'app/code/Gene/BlueFoot/view/adminhtml/ts')
+            Magento_PageBuilder: path.join(__dirname, 'app/code/Magento/PageBuilder/view/adminhtml/ts')
         }
     }
 );

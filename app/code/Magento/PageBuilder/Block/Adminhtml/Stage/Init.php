@@ -54,7 +54,7 @@ class Init extends \Magento\Backend\Block\Template
         $data = array_merge(
             [
                 'form_key' => $this->formKey->getFormKey(),
-                'init_button_class' => '.init-gene-pagebuilder',
+                'init_button_class' => '.init-magento-pagebuilder',
                 'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
                 'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
             ],
