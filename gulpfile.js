@@ -6,7 +6,7 @@ const gulp  = require('gulp'),
     header = require('gulp-header');
 
 const config = {
-    basePath: 'app/code/Gene/BlueFoot',
+    basePath: 'app/code/Magento/PageBuilder',
     tsPath: 'view/adminhtml/web/ts/',
     buildPath: 'view/adminhtml/web/',
     testsPath: 'dev/tests/js/',
