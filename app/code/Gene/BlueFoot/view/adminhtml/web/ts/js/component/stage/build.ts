@@ -36,7 +36,7 @@ export default class Build extends EventEmitter {
         this.stageDocument.setAttribute(Config.getValueAsString("dataRoleAttributeName"), "stage");
         this.stageDocument.innerHTML = this.fieldValue;
 
-        // Validate if the new stage contains any rows, if it doesn"t it"s not compatible with our system
+        // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
         return !!this.stageDocument.querySelector("[" + Config.getValueAsString("dataRoleAttributeName") + "='row']");
     }
 
@@ -54,7 +54,7 @@ export default class Build extends EventEmitter {
     }
 
     /**
-     * Build an element and it"s children into the stage
+     * Build an element and it's children into the stage
      *
      * @param {Element} element
      * @param {EditableArea} parent

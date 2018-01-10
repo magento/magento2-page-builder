@@ -16,7 +16,7 @@ export default class Tabs extends Block {
     constructor(parent: Block, config: object) {
         super(parent, config);
 
-        // Declare our tabs, they"ll get populated later
+        // Declare our tabs, they'll get populated later
         this.data.tabs = ko.observableArray([]);
         this.data.tabs.subscribe((data) => {
             this.renderCounter = 0;

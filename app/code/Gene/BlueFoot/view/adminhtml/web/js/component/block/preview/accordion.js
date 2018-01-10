@@ -10,7 +10,7 @@ define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockou
     function Accordion(parent, config) {
       var _this;
 
-      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they"ll get populated later
+      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
 
       _this.element = void 0;
       _this.renderCounter = 0;

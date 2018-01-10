@@ -15,7 +15,7 @@ export default class Accordion extends Block {
     constructor(parent: Block, config: object) {
         super(parent, config);
 
-        // Declare our tabs, they"ll get populated later
+        // Declare our tabs, they'll get populated later
         this.data.items = ko.observableArray([]);
         this.data.items.subscribe((data) => {
             this.renderCounter = 0;

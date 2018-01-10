@@ -206,7 +206,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     }
 
     /**
-     * Handle event when a block is sorted within it"s current container
+     * Handle event when a block is sorted within it's current container
      *
      * @param event
      * @param params

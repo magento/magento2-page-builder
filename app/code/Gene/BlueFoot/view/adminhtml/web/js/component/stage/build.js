@@ -33,7 +33,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
       // Create a document with a role of stage to wrap the contents
       this.stageDocument = document.createElement("div");
       this.stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
-      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn"t it"s not compatible with our system
+      this.stageDocument.innerHTML = this.fieldValue; // Validate if the new stage contains any rows, if it doesn't it's not compatible with our system
 
       return !!this.stageDocument.querySelector("[" + _config.getValueAsString("dataRoleAttributeName") + "='row']");
     };
@@ -51,7 +51,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
       return this.buildElement(this.stageDocument, this.stage);
     };
     /**
-     * Build an element and it"s children into the stage
+     * Build an element and it's children into the stage
      *
      * @param {Element} element
      * @param {EditableArea} parent

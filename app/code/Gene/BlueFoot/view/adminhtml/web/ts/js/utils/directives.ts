@@ -29,7 +29,7 @@ export function toDataUrl(directive: string): string {
 }
 
 /**
- * Convert a URI to it"s directive equivalent
+ * Convert a URI to it's directive equivalent
  * @param {string} url
  * @returns {string}
  */

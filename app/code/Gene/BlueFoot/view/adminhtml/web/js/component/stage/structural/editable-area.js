@@ -202,7 +202,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
       }*/
     };
     /**
-     * Handle event when a block is sorted within it"s current container
+     * Handle event when a block is sorted within it's current container
      *
      * @param event
      * @param params

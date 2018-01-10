@@ -68,7 +68,7 @@ define(["knockout", "../../../config"], function (_knockout, _config) {
       this.visible(false);
     };
     /**
-     * Proxy to the correct parent"s add column function
+     * Proxy to the correct parent's add column function
      */
 
 

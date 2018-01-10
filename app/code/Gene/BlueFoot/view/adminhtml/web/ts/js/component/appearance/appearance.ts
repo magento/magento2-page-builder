@@ -12,7 +12,7 @@ interface AppearanceList {
 
 export default class Appearance {
     // List of type appearances
-    public appearances: AppearanceList;
+    private appearances: AppearanceList;
 
     constructor(appearances: AppearanceList) {
         this.appearances = appearances;

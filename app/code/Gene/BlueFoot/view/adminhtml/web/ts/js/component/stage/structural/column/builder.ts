@@ -51,7 +51,7 @@ export class ColumnBuilder {
     }
 
     /**
-     * Proxy to the correct parent"s add column function
+     * Proxy to the correct parent's add column function
      */
     public addColumn(parents: any, data: any) {
         // Nest a column (within a column or on a row)

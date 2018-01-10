@@ -31,7 +31,7 @@ define([], function () {
     return "data:" + mimeType + "," + encodeURIComponent(directive);
   }
   /**
-   * Convert a URI to it"s directive equivalent
+   * Convert a URI to it's directive equivalent
    * @param {string} url
    * @returns {string}
    */
