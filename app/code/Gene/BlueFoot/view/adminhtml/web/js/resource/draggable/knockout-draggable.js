@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 /*eslint-disable vars-on-top, strict*/
 
 define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {

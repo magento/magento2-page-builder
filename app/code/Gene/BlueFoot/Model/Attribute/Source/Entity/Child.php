@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Model\Attribute\Source\Entity;
 
-/**
- * Class Child
- */
 class Child extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
     /**

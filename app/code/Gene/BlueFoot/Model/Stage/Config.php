@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Gene\BlueFoot\Model\Stage;
 
 class Config extends \Magento\Framework\Model\AbstractModel

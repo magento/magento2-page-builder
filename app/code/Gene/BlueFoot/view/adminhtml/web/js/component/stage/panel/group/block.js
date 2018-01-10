@@ -2,9 +2,6 @@
 define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitter) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  /**
-   * Block Class
-   */
   var Block =
   /*#__PURE__*/
   function (_EventEmitter) {

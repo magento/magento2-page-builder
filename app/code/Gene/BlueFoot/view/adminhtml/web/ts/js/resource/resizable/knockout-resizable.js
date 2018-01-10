@@ -3,9 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+/*eslint-disable */
+
 define(["ko", "jquery", 'Gene_BlueFoot/js/component/config'], function (ko, jQuery, Config) {
     'use strict';
-    /*eslint-disable */
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},

@@ -1,4 +1,9 @@
 /**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
  * Move an array item within the current array
  *
  * @param array
@@ -6,7 +11,6 @@
  * @param toIndex
  * @returns {Array<any>}
  */
-
 export function moveArrayItem(array: any[] | KnockoutObservableArray <any>, fromIndex: number,
                               toIndex: number): any[] | KnockoutObservableArray <any> {
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);

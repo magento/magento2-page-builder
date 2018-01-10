@@ -2,8 +2,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 /*eslint-disable vars-on-top, strict*/
-/*global FORM_KEY */
 
 (function (factory) {
     if (typeof define === "function" && define.amd) {

@@ -1,6 +1,11 @@
 /*eslint-disable */
 define([], function () {
   /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
    * Move an array item within the current array
    *
    * @param array

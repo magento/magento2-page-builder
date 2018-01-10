@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 var config = {
     paths: {
         'bluefoot/async': 'Gene_BlueFoot/js/resource/requirejs/async',
@@ -13,7 +14,6 @@ var config = {
         'slick': 'Gene_BlueFoot/js/resource/slick/slick',
         'xyperscript': 'Gene_BlueFoot/js/resource/xyperscript/xyperscript',
 
-
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Gene_BlueFoot/js/resource/sortable/knockout-sortable',
         'ko-draggable': 'Gene_BlueFoot/js/resource/draggable/knockout-draggable',
@@ -21,8 +21,6 @@ var config = {
         'bluefoot/ko-dropzone': 'Gene_BlueFoot/js/resource/dropzone/knockout-dropzone',
         'bluefoot/ko-redactor': 'Gene_BlueFoot/js/resource/redactor/knockout-redactor',
         'bluefoot/ko-liveedit': 'Gene_BlueFoot/js/resource/live-edit/knockout-liveedit'
-
-        /* BlueFoot config is required by other aspects of the system */
     },
     map: {
         '*': {

@@ -2,10 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 /*eslint-disable vars-on-top, strict */
-/**
- * Map UI Component
- */
+
 define([
     'Magento_Ui/js/form/element/abstract',
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',

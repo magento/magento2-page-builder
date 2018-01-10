@@ -8,7 +8,7 @@ namespace Gene\BlueFoot\Model\Template;
 class Filter
 {
     /**
-     * @var Config
+     * @var \Gene\BlueFoot\Model\Config
      */
     private $config;
 

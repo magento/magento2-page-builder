@@ -5,9 +5,6 @@
  */
 namespace Gene\BlueFoot\Model\Config;
 
-/**
- * Interface ConfigInterface
- */
 interface ConfigInterface
 {
     /**

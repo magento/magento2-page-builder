@@ -3,9 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+/*eslint-disable */
+
 define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
     'use strict';
-    /*eslint-disable */
 
     /**
      * Retrieve the view model for an element

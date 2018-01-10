@@ -6,8 +6,6 @@ define([], function () {
    */
 
   /**
-   * PersistenceClient
-   *
    * Acts as the data provider client between our system and the UI component system
    */
   var PersistenceClient =

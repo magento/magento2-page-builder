@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import _ from "underscore";
 import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
