@@ -66,8 +66,15 @@ export default class Structural extends EditableArea implements StructuralInterf
         return [
             new Option(this, "move", "<i></i>", $t("Move"), false, ["move-structural"], 10),
             new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
-            new Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>",
-                $t("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60),
+            new Option(
+                this,
+                "duplicate",
+                "<i class='icon-pagebuilder-copy'></i>",
+                $t("Duplicate"),
+                this.onOptionDuplicate,
+                ["duplicate-structural"],
+                60
+            ),
             new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 100),
         ];
     }

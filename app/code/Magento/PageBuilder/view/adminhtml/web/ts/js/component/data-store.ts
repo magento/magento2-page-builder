@@ -118,7 +118,7 @@ export default class DataStore extends EventEmitter {
     /**
      * Emit state updates through events
      *
-     * @param i
+     * @param id
      * @param data
      */
     private emitState(id?: string, data?: any) {
