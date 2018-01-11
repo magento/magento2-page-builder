@@ -7,7 +7,6 @@ import {DataObject} from "../../data-store";
 import AppearanceInterface from "../appearance-interface";
 
 export default class AlignCenter implements AppearanceInterface {
-
     /**
      * Apply align middle appearance
      *

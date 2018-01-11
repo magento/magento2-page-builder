@@ -21,17 +21,17 @@ import { Option } from "./options/option";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public appearance: Appearance;
-    public attributeFilter: AttributeFilter = new AttributeFilter();
-    public attributeMapper: AttributeMapper =  new AttributeMapper();
     public config: any;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
-    public optionsInstance: Options = new Options(this, this.options);
     public parent: EditableArea;
-    public styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
-    public styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
+    protected attributeFilter: AttributeFilter = new AttributeFilter();
+    protected attributeMapper: AttributeMapper =  new AttributeMapper();
+    protected optionsInstance: Options = new Options(this, this.options);
+    protected styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    protected styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
      * Abstract structural constructor
@@ -73,7 +73,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 $t("Duplicate"),
                 this.onOptionDuplicate,
                 ["duplicate-structural"],
-                60
+                60,
             ),
             new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 100),
         ];

@@ -37,7 +37,7 @@ export default function createBlock(
     config: ConfigObject,
     parent: EditableArea,
     stage: Stage,
-    formData?: object
+    formData?: object,
 ): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};

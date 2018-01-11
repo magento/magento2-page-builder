@@ -17,7 +17,7 @@ import Structural from "./structural/abstract";
  */
 
 export default class Save {
-    public rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";
+    protected rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";
 
     /**
      * Render a tree of content types instances stored in knockout

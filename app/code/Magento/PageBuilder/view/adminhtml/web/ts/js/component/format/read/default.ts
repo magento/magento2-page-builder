@@ -10,8 +10,8 @@ import {ReadInterface} from "../read-interface";
 import StyleAttributeMapper from "../style-attribute-mapper";
 
 export default class Default implements ReadInterface {
-    public attributeMapper: AttributeMapper = new AttributeMapper();
-    public styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
+    protected attributeMapper: AttributeMapper = new AttributeMapper();
+    protected styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
      * Read data, style and css properties from the element

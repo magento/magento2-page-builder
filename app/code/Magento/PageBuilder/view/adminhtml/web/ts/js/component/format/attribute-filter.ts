@@ -7,7 +7,7 @@ import {DataObject} from "../data-store";
 
 export default class AttributeFilter {
     // Allowed data attributes
-    public allowAttributes: string[] = [
+    protected allowAttributes: string[] = [
         "name",
         "appearance",
         "id",

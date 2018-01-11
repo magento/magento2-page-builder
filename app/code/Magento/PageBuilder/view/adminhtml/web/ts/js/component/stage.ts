@@ -24,12 +24,12 @@ export default class Stage extends EditableArea implements StageInterface {
     public loading: KnockoutObservable<boolean>;
     public originalScrollTop: number;
     public parent: any;
-    public save: Save = new Save();
     public serializeRole: string = "stage";
     public showBorders: KnockoutObservable<boolean>;
     public stage: Stage;
     public store: DataStore;
     public userSelect: KnockoutObservable<boolean>;
+    protected save: Save = new Save();
 
     /**
      * Stage constructor
@@ -99,7 +99,7 @@ export default class Stage extends EditableArea implements StageInterface {
                     Config.getInitConfig("contentTypes").row,
                     this,
                     this,
-                    {}
+                    {},
                 ).then((row: Block) => {
                     this.addChild(row);
                 });

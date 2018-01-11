@@ -51,6 +51,6 @@ export default function decodeAllDataUrlsInString(str: string) {
         new RegExp("url\\s*\\(\\s*(?:&quot;|\'|\")?(data:" + mimeType + ",.+?)(?:&quot;|\'|\")?\\s*\\)", "g"),
         (match, url) => {
             return "url(\'" + fromDataUrl(url) + "\')";
-        }
+        },
     );
 }

@@ -7,7 +7,7 @@ import {DataObject} from "../component/data-store";
 
 export default class AttributeMapper {
     // Attribute name mapping
-    public attributeNameMapping: DataObject = {
+    protected attributeNameMapping: DataObject = {
         advanced_settings: "data-advanced-settings",
         appearance: "data-appearance",
         autoplay: "data-autoplay",

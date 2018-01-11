@@ -124,7 +124,7 @@ export default class Config {
         matchKey: string,
         matchValue: string,
         newValueKey: string | number,
-        newValue: string
+        newValue: string,
     ) {
         const arr: any[] = [];
         Config.config.templates.forEach((item: any) => {

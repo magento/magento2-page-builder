@@ -21,7 +21,6 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
-      _this.element = void 0;
       _this.ready = false;
       _this.buildSlick = _underscore.debounce(function () {
         _underscore.delay(function () {
@@ -35,6 +34,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
           }
         }, 100);
       }, 20);
+      _this.element = void 0;
       parent.children.subscribe(_this.buildSlick);
 
       _this.parent.stage.store.subscribe(_this.buildSlick);

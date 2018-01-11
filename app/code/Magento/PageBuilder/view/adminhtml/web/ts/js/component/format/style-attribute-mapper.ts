@@ -135,7 +135,7 @@ export default class StyleAttributeMapper {
                     result.margins_and_padding = result.margins_and_padding || spacingObj;
                     result.margins_and_padding[attributeType] = _.extend(
                         result.margins_and_padding[attributeType],
-                        {[attributeDirection]: value.replace("px", "")}
+                        {[attributeDirection]: value.replace("px", "")},
                     );
                     return;
                 }

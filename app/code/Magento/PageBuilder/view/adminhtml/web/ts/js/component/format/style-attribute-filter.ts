@@ -7,7 +7,7 @@ import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
     // Allowed style attributes
-    public allowedAttributes: [string] = [
+    protected allowedAttributes: [string] = [
         "align_self",
         "background_color",
         "background_image",

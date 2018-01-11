@@ -10,9 +10,9 @@ import {ModalComponent} from "../edit";
  * Acts as the data provider client between our system and the UI component system
  */
 export default class PersistenceClient {
-    private modal: ModalComponent;
-    private store: DataStore;
-    private id: string;
+    protected modal: ModalComponent;
+    protected store: DataStore;
+    protected id: string;
 
     /**
      * @param {ModalComponent} modal
