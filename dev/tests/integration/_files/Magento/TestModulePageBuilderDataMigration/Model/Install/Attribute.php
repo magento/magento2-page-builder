@@ -42,7 +42,7 @@ class Attribute extends AbstractInstall
     ];
 
     /**
-     * Attribute constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -84,7 +84,6 @@ class Attribute extends AbstractInstall
      * @param array $attributeData
      * @param EntitySetup $eavSetup
      * @param bool $attributeCode
-     *
      * @return $this
      * @throws \Exception
      */
@@ -158,7 +157,6 @@ class Attribute extends AbstractInstall
      * @param array $attributes
      * @param mixed $installData
      * @param EntitySetup $eavSetup
-     *
      * @return $this
      */
     public function createAttributes($attributes, $installData, EntitySetup $eavSetup)
@@ -182,7 +180,6 @@ class Attribute extends AbstractInstall
      * Resolve any unmapped ID's in the additional data field
      *
      * @param EntitySetup $eavSetup
-     *
      * @return $this
      */
     public function resolveAdditionalData(EntitySetup $eavSetup)

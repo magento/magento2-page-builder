@@ -9,21 +9,16 @@ use Magento\Framework\Api\AttributeValueFactory;
 
 class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
 {
-    /**
-     * @var \Magento\PageBuilder\Model\ResourceModel\EntityFactory
-     */
-    protected $entityFactory;
-
-    /**
-     * @var null|array
-     */
-    protected $config = null;
-
     const AREA_FRONTEND = 'frontend';
     const AREA_ADMINHTML = 'adminhtml';
 
     /**
-     * ContentBlock constructor.
+     * @var \Magento\PageBuilder\Model\ResourceModel\EntityFactory
+     */
+    private $entityFactory;
+
+    /**
+     * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry

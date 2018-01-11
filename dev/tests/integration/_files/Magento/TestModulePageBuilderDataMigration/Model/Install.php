@@ -12,25 +12,25 @@ class Install extends \Magento\Framework\Model\AbstractModel
     /**
      * @var null|array
      */
-    protected $installData = null;
+    private $installData;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute
      */
-    protected $attributeInstall;
+    private $attributeInstall;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock
      */
-    protected $contentBlockInstall;
+    private $contentBlockInstall;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory
      */
-    protected $entitySetupFactory;
+    private $entitySetupFactory;
 
     /**
-     * Install constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -61,7 +61,6 @@ class Install extends \Magento\Framework\Model\AbstractModel
      * Install data from a data set
      *
      * @param $data array
-     *
      * @return bool
      * @throws \Exception
      */

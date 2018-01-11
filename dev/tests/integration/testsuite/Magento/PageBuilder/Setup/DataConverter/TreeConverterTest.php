@@ -1019,14 +1019,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param string$jsonFormatFileName
      * @param string $masterFormatFileName
      * @param callable|null $callSetupEntity
-     * @param \Exception|null $expectedException
+     * @param \Exception $expectedException
      * @dataProvider convertExceptionDataProvider
      */
     public function testConvertException(
         $contentTypes,
         $jsonFormatFileName,
         $masterFormatFileName,
-        $expectedException = null
+        $expectedException
     ) {
         foreach ($contentTypes as $contentTypesCode => $contentTypesData) {
             foreach ($contentTypesData as $contentType) {
@@ -1034,10 +1034,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        if ($expectedException != null) {
-            $this->expectException(get_class($expectedException));
-            $this->expectExceptionMessage($expectedException->getMessage());
-        }
+        $this->expectException(get_class($expectedException));
+        $this->expectExceptionMessage($expectedException->getMessage());
 
         $this->assertEquals(
             file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
@@ -1154,8 +1152,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      *
      * @param $contentTypeCode
      * @param $data
-     *
-     * @return mixed
      * @throws \Exception
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -1190,13 +1186,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             \Magento\PageBuilder\Model\ResourceModel\Entity::class
         );
         $entityResource->save($entity);
-
-        return $entity->getId();
     }
 
     /**
      * @param $contentTypeCode
-     *
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -1208,7 +1201,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
         $contentBlock = $contentBlockFactory->create();
 
-        /* @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource */
         $contentBlockResource = self::$objectManager->create(
             \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
         );
