@@ -32,13 +32,13 @@ class Install extends \Magento\Framework\Model\AbstractModel
     /**
      * Install constructor.
      *
-     * @param \Magento\Framework\Model\Context                                                  $context
-     * @param \Magento\Framework\Registry                                                       $registry
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute             $attribute
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock          $contentBlock
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                      $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null                                $resourceCollection
-     * @param array                                                                         $data
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute $attribute
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock $contentBlock
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,

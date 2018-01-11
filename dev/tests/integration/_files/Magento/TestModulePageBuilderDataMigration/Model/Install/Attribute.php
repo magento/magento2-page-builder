@@ -81,9 +81,9 @@ class Attribute extends AbstractInstall
     /**
      * Create an attribute
      *
-     * @param             $attributeData
+     * @param array $attributeData
      * @param EntitySetup $eavSetup
-     * @param bool        $attributeCode
+     * @param bool $attributeCode
      *
      * @return $this
      * @throws \Exception
@@ -155,8 +155,8 @@ class Attribute extends AbstractInstall
     /**
      * Create multiple attributes
      *
-     * @param             $attributes
-     * @param             $installData
+     * @param array $attributes
+     * @param mixed $installData
      * @param EntitySetup $eavSetup
      *
      * @return $this
