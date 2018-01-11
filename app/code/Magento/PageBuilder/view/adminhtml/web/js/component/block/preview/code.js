@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["pagebuilder/highlight", "knockout", "./block"], function (_highlight, _knockout, _block) {
+define(["knockout", "pagebuilder/highlight", "./block"], function (_knockout, _highlight, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Code =
