@@ -98,9 +98,9 @@ class ContentBlock extends AbstractInstall
     /**
      * Create a single content block
      *
-     * @param             $contentBlockData
+     * @param array $contentBlockData
      * @param EntitySetup $eavSetup
-     * @param bool        $contentBlockIdentifier
+     * @param bool $contentBlockIdentifier
      *
      * @return $this
      * @throws \Exception
@@ -175,8 +175,8 @@ class ContentBlock extends AbstractInstall
     }
 
     /**
-     * @param $contentBlocks
-     * @param $installData
+     * @param array $contentBlocks
+     * @param mixed $installData
      * @param EntitySetup $eavSetup
      *
      * @return $this
@@ -201,7 +201,7 @@ class ContentBlock extends AbstractInstall
 
     /**
      * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock
-     * @param $attributeGroups
+     * @param array $attributeGroups
      *
      * @return array
      */

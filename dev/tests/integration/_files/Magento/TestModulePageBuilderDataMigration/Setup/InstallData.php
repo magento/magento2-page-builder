@@ -67,7 +67,7 @@ class InstallData implements InstallDataInterface
      * Install groups and entities
      *
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
-     * @param \Magento\Framework\Setup\ModuleContextInterface   $context
+     * @param \Magento\Framework\Setup\ModuleContextInterface $context
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
@@ -90,6 +90,8 @@ class InstallData implements InstallDataInterface
     /**
      * Install
      *
+     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
+     *
      * @return $this
      */
     protected function installDefaultContentBlocks($setup)
@@ -100,7 +102,11 @@ class InstallData implements InstallDataInterface
         return $this;
     }
 
-
+    /**
+     * Returns the bluefoot content block data
+     *
+     * @return array
+     */
     private function getContentBlockData()
     {
         return \Zend_Json::decode('
