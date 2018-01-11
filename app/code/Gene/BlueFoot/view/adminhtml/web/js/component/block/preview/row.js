@@ -65,18 +65,26 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
 
         if (columnGroup.length > 0) {
           groupedChildren.push(columnGroup);
-        } // get width of column in the group. if width of all columns in a group > 100%, set wrapClass
-        // _.each(columnGroup, (column) => {
-        //     let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
-        // });
 
-
-        if (columnGroup.length > 6) {
-          _this.wrapClass(true);
+          if (_this.getWidthOfColumnGroup(columnGroup) > 100) {
+            _this.wrapClass(true);
+          }
         }
 
         return groupedChildren;
       });
+
+      _this.getWidthOfColumnGroup = function (columnGroup) {
+        var widthOfColumnGroup = 0;
+
+        _underscore.each(columnGroup, function (column) {
+          var columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
+          widthOfColumnGroup += columnWidth;
+        });
+
+        return widthOfColumnGroup;
+      };
+
       return _this;
     }
 

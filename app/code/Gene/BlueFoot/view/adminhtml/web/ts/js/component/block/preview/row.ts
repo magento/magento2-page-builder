@@ -74,18 +74,21 @@ export default class Row extends PreviewBlock {
 
             if (columnGroup.length > 0) {
                 groupedChildren.push(columnGroup);
+
+                if (this.getWidthOfColumnGroup(columnGroup) > 100) {
+                    this.wrapClass(true);
+                }
             }
-
-            // get width of column in the group. if width of all columns in a group > 100%, set wrapClass
-            // _.each(columnGroup, (column) => {
-            //     let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
-            // });
-
-            if (columnGroup.length > 6) {
-                this.wrapClass(true);
-            }
-
             return groupedChildren;
         });
+
+        this.getWidthOfColumnGroup = (columnGroup) => {
+            let widthOfColumnGroup:number = 0;
+            _.each(columnGroup, (column) => {
+                let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
+                widthOfColumnGroup += columnWidth;
+            });
+            return widthOfColumnGroup;
+        };
     }
 }
