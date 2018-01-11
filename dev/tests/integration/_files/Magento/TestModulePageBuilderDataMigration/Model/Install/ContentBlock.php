@@ -11,19 +11,9 @@ use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 class ContentBlock extends AbstractInstall
 {
     /**
-     * @var array
-     */
-    private $attributeData = [];
-
-    /**
-     * @var array
-     */
-    private $unresolvedAdditionalData = [];
-
-    /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
      */
-    protected $contentBlockFactory;
+    private $contentBlockFactory;
 
     /**
      * @var \Magento\Eav\Model\Entity\AttributeFactory
@@ -43,10 +33,10 @@ class ContentBlock extends AbstractInstall
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
      */
-    protected $contentBlockResource;
+    private $contentBlockResource;
 
     /**
-     * ContentBlock constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -89,7 +79,6 @@ class ContentBlock extends AbstractInstall
 
         $this->contentBlockFactory = $contentBlockFactory;
         $this->contentBlockResource = $contentBlockResource;
-
         $this->eavAttributeFactory = $eavAttributeFactory;
         $this->eavAttributeCollectionFactory = $eavAttributeCollectionFactory;
         $this->eavAttributeGroupFactory = $eavAttributeGroupFactory;
@@ -101,7 +90,6 @@ class ContentBlock extends AbstractInstall
      * @param array $contentBlockData
      * @param EntitySetup $eavSetup
      * @param bool $contentBlockIdentifier
-     *
      * @return $this
      * @throws \Exception
      */
@@ -178,7 +166,6 @@ class ContentBlock extends AbstractInstall
      * @param array $contentBlocks
      * @param mixed $installData
      * @param EntitySetup $eavSetup
-     *
      * @return $this
      * @throws \Exception
      */
@@ -202,7 +189,6 @@ class ContentBlock extends AbstractInstall
     /**
      * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock
      * @param array $attributeGroups
-     *
      * @return array
      */
     private function buildGroups(

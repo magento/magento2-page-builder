@@ -12,20 +12,15 @@ use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;
 
-/**
- * Class EntitySetup
- */
 class EntitySetup extends EavSetup
 {
     /**
-     * EAV configuration
-     *
      * @var Config
      */
-    protected $eavConfig;
+    private $eavConfig;
 
     /**
-     * Init
+     * Constructor
      *
      * @param ModuleDataSetupInterface $setup
      * @param Context $context
@@ -39,8 +34,7 @@ class EntitySetup extends EavSetup
         CacheInterface $cache,
         CollectionFactory $attrGroupCollectionFactory,
         Config $eavConfig
-    )
-    {
+    ) {
         $this->eavConfig = $eavConfig;
         parent::__construct($setup, $context, $cache, $attrGroupCollectionFactory);
     }
@@ -55,12 +49,12 @@ class EntitySetup extends EavSetup
     {
         $entities = [
             'gene_bluefoot_entity' => [
-                'entity_model' => 'Magento\PageBuilder\Model\ResourceModel\Entity',
-                'attribute_model' => 'Magento\PageBuilder\Model\Attribute',
+                'entity_model' => \Magento\PageBuilder\Model\ResourceModel\Entity::class,
+                'attribute_model' => \Magento\PageBuilder\Model\Attribute::class,
                 'table' => 'gene_bluefoot_entity',
-                'increment_model' => 'Magento\Eav\Model\Entity\Increment\NumericValue',
+                'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
                 'additional_attribute_table' => 'gene_bluefoot_eav_attribute',
-                'entity_attribute_collection' => 'Magento\PageBuilder\Model\ResourceModel\Attribute\Collection',
+                'entity_attribute_collection' => \Magento\PageBuilder\Model\ResourceModel\Attribute\Collection::class,
                 'attributes' => [
                     'title' => [
                         'type' => 'varchar',
@@ -87,7 +81,7 @@ class EntitySetup extends EavSetup
                         'type' => 'int',
                         'label' => 'Is Active',
                         'input' => 'select',
-                        'source' => 'Magento\Eav\Model\Entity\Attribute\Source\Boolean',
+                        'source' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
                         'sort_order' => 4,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                         'user_defined' => 1,
@@ -148,7 +142,7 @@ class EntitySetup extends EavSetup
                         'type' => 'varchar',
                         'label' => 'Custom Design',
                         'input' => 'select',
-                        'source' => 'Magento\Theme\Model\Theme\Source\Theme',
+                        'source' => \Magento\Theme\Model\Theme\Source\Theme::class,
                         'required' => false,
                         'sort_order' => 10,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
@@ -158,7 +152,7 @@ class EntitySetup extends EavSetup
                         'type' => 'varchar',
                         'label' => 'Page Layout',
                         'input' => 'select',
-                        'source' => 'Magento\Catalog\Model\Category\Attribute\Source\Layout',
+                        'source' => \Magento\Catalog\Model\Category\Attribute\Source\Layout::class,
                         'required' => false,
                         'sort_order' => 50,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
@@ -168,7 +162,7 @@ class EntitySetup extends EavSetup
                         'type' => 'text',
                         'label' => 'Custom Layout Update',
                         'input' => 'textarea',
-                        'backend' => 'Magento\Catalog\Model\Attribute\Backend\Customlayoutupdate',
+                        'backend' => \Magento\Catalog\Model\Attribute\Backend\Customlayoutupdate::class,
                         'required' => false,
                         'sort_order' => 60,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,

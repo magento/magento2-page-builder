@@ -10,16 +10,16 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
     /**
      * @var \Magento\PageBuilder\Model\ResourceModel\Entity
      */
-    protected $entity;
+    private $entity;
 
     /**
-     * ContentBlock constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Config $eavConfig
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param null $connectionName
+     * @param string|null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
@@ -37,7 +37,6 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * @param string $field
      * @param mixed $value
      * @param \Magento\Framework\Model\AbstractModel $object
-     *
      * @return \Magento\Framework\DB\Select
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -65,7 +64,6 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * Ensure the BlueFoot entity type ID is set on the row
      *
      * @param \Magento\Framework\Model\AbstractModel $object
-     *
      * @return $this
      */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)

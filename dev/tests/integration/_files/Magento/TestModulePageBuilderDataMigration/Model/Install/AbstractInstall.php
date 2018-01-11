@@ -13,22 +13,12 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory
      */
-    protected $entitySetupFactory;
-
-    /**
-     * @var \Magento\Eav\Model\Entity\Type
-     */
-    protected $entityType;
-
-    /**
-     * @var array
-     */
-    protected $classMapping = [];
+    private $entitySetupFactory;
 
     /**
      * @var null|array
      */
-    protected $installData = null;
+    private $installData;
 
     /**
      * @var \Magento\PageBuilder\Model\ResourceModel\Entity
@@ -38,20 +28,20 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     /**
      * @var array
      */
-    protected $modelFields;
+    private $modelFields;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
      */
-    protected $contentBlockFactory;
+    private $contentBlockFactory;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
      */
-    protected $contentBlockResource;
+    private $contentBlockResource;
 
     /**
-     * AbstractInstall constructor.
+     * Constructor
      *
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -62,7 +52,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
-     *
      * @throws \Exception
      */
     public function __construct(
@@ -77,11 +66,9 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-
         $this->contentBlockFactory = $contentBlockFactory;
         $this->contentBlockResource = $contentBlockResource;
         $this->entitySetupFactory = $entitySetupFactory;
-
         $this->entity = $entity;
 
         // Declare the model fields that require to be mapped
@@ -126,7 +113,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      *
      * @param int|string $attributeCode
      * @param EntitySetup $eavSetup
-     *
      * @return bool
      */
     protected function attributeWillExist($attributeCode, EntitySetup $eavSetup)
@@ -150,7 +136,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * Determine if a content block exists
      *
      * @param $identifier
-     *
      * @return bool
      */
     protected function contentBlockExists($identifier)
@@ -176,7 +161,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * Will a content block exist after installation has completed?
      *
      * @param $identifier
-     *
      * @return bool
      */
     protected function contentBlockWillExist($identifier)
@@ -200,7 +184,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param $data
      * @param $key
      * @param $value
-     *
      * @return bool
      */
     protected function findEntityByKey($data, $key, $value)
@@ -220,7 +203,9 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Load in the class mappings from various json strings
+     * Get class mappings from various json strings
+     *
+     * @return array
      */
     private function getClassMapping()
     {
@@ -233,7 +218,6 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 
     /**
      * Map classes from Magento 1 to Magento 2
-     *
      * See the Setup/data/class_mapping/*.json files for the mappings used here
      *
      * @param $data
