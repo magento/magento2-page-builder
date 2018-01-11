@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import hljs from "pagebuilder/highlight";
 import ko from "knockout";
+import hljs from "pagebuilder/highlight";
 import {Dictionary} from "underscore";
 import Block from "../block";
 import PreviewBlock from "./block";

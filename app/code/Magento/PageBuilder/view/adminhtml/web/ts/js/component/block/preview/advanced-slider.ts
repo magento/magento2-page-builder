@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import "Magento_PageBuilder/js/resource/slick/slick";
 import $ from "jquery";
+import "Magento_PageBuilder/js/resource/slick/slick";
 import _, {Dictionary} from "underscore";
 import Block from "../block";
 import PreviewBlock from "./block";
