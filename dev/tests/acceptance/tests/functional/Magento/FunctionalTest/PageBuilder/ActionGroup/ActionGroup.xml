@@ -139,6 +139,7 @@
         <click selector="{{PageBuilderRowSection.removeRow}}" stepKey="clickRemoveRow"/>
         <wait time="1" stepKey="wait1"/>
         <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
+        <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <wait time="1" stepKey="wait2"/>
     </actionGroup>
@@ -149,6 +150,7 @@
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
         <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
     </actionGroup>
