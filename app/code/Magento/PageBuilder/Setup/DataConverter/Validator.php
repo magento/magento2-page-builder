@@ -41,7 +41,7 @@ class Validator
 
             $firstContentType = $structure;
             if (!empty($firstContentType)
-                && (!isset($firstContentType['type']) && !isset($firstContentType['contentType']))
+                && (!isset($firstContentType['type']) || !isset($firstContentType['contentType']))
             ) {
                 $firstContentType = current($firstContentType);
             }
