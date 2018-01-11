@@ -95,8 +95,12 @@ export default class Stage extends EditableArea implements StageInterface {
         } else {
             // Add an initial row to the stage if the stage is currently empty
             if (typeof Config.getInitConfig("contentTypes").row !== "undefined") {
-                createBlock(Config.getInitConfig("contentTypes").row, this, this,
-                    {}).then((row: Block) => {
+                createBlock(
+                    Config.getInitConfig("contentTypes").row,
+                    this,
+                    this,
+                    {}
+                ).then((row: Block) => {
                     this.addChild(row);
                 });
             }

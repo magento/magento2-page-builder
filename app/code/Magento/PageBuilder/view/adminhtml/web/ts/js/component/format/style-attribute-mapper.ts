@@ -133,8 +133,10 @@ export default class StyleAttributeMapper {
                     const spacingObj = {margin: {}, padding: {}};
                     const [attributeType, attributeDirection] = key.split("-");
                     result.margins_and_padding = result.margins_and_padding || spacingObj;
-                    result.margins_and_padding[attributeType] = _.extend(result.margins_and_padding[attributeType],
-                        {[attributeDirection]: value.replace("px", "")});
+                    result.margins_and_padding[attributeType] = _.extend(
+                        result.margins_and_padding[attributeType],
+                        {[attributeDirection]: value.replace("px", "")}
+                    );
                     return;
                 }
                 result[key.replace("-", "_")] = value;

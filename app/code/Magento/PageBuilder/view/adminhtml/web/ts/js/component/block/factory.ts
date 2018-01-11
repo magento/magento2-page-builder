@@ -33,8 +33,12 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @param formData
  * @returns {Promise<BlockInterface>}
  */
-export default function createBlock(config: ConfigObject, parent: EditableArea,
-                                    stage: Stage, formData?: object): Promise<Block> {
+export default function createBlock(
+    config: ConfigObject,
+    parent: EditableArea,
+    stage: Stage,
+    formData?: object
+): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
     const appearanceFactory: AppearanceFactory = new AppearanceFactory();

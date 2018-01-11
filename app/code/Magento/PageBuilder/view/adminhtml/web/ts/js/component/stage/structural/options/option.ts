@@ -14,7 +14,7 @@ export class Option implements OptionInterface {
     public parent: Structural;
     public sort: number;
     public title: string;
-    public Template: string;
+    public optionTemplate: string;
 
     /**
      * Option constructor
@@ -26,7 +26,7 @@ export class Option implements OptionInterface {
      * @param action
      * @param classes
      * @param sort
-     * @param template
+     * @param optionTemplate
      */
     constructor(
         parent: Structural,
@@ -36,7 +36,7 @@ export class Option implements OptionInterface {
         action: () => void | false,
         classes: string[],
         sort: number,
-        template?: string,
+        optionTemplate?: string,
     ) {
         this.parent = parent;
         this.code = code;
@@ -45,10 +45,10 @@ export class Option implements OptionInterface {
         this.action = action;
         this.classes = classes.join(" ");
         this.sort = sort;
-        this.Template = template;
+        this.optionTemplate = optionTemplate;
     }
 
     get template(): string {
-        return this.Template || null;
+        return this.optionTemplate || null;
     }
 }

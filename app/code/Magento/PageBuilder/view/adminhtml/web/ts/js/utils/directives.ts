@@ -47,8 +47,10 @@ export function fromDataUrl(url: string): string {
  * @returns {string}
  */
 export default function decodeAllDataUrlsInString(str: string) {
-    return str.replace(new RegExp("url\\s*\\(\\s*(?:&quot;|\'|\")?(data:" + mimeType
-        + ",.+?)(?:&quot;|\'|\")?\\s*\\)", "g"), (match, url) => {
-        return "url(\'" + fromDataUrl(url) + "\')";
-    });
+    return str.replace(
+        new RegExp("url\\s*\\(\\s*(?:&quot;|\'|\")?(data:" + mimeType + ",.+?)(?:&quot;|\'|\")?\\s*\\)", "g"),
+        (match, url) => {
+            return "url(\'" + fromDataUrl(url) + "\')";
+        }
+    );
 }

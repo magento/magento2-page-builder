@@ -1,7 +1,6 @@
 const gulp  = require('gulp'),
     path = require('path'),
     fs = require('fs'),
-    jestConfig = require('./jest.config'),
     plugins = require('gulp-load-plugins')(),
     header = require('gulp-header');
 
@@ -56,11 +55,4 @@ gulp.task('watch', function () {
     gulp.watch([
         path.join(config.basePath, config.tsPath, '**/*.ts')
     ], ['buildChanged']);
-});
-
-gulp.task('jestConfig', function () {
-   fs.writeFile(
-       'jest.config.json',
-       JSON.stringify(jestConfig), () => {}
-   );
 });

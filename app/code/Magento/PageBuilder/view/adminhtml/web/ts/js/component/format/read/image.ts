@@ -35,7 +35,8 @@ export default class Image implements ReadInterface {
 
         // Detect if there is a mobile image and update the response
         if (element.querySelector("img:nth-child(2)")
-            && element.querySelector("img:nth-child(2)").getAttribute("src")) {
+            && element.querySelector("img:nth-child(2)").getAttribute("src")
+        ) {
             response.mobile_image =
                 this.generateImageObject(element.querySelector("img:nth-child(2)").getAttribute("src"));
         }

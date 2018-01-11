@@ -119,7 +119,7 @@ define(["./event-emitter"], function (_eventEmitter) {
     /**
      * Emit state updates through events
      *
-     * @param i
+     * @param id
      * @param data
      */
 

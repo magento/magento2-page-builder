@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-const magentoClasses = require('./magentoClasses');
-
 module.exports = {
     presets: [
         ['env', {
@@ -16,7 +14,7 @@ module.exports = {
                 ["transform-class-properties", {loose: true}]
             ]
         },
-        ['es6-to-magento-amd', {magentoClasses: magentoClasses}]
+        ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]
     ],
     plugins: [
         'transform-typescript'

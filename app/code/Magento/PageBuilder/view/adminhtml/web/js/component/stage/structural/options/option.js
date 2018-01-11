@@ -21,9 +21,9 @@ define([], function () {
      * @param action
      * @param classes
      * @param sort
-     * @param template
+     * @param optionTemplate
      */
-    function Option(parent, code, icon, title, action, classes, sort, template) {
+    function Option(parent, code, icon, title, action, classes, sort, optionTemplate) {
       this.action = void 0;
       this.classes = void 0;
       this.code = void 0;
@@ -31,7 +31,7 @@ define([], function () {
       this.parent = void 0;
       this.sort = void 0;
       this.title = void 0;
-      this.Template = void 0;
+      this.optionTemplate = void 0;
       this.parent = parent;
       this.code = code;
       this.icon = icon;
@@ -39,13 +39,13 @@ define([], function () {
       this.action = action;
       this.classes = classes.join(" ");
       this.sort = sort;
-      this.Template = template;
+      this.optionTemplate = optionTemplate;
     }
 
     _createClass(Option, [{
       key: "template",
       get: function get() {
-        return this.Template || null;
+        return this.optionTemplate || null;
       }
     }]);
 

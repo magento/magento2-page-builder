@@ -42,7 +42,8 @@ export default class Config {
      */
     public static getContentBlockConfig(type: string): object {
         if (typeof Config.initConfig.contentBlocks === "object"
-            && typeof Config.initConfig.contentBlocks[type] === "object") {
+            && typeof Config.initConfig.contentBlocks[type] === "object"
+        ) {
             return Config.initConfig.contentBlocks[type];
         }
 
@@ -119,8 +120,12 @@ export default class Config {
      * @param newValueKey
      * @param newValue
      */
-    public static updateTemplateValue(matchKey: string, matchValue: string,
-                                      newValueKey: string | number, newValue: string) {
+    public static updateTemplateValue(
+        matchKey: string,
+        matchValue: string,
+        newValueKey: string | number,
+        newValue: string
+    ) {
         const arr: any[] = [];
         Config.config.templates.forEach((item: any) => {
             if (item[matchKey] === matchValue) {
@@ -141,7 +146,8 @@ export default class Config {
     public static getPluginConfig(plugin: string, key: string): object | null {
         const config = Config.initConfig;
         if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin].config !== "undefined"
-            && typeof config.plugins[plugin].config[key] !== "undefined") {
+            && typeof config.plugins[plugin].config[key] !== "undefined"
+        ) {
             return config.plugins[plugin].config[key];
         }
 
