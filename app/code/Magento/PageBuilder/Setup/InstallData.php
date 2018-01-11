@@ -10,9 +10,6 @@ use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
-/**
- * Class InstallData
- */
 class InstallData implements InstallDataInterface
 {
     /**
@@ -26,7 +23,7 @@ class InstallData implements InstallDataInterface
     private $fullModuleList;
 
     /**
-     * InstallData constructor.
+     * Constructor
      *
      * @param ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param FullModuleList $fullModuleList
@@ -47,8 +44,8 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        //if ($this->fullModuleList->has('Magento_PageBuilder')) {
+        if ($this->fullModuleList->has('Gene_BlueFoot')) {
             $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
-        //}
+        }
     }
 }
