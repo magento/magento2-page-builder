@@ -29,6 +29,7 @@ export default class AttributeMapper {
         show_dots: "data-show-dots",
         show_out_of_stock: "data-show-out-of-stock",
         sku: "data-sku",
+        src: "src",
         title: "data-title",
         view_mode: "data-view-mode",
     };

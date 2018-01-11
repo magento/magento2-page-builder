@@ -149,6 +149,7 @@
             <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
             <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
             <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStageAfterSave"/>
             <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStageAfterSave"/>
             <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStageAfterSave"/>
