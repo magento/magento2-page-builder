@@ -13,6 +13,7 @@ import StyleAttributeFilter from "../../format/style-attribute-filter";
 export default class Row extends PreviewBlock {
     rowStyles: KnockoutComputed<{}>;
     getChildren: KnockoutComputed<{}>;
+    wrapClass: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * @param {Block} parent
@@ -58,7 +59,6 @@ export default class Row extends PreviewBlock {
             let columnGroup:any = [];
 
             _.each(parent.children(), (child) => {
-                // console.log(child);
                 if (child.config.name === 'column') {
                     columnGroup.push(child);
                 } else {
@@ -74,6 +74,15 @@ export default class Row extends PreviewBlock {
 
             if (columnGroup.length > 0) {
                 groupedChildren.push(columnGroup);
+            }
+
+            // get width of column in the group. if width of all columns in a group > 100%, set wrapClass
+            // _.each(columnGroup, (column) => {
+            //     let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
+            // });
+
+            if (columnGroup.length > 6) {
+                this.wrapClass(true);
             }
 
             return groupedChildren;

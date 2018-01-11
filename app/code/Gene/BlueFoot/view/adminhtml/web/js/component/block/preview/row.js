@@ -18,6 +18,7 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.rowStyles = void 0;
       _this.getChildren = void 0;
+      _this.wrapClass = _knockout.observable(false);
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       _this.rowStyles = _knockout.computed(function () {
@@ -49,7 +50,6 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
         var columnGroup = [];
 
         _underscore.each(parent.children(), function (child) {
-          // console.log(child);
           if (child.config.name === 'column') {
             columnGroup.push(child);
           } else {
@@ -65,6 +65,14 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
 
         if (columnGroup.length > 0) {
           groupedChildren.push(columnGroup);
+        } // get width of column in the group. if width of all columns in a group > 100%, set wrapClass
+        // _.each(columnGroup, (column) => {
+        //     let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
+        // });
+
+
+        if (columnGroup.length > 6) {
+          _this.wrapClass(true);
         }
 
         return groupedChildren;
