@@ -52,6 +52,25 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                         event: event,
                         ui: ui
                     });
+                    // console.log('drag stop');
+                    // ui.item is undefined
+                    // console.log(event.srcElement.innerText);
+
+                    // var isColumn = event.srcElement.innerText.indexOf('Column') != -1;
+                    // var isColumnGroup = event.target;
+                    //
+                    // console.log(isColumnGroup);
+
+                    // // if this is a column
+                    // if (isColumn) {
+                    //     if it's a column group, add one columns
+                    //     if () {
+                    //         console.log('add two columns');
+                    //     } else {
+                    //         // if parent is a column, add single column
+                    //         console.log('add one column');
+                    //     }
+                    // }
                 });
         },
 

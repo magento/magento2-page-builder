@@ -4,7 +4,7 @@
         <div class="element-children" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof preview !== 'undefined' && typeof preview.afterChildrenRender === 'function') { preview.afterChildrenRender(element) } }">
             <!-- ko foreach: preview.getChildren -->
                 <!-- ko if: $data instanceof Array -->
-                <div data-bind="style: { flexWrap: $parent.preview.wrapClass() ? 'wrap' : 'no-wrap' }" style="display: flex; border: 5px solid #000;">
+                <div class="bluefoot-column-group" data-bind="style: { flexWrap: $parent.preview.wrapClass() ? 'wrap' : 'no-wrap' }" style="display: flex; border: 5px solid #000;">
                     <!-- ko foreach: { data: $data, as: 'child' } -->
                     <!-- ko template: child.previewTemplate --><!-- /ko -->
                     <!-- remove css: widthClasses from above element -->
