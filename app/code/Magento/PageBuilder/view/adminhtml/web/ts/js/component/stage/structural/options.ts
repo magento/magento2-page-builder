@@ -9,8 +9,8 @@ import { Structural } from "./abstract.d";
 import { OptionInterface } from "./options/option.d";
 
 export class Options {
-    public parent: Structural;
-    public template: string = "Magento_PageBuilder/component/stage/structural/options.html";
+    private template: string = "Magento_PageBuilder/component/stage/structural/options.html";
+    private parent: Structural;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
     /**

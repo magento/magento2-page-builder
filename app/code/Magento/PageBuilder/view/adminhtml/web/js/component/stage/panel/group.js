@@ -21,6 +21,7 @@ define(["knockout"], function (_knockout) {
         blocks = [];
       }
 
+      this.hidden = _knockout.observable(false);
       this.id = _knockout.observable();
       this.code = _knockout.observable("");
       this.label = _knockout.observable("");
@@ -28,7 +29,6 @@ define(["knockout"], function (_knockout) {
       this.sort = _knockout.observable();
       this.blocks = _knockout.observableArray([]);
       this.active = _knockout.observable(false);
-      this.hidden = _knockout.observable(false);
       this.id(id);
       this.code(group.code);
       this.label(group.label);

@@ -17,8 +17,8 @@ define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitte
       var _this;
 
       _this = _EventEmitter.call(this) || this;
-      _this.config = void 0;
       _this.droppable = true;
+      _this.config = void 0;
       _this.icon = _knockout.observable("");
       _this.identifier = _knockout.observable("");
       _this.label = _knockout.observable("");

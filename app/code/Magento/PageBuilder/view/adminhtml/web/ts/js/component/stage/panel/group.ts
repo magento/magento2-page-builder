@@ -6,14 +6,14 @@
 import ko from "knockout";
 
 export class Group {
-    public id: KnockoutObservable<number> = ko.observable();
-    public code: KnockoutObservable<string> = ko.observable("");
-    public label: KnockoutObservable<string> = ko.observable("");
-    public icon: KnockoutObservable<string> = ko.observable("");
-    public sort: KnockoutObservable<number> = ko.observable();
-    public blocks: KnockoutObservableArray<[any]> = ko.observableArray([]);
-    public active: KnockoutObservable<boolean> = ko.observable(false);
-    public hidden: KnockoutObservable<boolean> = ko.observable(false);
+    private hidden: KnockoutObservable<boolean> = ko.observable(false);
+    private id: KnockoutObservable<number> = ko.observable();
+    private code: KnockoutObservable<string> = ko.observable("");
+    private label: KnockoutObservable<string> = ko.observable("");
+    private icon: KnockoutObservable<string> = ko.observable("");
+    private sort: KnockoutObservable<number> = ko.observable();
+    private blocks: KnockoutObservableArray<[any]> = ko.observableArray([]);
+    private active: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Group constructor

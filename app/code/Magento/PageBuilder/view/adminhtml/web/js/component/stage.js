@@ -24,12 +24,12 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       _this.loading = void 0;
       _this.originalScrollTop = void 0;
       _this.parent = void 0;
-      _this.save = new _save();
       _this.serializeRole = "stage";
       _this.showBorders = void 0;
       _this.stage = void 0;
       _this.store = void 0;
       _this.userSelect = void 0;
+      _this.save = new _save();
 
       _this.setChildren(stageContent);
 

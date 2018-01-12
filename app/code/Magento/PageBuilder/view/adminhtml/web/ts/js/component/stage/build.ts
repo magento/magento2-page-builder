@@ -13,11 +13,11 @@ import EditableArea from "./structural/editable-area";
 import {EditableAreaInterface} from "./structural/editable-area.d";
 
 export default class Build extends EventEmitter {
-    public attributeReaderComposite: AttributeReaderComposite;
-    public fieldValue: string;
     public stage: Stage;
-    public stageElement: Element;
-    public stageDocument: Element;
+    private stageElement: Element;
+    private attributeReaderComposite: AttributeReaderComposite;
+    private fieldValue: string;
+    private stageDocument: Element;
 
     constructor(fieldValue: string) {
         super();

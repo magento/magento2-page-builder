@@ -9,8 +9,8 @@ import require from "require";
 import Block from "./block";
 
 export default class Accordion extends Block {
-    public element: Element;
-    public renderCounter: number = 0;
+    private element: Element;
+    private renderCounter: number = 0;
 
     constructor(parent: Block, config: object) {
         super(parent, config);

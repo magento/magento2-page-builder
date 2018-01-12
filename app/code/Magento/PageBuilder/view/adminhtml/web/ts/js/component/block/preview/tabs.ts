@@ -10,8 +10,8 @@ import _ from "underscore";
 import Block from "./block";
 
 export default class Tabs extends Block {
-    public element: Element;
-    public renderCounter: number = 0;
+    private element: Element;
+    private renderCounter: number = 0;
 
     constructor(parent: Block, config: object) {
         super(parent, config);

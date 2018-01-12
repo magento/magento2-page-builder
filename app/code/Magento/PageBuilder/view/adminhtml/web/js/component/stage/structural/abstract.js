@@ -32,19 +32,19 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
 
       _this = _EditableArea.call(this, stage) || this;
       _this.appearance = void 0;
-      _this.attributeFilter = new _attributeFilter();
-      _this.attributeMapper = new _attributeMapper();
       _this.config = void 0;
       _this.children = _knockout.observableArray([]);
       _this.edit = void 0;
-      _this.optionsInstance = new _options.Options(_this, _this.options);
       _this.parent = void 0;
-      _this.styleAttributeFilter = new _styleAttributeFilter();
-      _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.title = void 0;
       _this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
+      _this.attributeFilter = new _attributeFilter();
+      _this.attributeMapper = new _attributeMapper();
+      _this.optionsInstance = new _options.Options(_this, _this.options);
+      _this.styleAttributeFilter = new _styleAttributeFilter();
+      _this.styleAttributeMapper = new _styleAttributeMapper();
 
       _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 

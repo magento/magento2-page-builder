@@ -34,7 +34,7 @@ export default class Row extends Block {
                 $t("Duplicate"),
                 this.onOptionDuplicate,
                 ["duplicate-structural"],
-                60
+                60,
             ),
             removeOption,
         ];

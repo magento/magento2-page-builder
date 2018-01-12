@@ -14,8 +14,8 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
      * @param options
      */
     function Options(parent, options) {
-      this.parent = void 0;
       this.template = "Magento_PageBuilder/component/stage/structural/options.html";
+      this.parent = void 0;
       this.options = _knockout.observableArray([]);
       this.parent = parent;
       this.options(options);

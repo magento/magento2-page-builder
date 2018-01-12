@@ -7,14 +7,14 @@ import { Structural } from "../abstract.d";
 import { OptionInterface } from "./option.d";
 
 export class Option implements OptionInterface {
-    public action: () => void | false;
     public classes: string;
     public code: string;
     public icon: string;
     public parent: Structural;
     public sort: number;
     public title: string;
-    public optionTemplate: string;
+    private action: () => void | false;
+    private optionTemplate: string;
 
     /**
      * Option constructor

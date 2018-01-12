@@ -24,11 +24,11 @@ export interface InsertFormComponent {
 }
 
 export default class Edit {
-    public modal: ModalComponent = registry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal");
-    public insertForm: InsertFormComponent =
+    private modal: ModalComponent = registry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal");
+    private insertForm: InsertFormComponent =
         registry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal.insert_form");
-    public instance: Structural;
-    public store: DataStore;
+    private instance: Structural;
+    private store: DataStore;
 
     /**
      * Initiate the edit class with an instance of structural

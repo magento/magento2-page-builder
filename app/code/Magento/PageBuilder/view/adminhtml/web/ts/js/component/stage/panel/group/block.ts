@@ -7,11 +7,11 @@ import ko from "knockout";
 import EventEmitter from "../../../event-emitter";
 
 export class Block extends EventEmitter {
-    public config: ContentBlockConfig;
     public droppable: boolean = true;
-    public icon: KnockoutObservable<string> = ko.observable("");
-    public identifier: KnockoutObservable<string> = ko.observable("");
-    public label: KnockoutObservable<string> = ko.observable("");
+    private config: ContentBlockConfig;
+    private icon: KnockoutObservable<string> = ko.observable("");
+    private identifier: KnockoutObservable<string> = ko.observable("");
+    private label: KnockoutObservable<string> = ko.observable("");
 
     /**
      * Block Constructor

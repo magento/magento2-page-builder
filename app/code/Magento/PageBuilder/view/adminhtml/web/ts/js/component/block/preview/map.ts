@@ -8,8 +8,8 @@ import "mage/backend/tabs";
 import Block from "./block";
 
 export default class Map extends Block {
-    public element: Element;
-    public getMapUrl: KnockoutComputed<string>;
+    private element: Element;
+    private getMapUrl: KnockoutComputed<string>;
 
     constructor(parent: Block, config: object) {
         super(parent, config);
