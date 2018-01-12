@@ -8,10 +8,10 @@ import EventEmitter from "../../../event-emitter";
 
 export class Block extends EventEmitter {
     public droppable: boolean = true;
-    protected config: ContentBlockConfig;
-    protected icon: KnockoutObservable<string> = ko.observable("");
-    protected identifier: KnockoutObservable<string> = ko.observable("");
-    protected label: KnockoutObservable<string> = ko.observable("");
+    private config: ContentBlockConfig;
+    private icon: KnockoutObservable<string> = ko.observable("");
+    private identifier: KnockoutObservable<string> = ko.observable("");
+    private label: KnockoutObservable<string> = ko.observable("");
 
     /**
      * Block Constructor

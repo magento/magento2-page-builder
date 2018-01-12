@@ -10,13 +10,13 @@ import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class AdvancedSlider extends PreviewBlock {
-    protected ready: boolean = false;
+    private ready: boolean = false;
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
      * @type {(() => any) & _.Cancelable}
      */
-    protected buildSlick = _.debounce(() => {
+    private buildSlick = _.debounce(() => {
         _.delay(() => {
             if (this.element && this.element.children.length > 0) {
                 try {
@@ -28,7 +28,7 @@ export default class AdvancedSlider extends PreviewBlock {
             }
         }, 100);
     }, 20);
-    protected element: Element;
+    private element: Element;
 
     /**
      * @param {Block} parent

@@ -13,8 +13,8 @@ export class Option implements OptionInterface {
     public parent: Structural;
     public sort: number;
     public title: string;
-    protected action: () => void | false;
-    protected optionTemplate: string;
+    private action: () => void | false;
+    private optionTemplate: string;
 
     /**
      * Option constructor

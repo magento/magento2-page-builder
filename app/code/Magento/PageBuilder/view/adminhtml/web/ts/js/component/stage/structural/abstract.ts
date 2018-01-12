@@ -27,11 +27,11 @@ export default class Structural extends EditableArea implements StructuralInterf
     public parent: EditableArea;
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
-    protected attributeFilter: AttributeFilter = new AttributeFilter();
-    protected attributeMapper: AttributeMapper =  new AttributeMapper();
-    protected optionsInstance: Options = new Options(this, this.options);
-    protected styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
-    protected styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
+    private attributeFilter: AttributeFilter = new AttributeFilter();
+    private attributeMapper: AttributeMapper =  new AttributeMapper();
+    private optionsInstance: Options = new Options(this, this.options);
+    private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
      * Abstract structural constructor

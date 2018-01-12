@@ -14,10 +14,10 @@ import {EditableAreaInterface} from "./structural/editable-area.d";
 
 export default class Build extends EventEmitter {
     public stage: Stage;
-    protected stageElement: Element;
-    protected attributeReaderComposite: AttributeReaderComposite;
-    protected fieldValue: string;
-    protected stageDocument: Element;
+    private stageElement: Element;
+    private attributeReaderComposite: AttributeReaderComposite;
+    private fieldValue: string;
+    private stageDocument: Element;
 
     constructor(fieldValue: string) {
         super();

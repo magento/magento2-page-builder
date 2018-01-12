@@ -19,9 +19,9 @@ export interface DataObject {
 }
 
 export default class DataStore extends EventEmitter {
-    protected state: Map<string, DataObject> = new Map();
-    protected snapshotStorage: Map<string, DataObject[]> = new Map();
-    protected snapshotLog: string[] = [];
+    private state: Map<string, DataObject> = new Map();
+    private snapshotStorage: Map<string, DataObject[]> = new Map();
+    private snapshotLog: string[] = [];
 
     /**
      * Retrieve data from the state for an editable area

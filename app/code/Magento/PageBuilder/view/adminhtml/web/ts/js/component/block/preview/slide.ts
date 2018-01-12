@@ -8,7 +8,7 @@ import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
-    protected backgroundImageStyle: KnockoutComputed<{}>;
+    private backgroundImageStyle: KnockoutComputed<{}>;
 
     /**
      * @param {Block} parent

@@ -7,7 +7,7 @@ import { EventEmitterInterface } from "event-emitter.d";
 import $ from "jquery";
 
 export default class EventEmitter implements EventEmitterInterface {
-    protected events: JQuery.PlainObject = $({});
+    private events: JQuery.PlainObject = $({});
 
     /**
      * Trigger / emit an event

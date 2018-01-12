@@ -29,7 +29,7 @@ export default class Stage extends EditableArea implements StageInterface {
     public stage: Stage;
     public store: DataStore;
     public userSelect: KnockoutObservable<boolean>;
-    protected save: Save = new Save();
+    private save: Save = new Save();
 
     /**
      * Stage constructor
