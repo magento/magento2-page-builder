@@ -1,3 +1,64 @@
+.bluefoot-column-group {
+  position: relative;
+  border: 5px solid #F3F3F3;
+  width: 100%;
+  box-sizing: border-box;
+
+  .resize-grid {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+
+    .grid-line {
+      height: 100%;
+      width: 16.66666667%;
+      border-right: 22px solid #F3F3F3;
+      box-sizing: border-box;
+    }
+  }
+
+  .resize-ghost {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border: 2px dashed #d0d0d0;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s opacity;
+  }
+
+  &.resizing {
+    .resize-grid, .resize-ghost {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+    * {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    }
+  }
+}
+
 .bluefoot-structure-wrapper {
   position: relative;
   box-sizing: content-box;
@@ -150,6 +211,7 @@
       bottom: 0;
       right: -3px;
       cursor: col-resize;
+      z-index: 10001;
     }
 
     .bluefoot-column-add {

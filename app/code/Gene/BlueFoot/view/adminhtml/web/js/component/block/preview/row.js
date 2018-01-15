@@ -45,46 +45,6 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
           });
         }
       });
-      _this.getChildren = _knockout.computed(function () {
-        var groupedChildren = [];
-        var columnGroup = [];
-
-        _underscore.each(parent.children(), function (child) {
-          if (child.config.name === 'column') {
-            columnGroup.push(child);
-          } else {
-            if (columnGroup.length > 0) {
-              groupedChildren.push(columnGroup);
-              groupedChildren.push(child);
-              columnGroup = [];
-            } else {
-              groupedChildren.push(child);
-            }
-          }
-        });
-
-        if (columnGroup.length > 0) {
-          groupedChildren.push(columnGroup);
-
-          if (_this.getWidthOfColumnGroup(columnGroup) > 100) {
-            _this.wrapClass(true);
-          }
-        }
-
-        return groupedChildren;
-      });
-
-      _this.getWidthOfColumnGroup = function (columnGroup) {
-        var widthOfColumnGroup = 0;
-
-        _underscore.each(columnGroup, function (column) {
-          var columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
-          widthOfColumnGroup += columnWidth;
-        });
-
-        return widthOfColumnGroup;
-      };
-
       return _this;
     }
 

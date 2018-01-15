@@ -53,42 +53,5 @@ export default class Row extends PreviewBlock {
                 });
             }
         });
-
-        this.getChildren = ko.computed(() => {
-            let groupedChildren:any = [];
-            let columnGroup:any = [];
-
-            _.each(parent.children(), (child) => {
-                if (child.config.name === 'column') {
-                    columnGroup.push(child);
-                } else {
-                    if (columnGroup.length > 0) {
-                        groupedChildren.push(columnGroup);
-                        groupedChildren.push(child);
-                        columnGroup = [];
-                    } else {
-                        groupedChildren.push(child);
-                    }
-                }
-            });
-
-            if (columnGroup.length > 0) {
-                groupedChildren.push(columnGroup);
-
-                if (this.getWidthOfColumnGroup(columnGroup) > 100) {
-                    this.wrapClass(true);
-                }
-            }
-            return groupedChildren;
-        });
-
-        this.getWidthOfColumnGroup = (columnGroup) => {
-            let widthOfColumnGroup:number = 0;
-            _.each(columnGroup, (column) => {
-                let columnWidth = parseFloat(column.preview.columnStyles().width.split('%')[0]);
-                widthOfColumnGroup += columnWidth;
-            });
-            return widthOfColumnGroup;
-        };
     }
 }
