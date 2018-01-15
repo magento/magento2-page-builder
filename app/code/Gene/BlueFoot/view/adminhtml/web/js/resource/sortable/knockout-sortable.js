@@ -137,16 +137,6 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                     originalEle: ui.item
                 };
 
-            var isColumn = event.srcElement.innerText === 'Column';
-
-            if (isColumn) {
-                if (event.target.children.length === 0) {
-                    //console.log('add two columns');
-                } else {
-                    //console.log('add one column');
-                }
-            }
-
             // ui.helper.data('sorting') is appended to the helper of sorted items
             if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
@@ -154,7 +144,6 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 eventData['block'] = block;
                 block.stage.emit('sortingStop', eventData);
             }
-
         },
 
         /**
