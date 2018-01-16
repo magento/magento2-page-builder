@@ -59,19 +59,24 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
       var _this2 = this;
 
       (0, _factory)(COL_GROUP_CONFIG, this.parent, this.stage).then(function (colGroup) {
-        _this2.parent.addChild(colGroup); // For speed on this prototype just create new columns
+        _this2.parent.addChild(colGroup); // For speed on this prototype just create new columns, moving the existing one is problematic currently
 
 
         _this2.parent.removeChild(_this2); // Add our additional second column
 
 
         (0, _factory)(_this2.config, parent, _this2.stage, {
-          width: '50%'
+          width: '33.33333333%'
         }).then(function (column) {
           colGroup.addChild(column);
         });
         (0, _factory)(_this2.config, parent, _this2.stage, {
-          width: '50%'
+          width: '33.33333333%'
+        }).then(function (column) {
+          colGroup.addChild(column);
+        });
+        (0, _factory)(_this2.config, parent, _this2.stage, {
+          width: '33.33333333%'
         }).then(function (column) {
           colGroup.addChild(column);
         });
@@ -107,18 +112,44 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
 
     _proto.resizeColumns = function resizeColumns(currentNewWidth) {
       var current = this.stage.store.get(this.id).width,
-          difference = (parseFloat(currentNewWidth) - parseFloat(current)).toFixed(8);
+          difference = (parseFloat(currentNewWidth) - parseFloat(current)).toFixed(8); // Don't run the update if we've already modified the column
+
+      if (parseFloat(current) === parseFloat(currentNewWidth)) {
+        return;
+      }
+
       this.stage.store.updateKey(this.id, currentNewWidth, 'width');
 
       if (difference) {
-        var parentChildren = this.parent.getChildren(),
-            currentIndex = parentChildren().indexOf(this);
+        this.resizeAdjacentColumn(difference);
+      }
+    };
+    /**
+     * Resize the adjacent column to the current
+     *
+     * @param difference
+     */
 
-        if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
-          var adjacentId = this.parent.children()[currentIndex + 1].id,
-              _current = this.stage.store.get(adjacentId).width;
-          this.stage.store.updateKey(adjacentId, parseFloat(_current) - difference + '%', 'width');
+
+    _proto.resizeAdjacentColumn = function resizeAdjacentColumn(difference) {
+      var parentChildren = this.parent.getChildren(),
+          currentIndex = parentChildren().indexOf(this);
+
+      if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
+        var adjacentId = this.parent.children()[currentIndex + 1].id,
+            currentAdjacent = this.stage.store.get(adjacentId).width;
+        var newWidth = parseFloat(currentAdjacent) + -difference; // Resolve the math here calculating to 49.9999 instead of 50
+
+        for (var i = MAX_COLUMNS; i > 0; i--) {
+          var percentage = parseFloat((100 / 6 * i).toFixed(Math.round(100 / 6 * i) !== 100 / 6 * i ? 8 : 0));
+
+          if (Math.floor(newWidth) === Math.floor(percentage)) {
+            newWidth = percentage;
+            break;
+          }
         }
+
+        this.stage.store.updateKey(adjacentId, newWidth + '%', 'width');
       }
     };
     /**
@@ -134,19 +165,32 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
       var group = (0, _jquery)(handle).parents('.bluefoot-column-group'),
           ghost = group.find('.resize-ghost'),
           column = (0, _jquery)(handle).parents('.bluefoot-column'),
-          columnLeft = column.offset().left,
+          smallestColumn = parseFloat((100 / MAX_COLUMNS).toFixed(Math.round(100 / MAX_COLUMNS) !== 100 / MAX_COLUMNS ? 8 : 0)),
+          nextColumn = false,
           isMouseDown = false,
+          maxGhostWidth = false,
           widths,
           initialPos,
           currentPos,
-          currentCol;
+          currentCol,
+          columnLeft;
       (0, _jquery)(handle).mousedown(function (e) {
         e.preventDefault();
 
         _this3.parent.resizing(true);
 
         widths = _this3.determineColumnWidths(column, group);
+        columnLeft = column.offset().left;
+
+        var parentChildren = _this3.parent.getChildren(),
+            currentIndex = parentChildren().indexOf(_this3);
+
+        if (typeof _this3.parent.children()[currentIndex + 1] !== 'undefined') {
+          nextColumn = _this3.parent.children()[currentIndex + 1];
+        }
+
         initialPos = e.pageX;
+        maxGhostWidth = false;
         isMouseDown = true;
       });
       group.mousemove(function (e) {
@@ -162,17 +206,37 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
 
           if (ghostWidth >= group.width() - column.position().left) {
             ghostWidth = group.width() - column.position().left;
-          }
+          } // Make sure the user can't crush the adjacent column smaller than 1/6
 
-          ghost.width(ghostWidth + 'px').css('left', column.position().left + 'px');
-          currentCol = _underscore.find(widths, function (val) {
-            if (currentPos > val.position - 15 && currentPos < val.position + 15) {
-              return val;
+
+          var adjacentWidth = parseFloat(_this3.stage.store.get(nextColumn.id).width);
+
+          if (adjacentWidth === smallestColumn && ghostWidth > column.width() || maxGhostWidth) {
+            ghostWidth = maxGhostWidth ? maxGhostWidth : column.width();
+
+            if (!maxGhostWidth) {
+              maxGhostWidth = column.width();
             }
-          });
+          } // Reset the max ghost width when the user moves back from the edge
 
-          if (currentCol) {
-            _this3.resizeColumns(currentCol.width);
+
+          if (currentPos - columnLeft < column.width()) {
+            maxGhostWidth = false;
+          } // We take the border width of the width to ensure it's under the mouse exactly
+
+
+          ghost.width(ghostWidth - 2 + 'px').css('left', column.position().left + 'px');
+
+          if (!maxGhostWidth) {
+            currentCol = _underscore.find(widths, function (val) {
+              if (currentPos > val.position - 15 && currentPos < val.position + 15) {
+                return val;
+              }
+            });
+
+            if (currentCol) {
+              _this3.resizeColumns(currentCol.width);
+            }
           }
         }
       }).mouseup(function () {

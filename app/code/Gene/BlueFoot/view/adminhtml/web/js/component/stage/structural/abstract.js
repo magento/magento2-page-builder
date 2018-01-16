@@ -93,7 +93,8 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
           confirm: function confirm() {
             // Call the parent to remove the child element
             _this2.parent.emit('blockRemoved', {
-              block: _this2
+              block: _this2,
+              index: _this2.parent.children().indexOf(_this2)
             });
           }
         }

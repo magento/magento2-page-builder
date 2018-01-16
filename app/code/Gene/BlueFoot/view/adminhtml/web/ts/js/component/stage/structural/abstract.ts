@@ -135,7 +135,8 @@ export default class Structural extends EditableArea implements StructuralInterf
                 confirm: () => {
                     // Call the parent to remove the child element
                     this.parent.emit('blockRemoved', {
-                        block: this
+                        block: this,
+                        index: this.parent.children().indexOf(this)
                     });
                 }
             }

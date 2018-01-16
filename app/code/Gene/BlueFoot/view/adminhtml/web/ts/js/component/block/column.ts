@@ -55,14 +55,17 @@ export default class Column extends Block {
     private wrapInColumnGroup() {
         createBlock(COL_GROUP_CONFIG, this.parent, this.stage).then((colGroup) => {
             this.parent.addChild(colGroup);
-            // For speed on this prototype just create new columns
+            // For speed on this prototype just create new columns, moving the existing one is problematic currently
             this.parent.removeChild(this);
 
             // Add our additional second column
-            createBlock(this.config, parent, this.stage, {width: '50%'}).then((column) => {
+            createBlock(this.config, parent, this.stage, {width: '33.33333333%'}).then((column) => {
                 colGroup.addChild(column);
             });
-            createBlock(this.config, parent, this.stage, {width: '50%'}).then((column) => {
+            createBlock(this.config, parent, this.stage, {width: '33.33333333%'}).then((column) => {
+                colGroup.addChild(column);
+            });
+            createBlock(this.config, parent, this.stage, {width: '33.33333333%'}).then((column) => {
                 colGroup.addChild(column);
             });
         });
@@ -96,6 +99,12 @@ export default class Column extends Block {
     private resizeColumns(currentNewWidth) {
         const current = this.stage.store.get(this.id).width,
             difference = (parseFloat(currentNewWidth) - parseFloat(current)).toFixed(8);
+
+        // Don't run the update if we've already modified the column
+        if (parseFloat(current) === parseFloat(currentNewWidth)) {
+            return;
+        }
+
         this.stage.store.updateKey(
             this.id,
             currentNewWidth,
@@ -103,19 +112,41 @@ export default class Column extends Block {
         );
 
         if (difference) {
-            const parentChildren = this.parent.getChildren(),
-                currentIndex = parentChildren().indexOf(this);
-            if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
-                const adjacentId = this.parent.children()[currentIndex + 1].id,
-                    current = this.stage.store.get(adjacentId).width;
-                this.stage.store.updateKey(
-                    adjacentId,
-                    parseFloat(current) - difference + '%',
-                    'width'
-                );
-            }
+            this.resizeAdjacentColumn(difference);
         }
+    }
 
+    /**
+     * Resize the adjacent column to the current
+     *
+     * @param difference
+     */
+    private resizeAdjacentColumn(difference)
+    {
+        const parentChildren = this.parent.getChildren(),
+            currentIndex = parentChildren().indexOf(this);
+        if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
+            const adjacentId = this.parent.children()[currentIndex + 1].id,
+                currentAdjacent = this.stage.store.get(adjacentId).width;
+            let newWidth = parseFloat(currentAdjacent) + -difference;
+
+            // Resolve the math here calculating to 49.9999 instead of 50
+            for (let i = MAX_COLUMNS; i > 0; i--) {
+                const percentage = parseFloat((100 / 6 * i).toFixed(
+                    Math.round((100 / 6 * i)) !== (100 / 6 * i) ? 8 : 0
+                ));
+                if (Math.floor(newWidth) === Math.floor(percentage)) {
+                    newWidth = percentage;
+                    break;
+                }
+            }
+
+            this.stage.store.updateKey(
+                adjacentId,
+                newWidth + '%',
+                'width'
+            );
+        }
     }
 
     /**
@@ -127,18 +158,30 @@ export default class Column extends Block {
         let group: JQuery = $(handle).parents('.bluefoot-column-group'),
             ghost: JQuery = group.find('.resize-ghost'),
             column: JQuery = $(handle).parents('.bluefoot-column'),
-            columnLeft = column.offset().left,
+            smallestColumn = parseFloat((100 / MAX_COLUMNS).toFixed(
+                Math.round((100 / MAX_COLUMNS)) !== (100 / MAX_COLUMNS) ? 8 : 0
+            )),
+            nextColumn: Column = false,
             isMouseDown = false,
+            maxGhostWidth = false,
             widths,
             initialPos,
             currentPos,
-            currentCol;
+            currentCol,
+            columnLeft;
 
         $(handle).mousedown((e) => {
             e.preventDefault();
             this.parent.resizing(true);
             widths = this.determineColumnWidths(column, group);
+            columnLeft = column.offset().left;
+            const parentChildren = this.parent.getChildren(),
+                currentIndex = parentChildren().indexOf(this);
+            if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
+                nextColumn = this.parent.children()[currentIndex + 1];
+            }
             initialPos = e.pageX;
+            maxGhostWidth = false;
             isMouseDown = true;
         });
 
@@ -155,16 +198,34 @@ export default class Column extends Block {
                 if (ghostWidth >= group.width() - column.position().left) {
                     ghostWidth = group.width() - column.position().left;
                 }
-                ghost.width(ghostWidth + 'px').css('left', column.position().left + 'px');
 
-                currentCol = _.find(widths, function (val) {
-                    if (currentPos > (val.position - 15) && currentPos < (val.position + 15)) {
-                        return val;
+                // Make sure the user can't crush the adjacent column smaller than 1/6
+                const adjacentWidth = parseFloat(this.stage.store.get(nextColumn.id).width);
+                if (adjacentWidth === smallestColumn && ghostWidth > column.width() || maxGhostWidth) {
+                    ghostWidth = (maxGhostWidth ? maxGhostWidth : column.width());
+                    if (!maxGhostWidth) {
+                        maxGhostWidth = column.width();
                     }
-                });
+                }
 
-                if (currentCol) {
-                    this.resizeColumns(currentCol.width);
+                // Reset the max ghost width when the user moves back from the edge
+                if (currentPos - columnLeft < column.width()) {
+                    maxGhostWidth = false;
+                }
+
+                // We take the border width of the width to ensure it's under the mouse exactly
+                ghost.width(ghostWidth - 2 + 'px').css('left', column.position().left + 'px');
+
+                if (!maxGhostWidth) {
+                    currentCol = _.find(widths, function (val) {
+                        if (currentPos > (val.position - 15) && currentPos < (val.position + 15)) {
+                            return val;
+                        }
+                    });
+
+                    if (currentCol) {
+                        this.resizeColumns(currentCol.width);
+                    }
                 }
             }
         }).mouseup(() => {
