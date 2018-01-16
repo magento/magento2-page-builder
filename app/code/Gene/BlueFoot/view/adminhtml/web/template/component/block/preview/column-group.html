@@ -8,7 +8,8 @@
         <div class="grid-line"></div>
     </div>
     <div class="resize-ghost"></div>
-    <div class="element-children" style="padding: 0; display: flex; width: 100%;" data-bind="foreach: getChildren(), sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.bluefoot-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof preview !== 'undefined' && typeof preview.afterChildrenRender === 'function') { preview.afterChildrenRender(element) } }">
+    <div class="drop-placeholder" data-bind="afterRender: initDropPlaceholder"></div>
+    <div class="element-children" style="padding: 0; display: flex; width: 100%; position: relative;" data-bind="foreach: getChildren(), afterRender: initDroppable">
         <!-- ko template: previewTemplate --><!-- /ko -->
     </div>
 </div>

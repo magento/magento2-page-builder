@@ -4,6 +4,30 @@
   width: 100%;
   box-sizing: border-box;
 
+  .drop-placeholder {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    background: rgba(142, 0, 6, 0.3);
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s opacity;
+
+    &.left {
+      opacity: 1;
+      visibility: visible;
+      border-left: 10px solid rgba(142, 0, 6, 0.1);
+      transform: translateX(1px);
+    }
+    &.right {
+      opacity: 1;
+      visibility: visible;
+      border-right: 10px solid rgba(142, 0, 6, 0.1);
+      transform: translateX(1px);
+    }
+  }
+
   .resize-grid {
     position: absolute;
     left: 0;

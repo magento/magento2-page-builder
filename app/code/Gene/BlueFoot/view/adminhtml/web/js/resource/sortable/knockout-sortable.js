@@ -18,6 +18,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
     var Sortable = {
         defaults: {
             tolerance: 'pointer',
+            disabled: false,
             cursorAt: {
                 top: 0,
                 left: 0
@@ -158,6 +159,11 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                 newIndex = blockEl.index();
 
             if (blockEl && (newParentEl === this)) {
+                // Don't run sortable when dropping on a placeholder
+                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                    return;
+                }
+
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
@@ -252,6 +258,11 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
          */
         onSortReceive: function (event, ui) {
             if (jQuery(event.target)[0] === this) {
+                // Don't run sortable when dropping on a placeholder
+                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                    return;
+                }
+
                 var block = getViewModelFromUi(ui),
                     target = ko.dataFor(jQuery(event.target)[0]);
 

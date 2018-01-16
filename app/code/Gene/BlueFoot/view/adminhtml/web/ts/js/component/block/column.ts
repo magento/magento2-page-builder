@@ -121,8 +121,7 @@ export default class Column extends Block {
      *
      * @param difference
      */
-    private resizeAdjacentColumn(difference)
-    {
+    private resizeAdjacentColumn(difference) {
         const parentChildren = this.parent.getChildren(),
             currentIndex = parentChildren().indexOf(this);
         if (typeof this.parent.children()[currentIndex + 1] !== 'undefined') {
@@ -130,20 +129,9 @@ export default class Column extends Block {
                 currentAdjacent = this.stage.store.get(adjacentId).width;
             let newWidth = parseFloat(currentAdjacent) + -difference;
 
-            // Resolve the math here calculating to 49.9999 instead of 50
-            for (let i = MAX_COLUMNS; i > 0; i--) {
-                const percentage = parseFloat((100 / 6 * i).toFixed(
-                    Math.round((100 / 6 * i)) !== (100 / 6 * i) ? 8 : 0
-                ));
-                if (Math.floor(newWidth) === Math.floor(percentage)) {
-                    newWidth = percentage;
-                    break;
-                }
-            }
-
             this.stage.store.updateKey(
                 adjacentId,
-                newWidth + '%',
+                this.parent.getAcceptedColumnWidth(newWidth) + '%',
                 'width'
             );
         }
@@ -187,7 +175,6 @@ export default class Column extends Block {
 
         group.mousemove((e) => {
             if (isMouseDown) {
-                e.preventDefault();
                 currentPos = e.pageX;
 
                 // Update the ghosts width and position to give a visual indication of the dragging
