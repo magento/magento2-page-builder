@@ -16,12 +16,12 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'Magento_PageBuilder/js/component/stage',
-    'Magento_PageBuilder/js/component/stage/build',
+    'Magento_PageBuilder/js/component/format/format-validator',
+    'Magento_PageBuilder/js/component/stage-builder',
     'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
+], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, formatValidator, buildStage, Panel, utils) {
     'use strict';
 
     /**
@@ -35,10 +35,10 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
+            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
-            panel: new Panel(),
             isFullScreen: false,
             originalScrollTop: false,
             links: {
@@ -91,13 +91,13 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
-            var buildInstance = new Build(this.initialValue);
-
             this.domNode = node;
             this.bindPageBuilderButton(node);
-            if (buildInstance.canBuild()) {
+
+            // Detect if we can build the contents of the stage within Page Builder
+            if (formatValidator(this.initialValue)) {
                 this.loading(true);
-                return this.buildPageBuilder(false, buildInstance);
+                return this.buildPageBuilder();
             }
 
             $(node).bindings({
@@ -130,30 +130,22 @@ define([
          * @param event
          * @param buildInstance
          */
-        buildPageBuilder: function (event, buildInstance) {
+        buildPageBuilder: function (event) {
             var self = this;
 
-            if (event) {
+            if (typeof event !== 'undefined') {
                 event.stopPropagation();
             }
 
-            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            buildStage(
                 this,
-                this.stageContent
-            );
-
-            // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
+                this.panel,
+                this.stageContent,
+                this.initialValue
+            ).on('stageReady', function () {
+                self.stageActive(true);
+                self.visible(false);
             });
-
-            // Create a new instance of the panel
-            this.panel.bindStage(this.stage);
-
-            // Build the stage instance using any existing build data
-            this.stage.build(buildInstance);
         },
 
         /**

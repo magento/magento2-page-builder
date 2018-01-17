@@ -132,5 +132,26 @@
                 <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
             </actionGroup>
         </test>
+        <test name="ExistingContentMigrates">
+            <annotations>
+                <title value="Existing content in WYSIWYG migrates into text"/>
+                <description value="The system should import any existing content into a text content type"/>
+                <severity value="CRITICAL"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+            <!-- We can't interact with TinyMCE so we add the content into the text area directly -->
+            <waitForElementVisible time="1" selector="{{CmsPageSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+            <click selector="{{CmsPageSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+            <waitForElementVisible time="1" selector="{{CmsPageSection.content}}" stepKey="waitForContentField" />
+            <fillField selector="{{CmsPageSection.content}}" userInput="{{PageBuilderMigratedText.text}}" stepKey="enterContent"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('textarea')}}" stepKey="waitForContentBlockInStage" />
+            <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('textarea')}}" stepKey="seeContentBlockInStage"/>
+            <see userInput="{{PageBuilderMigratedText.text}}" selector="{{TextOnBackend.textInstance}}" stepKey="assertTextAreaContent"/>
+        </test>
     </cest>
 </config>
