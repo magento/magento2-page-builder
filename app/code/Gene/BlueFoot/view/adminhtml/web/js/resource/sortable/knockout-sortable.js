@@ -197,9 +197,7 @@ define(["knockout", "jquery", "underscore", "jquery/ui"], function(ko, jQuery, _
                             index: newIndex
                         });
                     } else {
-                        block.originalParent.emit('blockRemoved', {
-                            block: block
-                        });
+                        block.originalParent.removeChild(block);
                         newParent.emit('blockInstanceDropped', {
                             blockInstance: block,
                             index: newIndex

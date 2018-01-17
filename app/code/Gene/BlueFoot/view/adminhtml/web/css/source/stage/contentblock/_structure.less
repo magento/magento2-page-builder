@@ -1,6 +1,5 @@
 .bluefoot-column-group {
   position: relative;
-  border: 5px solid #F3F3F3;
   width: 100%;
   box-sizing: border-box;
 
@@ -28,6 +27,24 @@
     }
   }
 
+  .move-placeholder {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    background: rgba(142, 0, 6, 0.3);
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s opacity;
+    transform: translateX(-3px);
+    width: 6px;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   .resize-grid {
     pointer-events: none;
     position: absolute;
@@ -39,11 +56,12 @@
     opacity: 0;
     visibility: hidden;
     transition: 0.5s;
+    z-index: 10001;
 
     .grid-line {
       height: 100%;
       width: 16.66666667%;
-      border-right: 22px solid #F3F3F3;
+      border-right: 22px solid rgba(238, 238, 238, 0.45);
       box-sizing: border-box;
     }
   }
@@ -174,10 +192,6 @@
     padding: 30px;
     position: relative;
     z-index: 10;
-
-    .ui-draggable {
-      display: none!important;
-    }
   }
 
   &:hover {
@@ -230,6 +244,7 @@
   }
 
   &.bluefoot-column {
+    background: white;
     .bluefoot-column-resize-handle {
       width: 15px;
       position: absolute;

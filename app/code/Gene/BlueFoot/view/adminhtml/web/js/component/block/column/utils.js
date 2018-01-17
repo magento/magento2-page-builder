@@ -51,6 +51,17 @@ define(["../../config", "../factory"], function (_config, _factory) {
     return parseFloat(column.stage.store.get(column.id).width);
   }
   /**
+   * Update the width of a column
+   *
+   * @param {Column} column
+   * @param {number} width
+   */
+
+
+  function updateColumnWidth(column, width) {
+    column.stage.store.updateKey(column.id, parseFloat(width) + '%', 'width');
+  }
+  /**
    * Create a column and add it to it's parent
    *
    * @param {ColumnGroup} parent
@@ -74,6 +85,7 @@ define(["../../config", "../factory"], function (_config, _factory) {
     getSmallestColumnWidth: getSmallestColumnWidth,
     getAcceptedColumnWidth: getAcceptedColumnWidth,
     getColumnWidth: getColumnWidth,
+    updateColumnWidth: updateColumnWidth,
     createColumn: createColumn
   };
 });

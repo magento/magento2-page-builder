@@ -55,6 +55,20 @@ export function getColumnWidth(column: Column): number {
 }
 
 /**
+ * Update the width of a column
+ *
+ * @param {Column} column
+ * @param {number} width
+ */
+export function updateColumnWidth(column: Column, width: number): void {
+    column.stage.store.updateKey(
+        column.id,
+        parseFloat(width) + '%',
+        'width'
+    );
+}
+
+/**
  * Create a column and add it to it's parent
  *
  * @param {ColumnGroup} parent
