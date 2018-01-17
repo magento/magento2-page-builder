@@ -69,6 +69,129 @@ export function updateColumnWidth(column: Column, width: number): void {
 }
 
 /**
+ * Calculate the drop positions of a column group
+ *
+ * @param {ColumnGroup} group
+ * @returns {any[]}
+ */
+export function calculateDropPositions(group: ColumnGroup) {
+    let dropPositions: any[] = [];
+    group.children().forEach((column, index) => {
+        const left = column.element.position().left,
+            width = column.element.outerWidth(),
+            canShrink = getColumnWidth(column) > getSmallestColumnWidth();
+        dropPositions.push(
+            {
+                left: left,
+                right: left + (width / 2),
+                insertIndex: index,
+                placement: 'left',
+                affectedColumn: column,
+                canShrink: canShrink
+            },
+            {
+                left: left + (width / 2),
+                right: left + width,
+                insertIndex: index + 1,
+                placement: 'right',
+                affectedColumn: column,
+                canShrink: canShrink
+            }
+        );
+    });
+    return dropPositions;
+}
+
+/**
+ * Return the column width to 8 decimal places if it's not a whole number
+ *
+ * @param {number} width
+ * @returns {number}
+ */
+export function getRoundedColumnWidth(width: number): number {
+    return (width).toFixed(
+        Math.round(width) !== width ? 8 : 0
+    );
+}
+
+/**
+ * Get the total width of all columns in the group
+ *
+ * @param {ColumnGroup} group
+ * @returns {number}
+ */
+export function getColumnsWidth(group: ColumnGroup): number {
+    return group.children().map((column: Column) => {
+        return getColumnWidth(column);
+    }).reduce((widthA, widthB) => {
+        return widthA + (widthB ? widthB : 0);
+    });
+}
+
+/**
+ * Determine the pixel position of every column that can be created within the group
+ *
+ * @param {Column} column
+ * @param {JQuery} group
+ * @returns {any[]}
+ */
+export function determineColumnWidths(column: Column, group: JQuery) {
+    const columnWidth = group.width() / getMaxColumns(),
+        groupLeftPos = column.element.offset().left;
+    let columnWidths = [];
+
+    for (let i = getMaxColumns(); i > 0; i--) {
+        columnWidths.push({
+            position: Math.round(groupLeftPos + columnWidth * i),
+            name: i + '/' + getMaxColumns(),
+            width: getRoundedColumnWidth(100 / getMaxColumns() * i)
+        });
+    }
+
+    return columnWidths;
+}
+
+/**
+ * Resize a column to a specific width
+ *
+ * @param {Column} column
+ * @param {number} width
+ */
+export function resizeColumn(column: Column, width: number) {
+    const current = getColumnWidth(column),
+        difference = (parseFloat(width) - current).toFixed(8);
+
+    // Don't run the update if we've already modified the column
+    if (current === parseFloat(width)) {
+        return;
+    }
+
+    updateColumnWidth(column, width);
+
+    if (difference) {
+        resizeAdjacentColumn(column, difference);
+    }
+}
+
+/**
+ * Resize the adjacent column to the current
+ *
+ * @param {Column} column
+ * @param {number} difference
+ */
+function resizeAdjacentColumn(column: Column, difference: number) {
+    const columnChildren = column.parent.children(),
+        columnIndex = columnChildren.indexOf(column);
+    if (typeof columnChildren[columnIndex + 1] !== 'undefined') {
+        const adjacentColumn: Column = columnChildren[columnIndex + 1],
+            currentAdjacent = getColumnWidth(adjacentColumn);
+        let newWidth = currentAdjacent + -difference;
+
+        updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth));
+    }
+}
+
+/**
  * Create a column and add it to it's parent
  *
  * @param {ColumnGroup} parent

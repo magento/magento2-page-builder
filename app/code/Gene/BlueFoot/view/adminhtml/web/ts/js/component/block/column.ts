@@ -11,6 +11,16 @@ import {Option} from "../stage/structural/options/option";
 
 export default class Column extends Block {
     parent: ColumnGroup;
+    element: JQuery;
+
+    /**
+     * Make a reference to the element in the column
+     *
+     * @param element
+     */
+    public initColumn(element) {
+        this.element = $(element);
+    }
 
     /**
      * Return an array of options

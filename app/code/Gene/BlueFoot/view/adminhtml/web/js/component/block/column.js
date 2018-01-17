@@ -17,10 +17,25 @@ define(["./block", "jquery", "mage/translate", "../stage/structural/options/opti
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.parent = void 0, _temp) || _this;
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.parent = void 0, _this.element = void 0, _temp) || _this;
     }
 
     var _proto = Column.prototype;
+
+    /**
+     * Make a reference to the element in the column
+     *
+     * @param element
+     */
+    _proto.initColumn = function initColumn(element) {
+      this.element = (0, _jquery)(element);
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
 
     /**
      * Init the resize handle for the resizing functionality
@@ -33,12 +48,6 @@ define(["./block", "jquery", "mage/translate", "../stage/structural/options/opti
 
     _createClass(Column, [{
       key: "options",
-
-      /**
-       * Return an array of options
-       *
-       * @returns {Array<Option>}
-       */
       get: function get() {
         var options = _Block.prototype.options,
             newOptions = options.filter(function (option) {

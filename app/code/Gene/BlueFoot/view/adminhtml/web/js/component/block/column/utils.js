@@ -62,6 +62,129 @@ define(["../../config", "../factory"], function (_config, _factory) {
     column.stage.store.updateKey(column.id, parseFloat(width) + '%', 'width');
   }
   /**
+   * Calculate the drop positions of a column group
+   *
+   * @param {ColumnGroup} group
+   * @returns {any[]}
+   */
+
+
+  function calculateDropPositions(group) {
+    var dropPositions = [];
+    group.children().forEach(function (column, index) {
+      var left = column.element.position().left,
+          width = column.element.outerWidth(),
+          canShrink = getColumnWidth(column) > getSmallestColumnWidth();
+      dropPositions.push({
+        left: left,
+        right: left + width / 2,
+        insertIndex: index,
+        placement: 'left',
+        affectedColumn: column,
+        canShrink: canShrink
+      }, {
+        left: left + width / 2,
+        right: left + width,
+        insertIndex: index + 1,
+        placement: 'right',
+        affectedColumn: column,
+        canShrink: canShrink
+      });
+    });
+    return dropPositions;
+  }
+  /**
+   * Return the column width to 8 decimal places if it's not a whole number
+   *
+   * @param {number} width
+   * @returns {number}
+   */
+
+
+  function getRoundedColumnWidth(width) {
+    return width.toFixed(Math.round(width) !== width ? 8 : 0);
+  }
+  /**
+   * Get the total width of all columns in the group
+   *
+   * @param {ColumnGroup} group
+   * @returns {number}
+   */
+
+
+  function getColumnsWidth(group) {
+    return group.children().map(function (column) {
+      return getColumnWidth(column);
+    }).reduce(function (widthA, widthB) {
+      return widthA + (widthB ? widthB : 0);
+    });
+  }
+  /**
+   * Determine the pixel position of every column that can be created within the group
+   *
+   * @param {Column} column
+   * @param {JQuery} group
+   * @returns {any[]}
+   */
+
+
+  function determineColumnWidths(column, group) {
+    var columnWidth = group.width() / getMaxColumns(),
+        groupLeftPos = column.element.offset().left;
+    var columnWidths = [];
+
+    for (var i = getMaxColumns(); i > 0; i--) {
+      columnWidths.push({
+        position: Math.round(groupLeftPos + columnWidth * i),
+        name: i + '/' + getMaxColumns(),
+        width: getRoundedColumnWidth(100 / getMaxColumns() * i)
+      });
+    }
+
+    return columnWidths;
+  }
+  /**
+   * Resize a column to a specific width
+   *
+   * @param {Column} column
+   * @param {number} width
+   */
+
+
+  function resizeColumn(column, width) {
+    var current = getColumnWidth(column),
+        difference = (parseFloat(width) - current).toFixed(8); // Don't run the update if we've already modified the column
+
+    if (current === parseFloat(width)) {
+      return;
+    }
+
+    updateColumnWidth(column, width);
+
+    if (difference) {
+      resizeAdjacentColumn(column, difference);
+    }
+  }
+  /**
+   * Resize the adjacent column to the current
+   *
+   * @param {Column} column
+   * @param {number} difference
+   */
+
+
+  function resizeAdjacentColumn(column, difference) {
+    var columnChildren = column.parent.children(),
+        columnIndex = columnChildren.indexOf(column);
+
+    if (typeof columnChildren[columnIndex + 1] !== 'undefined') {
+      var adjacentColumn = columnChildren[columnIndex + 1],
+          currentAdjacent = getColumnWidth(adjacentColumn);
+      var newWidth = currentAdjacent + -difference;
+      updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth));
+    }
+  }
+  /**
    * Create a column and add it to it's parent
    *
    * @param {ColumnGroup} parent
@@ -86,6 +209,11 @@ define(["../../config", "../factory"], function (_config, _factory) {
     getAcceptedColumnWidth: getAcceptedColumnWidth,
     getColumnWidth: getColumnWidth,
     updateColumnWidth: updateColumnWidth,
+    calculateDropPositions: calculateDropPositions,
+    getRoundedColumnWidth: getRoundedColumnWidth,
+    getColumnsWidth: getColumnsWidth,
+    determineColumnWidths: determineColumnWidths,
+    resizeColumn: resizeColumn,
     createColumn: createColumn
   };
 });
