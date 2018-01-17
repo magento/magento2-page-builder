@@ -908,7 +908,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'custom.json',
                 'custom.html'
             ],
-            'driver' => [
+            'banner' => [
                 [
                     'driver' => [
                         [
@@ -924,9 +924,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'driver.json',
-                'driver.html'
+                'banner.html'
             ],
-            'driver mobile image' => [
+            'banner mobile image' => [
                 [
                     'driver' => [
                         [
@@ -943,9 +943,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'driver_mobile_image.json',
-                'driver_mobile_image.html'
+                'banner_mobile_image.html'
             ],
-            'driver no link text' => [
+            'banner no link text' => [
                 [
                     'driver' => [
                         [
@@ -960,9 +960,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'driver_no_link_text.json',
-                'driver_no_link_text.html'
+                'banner_no_link_text.html'
             ],
-            'driver open in new window' => [
+            'banner open in new window' => [
                 [
                     'driver' => [
                         [
@@ -977,7 +977,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'driver_new_window.json',
-                'driver_new_window.html'
+                'banner_new_window.html'
             ],
             'product' => [
                 [

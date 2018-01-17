@@ -8,10 +8,10 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <cest name="AdminPageBuilderDriverCest">
+    <cest name="AdminPageBuilderBannerCest">
         <annotations>
             <features value="PageBuilder CMS"/>
-            <stories value="PageBuilder Driver Configuration"/>
+            <stories value="PageBuilder Banner Configuration"/>
             <group value="pagebuilder"/>
             <env value="chrome"/>
             <env value="firefox"/>
@@ -26,23 +26,23 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <test name="CanAddDriver">
+        <test name="CanAddBanner">
             <annotations>
-                <title value="Add an driver content block into stage"/>
-                <description value="A user should be able to add an driver into a row."/>
+                <title value="Add an banner content block into stage"/>
+                <description value="A user should be able to add an banner into a row."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84673"/>
                 <group value="pagebuilder"/>
             </annotations>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" stepKey="dragDriverIntoStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
                 <argument name="property" value="PageBuilderImagePropertyJpg"/>
@@ -50,10 +50,10 @@
             <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
                 <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDriverLinkText">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkText">
                 <argument name="property" value="PageBuilderLinkTextProperty"/>
             </actionGroup>
-            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDriverLinkUrl">
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
                 <argument name="property" value="PageBuilderLinkUrlProperty"/>
             </actionGroup>
             <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="openLinkInNewWindow">
@@ -68,46 +68,46 @@
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-            <amOnPage url="driver{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-            <seeElement selector="{{DriverOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElement selector="{{BannerOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
             <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
             <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
-            <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{DriverOnFrontend.linkText}}" stepKey="seeLinkTextDisplayed"/>
-            <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
-            <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
+            <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{BannerOnFrontend.linkText}}" stepKey="seeLinkTextDisplayed"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
         </test>
-        <test name="CanRemoveDriver">
+        <test name="CanRemoveBanner">
             <annotations>
-                <title value="Remove driver content block from stage"/>
-                <description value="A user should be able to remove driver block from a row."/>
+                <title value="Remove banner content block from stage"/>
+                <description value="A user should be able to remove banner block from a row."/>
                 <severity value="CRITICAL"/>
                 <testCaseId value="MAGETWO-84895"/>
                 <group value="pagebuilder"/>
             </annotations>
             <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
             <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
-            <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderDriverContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+            <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
         </test>
-        <test name="DriverHasAdvancedFormSection">
+        <test name="BannerHasAdvancedFormSection">
             <annotations>
-                <title value="Driver has Advanced form section"/>
-                <description value="A user should be able to configure advanced settings for driver"/>
+                <title value="Banner has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for banner"/>
                 <severity value="CRITICAL"/>
                 <group value="pagebuilder"/>
             </annotations>
             <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-            <actionGroup ref="dragContentBlockToStage" stepKey="dragDriverIntoStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderDriverContentBlock"/>
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
             <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
             <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>

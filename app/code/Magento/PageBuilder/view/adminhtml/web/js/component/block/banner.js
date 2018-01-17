@@ -2,19 +2,19 @@
 define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Driver =
+  var Banner =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(Driver, _Block);
+    _inheritsLoose(Banner, _Block);
 
-    function Driver() {
+    function Banner() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = Driver.prototype;
+    var _proto = Banner.prototype;
 
     /**
-     * Does the driver have a mobile image?
+     * Does the banner have a mobile image?
      *
      * @returns {boolean}
      */
@@ -88,9 +88,9 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
       return directive;
     };
 
-    return Driver;
+    return Banner;
   }(_block);
 
-  return Driver;
+  return Banner;
 });
-//# sourceMappingURL=driver.js.map
+//# sourceMappingURL=banner.js.map

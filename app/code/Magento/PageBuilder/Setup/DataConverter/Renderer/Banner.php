@@ -10,9 +10,9 @@ use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render driver to PageBuilder format
+ * Render banner to PageBuilder format
  */
-class Driver implements RendererInterface
+class Banner implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -43,7 +43,7 @@ class Driver implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'driver',
+            'data-role' => 'banner',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

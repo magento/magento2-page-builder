@@ -14,7 +14,7 @@ interface ImageObject {
     url: string;
 }
 
-export default class Driver implements ReadInterface {
+export default class Banner implements ReadInterface {
 
     /**
      * Read heading type and title from the element

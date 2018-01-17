@@ -7,10 +7,10 @@ import _ from "underscore";
 import Config from "../config";
 import Block from "./block";
 
-export default class Driver extends Block {
+export default class Banner extends Block {
 
     /**
-     * Does the driver have a mobile image?
+     * Does the banner have a mobile image?
      *
      * @returns {boolean}
      */
