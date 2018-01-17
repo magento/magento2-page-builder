@@ -86,6 +86,9 @@ class Attribute extends AbstractInstall
      * @param bool $attributeCode
      * @return $this
      * @throws \Exception
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function createAttribute($attributeData, EntitySetup $eavSetup, $attributeCode = false)
     {
@@ -139,7 +142,7 @@ class Attribute extends AbstractInstall
             // Map over any field keys that have changed from M1
             foreach ($attributeData as $key => $value) {
                 if (in_array($key, array_keys($this->fieldMapping))) {
-                    $attributeData[$this->fieldMapping[$key]] = $attributeData[$key];
+                    $attributeData[$this->fieldMapping[$key]] = $value;
                     unset($attributeData[$key]);
                 }
             }

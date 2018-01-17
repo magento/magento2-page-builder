@@ -39,6 +39,8 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return \Magento\Framework\DB\Select
      * @throws \Magento\Framework\Exception\LocalizedException
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function _getLoadSelect($field, $value, $object)
     {
@@ -80,6 +82,8 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {

@@ -32,6 +32,8 @@ class InstallData implements InstallDataInterface
      *
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
      * @param \Magento\Framework\Setup\ModuleContextInterface $context
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {

@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -139,6 +142,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function convertDataProvider()
     {
@@ -1058,6 +1063,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Creates and saves a CMS Block to database
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createCmsBlock()
     {
@@ -1081,6 +1088,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $blockRepository->save($block);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
     private function createProduct()
     {
         /** @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
