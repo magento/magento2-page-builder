@@ -8,6 +8,9 @@ namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
 use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class AbstractInstall extends \Magento\Framework\Model\AbstractModel
 {
     /**
