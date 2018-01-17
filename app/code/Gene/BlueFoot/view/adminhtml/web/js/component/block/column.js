@@ -1,4 +1,4 @@
-define(["./block", "./factory", "jquery", "underscore"], function (_block, _factory, _jquery, _underscore) {
+define(["./block", "../config", "./factory", "jquery", "underscore"], function (_block, _config, _factory, _jquery, _underscore) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -7,13 +7,6 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
    */
   // Temporary variable until we determine how we'll implement this
   var MAX_COLUMNS = 6;
-  var COL_GROUP_CONFIG = {
-    component: 'Gene_BlueFoot/js/component/block/column-group',
-    preview_component: 'Gene_BlueFoot/js/component/block/preview/column-group',
-    preview_template: 'Gene_BlueFoot/component/block/preview/column-group.html',
-    render_template: 'Gene_BlueFoot/component/block/render/column-group.html',
-    appearances: []
-  };
 
   var Column =
   /*#__PURE__*/
@@ -58,7 +51,7 @@ define(["./block", "./factory", "jquery", "underscore"], function (_block, _fact
     _proto.wrapInColumnGroup = function wrapInColumnGroup() {
       var _this2 = this;
 
-      (0, _factory)(COL_GROUP_CONFIG, this.parent, this.stage).then(function (colGroup) {
+      (0, _factory)(_config.getContentTypeConfig('column-group'), this.parent, this.stage).then(function (colGroup) {
         _this2.parent.addChild(colGroup); // For speed on this prototype just create new columns, moving the existing one is problematic currently
 
 

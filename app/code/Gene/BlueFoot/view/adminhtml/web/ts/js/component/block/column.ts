@@ -7,18 +7,10 @@ import {moveArrayItemIntoArray} from "../../utils/array";
 // Temporary variable until we determine how we'll implement this
 const MAX_COLUMNS = 6;
 
-const COL_GROUP_CONFIG = {
-    component: 'Gene_BlueFoot/js/component/block/column-group',
-    preview_component: 'Gene_BlueFoot/js/component/block/preview/column-group',
-    preview_template: 'Gene_BlueFoot/component/block/preview/column-group.html',
-    render_template: 'Gene_BlueFoot/component/block/render/column-group.html',
-    appearances: []
-};
-
 import Block from "./block";
 import EditableArea from "../stage/structural/editable-area";
 import Stage from "../stage";
-import {ConfigContentBlock} from "../config";
+import {default as Config, ConfigContentBlock} from "../config";
 import Appearance from "../appearance/appearance";
 import createBlock from "./factory";
 import $ from "jquery";
@@ -53,7 +45,7 @@ export default class Column extends Block {
      * Create a column group and insert the added column
      */
     private wrapInColumnGroup() {
-        createBlock(COL_GROUP_CONFIG, this.parent, this.stage).then((colGroup) => {
+        createBlock(Config.getContentTypeConfig('column-group'), this.parent, this.stage).then((colGroup) => {
             this.parent.addChild(colGroup);
             // For speed on this prototype just create new columns, moving the existing one is problematic currently
             this.parent.removeChild(this);
