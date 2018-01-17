@@ -11,19 +11,14 @@ use Magento\TestFramework\Helper\Bootstrap;
 class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var ObjectManagerInterface
-     */
-    private static $objectManager;
-    
-    /**
      * @param $originalContentFileName
      * @param $migratedContentFileName
      * @dataProvider convertDataProvider
      */
     public function testConvert($originalContentFileName, $migratedContentFileName)
     {
-        self::$objectManager = Bootstrap::getObjectManager();
-        $mixedToPageBuilderConverter = self::$objectManager->create(
+        $objectManager = Bootstrap::getObjectManager();
+        $mixedToPageBuilderConverter = $objectManager->create(
             \Magento\PageBuilder\Setup\DataConverter\MixedToPageBuilder::class
         );
 

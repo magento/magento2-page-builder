@@ -35,6 +35,8 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
+        if ($setup->tableExists('gene_bluefoot_entity')) {
+            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
+        }
     }
 }
