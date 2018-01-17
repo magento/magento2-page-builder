@@ -50,10 +50,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class);
+        $installSchema = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class
+        );
 
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class);
+        $installData = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class
+        );
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
         $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
@@ -93,7 +97,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $installData->install($moduleDataSetup, $moduleContext);
 
-        self::$treeConverter = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\TreeConverter::class);
+        self::$treeConverter = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\TreeConverter::class
+        );
     }
 
     protected function setUp()
@@ -213,7 +219,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
                             'align' => 'right',
-                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p>'
+                                . '<p><strong>World!</strong></p>',
                         ]
                     ]
                 ],
@@ -228,7 +235,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'center',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],
@@ -243,7 +252,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'left',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],

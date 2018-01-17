@@ -16,13 +16,13 @@ $catalogSearchHelper = $this->helper(\Magento\Search\Helper\Data::class);
       action="<?php /* @noEscape */ echo $catalogSearchHelper->getResultUrl() ?>"
       method="get">
     <div class="form-search">
-        <label for="search_<?php /* @noEscape */ echo $uniqueIdentifier; ?>"><?php echo __('Search:') ?></label>
+        <label for="search_<?php /* @noEscape */ echo $uniqueIdentifier; ?>"><?php echo $block->escapeHtml(__('Search:')) ?></label>
         <input id="search_<?php /* @noEscape */ echo $uniqueIdentifier; ?>" type="search"
                name="<?php echo $block->escapeHtml($catalogSearchHelper->getQueryParamName()) ?>"
                value="<?php echo $block->escapeHtml($catalogSearchHelper->getEscapedQueryText()) ?>" class="input-text"
                maxlength="<?php echo $block->escapeHtml($catalogSearchHelper->getMaxQueryLength()); ?>"
                placeholder="<?php echo $block->escapeHtml($block->getPlaceholder()); ?>"/>
-        <button type="submit" title="<?php echo __('Search') ?>" class="button search-button"></button>
+        <button type="submit" title="<?php echo $block->escapeHtmlAttr(__('Search')) ?>" class="button search-button"></button>
         <div id="search_autocomplete_<?php /* @noEscape */ echo $uniqueIdentifier; ?>" class="search-autocomplete"></div>
     </div>
 </form>

@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType;
 use Magento\PageBuilder\Model\Config\ConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 
+/**
+ * @api
+ */
 class ComponentList extends \Magento\Framework\View\Element\Template
 {
     /**

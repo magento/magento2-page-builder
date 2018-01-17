@@ -7,6 +7,9 @@ namespace Magento\PageBuilder\Block\Adminhtml\Stage;
 
 use Magento\Framework\UrlInterface;
 
+/**
+ * @api
+ */
 class Init extends \Magento\Backend\Block\Template
 {
     /**
