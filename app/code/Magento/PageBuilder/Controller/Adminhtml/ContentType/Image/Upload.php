@@ -14,6 +14,8 @@ class Upload extends \Magento\Backend\App\Action
 {
     const UPLOAD_DIR = 'wysiwyg' . DIRECTORY_SEPARATOR . 'pagebuilder';
 
+    const ADMIN_RESOURCE = 'Magento_Backend::content';
+
     /**
      * @var \Magento\Framework\Filesystem\DirectoryList
      */

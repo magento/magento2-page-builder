@@ -50,7 +50,7 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
         );
 
         // If the field isn't directly specifying which table to join on assume the main table
-        if (!strpos($field, '.')) {
+        if (false === strpos($field, '.')) {
             $field = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), $field));
         } else {
             $field = $this->getConnection()->quoteIdentifier($field);
