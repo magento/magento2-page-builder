@@ -6,7 +6,6 @@
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Framework\Exception\NoSuchEntityException as NoSuchEntityExceptionLocalized;
 use Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
@@ -142,24 +141,38 @@ class TreeConverter
             );
             $html = $renderer->render($itemData, $itemAdditionalData);
             restore_error_handler();
-        } catch (\InvalidArgumentException $exception) {
-            if ($this->isUnseparatableContentType($itemData)) {
-                $this->throwUnableMigrateWithOutParentException($exception);
-            }
-            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
-        } catch (NoSuchEntityException $exception) {
-            if ($this->isUnseparatableContentType($itemData)) {
-                $this->throwUnableMigrateWithOutParentException($exception);
-            }
-            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
-        } catch (NoSuchEntityExceptionLocalized $exception) {
-            if ($this->isUnseparatableContentType($itemData)) {
-                $this->throwUnableMigrateWithOutParentException($exception);
-            }
-            $html = $defaultRenderer->render($itemData, $itemAdditionalData);
+        } catch (\Exception $exception) {
+            $html = $this->handleRenderException(
+                $exception,
+                $defaultRenderer,
+                $itemData,
+                $itemAdditionalData
+            );
         }
 
         return $html;
+    }
+
+    /**
+     * Handle render exception. Migrate as html if content type can be migrated without parent,
+     * otherwise throw UnableMigrateWithOutParentException
+     *
+     * @param \Exception $exception
+     * @param RendererInterface $defaultRenderer
+     * @param array $itemData
+     * @param array $itemAdditionalData
+     * @return string
+     * @throws UnableMigrateWithOutParentException
+     */
+    private function handleRenderException($exception, $defaultRenderer, $itemData, $itemAdditionalData)
+    {
+        if ($this->isUnseparatableContentType($itemData)) {
+            throw new UnableMigrateWithOutParentException(
+                __('Content type can not be migrated with out parent.'),
+                $exception
+            );
+        }
+        return $defaultRenderer->render($itemData, $itemAdditionalData);
     }
 
     /**
@@ -174,21 +187,6 @@ class TreeConverter
         return in_array(
             isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'],
             $this->unseparatableContentTypes
-        );
-    }
-
-    /**
-     * Throw UnableMigrateWithOutParentException
-     *
-     * @param $exception
-     * @throws UnableMigrateWithOutParentException
-     */
-    private function throwUnableMigrateWithOutParentException($exception)
-    {
-        throw new UnableMigrateWithOutParentException(
-            __('Content type can not be migrated with out parent.'),
-            null,
-            $exception
         );
     }
 }

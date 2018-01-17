@@ -7,6 +7,7 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\PageBuilder\Model\EntityFactory;
 use Magento\PageBuilder\Model\AttributeFactory;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Using dependency injection, a virtual type can extend this class and be used by your renderer, to configure
@@ -52,6 +53,9 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
         $eavData = [];
         $entity = $this->entityFactory->create();
         $entity->load($entityId);
+        if (!$entity->getId()) {
+            throw new NoSuchEntityException(__('Entity with id "%1" does not exist.', $entityId));
+        }
         foreach ($this->eavAttributeNames as $attributeName) {
             if ($entity->hasData($attributeName)) {
                 $eavData[$attributeName] = $entity->getDataByKey($attributeName);

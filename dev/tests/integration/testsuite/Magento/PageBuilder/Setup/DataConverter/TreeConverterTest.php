@@ -1010,45 +1010,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'product_list.json',
                 'product_list.html'
-            ]
-        ];
-    }
-
-    /**
-     * @param array $contentTypes
-     * @param string$jsonFormatFileName
-     * @param string $masterFormatFileName
-     * @param callable|null $callSetupEntity
-     * @param \Exception $expectedException
-     * @dataProvider convertExceptionDataProvider
-     */
-    public function testConvertException(
-        $contentTypes,
-        $jsonFormatFileName,
-        $masterFormatFileName,
-        $expectedException
-    ) {
-        foreach ($contentTypes as $contentTypesCode => $contentTypesData) {
-            foreach ($contentTypesData as $contentType) {
-                $this->saveContentType($contentTypesCode, $contentType);
-            }
-        }
-
-        $this->expectException(get_class($expectedException));
-        $this->expectExceptionMessage($expectedException->getMessage());
-
-        $this->assertEquals(
-            file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
-            self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function convertExceptionDataProvider()
-    {
-        return [
+            ],
             'non existent entity' => [
                 [
                     'advanced_slider' => [
@@ -1078,8 +1040,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 'non_existent_entity.json',
-                'non_existent_entity.html',
-                new \UnexpectedValueException('Entity data is invalid: "{"contentType":"textarea","entityId":"1000000","formData":{"align":"","metric":""}}".')
+                'non_existent_entity.html'
             ]
         ];
     }

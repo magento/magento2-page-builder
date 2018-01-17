@@ -26,37 +26,22 @@ class Validator
     }
 
     /**
-     * Check if a JSON string is a valid PageBuilder content, if we require an entire stage we will validate the
-     * first child is a row
+     * Check if a JSON string is a valid PageBuilder content
      *
      * @param string $json
-     * @param bool $isStage
      * @return bool
-     * @throws \InvalidArgumentException
      */
-    public function isValidBlueFootJson($json, $isStage = true)
+    public function validate($json)
     {
         try {
             $structure = $this->serializer->unserialize($json);
-
-            $firstContentType = $structure;
-            if (!empty($firstContentType)
-                && (!isset($firstContentType['type']) || !isset($firstContentType['contentType']))
-            ) {
-                $firstContentType = current($firstContentType);
+            if (is_array($structure) && (!isset($structure['type']) || !isset($structure['contentType']))) {
+                $structure = current($structure);
             }
-
-            // Determine if the object has items with a key of type or contentType
-            $valid = count($firstContentType) > 0
-                && (isset($firstContentType['type']) || isset($firstContentType['contentType']));
-
-            // If we're validating an entire stage verify the first item is of type row
-            if ($valid && $isStage && isset($firstContentType['type'])) {
-                $valid = $firstContentType['type'] === 'row';
-            }
-            return $valid;
+            $result = is_array($structure) && (isset($structure['type']) || isset($structure['contentType']));
         } catch (\InvalidArgumentException $exception) {
-            return false;
+            $result = false;
         }
+        return $result;
     }
 }

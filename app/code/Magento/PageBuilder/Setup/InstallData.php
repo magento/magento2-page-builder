@@ -5,7 +5,6 @@
  */
 namespace Magento\PageBuilder\Setup;
 
-use Magento\Framework\Module\FullModuleList;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -18,22 +17,14 @@ class InstallData implements InstallDataInterface
     private $convertBlueFootToPageBuilderFactory;
 
     /**
-     * @var FullModuleList
-     */
-    private $fullModuleList;
-
-    /**
      * Constructor
      *
      * @param ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
-     * @param FullModuleList $fullModuleList
      */
     public function __construct(
-        ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
-        FullModuleList $fullModuleList
+        ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
-        $this->fullModuleList = $fullModuleList;
     }
 
     /**
@@ -44,8 +35,6 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        if ($this->fullModuleList->has('Gene_BlueFoot')) {
-            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
-        }
+        $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
     }
 }

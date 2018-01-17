@@ -24,7 +24,7 @@ class MixedToPageBuilder implements DataConverterInterface
     private $validator;
 
     /**
-     * BlueFootToPageBuilder constructor.
+     * Constructor
      *
      * @param TreeConverter $converter
      * @param Validator $validator
@@ -56,8 +56,7 @@ class MixedToPageBuilder implements DataConverterInterface
      * Convert any instances of un-migrated content to the new format
      *
      * @param $value
-     *
-     * @return mixed
+     * @return string
      */
     private function convertMixed($value)
     {
@@ -71,7 +70,6 @@ class MixedToPageBuilder implements DataConverterInterface
             $matches,
             PREG_SET_ORDER
         );
-
         $response = $value;
         foreach ($matches as $match) {
             /**
@@ -79,7 +77,7 @@ class MixedToPageBuilder implements DataConverterInterface
              * $structure matches the internal JSON structure of the HTML comment
              */
             list ($contentType, $structure) = $match;
-            if ($this->validator->isValidBlueFootJson($structure, false)) {
+            if ($this->validator->validate($structure)) {
                 $response = str_replace(
                     $contentType,
                     $this->converter->convert($structure),
@@ -87,7 +85,6 @@ class MixedToPageBuilder implements DataConverterInterface
                 );
             }
         }
-
         return $response;
     }
 }
