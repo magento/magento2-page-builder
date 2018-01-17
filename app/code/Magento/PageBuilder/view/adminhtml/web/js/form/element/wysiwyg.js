@@ -6,23 +6,23 @@
 /*eslint-disable vars-on-top, strict, max-len */
 
 define([
-    'underscore',
-    'Magento_Ui/js/form/element/wysiwyg',
-    'Magento_Ui/js/lib/view/utils/async',
-    'Magento_Ui/js/modal/confirm',
-    'Magento_Ui/js/modal/alert',
-    'mage/translate',
-    'mage/apply/main',
-    'ko',
-    'uiRegistry',
-    'jquery',
-    'Magento_PageBuilder/js/component/format/format-validator',
-    'Magento_PageBuilder/js/component/stage-builder',
-    'Magento_PageBuilder/js/component/stage/panel',
-    'mageUtils',
-    'Magento_Variable/variables'
+    "underscore",
+    "Magento_Ui/js/form/element/wysiwyg",
+    "Magento_Ui/js/lib/view/utils/async",
+    "Magento_Ui/js/modal/confirm",
+    "Magento_Ui/js/modal/alert",
+    "mage/translate",
+    "mage/apply/main",
+    "ko",
+    "uiRegistry",
+    "jquery",
+    "Magento_PageBuilder/js/component/format/format-validator",
+    "Magento_PageBuilder/js/component/stage-builder",
+    "Magento_PageBuilder/js/component/stage/panel",
+    "mageUtils",
+    "Magento_Variable/variables"
 ], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, formatValidator, buildStage, Panel, utils) {
-    'use strict';
+    "use strict";
 
     /**
      * Extend the original WYSIWYG with added PageBuilder functionality
@@ -30,7 +30,7 @@ define([
     return Wysiwyg.extend({
         defaults: {
             domNode: false,
-            elementSelector: 'textarea.textarea',
+            elementSelector: "textarea.textarea",
             stageActive: false,
             stage: {},
             stageId: utils.uniqueid(),
@@ -52,7 +52,7 @@ define([
                 isFullScreen: false
             },
             config: {
-                name: 'stage'
+                name: "stage"
             }
         },
 
@@ -64,7 +64,7 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+                .observe("value stageId stageActive stageContent showBorders loading userSelect isFullScreen");
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -121,7 +121,7 @@ define([
          * @param node
          */
         bindPageBuilderButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').on('click', this.buildPageBuilder.bind(this));
+            $(node).prevAll(".buttons-set").find(".init-magento-pagebuilder").on("click", this.buildPageBuilder.bind(this));
         },
 
         /**
@@ -133,7 +133,7 @@ define([
         buildPageBuilder: function (event) {
             var self = this;
 
-            if (typeof event !== 'undefined') {
+            if (typeof event !== "undefined") {
                 event.stopPropagation();
             }
 
@@ -142,7 +142,7 @@ define([
                 this.panel,
                 this.stageContent,
                 this.initialValue
-            ).on('stageReady', function () {
+            ).on("stageReady", function () {
                 self.stageActive(true);
                 self.visible(false);
             });
@@ -154,7 +154,7 @@ define([
          * @returns {string}
          */
         getStageTemplate: function () {
-            return 'Magento_PageBuilder/component/stage.html';
+            return "Magento_PageBuilder/component/stage.html";
         },
 
         /**
@@ -165,13 +165,13 @@ define([
          */
         confirmationDialog: function (options) {
             if (options.actions &&
-                ['always', 'confirm', 'cancel'].some(function (action) {
-                    return typeof options.actions[action] === 'function';
+                ["always", "confirm", "cancel"].some(function (action) {
+                    return typeof options.actions[action] === "function";
                 })
             ) {
                 confirmationPrompt(options);
             } else {
-                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+                throw new Error("Wysiwyg.confirmationDialog: options.actions must include at least one \"always\", \"confirm\", or \"cancel\" callback");
             }
         },
 
@@ -189,7 +189,7 @@ define([
                 }
                 alertPrompt(options);
             } else {
-                throw new Error('Wysiwyg.alertDialog: options.message must be provided');
+                throw new Error("Wysiwyg.alertDialog: options.message must be provided");
             }
         },
 

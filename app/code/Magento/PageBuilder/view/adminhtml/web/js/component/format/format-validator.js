@@ -12,10 +12,10 @@ define(["../config"], function (_config) {
    * @returns {boolean}
    */
   function formatValidate(content) {
-    var stageDocument = document.createElement('div');
-    stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
+    var stageDocument = document.createElement("div");
+    stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = content;
-    return !!stageDocument.querySelector('[' + _config.getValueAsString('dataRoleAttributeName') + '="row"]');
+    return !!stageDocument.querySelector("[" + _config.getValueAsString("dataRoleAttributeName") + "=\"row\"]");
   }
 
   return formatValidate;

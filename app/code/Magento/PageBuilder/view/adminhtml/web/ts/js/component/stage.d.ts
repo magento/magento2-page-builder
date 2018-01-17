@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import { EditableAreaInterface } from 'stage/structural/editable-area.d';
+import { EditableAreaInterface } from "stage/structural/editable-area.d";
 import DataStore from "./data-store";
 
 export interface StageInterface extends EditableAreaInterface {
