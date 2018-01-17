@@ -7,9 +7,9 @@
         <div class="grid-line"></div>
         <div class="grid-line"></div>
     </div>
-    <div class="resize-ghost"></div>
+    <div class="resize-ghost" data-bind="afterRender: initGhost"></div>
     <div class="drop-placeholder" data-bind="afterRender: initDropPlaceholder"></div>
-    <div class="element-children" style="padding: 0; display: flex; width: 100%; position: relative;" data-bind="foreach: getChildren(), afterRender: initDroppable">
+    <div class="element-children" style="padding: 0; display: flex; width: 100%; position: relative;" data-bind="foreach: getChildren(), afterRender: initInteractions">
         <!-- ko template: previewTemplate --><!-- /ko -->
     </div>
 </div>
