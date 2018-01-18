@@ -45,6 +45,7 @@ define(["underscore", "knockout", "mage/translate", "./editable-area", "./option
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
       _this.appearance = void 0;
+      _this.element = void 0;
 
       _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
 

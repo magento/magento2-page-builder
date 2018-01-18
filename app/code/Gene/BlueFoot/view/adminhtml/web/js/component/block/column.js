@@ -11,13 +11,7 @@ define(["./block", "jquery", "mage/translate", "../stage/structural/options/opti
     _inheritsLoose(Column, _Block);
 
     function Column() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.parent = void 0, _this.element = void 0, _temp) || _this;
+      return _Block.apply(this, arguments) || this;
     }
 
     var _proto = Column.prototype;

@@ -1,4 +1,4 @@
-define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/utils", "../../utils/array"], function (_block, _jquery, _knockout, _underscore, _uiRegistry, _utils, _array) {
+define(["./block", "jquery", "knockout", "underscore", "./column/utils", "../../utils/array"], function (_block, _jquery, _knockout, _underscore, _utils, _array) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -47,9 +47,10 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
 
       this.groupElement = (0, _jquery)(group);
       this.initDroppable(this.groupElement);
-      this.initMouseMove(this.groupElement);
+      this.initMouseMove(this.groupElement); // We have to re-bind the draggable library to any new children that appear inside the group
+
       this.children.subscribe(_underscore.debounce(function () {
-        return _this2.bindDraggable(_this2.groupElement);
+        return _this2.bindDraggable();
       }, 50));
     };
     /**
@@ -90,11 +91,13 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
      */
 
 
-    _proto.bindDraggable = function bindDraggable(group) {
+    _proto.bindDraggable = function bindDraggable() {
       var _this3 = this;
 
-      var internalColumns = group.find('>.bluefoot-column');
-      internalColumns.draggable({
+      var internalColumns = this.children().map(function (column) {
+        return column.element;
+      });
+      (0, _jquery)(internalColumns).draggable({
         handle: '.move-column',
         appendTo: "body",
         revertDuration: 250,
@@ -109,23 +112,22 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
           return helper;
         },
         start: function start(event) {
-          // Use the global registry as columns can be dragged between groups
-          _uiRegistry.set('pageBuilderDragColumn', {
-            element: jQuery(event.target),
-            instance: _knockout.dataFor(jQuery(event.target)[0])
+          // Use the globla state as columns can be dragged between groups
+          _this3.stage.store.update('pageBuilderDragColumn', {
+            element: (0, _jquery)(event.target),
+            instance: _knockout.dataFor((0, _jquery)(event.target)[0])
           });
 
           _this3.dropPositions = (0, _utils.calculateDropPositions)(_this3);
         },
         stop: function stop(event) {
-          var column = _uiRegistry.get('pageBuilderDragColumn');
+          var column = _this3.stage.store.get('pageBuilderDragColumn');
 
           if (_this3.movePosition && column) {
             // Check if we're moving within the same group, even though this function will only ever run on the
             // group that bound the draggable event
             if (column.instance.parent === _this3) {
-              var currentIndex = _this3.children().indexOf(column.instance);
-
+              var currentIndex = (0, _utils.getColumnIndexInGroup)(column.instance);
               var newIndex = _this3.movePosition.insertIndex;
 
               if (currentIndex !== newIndex) {
@@ -141,7 +143,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
             }
           }
 
-          _uiRegistry.remove('pageBuilderDragColumn');
+          _this3.stage.store.remove('pageBuilderDragColumn');
 
           _this3.dropPlaceholder.removeClass('left right');
 
@@ -252,21 +254,21 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
 
 
     _proto.handleDraggingMouseMove = function handleDraggingMouseMove(event, group) {
-      if (_uiRegistry.get('pageBuilderDragColumn')) {
+      var dragColumn = this.stage.store.get('pageBuilderDragColumn');
+
+      if (dragColumn.element && dragColumn.instance) {
         // If the drop positions haven't been calculated for this group do so now
         if (this.dropPositions.length === 0) {
           this.dropPositions = (0, _utils.calculateDropPositions)(this);
         }
 
-        var columnInstance = _uiRegistry.get('pageBuilderDragColumn').instance,
+        var columnInstance = dragColumn.instance,
             currentX = event.pageX - (0, _jquery)(group).offset().left; // Are we within the same column group or have we ended up over another?
 
-
         if (columnInstance.parent === this) {
-          var currentColumn = _uiRegistry.get('pageBuilderDragColumn').element,
+          var currentColumn = dragColumn.element,
               lastColInGroup = this.children()[this.children().length - 1].element,
               insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2; // @todo don't show placeholder next to current column
-
 
           this.movePosition = this.dropPositions.find(function (position, index) {
             // Only ever look for the left placement, except the last item where we look on the right
@@ -346,7 +348,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
       var _this5 = this;
 
-      (0, _jquery)(handle).mousedown(function (event) {
+      handle.mousedown(function (event) {
         event.preventDefault();
 
         _this5.resizing(true);
@@ -355,13 +357,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
         _this5.resizeColumnElement = column.element;
         _this5.resizeColumnWidths = (0, _utils.determineColumnWidths)(column, _this5.groupElement);
         _this5.resizeColumnLeft = _this5.resizeColumnElement.offset().left;
-
-        var currentIndex = _this5.children().indexOf(column);
-
-        if (typeof _this5.children()[currentIndex + 1] !== 'undefined') {
-          _this5.resizeNextColumn = _this5.children()[currentIndex + 1];
-        }
-
+        _this5.resizeNextColumn = (0, _utils.getAdjacentColumn)(column, '+1');
         _this5.resizeMaxGhostWidth = null;
         _this5.resizeMouseDown = true;
       });
@@ -369,15 +365,15 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
     /**
      * Init the droppable functionality for new columns
      *
-     * @param element
+     * @param {Element} group
      */
 
 
-    _proto.initDroppable = function initDroppable(element) {
+    _proto.initDroppable = function initDroppable(group) {
       var _this6 = this;
 
       var currentDraggedBlock;
-      (0, _jquery)(element).droppable({
+      group.droppable({
         greedy: true,
         activate: function activate(event) {
           currentDraggedBlock = _knockout.dataFor(event.currentTarget);
@@ -403,7 +399,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
         drop: function drop(event, ui) {
           _this6.handleNewColumnDrop(event, ui);
 
-          _this6.handleExistingColumnDrop(event, ui);
+          _this6.handleExistingColumnDrop(event);
 
           _this6.dropPositions = [];
 
@@ -442,28 +438,24 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
     /**
      * Handle an existing column being dropped into a new column group
      *
-     * @param event
-     * @param ui
+     * @param {Event} event
      */
 
 
-    _proto.handleExistingColumnDrop = function handleExistingColumnDrop(event, ui) {
-      var column = _uiRegistry.get('pageBuilderDragColumn');
-
+    _proto.handleExistingColumnDrop = function handleExistingColumnDrop(event) {
+      var column = this.stage.store.get('pageBuilderDragColumn');
       var modifyOldNeighbour; // This should only run when we're dragging between groups
 
-      if (this.movePosition && column && column.instance.parent !== this) {
+      if (this.movePosition && column.element && column.instance && column.instance.parent !== this) {
         event.preventDefault();
         event.stopImmediatePropagation(); // Determine which old neighbour we should modify
 
-        var currentParentChildren = column.instance.parent.children(),
-            oldIndex = currentParentChildren.indexOf(column.instance),
-            oldWidth = (0, _utils.getColumnWidth)(column.instance);
+        var oldWidth = (0, _utils.getColumnWidth)(column.instance); // Retrieve the adjacent column either +1 or -1
 
-        if (typeof currentParentChildren[oldIndex + 1] !== 'undefined') {
-          modifyOldNeighbour = currentParentChildren[oldIndex + 1];
-        } else if (typeof currentParentChildren[oldIndex - 1] !== 'undefined') {
-          modifyOldNeighbour = currentParentChildren[oldIndex - 1];
+        if ((0, _utils.getAdjacentColumn)(column.instance, '+1')) {
+          modifyOldNeighbour = (0, _utils.getAdjacentColumn)(column.instance, '+1');
+        } else if ((0, _utils.getAdjacentColumn)(column.instance, '-1')) {
+          modifyOldNeighbour = (0, _utils.getAdjacentColumn)(column.instance, '-1');
         } // Set the column to it's smallest column width
 
 
@@ -488,7 +480,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
     /**
      * Spread any empty space across the other columns
      *
-     * @param event
+     * @param {Event} event
      * @param params
      */
 
@@ -544,8 +536,7 @@ define(["./block", "jquery", "knockout", "underscore", "uiRegistry", "./column/u
         }
 
         if (columnToModify) {
-          var currentWidth = (0, _utils.getColumnWidth)(columnToModify);
-          (0, _utils.updateColumnWidth)(columnToModify, currentWidth + spreadAmount);
+          (0, _utils.updateColumnWidth)(columnToModify, (0, _utils.getColumnWidth)(columnToModify) + spreadAmount);
         }
       }
     };

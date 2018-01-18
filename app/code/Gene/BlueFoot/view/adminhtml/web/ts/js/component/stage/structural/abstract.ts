@@ -34,6 +34,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     attributeFilter: AttributeFilter = new AttributeFilter();
     attributeMapper: AttributeMapper =  new AttributeMapper();
     appearance: Appearance;
+    element: JQuery;
 
     /**
      * Abstract structural constructor

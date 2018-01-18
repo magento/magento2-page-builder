@@ -10,15 +10,12 @@ import $t from "mage/translate";
 import {Option} from "../stage/structural/options/option";
 
 export default class Column extends Block {
-    parent: ColumnGroup;
-    element: JQuery;
-
     /**
      * Make a reference to the element in the column
      *
      * @param element
      */
-    public initColumn(element) {
+    public initColumn(element: Element) {
         this.element = $(element);
     }
 
@@ -43,7 +40,7 @@ export default class Column extends Block {
      *
      * @param handle
      */
-    public initResizeHandle(handle) {
-        return this.parent.registerResizeHandle(this, $(handle));
+    public initResizeHandle(handle: Element) {
+        return (this.parent as ColumnGroup).registerResizeHandle(this, $(handle));
     }
 }
