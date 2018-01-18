@@ -104,7 +104,7 @@ export default class Stage extends EditableArea implements StageInterface {
                     this.addChild(row);
                 });
             }
-            this.ready();
+            this.re ady();
         }
     }
 
