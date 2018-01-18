@@ -115,6 +115,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
      * @param $contentType
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function flattenContentTypeData($name, $contentType)
     {

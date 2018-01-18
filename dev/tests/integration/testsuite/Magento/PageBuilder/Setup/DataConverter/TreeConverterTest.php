@@ -8,12 +8,20 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ObjectManagerInterface
      */
     private static $objectManager;
+
+    /**
+     * @var \Magento\Framework\App\ResourceConnection
+     */
+    private static $resourceConnection;
 
     /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
@@ -50,10 +58,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class);
+        $installSchema = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class
+        );
 
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = self::$objectManager->create(\Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class);
+        $installData = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class
+        );
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
         $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
@@ -68,37 +80,43 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
 
         /** @var \Magento\Framework\App\ResourceConnection $resourceConnection */
-        $resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
+        self::$resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
 
-        self::$dbAdapter = $resourceConnection->getConnection();
+        self::$dbAdapter = self::$resourceConnection->getConnection();
 
         $entityTypeSelect = self::$dbAdapter->select()
-            ->from('eav_entity_type', ['entity_type_id'])
+            ->from(self::$resourceConnection->getTableName('eav_entity_type'), ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
 
         $entityTypeId = self::$dbAdapter->fetchOne($entityTypeSelect);
 
         foreach (self::$dropTableNames as $tableName) {
-            self::$dbAdapter->dropTable($tableName);
+            self::$dbAdapter->dropTable(self::$resourceConnection->getTableName($tableName));
         }
 
         if ($entityTypeId) {
-            self::$dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
+            $entityTypeIdWhere = 'entity_type_id = ' . $entityTypeId;
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_attribute'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(
+                self::$resourceConnection->getTableName('eav_entity_attribute'),
+                $entityTypeIdWhere
+            );
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity_type'), $entityTypeIdWhere);
         }
 
         $installSchema->install($schemaSetup, $moduleContext);
 
         $installData->install($moduleDataSetup, $moduleContext);
 
-        self::$treeConverter = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\TreeConverter::class);
+        self::$treeConverter = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\TreeConverter::class
+        );
     }
 
     protected function setUp()
     {
-        self::$dbAdapter->delete('gene_bluefoot_entity');
+        self::$dbAdapter->delete(self::$resourceConnection->getTableName('gene_bluefoot_entity'));
     }
 
     /**
@@ -106,7 +124,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param string$jsonFormatFileName
      * @param string $masterFormatFileName
      * @param callable|null $callSetupEntity
-     * @param \Exception|null $expectedException
      * @dataProvider convertDataProvider
      */
     public function testConvert(
@@ -133,6 +150,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function convertDataProvider()
     {
@@ -213,7 +232,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
                             'align' => 'right',
-                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p>'
+                                . '<p><strong>World!</strong></p>',
                         ]
                     ]
                 ],
@@ -228,7 +248,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'center',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],
@@ -243,7 +265,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'left',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],
@@ -1047,6 +1071,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Creates and saves a CMS Block to database
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createCmsBlock()
     {
@@ -1070,6 +1096,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $blockRepository->save($block);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
     private function createProduct()
     {
         /** @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */

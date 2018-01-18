@@ -56,7 +56,10 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Colle
      */
     protected function _construct()
     {
-        $this->_init('Magento\PageBuilder\Model\Attribute', 'Magento\PageBuilder\Model\ResourceModel\Attribute');
+        $this->_init(
+            \Magento\PageBuilder\Model\Attribute::class,
+            \Magento\PageBuilder\Model\ResourceModel\Attribute::class
+        );
     }
 
     /**

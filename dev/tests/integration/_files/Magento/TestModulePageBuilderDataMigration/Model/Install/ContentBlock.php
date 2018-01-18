@@ -8,6 +8,9 @@ namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
 use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class ContentBlock extends AbstractInstall
 {
     /**
@@ -43,13 +46,16 @@ class ContentBlock extends AbstractInstall
      * @param EntitySetupFactory $entitySetupFactory
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
      * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
+     *        $contentBlockResource
      * @param \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -92,6 +98,9 @@ class ContentBlock extends AbstractInstall
      * @param bool $contentBlockIdentifier
      * @return $this
      * @throws \Exception
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function createContentBlock($contentBlockData, EntitySetup $eavSetup, $contentBlockIdentifier = false)
     {

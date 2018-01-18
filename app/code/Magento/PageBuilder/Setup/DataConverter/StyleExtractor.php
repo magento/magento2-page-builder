@@ -32,6 +32,9 @@ class StyleExtractor implements StyleExtractorInterface
 
     /**
      * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function extractStyle(array $formData)
     {
