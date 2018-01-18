@@ -6,7 +6,7 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-column" data-bind="style: preview.columnStyles, afterRender: initColumn">
-    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: initResizeHandle"></div>
+    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: initResizeHandle, visible: $index() < parent.children().length - 1"></div>
 
     <!-- ko template: optionsInstance.template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->

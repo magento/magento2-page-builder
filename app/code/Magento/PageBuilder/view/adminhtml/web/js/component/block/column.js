@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block", "jquery", "mage/translate", "../stage/structural/options/option"], function (_block, _jquery, _translate, _option) {
+define(["jquery", "mage/translate", "../stage/structural/options/option", "./block"], function (_jquery, _translate, _option, _block) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -44,11 +44,11 @@ define(["./block", "jquery", "mage/translate", "../stage/structural/options/opti
     _createClass(Column, [{
       key: "options",
       get: function get() {
-        var options = _Block.prototype.options,
-            newOptions = options.filter(function (option) {
-          return option.code !== 'move';
+        var options = _Block.prototype.options;
+        var newOptions = options.filter(function (option) {
+          return option.code !== "move";
         });
-        newOptions.unshift(new _option.Option(this, 'move', '<i></i>', (0, _translate)('Move'), false, ['move-column'], 10));
+        newOptions.unshift(new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-column"], 10));
         return newOptions;
       }
     }]);

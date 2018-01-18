@@ -53,15 +53,5 @@ export default class Row extends PreviewBlock {
                 });
             }
         });
-
-        this.afterColumnRenders = () => {
-            // // Not wrapping correctly here, but does if ran once after all elements render
-            // jQuery('.row-container').find('.bluefoot-column').parent('.bluefoot-structure-wrapper').addClass('column-flex');
-            // jQuery('.row-container').each(function(index) {
-            //     if ( jQuery(this).find('.column-flex').parent('.column-flex-wrapper').length === 0 ) {
-            //         jQuery(this).find('.column-flex').wrapAll('<div class="column-flex-wrapper" style="display: flex">');
-            //     }
-            // });
-        };
     }
 }

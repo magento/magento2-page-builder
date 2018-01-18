@@ -1,7 +1,7 @@
 import Config from "../../config";
-import createBlock from "../factory";
-import ColumnGroup from "../column-group";
 import Column from "../column";
+import ColumnGroup from "../column-group";
+import createBlock from "../factory";
 
 /**
  * Get the maximum columns allowed
@@ -19,7 +19,7 @@ export function getMaxColumns() {
  */
 export function getSmallestColumnWidth() {
     return getAcceptedColumnWidth(parseFloat((100 / getMaxColumns()).toString()).toFixed(
-        Math.round(100 / getMaxColumns()) !== 100 / getMaxColumns() ? 8 : 0
+        Math.round(100 / getMaxColumns()) !== 100 / getMaxColumns() ? 8 : 0,
     ));
 }
 
@@ -33,7 +33,7 @@ export function getAcceptedColumnWidth(width: string) {
     let newWidth = 0;
     for (let i = getMaxColumns(); i > 0; i--) {
         const percentage = parseFloat((100 / getMaxColumns() * i).toFixed(
-            Math.round((100 / getMaxColumns() * i)) !== (100 / getMaxColumns() * i) ? 8 : 0
+            Math.round((100 / getMaxColumns() * i)) !== (100 / getMaxColumns() * i) ? 8 : 0,
         ));
         // Allow for rounding issues
         if (parseFloat(width) > (percentage - 0.1) && parseFloat(width) < (percentage + 0.1)) {
@@ -71,10 +71,10 @@ export function getColumnIndexInGroup(column: Column): number {
  * @param {"+1" | "-1"} direction
  * @returns {any}
  */
-export function getAdjacentColumn(column: Column, direction: "+1" | "-1") {
+export function getAdjacentColumn(column: Column, direction: "+1" | "-1"): Column {
     const currentIndex = getColumnIndexInGroup(column);
-    if (typeof column.parent.children()[currentIndex + parseInt(direction)] !== 'undefined') {
-        return column.parent.children()[currentIndex + parseInt(direction)];
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+        return (column.parent.children()[currentIndex + parseInt(direction, 10)] as Column);
     }
     return null;
 }
@@ -88,9 +88,18 @@ export function getAdjacentColumn(column: Column, direction: "+1" | "-1") {
 export function updateColumnWidth(column: Column, width: number): void {
     column.stage.store.updateKey(
         column.id,
-        parseFloat(width.toString()) + '%',
-        'width'
+        parseFloat(width.toString()) + "%",
+        "width",
     );
+}
+
+export interface DropPosition {
+    left: number;
+    right: number;
+    insertIndex: number;
+    placement: string;
+    affectedColumn: Column;
+    canShrink: boolean;
 }
 
 /**
@@ -99,29 +108,29 @@ export function updateColumnWidth(column: Column, width: number): void {
  * @param {ColumnGroup} group
  * @returns {any[]}
  */
-export function calculateDropPositions(group: ColumnGroup) {
-    let dropPositions: any[] = [];
+export function calculateDropPositions(group: ColumnGroup): DropPosition[] {
+    const dropPositions: any[] = [];
     group.children().forEach((column: Column, index: number) => {
-        const left = column.element.position().left,
-            width = column.element.outerWidth(),
-            canShrink = getColumnWidth(column) > getSmallestColumnWidth();
+        const left = column.element.position().left;
+        const width = column.element.outerWidth();
+        const canShrink = getColumnWidth(column) > getSmallestColumnWidth();
         dropPositions.push(
             {
-                left: left,
-                right: left + (width / 2),
-                insertIndex: index,
-                placement: 'left',
                 affectedColumn: column,
-                canShrink: canShrink
+                canShrink,
+                insertIndex: index,
+                left,
+                placement: "left",
+                right: left + (width / 2),
             },
             {
-                left: left + (width / 2),
-                right: left + width,
-                insertIndex: index + 1,
-                placement: 'right',
                 affectedColumn: column,
-                canShrink: canShrink
-            }
+                canShrink,
+                insertIndex: index + 1,
+                left: left + (width / 2),
+                placement: "right",
+                right: left + width,
+            },
         );
     });
     return dropPositions;
@@ -133,10 +142,10 @@ export function calculateDropPositions(group: ColumnGroup) {
  * @param {number} width
  * @returns {string}
  */
-export function getRoundedColumnWidth(width: number): string {
-    return (width).toFixed(
-        Math.round(width) !== width ? 8 : 0
-    );
+export function getRoundedColumnWidth(width: number): number {
+    return Number((width).toFixed(
+        Math.round(width) !== width ? 8 : 0,
+    ));
 }
 
 /**
@@ -161,15 +170,15 @@ export function getColumnsWidth(group: ColumnGroup): number {
  * @returns {any[]}
  */
 export function determineColumnWidths(column: Column, group: JQuery) {
-    const columnWidth = group.width() / getMaxColumns(),
-        groupLeftPos = column.element.offset().left;
-    let columnWidths = [];
+    const columnWidth = group.width() / getMaxColumns();
+    const groupLeftPos = column.element.offset().left;
+    const columnWidths = [];
 
     for (let i = getMaxColumns(); i > 0; i--) {
         columnWidths.push({
+            name: i + "/" + getMaxColumns(),
             position: Math.round(groupLeftPos + columnWidth * i),
-            name: i + '/' + getMaxColumns(),
-            width: getRoundedColumnWidth(100 / getMaxColumns() * i)
+            width: getRoundedColumnWidth(100 / getMaxColumns() * i),
         });
     }
 
@@ -183,8 +192,8 @@ export function determineColumnWidths(column: Column, group: JQuery) {
  * @param {number} width
  */
 export function resizeColumn(column: Column, width: number) {
-    const current = getColumnWidth(column),
-        difference = (parseFloat(width.toString()) - current).toFixed(8);
+    const current = getColumnWidth(column);
+    const difference = (parseFloat(width.toString()) - current).toFixed(8);
 
     // Don't run the update if we've already modified the column
     if (current === parseFloat(width.toString())) {
@@ -205,12 +214,10 @@ export function resizeColumn(column: Column, width: number) {
  * @param {number} difference
  */
 function resizeAdjacentColumn(column: Column, difference: string) {
-    const columnChildren = column.parent.children(),
-        columnIndex = columnChildren.indexOf(column);
-    if (typeof columnChildren[columnIndex + 1] !== 'undefined') {
-        const adjacentColumn: Column = (columnChildren[columnIndex + 1] as Column),
-            currentAdjacent = getColumnWidth(adjacentColumn);
-        let newWidth = currentAdjacent + -difference;
+    if (getAdjacentColumn(column, "+1")) {
+        const adjacentColumn = getAdjacentColumn(column, "+1");
+        const currentAdjacent = getColumnWidth(adjacentColumn);
+        const newWidth = currentAdjacent + -difference;
 
         updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth.toString()));
     }
@@ -226,10 +233,10 @@ function resizeAdjacentColumn(column: Column, difference: string) {
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number) {
     return createBlock(
-        Config.getContentTypeConfig('column'),
+        Config.getContentTypeConfig("column"),
         parent,
         parent.stage,
-        {width: parseFloat(width.toString()) + '%'}
+        {width: parseFloat(width.toString()) + "%"},
     ).then((column) => {
         parent.addChild(column, index);
         return column;

@@ -74,8 +74,8 @@ define(["../../config", "../factory"], function (_config, _factory) {
   function getAdjacentColumn(column, direction) {
     var currentIndex = getColumnIndexInGroup(column);
 
-    if (typeof column.parent.children()[currentIndex + parseInt(direction)] !== 'undefined') {
-      return column.parent.children()[currentIndex + parseInt(direction)];
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+      return column.parent.children()[currentIndex + parseInt(direction, 10)];
     }
 
     return null;
@@ -89,36 +89,35 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function updateColumnWidth(column, width) {
-    column.stage.store.updateKey(column.id, parseFloat(width.toString()) + '%', 'width');
+    column.stage.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
   }
+
   /**
    * Calculate the drop positions of a column group
    *
    * @param {ColumnGroup} group
    * @returns {any[]}
    */
-
-
   function calculateDropPositions(group) {
     var dropPositions = [];
     group.children().forEach(function (column, index) {
-      var left = column.element.position().left,
-          width = column.element.outerWidth(),
-          canShrink = getColumnWidth(column) > getSmallestColumnWidth();
+      var left = column.element.position().left;
+      var width = column.element.outerWidth();
+      var canShrink = getColumnWidth(column) > getSmallestColumnWidth();
       dropPositions.push({
-        left: left,
-        right: left + width / 2,
+        affectedColumn: column,
+        canShrink: canShrink,
         insertIndex: index,
-        placement: 'left',
-        affectedColumn: column,
-        canShrink: canShrink
+        left: left,
+        placement: "left",
+        right: left + width / 2
       }, {
-        left: left + width / 2,
-        right: left + width,
-        insertIndex: index + 1,
-        placement: 'right',
         affectedColumn: column,
-        canShrink: canShrink
+        canShrink: canShrink,
+        insertIndex: index + 1,
+        left: left + width / 2,
+        placement: "right",
+        right: left + width
       });
     });
     return dropPositions;
@@ -132,7 +131,7 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function getRoundedColumnWidth(width) {
-    return width.toFixed(Math.round(width) !== width ? 8 : 0);
+    return Number(width.toFixed(Math.round(width) !== width ? 8 : 0));
   }
   /**
    * Get the total width of all columns in the group
@@ -159,14 +158,14 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function determineColumnWidths(column, group) {
-    var columnWidth = group.width() / getMaxColumns(),
-        groupLeftPos = column.element.offset().left;
+    var columnWidth = group.width() / getMaxColumns();
+    var groupLeftPos = column.element.offset().left;
     var columnWidths = [];
 
     for (var i = getMaxColumns(); i > 0; i--) {
       columnWidths.push({
+        name: i + "/" + getMaxColumns(),
         position: Math.round(groupLeftPos + columnWidth * i),
-        name: i + '/' + getMaxColumns(),
         width: getRoundedColumnWidth(100 / getMaxColumns() * i)
       });
     }
@@ -182,8 +181,8 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function resizeColumn(column, width) {
-    var current = getColumnWidth(column),
-        difference = (parseFloat(width.toString()) - current).toFixed(8); // Don't run the update if we've already modified the column
+    var current = getColumnWidth(column);
+    var difference = (parseFloat(width.toString()) - current).toFixed(8); // Don't run the update if we've already modified the column
 
     if (current === parseFloat(width.toString())) {
       return;
@@ -204,12 +203,9 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function resizeAdjacentColumn(column, difference) {
-    var columnChildren = column.parent.children(),
-        columnIndex = columnChildren.indexOf(column);
-
-    if (typeof columnChildren[columnIndex + 1] !== 'undefined') {
-      var adjacentColumn = columnChildren[columnIndex + 1],
-          currentAdjacent = getColumnWidth(adjacentColumn);
+    if (getAdjacentColumn(column, "+1")) {
+      var adjacentColumn = getAdjacentColumn(column, "+1");
+      var currentAdjacent = getColumnWidth(adjacentColumn);
       var newWidth = currentAdjacent + -difference;
       updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth.toString()));
     }
@@ -225,8 +221,8 @@ define(["../../config", "../factory"], function (_config, _factory) {
 
 
   function createColumn(parent, width, index) {
-    return (0, _factory)(_config.getContentTypeConfig('column'), parent, parent.stage, {
-      width: parseFloat(width.toString()) + '%'
+    return (0, _factory)(_config.getContentTypeConfig("column"), parent, parent.stage, {
+      width: parseFloat(width.toString()) + "%"
     }).then(function (column) {
       parent.addChild(column, index);
       return column;

@@ -1,49 +1,51 @@
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import Block from "./block";
 import $ from "jquery";
 import ko from "knockout";
+import registry from "uiRegistry";
 import _ from "underscore";
-import EditableArea from "../stage/structural/editable-area";
-import Stage from "../stage";
-import {ConfigContentBlock} from "../config";
+import {moveArrayItem} from "../../utils/array";
 import Appearance from "../appearance/appearance";
+import {ConfigContentBlock} from "../config";
+import Stage from "../stage";
+import EditableArea from "../stage/structural/editable-area";
+import Block from "./block";
 import Column from "./column";
 import {
-    createColumn, getAcceptedColumnWidth, getSmallestColumnWidth, getColumnWidth,
-    getMaxColumns, updateColumnWidth, calculateDropPositions, getRoundedColumnWidth, getColumnsWidth,
-    determineColumnWidths, resizeColumn, getAdjacentColumn, getColumnIndexInGroup
+    calculateDropPositions, createColumn, determineColumnWidths, DropPosition,
+    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth,
+    getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./column/utils";
-import {moveArrayItem} from "../../utils/array";
+import InlineBlock from "./inline";
 
 export default class ColumnGroup extends Block {
-    resizing: KnockoutObservable<boolean> = ko.observable(false);
-    dropPlaceholder: JQuery;
-    movePlaceholder: JQuery;
-    groupElement: JQuery;
+    public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public dropPlaceholder: JQuery<HTMLElement>;
+    public movePlaceholder: JQuery<HTMLElement>;
+    public groupElement: JQuery<HTMLElement>;
 
-    resizeGhost: JQuery;
-    resizeColumnInstance: Column;
-    resizeColumnWidths: [] = [];
-    resizeColumnElement: JQuery;
-    resizeColumnLeft: number;
-    resizeNextColumn: Column;
-    resizeMaxGhostWidth: number;
-    resizeMouseDown: boolean = false;
+    public resizeGhost: JQuery<HTMLElement>;
+    public resizeColumnInstance: Column;
+    public resizeColumnWidths: any[] = [];
+    public resizeColumnElement: JQuery<HTMLElement>;
+    public resizeColumnLeft: number;
+    public resizeNextColumn: Column;
+    public resizeMaxGhostWidth: number;
+    public resizeMouseDown: boolean = false;
 
-    dropOverElement: JQuery;
-    dropPositions: [] = [];
-    dropPosition: {};
+    public dropOverElement: JQuery<HTMLElement>;
+    public dropPositions: any[] = [];
+    public dropPosition: DropPosition;
 
-    movePosition: {};
+    public movePosition: DropPosition;
 
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, formData, appearance);
 
-        this.on('blockReady', this.addDefaultColumns.bind(this));
-        this.on('blockRemoved', this.spreadWidth.bind(this));
+        this.on("blockReady", this.addDefaultColumns.bind(this));
+        this.on("blockRemoved", this.spreadWidth.bind(this));
     }
 
     /**
@@ -58,18 +60,8 @@ export default class ColumnGroup extends Block {
 
         // We have to re-bind the draggable library to any new children that appear inside the group
         this.children.subscribe(
-            _.debounce(() => this.bindDraggable(), 50)
+            _.debounce(() => this.bindDraggable(), 50),
         );
-    }
-
-    /**
-     * Add the default columns to the group on creation
-     */
-    private addDefaultColumns() {
-        if (this.children().length === 0) {
-            createColumn(this, 50);
-            createColumn(this, 50);
-        }
     }
 
     /**
@@ -91,43 +83,82 @@ export default class ColumnGroup extends Block {
     }
 
     /**
-     * Bind draggable instances to the child columns
+     * Retrieve the ghost element from the template
      *
-     * @param {JQuery} group
+     * @param {Element} ghost
+     */
+    public initGhost(ghost: Element) {
+        this.resizeGhost = $(ghost);
+    }
+
+    /**
+     * Register a resize handle within a child column, this is called from the column itself
+     *
+     * @param {Column} column
+     * @param {JQuery<HTMLElement>} handle
+     */
+    public registerResizeHandle(column: Column, handle: JQuery<HTMLElement>) {
+        handle.mousedown((event) => {
+            event.preventDefault();
+            this.resizing(true);
+
+            this.resizeColumnInstance = column;
+            this.resizeColumnElement = column.element;
+            this.resizeColumnWidths = determineColumnWidths(column, this.groupElement);
+            this.resizeColumnLeft = this.resizeColumnElement.offset().left;
+
+            this.resizeNextColumn = getAdjacentColumn(column, "+1");
+            this.resizeMaxGhostWidth = null;
+            this.resizeMouseDown = true;
+        });
+    }
+
+    /**
+     * Add the default columns to the group on creation
+     */
+    private addDefaultColumns() {
+        if (this.children().length === 0) {
+            createColumn(this, 50);
+            createColumn(this, 50);
+        }
+    }
+
+    /**
+     * Bind draggable instances to the child columns
      */
     private bindDraggable() {
-        let internalColumns = this.children().map((column: Column) => {
+        const internalColumns = this.children().map((column: Column) => {
             return column.element;
         });
 
         $(internalColumns).draggable({
-            handle: '.move-column',
             appendTo: "body",
+            handle: ".move-column",
             revertDuration: 250,
-            helper: function () {
-                let helper = $(this).clone();
+            helper() {
+                const helper = $(this).clone();
                 helper.css({
-                    'zIndex': 100001,
-                    'pointerEvents': 'none',
-                    'opacity': 0.5,
-                    'width': $(this).width() + 'px'
+                    opacity: 0.5,
+                    pointerEvents: "none",
+                    width: $(this).width() + "px",
+                    zIndex: 100001,
                 });
                 return helper;
             },
-            start: (event) => {
-                // Use the globla state as columns can be dragged between groups
-                this.stage.store.update(
-                    'pageBuilderDragColumn',
+            start: (event: Event) => {
+                // Use the global state as columns can be dragged between groups
+                registry.set(
+                    "pageBuilderDragColumn",
                     {
                         element: $(event.target),
-                        instance: ko.dataFor($(event.target)[0])
-                    }
-                )
+                        instance: ko.dataFor($(event.target)[0]),
+                    },
+                );
 
                 this.dropPositions = calculateDropPositions(this);
             },
-            stop: (event) => {
-                const column = this.stage.store.get('pageBuilderDragColumn');
+            stop: () => {
+                const column: DraggedColumn = registry.get("pageBuilderDragColumn");
                 if (this.movePosition && column) {
                     // Check if we're moving within the same group, even though this function will only ever run on the
                     // group that bound the draggable event
@@ -145,54 +176,45 @@ export default class ColumnGroup extends Block {
                     }
                 }
 
-                this.stage.store.remove('pageBuilderDragColumn');
+                registry.remove("pageBuilderDragColumn");
 
-                this.dropPlaceholder.removeClass('left right');
-                this.movePlaceholder.removeClass('active');
-            }
+                this.dropPlaceholder.removeClass("left right");
+                this.movePlaceholder.removeClass("active");
+            },
         });
-    }
-
-    /**
-     * Retrieve the ghost element from the template
-     *
-     * @param {Element} ghost
-     */
-    public initGhost(ghost: Element) {
-        this.resizeGhost = $(ghost);
     }
 
     /**
      * Init the resizing events on the group
      *
-     * @param {Element} group
+     * @param {JQuery<HTMLElement>} group
      */
-    private initMouseMove(group: JQuery) {
-        group.mousemove((event) => {
+    private initMouseMove(group: JQuery<HTMLElement>) {
+        group.mousemove((event: JQuery.Event) => {
             this.handleResizingMouseMove(event, group);
             this.handleDraggingMouseMove(event, group);
             this.handleDroppingMouseMove(event, group);
         }).mouseout(() => {
-            this.movePlaceholder.removeClass('active');
+            this.movePlaceholder.removeClass("active");
         }).mouseup(() => {
             this.resizing(false);
             this.resizeMouseDown = false;
             this.dropPositions = [];
 
-            this.dropPlaceholder.removeClass('left right');
-            this.movePlaceholder.removeClass('active');
+            this.dropPlaceholder.removeClass("left right");
+            this.movePlaceholder.removeClass("active");
         });
     }
 
     /**
      * Handle the resizing on mouse move
      *
-     * @param event
-     * @param group
+     * @param {JQuery.Event} event
+     * @param {JQuery<HTMLElement>} group
      */
-    private handleResizingMouseMove(event, group) {
-        let currentPos: number,
-            currentCol;
+    private handleResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+        let currentPos: number;
+        let currentCol;
 
         if (this.resizeMouseDown) {
             event.preventDefault();
@@ -209,7 +231,9 @@ export default class ColumnGroup extends Block {
 
             // Make sure the user can't crush the adjacent column smaller than 1/6
             const adjacentWidth = getColumnWidth(this.resizeNextColumn);
-            if (adjacentWidth === getSmallestColumnWidth() && ghostWidth > this.resizeColumnElement.width() || this.resizeMaxGhostWidth) {
+            if (adjacentWidth === getSmallestColumnWidth() && ghostWidth > this.resizeColumnElement.width() ||
+                this.resizeMaxGhostWidth
+            ) {
                 ghostWidth = (this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnElement.width());
                 if (!this.resizeMaxGhostWidth) {
                     this.resizeMaxGhostWidth = this.resizeColumnElement.width();
@@ -222,9 +246,9 @@ export default class ColumnGroup extends Block {
             }
 
             // We take the border width of the width to ensure it's under the mouse exactly
-            this.resizeGhost.width(ghostWidth - 2 + 'px').css(
-                'left',
-                this.resizeColumnElement.position().left + 'px'
+            this.resizeGhost.width(ghostWidth - 2 + "px").css(
+                "left",
+                this.resizeColumnElement.position().left + "px",
             );
 
             if (!this.resizeMaxGhostWidth) {
@@ -242,33 +266,33 @@ export default class ColumnGroup extends Block {
     /**
      * Handle a column being dragged around the group
      *
-     * @param event
-     * @param group
+     * @param {JQuery.Event} event
+     * @param {JQuery<HTMLElement>} group
      */
-    private handleDraggingMouseMove(event, group) {
-        let dragColumn = this.stage.store.get('pageBuilderDragColumn');
-        if (dragColumn.element && dragColumn.instance) {
+    private handleDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+        const dragColumn: DraggedColumn = registry.get("pageBuilderDragColumn");
+        if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
                 this.dropPositions = calculateDropPositions(this);
             }
-            const columnInstance = dragColumn.instance,
-                currentX = event.pageX - $(group).offset().left;
+            const columnInstance = dragColumn.instance;
+            const currentX = event.pageX - $(group).offset().left;
 
             // Are we within the same column group or have we ended up over another?
             if (columnInstance.parent === this) {
-                let currentColumn = dragColumn.element,
-                    lastColInGroup = this.children()[this.children().length - 1].element,
-                    insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
+                const currentColumn = dragColumn.element;
+                const lastColInGroup = this.children()[this.children().length - 1].element;
+                const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
 
                 // @todo don't show placeholder next to current column
                 this.movePosition = this.dropPositions.find((position, index) => {
                     // Only ever look for the left placement, except the last item where we look on the right
-                    const placement = (currentX >= insertLastPos ? 'right' : 'left');
+                    const placement = (currentX >= insertLastPos ? "right" : "left");
                     // There is 200px area over each column borders @todo calculate this
                     if (currentX > position[placement] - 100 &&
                         currentX < position[placement] + 100 &&
-                        position.affectedColumn !== columnInstance && // Verify the affected column isn't the current column
+                        position.affectedColumn !== columnInstance && // Check affected column isn't the current column
                         position.placement === placement// Verify the position, we only check left on sorting
                     ) {
                         return position;
@@ -276,14 +300,16 @@ export default class ColumnGroup extends Block {
                 });
 
                 if (this.movePosition) {
-                    this.dropPlaceholder.removeClass('left right');
+                    this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
-                        left: (this.movePosition.placement === 'left' ? this.movePosition.left : ''),
+                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         // @todo investigate why we need to -5
-                        right: (this.movePosition.placement === 'right' ? $(group).outerWidth() - this.movePosition.right - 5 : ''),
-                    }).addClass('active');
+                        right: (this.movePosition.placement === "right" ?
+                            $(group).outerWidth() - this.movePosition.right - 5 : ""
+                        ),
+                    }).addClass("active");
                 } else {
-                    this.movePlaceholder.removeClass('active');
+                    this.movePlaceholder.removeClass("active");
                 }
             } else {
                 this.movePosition = this.dropPositions.find((position) => {
@@ -293,14 +319,16 @@ export default class ColumnGroup extends Block {
                 });
 
                 if (this.movePosition) {
-                    this.movePlaceholder.removeClass('active');
-                    this.dropPlaceholder.removeClass('left right').css({
-                        width: $(group).width() / getMaxColumns() + 'px',
-                        left: (this.movePosition.placement === 'left' ? this.movePosition.left : ''),
-                        right: (this.movePosition.placement === 'right' ? $(group).width() - this.movePosition.right : ''),
+                    this.movePlaceholder.removeClass("active");
+                    this.dropPlaceholder.removeClass("left right").css({
+                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
+                        right: (this.movePosition.placement === "right" ?
+                                $(group).width() - this.movePosition.right : ""
+                        ),
+                        width: $(group).width() / getMaxColumns() + "px",
                     }).addClass(this.movePosition.placement);
                 } else {
-                    this.dropPlaceholder.removeClass('left right');
+                    this.dropPlaceholder.removeClass("left right");
                 }
             }
         }
@@ -309,10 +337,10 @@ export default class ColumnGroup extends Block {
     /**
      * Handle mouse move events on when dropping elements
      *
-     * @param event
-     * @param group
+     * @param {JQuery.Event} event
+     * @param {JQuery<HTMLElement>} group
      */
-    private handleDroppingMouseMove(event, group) {
+    private handleDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
         if (this.dropOverElement) {
             const currentX = event.pageX - $(group).offset().left;
             this.dropPosition = this.dropPositions.find((position) => {
@@ -322,51 +350,43 @@ export default class ColumnGroup extends Block {
             });
 
             if (this.dropPosition) {
-                this.dropPlaceholder.removeClass('left right').css({
-                    width: $(group).width() / getMaxColumns() + 'px',
-                    left: (this.dropPosition.placement === 'left' ? this.dropPosition.left : ''),
-                    right: (this.dropPosition.placement === 'right' ? $(group).width() - this.dropPosition.right : ''),
+                this.dropPlaceholder.removeClass("left right").css({
+                    left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
+                    right: (this.dropPosition.placement === "right" ? $(group).width() - this.dropPosition.right : ""),
+                    width: $(group).width() / getMaxColumns() + "px",
                 }).addClass(this.dropPosition.placement);
             }
         }
     }
 
     /**
-     * Register a resize handle within a child column, this is called from the column itself
-     *
-     * @param {Column} column
-     * @param {JQuery} handle
-     */
-    public registerResizeHandle(column: Column, handle: JQuery) {
-        handle.mousedown((event) => {
-            event.preventDefault();
-            this.resizing(true);
-
-            this.resizeColumnInstance = column;
-            this.resizeColumnElement = column.element;
-            this.resizeColumnWidths = determineColumnWidths(column, this.groupElement);
-            this.resizeColumnLeft = this.resizeColumnElement.offset().left;
-
-            this.resizeNextColumn = getAdjacentColumn(column, '+1');
-            this.resizeMaxGhostWidth = null;
-            this.resizeMouseDown = true;
-        });
-    }
-
-    /**
      * Init the droppable functionality for new columns
      *
-     * @param {Element} group
+     * @param {JQuery<HTMLElement>} group
      */
-    private initDroppable(group: Element) {
-        let currentDraggedBlock;
+    private initDroppable(group: JQuery<HTMLElement>) {
+        let currentDraggedBlock: InlineBlock;
 
         group.droppable({
-            greedy: true,
             activate: (event: Event) => {
                 currentDraggedBlock = ko.dataFor(event.currentTarget);
             },
-            over: (event: Event) => {
+            deactivate: () => {
+                this.dropOverElement = null;
+                this.dropPlaceholder.removeClass("left right");
+            },
+            drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
+                this.handleNewColumnDrop(event, ui);
+                this.handleExistingColumnDrop(event);
+                this.dropPositions = [];
+                this.dropPlaceholder.removeClass("left right");
+            },
+            greedy: true,
+            out: () => {
+                this.dropOverElement = null;
+                this.dropPlaceholder.removeClass("left right");
+            },
+            over: () => {
                 // Always calculate drop positions when an element is dragged over
                 this.dropPositions = calculateDropPositions(this);
 
@@ -375,32 +395,18 @@ export default class ColumnGroup extends Block {
                     this.dropOverElement = true;
                 }
             },
-            deactivate: () => {
-                this.dropOverElement = false;
-                this.dropPlaceholder.removeClass('left right');
-            },
-            out: () => {
-                this.dropOverElement = false;
-                this.dropPlaceholder.removeClass('left right');
-            },
-            drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
-                this.handleNewColumnDrop(event, ui);
-                this.handleExistingColumnDrop(event);
-                this.dropPositions = [];
-                this.dropPlaceholder.removeClass('left right');
-            }
         });
     }
 
     /**
      * Handle a new column being dropped into the group
      *
-     * @param event
-     * @param ui
+     * @param {Event} event
+     * @param {JQueryUI.DroppableEventUIParam} ui
      */
     private handleNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam) {
         if (this.dropOverElement && this.dropPosition) {
-            this.dropOverElement = false;
+            this.dropOverElement = null;
 
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -414,10 +420,10 @@ export default class ColumnGroup extends Block {
             createColumn(
                 this,
                 getSmallestColumnWidth(),
-                this.dropPosition.insertIndex
+                this.dropPosition.insertIndex,
             ).then(() => {
                 const newWidth = getAcceptedColumnWidth(
-                    getColumnWidth(this.dropPosition.affectedColumn) - getSmallestColumnWidth()
+                    (getColumnWidth(this.dropPosition.affectedColumn) - getSmallestColumnWidth()).toString(),
                 );
                 // Reduce the affected columns width by the smallest column width
                 updateColumnWidth(this.dropPosition.affectedColumn, newWidth);
@@ -431,10 +437,10 @@ export default class ColumnGroup extends Block {
      * @param {Event} event
      */
     private handleExistingColumnDrop(event: Event) {
-        const column = this.stage.store.get('pageBuilderDragColumn');
+        const column: DraggedColumn = registry.get("pageBuilderDragColumn");
         let modifyOldNeighbour;
         // This should only run when we're dragging between groups
-        if (this.movePosition && column.element && column.instance && column.instance.parent !== this) {
+        if (this.movePosition && column && column.instance && column.instance.parent !== this) {
             event.preventDefault();
             event.stopImmediatePropagation();
 
@@ -442,32 +448,32 @@ export default class ColumnGroup extends Block {
             const oldWidth = getColumnWidth(column.instance);
 
             // Retrieve the adjacent column either +1 or -1
-            if (getAdjacentColumn(column.instance, '+1')) {
-                modifyOldNeighbour = getAdjacentColumn(column.instance, '+1');
-            } else if (getAdjacentColumn(column.instance, '-1')) {
-                modifyOldNeighbour = getAdjacentColumn(column.instance, '-1');
+            if (getAdjacentColumn(column.instance, "+1")) {
+                modifyOldNeighbour = getAdjacentColumn(column.instance, "+1");
+            } else if (getAdjacentColumn(column.instance, "-1")) {
+                modifyOldNeighbour = getAdjacentColumn(column.instance, "-1");
             }
 
             // Set the column to it's smallest column width
             updateColumnWidth(column.instance, getSmallestColumnWidth());
 
             column.instance.parent.removeChild(column.instance);
-            this.emit('blockInstanceDropped', {
+            this.emit("blockInstanceDropped", {
                 blockInstance: column.instance,
-                index: this.movePosition.insertIndex
+                index: this.movePosition.insertIndex,
             });
 
             // Modify the old neighbour
             if (modifyOldNeighbour) {
                 const oldNeighbourWidth = getAcceptedColumnWidth(
-                    oldWidth + getColumnWidth(modifyOldNeighbour)
+                    (oldWidth + getColumnWidth(modifyOldNeighbour)).toString(),
                 );
                 updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
             }
 
             // Modify the columns new neighbour
             const newNeighbourWidth = getAcceptedColumnWidth(
-                getColumnWidth(this.movePosition.affectedColumn) - getSmallestColumnWidth()
+                (getColumnWidth(this.movePosition.affectedColumn) - getSmallestColumnWidth()).toString(),
             );
 
             // Reduce the affected columns width by the smallest column width
@@ -479,20 +485,20 @@ export default class ColumnGroup extends Block {
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param params
+     * @param {BlockRemovedParams} params
      */
-    private spreadWidth(event: Event, params) {
+    private spreadWidth(event: Event, params: BlockRemovedParams) {
         if (this.children().length === 0) {
             this.parent.removeChild(this);
             return;
         }
 
-        const availableWidth = 100 - getColumnsWidth(this),
-            formattedAvailableWidth = getRoundedColumnWidth(availableWidth),
-            totalChildColumns = this.children().length;
-        let allowedColumnWidths = [],
-            spreadAcross = 1,
-            spreadAmount;
+        const availableWidth = 100 - getColumnsWidth(this);
+        const formattedAvailableWidth = getRoundedColumnWidth(availableWidth);
+        const totalChildColumns = this.children().length;
+        const allowedColumnWidths = [];
+        let spreadAcross = 1;
+        let spreadAmount;
 
         for (let i = getMaxColumns(); i > 0; i--) {
             allowedColumnWidths.push(getRoundedColumnWidth(100 / 6 * i));
@@ -501,8 +507,8 @@ export default class ColumnGroup extends Block {
         // Determine how we can spread the empty space across the columns
         traverseChildren: for (let i = totalChildColumns; i > 0; i--) {
             const potentialWidth = formattedAvailableWidth / i;
-            for (let width of allowedColumnWidths) {
-                if (Math.floor(potentialWidth) == Math.floor(width)) {
+            for (const width of allowedColumnWidths) {
+                if (Math.floor(potentialWidth) === Math.floor(width)) {
                     spreadAcross = i;
                     spreadAmount = formattedAvailableWidth / i;
                     break traverseChildren;
@@ -513,22 +519,37 @@ export default class ColumnGroup extends Block {
         // Let's spread the width across the columns
         for (let i = 1; i <= spreadAcross; i++) {
             // Let's look left
-            let columnToModify;
+            let columnToModify: Column;
 
             // As the original column has been removed from the array, check the new index for a column
-            if ((params.index) <= this.children().length && typeof this.children()[params.index] !== 'undefined') {
-                columnToModify = this.children()[params.index];
+            if ((params.index) <= this.children().length && typeof this.children()[params.index] !== "undefined") {
+                columnToModify = (this.children()[params.index] as Column);
             }
-            // As far as I can tell this statement will never run, however leaving it in as it might when more columns are present
-            if (!columnToModify && (params.index + i) <= this.children().length && typeof this.children()[params.index + i] !== 'undefined') {
-                columnToModify = this.children()[params.index + i];
+            // As far as I can tell this statement will never run, however leaving it in as it might when more columns
+            // are present
+            if (!columnToModify && (params.index + i) <= this.children().length &&
+                typeof this.children()[params.index + i] !== "undefined"
+            ) {
+                columnToModify = (this.children()[params.index + i] as Column);
             }
-            if (!columnToModify && (params.index - i) >= 0 && typeof this.children()[params.index - i] !== 'undefined') {
-                columnToModify = this.children()[params.index - i];
+            if (!columnToModify && (params.index - i) >= 0 &&
+                typeof this.children()[params.index - i] !== "undefined"
+            ) {
+                columnToModify = (this.children()[params.index - i] as Column);
             }
             if (columnToModify) {
                 updateColumnWidth(columnToModify, getColumnWidth(columnToModify) + spreadAmount);
             }
         }
     }
+}
+
+interface BlockRemovedParams {
+    block: Column;
+    index: number;
+}
+
+interface DraggedColumn {
+    instance: Column;
+    element: JQuery<HTMLElement>;
 }

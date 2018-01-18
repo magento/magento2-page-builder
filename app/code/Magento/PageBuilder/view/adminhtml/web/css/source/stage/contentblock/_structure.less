@@ -2,7 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-.bluefoot-column-group {
+.pagebuilder-column-group {
     position: relative;
     width: 100%;
     box-sizing: border-box;
@@ -107,77 +107,6 @@
     }
 }
 
-.pagebuilder-structure-wrapper {
-    position: relative;
-    box-sizing: content-box;
-
-    .pagebuilder-resize-ghost {
-        position: absolute;
-        top: 0;
-        left: 4px;
-        right: 0;
-        bottom: 0;
-        z-index: 20;
-        border: @border-size dashed darken(@columnColor, 20%);
-        margin: 4px 0 4px;
-    }
-
-    .pagebuilder-resize-size {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 19;
-        background: darken(@columnColor, 20%);
-        opacity: 0.25;
-        text-align: center;
-        color: white;
-        font-size: 20px;
-        padding-top: 25px;
-        font-weight: 300;
-    }
-
-    &.pagebuilder-resizing {
-        .pagebuilder-options {
-            display: none;
-        }
-    }
-
-    &-width-whole {
-        width: 100%;
-    }
-
-    &-width-half {
-        width: 50%;
-    }
-
-    &-width-third {
-        width: 33.3%;
-    }
-
-    &-width-quarter {
-        width: 25%;
-    }
-
-    &-width-sixth {
-        width: 16.666666667%;
-    }
-
-    &-width-two-thirds {
-        width: 66.6%;
-    }
-
-    &-width-three-quarters {
-        width: 75%;
-    }
-
-    &-width-five-sixths {
-        width: 83.333333335%;
-    }
-
-}
-
 .pagebuilder-structure {
     border: 1px solid #cccccc;
     box-sizing: border-box;
@@ -193,7 +122,7 @@
         text-align: center;
         height: 170px;
         padding-top: 130px;
-        background: url('@{baseDir}Magento_PageBuilder/css/images/empty-row-prompt.png') no-repeat center center;
+        background: url('@{baseDir}Magento_PageBuilder/css/images/empty-row-prompt.svg') no-repeat center center;
         background-size: 505px 97px;
         z-index: 1;
         opacity: 0;
@@ -244,33 +173,6 @@
         }
     }
 
-    .redactor-toolbar {
-        display: none;
-    }
-
-    &.redactor-active {
-        > .pagebuilder-live-edit-wrapper {
-            display: block;
-        }
-
-        > .pagebuilder-options {
-            display: none;
-        }
-
-        > .redactor-toolbar {
-            display: block;
-        }
-    }
-
-    .pagebuilder-id {
-        position: absolute;
-        bottom: -3px;
-        right: -3px;
-        color: white;
-        font-size: 11px;
-        padding: 2px 6px;
-    }
-
     &.pagebuilder-column {
         .pagebuilder-column-resize-handle {
             width: 15px;
@@ -279,26 +181,7 @@
             bottom: 0;
             right: -3px;
             cursor: col-resize;
-        }
-
-        .pagebuilder-column-add {
-            display: none;
-            position: absolute;
-            left: -25px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 4px 8px;
-            background: @color-brownie;
-            color: #fff;
-            font-size: 12px;
-            &:hover {
-                background: @color-very-dark-gray-black2;
-            }
-        }
-
-        .pagebuilder-column-add-right {
-            left: auto;
-            right: -25px;
+            z-index: 10001;
         }
     }
 

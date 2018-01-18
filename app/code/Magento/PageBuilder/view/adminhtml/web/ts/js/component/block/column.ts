@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
-import ColumnGroup from "./column-group";
 import $ from "jquery";
 import $t from "mage/translate";
 import {Option} from "../stage/structural/options/option";
+import Block from "./block";
+import ColumnGroup from "./column-group";
 
 export default class Column extends Block {
     /**
@@ -24,13 +24,13 @@ export default class Column extends Block {
      *
      * @returns {Array<Option>}
      */
-    get options(): Array<Option> {
-        let options = super.options,
-            newOptions = options.filter((option) => {
-                return (option.code !== 'move');
+    get options(): Option[] {
+        const options = super.options;
+        const newOptions = options.filter((option) => {
+                return (option.code !== "move");
             });
         newOptions.unshift(
-            new Option(this, 'move', '<i></i>', $t('Move'), false, ['move-column'], 10),
+            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-column"], 10),
         );
         return newOptions;
     }

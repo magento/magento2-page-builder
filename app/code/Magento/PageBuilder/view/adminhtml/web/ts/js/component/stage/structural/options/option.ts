@@ -13,7 +13,7 @@ export class Option implements OptionInterface {
     public parent: Structural;
     public sort: number;
     public title: string;
-    private action: () => void | false;
+    private action: () => void;
     private optionTemplate: string;
 
     /**
@@ -33,7 +33,7 @@ export class Option implements OptionInterface {
         code: string,
         icon: string,
         title: string,
-        action: () => void | false,
+        action: () => void,
         classes: string[],
         sort: number,
         optionTemplate?: string,
