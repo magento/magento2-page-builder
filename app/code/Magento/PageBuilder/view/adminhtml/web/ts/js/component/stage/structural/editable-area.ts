@@ -197,12 +197,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
         this.removeChild(params.block);
 
         // Remove the instance from the data store
-        this.stage.store.remove(this.id);
-
-        /*
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
-        }*/
+        this.stage.store.remove(params.block.id);
     }
 
     /**

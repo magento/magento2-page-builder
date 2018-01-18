@@ -195,11 +195,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
       params.block.emit("blockBeforeRemoved");
       this.removeChild(params.block); // Remove the instance from the data store
 
-      this.stage.store.remove(this.id);
-      /*
-      if (ko.processAllDeferredBindingUpdates) {
-          ko.processAllDeferredBindingUpdates();
-      }*/
+      this.stage.store.remove(params.block.id);
     };
     /**
      * Handle event when a block is sorted within it's current container

@@ -40,11 +40,9 @@ export default class Config {
      * @param type
      * @returns {any}
      */
-    public static getContentBlockConfig(type: string): object {
-        if (typeof Config.initConfig.contentBlocks === "object"
-            && typeof Config.initConfig.contentBlocks[type] === "object"
-        ) {
-            return Config.initConfig.contentBlocks[type];
+    static getContentTypeConfig(type: string): object {
+        if (typeof Config.initConfig.contentTypes === 'object' && typeof Config.initConfig.contentTypes[type] === 'object') {
+            return Config.initConfig.contentTypes[type];
         }
 
         return {};

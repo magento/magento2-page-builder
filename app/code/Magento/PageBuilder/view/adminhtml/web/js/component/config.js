@@ -42,9 +42,9 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
      */
 
 
-    Config.getContentBlockConfig = function getContentBlockConfig(type) {
-      if (_typeof(Config.initConfig.contentBlocks) === "object" && _typeof(Config.initConfig.contentBlocks[type]) === "object") {
-        return Config.initConfig.contentBlocks[type];
+    Config.getContentTypeConfig = function getContentTypeConfig(type) {
+      if (_typeof(Config.initConfig.contentTypes) === 'object' && _typeof(Config.initConfig.contentTypes[type]) === 'object') {
+        return Config.initConfig.contentTypes[type];
       }
 
       return {};

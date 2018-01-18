@@ -25,7 +25,11 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
             zIndex: 500,
             connectToSortable: '.pagebuilder-sortable',
             appendTo: document.body,
-            helper: 'clone'
+            helper: function(event) {
+                var clone = jQuery(event.currentTarget).clone();
+                clone.css('pointerEvents', 'none');
+                return clone;
+            }
         },
 
         /**

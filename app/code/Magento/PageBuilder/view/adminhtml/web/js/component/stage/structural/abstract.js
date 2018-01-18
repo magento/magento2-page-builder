@@ -40,6 +40,7 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
       _this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
+      _this.element = void 0;
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
       _this.optionsInstance = new _options.Options(_this, _this.options);
@@ -90,8 +91,9 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
         actions: {
           confirm: function confirm() {
             // Call the parent to remove the child element
-            _this2.parent.emit("blockRemoved", {
-              block: _this2
+            _this2.parent.emit('blockRemoved', {
+              block: _this2,
+              index: _this2.parent.children().indexOf(_this2)
             });
           }
         },

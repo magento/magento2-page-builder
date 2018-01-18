@@ -52,9 +52,11 @@ class ComponentList extends \Magento\Framework\View\Element\Template
         $result = [];
 
         foreach ($this->config->getContentTypes() as $contentType) {
-            $result[$contentType['form']] = $this->componentRenderer->renderComponent(
-                $contentType['form']
-            );
+            if (!empty($contentType['form'])) {
+                $result[$contentType['form']] = $this->componentRenderer->renderComponent(
+                    $contentType['form']
+                );
+            }
         }
         return $result;
     }

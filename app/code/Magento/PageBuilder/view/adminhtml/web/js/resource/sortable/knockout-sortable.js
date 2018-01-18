@@ -158,7 +158,12 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                 newParentEl = blockEl.parent()[0],
                 newIndex = blockEl.index();
 
-            if (blockEl && newParentEl === this) {
+            if (blockEl && (newParentEl === this)) {
+                // Don't run sortable when dropping on a placeholder
+                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                    return;
+                }
+
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
@@ -193,9 +198,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                             index: newIndex
                         });
                     } else {
-                        block.originalParent.emit('blockRemoved', {
-                            block: block
-                        });
+                        block.originalParent.removeChild(block);
                         newParent.emit('blockInstanceDropped', {
                             blockInstance: block,
                             index: newIndex
@@ -254,6 +257,11 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
          */
         onSortReceive: function (event, ui) {
             if (jQuery(event.target)[0] === this) {
+                // Don't run sortable when dropping on a placeholder
+                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                    return;
+                }
+
                 var block = getViewModelFromUi(ui),
                     target = ko.dataFor(jQuery(event.target)[0]);
 

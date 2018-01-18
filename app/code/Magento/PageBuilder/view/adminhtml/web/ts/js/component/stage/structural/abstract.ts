@@ -27,6 +27,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public parent: EditableArea;
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
+    public element: Element;
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
     private optionsInstance: Options = new Options(this, this.options);
@@ -128,8 +129,9 @@ export default class Structural extends EditableArea implements StructuralInterf
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element
-                    this.parent.emit("blockRemoved", {
+                    this.parent.emit('blockRemoved', {
                         block: this,
+                        index: this.parent.children().indexOf(this)
                     });
                 },
             },
