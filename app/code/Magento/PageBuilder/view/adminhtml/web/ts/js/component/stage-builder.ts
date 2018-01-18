@@ -19,14 +19,15 @@ import EditableArea from "./stage/structural/editable-area";
 /**
  * Build the stage with the provided value
  *
+ * @param {stage} stage
  * @param {string} value
  * @returns {Promise<void>}
  */
-function buildStage(value: string) {
+function buildStageFromPageBuilderContent(stage: Stage, value: string) {
     let stageDocument = document.createElement('div');
     stageDocument.setAttribute(Config.getValueAsString('dataRoleAttributeName'), 'stage');
     stageDocument.innerHTML = value;
-    return this.buildElement(stageDocument, this.stage);
+    return buildElementIntoStage(stageDocument, stage, stage);
 }
 
 /**
@@ -34,27 +35,28 @@ function buildStage(value: string) {
  *
  * @param {Element} element
  * @param {EditableArea} parent
+ * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElement(element: Element, parent: EditableArea) {
+function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage) {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
     ) {
-        let childPromises: Array<Promise<Structural>> = [],
+        let childPromises: Array<Promise<EditableArea>> = [],
             childElements: Array<Element> = [],
-            children = this.getElementChildren(element);
+            children = getElementChildren(element);
 
         if (children.length > 0) {
-            _.forEach(children, (childElement: Element) => {
-                childPromises.push(this.createElementBlock(childElement, this.stage));
+            _.forEach(children, (childElement: HTMLElement) => {
+                childPromises.push(createElementBlock(childElement, stage, stage));
                 childElements.push(childElement);
             });
         }
 
         // Wait for all the promises to finish and add the instances to the stage
-        return Promise.all(childPromises).then(children => children.forEach((child, index) => {
+        return Promise.all(childPromises).then(children => children.forEach((child: Structural, index) => {
             parent.addChild(child);
-            this.buildElement(childElements[index], child);
+            buildElementIntoStage(childElements[index], child, stage);
         }));
     }
 }
@@ -64,16 +66,17 @@ function buildElement(element: Element, parent: EditableArea) {
  *
  * @param {Element} element
  * @param {EditableArea} parent
+ * @param {stage} stage
  * @returns {Promise<EditableAreaInterface>}
  */
-function createElementBlock(element: Element, parent: EditableArea): Promise<EditableArea> {
-    parent = parent || this.stage;
+function createElementBlock(element: HTMLElement, parent: EditableArea, stage: Stage): Promise<EditableArea> {
+    parent = parent || stage;
     let role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
 
-    return this.getElementData(element).then((data: object) => createBlock(
+    return getElementData(element).then((data: object) => createBlock(
         Config.getInitConfig('contentTypes')[role],
         parent,
-        this.stage,
+        stage,
         data
     ));
 }
@@ -87,7 +90,6 @@ function createElementBlock(element: Element, parent: EditableArea): Promise<Edi
 function getElementData(element: HTMLElement) {
     let result = {};
     let attributeReaderComposite = new AttributeReaderComposite();
-
     const readPromise = attributeReaderComposite.read(element);
     return readPromise.then((data) => {
         return result ? _.extend(result, data) : {}
@@ -110,7 +112,7 @@ function getElementChildren(element: Element) {
                 if (child.hasAttribute(Config.getValueAsString('dataRoleAttributeName'))) {
                     children.push(child);
                 } else {
-                    children = this.getElementChildren(child);
+                    children = getElementChildren(child);
                 }
             }
         });
@@ -130,7 +132,7 @@ function getElementChildren(element: Element) {
  * @param {string} initialValue
  * @returns {Promise<any>}
  */
-function buildNew(stage: Stage, initialValue: string) {
+function buildNewStageInstance(stage: Stage, initialValue: string) {
     return new Promise((resolve) => {
         const rowConfig = Config.getContentType('row');
         const textConfig = Config.getContentType('text');
@@ -167,14 +169,20 @@ function buildNew(stage: Stage, initialValue: string) {
  * @param panel
  * @param {KnockoutObservableArray<Structural>} stageContent
  * @param {string} initialValue
+ * @param {function} stageBinder
  * @returns {Stage}
  */
-export default function build(parent: any, panel: Panel, stageContent: KnockoutObservableArray<Structural>, initialValue: string) {
+export default function build(parent: any, panel: Panel, stageContent: KnockoutObservableArray<Structural>, initialValue: string, stageBinder: (stage: Stage) => void) {
     // Create a new instance of the stage
     const stage: any = new Stage(
         parent,
         stageContent,
     );
+
+    if(typeof stageBinder !== "undefined"){
+        stageBinder(stage);
+    }
+
     let build;
 
     // Bind the panel to the stage
@@ -182,10 +190,10 @@ export default function build(parent: any, panel: Panel, stageContent: KnockoutO
 
     // Determine if we're building from existing page builder content
     if (isPageBuilder(initialValue)) {
-        build = this.buildStage(initialValue);
+        build = buildStageFromPageBuilderContent(stage, initialValue);
 
     } else {
-        build = this.buildNew(stage, initialValue);
+        build = buildNewStageInstance(stage, initialValue);
     }
 
     // Once the build process is finished the stage is ready
@@ -198,6 +206,5 @@ export default function build(parent: any, panel: Panel, stageContent: KnockoutO
             stage.emit('stageError', error);
             console.error( error );
         });
-
     return stage;
 }

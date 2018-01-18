@@ -8,35 +8,35 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
   /**
    * Build the stage with the provided value
    *
+   * @param {stage} stage
    * @param {string} value
    * @returns {Promise<void>}
    */
-  function buildStage(value) {
+  function buildStageFromPageBuilderContent(stage, value) {
     var stageDocument = document.createElement('div');
     stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
     stageDocument.innerHTML = value;
-    return this.buildElement(stageDocument, this.stage);
+    return buildElementIntoStage(stageDocument, stage, stage);
   }
   /**
    * Build an element and it's children into the stage
    *
    * @param {Element} element
    * @param {EditableArea} parent
+   * @param {stage} stage
    * @returns {Promise<void>}
    */
 
 
-  function buildElement(element, parent) {
-    var _this = this;
-
+  function buildElementIntoStage(element, parent, stage) {
     if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
       var childPromises = [],
           childElements = [],
-          children = this.getElementChildren(element);
+          children = getElementChildren(element);
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(_this.createElementBlock(childElement, _this.stage));
+          childPromises.push(createElementBlock(childElement, stage, stage));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -45,8 +45,7 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
       return Promise.all(childPromises).then(function (children) {
         return children.forEach(function (child, index) {
           parent.addChild(child);
-
-          _this.buildElement(childElements[index], child);
+          buildElementIntoStage(childElements[index], child, stage);
         });
       });
     }
@@ -56,17 +55,16 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    *
    * @param {Element} element
    * @param {EditableArea} parent
+   * @param {stage} stage
    * @returns {Promise<EditableAreaInterface>}
    */
 
 
-  function createElementBlock(element, parent) {
-    var _this2 = this;
-
-    parent = parent || this.stage;
+  function createElementBlock(element, parent, stage) {
+    parent = parent || stage;
     var role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
-    return this.getElementData(element).then(function (data) {
-      return (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, _this2.stage, data);
+    return getElementData(element).then(function (data) {
+      return (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, stage, data);
     });
   }
   /**
@@ -94,8 +92,6 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
 
 
   function getElementChildren(element) {
-    var _this3 = this;
-
     if (element.hasChildNodes()) {
       var children = []; // Find direct children of the element
 
@@ -105,7 +101,7 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
           if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
             children.push(child);
           } else {
-            children = _this3.getElementChildren(child);
+            children = getElementChildren(child);
           }
         }
       });
@@ -126,7 +122,7 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    */
 
 
-  function buildNew(stage, initialValue) {
+  function buildNewStageInstance(stage, initialValue) {
     return new Promise(function (resolve) {
       var rowConfig = _config.getContentType('row');
 
@@ -160,21 +156,27 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    * @param panel
    * @param {KnockoutObservableArray<Structural>} stageContent
    * @param {string} initialValue
+   * @param {function} stageBinder
    * @returns {Stage}
    */
 
 
-  function build(parent, panel, stageContent, initialValue) {
+  function build(parent, panel, stageContent, initialValue, stageBinder) {
     // Create a new instance of the stage
     var stage = new _stage(parent, stageContent);
+
+    if (typeof stageBinder !== "undefined") {
+      stageBinder(stage);
+    }
+
     var build; // Bind the panel to the stage
 
     panel.bindStage(stage); // Determine if we're building from existing page builder content
 
     if ((0, _formatValidator)(initialValue)) {
-      build = this.buildStage(initialValue);
+      build = buildStageFromPageBuilderContent(stage, initialValue);
     } else {
-      build = this.buildNew(stage, initialValue);
+      build = buildNewStageInstance(stage, initialValue);
     } // Once the build process is finished the stage is ready
 
 

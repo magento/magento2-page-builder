@@ -20,8 +20,9 @@ define([
     "Magento_PageBuilder/js/component/stage-builder",
     "Magento_PageBuilder/js/component/stage/panel",
     "mageUtils",
+    "Magento_PageBuilder/js/component/event-emitter",
     "Magento_Variable/variables"
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, formatValidator, buildStage, Panel, utils) {
+], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, formatValidator, buildStage, Panel, utils, eventEmitter) {
     "use strict";
 
     /**
@@ -132,6 +133,13 @@ define([
          */
         buildPageBuilder: function (event) {
             var self = this;
+            var bindStage = function (stage) {
+                self.stage = stage;
+                stage.on("stageReady", function() {
+                    self.stageActive(true);
+                    self.visible(false);
+                });
+            };
 
             if (typeof event !== "undefined") {
                 event.stopPropagation();
@@ -141,11 +149,9 @@ define([
                 this,
                 this.panel,
                 this.stageContent,
-                this.initialValue
-            ).on("stageReady", function () {
-                self.stageActive(true);
-                self.visible(false);
-            });
+                this.initialValue,
+                bindStage
+            );
         },
 
         /**
