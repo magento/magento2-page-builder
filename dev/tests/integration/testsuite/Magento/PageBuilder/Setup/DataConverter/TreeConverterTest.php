@@ -80,20 +80,21 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$dbAdapter = $resourceConnection->getConnection();
 
         $entityTypeSelect = self::$dbAdapter->select()
-            ->from('eav_entity_type', ['entity_type_id'])
+            ->from($resourceConnection->getTableName('eav_entity_type'), ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
 
         $entityTypeId = self::$dbAdapter->fetchOne($entityTypeSelect);
 
         foreach (self::$dropTableNames as $tableName) {
-            self::$dbAdapter->dropTable($tableName);
+            self::$dbAdapter->dropTable($resourceConnection->getTableName($tableName));
         }
 
         if ($entityTypeId) {
-            self::$dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
+            $entityTypeIdWhere = 'entity_type_id = ' . $entityTypeId;
+            self::$dbAdapter->delete($resourceConnection->getTableName('eav_attribute'), $entityTypeIdWhere);
+            self::$dbAdapter->delete($resourceConnection->getTableName('eav_entity_attribute'), $entityTypeIdWhere);
+            self::$dbAdapter->delete($resourceConnection->getTableName('eav_entity'), $entityTypeIdWhere);
+            self::$dbAdapter->delete($resourceConnection->getTableName('eav_entity_type'), $entityTypeIdWhere);
         }
 
         $installSchema->install($schemaSetup, $moduleContext);
@@ -115,7 +116,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param string$jsonFormatFileName
      * @param string $masterFormatFileName
      * @param callable|null $callSetupEntity
-     * @param \Exception|null $expectedException
      * @dataProvider convertDataProvider
      */
     public function testConvert(
