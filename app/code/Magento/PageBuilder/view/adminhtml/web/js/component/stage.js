@@ -24,7 +24,6 @@ define(["jquery", "mage/translate", "underscore", "./data-store", "./stage/save"
       _this.loading = void 0;
       _this.originalScrollTop = void 0;
       _this.parent = void 0;
-      _this.serializeRole = void 0;
       _this.showBorders = void 0;
       _this.stage = void 0;
       _this.store = void 0;

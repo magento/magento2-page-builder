@@ -12,11 +12,11 @@ import Config from "../config";
  * @returns {boolean}
  */
 export default function formatValidate(content: string) {
-    let stageDocument = document.createElement("div");
+    const stageDocument = document.createElement("div");
 
     stageDocument.setAttribute(Config.getValueAsString("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = content;
     return !!stageDocument.querySelector(
-        "[" + Config.getValueAsString("dataRoleAttributeName") + "=\"row\"]"
+        "[" + Config.getValueAsString("dataRoleAttributeName") + "=\"row\"]",
     );
 }

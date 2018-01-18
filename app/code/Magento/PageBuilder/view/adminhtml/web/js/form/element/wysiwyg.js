@@ -20,9 +20,8 @@ define([
     "Magento_PageBuilder/js/component/stage-builder",
     "Magento_PageBuilder/js/component/stage/panel",
     "mageUtils",
-    "Magento_PageBuilder/js/component/event-emitter",
     "Magento_Variable/variables"
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, formatValidator, buildStage, Panel, utils, eventEmitter) {
+], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, validateFormat, buildStage, Panel, utils) {
     "use strict";
 
     /**
@@ -96,7 +95,7 @@ define([
             this.bindPageBuilderButton(node);
 
             // Detect if we can build the contents of the stage within Page Builder
-            if (formatValidator(this.initialValue)) {
+            if (validateFormat(this.initialValue)) {
                 this.loading(true);
                 return this.buildPageBuilder();
             }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "jquery", "advanced-cms-init-config"], function (_underscore, _jquery, _advancedCmsInitConfig) {
+define(["advanced-cms-init-config", "jquery", "underscore"], function (_advancedCmsInitConfig, _jquery, _underscore) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Config =
@@ -25,7 +25,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
     Config.getInitConfig = function getInitConfig(key) {
       if (key) {
-        if (typeof Config.initConfig[key] !== 'undefined') {
+        if (typeof Config.initConfig[key] !== "undefined") {
           return Config.initConfig[key];
         }
 
@@ -43,8 +43,8 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
 
     Config.getContentType = function getContentType(contentType) {
-      if (typeof Config.getInitConfig('contentTypes')[contentType] !== 'undefined') {
-        return Config.getInitConfig('contentTypes')[contentType];
+      if (typeof Config.getInitConfig("contentTypes")[contentType] !== "undefined") {
+        return Config.getInitConfig("contentTypes")[contentType];
       }
 
       return null;
@@ -68,7 +68,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
 
     Config.getValue = function getValue(key) {
-      if (typeof Config.config[key] !== 'undefined') {
+      if (typeof Config.config[key] !== "undefined") {
         return Config.config[key];
       }
 
@@ -101,7 +101,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
     Config.deleteValue = function deleteValue(key, valueKey, value) {
       var arr = [];
       Config.config[key].forEach(function (item) {
-        if (item[valueKey] != value) {
+        if (item[valueKey] !== value) {
           arr.push(item);
         }
       });
@@ -130,14 +130,14 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
     Config.updateTemplateValue = function updateTemplateValue(matchKey, matchValue, newValueKey, newValue) {
       var arr = [];
-      Config.config['templates'].forEach(function (item) {
+      Config.config.templates.forEach(function (item) {
         if (item[matchKey] === matchValue) {
           item[newValueKey] = newValue;
         }
 
         arr.push(item);
       });
-      Config.config['templates'] = arr;
+      Config.config.templates = arr;
     };
     /**
      * Retrieve a specific config value from the plugin section
@@ -151,8 +151,8 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
     Config.getPluginConfig = function getPluginConfig(plugin, key) {
       var config = Config.initConfig;
 
-      if (typeof config.plugins[plugin] !== 'undefined' && typeof config.plugins[plugin]['config'] !== 'undefined' && typeof config.plugins[plugin]['config'][key] !== 'undefined') {
-        return config.plugins[plugin]['config'][key];
+      if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin].config !== "undefined" && typeof config.plugins[plugin].config[key] !== "undefined") {
+        return config.plugins[plugin].config[key];
       }
 
       return null;
@@ -172,14 +172,14 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
       Config.allFields = {};
 
       _jquery.each(Config.initConfig.contentBlocks, function (index, element) {
-        if (_typeof(element.fields) === 'object') {
+        if (_typeof(element.fields) === "object") {
           _jquery.extend(Config.allFields, element.fields);
         }
       }); // Include global fields in all fields
 
 
-      if (this.getValue('globalFields')) {
-        _jquery.extend(Config.allFields, this.getValue('globalFields'));
+      if (this.getValue("globalFields")) {
+        _jquery.extend(Config.allFields, this.getValue("globalFields"));
       }
 
       return Config.allFields;
@@ -201,7 +201,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
         fields = Config.allFields;
       }
 
-      if (typeof fields[key] !== 'undefined') {
+      if (typeof fields[key] !== "undefined") {
         return fields[key];
       }
 
@@ -223,8 +223,8 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
 
     Config.getStoreId = function getStoreId() {
-      if ((0, _jquery)('#store_switcher').length > 0) {
-        return (0, _jquery)('#store_switcher').val();
+      if ((0, _jquery)("#store_switcher").length > 0) {
+        return (0, _jquery)("#store_switcher").val();
       }
     };
     /**
@@ -236,7 +236,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
 
     Config.getColumnDefinitionByClassName = function getColumnDefinitionByClassName(className) {
-      return Config.getColumnDef('className', className);
+      return Config.getColumnDef("className", className);
     };
     /**
      * Return a column definition based on a breakpoint
@@ -247,8 +247,9 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
 
     Config.getColumnDefinitionByBreakpoint = function getColumnDefinitionByBreakpoint(breakpoint) {
-      return Config.getColumnDef('breakpoint', breakpoint);
+      return Config.getColumnDef("breakpoint", breakpoint);
     };
+
     /**
      * Retrieve a column defination based on a key value pair
      *
@@ -256,12 +257,10 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
      * @param value
      * @returns {undefined|T}
      */
-
-
     Config.getColumnDef = function getColumnDef(field, value) {
       var searchObj = {};
       searchObj[field] = value;
-      return _underscore.findWhere(this.getInitConfig('column_definitions'), searchObj);
+      return _underscore.findWhere(this.getInitConfig("column_definitions"), searchObj);
     };
 
     return Config;
@@ -269,7 +268,7 @@ define(["underscore", "jquery", "advanced-cms-init-config"], function (_undersco
 
   Config.initConfig = _advancedCmsInitConfig;
   Config.config = {
-    'dataRoleAttributeName': 'data-role'
+    dataRoleAttributeName: "data-role"
   };
   Config.allFields = void 0;
   return Config;

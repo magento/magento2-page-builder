@@ -3,16 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import _ from 'underscore';
-import $ from 'jquery';
-import cmsConfig from 'advanced-cms-init-config';
+import cmsConfig from "advanced-cms-init-config";
+import $ from "jquery";
+import _ from "underscore";
 
 export default class Config {
-    private static initConfig: any = cmsConfig;
-    private static config: any = {
-        'dataRoleAttributeName': 'data-role'
-    };
-    private static allFields: any;
 
     /**
      * Set the initial config
@@ -31,7 +26,7 @@ export default class Config {
      */
     public static getInitConfig(key?: string): any {
         if (key) {
-            if (typeof Config.initConfig[key] !== 'undefined') {
+            if (typeof Config.initConfig[key] !== "undefined") {
                 return Config.initConfig[key];
             }
             return null;
@@ -46,8 +41,8 @@ export default class Config {
      * @returns {any}
      */
     public static getContentType(contentType: string): any {
-        if (typeof Config.getInitConfig('contentTypes')[contentType] !== 'undefined') {
-            return Config.getInitConfig('contentTypes')[contentType];
+        if (typeof Config.getInitConfig("contentTypes")[contentType] !== "undefined") {
+            return Config.getInitConfig("contentTypes")[contentType];
         }
 
         return null;
@@ -69,7 +64,7 @@ export default class Config {
      * @returns {any}
      */
     public static getValue(key: string): object | string | void {
-        if (typeof Config.config[key] !== 'undefined') {
+        if (typeof Config.config[key] !== "undefined") {
             return Config.config[key];
         }
         if (Config.getInitConfig(key)) {
@@ -96,9 +91,9 @@ export default class Config {
      * @param value
      */
     public static deleteValue(key: string, valueKey: string, value: any): void {
-        let arr: Array<any> = [];
-        Config.config[key].forEach(function (item: any) {
-            if (item[valueKey] != value) {
+        const arr: any[] = [];
+        Config.config[key].forEach((item: any) => {
+            if (item[valueKey] !== value) {
                 arr.push(item);
             }
         });
@@ -123,15 +118,20 @@ export default class Config {
      * @param newValueKey
      * @param newValue
      */
-    public static updateTemplateValue(matchKey: string, matchValue: string, newValueKey: string | number, newValue: string) {
-        let arr: Array<any> = [];
-        Config.config['templates'].forEach(function (item: any) {
+    public static updateTemplateValue(
+        matchKey: string,
+        matchValue: string,
+        newValueKey: string | number,
+        newValue: string,
+    ) {
+        const arr: any[] = [];
+        Config.config.templates.forEach((item: any) => {
             if (item[matchKey] === matchValue) {
                 item[newValueKey] = newValue;
             }
             arr.push(item);
         });
-        Config.config['templates'] = arr;
+        Config.config.templates = arr;
     }
 
     /**
@@ -142,9 +142,13 @@ export default class Config {
      * @returns {null}
      */
     public static getPluginConfig(plugin: string, key: string): object | null {
-        let config = Config.initConfig;
-        if (typeof config.plugins[plugin] !== 'undefined' && typeof config.plugins[plugin]['config'] !== 'undefined' && typeof config.plugins[plugin]['config'][key] !== 'undefined') {
-            return config.plugins[plugin]['config'][key];
+        const config = Config.initConfig;
+        if (
+            typeof config.plugins[plugin] !== "undefined" &&
+            typeof config.plugins[plugin].config !== "undefined" &&
+            typeof config.plugins[plugin].config[key] !== "undefined"
+        ) {
+            return config.plugins[plugin].config[key];
         }
 
         return null;
@@ -161,15 +165,15 @@ export default class Config {
         }
 
         Config.allFields = {};
-        $.each(Config.initConfig.contentBlocks, function (index, element) {
-            if (typeof element.fields === 'object') {
+        $.each(Config.initConfig.contentBlocks, (index, element) => {
+            if (typeof element.fields === "object") {
                 $.extend(Config.allFields, element.fields);
             }
         });
 
         // Include global fields in all fields
-        if (this.getValue('globalFields')) {
-            $.extend(Config.allFields, this.getValue('globalFields'));
+        if (this.getValue("globalFields")) {
+            $.extend(Config.allFields, this.getValue("globalFields"));
         }
 
         return Config.allFields;
@@ -189,7 +193,7 @@ export default class Config {
             fields = Config.allFields;
         }
 
-        if (typeof fields[key] !== 'undefined') {
+        if (typeof fields[key] !== "undefined") {
             return fields[key];
         }
 
@@ -209,8 +213,8 @@ export default class Config {
      * @returns {any}
      */
     public static getStoreId() {
-        if ($('#store_switcher').length > 0) {
-            return $('#store_switcher').val();
+        if ($("#store_switcher").length > 0) {
+            return $("#store_switcher").val();
         }
     }
 
@@ -221,7 +225,7 @@ export default class Config {
      * @returns {T}
      */
     public static getColumnDefinitionByClassName(className: string) {
-        return Config.getColumnDef('className', className);
+        return Config.getColumnDef("className", className);
     }
 
     /**
@@ -231,8 +235,14 @@ export default class Config {
      * @returns {T}
      */
     public static getColumnDefinitionByBreakpoint(breakpoint: number) {
-        return Config.getColumnDef('breakpoint', breakpoint);
+        return Config.getColumnDef("breakpoint", breakpoint);
     }
+
+    private static initConfig: any = cmsConfig;
+    private static config: any = {
+        dataRoleAttributeName: "data-role",
+    };
+    private static allFields: any;
 
     /**
      * Retrieve a column defination based on a key value pair
@@ -242,10 +252,11 @@ export default class Config {
      * @returns {undefined|T}
      */
     private static getColumnDef(field: string, value: string | number) {
-        let searchObj: any = {};
+        const searchObj: any = {};
         searchObj[field] = value;
-        return _.findWhere(this.getInitConfig('column_definitions'), searchObj);
+        return _.findWhere(this.getInitConfig("column_definitions"), searchObj);
     }
+
 }
 
 export interface ConfigFieldConfig {
@@ -258,7 +269,7 @@ export interface ConfigContentBlock {
     form: string;
     contentType: string;
     group: string;
-    fields: Array<ConfigFieldConfig>;
+    fields: ConfigFieldConfig[];
     visible: boolean;
     preview_template: string;
     render_template: string;
@@ -266,5 +277,5 @@ export interface ConfigContentBlock {
     component: string;
 }
 export interface ConfigContentBlocks {
-    [key: string]: ConfigContentBlock
+    [key: string]: ConfigContentBlock;
 }

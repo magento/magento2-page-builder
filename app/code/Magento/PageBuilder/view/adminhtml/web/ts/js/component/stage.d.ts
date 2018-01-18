@@ -13,7 +13,6 @@ export interface StageInterface extends EditableAreaInterface {
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
     originalScrollTop: number;
-    serializeRole: string;
     store: DataStore;
 
     ready(): void

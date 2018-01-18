@@ -20,7 +20,6 @@ export default class Stage extends EditableArea implements StageInterface {
     public loading: KnockoutObservable<boolean>;
     public originalScrollTop: number;
     public parent: any;
-    public serializeRole: string;
     public showBorders: KnockoutObservable<boolean>;
     public stage: Stage;
     public store: DataStore;

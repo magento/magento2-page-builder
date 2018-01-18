@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./stage", "./format/format-validator", "mage/translate", "./config", "./block/factory", "underscore", "./format/read/composite"], function (_stage, _formatValidator, _translate, _config, _factory, _, _composite) {
+define(["mage/translate", "underscore", "./block/factory", "./config", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _formatValidator, _composite, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,9 +12,9 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    * @param {string} value
    * @returns {Promise<void>}
    */
-  function buildStageFromPageBuilderContent(stage, value) {
-    var stageDocument = document.createElement('div');
-    stageDocument.setAttribute(_config.getValueAsString('dataRoleAttributeName'), 'stage');
+  function buildFromContent(stage, value) {
+    var stageDocument = document.createElement("div");
+    stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
   }
@@ -29,10 +29,10 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
 
 
   function buildElementIntoStage(element, parent, stage) {
-    if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
-      var childPromises = [],
-          childElements = [],
-          children = getElementChildren(element);
+    if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+      var childPromises = [];
+      var childElements = [];
+      var children = getElementChildren(element);
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
@@ -42,8 +42,8 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
       } // Wait for all the promises to finish and add the instances to the stage
 
 
-      return Promise.all(childPromises).then(function (children) {
-        return children.forEach(function (child, index) {
+      return Promise.all(childPromises).then(function (childrenPromises) {
+        return childrenPromises.forEach(function (child, index) {
           parent.addChild(child);
           buildElementIntoStage(childElements[index], child, stage);
         });
@@ -62,9 +62,9 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
 
   function createElementBlock(element, parent, stage) {
     parent = parent || stage;
-    var role = element.getAttribute(_config.getValueAsString('dataRoleAttributeName'));
+    var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
     return getElementData(element).then(function (data) {
-      return (0, _factory)(_config.getInitConfig('contentTypes')[role], parent, stage, data);
+      return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, stage, data);
     });
   }
   /**
@@ -97,8 +97,8 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
 
       _.forEach(element.childNodes, function (child) {
         // Only search elements which tagName's and not script tags
-        if (child.tagName && child.tagName != 'SCRIPT') {
-          if (child.hasAttribute(_config.getValueAsString('dataRoleAttributeName'))) {
+        if (child.tagName && child.tagName !== "SCRIPT") {
+          if (child.hasAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
             children.push(child);
           } else {
             children = getElementChildren(child);
@@ -122,11 +122,11 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    */
 
 
-  function buildNewStageInstance(stage, initialValue) {
+  function buildEmpty(stage, initialValue) {
     return new Promise(function (resolve) {
-      var rowConfig = _config.getContentType('row');
+      var rowConfig = _config.getContentType("row");
 
-      var textConfig = _config.getContentType('text');
+      var textConfig = _config.getContentType("text");
 
       if (rowConfig) {
         (0, _factory)(rowConfig, stage, stage, {}).then(function (row) {
@@ -155,37 +155,37 @@ define(["./stage", "./format/format-validator", "mage/translate", "./config", ".
    * @param parent
    * @param panel
    * @param {KnockoutObservableArray<Structural>} stageContent
-   * @param {string} initialValue
-   * @param {function} stageBinder
+   * @param {string} content
+   * @param {function} afterCreateCallback
    * @returns {Stage}
    */
 
 
-  function build(parent, panel, stageContent, initialValue, stageBinder) {
+  function build(parent, panel, stageContent, content, afterCreateCallback) {
     // Create a new instance of the stage
     var stage = new _stage(parent, stageContent);
 
-    if (typeof stageBinder !== "undefined") {
-      stageBinder(stage);
+    if (typeof afterCreateCallback !== "undefined") {
+      afterCreateCallback(stage);
     }
 
-    var build; // Bind the panel to the stage
+    var currentBuild; // Bind the panel to the stage
 
     panel.bindStage(stage); // Determine if we're building from existing page builder content
 
-    if ((0, _formatValidator)(initialValue)) {
-      build = buildStageFromPageBuilderContent(stage, initialValue);
+    if ((0, _formatValidator)(content)) {
+      currentBuild = buildFromContent(stage, content);
     } else {
-      build = buildNewStageInstance(stage, initialValue);
+      currentBuild = buildEmpty(stage, content);
     } // Once the build process is finished the stage is ready
 
 
-    build.then(stage.ready.bind(stage)).catch(function (error) {
+    currentBuild.then(stage.ready.bind(stage)).catch(function (error) {
       parent.alertDialog({
-        title: (0, _translate)('Advanced CMS Error'),
-        content: (0, _translate)("An error has occurred while initiating the content area.")
+        content: (0, _translate)("An error has occurred while initiating the content area."),
+        title: (0, _translate)("Advanced CMS Error")
       });
-      stage.emit('stageError', error);
+      stage.emit("stageError", error);
       console.error(error);
     });
     return stage;

@@ -3,18 +3,18 @@
  * See COPYING.txt for license details.
  */
 
+import $t from "mage/translate";
+import * as _ from "underscore";
+import Block from "./block/block";
+import createBlock from "./block/factory";
+import Config from "./config";
+import validateFormat from "./format/format-validator";
+import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
 import Panel from "./stage/panel";
 import Structural from "./stage/structural/abstract";
-import isPageBuilder from "./format/format-validator";
-import $t from "mage/translate";
-import Config from "./config";
-import createBlock from "./block/factory";
-import Block from "./block/block";
-import * as _ from 'underscore';
-import {EditableAreaInterface} from './stage/structural/editable-area.d';
-import AttributeReaderComposite from './format/read/composite';
 import EditableArea from "./stage/structural/editable-area";
+import {EditableAreaInterface} from "./stage/structural/editable-area.d";
 
 /**
  * Build the stage with the provided value
@@ -23,9 +23,9 @@ import EditableArea from "./stage/structural/editable-area";
  * @param {string} value
  * @returns {Promise<void>}
  */
-function buildStageFromPageBuilderContent(stage: Stage, value: string) {
-    let stageDocument = document.createElement('div');
-    stageDocument.setAttribute(Config.getValueAsString('dataRoleAttributeName'), 'stage');
+function buildFromContent(stage: Stage, value: string) {
+    const stageDocument = document.createElement("div");
+    stageDocument.setAttribute(Config.getValueAsString("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
 }
@@ -40,11 +40,11 @@ function buildStageFromPageBuilderContent(stage: Stage, value: string) {
  */
 function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage) {
     if (element instanceof HTMLElement
-        && element.getAttribute(Config.getValueAsString('dataRoleAttributeName'))
+        && element.getAttribute(Config.getValueAsString("dataRoleAttributeName"))
     ) {
-        let childPromises: Array<Promise<EditableArea>> = [],
-            childElements: Array<Element> = [],
-            children = getElementChildren(element);
+        const childPromises: Array<Promise<EditableArea>> = [];
+        const childElements: Element[] = [];
+        const children = getElementChildren(element);
 
         if (children.length > 0) {
             _.forEach(children, (childElement: HTMLElement) => {
@@ -54,7 +54,8 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
         }
 
         // Wait for all the promises to finish and add the instances to the stage
-        return Promise.all(childPromises).then(children => children.forEach((child: Structural, index) => {
+        return Promise.all(childPromises).then((childrenPromises) =>
+            childrenPromises.forEach((child: Structural, index) => {
             parent.addChild(child);
             buildElementIntoStage(childElements[index], child, stage);
         }));
@@ -71,13 +72,13 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
  */
 function createElementBlock(element: HTMLElement, parent: EditableArea, stage: Stage): Promise<EditableArea> {
     parent = parent || stage;
-    let role = element.getAttribute(Config.getValueAsString('dataRoleAttributeName'));
+    const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
 
     return getElementData(element).then((data: object) => createBlock(
-        Config.getInitConfig('contentTypes')[role],
+        Config.getInitConfig("contentTypes")[role],
         parent,
         stage,
-        data
+        data,
     ));
 }
 
@@ -88,11 +89,11 @@ function createElementBlock(element: HTMLElement, parent: EditableArea, stage: S
  * @returns {{}}
  */
 function getElementData(element: HTMLElement) {
-    let result = {};
-    let attributeReaderComposite = new AttributeReaderComposite();
+    const result = {};
+    const attributeReaderComposite = new AttributeReaderComposite();
     const readPromise = attributeReaderComposite.read(element);
     return readPromise.then((data) => {
-        return result ? _.extend(result, data) : {}
+        return result ? _.extend(result, data) : {};
     });
 }
 
@@ -104,12 +105,12 @@ function getElementData(element: HTMLElement) {
  */
 function getElementChildren(element: Element) {
     if (element.hasChildNodes()) {
-        let children: Array<any> = [];
+        let children: any[] = [];
         // Find direct children of the element
         _.forEach(element.childNodes, (child: HTMLElement) => {
             // Only search elements which tagName's and not script tags
-            if (child.tagName && child.tagName != 'SCRIPT') {
-                if (child.hasAttribute(Config.getValueAsString('dataRoleAttributeName'))) {
+            if (child.tagName && child.tagName !== "SCRIPT") {
+                if (child.hasAttribute(Config.getValueAsString("dataRoleAttributeName"))) {
                     children.push(child);
                 } else {
                     children = getElementChildren(child);
@@ -132,10 +133,10 @@ function getElementChildren(element: Element) {
  * @param {string} initialValue
  * @returns {Promise<any>}
  */
-function buildNewStageInstance(stage: Stage, initialValue: string) {
+function buildEmpty(stage: Stage, initialValue: string) {
     return new Promise((resolve) => {
-        const rowConfig = Config.getContentType('row');
-        const textConfig = Config.getContentType('text');
+        const rowConfig = Config.getContentType("row");
+        const textConfig = Config.getContentType("text");
         if (rowConfig) {
             createBlock(rowConfig, stage, stage, {}).then((row: Block) => {
                 stage.addChild(row);
@@ -145,8 +146,8 @@ function buildNewStageInstance(stage: Stage, initialValue: string) {
                         stage,
                         stage,
                         {
-                            content: initialValue
-                        }
+                            content: initialValue,
+                        },
                     ).then((text: Block) => {
                         row.addChild(text);
                         resolve();
@@ -168,42 +169,47 @@ function buildNewStageInstance(stage: Stage, initialValue: string) {
  * @param parent
  * @param panel
  * @param {KnockoutObservableArray<Structural>} stageContent
- * @param {string} initialValue
- * @param {function} stageBinder
+ * @param {string} content
+ * @param {function} afterCreateCallback
  * @returns {Stage}
  */
-export default function build(parent: any, panel: Panel, stageContent: KnockoutObservableArray<Structural>, initialValue: string, stageBinder: (stage: Stage) => void) {
+export default function build(
+    parent: any,
+    panel: Panel,
+    stageContent: KnockoutObservableArray<Structural>,
+    content: string,
+    afterCreateCallback: (stage: Stage) => void,
+) {
     // Create a new instance of the stage
     const stage: any = new Stage(
         parent,
         stageContent,
     );
 
-    if(typeof stageBinder !== "undefined"){
-        stageBinder(stage);
+    if (typeof afterCreateCallback !== "undefined") {
+        afterCreateCallback(stage);
     }
 
-    let build;
+    let currentBuild;
 
     // Bind the panel to the stage
     panel.bindStage(stage);
 
     // Determine if we're building from existing page builder content
-    if (isPageBuilder(initialValue)) {
-        build = buildStageFromPageBuilderContent(stage, initialValue);
-
+    if (validateFormat(content)) {
+        currentBuild = buildFromContent(stage, content);
     } else {
-        build = buildNewStageInstance(stage, initialValue);
+        currentBuild = buildEmpty(stage, content);
     }
 
     // Once the build process is finished the stage is ready
-    build.then(stage.ready.bind(stage))
+    currentBuild.then(stage.ready.bind(stage))
         .catch((error: Error) => {
             parent.alertDialog({
-                title: $t('Advanced CMS Error'),
-                content: $t("An error has occurred while initiating the content area.")
+                content: $t("An error has occurred while initiating the content area."),
+                title: $t("Advanced CMS Error"),
             });
-            stage.emit('stageError', error);
+            stage.emit("stageError", error);
             console.error( error );
         });
     return stage;
