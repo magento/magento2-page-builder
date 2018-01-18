@@ -47,7 +47,11 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
         $select = $this->getConnection()->select()->from($this->getMainTable());
         $select->joinLeft(
             ['entity_type' => $this->getTable('gene_bluefoot_entity_type')],
-            'eav_attribute_set.attribute_set_id = entity_type.attribute_set_id',
+            sprintf(
+                '%s.attribute_set_id = %s.attribute_set_id',
+                $this->getTable('eav_attribute_set'),
+                $this->getTable('entity_type')
+            ),
             '*'
         );
 
