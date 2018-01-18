@@ -177,10 +177,11 @@ define(["../../config", "../factory"], function (_config, _factory) {
    *
    * @param {Column} column
    * @param {number} width
+   * @param {Column} shrinkableColumn
    */
 
 
-  function resizeColumn(column, width) {
+  function resizeColumn(column, width, shrinkableColumn) {
     var current = getColumnWidth(column);
     var difference = (parseFloat(width.toString()) - current).toFixed(8); // Don't run the update if we've already modified the column
 
@@ -188,27 +189,26 @@ define(["../../config", "../factory"], function (_config, _factory) {
       return;
     }
 
-    updateColumnWidth(column, width);
+    updateColumnWidth(column, width); // Also shrink the closest shrinkable column
 
-    if (difference) {
-      resizeAdjacentColumn(column, difference);
+    if (difference && shrinkableColumn) {
+      var currentShrinkable = getColumnWidth(shrinkableColumn);
+      updateColumnWidth(shrinkableColumn, getAcceptedColumnWidth((currentShrinkable + -difference).toString()));
     }
   }
   /**
-   * Resize the adjacent column to the current
+   * Find a column to the right of the current which can shrink
    *
    * @param {Column} column
-   * @param {number} difference
+   * @returns {Column}
    */
 
 
-  function resizeAdjacentColumn(column, difference) {
-    if (getAdjacentColumn(column, "+1")) {
-      var adjacentColumn = getAdjacentColumn(column, "+1");
-      var currentAdjacent = getColumnWidth(adjacentColumn);
-      var newWidth = currentAdjacent + -difference;
-      updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth.toString()));
-    }
+  function findShrinkableColumnForResize(column) {
+    var currentIndex = getColumnIndexInGroup(column);
+    return column.parent.children().slice(currentIndex + 1).find(function (groupColumn) {
+      return getColumnWidth(groupColumn) > getSmallestColumnWidth();
+    });
   }
   /**
    * Create a column and add it to it's parent
@@ -242,6 +242,7 @@ define(["../../config", "../factory"], function (_config, _factory) {
     getColumnsWidth: getColumnsWidth,
     determineColumnWidths: determineColumnWidths,
     resizeColumn: resizeColumn,
+    findShrinkableColumnForResize: findShrinkableColumnForResize,
     createColumn: createColumn
   };
 });

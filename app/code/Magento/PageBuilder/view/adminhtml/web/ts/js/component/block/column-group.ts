@@ -10,11 +10,12 @@ import {moveArrayItem} from "../../utils/array";
 import Appearance from "../appearance/appearance";
 import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
+import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
 import {
-    calculateDropPositions, createColumn, determineColumnWidths, DropPosition,
+    calculateDropPositions, createColumn, determineColumnWidths, DropPosition, findShrinkableColumnForResize,
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth,
     getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./column/utils";
@@ -33,7 +34,8 @@ export default class ColumnGroup extends Block {
     public resizeColumnLeft: number;
     public resizeNextColumn: Column;
     public resizeMaxGhostWidth: number;
-    public resizeMouseDown: boolean = false;
+    public resizeMouseDown: number;
+    public resizeLastColumnShrunk: Column;
 
     public dropOverElement: JQuery<HTMLElement>;
     public dropPositions: any[] = [];
@@ -46,6 +48,13 @@ export default class ColumnGroup extends Block {
 
         this.on("blockReady", this.addDefaultColumns.bind(this));
         this.on("blockRemoved", this.spreadWidth.bind(this));
+
+        this.children.subscribe(
+            _.debounce(
+                this.removeIfEmpty.bind(this),
+                50,
+            ),
+        );
     }
 
     /**
@@ -109,8 +118,39 @@ export default class ColumnGroup extends Block {
 
             this.resizeNextColumn = getAdjacentColumn(column, "+1");
             this.resizeMaxGhostWidth = null;
-            this.resizeMouseDown = true;
+            this.resizeMouseDown = event.pageX;
         });
+    }
+
+    /**
+     * Duplicate a child of the current instance
+     *
+     * @param {Column} child
+     * @param {boolean} autoAppend
+     * @returns {Structural}
+     */
+    public duplicateChild(child: Column, autoAppend: boolean = true): Structural {
+        // Attempt to split the current column into parts
+        let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
+        if (splitTimes > 1) {
+            const duplicate = super.duplicateChild(child, autoAppend) as Column;
+            let originalWidth = 0;
+            let duplicateWidth = 0;
+
+            for (let i = 0; i <= splitTimes; i++) {
+                if (splitTimes > 0) {
+                    originalWidth += getSmallestColumnWidth();
+                    --splitTimes;
+                }
+                if (splitTimes > 0) {
+                    duplicateWidth += getSmallestColumnWidth();
+                    --splitTimes;
+                }
+            }
+            updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
+            updateColumnWidth(duplicate, getAcceptedColumnWidth(duplicateWidth.toString()));
+            return duplicate;
+        }
     }
 
     /**
@@ -127,60 +167,58 @@ export default class ColumnGroup extends Block {
      * Bind draggable instances to the child columns
      */
     private bindDraggable() {
-        const internalColumns = this.children().map((column: Column) => {
-            return column.element;
-        });
+        this.children().forEach((column: Column) => {
+            column.element.draggable({
+                appendTo: "body",
+                handle: ".move-column",
+                revertDuration: 250,
+                helper() {
+                    const helper = $(this).clone();
+                    helper.css({
+                        opacity: 0.5,
+                        pointerEvents: "none",
+                        width: $(this).width() + "px",
+                        zIndex: 100001,
+                    });
+                    return helper;
+                },
+                start: (event: Event) => {
+                    // Use the global state as columns can be dragged between groups
+                    registry.set(
+                        "pageBuilderDragColumn",
+                        {
+                            element: $(event.target),
+                            instance: ko.dataFor($(event.target)[0]),
+                        },
+                    );
 
-        $(internalColumns).draggable({
-            appendTo: "body",
-            handle: ".move-column",
-            revertDuration: 250,
-            helper() {
-                const helper = $(this).clone();
-                helper.css({
-                    opacity: 0.5,
-                    pointerEvents: "none",
-                    width: $(this).width() + "px",
-                    zIndex: 100001,
-                });
-                return helper;
-            },
-            start: (event: Event) => {
-                // Use the global state as columns can be dragged between groups
-                registry.set(
-                    "pageBuilderDragColumn",
-                    {
-                        element: $(event.target),
-                        instance: ko.dataFor($(event.target)[0]),
-                    },
-                );
-
-                this.dropPositions = calculateDropPositions(this);
-            },
-            stop: () => {
-                const column: DraggedColumn = registry.get("pageBuilderDragColumn");
-                if (this.movePosition && column) {
-                    // Check if we're moving within the same group, even though this function will only ever run on the
-                    // group that bound the draggable event
-                    if (column.instance.parent === this) {
-                        const currentIndex = getColumnIndexInGroup(column.instance);
-                        let newIndex = this.movePosition.insertIndex;
-                        if (currentIndex !== newIndex) {
-                            if (currentIndex < newIndex) {
-                                // As we're moving an array item the keys all reduce by 1
-                                --newIndex;
+                    this.dropPositions = calculateDropPositions(this);
+                },
+                stop: () => {
+                    const draggedColumn: DraggedColumn = registry.get("pageBuilderDragColumn");
+                    if (this.movePosition && draggedColumn) {
+                        // Check if we're moving within the same group, even though this function will
+                        // only ever run on the group that bound the draggable event
+                        if (draggedColumn.instance.parent === this) {
+                            const currentIndex = getColumnIndexInGroup(draggedColumn.instance);
+                            let newIndex = this.movePosition.insertIndex;
+                            if (currentIndex !== newIndex) {
+                                if (currentIndex < newIndex) {
+                                    // As we're moving an array item the keys all reduce by 1
+                                    --newIndex;
+                                }
+                                moveArrayItem(this.children, currentIndex, newIndex);
                             }
-                            moveArrayItem(this.children, currentIndex, newIndex);
+                            this.movePosition = null;
                         }
-                        this.movePosition = null;
                     }
-                }
 
-                registry.remove("pageBuilderDragColumn");
+                    registry.remove("pageBuilderDragColumn");
 
-                this.dropPlaceholder.removeClass("left right");
-                this.movePlaceholder.removeClass("active");
-            },
+                    this.dropPlaceholder.removeClass("left right");
+                    this.movePlaceholder.removeClass("active");
+                },
+            });
         });
     }
 
@@ -198,7 +236,8 @@ export default class ColumnGroup extends Block {
             this.movePlaceholder.removeClass("active");
         }).mouseup(() => {
             this.resizing(false);
-            this.resizeMouseDown = false;
+            this.resizeMouseDown = null;
+            this.resizeLastColumnShrunk = null;
             this.dropPositions = [];
 
             this.dropPlaceholder.removeClass("left right");
@@ -229,9 +268,23 @@ export default class ColumnGroup extends Block {
                 ghostWidth = group.width() - this.resizeColumnElement.position().left;
             }
 
-            // Make sure the user can't crush the adjacent column smaller than 1/6
-            const adjacentWidth = getColumnWidth(this.resizeNextColumn);
-            if (adjacentWidth === getSmallestColumnWidth() && ghostWidth > this.resizeColumnElement.width() ||
+            let adjustedColumn;
+            if (currentPos > this.resizeMouseDown) {
+                // If we're increasing the width of our column we need to locate a column that can shrink to the right
+                adjustedColumn = findShrinkableColumnForResize(this.resizeColumnInstance);
+                if (adjustedColumn) {
+                    this.resizeLastColumnShrunk = adjustedColumn;
+                }
+            } else {
+                // Restore the width to the last column which was shrunk
+                if (this.resizeLastColumnShrunk) {
+                    adjustedColumn = this.resizeLastColumnShrunk;
+                } else {
+                    // If we're shrinking our column we can just increase the adjacent column
+                    adjustedColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
+                }
+            }
+            if (!adjustedColumn && ghostWidth > this.resizeColumnElement.width() ||
                 this.resizeMaxGhostWidth
             ) {
                 ghostWidth = (this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnElement.width());
@@ -257,7 +310,9 @@ export default class ColumnGroup extends Block {
                 });
 
                 if (currentCol) {
-                    resizeColumn(this.resizeColumnInstance, currentCol.width);
+                    // If we conduct a resize, record the mouse position
+                    this.resizeMouseDown = currentPos;
+                    resizeColumn(this.resizeColumnInstance, currentCol.width, adjustedColumn);
                 }
             }
         }
@@ -488,11 +543,6 @@ export default class ColumnGroup extends Block {
      * @param {BlockRemovedParams} params
      */
     private spreadWidth(event: Event, params: BlockRemovedParams) {
-        if (this.children().length === 0) {
-            this.parent.removeChild(this);
-            return;
-        }
-
         const availableWidth = 100 - getColumnsWidth(this);
         const formattedAvailableWidth = getRoundedColumnWidth(availableWidth);
         const totalChildColumns = this.children().length;
@@ -540,6 +590,16 @@ export default class ColumnGroup extends Block {
             if (columnToModify) {
                 updateColumnWidth(columnToModify, getColumnWidth(columnToModify) + spreadAmount);
             }
+        }
+    }
+
+    /**
+     * Remove self if we contain no children
+     */
+    private removeIfEmpty() {
+        if (this.children().length === 0) {
+            this.parent.removeChild(this);
+            return;
         }
     }
 }

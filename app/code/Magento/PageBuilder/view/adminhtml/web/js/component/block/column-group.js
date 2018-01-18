@@ -22,7 +22,8 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
       _this.resizeColumnLeft = void 0;
       _this.resizeNextColumn = void 0;
       _this.resizeMaxGhostWidth = void 0;
-      _this.resizeMouseDown = false;
+      _this.resizeMouseDown = void 0;
+      _this.resizeLastColumnShrunk = void 0;
       _this.dropOverElement = void 0;
       _this.dropPositions = [];
       _this.dropPosition = void 0;
@@ -31,6 +32,8 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
       _this.on("blockReady", _this.addDefaultColumns.bind(_this));
 
       _this.on("blockRemoved", _this.spreadWidth.bind(_this));
+
+      _this.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
 
       return _this;
     }
@@ -106,8 +109,48 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
         _this3.resizeColumnLeft = _this3.resizeColumnElement.offset().left;
         _this3.resizeNextColumn = (0, _utils.getAdjacentColumn)(column, "+1");
         _this3.resizeMaxGhostWidth = null;
-        _this3.resizeMouseDown = true;
+        _this3.resizeMouseDown = event.pageX;
       });
+    };
+    /**
+     * Duplicate a child of the current instance
+     *
+     * @param {Column} child
+     * @param {boolean} autoAppend
+     * @returns {Structural}
+     */
+
+
+    _proto.duplicateChild = function duplicateChild(child, autoAppend) {
+      if (autoAppend === void 0) {
+        autoAppend = true;
+      }
+
+      // Attempt to split the current column into parts
+      var splitTimes = Math.round((0, _utils.getColumnWidth)(child) / (0, _utils.getSmallestColumnWidth)());
+
+      if (splitTimes > 1) {
+        var duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
+
+        var originalWidth = 0;
+        var duplicateWidth = 0;
+
+        for (var i = 0; i <= splitTimes; i++) {
+          if (splitTimes > 0) {
+            originalWidth += (0, _utils.getSmallestColumnWidth)();
+            --splitTimes;
+          }
+
+          if (splitTimes > 0) {
+            duplicateWidth += (0, _utils.getSmallestColumnWidth)();
+            --splitTimes;
+          }
+        }
+
+        (0, _utils.updateColumnWidth)(child, (0, _utils.getAcceptedColumnWidth)(originalWidth.toString()));
+        (0, _utils.updateColumnWidth)(duplicate, (0, _utils.getAcceptedColumnWidth)(duplicateWidth.toString()));
+        return duplicate;
+      }
     };
     /**
      * Add the default columns to the group on creation
@@ -128,61 +171,60 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
     _proto.bindDraggable = function bindDraggable() {
       var _this4 = this;
 
-      var internalColumns = this.children().map(function (column) {
-        return column.element;
-      });
-      (0, _jquery)(internalColumns).draggable({
-        appendTo: "body",
-        handle: ".move-column",
-        revertDuration: 250,
-        helper: function helper() {
-          var helper = (0, _jquery)(this).clone();
-          helper.css({
-            opacity: 0.5,
-            pointerEvents: "none",
-            width: (0, _jquery)(this).width() + "px",
-            zIndex: 100001
-          });
-          return helper;
-        },
-        start: function start(event) {
-          // Use the global state as columns can be dragged between groups
-          _uiRegistry.set("pageBuilderDragColumn", {
-            element: (0, _jquery)(event.target),
-            instance: _knockout.dataFor((0, _jquery)(event.target)[0])
-          });
+      this.children().forEach(function (column) {
+        column.element.draggable({
+          appendTo: "body",
+          handle: ".move-column",
+          revertDuration: 250,
+          helper: function helper() {
+            var helper = (0, _jquery)(this).clone();
+            helper.css({
+              opacity: 0.5,
+              pointerEvents: "none",
+              width: (0, _jquery)(this).width() + "px",
+              zIndex: 100001
+            });
+            return helper;
+          },
+          start: function start(event) {
+            // Use the global state as columns can be dragged between groups
+            _uiRegistry.set("pageBuilderDragColumn", {
+              element: (0, _jquery)(event.target),
+              instance: _knockout.dataFor((0, _jquery)(event.target)[0])
+            });
 
-          _this4.dropPositions = (0, _utils.calculateDropPositions)(_this4);
-        },
-        stop: function stop() {
-          var column = _uiRegistry.get("pageBuilderDragColumn");
+            _this4.dropPositions = (0, _utils.calculateDropPositions)(_this4);
+          },
+          stop: function stop() {
+            var draggedColumn = _uiRegistry.get("pageBuilderDragColumn");
 
-          if (_this4.movePosition && column) {
-            // Check if we're moving within the same group, even though this function will only ever run on the
-            // group that bound the draggable event
-            if (column.instance.parent === _this4) {
-              var currentIndex = (0, _utils.getColumnIndexInGroup)(column.instance);
-              var newIndex = _this4.movePosition.insertIndex;
+            if (_this4.movePosition && draggedColumn) {
+              // Check if we're moving within the same group, even though this function will
+              // only ever run on the group that bound the draggable event
+              if (draggedColumn.instance.parent === _this4) {
+                var currentIndex = (0, _utils.getColumnIndexInGroup)(draggedColumn.instance);
+                var newIndex = _this4.movePosition.insertIndex;
 
-              if (currentIndex !== newIndex) {
-                if (currentIndex < newIndex) {
-                  // As we're moving an array item the keys all reduce by 1
-                  --newIndex;
+                if (currentIndex !== newIndex) {
+                  if (currentIndex < newIndex) {
+                    // As we're moving an array item the keys all reduce by 1
+                    --newIndex;
+                  }
+
+                  (0, _array.moveArrayItem)(_this4.children, currentIndex, newIndex);
                 }
 
-                (0, _array.moveArrayItem)(_this4.children, currentIndex, newIndex);
+                _this4.movePosition = null;
               }
-
-              _this4.movePosition = null;
             }
+
+            _uiRegistry.remove("pageBuilderDragColumn");
+
+            _this4.dropPlaceholder.removeClass("left right");
+
+            _this4.movePlaceholder.removeClass("active");
           }
-
-          _uiRegistry.remove("pageBuilderDragColumn");
-
-          _this4.dropPlaceholder.removeClass("left right");
-
-          _this4.movePlaceholder.removeClass("active");
-        }
+        });
       });
     };
     /**
@@ -206,7 +248,8 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
       }).mouseup(function () {
         _this5.resizing(false);
 
-        _this5.resizeMouseDown = false;
+        _this5.resizeMouseDown = null;
+        _this5.resizeLastColumnShrunk = null;
         _this5.dropPositions = [];
 
         _this5.dropPlaceholder.removeClass("left right");
@@ -238,12 +281,28 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
 
         if (ghostWidth >= group.width() - this.resizeColumnElement.position().left) {
           ghostWidth = group.width() - this.resizeColumnElement.position().left;
-        } // Make sure the user can't crush the adjacent column smaller than 1/6
+        }
 
+        var adjustedColumn;
 
-        var adjacentWidth = (0, _utils.getColumnWidth)(this.resizeNextColumn);
+        if (currentPos > this.resizeMouseDown) {
+          // If we're increasing the width of our column we need to locate a column that can shrink to the right
+          adjustedColumn = (0, _utils.findShrinkableColumnForResize)(this.resizeColumnInstance);
 
-        if (adjacentWidth === (0, _utils.getSmallestColumnWidth)() && ghostWidth > this.resizeColumnElement.width() || this.resizeMaxGhostWidth) {
+          if (adjustedColumn) {
+            this.resizeLastColumnShrunk = adjustedColumn;
+          }
+        } else {
+          // Restore the width to the last column which was shrunk
+          if (this.resizeLastColumnShrunk) {
+            adjustedColumn = this.resizeLastColumnShrunk;
+          } else {
+            // If we're shrinking our column we can just increase the adjacent column
+            adjustedColumn = (0, _utils.getAdjacentColumn)(this.resizeColumnInstance, "+1");
+          }
+        }
+
+        if (!adjustedColumn && ghostWidth > this.resizeColumnElement.width() || this.resizeMaxGhostWidth) {
           ghostWidth = this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnElement.width();
 
           if (!this.resizeMaxGhostWidth) {
@@ -265,7 +324,9 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
           });
 
           if (currentCol) {
-            (0, _utils.resizeColumn)(this.resizeColumnInstance, currentCol.width);
+            // If we conduct a resize, record the mouse position
+            this.resizeMouseDown = currentPos;
+            (0, _utils.resizeColumn)(this.resizeColumnInstance, currentCol.width, adjustedColumn);
           }
         }
       }
@@ -487,11 +548,6 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
 
 
     _proto.spreadWidth = function spreadWidth(event, params) {
-      if (this.children().length === 0) {
-        this.parent.removeChild(this);
-        return;
-      }
-
       var availableWidth = 100 - (0, _utils.getColumnsWidth)(this);
       var formattedAvailableWidth = (0, _utils.getRoundedColumnWidth)(availableWidth);
       var totalChildColumns = this.children().length;
@@ -540,6 +596,17 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
         if (columnToModify) {
           (0, _utils.updateColumnWidth)(columnToModify, (0, _utils.getColumnWidth)(columnToModify) + spreadAmount);
         }
+      }
+    };
+    /**
+     * Remove self if we contain no children
+     */
+
+
+    _proto.removeIfEmpty = function removeIfEmpty() {
+      if (this.children().length === 0) {
+        this.parent.removeChild(this);
+        return;
       }
     };
 

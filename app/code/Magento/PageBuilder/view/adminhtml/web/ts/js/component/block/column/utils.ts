@@ -190,8 +190,9 @@ export function determineColumnWidths(column: Column, group: JQuery) {
  *
  * @param {Column} column
  * @param {number} width
+ * @param {Column} shrinkableColumn
  */
-export function resizeColumn(column: Column, width: number) {
+export function resizeColumn(column: Column, width: number, shrinkableColumn: Column) {
     const current = getColumnWidth(column);
     const difference = (parseFloat(width.toString()) - current).toFixed(8);
 
@@ -202,25 +203,27 @@ export function resizeColumn(column: Column, width: number) {
 
     updateColumnWidth(column, width);
 
-    if (difference) {
-        resizeAdjacentColumn(column, difference);
+    // Also shrink the closest shrinkable column
+    if (difference && shrinkableColumn) {
+        const currentShrinkable = getColumnWidth(shrinkableColumn);
+        updateColumnWidth(
+            shrinkableColumn,
+            getAcceptedColumnWidth((currentShrinkable + -difference).toString()),
+        );
     }
 }
 
 /**
- * Resize the adjacent column to the current
+ * Find a column to the right of the current which can shrink
  *
  * @param {Column} column
- * @param {number} difference
+ * @returns {Column}
  */
-function resizeAdjacentColumn(column: Column, difference: string) {
-    if (getAdjacentColumn(column, "+1")) {
-        const adjacentColumn = getAdjacentColumn(column, "+1");
-        const currentAdjacent = getColumnWidth(adjacentColumn);
-        const newWidth = currentAdjacent + -difference;
-
-        updateColumnWidth(adjacentColumn, getAcceptedColumnWidth(newWidth.toString()));
-    }
+export function findShrinkableColumnForResize(column: Column): Column {
+    const currentIndex = getColumnIndexInGroup(column);
+    return column.parent.children().slice(currentIndex + 1).find((groupColumn: Column) => {
+        return getColumnWidth(groupColumn) > getSmallestColumnWidth();
+    }) as Column;
 }
 
 /**
