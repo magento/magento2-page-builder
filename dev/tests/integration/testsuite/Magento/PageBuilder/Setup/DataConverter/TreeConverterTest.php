@@ -1159,7 +1159,12 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             if (!in_array($key, $this->dropdownAttributeCodes)) {
                 continue;
             }
-            $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
+
+            $attribute = $attributeRepository->get(
+                self::$resourceConnection->getTableName('gene_bluefoot_entity'),
+                $key
+            );
+
             if ($attribute && $attribute->getOptions()) {
                 foreach ($attribute->getOptions() as $option) {
                     if ($option['label'] === $value) {
