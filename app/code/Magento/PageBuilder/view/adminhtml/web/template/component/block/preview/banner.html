@@ -6,14 +6,23 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-image">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <div data-bind="style: {textAlign: preview.data.text_align}">
+        <!-- ko template: previewChildTemplate --><!-- /ko -->
+    </div>
     <!-- ko ifnot: preview.data.image() -->
-        <i class="icon-pagebuilder-image"></i> <span data-bind="text: $t('Banner');"></span>
+    <div class="pagebuilder-empty pagebuilder-empty-banner" data-bind="css: {visible: true}, text: $t('Write your text here...')"></div>
     <!-- /ko -->
     <!-- ko if: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-        <img data-bind="attr: { src: preview.data.image()[0].url, alt: preview.data.alt(), title: preview.data.title_tag(), style:'width:initial; max-width:20%;' }" />
-        <!-- ko if: preview.data.link_text() -->
-            <div data-bind="text: preview.data.link_text()"></div>
-        <!-- /ko -->
+        <div data-bind="attr: preview.getOverlayAttributes()">
+            <img data-bind="attr: { src: preview.data.image()[0].url, alt: preview.data.alt(), title: preview.data.title(), style:'width:100%;' }" />
+            <div class="pagebuilder-html" data-bind="html: preview.data.content"></div>
+        </div>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko ifnot: preview.data.button_text() -->
+    <button class="pagebuilder-banner-button" style="text-align:center;">Edit Button Text</button>
+    <!-- /ko -->
+    <!-- ko if: preview.data.button_text() -->
+    <button class="pagebuilder-banner-button" style="text-align:center;" data-bind="html: preview.data.button_text()"></button>
+    <!-- /ko -->
 </div>
