@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+// @codingStandardsIgnoreFile
 ?>
 
 <?php
@@ -17,7 +19,7 @@ $components = $block->getComponents();
 <?php if ($components): ?>
     <script type="text/javascript">
         require(['underscore', 'uiRegistry'], function (_, registry) {
-            _.each(<?php /* @noEscape */ echo json_encode($components) ?>, function (component, key) {
+            _.each(<?= /* @noEscape */ json_encode($components) ?>, function (component, key) {
                 registry.set('component_' + key, component);
             });
         });
