@@ -1160,10 +1160,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 continue;
             }
 
-            $attribute = $attributeRepository->get(
-                self::$resourceConnection->getTableName('gene_bluefoot_entity'),
-                $key
-            );
+            $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
 
             if ($attribute && $attribute->getOptions()) {
                 foreach ($attribute->getOptions() as $option) {

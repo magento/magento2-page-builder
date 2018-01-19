@@ -13,11 +13,6 @@ class Entity extends \Magento\Framework\Model\AbstractModel
     const ENTITY = 'gene_bluefoot_entity';
 
     /**
-     * Return the cache tag
-     */
-    const CACHE_TAG = 'gene_bluefoot_entity';
-
-    /**
      * Initialize entity model
      *
      * @return void
