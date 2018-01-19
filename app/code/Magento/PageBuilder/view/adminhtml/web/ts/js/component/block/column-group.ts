@@ -365,16 +365,18 @@ export default class ColumnGroup extends Block {
             // Are we within the same column group or have we ended up over another?
             if (columnInstance.parent === this) {
                 const currentColumn = dragColumn.element;
+                const currentColumnRight = currentColumn.position().left + currentColumn.width();
                 const lastColInGroup = this.children()[this.children().length - 1].element;
                 const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
 
-                // @todo don't show placeholder next to current column
                 this.movePosition = this.dropPositions.find((position, index) => {
                     // Only ever look for the left placement, except the last item where we look on the right
                     const placement = (currentX >= insertLastPos ? "right" : "left");
-                    // There is 200px area over each column borders @todo calculate this
+                    // There is 200px area over each column borders
                     if (currentX > position[placement] - 100 &&
                         currentX < position[placement] + 100 &&
+                        // Verify we're not dropping next to the current columns right position
+                        !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) &&
                         position.affectedColumn !== columnInstance && // Check affected column isn't the current column
                         position.placement === placement// Verify the position, we only check left on sorting
                     ) {

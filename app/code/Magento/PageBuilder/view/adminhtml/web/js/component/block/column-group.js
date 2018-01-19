@@ -371,14 +371,15 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
 
         if (columnInstance.parent === this) {
           var currentColumn = dragColumn.element;
+          var currentColumnRight = currentColumn.position().left + currentColumn.width();
           var lastColInGroup = this.children()[this.children().length - 1].element;
-          var insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2; // @todo don't show placeholder next to current column
-
+          var insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2;
           this.movePosition = this.dropPositions.find(function (position, index) {
             // Only ever look for the left placement, except the last item where we look on the right
-            var placement = currentX >= insertLastPos ? "right" : "left"; // There is 200px area over each column borders @todo calculate this
+            var placement = currentX >= insertLastPos ? "right" : "left"; // There is 200px area over each column borders
 
-            if (currentX > position[placement] - 100 && currentX < position[placement] + 100 && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
+            if (currentX > position[placement] - 100 && currentX < position[placement] + 100 && // Verify we're not dropping next to the current columns right position
+            !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
             position.placement === placement // Verify the position, we only check left on sorting
             ) {
                 return position;
