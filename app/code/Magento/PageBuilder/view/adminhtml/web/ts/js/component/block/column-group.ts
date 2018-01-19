@@ -7,7 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import registry from "uiRegistry";
 import _ from "underscore";
-import {moveArrayItem, outwardSearch} from "../../utils/array";
+import {moveArrayItem} from "../../utils/array";
 import Appearance from "../appearance/appearance";
 import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
@@ -16,7 +16,8 @@ import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
 import {
-    calculateDropPositions, createColumn, determineColumnWidths, DropPosition, findShrinkableColumnForResize,
+    calculateDropPositions, ColumnWidth, createColumn, determineColumnWidths, DropPosition, findShrinkableColumn,
+    findShrinkableColumnForResize,
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth,
     getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./column/utils";
@@ -30,7 +31,7 @@ export default class ColumnGroup extends Block {
 
     public resizeGhost: JQuery<HTMLElement>;
     public resizeColumnInstance: Column;
-    public resizeColumnWidths: any[] = [];
+    public resizeColumnWidths: ColumnWidth[] = [];
     public resizeColumnElement: JQuery<HTMLElement>;
     public resizeColumnLeft: number;
     public resizeNextColumn: Column;
@@ -38,10 +39,9 @@ export default class ColumnGroup extends Block {
     public resizeMouseDown: number;
     public resizeLastColumnShrunk: Column;
 
-    public dropOverElement: JQuery<HTMLElement>;
-    public dropPositions: any[] = [];
+    public dropOverElement: boolean;
+    public dropPositions: DropPosition[] = [];
     public dropPosition: DropPosition;
-
     public movePosition: DropPosition;
 
     private debounceBindDraggable = _.debounce(
@@ -117,11 +117,9 @@ export default class ColumnGroup extends Block {
             this.resizing(true);
 
             this.resizeColumnInstance = column;
-            this.resizeColumnElement = column.element;
             this.resizeColumnWidths = determineColumnWidths(column, this.groupElement);
-            this.resizeColumnLeft = this.resizeColumnElement.offset().left;
+            this.resizeColumnLeft = this.resizeColumnInstance.element.offset().left;
 
-            this.resizeNextColumn = getAdjacentColumn(column, "+1");
             this.resizeMaxGhostWidth = null;
             this.resizeMouseDown = event.pageX;
         });
@@ -157,13 +155,8 @@ export default class ColumnGroup extends Block {
             updateColumnWidth(duplicate, getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicate;
         } else {
-            const shrinkableColumn = outwardSearch(
-                this.children(),
-                getColumnIndexInGroup(child),
-                (column) => {
-                    return getColumnWidth(column) > getSmallestColumnWidth();
-                },
-            );
+            // Conduct an outward search on the children to locate a suitable shrinkable column
+            const shrinkableColumn = findShrinkableColumn(child);
             if (shrinkableColumn) {
                 duplicate = super.duplicateChild(child, autoAppend) as Column;
                 updateColumnWidth(
@@ -210,7 +203,7 @@ export default class ColumnGroup extends Block {
                         opacity: 0.5,
                         pointerEvents: "none",
                         width: $(this).width() + "px",
-                        zIndex: 100001,
+                        zIndex: 100,
                     });
                     return helper;
                 },
@@ -296,8 +289,8 @@ export default class ColumnGroup extends Block {
             if (ghostWidth <= group.width() / getMaxColumns()) {
                 ghostWidth = group.width() / getMaxColumns();
             }
-            if (ghostWidth >= group.width() - this.resizeColumnElement.position().left) {
-                ghostWidth = group.width() - this.resizeColumnElement.position().left;
+            if (ghostWidth >= group.width() - this.resizeColumnInstance.element.position().left) {
+                ghostWidth = group.width() - this.resizeColumnInstance.element.position().left;
             }
 
             let adjustedColumn;
@@ -316,24 +309,26 @@ export default class ColumnGroup extends Block {
                     adjustedColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
                 }
             }
-            if (!adjustedColumn && ghostWidth > this.resizeColumnElement.width() ||
+            if (!adjustedColumn && ghostWidth > this.resizeColumnInstance.element.width() ||
                 this.resizeMaxGhostWidth
             ) {
-                ghostWidth = (this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnElement.width());
+                ghostWidth = (this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth :
+                    this.resizeColumnInstance.element.width()
+                );
                 if (!this.resizeMaxGhostWidth) {
-                    this.resizeMaxGhostWidth = this.resizeColumnElement.width();
+                    this.resizeMaxGhostWidth = this.resizeColumnInstance.element.width();
                 }
             }
 
             // Reset the max ghost width when the user moves back from the edge
-            if (currentPos - this.resizeColumnLeft < this.resizeColumnElement.width()) {
+            if (currentPos - this.resizeColumnLeft < this.resizeColumnInstance.element.width()) {
                 this.resizeMaxGhostWidth = null;
             }
 
             // We take the border width of the width to ensure it's under the mouse exactly
             this.resizeGhost.width(ghostWidth - 2 + "px").css(
                 "left",
-                this.resizeColumnElement.position().left + "px",
+                this.resizeColumnInstance.element.position().left + "px",
             );
 
             if (!this.resizeMaxGhostWidth) {
@@ -342,7 +337,7 @@ export default class ColumnGroup extends Block {
                 });
 
                 if (currentCol) {
-                    // If we conduct a resize, record the mouse position
+                    // If we conduct a resize, update the recorded mouse position
                     this.resizeMouseDown = currentPos;
                     resizeColumn(this.resizeColumnInstance, currentCol.width, adjustedColumn);
                 }
@@ -373,19 +368,17 @@ export default class ColumnGroup extends Block {
                 const lastColInGroup = this.children()[this.children().length - 1].element;
                 const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
 
-                this.movePosition = this.dropPositions.find((position, index) => {
+                this.movePosition = this.dropPositions.find((position) => {
                     // Only ever look for the left placement, except the last item where we look on the right
                     const placement = (currentX >= insertLastPos ? "right" : "left");
                     // There is 200px area over each column borders
-                    if (currentX > position[placement] - 100 &&
+                    return (currentX > position[placement] - 100 &&
                         currentX < position[placement] + 100 &&
                         // Verify we're not dropping next to the current columns right position
                         !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) &&
                         position.affectedColumn !== columnInstance && // Check affected column isn't the current column
                         position.placement === placement// Verify the position, we only check left on sorting
-                    ) {
-                        return position;
-                    }
+                    );
                 });
 
                 if (this.movePosition) {
@@ -400,10 +393,9 @@ export default class ColumnGroup extends Block {
                     this.movePlaceholder.removeClass("active");
                 }
             } else {
+                // If we're moving to another column group we utilise the existing drop placeholder
                 this.movePosition = this.dropPositions.find((position) => {
-                    if (currentX > position.left && currentX < position.right && position.canShrink) {
-                        return position;
-                    }
+                    return currentX > position.left && currentX < position.right && position.canShrink;
                 });
 
                 if (this.movePosition) {
@@ -432,9 +424,7 @@ export default class ColumnGroup extends Block {
         if (this.dropOverElement) {
             const currentX = event.pageX - $(group).offset().left;
             this.dropPosition = this.dropPositions.find((position) => {
-                if (currentX > position.left && currentX < position.right && position.canShrink) {
-                    return position;
-                }
+                return currentX > position.left && currentX < position.right && position.canShrink;
             });
 
             if (this.dropPosition) {
@@ -601,19 +591,11 @@ export default class ColumnGroup extends Block {
 
         // Let's spread the width across the columns
         for (let i = 1; i <= spreadAcross; i++) {
-            // Let's look left
             let columnToModify: Column;
 
             // As the original column has been removed from the array, check the new index for a column
             if ((params.index) <= this.children().length && typeof this.children()[params.index] !== "undefined") {
                 columnToModify = (this.children()[params.index] as Column);
-            }
-            // As far as I can tell this statement will never run, however leaving it in as it might when more columns
-            // are present
-            if (!columnToModify && (params.index + i) <= this.children().length &&
-                typeof this.children()[params.index + i] !== "undefined"
-            ) {
-                columnToModify = (this.children()[params.index + i] as Column);
             }
             if (!columnToModify && (params.index - i) >= 0 &&
                 typeof this.children()[params.index - i] !== "undefined"

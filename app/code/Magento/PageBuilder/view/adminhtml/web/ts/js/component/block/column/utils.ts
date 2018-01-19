@@ -1,3 +1,4 @@
+import {outwardSearch} from "../../../utils/array";
 import Config from "../../config";
 import Column from "../column";
 import ColumnGroup from "../column-group";
@@ -161,15 +162,21 @@ export function getColumnsWidth(group: ColumnGroup): number {
         return widthA + (widthB ? widthB : 0);
     });
 }
+export
+interface ColumnWidth {
+    name: string;
+    position: number;
+    width: number;
+}
 
 /**
  * Determine the pixel position of every column that can be created within the group
  *
  * @param {Column} column
  * @param {JQuery} group
- * @returns {any[]}
+ * @returns {ColumnWidth[]}
  */
-export function determineColumnWidths(column: Column, group: JQuery) {
+export function determineColumnWidths(column: Column, group: JQuery): ColumnWidth[] {
     const columnWidth = group.width() / getMaxColumns();
     const groupLeftPos = column.element.offset().left;
     const columnWidths = [];
@@ -224,6 +231,22 @@ export function findShrinkableColumnForResize(column: Column): Column {
     return column.parent.children().slice(currentIndex + 1).find((groupColumn: Column) => {
         return getColumnWidth(groupColumn) > getSmallestColumnWidth();
     }) as Column;
+}
+
+/**
+ * Find a shrinkable column outwards from the current column
+ *
+ * @param {Column} column
+ * @returns {Column}
+ */
+export function findShrinkableColumn(column: Column): Column {
+    return outwardSearch(
+        column.parent.children(),
+        getColumnIndexInGroup(column),
+        (neighbourColumn) => {
+            return getColumnWidth(neighbourColumn) > getSmallestColumnWidth();
+        },
+    );
 }
 
 /**

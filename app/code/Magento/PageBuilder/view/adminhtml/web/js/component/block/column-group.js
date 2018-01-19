@@ -104,10 +104,8 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         _this2.resizing(true);
 
         _this2.resizeColumnInstance = column;
-        _this2.resizeColumnElement = column.element;
         _this2.resizeColumnWidths = (0, _utils.determineColumnWidths)(column, _this2.groupElement);
-        _this2.resizeColumnLeft = _this2.resizeColumnElement.offset().left;
-        _this2.resizeNextColumn = (0, _utils.getAdjacentColumn)(column, "+1");
+        _this2.resizeColumnLeft = _this2.resizeColumnInstance.element.offset().left;
         _this2.resizeMaxGhostWidth = null;
         _this2.resizeMouseDown = event.pageX;
       });
@@ -151,9 +149,8 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         (0, _utils.updateColumnWidth)(duplicate, (0, _utils.getAcceptedColumnWidth)(duplicateWidth.toString()));
         return duplicate;
       } else {
-        var shrinkableColumn = (0, _array.outwardSearch)(this.children(), (0, _utils.getColumnIndexInGroup)(child), function (column) {
-          return (0, _utils.getColumnWidth)(column) > (0, _utils.getSmallestColumnWidth)();
-        });
+        // Conduct an outward search on the children to locate a suitable shrinkable column
+        var shrinkableColumn = (0, _utils.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
           duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
@@ -200,7 +197,7 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
               opacity: 0.5,
               pointerEvents: "none",
               width: (0, _jquery)(this).width() + "px",
-              zIndex: 100001
+              zIndex: 100
             });
             return helper;
           },
@@ -297,8 +294,8 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
           ghostWidth = group.width() / (0, _utils.getMaxColumns)();
         }
 
-        if (ghostWidth >= group.width() - this.resizeColumnElement.position().left) {
-          ghostWidth = group.width() - this.resizeColumnElement.position().left;
+        if (ghostWidth >= group.width() - this.resizeColumnInstance.element.position().left) {
+          ghostWidth = group.width() - this.resizeColumnInstance.element.position().left;
         }
 
         var adjustedColumn;
@@ -320,21 +317,21 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
           }
         }
 
-        if (!adjustedColumn && ghostWidth > this.resizeColumnElement.width() || this.resizeMaxGhostWidth) {
-          ghostWidth = this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnElement.width();
+        if (!adjustedColumn && ghostWidth > this.resizeColumnInstance.element.width() || this.resizeMaxGhostWidth) {
+          ghostWidth = this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnInstance.element.width();
 
           if (!this.resizeMaxGhostWidth) {
-            this.resizeMaxGhostWidth = this.resizeColumnElement.width();
+            this.resizeMaxGhostWidth = this.resizeColumnInstance.element.width();
           }
         } // Reset the max ghost width when the user moves back from the edge
 
 
-        if (currentPos - this.resizeColumnLeft < this.resizeColumnElement.width()) {
+        if (currentPos - this.resizeColumnLeft < this.resizeColumnInstance.element.width()) {
           this.resizeMaxGhostWidth = null;
         } // We take the border width of the width to ensure it's under the mouse exactly
 
 
-        this.resizeGhost.width(ghostWidth - 2 + "px").css("left", this.resizeColumnElement.position().left + "px");
+        this.resizeGhost.width(ghostWidth - 2 + "px").css("left", this.resizeColumnInstance.element.position().left + "px");
 
         if (!this.resizeMaxGhostWidth) {
           currentCol = this.resizeColumnWidths.find(function (val) {
@@ -342,7 +339,7 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
           });
 
           if (currentCol) {
-            // If we conduct a resize, record the mouse position
+            // If we conduct a resize, update the recorded mouse position
             this.resizeMouseDown = currentPos;
             (0, _utils.resizeColumn)(this.resizeColumnInstance, currentCol.width, adjustedColumn);
           }
@@ -374,16 +371,14 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
           var currentColumnRight = currentColumn.position().left + currentColumn.width();
           var lastColInGroup = this.children()[this.children().length - 1].element;
           var insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2;
-          this.movePosition = this.dropPositions.find(function (position, index) {
+          this.movePosition = this.dropPositions.find(function (position) {
             // Only ever look for the left placement, except the last item where we look on the right
             var placement = currentX >= insertLastPos ? "right" : "left"; // There is 200px area over each column borders
 
-            if (currentX > position[placement] - 100 && currentX < position[placement] + 100 && // Verify we're not dropping next to the current columns right position
+            return currentX > position[placement] - 100 && currentX < position[placement] + 100 && // Verify we're not dropping next to the current columns right position
             !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
             position.placement === placement // Verify the position, we only check left on sorting
-            ) {
-                return position;
-              }
+            ;
           });
 
           if (this.movePosition) {
@@ -396,10 +391,9 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
             this.movePlaceholder.removeClass("active");
           }
         } else {
+          // If we're moving to another column group we utilise the existing drop placeholder
           this.movePosition = this.dropPositions.find(function (position) {
-            if (currentX > position.left && currentX < position.right && position.canShrink) {
-              return position;
-            }
+            return currentX > position.left && currentX < position.right && position.canShrink;
           });
 
           if (this.movePosition) {
@@ -427,9 +421,7 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
       if (this.dropOverElement) {
         var currentX = event.pageX - (0, _jquery)(group).offset().left;
         this.dropPosition = this.dropPositions.find(function (position) {
-          if (currentX > position.left && currentX < position.right && position.canShrink) {
-            return position;
-          }
+          return currentX > position.left && currentX < position.right && position.canShrink;
         });
 
         if (this.dropPosition) {
@@ -594,17 +586,10 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
 
 
       for (var _i3 = 1; _i3 <= spreadAcross; _i3++) {
-        // Let's look left
         var columnToModify = void 0; // As the original column has been removed from the array, check the new index for a column
 
         if (params.index <= this.children().length && typeof this.children()[params.index] !== "undefined") {
           columnToModify = this.children()[params.index];
-        } // As far as I can tell this statement will never run, however leaving it in as it might when more columns
-        // are present
-
-
-        if (!columnToModify && params.index + _i3 <= this.children().length && typeof this.children()[params.index + _i3] !== "undefined") {
-          columnToModify = this.children()[params.index + _i3];
         }
 
         if (!columnToModify && params.index - _i3 >= 0 && typeof this.children()[params.index - _i3] !== "undefined") {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config", "../factory"], function (_config, _factory) {
+define(["../../../utils/array", "../../config", "../factory"], function (_array, _config, _factory) {
   /**
    * Get the maximum columns allowed
    *
@@ -148,15 +148,14 @@ define(["../../config", "../factory"], function (_config, _factory) {
       return widthA + (widthB ? widthB : 0);
     });
   }
+
   /**
    * Determine the pixel position of every column that can be created within the group
    *
    * @param {Column} column
    * @param {JQuery} group
-   * @returns {any[]}
+   * @returns {ColumnWidth[]}
    */
-
-
   function determineColumnWidths(column, group) {
     var columnWidth = group.width() / getMaxColumns();
     var groupLeftPos = column.element.offset().left;
@@ -211,6 +210,19 @@ define(["../../config", "../factory"], function (_config, _factory) {
     });
   }
   /**
+   * Find a shrinkable column outwards from the current column
+   *
+   * @param {Column} column
+   * @returns {Column}
+   */
+
+
+  function findShrinkableColumn(column) {
+    return (0, _array.outwardSearch)(column.parent.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
+      return getColumnWidth(neighbourColumn) > getSmallestColumnWidth();
+    });
+  }
+  /**
    * Create a column and add it to it's parent
    *
    * @param {ColumnGroup} parent
@@ -243,6 +255,7 @@ define(["../../config", "../factory"], function (_config, _factory) {
     determineColumnWidths: determineColumnWidths,
     resizeColumn: resizeColumn,
     findShrinkableColumnForResize: findShrinkableColumnForResize,
+    findShrinkableColumn: findShrinkableColumn,
     createColumn: createColumn
   };
 });
