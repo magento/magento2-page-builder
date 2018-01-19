@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="CanAddHtml">
+        <annotations>
+            <title value="Add a html content block into stage"/>
+            <description value="A user should be able to add a html content block into a row."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84270"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlTypeProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <amOnPage url="html{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="htmlStyleApplied"/>
+        <see userInput="{{PageBuilderHtmlTypeProperty.value}}" selector="{{HtmlOnFrontend.htmlDisplay('div')}}" stepKey="assertHtmlShowsFrontend"/>
+    </test>
+    <test name="CanRemoveHtml">
+        <annotations>
+            <title value="Remove a html content block from stage"/>
+            <description value="A user should be able to remove html block from a row."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84895"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="html" stepKey="fillSearch"/>
+        <see userInput="HTML" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHtmlContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+    </test>
+    <test name="HtmlHasAdvancedFormSection">
+        <annotations>
+            <title value="HTML has Advanced form section"/>
+            <description value="A user should be able to configure advanced settings html"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+    </test>
+</tests>

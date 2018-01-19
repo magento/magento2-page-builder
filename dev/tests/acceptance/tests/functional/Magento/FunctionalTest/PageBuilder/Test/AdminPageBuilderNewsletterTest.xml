@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="CanAddNewsletter">
+        <annotations>
+            <title value="Can add newsletter"/>
+            <description value="The user should be able to add newsletter content types and they should be visible on frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="waitForElementVisible" />
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyButtonText">
+            <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyLabel">
+            <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyPlaceholder">
+            <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTypePropertyTitle">
+            <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="15" selector="{{NewsletterOnFrontend.form}}" stepKey="waitForNewsletterFormElementVisible" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextProperty">
+            <argument name="property" value="PageBuilderNewsletterTypeButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLabelProperty">
+            <argument name="property" value="PageBuilderNewsletterTypeLabelProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePlaceholderProperty">
+            <argument name="property" value="PageBuilderNewsletterTypePlaceholderProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTitleProperty">
+            <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
+        </actionGroup>
+        <amOnPage url="newsletter{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{NewsletterOnFrontend.form}}" stepKey="seeNewsletterForm"/>
+        <seeElement selector="{{NewsletterOnFrontend.title('Newsletter title')}}" stepKey="seeNewsletterTitle"/>
+        <seeElement selector="{{NewsletterOnFrontend.placeholder('Newsletter placeholder')}}" stepKey="seeNewsletterPlaceholder"/>
+        <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" stepKey="seeNewsletterLabel"/>
+        <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" stepKey="seeNewsletterButtonText"/>
+    </test>
+    <test name="CanRemoveNewsletter">
+        <annotations>
+            <title value="Remove newsletter content block from stage"/>
+            <description value="A user should be able to remove newsletter block from a row."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84895"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="news" stepKey="fillSearch"/>
+        <see userInput="Newsletter" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderNewsletterContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+    </test>
+    <test name="NewsletterHasAdvancedFormSection">
+        <annotations>
+            <title value="Newsletter has Advanced form section"/>
+            <description value="A user should be able to configure advanced settings for newsletter"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragNewsletterIntoStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+    </test>
+</tests>
