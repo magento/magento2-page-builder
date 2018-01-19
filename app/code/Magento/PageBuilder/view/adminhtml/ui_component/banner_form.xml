@@ -153,6 +153,11 @@
             </settings>
         </field>
         <field name="overlay_transparency" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Overlay Transparency</label>
                 <addAfter>%</addAfter>
@@ -181,9 +186,6 @@
                 <additionalClasses>
                     <class name="admin__field-wide">false</class>
                 </additionalClasses>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
                 <label translate="true">Message</label>
                 <dataScope>message</dataScope>
             </settings>

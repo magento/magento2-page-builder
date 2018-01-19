@@ -8,23 +8,61 @@ import PreviewBlock from "./block";
 export default class Banner extends PreviewBlock {
 
     /**
-     * Retrieve the banner attributes for the preview
+     * Get the banner overlay attributes for the preview
      *
      * @returns {any}
      */
-    public getOverlayAttributes() {
-        if (this.data.show_overlay() === "never_show") {
-            return;
-        } else if (this.data.show_overlay() === "always") {
-            if (this.data.overlay_color() != undefined && this.data.overlay_transparency()) {
-                return {style: "background-color: " + this.data.overlay_color() + "; opacity: " + this.data.overlay_transparency() / 100}
-            }
+    public getPreviewBannerAttributes() {
+        let backgroundImage = "none",
+            minHeight = "250px",
+            backgroundSize = "cover";
+
+        if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
+            backgroundImage = "url(" + this.data.image()[0].url + ")";
+        }
+        return {style: "background-image: " + backgroundImage + "; min-height: " + minHeight + "; background-size: " + backgroundSize + ";"};
+    }
+
+    /**
+     * Get the banner overlay attributes for the preview
+     *
+     * @returns {any}
+     */
+    public getPreviewOverlayAttributes() {
+        let backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : "rgba(0,0,0,0.3)";
+        return {style: "min-height: 250px; background-color: " + backgroundColor + ";"};
+    }
+
+    /**
+     * Is there content in the WYSIWYG?
+     *
+     * @returns {boolean}
+     */
+    public isBannerEmpty() {
+        return this.data.message() === "" || this.data.message() === undefined ? true : false;
+    }
+
+    /**
+     * Get the content for the preview
+     *
+     * @returns {any}
+     */
+    public getContentHtml() {
+        if (this.data.message() === "" || this.data.message() === undefined) {
+            return "Write banner text here...";
+        } else {
+            return this.data.message();
         }
     }
 
+    /**
+     * Get the button text for the preview
+     *
+     * @returns {any}
+     */
     public getButtonText() {
-        if (this.data.button_text() === undefined) {
-            return "Edit Button Text"
+        if (this.data.button_text() === "" || this.data.button_text() === undefined) {
+            return "Edit Button Text";
         } else {
             return this.data.button_text();
         }
