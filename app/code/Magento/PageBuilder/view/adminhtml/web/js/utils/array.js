@@ -49,11 +49,71 @@ define([], function () {
 
     return array;
   }
+  /**
+   * Search outwards from an array item until a callback matches
+   *
+   * @author https://github.com/thejameskyle/outward-search
+   *
+   * @param {any[]} items
+   * @param {number} start
+   * @param {(item: any, index: number) => boolean} callback
+   * @returns {any}
+   */
+
+
+  function outwardSearch(items, start, callback) {
+    if (!items.length) {
+      return null;
+    }
+
+    if (start < 0 || start > items.length - 1) {
+      throw new TypeError("starting index must be within bounds of array");
+    }
+
+    var max = items.length - 1;
+    var low = start;
+    var high = start + 1;
+
+    while (true) {
+      var hitMin = low < 0;
+      var hitMax = high > max;
+
+      if (hitMin && hitMax) {
+        break;
+      }
+
+      if (!hitMin) {
+        var item = items[low];
+        var result = callback(item, low);
+
+        if (!!result) {
+          return item;
+        }
+
+        low--;
+      }
+
+      if (!hitMax) {
+        var _item = items[high];
+
+        var _result = callback(_item, high);
+
+        if (!!_result) {
+          return _item;
+        }
+
+        high++;
+      }
+    }
+
+    return null;
+  }
 
   return {
     moveArrayItem: moveArrayItem,
     moveArrayItemIntoArray: moveArrayItemIntoArray,
-    removeArrayItem: removeArrayItem
+    removeArrayItem: removeArrayItem,
+    outwardSearch: outwardSearch
   };
 });
 //# sourceMappingURL=array.js.map

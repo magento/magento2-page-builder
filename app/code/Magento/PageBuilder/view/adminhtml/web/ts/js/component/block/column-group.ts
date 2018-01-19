@@ -4,9 +4,10 @@
  */
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import registry from "uiRegistry";
 import _ from "underscore";
-import {moveArrayItem} from "../../utils/array";
+import {moveArrayItem, outwardSearch} from "../../utils/array";
 import Appearance from "../appearance/appearance";
 import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
@@ -130,10 +131,11 @@ export default class ColumnGroup extends Block {
      * @returns {Structural}
      */
     public duplicateChild(child: Column, autoAppend: boolean = true): Structural {
+        let duplicate;
         // Attempt to split the current column into parts
         let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
         if (splitTimes > 1) {
-            const duplicate = super.duplicateChild(child, autoAppend) as Column;
+            duplicate = super.duplicateChild(child, autoAppend) as Column;
             let originalWidth = 0;
             let duplicateWidth = 0;
 
@@ -150,6 +152,32 @@ export default class ColumnGroup extends Block {
             updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
             updateColumnWidth(duplicate, getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicate;
+        } else {
+            const shrinkableColumn = outwardSearch(
+                this.children(),
+                getColumnIndexInGroup(child),
+                (column) => {
+                    return getColumnWidth(column) > getSmallestColumnWidth();
+                },
+            );
+            if (shrinkableColumn) {
+                duplicate = super.duplicateChild(child, autoAppend) as Column;
+                updateColumnWidth(
+                    shrinkableColumn,
+                    getAcceptedColumnWidth(
+                        (getColumnWidth(shrinkableColumn) - getSmallestColumnWidth()).toString(),
+                    ),
+                );
+                updateColumnWidth(duplicate, getSmallestColumnWidth());
+            }
+        }
+
+        // If we aren't able to duplicate inform the user why
+        if (!duplicate) {
+            this.stage.parent.alertDialog({
+                content: $t("There is no free space within the column group to perform this action."),
+                title: $t("Unable to duplicate column"),
+            });
         }
     }
 
@@ -233,7 +261,7 @@ export default class ColumnGroup extends Block {
             this.handleDraggingMouseMove(event, group);
             this.handleDroppingMouseMove(event, group);
         }).mouseout(() => {
-            this.movePlaceholder.removeClass("active");
+            this.movePlaceholder.css('left', '').removeClass("active");
         }).mouseup(() => {
             this.resizing(false);
             this.resizeMouseDown = null;
@@ -358,7 +386,6 @@ export default class ColumnGroup extends Block {
                     this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
-                        // @todo investigate why we need to -5
                         right: (this.movePosition.placement === "right" ?
                             $(group).outerWidth() - this.movePosition.right - 5 : ""
                         ),

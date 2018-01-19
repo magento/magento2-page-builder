@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "./block", "./column/utils"], function (_jquery, _knockout, _uiRegistry, _underscore, _array, _block, _utils) {
+define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../../utils/array", "./block", "./column/utils"], function (_jquery, _knockout, _translate, _uiRegistry, _underscore, _array, _block, _utils) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -126,12 +126,12 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
         autoAppend = true;
       }
 
-      // Attempt to split the current column into parts
+      var duplicate; // Attempt to split the current column into parts
+
       var splitTimes = Math.round((0, _utils.getColumnWidth)(child) / (0, _utils.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
-        var duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
-
+        duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
         var originalWidth = 0;
         var duplicateWidth = 0;
 
@@ -150,6 +150,24 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
         (0, _utils.updateColumnWidth)(child, (0, _utils.getAcceptedColumnWidth)(originalWidth.toString()));
         (0, _utils.updateColumnWidth)(duplicate, (0, _utils.getAcceptedColumnWidth)(duplicateWidth.toString()));
         return duplicate;
+      } else {
+        var shrinkableColumn = (0, _array.outwardSearch)(this.children(), (0, _utils.getColumnIndexInGroup)(child), function (column) {
+          return (0, _utils.getColumnWidth)(column) > (0, _utils.getSmallestColumnWidth)();
+        });
+
+        if (shrinkableColumn) {
+          duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
+          (0, _utils.updateColumnWidth)(shrinkableColumn, (0, _utils.getAcceptedColumnWidth)(((0, _utils.getColumnWidth)(shrinkableColumn) - (0, _utils.getSmallestColumnWidth)()).toString()));
+          (0, _utils.updateColumnWidth)(duplicate, (0, _utils.getSmallestColumnWidth)());
+        }
+      } // If we aren't able to duplicate inform the user why
+
+
+      if (!duplicate) {
+        this.stage.parent.alertDialog({
+          content: (0, _translate)("There is no free space within the column group to perform this action."),
+          title: (0, _translate)("Unable to duplicate column")
+        });
       }
     };
     /**
@@ -244,7 +262,7 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
 
         _this5.handleDroppingMouseMove(event, group);
       }).mouseout(function () {
-        _this5.movePlaceholder.removeClass("active");
+        _this5.movePlaceholder.css('left', '').removeClass("active");
       }).mouseup(function () {
         _this5.resizing(false);
 
@@ -371,7 +389,6 @@ define(["jquery", "knockout", "uiRegistry", "underscore", "../../utils/array", "
             this.dropPlaceholder.removeClass("left right");
             this.movePlaceholder.css({
               left: this.movePosition.placement === "left" ? this.movePosition.left : "",
-              // @todo investigate why we need to -5
               right: this.movePosition.placement === "right" ? (0, _jquery)(group).outerWidth() - this.movePosition.right - 5 : ""
             }).addClass("active");
           } else {
