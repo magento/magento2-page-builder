@@ -1198,7 +1198,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $contentBlockResource->load(
             $contentBlock,
             $contentTypeCode,
-            'entity_type.identifier'
+            sprintf('%s.identifier', self::$resourceConnection->getTableName('entity_type'))
         );
         if (!$contentBlock->getId()) {
             throw \Magento\Framework\Exception\NoSuchEntityException::singleField(
