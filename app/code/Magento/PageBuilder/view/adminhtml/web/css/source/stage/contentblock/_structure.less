@@ -2,107 +2,117 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-.pagebuilder-column-group {
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-
-    .drop-placeholder {
-        position: absolute;
-        top: 1px;
-        bottom: 1px;
-        background: rgba(142, 0, 6, 0.3);
-        z-index: 10001;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.5s opacity;
-
-        &.left {
-            opacity: 1;
-            visibility: visible;
-            border-left: 10px solid rgba(142, 0, 6, 0.1);
-            transform: translateX(1px);
-        }
-        &.right {
-            opacity: 1;
-            visibility: visible;
-            border-right: 10px solid rgba(142, 0, 6, 0.1);
-            transform: translateX(1px);
-        }
-    }
-
-    .move-placeholder {
-        position: absolute;
-        top: 1px;
-        bottom: 1px;
-        background: rgba(142, 0, 6, 0.3);
-        z-index: 10001;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.5s opacity;
-        transform: translateX(-3px);
-        width: 6px;
-
-        &.active {
-            opacity: 1;
-            visibility: visible;
-        }
-    }
-
-    .resize-grid {
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: 0;
+.pagebuilder-structure {
+    .pagebuilder-column-group {
+        position: relative;
         width: 100%;
-        height: 100%;
-        display: flex;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.5s;
-        z-index: 9;
+        box-sizing: border-box;
 
-        .grid-line {
+        .drop-placeholder {
+            position: absolute;
+            top: 1px;
+            bottom: 1px;
+            background: rgba(142, 0, 6, 0.3);
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s opacity;
+
+            &.left {
+                opacity: 1;
+                visibility: visible;
+                border-left: 10px solid rgba(142, 0, 6, 0.1);
+                transform: translateX(1px);
+            }
+            &.right {
+                opacity: 1;
+                visibility: visible;
+                border-right: 10px solid rgba(142, 0, 6, 0.1);
+                transform: translateX(1px);
+            }
+        }
+
+        .move-placeholder {
+            position: absolute;
+            top: 1px;
+            bottom: 1px;
+            background: rgba(142, 0, 6, 0.3);
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s opacity;
+            transform: translateX(-3px);
+            width: 6px;
+
+            &.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .resize-grid {
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
             height: 100%;
-            width: 16.66666667%;
-            border-right: 22px solid rgba(238, 238, 238, 0.45);
-            box-sizing: border-box;
-        }
-    }
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s;
+            z-index: 9;
 
-    .resize-ghost {
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        border: 2px dashed #d0d0d0;
-        z-index: 10;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.5s opacity;
-    }
-
-    &.resizing {
-        .resize-grid, .resize-ghost {
-            opacity: 1;
-            visibility: visible;
+            .grid-line {
+                height: 100%;
+                width: 16.66666667%;
+                border-right: 22px solid rgba(238, 238, 238, 0.45);
+                box-sizing: border-box;
+            }
         }
 
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Safari */
-        -khtml-user-select: none; /* Konqueror HTML */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-        * {
+        .resize-ghost {
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border: 2px dashed #d0d0d0;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s opacity;
+        }
+
+        &.resizing {
+            .resize-grid, .resize-ghost {
+                opacity: 1;
+                visibility: visible;
+            }
+
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Safari */
             -khtml-user-select: none; /* Konqueror HTML */
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                             supported by Chrome and Opera */
+            * {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+            }
+        }
+
+        .element-children {
+            padding: 0;
+            display: flex;
+            width: 100%;
+            position: relative;
         }
     }
 }

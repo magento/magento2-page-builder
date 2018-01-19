@@ -44,6 +44,11 @@ export default class ColumnGroup extends Block {
 
     public movePosition: DropPosition;
 
+    private debounceBindDraggable = _.debounce(
+        () => this.bindDraggable(),
+        150,
+    );
+
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, formData, appearance);
 
@@ -63,15 +68,14 @@ export default class ColumnGroup extends Block {
      *
      * @param group
      */
-    public initInteractions(group: Element) {
+    public bindInteractions(group: Element) {
         this.groupElement = $(group);
         this.initDroppable(this.groupElement);
         this.initMouseMove(this.groupElement);
 
         // We have to re-bind the draggable library to any new children that appear inside the group
-        this.children.subscribe(
-            _.debounce(() => this.bindDraggable(), 50),
-        );
+        this.children.subscribe(this.debounceBindDraggable.bind(this));
+        this.debounceBindDraggable();
     }
 
     /**
@@ -79,7 +83,7 @@ export default class ColumnGroup extends Block {
      *
      * @param element
      */
-    public initDropPlaceholder(element: Element) {
+    public bindDropPlaceholder(element: Element) {
         this.dropPlaceholder = $(element);
     }
 
@@ -88,7 +92,7 @@ export default class ColumnGroup extends Block {
      *
      * @param {Element} element
      */
-    public initMovePlaceholder(element: Element) {
+    public bindMovePlaceholder(element: Element) {
         this.movePlaceholder = $(element);
     }
 
@@ -97,7 +101,7 @@ export default class ColumnGroup extends Block {
      *
      * @param {Element} ghost
      */
-    public initGhost(ghost: Element) {
+    public bindGhost(ghost: Element) {
         this.resizeGhost = $(ghost);
     }
 
@@ -261,7 +265,7 @@ export default class ColumnGroup extends Block {
             this.handleDraggingMouseMove(event, group);
             this.handleDroppingMouseMove(event, group);
         }).mouseout(() => {
-            this.movePlaceholder.css('left', '').removeClass("active");
+            this.movePlaceholder.css("left", "").removeClass("active");
         }).mouseup(() => {
             this.resizing(false);
             this.resizeMouseDown = null;
