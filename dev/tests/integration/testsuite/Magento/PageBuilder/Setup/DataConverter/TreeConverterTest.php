@@ -19,6 +19,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     private static $objectManager;
 
     /**
+     * @var \Magento\Framework\App\ResourceConnection
+     */
+    private static $resourceConnection;
+
+    /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
      */
     private static $dbAdapter;
@@ -75,25 +80,29 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
 
         /** @var \Magento\Framework\App\ResourceConnection $resourceConnection */
-        $resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
+        self::$resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
 
-        self::$dbAdapter = $resourceConnection->getConnection();
+        self::$dbAdapter = self::$resourceConnection->getConnection();
 
         $entityTypeSelect = self::$dbAdapter->select()
-            ->from('eav_entity_type', ['entity_type_id'])
+            ->from(self::$resourceConnection->getTableName('eav_entity_type'), ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
 
         $entityTypeId = self::$dbAdapter->fetchOne($entityTypeSelect);
 
         foreach (self::$dropTableNames as $tableName) {
-            self::$dbAdapter->dropTable($tableName);
+            self::$dbAdapter->dropTable(self::$resourceConnection->getTableName($tableName));
         }
 
         if ($entityTypeId) {
-            self::$dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
+            $entityTypeIdWhere = 'entity_type_id = ' . $entityTypeId;
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_attribute'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(
+                self::$resourceConnection->getTableName('eav_entity_attribute'),
+                $entityTypeIdWhere
+            );
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity_type'), $entityTypeIdWhere);
         }
 
         $installSchema->install($schemaSetup, $moduleContext);
@@ -107,7 +116,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        self::$dbAdapter->delete('gene_bluefoot_entity');
+        self::$dbAdapter->delete(self::$resourceConnection->getTableName('gene_bluefoot_entity'));
     }
 
     /**
@@ -115,7 +124,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param string$jsonFormatFileName
      * @param string $masterFormatFileName
      * @param callable|null $callSetupEntity
-     * @param \Exception|null $expectedException
      * @dataProvider convertDataProvider
      */
     public function testConvert(
@@ -1151,7 +1159,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             if (!in_array($key, $this->dropdownAttributeCodes)) {
                 continue;
             }
+
             $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
+
             if ($attribute && $attribute->getOptions()) {
                 foreach ($attribute->getOptions() as $option) {
                     if ($option['label'] === $value) {
@@ -1190,7 +1200,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $contentBlockResource->load(
             $contentBlock,
             $contentTypeCode,
-            'entity_type.identifier'
+            sprintf('%s.identifier', self::$resourceConnection->getTableName('entity_type'))
         );
         if (!$contentBlock->getId()) {
             throw \Magento\Framework\Exception\NoSuchEntityException::singleField(
