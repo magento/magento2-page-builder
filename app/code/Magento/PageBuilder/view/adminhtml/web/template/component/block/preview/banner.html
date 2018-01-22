@@ -9,9 +9,9 @@
     <!-- ko template: optionsInstance.template --><!-- /ko -->
     <div class="pagebuilder-banner-wrapper" data-bind="attr: preview.getPreviewBannerAttributes()">
         <div class="pagebuilder-poster-overlay" data-bind="attr: preview.getPreviewOverlayAttributes()">
-            <div class="pagebuilder-poster-content">
+            <div class="pagebuilder-poster-content" data-bind="attr: preview.getPreviewContentAttributes()">
                 <div data-bind="css: {'pagebuilder-empty-banner': preview.isBannerEmpty()}, html: preview.getContentHtml()"></div>
-                <button class="pagebuilder-banner-button" data-bind="text: preview.getButtonText()"></button>
+                <button class="pagebuilder-banner-button" data-bind="text: preview.getButtonText(), attr: {'data-link-url': preview.data.link_url()}" disabled></button>
             </div>
         </div>
     </div>
