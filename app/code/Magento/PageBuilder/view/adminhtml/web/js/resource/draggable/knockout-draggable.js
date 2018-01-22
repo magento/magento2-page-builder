@@ -23,6 +23,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
             revert: true,
             revertDuration: 0,
             zIndex: 500,
+            containment: 'body',
             connectToSortable: '.pagebuilder-sortable',
             appendTo: document.body,
             helper: function(event) {

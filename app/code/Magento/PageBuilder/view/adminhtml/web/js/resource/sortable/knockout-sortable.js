@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
+define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, registry) {
 
     /**
      * Retrieve the view model for an element
@@ -160,7 +160,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
             if (blockEl && (newParentEl === this)) {
                 // Don't run sortable when dropping on a placeholder
-                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                if (registry.get("pageBuilderBlockSortable")) {
                     return;
                 }
 
@@ -223,8 +223,8 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                 currentInstance = getViewModelFromUi(ui);
 
             // If the registry contains a reference to the drag element view model use that instead
-            if (require("uiRegistry").get('dragElementViewModel')) {
-                currentInstance = require("uiRegistry").get('dragElementViewModel');
+            if (registry.get('dragElementViewModel')) {
+                currentInstance = registry.get('dragElementViewModel');
             }
 
             var allowedParents = currentInstance.config.allowed_parents;
@@ -258,7 +258,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
         onSortReceive: function (event, ui) {
             if (jQuery(event.target)[0] === this) {
                 // Don't run sortable when dropping on a placeholder
-                if (jQuery(event.toElement).hasClass('drop-placeholder')) {
+                if (registry.get("pageBuilderBlockSortable")) {
                     return;
                 }
 

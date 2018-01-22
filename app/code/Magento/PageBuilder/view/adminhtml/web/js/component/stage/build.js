@@ -69,7 +69,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
 
         if (elementChildren.length > 0) {
           _.forEach(elementChildren, function (childElement) {
-            childPromises.push(_this2.createBlock(childElement, _this2.stage));
+            childPromises.push(_this2.createBlock(childElement, parent || _this2.stage));
             childElements.push(childElement);
           });
         } // Wait for all the promises to finish and add the instances to the stage

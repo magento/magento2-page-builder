@@ -18,12 +18,10 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
       _this.resizeGhost = void 0;
       _this.resizeColumnInstance = void 0;
       _this.resizeColumnWidths = [];
-      _this.resizeColumnElement = void 0;
-      _this.resizeColumnLeft = void 0;
-      _this.resizeNextColumn = void 0;
       _this.resizeMaxGhostWidth = void 0;
       _this.resizeMouseDown = void 0;
       _this.resizeLastColumnShrunk = void 0;
+      _this.resizeLastPosition = void 0;
       _this.dropOverElement = void 0;
       _this.dropPositions = [];
       _this.dropPosition = void 0;
@@ -104,10 +102,15 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         _this2.resizing(true);
 
         _this2.resizeColumnInstance = column;
-        _this2.resizeColumnWidths = (0, _utils.determineColumnWidths)(column, _this2.groupElement);
-        _this2.resizeColumnLeft = _this2.resizeColumnInstance.element.offset().left;
+        _this2.resizeColumnWidths = (0, _utils.determineColumnWidths)(_this2.resizeColumnInstance, _this2.groupElement); // Set a flag of the columns which are currently being resized
+
+        _this2.setColumnsAsResizing(column, (0, _utils.getAdjacentColumn)(column, "+1")); // Force the cursor to resizing
+
+
+        (0, _jquery)("body").css("cursor", "col-resize");
+        _this2.resizeLastPosition = null;
         _this2.resizeMaxGhostWidth = null;
-        _this2.resizeMouseDown = event.pageX;
+        _this2.resizeMouseDown = true;
       });
     };
     /**
@@ -168,6 +171,32 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
       }
     };
     /**
+     * Set columns in the group as resizing
+     *
+     * @param {Column} columns
+     */
+
+
+    _proto.setColumnsAsResizing = function setColumnsAsResizing() {
+      for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
+        columns[_key] = arguments[_key];
+      }
+
+      columns.forEach(function (column) {
+        column.resizing(true);
+      });
+    };
+    /**
+     * Unset resizing flag on all child columns
+     */
+
+
+    _proto.unsetResizingColumns = function unsetResizingColumns() {
+      this.children().forEach(function (column) {
+        column.resizing(false);
+      });
+    };
+    /**
      * Add the default columns to the group on creation
      */
 
@@ -189,6 +218,7 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
       this.children().forEach(function (column) {
         column.element.draggable({
           appendTo: "body",
+          containment: "body",
           handle: ".move-column",
           revertDuration: 250,
           helper: function helper() {
@@ -206,7 +236,10 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
             _uiRegistry.set("pageBuilderDragColumn", {
               element: (0, _jquery)(event.target),
               instance: _knockout.dataFor((0, _jquery)(event.target)[0])
-            });
+            }); // Set a flag to inform the UI sortable functionality not to run
+
+
+            _uiRegistry.set("pageBuilderBlockSortable", true);
 
             _this3.dropPositions = (0, _utils.calculateDropPositions)(_this3);
           },
@@ -235,6 +268,10 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
 
             _uiRegistry.remove("pageBuilderDragColumn");
 
+            _underscore.delay(function () {
+              _uiRegistry.remove("pageBuilderBlockSortable");
+            }, 150);
+
             _this3.dropPlaceholder.removeClass("left right");
 
             _this3.movePlaceholder.removeClass("active");
@@ -258,7 +295,7 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         _this4.handleDraggingMouseMove(event, group);
 
         _this4.handleDroppingMouseMove(event, group);
-      }).mouseout(function () {
+      }).mouseleave(function () {
         _this4.movePlaceholder.css("left", "").removeClass("active");
       }).mouseup(function () {
         _this4.resizing(false);
@@ -267,13 +304,20 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         _this4.resizeLastColumnShrunk = null;
         _this4.dropPositions = [];
 
+        _this4.unsetResizingColumns(); // Change the cursor back
+
+
+        (0, _jquery)("body").css("cursor", "");
+
         _this4.dropPlaceholder.removeClass("left right");
 
         _this4.movePlaceholder.removeClass("active");
+
+        _this4.resizeGhost.removeClass("active");
       });
     };
     /**
-     * Handle the resizing on mouse move
+     * Handle the resizing on mouse move, we always resize a pair of columns at once
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
@@ -283,65 +327,89 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
     _proto.handleResizingMouseMove = function handleResizingMouseMove(event, group) {
       var currentPos;
       var currentCol;
+      var modifyColumnInPair = "left"; // Determine if we're modifying the left or right column in the pair
 
       if (this.resizeMouseDown) {
         event.preventDefault();
+        var resizeColumnLeft = this.resizeColumnInstance.element.offset().left;
+        var resizeColumnWidth = this.resizeColumnInstance.element.outerWidth();
+        var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
         currentPos = event.pageX; // Update the ghosts width and position to give a visual indication of the dragging
 
-        var ghostWidth = currentPos - this.resizeColumnLeft;
+        var ghostWidth = currentPos - group.offset().left;
 
         if (ghostWidth <= group.width() / (0, _utils.getMaxColumns)()) {
           ghostWidth = group.width() / (0, _utils.getMaxColumns)();
         }
 
-        if (ghostWidth >= group.width() - this.resizeColumnInstance.element.position().left) {
-          ghostWidth = group.width() - this.resizeColumnInstance.element.position().left;
-        }
-
         var adjustedColumn;
 
-        if (currentPos > this.resizeMouseDown) {
+        if (currentPos >= resizeHandlePosition) {
           // If we're increasing the width of our column we need to locate a column that can shrink to the right
-          adjustedColumn = (0, _utils.findShrinkableColumnForResize)(this.resizeColumnInstance);
+          adjustedColumn = (0, _utils.findShrinkableColumnForResize)(this.resizeColumnInstance, "right");
 
           if (adjustedColumn) {
             this.resizeLastColumnShrunk = adjustedColumn;
           }
         } else {
-          // Restore the width to the last column which was shrunk
-          if (this.resizeLastColumnShrunk) {
-            adjustedColumn = this.resizeLastColumnShrunk;
+          // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
+          // current element
+          if ((0, _utils.getColumnWidth)(this.resizeColumnInstance) <= (0, _utils.getSmallestColumnWidth)()) {
+            modifyColumnInPair = "right";
+            adjustedColumn = (0, _utils.findShrinkableColumnForResize)(this.resizeColumnInstance, "left");
+
+            if (adjustedColumn) {
+              this.resizeLastColumnShrunk = adjustedColumn;
+            } // Ensure the handler cannot be dragged further than supported
+
+
+            ghostWidth = currentPos - group.offset().left;
+            var smallestGhostWidth = ((0, _utils.getColumnIndexInGroup)(this.resizeColumnInstance) + 1) * (group.width() / (0, _utils.getMaxColumns)());
+
+            if (currentPos - group.offset().left < smallestGhostWidth) {
+              ghostWidth = smallestGhostWidth;
+            }
           } else {
             // If we're shrinking our column we can just increase the adjacent column
             adjustedColumn = (0, _utils.getAdjacentColumn)(this.resizeColumnInstance, "+1");
           }
         }
 
-        if (!adjustedColumn && ghostWidth > this.resizeColumnInstance.element.width() || this.resizeMaxGhostWidth) {
-          ghostWidth = this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : this.resizeColumnInstance.element.width();
+        if (!adjustedColumn && ghostWidth > resizeColumnWidth || this.resizeMaxGhostWidth) {
+          ghostWidth = this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth : resizeColumnWidth + this.resizeColumnInstance.element.position().left;
 
           if (!this.resizeMaxGhostWidth) {
-            this.resizeMaxGhostWidth = this.resizeColumnInstance.element.width();
+            this.resizeMaxGhostWidth = resizeColumnWidth + this.resizeColumnInstance.element.position().left;
           }
         } // Reset the max ghost width when the user moves back from the edge
 
 
-        if (currentPos - this.resizeColumnLeft < this.resizeColumnInstance.element.width()) {
+        if (resizeColumnWidth + resizeColumnLeft < currentPos) {
           this.resizeMaxGhostWidth = null;
         } // We take the border width of the width to ensure it's under the mouse exactly
 
 
-        this.resizeGhost.width(ghostWidth - 2 + "px").css("left", this.resizeColumnInstance.element.position().left + "px");
+        this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
-        if (!this.resizeMaxGhostWidth) {
+        if (adjustedColumn && !this.resizeMaxGhostWidth && this.resizeColumnWidths) {
           currentCol = this.resizeColumnWidths.find(function (val) {
-            return currentPos > val.position - 15 && currentPos < val.position + 15;
+            return currentPos > val.position - 25 && currentPos < val.position + 25 && val.forColumn === modifyColumnInPair;
           });
+          var mainColumn = this.resizeColumnInstance; // If we're using the left data set, we're actually resizing the right column of the group
+
+          if (modifyColumnInPair === "right") {
+            mainColumn = (0, _utils.getAdjacentColumn)(this.resizeColumnInstance, "+1");
+          }
 
           if (currentCol) {
-            // If we conduct a resize, update the recorded mouse position
-            this.resizeMouseDown = currentPos;
-            (0, _utils.resizeColumn)(this.resizeColumnInstance, currentCol.width, adjustedColumn);
+            // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
+            // one being performed now. This occurs as we re-calculate the column positions on resize
+            if ((0, _utils.getColumnWidth)(mainColumn) !== currentCol.width && this.resizeLastPosition !== currentCol.position) {
+              this.resizeLastPosition = currentCol.position;
+              (0, _utils.resizeColumn)(mainColumn, currentCol.width, adjustedColumn); // If we do a resize, re-calculate the column widths
+
+              this.resizeColumnWidths = (0, _utils.determineColumnWidths)(this.resizeColumnInstance, this.groupElement);
+            }
           }
         }
       }
@@ -451,7 +519,12 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         deactivate: function deactivate() {
           _this5.dropOverElement = null;
 
-          _this5.dropPlaceholder.removeClass("left right");
+          _this5.dropPlaceholder.removeClass("left right"); // Delay the removal of the flag so other systems have time to execute
+
+
+          _underscore.delay(function () {
+            _uiRegistry.remove("pageBuilderBlockSortable");
+          }, 50);
         },
         drop: function drop(event, ui) {
           _this5.handleNewColumnDrop(event, ui);
@@ -466,7 +539,12 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
         out: function out() {
           _this5.dropOverElement = null;
 
-          _this5.dropPlaceholder.removeClass("left right");
+          _this5.dropPlaceholder.removeClass("left right"); // Delay the removal of the flag so other systems have time to execute
+
+
+          _underscore.delay(function () {
+            _uiRegistry.remove("pageBuilderBlockSortable");
+          }, 50);
         },
         over: function over() {
           // Always calculate drop positions when an element is dragged over
@@ -474,6 +552,8 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
 
           if (currentDraggedBlock.config.name === _this5.config.name) {
             _this5.dropOverElement = true;
+
+            _uiRegistry.set("pageBuilderBlockSortable", true);
           }
         }
       });
@@ -558,6 +638,10 @@ define(["jquery", "knockout", "mage/translate", "uiRegistry", "underscore", "../
 
 
     _proto.spreadWidth = function spreadWidth(event, params) {
+      if (this.children().length === 0) {
+        return;
+      }
+
       var availableWidth = 100 - (0, _utils.getColumnsWidth)(this);
       var formattedAvailableWidth = (0, _utils.getRoundedColumnWidth)(availableWidth);
       var totalChildColumns = this.children().length;

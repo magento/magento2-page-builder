@@ -70,7 +70,7 @@ export default class Build extends EventEmitter {
 
             if (elementChildren.length > 0) {
                 _.forEach(elementChildren, (childElement: Element) => {
-                    childPromises.push(this.createBlock(childElement, this.stage));
+                    childPromises.push(this.createBlock(childElement, parent || this.stage));
                     childElements.push(childElement);
                 });
             }

@@ -157,16 +157,44 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
    * @returns {ColumnWidth[]}
    */
   function determineColumnWidths(column, group) {
-    var columnWidth = group.width() / getMaxColumns();
-    var groupLeftPos = column.element.offset().left;
+    var singleColumnWidth = group.width() / getMaxColumns();
+    var adjacentColumn = getAdjacentColumn(column, "+1");
     var columnWidths = [];
+    /**
+     * Generate an individual width object
+     *
+     * @param {number} index
+     * @param {string} forColumn
+     * @param {() => number} positionFn
+     * @returns {ColumnWidth}
+     */
+
+    function generateWidth(index, forColumn, positionFn) {
+      return {
+        forColumn: forColumn,
+        // These positions are for the left column in the pair
+        name: index + "/" + getMaxColumns(),
+        position: positionFn(),
+        width: getRoundedColumnWidth(100 / getMaxColumns() * index)
+      };
+    } // Iterate through the amount of columns generating the position for both left & right interactions
+
+
+    var _loop = function _loop(i) {
+      columnWidths.push(generateWidth(i, "left", function () {
+        return Math.round(column.element.offset().left + singleColumnWidth * i);
+      }));
+
+      if (adjacentColumn) {
+        // The right interaction is only used when we're crushing a column that isn't adjacent
+        columnWidths.push(generateWidth(i, "right", function () {
+          return Math.round(group.offset().left + group.width() - singleColumnWidth * i);
+        }));
+      }
+    };
 
     for (var i = getMaxColumns(); i > 0; i--) {
-      columnWidths.push({
-        name: i + "/" + getMaxColumns(),
-        position: Math.round(groupLeftPos + columnWidth * i),
-        width: getRoundedColumnWidth(100 / getMaxColumns() * i)
-      });
+      _loop(i);
     }
 
     return columnWidths;
@@ -196,16 +224,30 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
     }
   }
   /**
-   * Find a column to the right of the current which can shrink
+   * Find a column which can be shrunk for the current resize action
    *
    * @param {Column} column
+   * @param {"left" | "right"} direction
    * @returns {Column}
    */
 
 
-  function findShrinkableColumnForResize(column) {
+  function findShrinkableColumnForResize(column, direction) {
     var currentIndex = getColumnIndexInGroup(column);
-    return column.parent.children().slice(currentIndex + 1).find(function (groupColumn) {
+    var parentChildren = column.parent.children();
+    var searchArray;
+
+    switch (direction) {
+      case "right":
+        searchArray = parentChildren.slice(currentIndex + 1);
+        break;
+
+      case "left":
+        searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex);
+        break;
+    }
+
+    return searchArray.find(function (groupColumn) {
       return getColumnWidth(groupColumn) > getSmallestColumnWidth();
     });
   }

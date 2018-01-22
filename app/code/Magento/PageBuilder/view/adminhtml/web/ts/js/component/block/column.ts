@@ -4,12 +4,15 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import $t from "mage/translate";
 import {Option} from "../stage/structural/options/option";
 import Block from "./block";
 import ColumnGroup from "./column-group";
 
 export default class Column extends Block {
+    public resizing: KnockoutObservable<boolean> = ko.observable(false);
+
     /**
      * Make a reference to the element in the column
      *

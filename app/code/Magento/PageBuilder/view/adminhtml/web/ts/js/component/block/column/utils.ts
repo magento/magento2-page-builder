@@ -162,11 +162,12 @@ export function getColumnsWidth(group: ColumnGroup): number {
         return widthA + (widthB ? widthB : 0);
     });
 }
-export
-interface ColumnWidth {
+
+export interface ColumnWidth {
     name: string;
     position: number;
     width: number;
+    forColumn: string;
 }
 
 /**
@@ -177,16 +178,42 @@ interface ColumnWidth {
  * @returns {ColumnWidth[]}
  */
 export function determineColumnWidths(column: Column, group: JQuery): ColumnWidth[] {
-    const columnWidth = group.width() / getMaxColumns();
-    const groupLeftPos = column.element.offset().left;
+    const singleColumnWidth = group.width() / getMaxColumns();
+    const adjacentColumn = getAdjacentColumn(column, "+1");
     const columnWidths = [];
 
+    /**
+     * Generate an individual width object
+     *
+     * @param {number} index
+     * @param {string} forColumn
+     * @param {() => number} positionFn
+     * @returns {ColumnWidth}
+     */
+    function generateWidth(index: number, forColumn: string, positionFn: () => number): ColumnWidth {
+        return {
+            forColumn, // These positions are for the left column in the pair
+            name: index + "/" + getMaxColumns(),
+            position: positionFn(),
+            width: getRoundedColumnWidth(100 / getMaxColumns() * index),
+        };
+    }
+
+    // Iterate through the amount of columns generating the position for both left & right interactions
     for (let i = getMaxColumns(); i > 0; i--) {
-        columnWidths.push({
-            name: i + "/" + getMaxColumns(),
-            position: Math.round(groupLeftPos + columnWidth * i),
-            width: getRoundedColumnWidth(100 / getMaxColumns() * i),
-        });
+        columnWidths.push(
+            generateWidth(i, "left", () => {
+                return Math.round(column.element.offset().left + (singleColumnWidth * i));
+            }),
+        );
+        if (adjacentColumn) {
+            // The right interaction is only used when we're crushing a column that isn't adjacent
+            columnWidths.push(
+                generateWidth(i, "right", () => {
+                    return Math.round(group.offset().left + group.width() - (singleColumnWidth * i));
+                }),
+            );
+        }
     }
 
     return columnWidths;
@@ -221,14 +248,25 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
 }
 
 /**
- * Find a column to the right of the current which can shrink
+ * Find a column which can be shrunk for the current resize action
  *
  * @param {Column} column
+ * @param {"left" | "right"} direction
  * @returns {Column}
  */
-export function findShrinkableColumnForResize(column: Column): Column {
+export function findShrinkableColumnForResize(column: Column, direction: "left" | "right"): Column {
     const currentIndex = getColumnIndexInGroup(column);
-    return column.parent.children().slice(currentIndex + 1).find((groupColumn: Column) => {
+    const parentChildren = column.parent.children();
+    let searchArray: Column[];
+    switch (direction) {
+        case "right":
+            searchArray = parentChildren.slice(currentIndex + 1) as Column[];
+            break;
+        case "left":
+            searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex) as Column[];
+            break;
+    }
+    return searchArray.find((groupColumn: Column) => {
         return getColumnWidth(groupColumn) > getSmallestColumnWidth();
     }) as Column;
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "../stage/structural/options/option", "./block"], function (_jquery, _translate, _option, _block) {
+define(["jquery", "knockout", "mage/translate", "../stage/structural/options/option", "./block"], function (_jquery, _knockout, _translate, _option, _block) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -12,7 +12,13 @@ define(["jquery", "mage/translate", "../stage/structural/options/option", "./blo
     _inheritsLoose(Column, _Block);
 
     function Column() {
-      return _Block.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.resizing = _knockout.observable(false), _temp) || _this;
     }
 
     var _proto = Column.prototype;
