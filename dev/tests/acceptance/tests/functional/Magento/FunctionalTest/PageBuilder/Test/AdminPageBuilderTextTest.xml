@@ -73,8 +73,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="{{PageBuilderTextContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <see userInput="{{_ENV.MAGENTO_BASE_URL}}" stepKey="seeBaseUnsecureUrlOnStorefront"/>
-        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderTextContentBlock.cmsPageLinkName}}']" stepKey="seeHomePageWidgetOnStorefront"/>
+        <seeElement selector="div.block-cms-link a[href*='{{PageBuilderTextContentBlock.cmsPageLinkName}}']" stepKey="seeHomePageWidgetOnStorefront"/>
         <see userInput="This is some text" stepKey="seeTypedTextOnStorefront"/>
     </test>
     <test name="CanRemoveText">

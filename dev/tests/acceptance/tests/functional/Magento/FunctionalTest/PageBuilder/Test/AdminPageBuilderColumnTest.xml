@@ -455,7 +455,7 @@
         <wait time="1" stepKey="wait3"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
         <wait time="5" stepKey="wait5"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderBackgroundImageProperty.path,PageBuilderBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImageProperty.path,PageBuilderBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
         <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
     </test>
     <test name="ColumnBackgroundColorPreserved">

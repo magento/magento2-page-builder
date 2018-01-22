@@ -61,10 +61,10 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="driver{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{DriverOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
+        <seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
         <see userInput="{{PageBuilderLinkTextProperty.value}}" selector="{{DriverOnFrontend.linkText}}" stepKey="seeLinkTextDisplayed"/>
         <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
         <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
