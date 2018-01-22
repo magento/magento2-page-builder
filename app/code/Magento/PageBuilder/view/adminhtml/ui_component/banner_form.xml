@@ -86,7 +86,38 @@
                 </fileUploader>
             </formElements>
         </field>
-        <field name="show_button" sortOrder="10" formElement="select">
+        <field name="background_size" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Size</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">default</item>
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">cover</item>
+                                <item name="label" xsi:type="string" translate="true">Cover</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">contain</item>
+                                <item name="label" xsi:type="string" translate="true">Contain</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="show_button" sortOrder="20" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">always</item>
@@ -113,7 +144,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="show_overlay" sortOrder="20" formElement="select">
+        <field name="show_overlay" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">never_show</item>
@@ -121,7 +152,7 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Show Overlay</label>
+                <label translate="true">Show Content Overlay</label>
             </settings>
             <formElements>
                 <select>
@@ -144,15 +175,18 @@
                 </select>
             </formElements>
         </field>
-        <field name="overlay_color" sortOrder="30" formElement="input">
+        <field name="overlay_color" sortOrder="40" formElement="input">
             <settings>
-                <label translate="true">Overlay Color</label>
+                <label translate="true">Content Overlay Color</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter>hex color</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_color</dataScope>
             </settings>
         </field>
-        <field name="overlay_transparency" sortOrder="40" formElement="input">
+        <field name="overlay_transparency" sortOrder="50" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">0</item>
@@ -160,9 +194,28 @@
             </argument>
             <settings>
                 <label translate="true">Overlay Transparency</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
                 <addAfter>%</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_transparency</dataScope>
+            </settings>
+        </field>
+        <field name="minimum_height" sortOrder="60" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
+                <addAfter>px</addAfter>
+                <dataType>text</dataType>
+                <dataScope>minimum_height</dataScope>
             </settings>
         </field>
     </fieldset>
@@ -183,9 +236,6 @@
                 </item>
             </argument>
             <settings>
-                <additionalClasses>
-                    <class name="admin__field-wide">false</class>
-                </additionalClasses>
                 <label translate="true">Message</label>
                 <dataScope>message</dataScope>
             </settings>
@@ -232,30 +282,6 @@
                     </settings>
                 </checkbox>
             </formElements>
-        </field>
-    </fieldset>
-    <fieldset name="seo">
-        <settings>
-            <label translate="true">Search Engine Optimization</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="alt" sortOrder="10" formElement="input">
-            <settings>
-                <label translate="true">Alternative Text</label>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-        </field>
-        <field name="title" sortOrder="20" formElement="input">
-            <settings>
-                <label translate="true">Title</label>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
         </field>
     </fieldset>
     <fieldset name="advanced">
@@ -363,6 +389,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Color</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter>hex color</addAfter>
                 <dataScope>border_color</dataScope>
             </settings>
@@ -376,6 +405,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Size</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
                 <addAfter>px</addAfter>
                 <dataScope>border_width</dataScope>
                 <validation>
@@ -392,6 +424,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Radius</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
                 <addAfter>px</addAfter>
                 <dataScope>border_radius</dataScope>
                 <validation>
