@@ -61,7 +61,7 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
       };
     };
     /**
-     * Get the content for the preview
+     * Get the banner content for the storefront
      *
      * @returns {any}
      */

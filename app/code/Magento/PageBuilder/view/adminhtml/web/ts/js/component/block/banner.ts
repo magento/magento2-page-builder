@@ -61,7 +61,7 @@ export default class Banner extends Block {
     }
 
     /**
-     * Get the content for the preview
+     * Get the banner content for the storefront
      *
      * @returns {any}
      */
