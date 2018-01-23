@@ -27,7 +27,7 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getPreviewOverlayAttributes() {
-        let backgroundColor:string = this.data.show_overlay() === "never_show" ? "transparent" : this.getRgba();
+        let backgroundColor:string = this.data.show_overlay() === "never_show" ? "transparent" : this.convertHexToRgba();
         return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
     }
 
@@ -36,7 +36,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {string}
      */
-    private getRgba() {
+    private convertHexToRgba() {
         if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
             let colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.data.overlay_color()),
                 red = parseInt(colors[1], 16),

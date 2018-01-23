@@ -28,12 +28,18 @@ export default class Banner implements ReadInterface {
         debugger;
         const target = element.querySelector("a").getAttribute("target");
         const response: DataObject = {
-            image: this.generateImageObject(
-                element.querySelector("img:nth-child(1)").getAttribute("src")),
-            link_text: element.dataset.buttonText,
+            background_size: element.style.backgroundSize,
+            button_text: element.dataset.buttonText,
+            image: "",
             link_url: element.querySelector("a").getAttribute("href"),
+            message: element.querySelector('.pagebuilder-poster-content div').innerHTML,
+            minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
             mobile_image: "",
-            open_in_new_window: target && target === "_blank" ? "1" : "0"
+            open_in_new_tab: target && target === "_blank" ? "1" : "0",
+            overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
+            overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : "1",
+            show_button: "",
+            show_overlay: ""
         };
 
         // Detect if there is a mobile image and update the response
@@ -44,6 +50,25 @@ export default class Banner implements ReadInterface {
         }
 
         return Promise.resolve(response);
+    }
+
+    /**
+     * Convert RGBA to HEX for transparent overlay for the element
+     *
+     * @returns {string}
+     */
+    private convertRgbaToHex(value: string) {
+
+    }
+
+    /**
+     * Convert decimal to percent for transparent overlay for the element
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    private convertDecimalToPercent(value: string) {
+        return (parseInt(value, 10) * 100).toString();
     }
 
     /**

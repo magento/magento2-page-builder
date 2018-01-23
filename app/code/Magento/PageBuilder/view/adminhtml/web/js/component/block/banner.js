@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
+define(["underscore", "mage/translate", "../config", "./block"], function (_underscore, _translate, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -59,6 +59,22 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
       return {
         style: "margin-top: " + marginTop + "px; " + "margin-right: " + marginRight + "px; " + "margin-bottom: " + marginBottom + "px; " + "margin-left: " + marginLeft + "px; " + "padding-top: " + paddingTop + "px; " + "padding-right: " + paddingRight + "px; " + "padding-bottom: " + paddingBottom + "px; " + "padding-left: " + paddingLeft + "px;"
       };
+    };
+    /**
+     * Get the content for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getContentHtml = function getContentHtml() {
+      var data = this.getData();
+
+      if (data.message === "" || data.message === undefined) {
+        return;
+      } else {
+        return (0, _translate)(data.message);
+      }
     };
     /**
      * Get the desktop (main) image attributes for the render

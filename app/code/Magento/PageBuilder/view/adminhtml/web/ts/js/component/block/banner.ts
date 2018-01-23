@@ -4,6 +4,7 @@
  */
 
 import _ from "underscore";
+import $t from "mage/translate";
 import Config from "../config";
 import Block from "./block";
 
@@ -57,6 +58,20 @@ export default class Banner extends Block {
             "padding-bottom: " + paddingBottom + "px; " +
             "padding-left: " + paddingLeft + "px;"
         };
+    }
+
+    /**
+     * Get the content for the preview
+     *
+     * @returns {any}
+     */
+    public getContentHtml() {
+        const data = this.getData();
+        if (data.message === "" || data.message === undefined) {
+            return;
+        } else {
+            return $t(data.message);
+        }
     }
 
     /**

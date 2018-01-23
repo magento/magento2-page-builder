@@ -37,7 +37,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
 
 
     _proto.getPreviewOverlayAttributes = function getPreviewOverlayAttributes() {
-      var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.getRgba();
+      var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.convertHexToRgba();
       return {
         style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
       };
@@ -49,7 +49,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
      */
 
 
-    _proto.getRgba = function getRgba() {
+    _proto.convertHexToRgba = function convertHexToRgba() {
       if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
         var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.data.overlay_color()),
             red = parseInt(colors[1], 16),
