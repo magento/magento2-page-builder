@@ -95,6 +95,36 @@
             </actionGroup>
             <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
         </test>
+        <test name="BannerDoesNotNavigate">
+            <annotations>
+                <title value="Banner does not navigate on click"/>
+                <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-86838"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+                <argument name="property" value="PageBuilderImagePropertyJpg"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
+                <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+                <argument name="property" value="PageBuilderLinkUrlProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <dontSeeElement selector="{{BannerOnBackend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="dontSeeLinkUrl"/>
+        </test>
         <test name="BannerHasAdvancedFormSection">
             <annotations>
                 <title value="Banner has Advanced form section"/>
