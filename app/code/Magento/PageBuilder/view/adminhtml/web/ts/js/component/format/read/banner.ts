@@ -23,17 +23,17 @@ export default class Banner implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
+        console.log('read/banner.ts');
+        console.log(element);
+        debugger;
         const target = element.querySelector("a").getAttribute("target");
         const response: DataObject = {
-            alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
             image: this.generateImageObject(
                 element.querySelector("img:nth-child(1)").getAttribute("src")),
-            link_text: element.querySelector("a>div") === null ?
-                "" : element.querySelector("a>div").innerHTML,
+            link_text: element.dataset.buttonText,
             link_url: element.querySelector("a").getAttribute("href"),
             mobile_image: "",
-            open_in_new_window: target && target === "_blank" ? "1" : "0",
-            title_tag: element.querySelector("a").getAttribute("title"),
+            open_in_new_window: target && target === "_blank" ? "1" : "0"
         };
 
         // Detect if there is a mobile image and update the response

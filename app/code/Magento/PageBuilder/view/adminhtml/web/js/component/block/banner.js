@@ -14,10 +14,79 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
     var _proto = Banner.prototype;
 
     /**
+     * Get the banner wrapper attributes for the storefront
+     *
+     * @returns {any}
+     */
+    _proto.getBannerAttributes = function getBannerAttributes() {
+      var data = this.getData();
+      var backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
+      return {
+        style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"
+      };
+    };
+    /**
+     * Get the banner overlay attributes for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getOverlayAttributes = function getOverlayAttributes() {
+      var data = this.getData();
+      var backgroundColor = data.show_overlay === "never_show" ? "transparent" : "transparent";
+      return {
+        style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
+      };
+    };
+    /**
+     * Get the banner content attributes for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getContentAttributes = function getContentAttributes() {
+      var data = this.getData();
+      var marginTop = data.fields.margins_and_padding.default.margin.top || "0",
+          marginRight = data.fields.margins_and_padding.default.margin.right || "0",
+          marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0",
+          marginLeft = data.fields.margins_and_padding.default.margin.left || "0",
+          paddingTop = data.fields.margins_and_padding.default.padding.top || "0",
+          paddingRight = data.fields.margins_and_padding.default.padding.right || "0",
+          paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0",
+          paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
+      return {
+        style: "margin-top: " + marginTop + "px; " + "margin-right: " + marginRight + "px; " + "margin-bottom: " + marginBottom + "px; " + "margin-left: " + marginLeft + "px; " + "padding-top: " + paddingTop + "px; " + "padding-right: " + paddingRight + "px; " + "padding-bottom: " + paddingBottom + "px; " + "padding-left: " + paddingLeft + "px;"
+      };
+    };
+    /**
+     * Get the desktop (main) image attributes for the render
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getImage = function getImage() {
+      var data = this.getData();
+
+      if (data.image === "" || data.image === undefined) {
+        return {};
+      }
+
+      if (_underscore.isEmpty(data.image[0])) {
+        return;
+      }
+
+      return this.getImageUrl(data.image);
+    };
+    /**
      * Does the banner have a mobile image?
      *
      * @returns {boolean}
      */
+
+
     _proto.hasMobileImage = function hasMobileImage() {
       var data = this.getData();
       return !(data.mobile_image === "" || data.mobile_image === undefined || _underscore.isEmpty(data.mobile_image[0]));

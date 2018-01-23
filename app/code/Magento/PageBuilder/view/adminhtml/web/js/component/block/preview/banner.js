@@ -14,7 +14,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
     var _proto = Banner.prototype;
 
     /**
-     * Get the banner overlay attributes for the preview
+     * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
@@ -39,7 +39,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
     _proto.getPreviewOverlayAttributes = function getPreviewOverlayAttributes() {
       var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.getRgba();
       return {
-        style: "min-height: 250px; background-color: " + backgroundColor + ";"
+        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
       };
     };
     /**

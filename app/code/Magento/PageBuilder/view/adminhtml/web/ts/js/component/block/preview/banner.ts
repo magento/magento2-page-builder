@@ -9,7 +9,7 @@ import PreviewBlock from "./block";
 export default class Banner extends PreviewBlock {
 
     /**
-     * Get the banner overlay attributes for the preview
+     * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
@@ -28,7 +28,7 @@ export default class Banner extends PreviewBlock {
      */
     public getPreviewOverlayAttributes() {
         let backgroundColor:string = this.data.show_overlay() === "never_show" ? "transparent" : this.getRgba();
-        return {style: "min-height: 250px; background-color: " + backgroundColor + ";"};
+        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
     }
 
     /**
@@ -75,14 +75,14 @@ export default class Banner extends PreviewBlock {
      */
     public getPreviewContentAttributes() {
         if (this.data.margins_and_padding() !== "" && this.data.margins_and_padding() !== undefined) {
-            let marginTop = this.data.margins_and_padding().margin.top || "0",
-                marginRight = this.data.margins_and_padding().margin.right || "0",
-                marginBottom = this.data.margins_and_padding().margin.bottom || "0",
-                marginLeft = this.data.margins_and_padding().margin.left || "0",
-                paddingTop = this.data.margins_and_padding().padding.top || "0",
-                paddingRight = this.data.margins_and_padding().padding.right || "0",
-                paddingBottom = this.data.margins_and_padding().padding.bottom || "0",
-                paddingLeft = this.data.margins_and_padding().padding.left || "0";
+            const marginTop = this.data.margins_and_padding().margin.top || "0",
+                  marginRight = this.data.margins_and_padding().margin.right || "0",
+                  marginBottom = this.data.margins_and_padding().margin.bottom || "0",
+                  marginLeft = this.data.margins_and_padding().margin.left || "0",
+                  paddingTop = this.data.margins_and_padding().padding.top || "0",
+                  paddingRight = this.data.margins_and_padding().padding.right || "0",
+                  paddingBottom = this.data.margins_and_padding().padding.bottom || "0",
+                  paddingLeft = this.data.margins_and_padding().padding.left || "0";
             return {
                 style:
                     "margin-top: " + marginTop + "px; " +
