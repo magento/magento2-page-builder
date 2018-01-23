@@ -31,7 +31,7 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
       _this.preview = (0, _previews)(_this, config);
       var defaults = {};
 
-      if (config.fields) {
+      if (typeof config !== "undefined" && config.fields) {
         _underscore.each(config.fields, function (field, key) {
           defaults[key] = field.default;
         });

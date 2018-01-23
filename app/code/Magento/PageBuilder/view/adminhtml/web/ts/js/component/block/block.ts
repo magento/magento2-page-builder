@@ -38,7 +38,7 @@ export default class Block extends Structural implements BlockInterface {
         this.preview = getPreviewInstance(this, config);
 
         const defaults: FieldDefaults = {};
-        if (config.fields) {
+        if (typeof config !== "undefined" && config.fields) {
             _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
                 defaults[key] = field.default;
             });

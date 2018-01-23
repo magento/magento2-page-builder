@@ -12,7 +12,11 @@ define(["Magento_PageBuilder/js/component/loader", "../appearance/appearance-fac
    * @returns {any|string}
    */
   function getBlockComponentPath(config) {
-    return config.component || "Magento_PageBuilder/js/component/block/block";
+    if (typeof config !== "undefined") {
+      return config.component || "Magento_PageBuilder/js/component/block/block";
+    }
+
+    return "Magento_PageBuilder/js/component/block/block";
   }
   /**
    * Create a new instance of a block
