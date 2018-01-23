@@ -1,7 +1,7 @@
 import {outwardSearch} from "../../../utils/array";
 import Config from "../../config";
 import Column from "../column";
-import ColumnGroup from "../column-group";
+import ColumnGroup, {ResizeHistoryItem} from "../column-group";
 import createBlock from "../factory";
 
 /**
@@ -94,15 +94,6 @@ export function updateColumnWidth(column: Column, width: number): void {
     );
 }
 
-export interface DropPosition {
-    left: number;
-    right: number;
-    insertIndex: number;
-    placement: string;
-    affectedColumn: Column;
-    canShrink: boolean;
-}
-
 /**
  * Calculate the drop positions of a column group
  *
@@ -163,13 +154,6 @@ export function getColumnsWidth(group: ColumnGroup): number {
     });
 }
 
-export interface ColumnWidth {
-    name: string;
-    position: number;
-    width: number;
-    forColumn: string;
-}
-
 /**
  * Determine the pixel position of every column that can be created within the group
  *
@@ -181,39 +165,34 @@ export function determineColumnWidths(column: Column, group: JQuery): ColumnWidt
     const singleColumnWidth = group.width() / getMaxColumns();
     const adjacentColumn = getAdjacentColumn(column, "+1");
     const columnWidths = [];
-
-    /**
-     * Generate an individual width object
-     *
-     * @param {number} index
-     * @param {string} forColumn
-     * @param {() => number} positionFn
-     * @returns {ColumnWidth}
-     */
-    function generateWidth(index: number, forColumn: string, positionFn: () => number): ColumnWidth {
-        return {
-            forColumn, // These positions are for the left column in the pair
-            name: index + "/" + getMaxColumns(),
-            position: positionFn(),
-            width: getRoundedColumnWidth(100 / getMaxColumns() * index),
-        };
-    }
+    const groupLeft = group.offset().left;
+    const columnLeft = column.element.offset().left;
+    const adjacentRightPosition = groupLeft + adjacentColumn.element.offset().left +
+        adjacentColumn.element.outerWidth();
 
     // Iterate through the amount of columns generating the position for both left & right interactions
     for (let i = getMaxColumns(); i > 0; i--) {
         columnWidths.push(
-            generateWidth(i, "left", () => {
-                return Math.round(column.element.offset().left + (singleColumnWidth * i));
-            }),
+            {
+                forColumn: "left", // These positions are for the left column in the pair
+                name: i + "/" + getMaxColumns(),
+                position: Math.round(columnLeft + (singleColumnWidth * i)),
+                width: getRoundedColumnWidth(100 / getMaxColumns() * i),
+            },
         );
-        if (adjacentColumn) {
-            // The right interaction is only used when we're crushing a column that isn't adjacent
-            columnWidths.push(
-                generateWidth(i, "right", () => {
-                    return Math.round(group.offset().left + group.width() - (singleColumnWidth * i));
-                }),
-            );
-        }
+    }
+
+    const currentWidth = Math.round(getColumnWidth(adjacentColumn) / getSmallestColumnWidth());
+    for (let i = 1; i < getMaxColumns(); i++) {
+        // The right interaction is only used when we're crushing a column that isn't adjacent
+        columnWidths.push(
+            {
+                forColumn: "right", // These positions are for the left column in the pair
+                name: i + "/" + getMaxColumns(),
+                position: Math.round(adjacentRightPosition - ((i + 1) * singleColumnWidth) - singleColumnWidth),
+                width: getRoundedColumnWidth(100 / getMaxColumns() * i),
+            },
+        );
     }
 
     return columnWidths;
@@ -305,4 +284,20 @@ export function createColumn(parent: ColumnGroup, width: number, index?: number)
         parent.addChild(column, index);
         return column;
     });
+}
+
+export interface ColumnWidth {
+    name: string;
+    position: number;
+    width: number;
+    forColumn: string;
+}
+
+export interface DropPosition {
+    left: number;
+    right: number;
+    insertIndex: number;
+    placement: string;
+    affectedColumn: Column;
+    canShrink: boolean;
 }

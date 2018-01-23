@@ -34,8 +34,13 @@ export default class ColumnGroup extends Block {
     private resizeColumnWidths: ColumnWidth[] = [];
     private resizeMaxGhostWidth: number;
     private resizeMouseDown: boolean;
-    private resizeLastColumnShrunk: Column;
+    private resizeLeftLastColumnShrunk: Column;
+    private resizeRightLastColumnShrunk: Column;
     private resizeLastPosition: number;
+    private resizeHistory: ResizeHistory = {
+        left: [],
+        right: [],
+    };
 
     private dropOverElement: boolean;
     private dropPositions: DropPosition[] = [];
@@ -122,6 +127,12 @@ export default class ColumnGroup extends Block {
 
             // Force the cursor to resizing
             $("body").css("cursor", "col-resize");
+
+            // Reset the resize history
+            this.resizeHistory = {
+                left: [],
+                right: [],
+            };
 
             this.resizeLastPosition = null;
             this.resizeMaxGhostWidth = null;
@@ -290,7 +301,7 @@ export default class ColumnGroup extends Block {
         }).mouseup(() => {
             this.resizing(false);
             this.resizeMouseDown = null;
-            this.resizeLastColumnShrunk = null;
+            this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
             this.dropPositions = [];
 
             this.unsetResizingColumns();
@@ -305,97 +316,203 @@ export default class ColumnGroup extends Block {
     }
 
     /**
+     * Determine which column should be adjusted in this resizing action
+     *
+     * @param {JQuery<HTMLElement>} group
+     * @param {number} currentPos
+     * @param {Column} column
+     * @param {ResizeHistory} history
+     * @returns {[Column , string , string]}
+     */
+    private determineAdjustedColumn(
+        group: JQuery<HTMLElement>,
+        currentPos: number,
+        column: Column,
+        history: ResizeHistory,
+    ): [Column, string, string] {
+        let modifyColumnInPair: string = "left";
+        let usedHistory: string;
+        const resizeColumnLeft = column.element.offset().left;
+        const resizeColumnWidth = column.element.outerWidth();
+        const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
+
+        let adjustedColumn: Column;
+        if (currentPos >= resizeHandlePosition) {
+            // Get the history for the opposite direction of resizing
+            if (history.left.length > 0) {
+                usedHistory = "left";
+                adjustedColumn = history.left.reverse()[0].adjustedColumn;
+                modifyColumnInPair = history.left.reverse()[0].modifyColumnInPair;
+            } else {
+                // If we're increasing the width of our column we need to locate a column that can shrink to the
+                // right
+                adjustedColumn = findShrinkableColumnForResize(column, "right");
+            }
+        } else {
+            if (history.right.length > 0) {
+                usedHistory = "right";
+                adjustedColumn = history.right.reverse()[0].adjustedColumn;
+                modifyColumnInPair = history.right.reverse()[0].modifyColumnInPair;
+            } else {
+                // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
+                // current element
+                if (getColumnWidth(column) <= getSmallestColumnWidth()) {
+                    modifyColumnInPair = "right";
+                    adjustedColumn = findShrinkableColumnForResize(column, "left");
+                } else {
+                    // If we're shrinking our column we can just increase the adjacent column
+                    adjustedColumn = getAdjacentColumn(column, "+1");
+                }
+            }
+        }
+
+        return [adjustedColumn, modifyColumnInPair, usedHistory];
+    }
+
+    /**
+     * Calculate the size of the resize ghost
+     *
+     * @param {JQuery<HTMLElement>} group
+     * @param {number} currentPos
+     * @param {Column} column
+     * @param {Column} adjustedColumn
+     * @param {string} modifyColumnInPair
+     * @param {number} maxGhostWidth
+     * @returns {[number , number]}
+     */
+    private calculateResizeGhostWidth(
+        group: JQuery<HTMLElement>,
+        currentPos: number,
+        column: Column,
+        adjustedColumn: Column,
+        modifyColumnInPair: string,
+        maxGhostWidth: number,
+    ): [number, number] {
+        const resizeColumnLeft = column.element.offset().left;
+        const resizeColumnWidth = column.element.outerWidth();
+
+        // Update the ghosts width and position to give a visual indication of the dragging
+        let ghostWidth = currentPos - group.offset().left;
+        if (ghostWidth <= group.width() / getMaxColumns()) {
+            ghostWidth = group.width() / getMaxColumns();
+        }
+
+        if (modifyColumnInPair === "right") {
+            // Ensure the handler cannot be dragged further than supported
+            ghostWidth = currentPos - group.offset().left;
+            const smallestGhostWidth = (getColumnIndexInGroup(column) + 1) *
+                (group.width() / getMaxColumns());
+            if ((currentPos - group.offset().left) < smallestGhostWidth) {
+                ghostWidth = smallestGhostWidth;
+            }
+        }
+
+        if (!adjustedColumn && ghostWidth > resizeColumnWidth || maxGhostWidth) {
+            ghostWidth = (maxGhostWidth ? maxGhostWidth : resizeColumnWidth + column.element.position().left);
+            if (!maxGhostWidth) {
+                maxGhostWidth = resizeColumnWidth + column.element.position().left;
+            }
+        }
+
+        // Reset the max ghost width when the user moves back from the edge
+        if ((resizeColumnWidth + resizeColumnLeft) < currentPos) {
+            maxGhostWidth = null;
+        }
+
+        return [ghostWidth, maxGhostWidth];
+    }
+
+    /**
+     * Record the resizing history for this action
+     *
+     * @param {string} usedHistory
+     * @param {string} direction
+     * @param {Column} adjustedColumn
+     * @param {string} modifyColumnInPair
+     */
+    private recordResizeHistory(
+        usedHistory: string,
+        direction: string,
+        adjustedColumn: Column,
+        modifyColumnInPair: string,
+    ) {
+        if (usedHistory) {
+            this.resizeHistory[usedHistory].pop();
+        }
+        this.resizeHistory[direction].push({
+            adjustedColumn,
+            modifyColumnInPair,
+        });
+    }
+
+    /**
      * Handle the resizing on mouse move, we always resize a pair of columns at once
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
      */
     private handleResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
-        let currentPos: number;
         let currentCol: ColumnWidth;
-        let modifyColumnInPair: string = "left"; // Determine if we're modifying the left or right column in the pair
 
         if (this.resizeMouseDown) {
             event.preventDefault();
+            const currentPos = event.pageX;
             const resizeColumnLeft = this.resizeColumnInstance.element.offset().left;
             const resizeColumnWidth = this.resizeColumnInstance.element.outerWidth();
             const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
-            currentPos = event.pageX;
+            const direction = (currentPos >= resizeHandlePosition) ? "right" : "left";
 
-            // Update the ghosts width and position to give a visual indication of the dragging
-            let ghostWidth = currentPos - group.offset().left;
-            if (ghostWidth <= group.width() / getMaxColumns()) {
-                ghostWidth = group.width() / getMaxColumns();
-            }
+            let adjustedColumn: Column;
+            let modifyColumnInPair: string; // We need to know if we're modifying the left or right column in the pair
+            let usedHistory: string; // Was the adjusted column pulled from history?
 
-            let adjustedColumn;
-            if (currentPos >= resizeHandlePosition) {
-                // If we're increasing the width of our column we need to locate a column that can shrink to the right
-                adjustedColumn = findShrinkableColumnForResize(this.resizeColumnInstance, "right");
-                if (adjustedColumn) {
-                    this.resizeLastColumnShrunk = adjustedColumn;
-                }
-            } else {
-                // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
-                // current element
-                if (getColumnWidth(this.resizeColumnInstance) <= getSmallestColumnWidth()) {
-                    modifyColumnInPair = "right";
-                    adjustedColumn = findShrinkableColumnForResize(this.resizeColumnInstance, "left");
-                    if (adjustedColumn) {
-                        this.resizeLastColumnShrunk = adjustedColumn;
-                    }
+            // Determine which column in the group should be adjusted for this action
+            [adjustedColumn, modifyColumnInPair, usedHistory] = this.determineAdjustedColumn(
+                group,
+                currentPos,
+                this.resizeColumnInstance,
+                this.resizeHistory,
+            );
 
-                    // Ensure the handler cannot be dragged further than supported
-                    ghostWidth = currentPos - group.offset().left;
-                    const smallestGhostWidth = (getColumnIndexInGroup(this.resizeColumnInstance) + 1) *
-                        (group.width() / getMaxColumns());
-                    if ((currentPos - group.offset().left) < smallestGhostWidth) {
-                        ghostWidth = smallestGhostWidth;
-                    }
-                } else {
-                    // If we're shrinking our column we can just increase the adjacent column
-                    adjustedColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
-                }
-            }
+            // Calculate the ghost width based on mouse position and bounds of allowed sizes
+            const [ghostWidth, maxGhostWidth] = this.calculateResizeGhostWidth(
+                group,
+                currentPos,
+                this.resizeColumnInstance,
+                adjustedColumn,
+                modifyColumnInPair,
+                this.resizeMaxGhostWidth,
+            );
+            this.resizeMaxGhostWidth = maxGhostWidth;
 
-            if (!adjustedColumn && ghostWidth > resizeColumnWidth ||
-                this.resizeMaxGhostWidth
-            ) {
-                ghostWidth = (this.resizeMaxGhostWidth ? this.resizeMaxGhostWidth :
-                    resizeColumnWidth + this.resizeColumnInstance.element.position().left
-                );
-                if (!this.resizeMaxGhostWidth) {
-                    this.resizeMaxGhostWidth = resizeColumnWidth + this.resizeColumnInstance.element.position().left;
-                }
-            }
-
-            // Reset the max ghost width when the user moves back from the edge
-            if ((resizeColumnWidth + resizeColumnLeft) < currentPos) {
-                this.resizeMaxGhostWidth = null;
-            }
-
-            // We take the border width of the width to ensure it's under the mouse exactly
             this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
-            if (adjustedColumn && !this.resizeMaxGhostWidth && this.resizeColumnWidths) {
+            if (adjustedColumn && !maxGhostWidth && this.resizeColumnWidths) {
                 currentCol = this.resizeColumnWidths.find((val) => {
                     return (currentPos > (val.position - 25) && currentPos < (val.position + 25)) &&
                         val.forColumn === modifyColumnInPair;
                 });
 
-                let mainColumn = this.resizeColumnInstance;
-                // If we're using the left data set, we're actually resizing the right column of the group
-                if (modifyColumnInPair === "right") {
-                    mainColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
-                }
-
                 if (currentCol) {
+                    let mainColumn = this.resizeColumnInstance;
+                    // If we're using the left data set, we're actually resizing the right column of the group
+                    if (modifyColumnInPair === "right") {
+                        mainColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
+                    }
+
                     // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
                     // one being performed now. This occurs as we re-calculate the column positions on resize
                     if (getColumnWidth(mainColumn) !== currentCol.width &&
                         this.resizeLastPosition !== currentCol.position
                     ) {
+                        this.recordResizeHistory(
+                            usedHistory,
+                            direction,
+                            adjustedColumn,
+                            modifyColumnInPair,
+                        );
                         this.resizeLastPosition = currentCol.position;
+
                         resizeColumn(mainColumn, currentCol.width, adjustedColumn);
 
                         // If we do a resize, re-calculate the column widths
@@ -689,6 +806,17 @@ export default class ColumnGroup extends Block {
             return;
         }
     }
+}
+
+interface ResizeHistory {
+    left: ResizeHistoryItem[];
+    right: ResizeHistoryItem[];
+    [key: string]: ResizeHistoryItem[];
+}
+
+interface ResizeHistoryItem {
+    adjustedColumn: Column,
+    modifyColumnInPair: string;
 }
 
 interface BlockRemovedParams {

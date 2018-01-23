@@ -91,13 +91,14 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
   function updateColumnWidth(column, width) {
     column.stage.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
   }
-
   /**
    * Calculate the drop positions of a column group
    *
    * @param {ColumnGroup} group
    * @returns {any[]}
    */
+
+
   function calculateDropPositions(group) {
     var dropPositions = [];
     group.children().forEach(function (column, index) {
@@ -148,7 +149,6 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
       return widthA + (widthB ? widthB : 0);
     });
   }
-
   /**
    * Determine the pixel position of every column that can be created within the group
    *
@@ -156,45 +156,37 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
    * @param {JQuery} group
    * @returns {ColumnWidth[]}
    */
+
+
   function determineColumnWidths(column, group) {
     var singleColumnWidth = group.width() / getMaxColumns();
     var adjacentColumn = getAdjacentColumn(column, "+1");
     var columnWidths = [];
-    /**
-     * Generate an individual width object
-     *
-     * @param {number} index
-     * @param {string} forColumn
-     * @param {() => number} positionFn
-     * @returns {ColumnWidth}
-     */
-
-    function generateWidth(index, forColumn, positionFn) {
-      return {
-        forColumn: forColumn,
-        // These positions are for the left column in the pair
-        name: index + "/" + getMaxColumns(),
-        position: positionFn(),
-        width: getRoundedColumnWidth(100 / getMaxColumns() * index)
-      };
-    } // Iterate through the amount of columns generating the position for both left & right interactions
-
-
-    var _loop = function _loop(i) {
-      columnWidths.push(generateWidth(i, "left", function () {
-        return Math.round(column.element.offset().left + singleColumnWidth * i);
-      }));
-
-      if (adjacentColumn) {
-        // The right interaction is only used when we're crushing a column that isn't adjacent
-        columnWidths.push(generateWidth(i, "right", function () {
-          return Math.round(group.offset().left + group.width() - singleColumnWidth * i);
-        }));
-      }
-    };
+    var groupLeft = group.offset().left;
+    var columnLeft = column.element.offset().left;
+    var adjacentRightPosition = groupLeft + adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(); // Iterate through the amount of columns generating the position for both left & right interactions
 
     for (var i = getMaxColumns(); i > 0; i--) {
-      _loop(i);
+      columnWidths.push({
+        forColumn: "left",
+        // These positions are for the left column in the pair
+        name: i + "/" + getMaxColumns(),
+        position: Math.round(columnLeft + singleColumnWidth * i),
+        width: getRoundedColumnWidth(100 / getMaxColumns() * i)
+      });
+    }
+
+    var currentWidth = Math.round(getColumnWidth(adjacentColumn) / getSmallestColumnWidth());
+
+    for (var _i = 1; _i < getMaxColumns(); _i++) {
+      // The right interaction is only used when we're crushing a column that isn't adjacent
+      columnWidths.push({
+        forColumn: "right",
+        // These positions are for the left column in the pair
+        name: _i + "/" + getMaxColumns(),
+        position: Math.round(adjacentRightPosition - (_i + 1) * singleColumnWidth - singleColumnWidth),
+        width: getRoundedColumnWidth(100 / getMaxColumns() * _i)
+      });
     }
 
     return columnWidths;
