@@ -34,10 +34,42 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var backgroundColor = data.show_overlay === "never_show" ? "transparent" : "transparent";
+      var backgroundColor = data.show_overlay === "never_show" ? "transparent" : this.convertHexToRgba();
       return {
         style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
       };
+    };
+    /**
+     * Convert HEX to RGBA for transparent overlay for the preview
+     *
+     * @returns {string}
+     */
+
+
+    _proto.convertHexToRgba = function convertHexToRgba() {
+      var data = this.getData();
+
+      if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+        var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color),
+            red = parseInt(colors[1], 16),
+            green = parseInt(colors[2], 16),
+            blue = parseInt(colors[3], 16),
+            alpha = this.convertPercentToDecimal(data.overlay_transparency);
+        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+      } else {
+        return "transparent";
+      }
+    };
+    /**
+     * Convert percent to decimal for transparent overlay for the preview
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+
+
+    _proto.convertPercentToDecimal = function convertPercentToDecimal(value) {
+      return (parseInt(value, 10) / 100).toString();
     };
     /**
      * Get the banner content attributes for the storefront

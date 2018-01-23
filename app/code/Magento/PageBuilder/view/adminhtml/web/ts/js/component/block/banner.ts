@@ -28,8 +28,37 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let backgroundColor:string = data.show_overlay === "never_show" ? "transparent" : "transparent";
+        let backgroundColor:string = data.show_overlay === "never_show" ? "transparent" : this.convertHexToRgba();
         return {style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"};
+    }
+
+    /**
+     * Convert HEX to RGBA for transparent overlay for the preview
+     *
+     * @returns {string}
+     */
+    private convertHexToRgba() {
+        const data = this.getData();
+        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+            let colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color),
+                red = parseInt(colors[1], 16),
+                green = parseInt(colors[2], 16),
+                blue = parseInt(colors[3], 16),
+                alpha = this.convertPercentToDecimal(data.overlay_transparency);
+            return "rgba(" + red + "," + green +"," + blue + "," + alpha + ")";
+        } else {
+            return "transparent";
+        }
+    }
+
+    /**
+     * Convert percent to decimal for transparent overlay for the preview
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    private convertPercentToDecimal(value: string) {
+        return (parseInt(value, 10) / 100).toString();
     }
 
     /**

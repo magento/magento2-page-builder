@@ -32,7 +32,7 @@ define(["../../../component/config"], function (_config) {
         mobile_image: "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-        overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : "1",
+        overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
         show_button: "",
         show_overlay: ""
       }; // Detect if there is a mobile image and update the response
@@ -44,13 +44,29 @@ define(["../../../component/config"], function (_config) {
       return Promise.resolve(response);
     };
     /**
-     * Convert RGBA to HEX for transparent overlay for the element
+     * Convert RGBA to HEX for content overlay color
      *
-     * @returns {string}
+     * @returns string
      */
 
 
-    _proto.convertRgbaToHex = function convertRgbaToHex(value) {};
+    _proto.convertRgbaToHex = function convertRgbaToHex(value) {
+      var r = parseInt(value.match(/\d+/g)[0]).toString(16);
+      var g = parseInt(value.match(/\d+/g)[1]).toString(16);
+      var b = parseInt(value.match(/\d+/g)[2]).toString(16);
+      return "#" + r + g + b;
+    };
+    /**
+     * Extract the Alpha component from RGBA for overlay transparency
+     *
+     * @returns int
+     */
+
+
+    _proto.extractAlphaFromRgba = function extractAlphaFromRgba(value) {
+      var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]);
+      return a * 100;
+    };
     /**
      * Convert decimal to percent for transparent overlay for the element
      *
