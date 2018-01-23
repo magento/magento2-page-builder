@@ -18,9 +18,15 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getBannerAttributes() {
+    public getBannerAttributes(type: string) {
         const data = this.getData();
-        let backgroundImage:string = this.getImage() ? "url(" + this.getImage() + ")" : "none";
+        let backgroundImage: string = "";
+        if (type === 'image') {
+            backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
+        } else if (type === 'mobileImage') {
+            backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+        }
+
         return {style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"};
     }
 
@@ -123,6 +129,22 @@ export default class Banner extends Block {
     }
 
     /**
+     * Get the mobile image attributes for the render
+     *
+     * @returns {any}
+     */
+    public getMobileImage() {
+        const data = this.getData();
+        if (data.mobile_image === "" || data.mobile_image === undefined) {
+            return {};
+        }
+        if (_.isEmpty(data.mobile_image[0])) {
+            return;
+        }
+        return this.getImageUrl(data.mobile_image);
+    }
+
+    /**
      * Show banner details
      *
      * @returns {any}
@@ -138,48 +160,6 @@ export default class Banner extends Block {
      */
     public disableDetails() {
         this.detailsEnabled(false);
-    }
-
-    /**
-     * Does the banner have a mobile image?
-     *
-     * @returns {boolean}
-     */
-    public hasMobileImage() {
-        const data = this.getData();
-        return !(data.mobile_image === "" || data.mobile_image === undefined || _.isEmpty(data.mobile_image[0]));
-    }
-
-    /**
-     * Get the desktop (main) image attributes for the render
-     *
-     * @returns {any}
-     */
-    public getMainImageAttributes() {
-        const data = this.getData();
-        if (data.image === "" || data.image === undefined) {
-            return {};
-        }
-        if (_.isEmpty(data.image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
-    }
-
-    /**
-     * Get the mobile image attributes for the render
-     *
-     * @returns {any}
-     */
-    public getMobileImageAttributes() {
-        const data = this.getData();
-        if (data.mobile_image === "" || data.mobile_image === undefined) {
-            return {};
-        }
-        if (_.isEmpty(data.mobile_image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
     }
 
     /**

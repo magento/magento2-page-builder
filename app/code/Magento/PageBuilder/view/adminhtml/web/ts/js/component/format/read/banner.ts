@@ -30,11 +30,11 @@ export default class Banner implements ReadInterface {
         const response: DataObject = {
             background_size: element.style.backgroundSize,
             button_text: element.dataset.buttonText,
-            image: "",
+            image: this.generateImageObject(element.querySelector('.pagebuilder-mobile-hidden').getAttribute('style').split(';')[0]),
             link_url: element.querySelector("a").getAttribute("href"),
             message: element.querySelector('.pagebuilder-poster-content div').innerHTML,
             minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
-            mobile_image: "",
+            mobile_image: element.querySelector('.pagebuilder-mobile-only') ? this.generateImageObject(element.querySelector('.pagebuilder-mobile-only').getAttribute('style').split(';')[0]) : "",
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
             overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
@@ -85,7 +85,7 @@ export default class Banner implements ReadInterface {
     }
 
     /**
-     * Magentorate the image object
+     * Fetch the image object
      *
      * @param {string} src
      * @returns {ImageObject}

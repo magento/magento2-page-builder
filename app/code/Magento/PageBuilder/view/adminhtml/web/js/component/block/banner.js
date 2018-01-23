@@ -24,9 +24,16 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
      *
      * @returns {any}
      */
-    _proto.getBannerAttributes = function getBannerAttributes() {
+    _proto.getBannerAttributes = function getBannerAttributes(type) {
       var data = this.getData();
-      var backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
+      var backgroundImage = "";
+
+      if (type === 'image') {
+        backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
+      } else if (type === 'mobileImage') {
+        backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+      }
+
       return {
         style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"
       };
@@ -135,6 +142,26 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
       return this.getImageUrl(data.image);
     };
     /**
+     * Get the mobile image attributes for the render
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getMobileImage = function getMobileImage() {
+      var data = this.getData();
+
+      if (data.mobile_image === "" || data.mobile_image === undefined) {
+        return {};
+      }
+
+      if (_underscore.isEmpty(data.mobile_image[0])) {
+        return;
+      }
+
+      return this.getImageUrl(data.mobile_image);
+    };
+    /**
      * Show banner details
      *
      * @returns {any}
@@ -153,65 +180,6 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
 
     _proto.disableDetails = function disableDetails() {
       this.detailsEnabled(false);
-    };
-    /**
-     * Does the banner have a mobile image?
-     *
-     * @returns {boolean}
-     */
-
-
-    _proto.hasMobileImage = function hasMobileImage() {
-      var data = this.getData();
-      return !(data.mobile_image === "" || data.mobile_image === undefined || _underscore.isEmpty(data.mobile_image[0]));
-    };
-    /**
-     * Get the desktop (main) image attributes for the render
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getMainImageAttributes = function getMainImageAttributes() {
-      var data = this.getData();
-
-      if (data.image === "" || data.image === undefined) {
-        return {};
-      }
-
-      if (_underscore.isEmpty(data.image[0])) {
-        return;
-      }
-
-      return {
-        src: this.getImageUrl(data.image),
-        alt: data.alt,
-        title: data.title_tag
-      };
-    };
-    /**
-     * Get the mobile image attributes for the render
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getMobileImageAttributes = function getMobileImageAttributes() {
-      var data = this.getData();
-
-      if (data.mobile_image === "" || data.mobile_image === undefined) {
-        return {};
-      }
-
-      if (_underscore.isEmpty(data.mobile_image[0])) {
-        return;
-      }
-
-      return {
-        src: this.getImageUrl(data.mobile_image),
-        alt: data.alt,
-        title: data.title_tag
-      };
     };
     /**
      * Retrieve the image URL with directive
