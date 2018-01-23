@@ -5,6 +5,8 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import StyleAttributeFilter from "../../format/style-attribute-filter";
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import Block from "../block";
 
 interface PreviewData {
@@ -15,6 +17,7 @@ export default class PreviewBlock {
     public parent: Block;
     public config: any;
     public data: PreviewData = {};
+    public previewStyle: KnockoutComputed<{}>;
 
     /**
      * PreviewBlock constructor
@@ -23,8 +26,11 @@ export default class PreviewBlock {
      * @param {Object} config
      */
     constructor(parent: Block, config: object) {
+        const styleAttributeMapper = new StyleAttributeMapper();
+        const styleAttributeFilter = new StyleAttributeFilter();
+
         this.parent = parent;
-        this.config = config;
+        this.config = config || {};
 
         // Create an empty observable for all fields
         if (this.config.fields) {
@@ -42,6 +48,45 @@ export default class PreviewBlock {
             },
             this.parent.id,
         );
+
+        this.previewStyle = ko.computed(() => {
+            // Extract data values our of observable functions
+            const styles = styleAttributeMapper.toDom(
+                styleAttributeFilter.filter(
+                    _.mapObject(this.data, (value) => {
+                        if (ko.isObservable(value)) {
+                            return value();
+                        }
+                        return value;
+                    }),
+                ),
+            );
+            // The style attribute mapper converts images to directives, override it to include the correct URL
+            if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
+                styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+            }
+            if (this.data.margins_and_paddings && typeof this.data.margins_and_paddings() === "object") {
+                styles.margins = this.data.margins_and_padding().margin.top + "px " +
+                    this.data.margins_and_padding().margin.right + "px " +
+                    this.data.margins_and_padding().margin.bottom + "px " +
+                    this.data.margins_and_padding().margin.left + "px ";
+                styles.padding = this.data.margins_and_padding().padding.top + "px " +
+                this.data.margins_and_padding().padding.right + "px " +
+                this.data.margins_and_padding().padding.bottom + "px " +
+                this.data.margins_and_padding().padding.left + "px ";
+            }
+
+            return styles;
+        });
+
+        // Force the columnStyles to update on changes to stored style attribute data
+        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
+            if (ko.isObservable(this.data[key])) {
+                this.data[key].subscribe(() => {
+                    this.previewStyle.notifySubscribers();
+                });
+            }
+        });
     }
 
     /**
@@ -53,7 +98,6 @@ export default class PreviewBlock {
         if (this.config.preview_template) {
             return this.config.preview_template;
         }
-
         return "";
     }
 

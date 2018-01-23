@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["knockout", "underscore"], function (_knockout, _underscore) {
+define(["knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper"], function (_knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -19,8 +21,11 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
       this.parent = void 0;
       this.config = void 0;
       this.data = {};
+      this.previewStyle = void 0;
+      var styleAttributeMapper = new _styleAttributeMapper();
+      var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
-      this.config = config; // Create an empty observable for all fields
+      this.config = config || {}; // Create an empty observable for all fields
 
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
@@ -34,6 +39,35 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
           _this.updateDataValue(key, value);
         });
       }, this.parent.id);
+      this.previewStyle = _knockout.computed(function () {
+        // Extract data values our of observable functions
+        var styles = styleAttributeMapper.toDom(styleAttributeFilter.filter(_underscore.mapObject(_this.data, function (value) {
+          if (_knockout.isObservable(value)) {
+            return value();
+          }
+
+          return value;
+        }))); // The style attribute mapper converts images to directives, override it to include the correct URL
+
+        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
+          styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
+        }
+
+        if (_this.data.margins_and_paddings && _typeof(_this.data.margins_and_paddings()) === "object") {
+          styles.margins = _this.data.margins_and_padding().margin.top + "px " + _this.data.margins_and_padding().margin.right + "px " + _this.data.margins_and_padding().margin.bottom + "px " + _this.data.margins_and_padding().margin.left + "px ";
+          styles.padding = _this.data.margins_and_padding().padding.top + "px " + _this.data.margins_and_padding().padding.right + "px " + _this.data.margins_and_padding().padding.bottom + "px " + _this.data.margins_and_padding().padding.left + "px ";
+        }
+
+        return styles;
+      }); // Force the columnStyles to update on changes to stored style attribute data
+
+      Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
+        if (_knockout.isObservable(_this.data[key])) {
+          _this.data[key].subscribe(function () {
+            _this.previewStyle.notifySubscribers();
+          });
+        }
+      });
     }
     /**
      * Retrieve the template for the preview block

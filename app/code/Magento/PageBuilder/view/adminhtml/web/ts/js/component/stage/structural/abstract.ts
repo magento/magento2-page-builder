@@ -6,7 +6,6 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
-import Appearance from "../../appearance/appearance";
 import {DataObject} from "../../data-store";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
@@ -20,7 +19,6 @@ import { Options } from "./options";
 import { Option } from "./options/option";
 
 export default class Structural extends EditableArea implements StructuralInterface {
-    public appearance: Appearance;
     public config: any;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
@@ -39,20 +37,17 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
-     * @param appearance
      */
     constructor(
         parent: EditableArea,
         stage: Stage,
         config: any = {},
-        appearance: Appearance = new Appearance({}),
     ) {
         super(stage);
         this.setChildren(this.children);
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
-        this.appearance = appearance;
         this.parent = parent;
         this.config = config;
     }
@@ -162,8 +157,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getStyle() {
-        let styleAttributes = this.getData();
-        styleAttributes = this.appearance.add(styleAttributes);
+        const styleAttributes = this.getData();
         return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     }
 

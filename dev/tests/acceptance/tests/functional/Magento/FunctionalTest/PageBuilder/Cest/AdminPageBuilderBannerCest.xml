@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <cest name="AdminPageBuilderBannerCest">
+        <annotations>
+            <features value="PageBuilder CMS"/>
+            <stories value="PageBuilder Banner Configuration"/>
+            <group value="pagebuilder"/>
+            <env value="chrome"/>
+            <env value="firefox"/>
+            <env value="phantomjs"/>
+        </annotations>
+        <before>
+            <loginAsAdmin stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <test name="CanAddBanner">
+            <annotations>
+                <title value="Add an banner content block into stage"/>
+                <description value="A user should be able to add an banner into a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84673"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+                <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.banner}}" stepKey="verifyLinkOpensNewWindow"/>
+        </test>
+        <test name="CanRemoveBanner">
+            <annotations>
+                <title value="Remove banner content block from stage"/>
+                <description value="A user should be able to remove banner block from a row."/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-84895"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        </test>
+
+        <test name="BannerPosterDefaultValues">
+            <annotations>
+                <title value="Check default value of a banner"/>
+                <description value="Check default value of a banner"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-83553"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAppearanceTypeDefaultInAdmin">
+                <argument name="property" value="PageBuilderBannerAppearanceDefaultProperty"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingBottomInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+                <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <waitForElementVisible time="2" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInAdmin" />
+            <seeElementInDOM selector="{{BannerOnBackend.poster}}" stepKey="verifyPosterInAdmin"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend"/>
+        </test>
+
+        <test name="BannerCollageLeftValues">
+            <annotations>
+                <title value="Check value of a collage left banner"/>
+                <description value="Check value of a collage left banner"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-83553"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
+                <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingBottomInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+                <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <waitForElementVisible time="2" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
+            <seeElementInDOM selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
+        </test>
+
+        <test name="BannerCollageCenteredValues">
+            <annotations>
+                <title value="Check value of a collage centered banner"/>
+                <description value="Check value of a collage centered banner"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-83553"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
+                <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingBottomInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+                <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <waitForElementVisible time="2" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
+            <seeElementInDOM selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend"/>
+        </test>
+
+        <test name="BannerCollageRightValues">
+            <annotations>
+                <title value="Check value of a collage right banner"/>
+                <description value="Check value of a collage right banner"/>
+                <severity value="CRITICAL"/>
+                <testCaseId value="MAGETWO-83553"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
+                <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingBottomInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
+                <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+                <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <waitForElementVisible time="2" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
+            <seeElementInDOM selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
+            <seeElementInDOM selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
+        </test>
+
+        <test name="BannerHasAdvancedFormSection">
+            <annotations>
+                <title value="Banner has Advanced form section"/>
+                <description value="A user should be able to configure advanced settings for banner"/>
+                <severity value="CRITICAL"/>
+                <group value="pagebuilder"/>
+            </annotations>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+            <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+            <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+                <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+                <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            </actionGroup>
+            <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+                <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            </actionGroup>
+        </test>
+    </cest>
+</config>

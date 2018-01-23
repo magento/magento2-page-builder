@@ -19,7 +19,6 @@
         </deps>
         <dataScope>data</dataScope>
         <namespace>banner_form</namespace>
-
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -39,16 +38,62 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="general">
+    <fieldset name="appearance">
+        <settings>
+            <label translate="true">Appearance</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="appearance" sortOrder="1" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">poster</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Appearance</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="10" xsi:type="array">
+                                <item name="value" xsi:type="string">poster</item>
+                                <item name="label" xsi:type="string" translate="true">Poster</item>
+                            </option>
+                            <option name="20" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-left</item>
+                                <item name="label" xsi:type="string" translate="true">Collage on the left</item>
+                            </option>
+                            <option name="30" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-centered</item>
+                                <item name="label" xsi:type="string" translate="true">Collage centered</item>
+                            </option>
+                            <option name="40" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-right</item>
+                                <item name="label" xsi:type="string" translate="true">Collage on the right</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+
+    <fieldset name="images">
         <settings>
             <label translate="true">Images</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="image" formElement="fileUploader">
+        <field name="background_image" formElement="fileUploader">
             <settings>
                 <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
-                <label translate="true">Image</label>
+                <label translate="true">Background Image</label>
                 <componentType>fileUploader</componentType>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
@@ -131,30 +176,6 @@
             </formElements>
         </field>
     </fieldset>
-    <fieldset name="seo">
-        <settings>
-            <label translate="true">Seo</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="alt" sortOrder="10" formElement="input">
-            <settings>
-                <label translate="true">Alternative Text</label>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-        </field>
-        <field name="title_tag" sortOrder="20" formElement="input">
-            <settings>
-                <label translate="true">Title Tag</label>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-        </field>
-    </fieldset>
     <fieldset name="advanced">
         <settings>
             <label translate="true">Advanced</label>
@@ -206,7 +227,25 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="margin" xsi:type="array">
+                            <item name="top" xsi:type="number">0</item>
+                            <item name="right" xsi:type="number">0</item>
+                            <item name="bottom" xsi:type="number">0</item>
+                            <item name="left" xsi:type="number">0</item>
+                        </item>
+                        <item name="padding" xsi:type="array">
+                            <item name="top" xsi:type="number">40</item>
+                            <item name="right" xsi:type="number">40</item>
+                            <item name="bottom" xsi:type="number">40</item>
+                            <item name="left" xsi:type="number">40</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>

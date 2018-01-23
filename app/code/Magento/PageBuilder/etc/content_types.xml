@@ -50,9 +50,15 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
             <appearances>
-                <appearance name="align-top" component="Magento_PageBuilder/js/component/appearance/column/align-top"/>
-                <appearance name="align-center" component="Magento_PageBuilder/js/component/appearance/column/align-center"/>
-                <appearance name="align-bottom" component="Magento_PageBuilder/js/component/appearance/column/align-bottom"/>
+                <appearance name="align-top">
+                    <data name="align_self">flex-start</data>
+                </appearance>
+                <appearance name="align-center">
+                    <data name="align_self">center</data>
+                </appearance>
+                <appearance name="align-bottom">
+                    <data name="align_self">flex-end</data>
+                </appearance>
             </appearances>
         </type>
         <type name="text" translate="label" sortOrder="20">
@@ -129,7 +135,6 @@
         <type name="banner" translate="label" sortOrder="1">
             <label>Banner</label>
             <icon>icon-pagebuilder-image</icon>
-            <component>Magento_PageBuilder/js/component/block/banner</component>
             <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
             <form>banner_form</form>
@@ -139,6 +144,40 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
                 <reader name="banner" component="Magento_PageBuilder/js/component/format/read/banner"/>
             </readers>
+            <appearances>
+                <appearance name="collage-left">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-left.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-left.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-centered">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-centered.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-centered.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-right">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-right.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-right.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="poster">
+                    <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="poster" component="Magento_PageBuilder/js/component/format/read/banner"/>
+                    </readers>
+                </appearance>
+            </appearances>
         </type>
         <type name="video" translate="label" sortOrder="10">
             <label>Video</label>

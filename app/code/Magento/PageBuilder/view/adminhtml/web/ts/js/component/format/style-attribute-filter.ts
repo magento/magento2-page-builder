@@ -37,6 +37,10 @@ export default class StyleAttributeFilter {
         "width",
     ];
 
+    public getAllowedAttributes(): [string] {
+        return this.allowedAttributes;
+    }
+
     /**
      * Filter allowed attributes from object
      *

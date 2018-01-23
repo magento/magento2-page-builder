@@ -5,15 +5,20 @@
  */
 -->
 
-<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-image">
-    <!-- ko ifnot: preview.data.image() -->
-        <i class="icon-pagebuilder-image"></i> <span data-bind="text: $t('Banner');"></span>
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview" style="box-sizing: border-box;">
+    <!-- ko ifnot: preview.data.background_image() -->
+    <i class="icon-pagebuilder-banner"></i> <span data-bind="text: $t('Banner');"></span>
     <!-- /ko -->
-    <!-- ko if: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-        <img data-bind="attr: { src: preview.data.image()[0].url, alt: preview.data.alt(), title: preview.data.title_tag(), style:'width:initial; max-width:20%;' }" />
-        <!-- ko if: preview.data.link_text() -->
-            <div data-bind="text: preview.data.link_text()"></div>
-        <!-- /ko -->
+    <!-- ko if: preview.data.background_image() && typeof preview.data.background_image()[0] !== 'undefined' -->
+    <div data-bind="style: {
+        margin: preview.previewStyle().margin,
+        padding: preview.previewStyle().padding,
+        backgroundImage: preview.previewStyle().backgroundImage
+        }"
+        style="background-repeat: no-repeat; background-size: 100%; box-sizing: border-box; min-height: 250px;">
+        <div style="background: white; box-sizing: border-box; min-height: 100px; padding:35px; width: 50%;">
+        </div>
+    </div>
     <!-- /ko -->
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>
