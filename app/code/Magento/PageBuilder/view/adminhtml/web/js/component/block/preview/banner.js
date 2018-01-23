@@ -19,16 +19,14 @@ define(["mage/translate", "./block"], function (_translate, _block) {
      * @returns {any}
      */
     _proto.getPreviewBannerAttributes = function getPreviewBannerAttributes() {
-      var backgroundImage = "none",
-          minHeight = "250px",
-          backgroundSize = "cover";
+      var backgroundImage = "none";
 
       if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
         backgroundImage = "url(" + this.data.image()[0].url + ")";
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; min-height: " + minHeight + "; background-size: " + backgroundSize + ";"
+        style: "background-image: " + backgroundImage + "; min-height: " + this.data.minimum_height() + "px; background-size: " + this.data.background_size() + ";"
       };
     };
     /**

@@ -14,13 +14,11 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getPreviewBannerAttributes() {
-        let backgroundImage:string = "none",
-            minHeight:string = "250px",
-            backgroundSize:string = "cover";
+        let backgroundImage:string = "none";
         if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
             backgroundImage = "url(" + this.data.image()[0].url + ")";
         }
-        return {style: "background-image: " + backgroundImage + "; min-height: " + minHeight + "; background-size: " + backgroundSize + ";"};
+        return {style: "background-image: " + backgroundImage + "; min-height: " + this.data.minimum_height() + "px; background-size: " + this.data.background_size() + ";"};
     }
 
     /**
