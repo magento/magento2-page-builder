@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "mage/translate", "../config", "./block"], function (_underscore, _translate, _config, _block) {
+define(["knockout", "underscore", "mage/translate", "../config", "./block"], function (_knockout, _underscore, _translate, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -8,7 +8,13 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
     _inheritsLoose(Banner, _Block);
 
     function Banner() {
-      return _Block.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.detailsEnabled = _knockout.observable(false), _temp) || _this;
     }
 
     var _proto = Banner.prototype;
@@ -95,6 +101,26 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
       }
 
       return this.getImageUrl(data.image);
+    };
+    /**
+     * Show banner details
+     *
+     * @returns {any}
+     */
+
+
+    _proto.enableDetails = function enableDetails() {
+      this.detailsEnabled(true);
+    };
+    /**
+     * Hide banner details
+     *
+     * @returns {any}
+     */
+
+
+    _proto.disableDetails = function disableDetails() {
+      this.detailsEnabled(false);
     };
     /**
      * Does the banner have a mobile image?

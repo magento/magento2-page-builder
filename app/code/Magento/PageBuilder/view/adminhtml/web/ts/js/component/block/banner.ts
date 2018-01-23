@@ -3,12 +3,15 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import _ from "underscore";
 import $t from "mage/translate";
 import Config from "../config";
 import Block from "./block";
 
 export default class Banner extends Block {
+
+    private detailsEnabled: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the storefront
@@ -88,6 +91,24 @@ export default class Banner extends Block {
             return;
         }
         return this.getImageUrl(data.image);
+    }
+
+    /**
+     * Show banner details
+     *
+     * @returns {any}
+     */
+    public enableDetails() {
+        this.detailsEnabled(true);
+    }
+
+    /**
+     * Hide banner details
+     *
+     * @returns {any}
+     */
+    public disableDetails() {
+        this.detailsEnabled(false);
     }
 
     /**

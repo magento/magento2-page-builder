@@ -6,12 +6,12 @@
 -->
 
 <div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
-    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }">
+    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }, event: { mouseover: enableDetails, mouseout: disableDetails }">
         <div class="pagebuilder-banner-wrapper" data-bind="attr: getBannerAttributes()">
             <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
                 <div class="pagebuilder-poster-content" data-bind="attr: getContentAttributes()">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text"></button>
+                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, visible: detailsEnabled"></button>
                 </div>
             </div>
         </div>
