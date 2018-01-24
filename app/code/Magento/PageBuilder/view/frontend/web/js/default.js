@@ -40,12 +40,25 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
 
-        $('div[data-role="banner"] .pagebuilder-banner-on-hover').each(function (index, element) {
+        $('div[data-role="banner"] .pagebuilder-banner-show-button').each(function (index, element) {
             $(element).hover(
                 function() {
                     $(element).find('.pagebuilder-banner-button').css('visibility', 'visible');
                 }, function() {
                     $(element).find('.pagebuilder-banner-button').css('visibility', 'hidden');
+                }
+            );
+        });
+
+        $('div[data-role="banner"] .pagebuilder-banner-show-overlay-hover').each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-poster-overlay'),
+                overlayColor = overlayEl.css('background-color');
+            overlayEl.css('background-color', 'transparent');
+            $(element).hover(
+                function() {
+                    overlayEl.css('background-color', overlayColor);
+                }, function() {
+                    overlayEl.css('background-color', 'transparent');
                 }
             );
         });

@@ -38,10 +38,19 @@ export default class Banner implements ReadInterface {
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
             overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-            show_button: element.querySelector(".pagebuilder-banner-on-hover") ? "on_hover" : "always",
-            show_overlay: ""
+            show_button: element.querySelector(".pagebuilder-banner-show-button") ? "on_hover" : "always",
+            show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector(".pagebuilder-banner-show-overlay"))
         };
         return Promise.resolve(response);
+    }
+
+    /**
+     * Get show overlay setting
+     *
+     * @returns string
+     */
+    private getShowOverlay(value: string) {
+        return value === "always" || "never_show";
     }
 
     /**
