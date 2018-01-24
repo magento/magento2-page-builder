@@ -11,7 +11,28 @@ import Block from "./block";
 
 export default class Banner extends Block {
 
-    private detailsEnabled: KnockoutObservable<boolean> = ko.observable(false);
+    private isButtonVisible: KnockoutObservable<boolean> = ko.observable(true);
+
+    /**
+     * Get the anchor attributes for the storefront
+     *
+     * @returns {any}
+     */
+    public getAnchorAttributes() {
+        const data = this.getData();
+        if (data.show_button === "on_hover") {
+            return {href: data.link_url, target: data.open_in_new_tab === "1" ? "_blank" : false, class: 'pagebuilder-banner-button'};
+        }
+        return {href: data.link_url, target: data.open_in_new_tab === "1" ? "_blank" : false};
+    }
+
+    public getEvent() {
+        const data = this.getData();
+        if (data.show_button === "on_hover") {
+            return {event: ' mouseover: this.isButtonVisible(true), mouseout: this.isButtonVisible(false) ' };
+        }
+        return "";
+    }
 
     /**
      * Get the banner wrapper attributes for the storefront
@@ -26,7 +47,6 @@ export default class Banner extends Block {
         } else if (type === 'mobileImage') {
             backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
         }
-
         return {style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"};
     }
 
@@ -142,24 +162,6 @@ export default class Banner extends Block {
             return;
         }
         return this.getImageUrl(data.mobile_image);
-    }
-
-    /**
-     * Show banner details
-     *
-     * @returns {any}
-     */
-    public enableDetails() {
-        this.detailsEnabled(true);
-    }
-
-    /**
-     * Hide banner details
-     *
-     * @returns {any}
-     */
-    public disableDetails() {
-        this.detailsEnabled(false);
     }
 
     /**

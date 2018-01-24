@@ -14,16 +14,51 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.detailsEnabled = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.isButtonVisible = _knockout.observable(true), _temp) || _this;
     }
 
     var _proto = Banner.prototype;
 
     /**
+     * Get the anchor attributes for the storefront
+     *
+     * @returns {any}
+     */
+    _proto.getAnchorAttributes = function getAnchorAttributes() {
+      var data = this.getData();
+
+      if (data.show_button === "on_hover") {
+        return {
+          href: data.link_url,
+          target: data.open_in_new_tab === "1" ? "_blank" : false,
+          class: 'pagebuilder-banner-button'
+        };
+      }
+
+      return {
+        href: data.link_url,
+        target: data.open_in_new_tab === "1" ? "_blank" : false
+      };
+    };
+
+    _proto.getEvent = function getEvent() {
+      var data = this.getData();
+
+      if (data.show_button === "on_hover") {
+        return {
+          event: ' mouseover: this.isButtonVisible(true), mouseout: this.isButtonVisible(false) '
+        };
+      }
+
+      return "";
+    };
+    /**
      * Get the banner wrapper attributes for the storefront
      *
      * @returns {any}
      */
+
+
     _proto.getBannerAttributes = function getBannerAttributes(type) {
       var data = this.getData();
       var backgroundImage = "";
@@ -160,26 +195,6 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
       }
 
       return this.getImageUrl(data.mobile_image);
-    };
-    /**
-     * Show banner details
-     *
-     * @returns {any}
-     */
-
-
-    _proto.enableDetails = function enableDetails() {
-      this.detailsEnabled(true);
-    };
-    /**
-     * Hide banner details
-     *
-     * @returns {any}
-     */
-
-
-    _proto.disableDetails = function disableDetails() {
-      this.detailsEnabled(false);
     };
     /**
      * Retrieve the image URL with directive

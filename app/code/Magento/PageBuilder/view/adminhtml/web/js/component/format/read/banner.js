@@ -18,29 +18,24 @@ define(["../../../component/config"], function (_config) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      console.log('read/banner.ts');
-      console.log(element);
+      // console.log('read/banner.ts');
+      // console.log(element);
       debugger;
       var target = element.querySelector("a").getAttribute("target");
       var response = {
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
-        image: this.generateImageObject(element.querySelector('.pagebuilder-mobile-hidden').getAttribute('style').split(';')[0]),
+        image: this.generateImageObject(element.querySelector('.pagebuilder-banner-image').getAttribute('style').split(';')[0]),
         link_url: element.querySelector("a").getAttribute("href"),
         message: element.querySelector('.pagebuilder-poster-content div').innerHTML,
         minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
-        mobile_image: element.querySelector('.pagebuilder-mobile-only') ? this.generateImageObject(element.querySelector('.pagebuilder-mobile-only').getAttribute('style').split(';')[0]) : "",
+        mobile_image: element.querySelector('.pagebuilder-banner-mobile') ? this.generateImageObject(element.querySelector('.pagebuilder-banner-mobile').getAttribute('style').split(';')[0]) : "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
         overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-        show_button: "",
+        show_button: element.querySelector(".pagebuilder-button-hover") ? "on_hover" : "always",
         show_overlay: ""
-      }; // Detect if there is a mobile image and update the response
-
-      if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
-        response.mobile_image = this.generateImageObject(element.querySelector("img:nth-child(2)").getAttribute("src"));
-      }
-
+      };
       return Promise.resolve(response);
     };
     /**
