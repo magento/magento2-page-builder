@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\ResourceModel\Setup;
+namespace Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Setup;
 
 class PropertyMapper extends \Magento\Eav\Model\Entity\Setup\PropertyMapperAbstract
 {
