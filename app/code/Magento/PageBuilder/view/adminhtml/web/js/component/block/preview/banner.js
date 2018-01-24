@@ -14,21 +14,19 @@ define(["mage/translate", "./block"], function (_translate, _block) {
     var _proto = Banner.prototype;
 
     /**
-     * Get the banner overlay attributes for the preview
+     * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
     _proto.getPreviewBannerAttributes = function getPreviewBannerAttributes() {
-      var backgroundImage = "none",
-          minHeight = "250px",
-          backgroundSize = "cover";
+      var backgroundImage = "none";
 
       if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
         backgroundImage = "url(" + this.data.image()[0].url + ")";
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; min-height: " + minHeight + "; background-size: " + backgroundSize + ";"
+        style: "background-image: " + backgroundImage + "; min-height: " + this.data.minimum_height() + "px; background-size: " + this.data.background_size() + ";"
       };
     };
     /**
@@ -39,9 +37,9 @@ define(["mage/translate", "./block"], function (_translate, _block) {
 
 
     _proto.getPreviewOverlayAttributes = function getPreviewOverlayAttributes() {
-      var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.getRgba();
+      var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.convertHexToRgba();
       return {
-        style: "min-height: 250px; background-color: " + backgroundColor + ";"
+        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
       };
     };
     /**
@@ -51,7 +49,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
      */
 
 
-    _proto.getRgba = function getRgba() {
+    _proto.convertHexToRgba = function convertHexToRgba() {
       if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
         var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.data.overlay_color()),
             red = parseInt(colors[1], 16),

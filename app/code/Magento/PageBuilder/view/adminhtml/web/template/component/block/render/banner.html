@@ -6,13 +6,26 @@
 -->
 
 <div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
-    <a data-bind="attr: { href: getData().link_url, title: getData().title_tag, target: getData().open_in_new_window == '1' ? '_blank' : false }">
-        <img data-bind="attr: getMainImageAttributes(), css: {'pagebuilder-mobile-hidden': hasMobileImage()}" />
-        <!-- ko if: hasMobileImage() -->
-        <img data-bind="attr: getMobileImageAttributes()" class="pagebuilder-mobile-only" />
-        <!-- /ko -->
-        <!-- ko if: getData().link_text -->
-        <button data-bind="text: getData().link_text"></button>
-        <!-- /ko -->
+    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }, event: { mouseover: enableDetails, mouseout: disableDetails }">
+        <div class="pagebuilder-banner-wrapper" data-bind="attr: getBannerAttributes('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
+            <!-- ko if: getData().mobile_image -->
+            <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" data-bind="attr: getBannerAttributes('mobileImage')">
+                <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
+                    <div class="pagebuilder-poster-content" data-bind="attr: getContentAttributes()">
+                        <div data-bind="html: getContentHtml()"></div>
+                        <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text"></button>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: getData().mobile_image -->
+            <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
+                <div class="pagebuilder-poster-content" data-bind="attr: getContentAttributes()">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, visible: detailsEnabled"></button>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
     </a>
 </div>

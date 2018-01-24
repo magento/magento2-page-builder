@@ -23,17 +23,23 @@ export default class Banner implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
+        console.log('read/banner.ts');
+        console.log(element);
+        debugger;
         const target = element.querySelector("a").getAttribute("target");
         const response: DataObject = {
-            alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
-            image: this.generateImageObject(
-                element.querySelector("img:nth-child(1)").getAttribute("src")),
-            link_text: element.querySelector("a>div") === null ?
-                "" : element.querySelector("a>div").innerHTML,
+            background_size: element.style.backgroundSize,
+            button_text: element.dataset.buttonText,
+            image: this.generateImageObject(element.querySelector('.pagebuilder-mobile-hidden').getAttribute('style').split(';')[0]),
             link_url: element.querySelector("a").getAttribute("href"),
-            mobile_image: "",
-            open_in_new_window: target && target === "_blank" ? "1" : "0",
-            title_tag: element.querySelector("a").getAttribute("title"),
+            message: element.querySelector('.pagebuilder-poster-content div').innerHTML,
+            minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
+            mobile_image: element.querySelector('.pagebuilder-mobile-only') ? this.generateImageObject(element.querySelector('.pagebuilder-mobile-only').getAttribute('style').split(';')[0]) : "",
+            open_in_new_tab: target && target === "_blank" ? "1" : "0",
+            overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
+            overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
+            show_button: "",
+            show_overlay: ""
         };
 
         // Detect if there is a mobile image and update the response
@@ -47,7 +53,39 @@ export default class Banner implements ReadInterface {
     }
 
     /**
-     * Magentorate the image object
+     * Convert RGBA to HEX for content overlay color
+     *
+     * @returns string
+     */
+    private convertRgbaToHex(value: string) {
+        const r = parseInt(value.match(/\d+/g)[0]).toString(16);
+        const g = parseInt(value.match(/\d+/g)[1]).toString(16);
+        const b = parseInt(value.match(/\d+/g)[2]).toString(16);
+        return "#" + r + g + b;
+    }
+
+    /**
+     * Extract the Alpha component from RGBA for overlay transparency
+     *
+     * @returns int
+     */
+    private extractAlphaFromRgba(value: string) {
+        const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]);
+        return a * 100;
+    }
+
+    /**
+     * Convert decimal to percent for transparent overlay for the element
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    private convertDecimalToPercent(value: string) {
+        return (parseInt(value, 10) * 100).toString();
+    }
+
+    /**
+     * Fetch the image object
      *
      * @param {string} src
      * @returns {ImageObject}
