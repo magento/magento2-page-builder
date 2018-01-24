@@ -18,9 +18,6 @@ define(["../../../component/config"], function (_config) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      // console.log('read/banner.ts');
-      // console.log(element);
-      debugger;
       var target = element.querySelector("a").getAttribute("target");
       var response = {
         background_size: element.style.backgroundSize,

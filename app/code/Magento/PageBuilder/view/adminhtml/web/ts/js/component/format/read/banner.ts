@@ -23,9 +23,6 @@ export default class Banner implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        // console.log('read/banner.ts');
-        // console.log(element);
-        debugger;
         const target = element.querySelector("a").getAttribute("target");
         const response: DataObject = {
             background_size: element.style.backgroundSize,
