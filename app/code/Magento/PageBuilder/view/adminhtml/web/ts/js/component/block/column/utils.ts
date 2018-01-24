@@ -1,7 +1,7 @@
 import {outwardSearch} from "../../../utils/array";
 import Config from "../../config";
 import Column from "../column";
-import ColumnGroup, {ResizeHistoryItem} from "../column-group";
+import ColumnGroup from "../column-group";
 import createBlock from "../factory";
 
 /**
@@ -165,37 +165,69 @@ export function determineColumnWidths(column: Column, group: JQuery): ColumnWidt
     const singleColumnWidth = group.width() / getMaxColumns();
     const adjacentColumn = getAdjacentColumn(column, "+1");
     const columnWidths = [];
-    const groupLeft = group.offset().left;
     const columnLeft = column.element.offset().left;
-    const adjacentRightPosition = groupLeft + adjacentColumn.element.offset().left +
+    const adjacentRightPosition = adjacentColumn.element.offset().left +
         adjacentColumn.element.outerWidth();
+
+    // Determine the maximum size (in pixels) that this column can be dragged to
+    const columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
+    const leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - columnsToRight * singleColumnWidth + 10;
+    const rightMaxWidthFromChildren = group.offset().left +
+        (column.parent.children().length - columnsToRight) * singleColumnWidth - 10;
+    // Due to rounding we add a threshold of 10
 
     // Iterate through the amount of columns generating the position for both left & right interactions
     for (let i = getMaxColumns(); i > 0; i--) {
+        const position = Math.round(columnLeft + (singleColumnWidth * i));
+        if (position > Math.round(leftMaxWidthFromChildren)) {
+            continue;
+        }
         columnWidths.push(
             {
                 forColumn: "left", // These positions are for the left column in the pair
                 name: i + "/" + getMaxColumns(),
-                position: Math.round(columnLeft + (singleColumnWidth * i)),
+                position,
                 width: getRoundedColumnWidth(100 / getMaxColumns() * i),
             },
         );
     }
 
-    const currentWidth = Math.round(getColumnWidth(adjacentColumn) / getSmallestColumnWidth());
     for (let i = 1; i < getMaxColumns(); i++) {
+        const position = Math.floor(adjacentRightPosition - (i * singleColumnWidth));
+        if (position < Math.floor(rightMaxWidthFromChildren)) {
+            continue;
+        }
         // The right interaction is only used when we're crushing a column that isn't adjacent
         columnWidths.push(
             {
                 forColumn: "right", // These positions are for the left column in the pair
                 name: i + "/" + getMaxColumns(),
-                position: Math.round(adjacentRightPosition - ((i + 1) * singleColumnWidth) - singleColumnWidth),
+                position,
                 width: getRoundedColumnWidth(100 / getMaxColumns() * i),
             },
         );
     }
 
     return columnWidths;
+}
+
+/**
+ * Determine the max ghost width based on the calculated columns
+ *
+ * @param {ColumnWidth[]} columnWidths
+ * @returns {MaxGhostWidth}
+ */
+export function determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWidth {
+    const leftColumns = columnWidths.filter((width) => {
+        return width.forColumn === "left";
+    });
+    const rightColumns = columnWidths.filter((width) => {
+        return width.forColumn === "right";
+    });
+    return {
+        left: leftColumns[0].position,
+        right: rightColumns[rightColumns.length - 1].position,
+    };
 }
 
 /**
@@ -210,7 +242,7 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
     const difference = (parseFloat(width.toString()) - current).toFixed(8);
 
     // Don't run the update if we've already modified the column
-    if (current === parseFloat(width.toString())) {
+    if (current === parseFloat(width.toString()) || parseFloat(width.toString()) < getSmallestColumnWidth()) {
         return;
     }
 
@@ -284,6 +316,11 @@ export function createColumn(parent: ColumnGroup, width: number, index?: number)
         parent.addChild(column, index);
         return column;
     });
+}
+
+export interface MaxGhostWidth {
+    left: number;
+    right: number;
 }
 
 export interface ColumnWidth {

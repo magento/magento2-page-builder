@@ -159,13 +159,13 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                 newIndex = blockEl.index();
 
             if (blockEl && (newParentEl === this)) {
-                // Don't run sortable when dropping on a placeholder
-                if (registry.get("pageBuilderBlockSortable")) {
-                    return;
-                }
-
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
+
+                // @todo this needs improvement
+                if ((block.config.name === 'column-group' || block.config.name === 'column') && jQuery(event.currentTarget).hasClass('column-container')) {
+                    return;
+                }
 
                 var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
                     allowedParents = getViewModelFromUi(ui).config.allowed_parents;
@@ -257,13 +257,16 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
          */
         onSortReceive: function (event, ui) {
             if (jQuery(event.target)[0] === this) {
-                // Don't run sortable when dropping on a placeholder
-                if (registry.get("pageBuilderBlockSortable")) {
-                    return;
-                }
-
                 var block = getViewModelFromUi(ui),
                     target = ko.dataFor(jQuery(event.target)[0]);
+
+                // Don't run sortable when dropping on a placeholder
+                // @todo this needs improvement
+                if (block.config.name === "column-group" &&
+                    jQuery(event.srcElement).parents('.ui-droppable').length > 0
+                ) {
+                    return;
+                }
 
                 if (block.droppable) {
                     event.stopPropagation();
@@ -273,6 +276,10 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                         index: this.draggedItem.index()
                     });
                     this.draggedItem.remove();
+                }
+            } else {
+                if (!ui.helper && ui.item) {
+                    jQuery(ui.item).remove();
                 }
             }
         }

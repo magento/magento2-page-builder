@@ -162,34 +162,68 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
     var singleColumnWidth = group.width() / getMaxColumns();
     var adjacentColumn = getAdjacentColumn(column, "+1");
     var columnWidths = [];
-    var groupLeft = group.offset().left;
     var columnLeft = column.element.offset().left;
-    var adjacentRightPosition = groupLeft + adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(); // Iterate through the amount of columns generating the position for both left & right interactions
+    var adjacentRightPosition = adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(); // Determine the maximum size (in pixels) that this column can be dragged to
+
+    var columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
+    var leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - columnsToRight * singleColumnWidth + 10;
+    var rightMaxWidthFromChildren = group.offset().left + (column.parent.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
+    // Iterate through the amount of columns generating the position for both left & right interactions
 
     for (var i = getMaxColumns(); i > 0; i--) {
+      var _position = Math.round(columnLeft + singleColumnWidth * i);
+
+      if (_position > Math.round(leftMaxWidthFromChildren)) {
+        continue;
+      }
+
       columnWidths.push({
         forColumn: "left",
         // These positions are for the left column in the pair
         name: i + "/" + getMaxColumns(),
-        position: Math.round(columnLeft + singleColumnWidth * i),
+        position: _position,
         width: getRoundedColumnWidth(100 / getMaxColumns() * i)
       });
     }
 
-    var currentWidth = Math.round(getColumnWidth(adjacentColumn) / getSmallestColumnWidth());
-
     for (var _i = 1; _i < getMaxColumns(); _i++) {
-      // The right interaction is only used when we're crushing a column that isn't adjacent
+      var _position2 = Math.floor(adjacentRightPosition - _i * singleColumnWidth);
+
+      if (_position2 < Math.floor(rightMaxWidthFromChildren)) {
+        continue;
+      } // The right interaction is only used when we're crushing a column that isn't adjacent
+
+
       columnWidths.push({
         forColumn: "right",
         // These positions are for the left column in the pair
         name: _i + "/" + getMaxColumns(),
-        position: Math.round(adjacentRightPosition - (_i + 1) * singleColumnWidth - singleColumnWidth),
+        position: _position2,
         width: getRoundedColumnWidth(100 / getMaxColumns() * _i)
       });
     }
 
     return columnWidths;
+  }
+  /**
+   * Determine the max ghost width based on the calculated columns
+   *
+   * @param {ColumnWidth[]} columnWidths
+   * @returns {MaxGhostWidth}
+   */
+
+
+  function determineMaxGhostWidth(columnWidths) {
+    var leftColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "left";
+    });
+    var rightColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "right";
+    });
+    return {
+      left: leftColumns[0].position,
+      right: rightColumns[rightColumns.length - 1].position
+    };
   }
   /**
    * Resize a column to a specific width
@@ -204,7 +238,7 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
     var current = getColumnWidth(column);
     var difference = (parseFloat(width.toString()) - current).toFixed(8); // Don't run the update if we've already modified the column
 
-    if (current === parseFloat(width.toString())) {
+    if (current === parseFloat(width.toString()) || parseFloat(width.toString()) < getSmallestColumnWidth()) {
       return;
     }
 
@@ -287,6 +321,7 @@ define(["../../../utils/array", "../../config", "../factory"], function (_array,
     getRoundedColumnWidth: getRoundedColumnWidth,
     getColumnsWidth: getColumnsWidth,
     determineColumnWidths: determineColumnWidths,
+    determineMaxGhostWidth: determineMaxGhostWidth,
     resizeColumn: resizeColumn,
     findShrinkableColumnForResize: findShrinkableColumnForResize,
     findShrinkableColumn: findShrinkableColumn,

@@ -16,10 +16,11 @@ import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
 import {
-    calculateDropPositions, ColumnWidth, createColumn, determineColumnWidths, DropPosition, findShrinkableColumn,
+    calculateDropPositions, ColumnWidth, createColumn, determineColumnWidths, determineMaxGhostWidth,
+    DropPosition, findShrinkableColumn,
     findShrinkableColumnForResize,
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth,
-    getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
+    getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, MaxGhostWidth, resizeColumn, updateColumnWidth,
 } from "./column/utils";
 import InlineBlock from "./inline";
 
@@ -32,7 +33,7 @@ export default class ColumnGroup extends Block {
     private resizeGhost: JQuery<HTMLElement>;
     private resizeColumnInstance: Column;
     private resizeColumnWidths: ColumnWidth[] = [];
-    private resizeMaxGhostWidth: number;
+    private resizeMaxGhostWidth: MaxGhostWidth;
     private resizeMouseDown: boolean;
     private resizeLeftLastColumnShrunk: Column;
     private resizeRightLastColumnShrunk: Column;
@@ -51,6 +52,7 @@ export default class ColumnGroup extends Block {
         () => this.bindDraggable(),
         150,
     );
+
 
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, formData, appearance);
@@ -121,6 +123,7 @@ export default class ColumnGroup extends Block {
 
             this.resizeColumnInstance = column;
             this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, this.groupElement);
+            this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
 
             // Set a flag of the columns which are currently being resized
             this.setColumnsAsResizing(column, getAdjacentColumn(column, "+1"));
@@ -135,7 +138,6 @@ export default class ColumnGroup extends Block {
             };
 
             this.resizeLastPosition = null;
-            this.resizeMaxGhostWidth = null;
             this.resizeMouseDown = true;
         });
     }
@@ -252,8 +254,6 @@ export default class ColumnGroup extends Block {
                             instance: ko.dataFor($(event.target)[0]),
                         },
                     );
-                    // Set a flag to inform the UI sortable functionality not to run
-                    registry.set("pageBuilderBlockSortable", true);
 
                     this.dropPositions = calculateDropPositions(this);
                 },
@@ -277,7 +277,6 @@ export default class ColumnGroup extends Block {
                     }
 
                     registry.remove("pageBuilderDragColumn");
-                    _.delay(() => { registry.remove("pageBuilderBlockSortable"); }, 150);
 
                     this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.removeClass("active");
@@ -357,8 +356,10 @@ export default class ColumnGroup extends Block {
                 // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
                 // current element
                 if (getColumnWidth(column) <= getSmallestColumnWidth()) {
-                    modifyColumnInPair = "right";
                     adjustedColumn = findShrinkableColumnForResize(column, "left");
+                    if (adjustedColumn) {
+                        modifyColumnInPair = "right";
+                    }
                 } else {
                     // If we're shrinking our column we can just increase the adjacent column
                     adjustedColumn = getAdjacentColumn(column, "+1");
@@ -386,40 +387,30 @@ export default class ColumnGroup extends Block {
         column: Column,
         adjustedColumn: Column,
         modifyColumnInPair: string,
-        maxGhostWidth: number,
-    ): [number, number] {
-        const resizeColumnLeft = column.element.offset().left;
-        const resizeColumnWidth = column.element.outerWidth();
-
-        // Update the ghosts width and position to give a visual indication of the dragging
+        maxGhostWidth: MaxGhostWidth,
+    ): number {
         let ghostWidth = currentPos - group.offset().left;
-        if (ghostWidth <= group.width() / getMaxColumns()) {
-            ghostWidth = group.width() / getMaxColumns();
+
+        switch (modifyColumnInPair) {
+            case "left":
+                const singleColumnWidth = column.element.position().left + group.width() / getMaxColumns();
+                // Don't allow the ghost widths be less than the smallest column
+                if (ghostWidth <= singleColumnWidth) {
+                    ghostWidth = singleColumnWidth;
+                }
+
+                if (currentPos >= maxGhostWidth.left) {
+                    ghostWidth = maxGhostWidth.left - group.offset().left;
+                }
+                break;
+            case "right":
+                if (currentPos <= maxGhostWidth.right) {
+                    ghostWidth = maxGhostWidth.right - group.offset().left;
+                }
+                break;
         }
 
-        if (modifyColumnInPair === "right") {
-            // Ensure the handler cannot be dragged further than supported
-            ghostWidth = currentPos - group.offset().left;
-            const smallestGhostWidth = (getColumnIndexInGroup(column) + 1) *
-                (group.width() / getMaxColumns());
-            if ((currentPos - group.offset().left) < smallestGhostWidth) {
-                ghostWidth = smallestGhostWidth;
-            }
-        }
-
-        if (!adjustedColumn && ghostWidth > resizeColumnWidth || maxGhostWidth) {
-            ghostWidth = (maxGhostWidth ? maxGhostWidth : resizeColumnWidth + column.element.position().left);
-            if (!maxGhostWidth) {
-                maxGhostWidth = resizeColumnWidth + column.element.position().left;
-            }
-        }
-
-        // Reset the max ghost width when the user moves back from the edge
-        if ((resizeColumnWidth + resizeColumnLeft) < currentPos) {
-            maxGhostWidth = null;
-        }
-
-        return [ghostWidth, maxGhostWidth];
+        return ghostWidth;
     }
 
     /**
@@ -475,7 +466,7 @@ export default class ColumnGroup extends Block {
             );
 
             // Calculate the ghost width based on mouse position and bounds of allowed sizes
-            const [ghostWidth, maxGhostWidth] = this.calculateResizeGhostWidth(
+            const ghostWidth = this.calculateResizeGhostWidth(
                 group,
                 currentPos,
                 this.resizeColumnInstance,
@@ -483,13 +474,12 @@ export default class ColumnGroup extends Block {
                 modifyColumnInPair,
                 this.resizeMaxGhostWidth,
             );
-            this.resizeMaxGhostWidth = maxGhostWidth;
 
             this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
-            if (adjustedColumn && !maxGhostWidth && this.resizeColumnWidths) {
+            if (adjustedColumn && this.resizeColumnWidths) {
                 currentCol = this.resizeColumnWidths.find((val) => {
-                    return (currentPos > (val.position - 25) && currentPos < (val.position + 25)) &&
+                    return (currentPos > (val.position - 35) && currentPos < (val.position + 35)) &&
                         val.forColumn === modifyColumnInPair;
                 });
 
@@ -515,8 +505,15 @@ export default class ColumnGroup extends Block {
 
                         resizeColumn(mainColumn, currentCol.width, adjustedColumn);
 
-                        // If we do a resize, re-calculate the column widths
-                        this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, this.groupElement);
+                        // Wait for the render cycle to finish from the above resize before re-calculating
+                        _.defer(() => {
+                            // If we do a resize, re-calculate the column widths
+                            this.resizeColumnWidths = determineColumnWidths(
+                                this.resizeColumnInstance,
+                                this.groupElement,
+                            );
+                            this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
+                        });
                     }
                 }
             }
@@ -577,8 +574,9 @@ export default class ColumnGroup extends Block {
                 });
 
                 if (this.movePosition) {
+                    const classToRemove = (this.movePosition.placement === "left" ? "right" : "left");
                     this.movePlaceholder.removeClass("active");
-                    this.dropPlaceholder.removeClass("left right").css({
+                    this.dropPlaceholder.removeClass(classToRemove).css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right" ?
                                 $(group).width() - this.movePosition.right : ""
@@ -631,12 +629,11 @@ export default class ColumnGroup extends Block {
                 this.dropOverElement = null;
                 this.dropPlaceholder.removeClass("left right");
                 // Delay the removal of the flag so other systems have time to execute
-
-                _.delay(() => { registry.remove("pageBuilderBlockSortable"); }, 50);
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 this.handleNewColumnDrop(event, ui);
                 this.handleExistingColumnDrop(event);
+
                 this.dropPositions = [];
                 this.dropPlaceholder.removeClass("left right");
             },
@@ -644,9 +641,6 @@ export default class ColumnGroup extends Block {
             out: () => {
                 this.dropOverElement = null;
                 this.dropPlaceholder.removeClass("left right");
-
-                // Delay the removal of the flag so other systems have time to execute
-                _.delay(() => { registry.remove("pageBuilderBlockSortable"); }, 50);
             },
             over: () => {
                 // Always calculate drop positions when an element is dragged over
@@ -655,7 +649,6 @@ export default class ColumnGroup extends Block {
                 // Is the element being dragged a column group?
                 if (currentDraggedBlock.config.name === this.config.name) {
                     this.dropOverElement = true;
-                    registry.set("pageBuilderBlockSortable", true);
                 }
             },
         });
@@ -673,11 +666,6 @@ export default class ColumnGroup extends Block {
 
             event.preventDefault();
             event.stopImmediatePropagation();
-
-            // Remove any dropped items from the DOM
-            if (ui.draggable) {
-                ui.draggable.remove();
-            }
 
             // Create our new column
             createColumn(
@@ -815,7 +803,7 @@ interface ResizeHistory {
 }
 
 interface ResizeHistoryItem {
-    adjustedColumn: Column,
+    adjustedColumn: Column;
     modifyColumnInPair: string;
 }
 

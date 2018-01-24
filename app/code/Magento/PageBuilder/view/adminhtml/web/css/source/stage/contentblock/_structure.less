@@ -2,6 +2,29 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+.no-user-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
+    * {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    }
+}
+
+.no-pointer-events {
+    pointer-events: none;
+}
+
 .pagebuilder-structure {
     .pagebuilder-column-group {
         position: relative;
@@ -16,21 +39,21 @@
             z-index: 10001;
             opacity: 0;
             visibility: hidden;
-            transition: 0.5s opacity;
+
+            .no-user-select;
+            .no-pointer-events;
 
             &.left {
                 opacity: 1;
                 visibility: visible;
                 border-left: 10px solid rgba(142, 0, 6, 0.1);
                 transform: translateX(1px);
-                transition: 0.5s opacity;
             }
             &.right {
                 opacity: 1;
                 visibility: visible;
                 border-right: 10px solid rgba(142, 0, 6, 0.1);
                 transform: translateX(1px);
-                transition: 0.5s opacity;
             }
         }
 
@@ -45,6 +68,9 @@
             transition: 0.5s opacity;
             transform: translateX(-3px);
             width: 6px;
+
+            .no-user-select;
+            .no-pointer-events;
 
             &.active {
                 opacity: 1;
@@ -65,6 +91,9 @@
             visibility: hidden;
             transition: 0.5s;
             z-index: 9;
+
+            .no-user-select;
+            .no-pointer-events;
 
             .grid-line {
                 height: 100%;
@@ -87,6 +116,9 @@
             visibility: hidden;
             transition: 0.5s opacity;
 
+            .no-user-select;
+            .no-pointer-events;
+
             &.active {
                 opacity: 1;
                 visibility: visible;
@@ -101,25 +133,16 @@
                 transition: 0.5s opacity;
             }
 
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-            -khtml-user-select: none; /* Konqueror HTML */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none;
-            /* Non-prefixed version, currently
-                                             supported by Chrome and Opera */
-            * {
-                -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-            }
+            .no-user-select;
 
             .pagebuilder-options {
                 display: none;
+            }
+
+            .pagebuilder-structure {
+                .pagebuilder-empty {
+                    opacity: 0;
+                }
             }
         }
 
