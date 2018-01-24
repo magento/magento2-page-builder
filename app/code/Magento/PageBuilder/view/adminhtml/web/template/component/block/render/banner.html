@@ -6,12 +6,12 @@
 -->
 
 <div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
-    <a data-bind="attr: getAnchorAttributes(), event: getEvent()">
+    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }, css: {'pagebuilder-banner-on-hover': getData().show_button === 'on_hover'}">
         <div class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only" data-bind="attr: getBannerAttributes('mobileImage')">
             <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
                 <div class="pagebuilder-poster-content" data-bind="attr: getContentAttributes()">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, visible: isButtonVisible()"></button>
+                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden'}"></button>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
                 <div class="pagebuilder-poster-content" data-bind="attr: getContentAttributes()">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, visible: isButtonVisible()"></button>
+                    <button class="luma-button-primary pagebuilder-banner-button" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden'}"></button>
                 </div>
             </div>
         </div>

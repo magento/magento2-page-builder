@@ -33,7 +33,7 @@ define(["../../../component/config"], function (_config) {
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
         overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-        show_button: element.querySelector(".pagebuilder-button-hover") ? "on_hover" : "always",
+        show_button: element.querySelector(".pagebuilder-banner-on-hover") ? "on_hover" : "always",
         show_overlay: ""
       };
       return Promise.resolve(response);

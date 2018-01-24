@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "mage/translate", "../config", "./block"], function (_knockout, _underscore, _translate, _config, _block) {
+define(["underscore", "mage/translate", "../config", "./block"], function (_underscore, _translate, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -8,57 +8,16 @@ define(["knockout", "underscore", "mage/translate", "../config", "./block"], fun
     _inheritsLoose(Banner, _Block);
 
     function Banner() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.isButtonVisible = _knockout.observable(true), _temp) || _this;
+      return _Block.apply(this, arguments) || this;
     }
 
     var _proto = Banner.prototype;
 
     /**
-     * Get the anchor attributes for the storefront
-     *
-     * @returns {any}
-     */
-    _proto.getAnchorAttributes = function getAnchorAttributes() {
-      var data = this.getData();
-
-      if (data.show_button === "on_hover") {
-        return {
-          href: data.link_url,
-          target: data.open_in_new_tab === "1" ? "_blank" : false,
-          class: 'pagebuilder-banner-button'
-        };
-      }
-
-      return {
-        href: data.link_url,
-        target: data.open_in_new_tab === "1" ? "_blank" : false
-      };
-    };
-
-    _proto.getEvent = function getEvent() {
-      var data = this.getData();
-
-      if (data.show_button === "on_hover") {
-        return {
-          event: ' mouseover: this.isButtonVisible(true), mouseout: this.isButtonVisible(false) '
-        };
-      }
-
-      return "";
-    };
-    /**
      * Get the banner wrapper attributes for the storefront
      *
      * @returns {any}
      */
-
-
     _proto.getBannerAttributes = function getBannerAttributes(type) {
       var data = this.getData();
       var backgroundImage = "";

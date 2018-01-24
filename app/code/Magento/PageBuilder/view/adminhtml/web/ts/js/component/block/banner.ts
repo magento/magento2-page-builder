@@ -11,29 +11,6 @@ import Block from "./block";
 
 export default class Banner extends Block {
 
-    private isButtonVisible: KnockoutObservable<boolean> = ko.observable(true);
-
-    /**
-     * Get the anchor attributes for the storefront
-     *
-     * @returns {any}
-     */
-    public getAnchorAttributes() {
-        const data = this.getData();
-        if (data.show_button === "on_hover") {
-            return {href: data.link_url, target: data.open_in_new_tab === "1" ? "_blank" : false, class: 'pagebuilder-banner-button'};
-        }
-        return {href: data.link_url, target: data.open_in_new_tab === "1" ? "_blank" : false};
-    }
-
-    public getEvent() {
-        const data = this.getData();
-        if (data.show_button === "on_hover") {
-            return {event: ' mouseover: this.isButtonVisible(true), mouseout: this.isButtonVisible(false) ' };
-        }
-        return "";
-    }
-
     /**
      * Get the banner wrapper attributes for the storefront
      *

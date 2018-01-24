@@ -38,6 +38,17 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         $('div[data-role="row"][data-enable-parallax="1"]').each(function (index, element) {
             $(element).addClass('pagebuilder-parallax');
         });
+
+
+        $('div[data-role="banner"] .pagebuilder-banner-on-hover').each(function (index, element) {
+            $(element).hover(
+                function() {
+                    $(element).find('.pagebuilder-banner-button').css('visibility', 'visible');
+                }, function() {
+                    $(element).find('.pagebuilder-banner-button').css('visibility', 'hidden');
+                }
+            );
+        });
     });
 
     $(window).load(function (){
