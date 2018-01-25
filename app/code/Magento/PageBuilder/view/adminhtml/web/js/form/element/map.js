@@ -68,7 +68,7 @@ define([
 
             this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
 
-            google.maps.event.trigger(this.marker, "click");
+            google.maps.event.trigger(this.marker, 'click');
         },
 
         /**

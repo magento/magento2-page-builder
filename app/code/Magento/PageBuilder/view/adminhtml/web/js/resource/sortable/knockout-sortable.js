@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
+define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
 
     /**
      * Retrieve the view model for an element
@@ -167,7 +167,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
                 if (parentContainerName && Array.isArray(allowedParents)) {
                     if (allowedParents.indexOf(parentContainerName) === -1) {
-                        jQuery(this).sortable("cancel");
+                        jQuery(this).sortable('cancel');
                         jQuery(ui.item).remove();
 
                         // Force refresh of the parent
@@ -220,8 +220,8 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                 currentInstance = getViewModelFromUi(ui);
 
             // If the registry contains a reference to the drag element view model use that instead
-            if (require("uiRegistry").get('dragElementViewModel')) {
-                currentInstance = require("uiRegistry").get('dragElementViewModel');
+            if (require('uiRegistry').get('dragElementViewModel')) {
+                currentInstance = require('uiRegistry').get('dragElementViewModel');
             }
 
             var allowedParents = currentInstance.config.allowed_parents;
