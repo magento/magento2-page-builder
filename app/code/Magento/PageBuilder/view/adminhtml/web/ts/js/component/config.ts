@@ -40,7 +40,7 @@ export default class Config {
      * @param type
      * @returns {any}
      */
-    static getContentTypeConfig(type: string): object {
+    static getContentTypeConfig(type: string): ConfigContentBlock {
         if (typeof Config.initConfig.contentTypes === 'object' && typeof Config.initConfig.contentTypes[type] === 'object') {
             return Config.initConfig.contentTypes[type];
         }
@@ -273,6 +273,8 @@ export interface ConfigContentBlock {
     render_template: string;
     preview_component: string;
     component: string;
+    appearances: any[];
+    allowed_parents: string[];
 }
 export interface ConfigContentBlocks {
     [key: string]: ConfigContentBlock;

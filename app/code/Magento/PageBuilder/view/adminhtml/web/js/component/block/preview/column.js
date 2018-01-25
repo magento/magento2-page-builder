@@ -1,19 +1,19 @@
 /*eslint-disable */
-define(["knockout", "underscore", "./block", "../../format/style-attribute-mapper", "../../format/style-attribute-filter"], function (_knockout, _underscore, _block, _styleAttributeMapper, _styleAttributeFilter) {
+define(["knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./block"], function (_knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper, _block) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Row =
+  var Column =
   /*#__PURE__*/
   function (_PreviewBlock) {
-    _inheritsLoose(Row, _PreviewBlock);
+    _inheritsLoose(Column, _PreviewBlock);
 
     /**
      * @param {Block} parent
      * @param {Object} config
      */
-    function Row(parent, config) {
+    function Column(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
@@ -30,10 +30,9 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
           return value;
         }))); // The style attribute mapper converts images to directives, override it to include the correct URL
 
-        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === 'object') {
-          styles['backgroundImage'] = 'url(' + _this.data.background_image()[0].url + ')';
-        } // styles['flex-grow'] = 1;
-
+        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
+          styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
+        }
 
         return styles;
       }); // Force the columnStyles to update on changes to stored style attribute data
@@ -48,9 +47,9 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
       return _this;
     }
 
-    return Row;
+    return Column;
   }(_block);
 
-  return Row;
+  return Column;
 });
 //# sourceMappingURL=column.js.map

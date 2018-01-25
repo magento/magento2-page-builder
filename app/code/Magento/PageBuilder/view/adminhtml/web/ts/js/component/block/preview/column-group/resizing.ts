@@ -1,8 +1,10 @@
-import {outwardSearch} from "../../../utils/array";
-import Config from "../../config";
-import Column from "../column";
-import ColumnGroup from "../column-group";
-import createBlock from "../factory";
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+import {outwardSearch} from "../../../../utils/array";
+import Column from "../../column";
+import ColumnGroup from "../../column-group";
 
 /**
  * Get the maximum columns allowed
@@ -78,66 +80,6 @@ export function getAdjacentColumn(column: Column, direction: "+1" | "-1"): Colum
         return (column.parent.children()[currentIndex + parseInt(direction, 10)] as Column);
     }
     return null;
-}
-
-/**
- * Update the width of a column
- *
- * @param {Column} column
- * @param {number} width
- */
-export function updateColumnWidth(column: Column, width: number): void {
-    column.stage.store.updateKey(
-        column.id,
-        parseFloat(width.toString()) + "%",
-        "width",
-    );
-}
-
-/**
- * Calculate the drop positions of a column group
- *
- * @param {ColumnGroup} group
- * @returns {any[]}
- */
-export function calculateDropPositions(group: ColumnGroup): DropPosition[] {
-    const dropPositions: any[] = [];
-    group.children().forEach((column: Column, index: number) => {
-        const left = column.element.position().left;
-        const width = column.element.outerWidth();
-        const canShrink = getColumnWidth(column) > getSmallestColumnWidth();
-        dropPositions.push(
-            {
-                affectedColumn: column,
-                canShrink,
-                insertIndex: index,
-                left,
-                placement: "left",
-                right: left + (width / 2),
-            },
-            {
-                affectedColumn: column,
-                canShrink,
-                insertIndex: index + 1,
-                left: left + (width / 2),
-                placement: "right",
-                right: left + width,
-            },
-        );
-    });
-    return dropPositions;
-}
-
-/**
- * Return the column width to 8 decimal places if it's not a whole number
- *
- * @param {number} width
- * @returns {string}
- */
-export function getRoundedColumnWidth(width: number): number {
-    return Number((width).toFixed(
-        Math.round(width) !== width ? 8 : 0,
-    ));
 }
 
 /**
@@ -231,34 +173,6 @@ export function determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWid
 }
 
 /**
- * Resize a column to a specific width
- *
- * @param {Column} column
- * @param {number} width
- * @param {Column} shrinkableColumn
- */
-export function resizeColumn(column: Column, width: number, shrinkableColumn: Column) {
-    const current = getColumnWidth(column);
-    const difference = (parseFloat(width.toString()) - current).toFixed(8);
-
-    // Don't run the update if we've already modified the column
-    if (current === parseFloat(width.toString()) || parseFloat(width.toString()) < getSmallestColumnWidth()) {
-        return;
-    }
-
-    updateColumnWidth(column, width);
-
-    // Also shrink the closest shrinkable column
-    if (difference && shrinkableColumn) {
-        const currentShrinkable = getColumnWidth(shrinkableColumn);
-        updateColumnWidth(
-            shrinkableColumn,
-            getAcceptedColumnWidth((currentShrinkable + -difference).toString()),
-        );
-    }
-}
-
-/**
  * Find a column which can be shrunk for the current resize action
  *
  * @param {Column} column
@@ -299,23 +213,123 @@ export function findShrinkableColumn(column: Column): Column {
 }
 
 /**
- * Create a column and add it to it's parent
+ * Return the column width to 8 decimal places if it's not a whole number
  *
- * @param {ColumnGroup} parent
  * @param {number} width
- * @param {number} index
- * @returns {Promise<void>}
+ * @returns {string}
  */
-export function createColumn(parent: ColumnGroup, width: number, index?: number) {
-    return createBlock(
-        Config.getContentTypeConfig("column"),
-        parent,
-        parent.stage,
-        {width: parseFloat(width.toString()) + "%"},
-    ).then((column) => {
-        parent.addChild(column, index);
-        return column;
-    });
+export function getRoundedColumnWidth(width: number): number {
+    return Number((width).toFixed(
+        Math.round(width) !== width ? 8 : 0,
+    ));
+}
+
+/**
+ * Calculate the ghost size for the resizing action
+ *
+ * @param {JQuery<HTMLElement>} group
+ * @param {number} currentPos
+ * @param {Column} column
+ * @param {string} modifyColumnInPair
+ * @param {MaxGhostWidth} maxGhostWidth
+ * @returns {number}
+ */
+export function calculateGhostWidth(
+    group: JQuery<HTMLElement>,
+    currentPos: number,
+    column: Column,
+    modifyColumnInPair: string,
+    maxGhostWidth: MaxGhostWidth,
+): number {
+    let ghostWidth = currentPos - group.offset().left;
+
+    switch (modifyColumnInPair) {
+        case "left":
+            const singleColumnWidth = column.element.position().left + group.width() / getMaxColumns();
+            // Don't allow the ghost widths be less than the smallest column
+            if (ghostWidth <= singleColumnWidth) {
+                ghostWidth = singleColumnWidth;
+            }
+
+            if (currentPos >= maxGhostWidth.left) {
+                ghostWidth = maxGhostWidth.left - group.offset().left;
+            }
+            break;
+        case "right":
+            if (currentPos <= maxGhostWidth.right) {
+                ghostWidth = maxGhostWidth.right - group.offset().left;
+            }
+            break;
+    }
+
+    return ghostWidth;
+}
+
+/**
+ * Determine which column in the group should be adjusted for the current resize action
+ *
+ * @param {JQuery<HTMLElement>} group
+ * @param {number} currentPos
+ * @param {Column} column
+ * @param {ResizeHistory} history
+ * @returns {[Column , string , string]}
+ */
+export function determineAdjustedColumn(
+    group: JQuery<HTMLElement>,
+    currentPos: number,
+    column: Column,
+    history: ResizeHistory,
+): [Column, string, string] {
+    let modifyColumnInPair: string = "left";
+    let usedHistory: string;
+    const resizeColumnLeft = column.element.offset().left;
+    const resizeColumnWidth = column.element.outerWidth();
+    const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
+
+    let adjustedColumn: Column;
+    if (currentPos >= resizeHandlePosition) {
+        // Get the history for the opposite direction of resizing
+        if (history.left.length > 0) {
+            usedHistory = "left";
+            adjustedColumn = history.left.reverse()[0].adjustedColumn;
+            modifyColumnInPair = history.left.reverse()[0].modifyColumnInPair;
+        } else {
+            // If we're increasing the width of our column we need to locate a column that can shrink to the
+            // right
+            adjustedColumn = findShrinkableColumnForResize(column, "right");
+        }
+    } else {
+        if (history.right.length > 0) {
+            usedHistory = "right";
+            adjustedColumn = history.right.reverse()[0].adjustedColumn;
+            modifyColumnInPair = history.right.reverse()[0].modifyColumnInPair;
+        } else {
+            // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
+            // current element
+            if (getColumnWidth(column) <= getSmallestColumnWidth()) {
+                adjustedColumn = findShrinkableColumnForResize(column, "left");
+                if (adjustedColumn) {
+                    modifyColumnInPair = "right";
+                }
+            } else {
+                // If we're shrinking our column we can just increase the adjacent column
+                adjustedColumn = getAdjacentColumn(column, "+1");
+            }
+        }
+    }
+
+    return [adjustedColumn, modifyColumnInPair, usedHistory];
+}
+
+export interface ResizeHistory {
+    left: ResizeHistoryItem[];
+    right: ResizeHistoryItem[];
+    [key: string]: ResizeHistoryItem[];
+}
+
+export interface ResizeHistoryItem {
+    adjustedColumn: Column;
+    modifyColumnInPair: string;
 }
 
 export interface MaxGhostWidth {
@@ -328,13 +342,4 @@ export interface ColumnWidth {
     position: number;
     width: number;
     forColumn: string;
-}
-
-export interface DropPosition {
-    left: number;
-    right: number;
-    insertIndex: number;
-    placement: string;
-    affectedColumn: Column;
-    canShrink: boolean;
 }

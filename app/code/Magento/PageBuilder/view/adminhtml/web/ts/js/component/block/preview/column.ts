@@ -5,13 +5,13 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import PreviewBlock from "./block";
-import Block from "../block"
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import Block from "../block";
+import PreviewBlock from "./block";
 
-export default class Row extends PreviewBlock {
-    columnStyles: KnockoutComputed<{}>;
+export default class Column extends PreviewBlock {
+    public columnStyles: KnockoutComputed<{}>;
 
     /**
      * @param {Block} parent
@@ -24,23 +24,21 @@ export default class Row extends PreviewBlock {
 
         this.columnStyles = ko.computed(() => {
             // Extract data values our of observable functions
-            let styles = styleAttributeMapper.toDom(
+            const styles = styleAttributeMapper.toDom(
                 styleAttributeFilter.filter(
                     _.mapObject(this.data, (value) => {
                         if (ko.isObservable(value)) {
                             return value();
                         }
                         return value;
-                    })
-                )
+                    }),
+                ),
             );
 
             // The style attribute mapper converts images to directives, override it to include the correct URL
-            if (this.data.background_image && typeof this.data.background_image()[0] === 'object') {
-                styles['backgroundImage'] = 'url(' + this.data.background_image()[0].url + ')';
+            if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
+                styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
             }
-
-            // styles['flex-grow'] = 1;
 
             return styles;
         });

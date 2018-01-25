@@ -162,8 +162,10 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
-                // @todo this needs improvement
-                if ((block.config.name === 'column-group' || block.config.name === 'column') && jQuery(event.currentTarget).hasClass('column-container')) {
+                // @todo to be refactored under MAGETWO-86953
+                if ((block.config.name === 'column-group' || block.config.name === 'column') &&
+                    jQuery(event.currentTarget).hasClass('column-container')
+                ) {
                     return;
                 }
 
@@ -261,8 +263,8 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                     target = ko.dataFor(jQuery(event.target)[0]);
 
                 // Don't run sortable when dropping on a placeholder
-                // @todo this needs improvement
-                if (block.config.name === "column-group" &&
+                // @todo to be refactored under MAGETWO-86953
+                if (block.config.name === "column" &&
                     jQuery(event.srcElement).parents('.ui-droppable').length > 0
                 ) {
                     return;

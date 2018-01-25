@@ -92,7 +92,7 @@ export default class Panel extends uiComponent implements PanelInterface {
             this.searchResults(_.map(
                 _.filter(
                     Config.getInitConfig("contentTypes"),
-                    (contentBlock: ContentBlockConfig) => {
+                    (contentBlock: ConfigContentBlock) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
                         return matches &&
@@ -127,7 +127,7 @@ export default class Panel extends uiComponent implements PanelInterface {
                             group: id,
                             is_visible: true,
                         }), /* Retrieve content blocks with group id */
-                        (contentBlock: ContentBlockConfig, identifier: string) => {
+                        (contentBlock: ConfigContentBlock, identifier: string) => {
                             return new GroupBlock(identifier, contentBlock);
                         },
                     ),

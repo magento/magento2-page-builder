@@ -5,14 +5,11 @@
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import AppearanceFactory from "../appearance/appearance-factory";
+import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
+import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
-
-interface ConfigObject {
-    component?: string;
-    [key: string]: any;
-}
 
 /**
  * Retrieve the block instance from the config object
@@ -20,7 +17,7 @@ interface ConfigObject {
  * @param config
  * @returns {any|string}
  */
-function getBlockComponentPath(config: ConfigObject): string {
+function getBlockComponentPath(config: ConfigContentBlock): string {
     return config.component || "Magento_PageBuilder/js/component/block/block";
 }
 
@@ -34,7 +31,7 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @returns {Promise<BlockInterface>}
  */
 export default function createBlock(
-    config: ConfigObject,
+    config: ConfigContentBlock,
     parent: EditableArea,
     stage: Stage,
     formData?: object,
@@ -42,10 +39,10 @@ export default function createBlock(
     stage = stage || parent.stage;
     formData = formData || {};
     const appearanceFactory: AppearanceFactory = new AppearanceFactory();
-    return new Promise((resolve: (blockComponent: any) => void, reject: (e: Error) => void) => {
+    return new Promise((resolve: (blockComponent: Block) => void, reject: (e: Error) => void) => {
         appearanceFactory.create(config)
             .then((appearance) => {
-                loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
+                loadModule([getBlockComponentPath(config)], (blockComponent: typeof Block) => {
                     try {
                         resolve(new blockComponent(parent, stage, config, formData, appearance));
                     } catch (e) {

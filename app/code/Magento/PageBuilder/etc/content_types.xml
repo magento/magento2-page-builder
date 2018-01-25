@@ -39,7 +39,7 @@
             </readers>
         </type>
         <type name="column-group" translate="label" sortOrder="10">
-            <label>Columns</label>
+            <label>Column Group</label>
             <icon>icon-pagebuilder-column</icon>
             <form />
             <group>general</group>
@@ -51,6 +51,7 @@
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
+            <is_visible>false</is_visible>
         </type>
         <type name="column" translate="label" sortOrder="15">
             <label>Column</label>
@@ -61,7 +62,7 @@
             <render_template>Magento_PageBuilder/component/block/render/column.html</render_template>
             <form>column_form</form>
             <group>general</group>
-            <allowed_parents>column-group</allowed_parents>
+            <allowed_parents>row,column-group</allowed_parents>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
@@ -70,7 +71,6 @@
                 <appearance name="align-center" component="Magento_PageBuilder/js/component/appearance/column/align-center"/>
                 <appearance name="align-bottom" component="Magento_PageBuilder/js/component/appearance/column/align-bottom"/>
             </appearances>
-            <is_visible>false</is_visible>
         </type>
         <type name="text" translate="label" sortOrder="20">
             <label>Text</label>

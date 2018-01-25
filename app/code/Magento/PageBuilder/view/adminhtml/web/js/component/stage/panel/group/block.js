@@ -11,7 +11,7 @@ define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitte
      * Block Constructor
      *
      * @param {string} identifier
-     * @param {ContentBlockConfig} config
+     * @param {ConfigContentBlock} config
      */
     function Block(identifier, config) {
       var _this;
@@ -33,13 +33,23 @@ define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitte
       return _this;
     }
     /**
+     * Retrieve the config object
+     *
+     * @returns {ConfigContentBlock}
+     */
+
+
+    var _proto = Block.prototype;
+
+    _proto.getConfig = function getConfig() {
+      return this.config;
+    };
+    /**
      * Return the draggable config to the element
      *
      * @returns {string}
      */
 
-
-    var _proto = Block.prototype;
 
     _proto.getDraggableConfig = function getDraggableConfig() {
       return this.config.allowed_parents.map(function (value, index) {

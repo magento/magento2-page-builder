@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "../stage/structural/options/option", "./block"], function (_jquery, _knockout, _translate, _option, _block) {
+define(["jquery", "knockout", "mage/translate", "../config", "../stage/structural/options/option", "./block", "./column-group"], function (_jquery, _knockout, _translate, _config, _option, _block, _columnGroup) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -23,11 +23,20 @@ define(["jquery", "knockout", "mage/translate", "../stage/structural/options/opt
 
     var _proto = Column.prototype;
 
+    _proto.bindEvents = function bindEvents() {
+      _Block.prototype.bindEvents.call(this);
+
+      if (_config.getContentTypeConfig("column-group")) {
+        this.on("blockReady", this.createColumnGroup.bind(this));
+      }
+    };
     /**
      * Make a reference to the element in the column
      *
      * @param element
      */
+
+
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
     };
@@ -44,7 +53,39 @@ define(["jquery", "knockout", "mage/translate", "../stage/structural/options/opt
      * @param handle
      */
     _proto.initResizeHandle = function initResizeHandle(handle) {
-      return this.parent.registerResizeHandle(this, (0, _jquery)(handle));
+      var _this2 = this;
+
+      _.defer(function () {
+        _this2.emit("initResizing", {
+          handle: (0, _jquery)(handle)
+        });
+      });
+    };
+    /**
+     * Wrap the current column in a group
+     *
+     * @returns {Promise<Block>}
+     */
+
+
+    _proto.createColumnGroup = function createColumnGroup() {
+      var _this3 = this;
+
+      if (!(this.parent instanceof _columnGroup)) {
+        var index = this.parent.children().indexOf(this); // Remove child instantly to stop content jumping around
+
+        this.parent.removeChild(this); // Create a new instance of column group to wrap our columns with
+
+        return _Block.prototype.createBlock.call(this, _config.getContentTypeConfig("column-group"), this.parent, index).then(function (columnGroup) {
+          return Promise.all([_Block.prototype.createBlock.call(_this3, _this3.config, columnGroup, 0, {
+            width: "50%"
+          }), _Block.prototype.createBlock.call(_this3, _this3.config, columnGroup, 1, {
+            width: "50%"
+          })]).then(function () {
+            return columnGroup;
+          });
+        });
+      }
     };
 
     _createClass(Column, [{

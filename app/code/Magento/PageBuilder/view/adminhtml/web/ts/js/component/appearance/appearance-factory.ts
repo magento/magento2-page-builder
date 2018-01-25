@@ -6,6 +6,7 @@
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import {DataObject} from "../data-store";
 import Appearance from "./appearance";
+import {ConfigContentBlock} from "../config";
 
 export default class AppearanceFactory {
     /**
@@ -14,7 +15,7 @@ export default class AppearanceFactory {
      * @param data {DataObject}
      * @returns {Promise<Appearance>}
      */
-    public create(data: DataObject): Promise<Appearance> {
+    public create(data: ConfigContentBlock): Promise<Appearance> {
         return new Promise((resolve: (Appearance: Appearance) => void, reject: (e: Error) => void) => {
             try {
                 if (data.appearances.length) {

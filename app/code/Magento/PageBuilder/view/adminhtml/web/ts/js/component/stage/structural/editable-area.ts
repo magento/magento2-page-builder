@@ -10,11 +10,12 @@ import _ from "underscore";
 import {  moveArrayItem, moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
 import Block from "../../block/block";
 import { Block as BlockInterface } from "../../block/block.d";
-import createBlock from "../../block/factory";
+import createBlock, {ConfigObject} from "../../block/factory";
 import EventEmitter from "../../event-emitter";
 import Stage from "../../stage";
 import Structural from "./abstract";
 import { EditableAreaInterface } from "./editable-area.d";
+import {ConfigContentBlock, ConfigFieldConfig} from "../../config";
 
 export default class EditableArea extends EventEmitter implements EditableAreaInterface {
     public id: string = mageUtils.uniqueid();
@@ -33,6 +34,13 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
             this.stage = stage;
         }
 
+        this.bindEvents();
+    }
+
+    /**
+     * Bind any events to the current instance of the class
+     */
+    public bindEvents() {
         _.bindAll(
             this,
             "onBlockDropped",
@@ -122,7 +130,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @param index
      */
     public addChild(child: Structural, index?: number): void {
-
         child.parent = this;
         child.stage = this.stage;
         if (typeof index === "number") {
@@ -154,18 +161,29 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
 
         new Promise<BlockInterface>((resolve, reject) => {
             if (params.block) {
-                return createBlock(params.block.config, this, this.stage).then((block: Block) => {
-                    this.addChild(block, index);
-                    resolve(block);
-                    block.emit("blockReady");
-                }).catch((error: string) => {
-                    reject(error);
-                });
+                this.createBlock(params.block.config, this, index);
             } else {
                 reject("Parameter block missing from event.");
             }
         }).catch((error: string) => {
             console.error( error );
+        });
+    }
+
+    /**
+     * Create a new instance of the block
+     *
+     * @param {ConfigContentBlock} config
+     * @param {EditableArea} parent
+     * @param {number} index
+     * @param {{}} formData
+     * @returns {Promise<Block>}
+     */
+    public createBlock(config: ConfigContentBlock, parent: EditableArea, index: number, formData?: {}): Promise<Block> {
+        return createBlock(config, parent, parent.stage, formData).then((block: Block) => {
+            parent.addChild(block, index);
+            block.emit("blockReady");
+            return block;
         });
     }
 
@@ -176,12 +194,8 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @param params
      */
     public onBlockInstanceDropped(event: Event, params: BlockInstanceDroppedParams): void {
+        params.blockInstance.parent = this;
         this.addChild(params.blockInstance, params.index);
-
-        /*
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
-        }*/
 
         params.blockInstance.emit("blockMoved");
     }
@@ -248,7 +262,7 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
 export interface BlockDroppedParams {
     index: number;
     block: {
-        config: object,
+        config: ConfigContentBlock,
     };
 }
 
@@ -270,4 +284,8 @@ export interface SortParams {
     originalEle: JQuery;
     placeholder: JQuery;
     helper?: any;
+}
+
+export interface BlockCreatedParams {
+    parent: EditableArea;
 }

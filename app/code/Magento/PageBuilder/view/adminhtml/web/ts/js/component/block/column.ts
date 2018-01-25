@@ -6,12 +6,21 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import Config from "../config";
 import {Option} from "../stage/structural/options/option";
 import Block from "./block";
 import ColumnGroup from "./column-group";
 
 export default class Column extends Block {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+
+    public bindEvents() {
+        super.bindEvents();
+
+        if (Config.getContentTypeConfig("column-group")) {
+            this.on("blockReady", this.createColumnGroup.bind(this));
+        }
+    }
 
     /**
      * Make a reference to the element in the column
@@ -44,6 +53,36 @@ export default class Column extends Block {
      * @param handle
      */
     public initResizeHandle(handle: Element) {
-        return (this.parent as ColumnGroup).registerResizeHandle(this, $(handle));
+        _.defer(() => {
+            this.emit("initResizing", {
+                handle: $(handle),
+            });
+        });
+    }
+
+    /**
+     * Wrap the current column in a group
+     *
+     * @returns {Promise<Block>}
+     */
+    public createColumnGroup(): Promise<Block> {
+        if (!(this.parent instanceof ColumnGroup)) {
+            const index = this.parent.children().indexOf(this);
+            // Remove child instantly to stop content jumping around
+            this.parent.removeChild(this);
+            // Create a new instance of column group to wrap our columns with
+            return super.createBlock(
+                Config.getContentTypeConfig("column-group"),
+                this.parent,
+                index,
+            ).then((columnGroup) => {
+                return Promise.all([
+                    super.createBlock(this.config, columnGroup, 0, {width: "50%"}),
+                    super.createBlock(this.config, columnGroup, 1, {width: "50%"}),
+                ]).then(() => {
+                    return columnGroup;
+                });
+            });
+        }
     }
 }

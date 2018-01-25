@@ -29,32 +29,36 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
         _this.stage = stage;
       }
 
-      _underscore.bindAll(_this, "onBlockDropped", "onBlockInstanceDropped", "onBlockRemoved", "onBlockSorted", "onSortStart"); // Attach events to structural elements
-      // Block dropped from left hand panel
-
-
-      _this.on("blockDropped", _this.onBlockDropped); // Block instance being moved between structural elements
-
-
-      _this.on("blockInstanceDropped", _this.onBlockInstanceDropped);
-
-      _this.on("blockRemoved", _this.onBlockRemoved); // Block sorted within the same structural element
-
-
-      _this.on("blockSorted", _this.onBlockSorted);
-
-      _this.on("sortStart", _this.onSortStart);
+      _this.bindEvents();
 
       return _this;
     }
+    /**
+     * Bind any events to the current instance of the class
+     */
+
+
+    var _proto = EditableArea.prototype;
+
+    _proto.bindEvents = function bindEvents() {
+      _underscore.bindAll(this, "onBlockDropped", "onBlockInstanceDropped", "onBlockRemoved", "onBlockSorted", "onSortStart"); // Attach events to structural elements
+      // Block dropped from left hand panel
+
+
+      this.on("blockDropped", this.onBlockDropped); // Block instance being moved between structural elements
+
+      this.on("blockInstanceDropped", this.onBlockInstanceDropped);
+      this.on("blockRemoved", this.onBlockRemoved); // Block sorted within the same structural element
+
+      this.on("blockSorted", this.onBlockSorted);
+      this.on("sortStart", this.onSortStart);
+    };
     /**
      * Retrieve the child template
      *
      * @returns {string}
      */
 
-
-    var _proto = EditableArea.prototype;
 
     /**
      * Return the children of the current element
@@ -151,19 +155,30 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
       var index = params.index || 0;
       new Promise(function (resolve, reject) {
         if (params.block) {
-          return (0, _factory)(params.block.config, _this2, _this2.stage).then(function (block) {
-            _this2.addChild(block, index);
-
-            resolve(block);
-            block.emit("blockReady");
-          }).catch(function (error) {
-            reject(error);
-          });
+          _this2.createBlock(params.block.config, _this2, index);
         } else {
           reject("Parameter block missing from event.");
         }
       }).catch(function (error) {
         console.error(error);
+      });
+    };
+    /**
+     * Create a new instance of the block
+     *
+     * @param {ConfigContentBlock} config
+     * @param {EditableArea} parent
+     * @param {number} index
+     * @param {{}} formData
+     * @returns {Promise<Block>}
+     */
+
+
+    _proto.createBlock = function createBlock(config, parent, index, formData) {
+      return (0, _factory)(config, parent, parent.stage, formData).then(function (block) {
+        parent.addChild(block, index);
+        block.emit("blockReady");
+        return block;
       });
     };
     /**
@@ -175,12 +190,8 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
 
 
     _proto.onBlockInstanceDropped = function onBlockInstanceDropped(event, params) {
+      params.blockInstance.parent = this;
       this.addChild(params.blockInstance, params.index);
-      /*
-      if (ko.processAllDeferredBindingUpdates) {
-          ko.processAllDeferredBindingUpdates();
-      }*/
-
       params.blockInstance.emit("blockMoved");
     };
     /**
