@@ -6,8 +6,8 @@
   */
 -->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addCmsBlock">
         <amOnPage url="{{CmsNewBlock.page}}" stepKey="amOnNewBlockPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -17,4 +17,4 @@
         <fillField selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" userInput="&lt;hr /&gt;" stepKey="fillFieldContent"/>
         <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="clickSaveBlock"/>
     </actionGroup>
-</config>
+</actionGroups>
