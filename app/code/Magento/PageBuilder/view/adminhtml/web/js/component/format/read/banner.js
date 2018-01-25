@@ -31,7 +31,7 @@ define(["../../../component/config"], function (_config) {
         overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
         overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
         show_button: element.querySelector(".pagebuilder-banner-show-button") ? "on_hover" : "always",
-        show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector(".pagebuilder-banner-show-overlay"))
+        show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor)
       };
       return Promise.resolve(response);
     };
@@ -43,7 +43,7 @@ define(["../../../component/config"], function (_config) {
 
 
     _proto.getShowOverlay = function getShowOverlay(value) {
-      return value === "always" || "never_show";
+      return value === "transparent" ? "never_show" : "always";
     };
     /**
      * Convert RGBA to HEX for content overlay color
@@ -53,10 +53,25 @@ define(["../../../component/config"], function (_config) {
 
 
     _proto.convertRgbaToHex = function convertRgbaToHex(value) {
-      var r = parseInt(value.match(/\d+/g)[0]).toString(16);
-      var g = parseInt(value.match(/\d+/g)[1]).toString(16);
-      var b = parseInt(value.match(/\d+/g)[2]).toString(16);
-      return "#" + r + g + b;
+      var values = value.match(/\d+/g);
+      var r = parseInt(values[0]).toString(16);
+      var g = parseInt(values[1]).toString(16);
+      var b = parseInt(values[2]).toString(16);
+      return this.padZero(r) + this.padZero(g) + this.padZero(b);
+    };
+    /**
+     * Adds 0 if hex value is string character
+     *
+     * @returns string
+     */
+
+
+    _proto.padZero = function padZero(value) {
+      if (value.length == 1) {
+        value = "0" + value;
+      }
+
+      return value;
     };
     /**
      * Extract the Alpha component from RGBA for overlay transparency

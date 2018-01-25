@@ -36,7 +36,7 @@ export default class Banner implements ReadInterface {
             overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
             overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
             show_button: element.querySelector(".pagebuilder-banner-show-button") ? "on_hover" : "always",
-            show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector(".pagebuilder-banner-show-overlay"))
+            show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor)
         };
         return Promise.resolve(response);
     }
@@ -47,7 +47,7 @@ export default class Banner implements ReadInterface {
      * @returns string
      */
     private getShowOverlay(value: string) {
-        return value === "always" || "never_show";
+        return value === "transparent" ? "never_show" : "always";
     }
 
     /**
@@ -56,10 +56,23 @@ export default class Banner implements ReadInterface {
      * @returns string
      */
     private convertRgbaToHex(value: string) {
-        const r = parseInt(value.match(/\d+/g)[0]).toString(16);
-        const g = parseInt(value.match(/\d+/g)[1]).toString(16);
-        const b = parseInt(value.match(/\d+/g)[2]).toString(16);
-        return "#" + r + g + b;
+        const values = value.match(/\d+/g);
+        const r = parseInt(values[0]).toString(16);
+        const g = parseInt(values[1]).toString(16);
+        const b = parseInt(values[2]).toString(16);
+        return this.padZero(r) + this.padZero(g) + this.padZero(b);
+    }
+
+    /**
+     * Adds 0 if hex value is string character
+     *
+     * @returns string
+     */
+    private padZero(value: string) {
+        if (value.length == 1) {
+            value = "0" + value;
+        }
+        return value;
     }
 
     /**
