@@ -10,11 +10,16 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="imageDisplay" type="button" selector="[data-role='banner'] img"/>
-        <element name="linkText" type="text" selector="[data-role='banner'] a div" />
+        <element name="buttonText" type="text" selector="[data-role='banner'] button" />
         <element name="linkUrl" type="button" selector="[data-role='banner'] a[href='{{arg1}}']" parameterized="true"/>
-        <element name="openInNewWindow" type="button" selector="[data-role='banner'] a[target='_blank']" />
+        <element name="openInNewTab" type="button" selector="[data-role='banner'] a[target='_blank']"/>
     </section>
     <section name="BannerOnBackend">
+        <element name="imageDisplay" type="button" selector="[data-role='banner'] img"/>
+        <element name="imageSource" type="button" selector="img.pagebuilder-mobile-hidden[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
+        <element name="buttonText" type="text" selector="[data-role='banner'] button" />
         <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
+        <element name="editButtonLuma" type="button" selector="//button[contains(@class, 'luma-button-primary')]" />
     </section>
 </config>
