@@ -9,17 +9,18 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
-        <element name="imageDisplay" type="button" selector="[data-role='banner'] img"/>
-        <element name="buttonText" type="text" selector="[data-role='banner'] button" />
-        <element name="linkUrl" type="button" selector="[data-role='banner'] a[href='{{arg1}}']" parameterized="true"/>
-        <element name="openInNewTab" type="button" selector="[data-role='banner'] a[target='_blank']"/>
+        <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
+        <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
+        <element name="buttonText" type="text" selector="//button[text()='{{arg1}}']" parameterized="true"/>
+        <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
-        <element name="imageDisplay" type="button" selector="[data-role='banner'] img"/>
-        <element name="imageSource" type="button" selector="img.pagebuilder-mobile-hidden[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
-        <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src^='{{arg1}}'][src*='{{arg2}}'][src$='.{{arg3}}']" parameterized="true"/>
-        <element name="buttonText" type="text" selector="[data-role='banner'] button" />
+        <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
+        <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
+        <element name="buttonText" type="text" selector="//button[text()='{{arg1}}']" parameterized="true"/>
         <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
         <element name="editButtonLuma" type="button" selector="//button[contains(@class, 'luma-button-primary')]" />
+        <element name="requiredField" type="text" selector="//label[contains(@class, 'admin__field-error')]" />
+        <element name="openInNewTab" type="button" selector="[data-role='banner'] a[target='_blank']"/>
     </section>
 </config>

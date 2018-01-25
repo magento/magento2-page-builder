@@ -56,9 +56,6 @@
             <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
                 <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             </actionGroup>
-            <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="openLinkInNewWindow">
-                <argument name="property" value="PageBuilderBannerNewTabProperty"/>
-            </actionGroup>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -160,8 +157,28 @@
             <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
                 <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             </actionGroup>
+            <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+            <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+            <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+            <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+                <argument name="property" value="PageBuilderBannerImageProperty"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+            <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+            <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+            <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+                <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+            </actionGroup>
+            <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+            <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+            <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+            <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+                <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            </actionGroup>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-
         </test>
         <test name="BannerHasDefaults">
             <annotations>
@@ -170,6 +187,25 @@
                 <severity value="CRITICAL"/>
                 <group value="pagebuilder"/>
             </annotations>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBannerShowButtonPositionProperty">
+                <argument name="property" value="PageBuilderBannerShowButtonProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBannerShowContentOverlayProperty">
+                <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
+            </actionGroup>
+            <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBannerMinimumHeightProperty">
+                <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+            </actionGroup>
         </test>
         <test name="BannerCanPreviewAdmin">
             <annotations>
@@ -200,13 +236,16 @@
             <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
                 <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             </actionGroup>
+            <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Good Night!')" stepKey="addTextToWYSIWYG"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
             <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
             <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-            <seeElement selector="{{BannerOnBackend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-            <seeElement selector="{{BannerOnBackend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderBannerImageProperty.path,PageBuilderBannerImageProperty.fileType)}}" stepKey="seeMainImageSource"/>
-            <seeElementInDOM selector="{{BannerOnBackend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderBannerMobileImageProperty.path,PageBuilderBannerMobileImageProperty.fileType)}}" stepKey="seeMobileImageInDom"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+            <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+            <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
+            <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         </test>
         <test name="BannerCanPreviewFrontend">
             <annotations>
@@ -215,12 +254,37 @@
                 <severity value="CRITICAL"/>
                 <group value="pagebuilder"/>
             </annotations>
-        <!--<seeElement selector="{{BannerOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>-->
-        <!--<seeElement selector="{{ImageOnFrontend.imageSource(_ENV.MAGENTO_BASE_URL,PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>-->
-        <!--<seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(_ENV.MAGENTO_BASE_URL,PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>-->
-        <!--<see userInput="{{PageBuilderBannerButtonTextProperty.value}}" selector="{{BannerOnFrontend.buttonText}}" stepKey="seeButtonTextDisplayed"/>-->
-        <!--<seeElementInDOM selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>-->
-        <!--<seeElementInDOM selector="{{BannerOnFrontend.openInNewTab}}" stepKey="verifyLinkOpensNewTab"/>-->
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+            <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+                <argument name="property" value="PageBuilderBannerImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
+                <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+                <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+                <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            </actionGroup>
+            <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Good Night!')" stepKey="addTextToWYSIWYG"/>
+            <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+            <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+            <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+            <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
+            <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         </test>
         <test name="BannerHasButtonStyled">
             <annotations>
