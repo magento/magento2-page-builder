@@ -41,11 +41,18 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
 
 
         $('div[data-role="banner"] .pagebuilder-banner-show-button').each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-banner-button');
             $(element).hover(
                 function() {
-                    $(element).find('.pagebuilder-banner-button').css('visibility', 'visible');
+                    overlayEl.css({
+                        'opacity' : '1',
+                        'visibility' : 'visible'
+                    });
                 }, function() {
-                    $(element).find('.pagebuilder-banner-button').css('visibility', 'hidden');
+                    overlayEl.css({
+                        'opacity' : '0',
+                        'visibility' : 'hidden'
+                    });
                 }
             );
         });
