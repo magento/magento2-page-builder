@@ -26,6 +26,13 @@ define(["../../config"], function (_config) {
       response.background_image = this.decodeBackground(background);
       return Promise.resolve(response);
     };
+    /**
+     * Decode background image back into object format
+     *
+     * @param value
+     * @returns {Object}
+     */
+
 
     _proto.decodeBackground = function decodeBackground(value) {
       value = decodeURIComponent(value.replace(window.location.href, ""));

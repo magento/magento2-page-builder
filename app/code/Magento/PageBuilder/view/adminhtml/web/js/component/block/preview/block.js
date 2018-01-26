@@ -53,11 +53,6 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
         }
 
-        if (_this.data.margins_and_paddings && _typeof(_this.data.margins_and_paddings()) === "object") {
-          styles.margins = _this.data.margins_and_padding().margin.top + "px " + _this.data.margins_and_padding().margin.right + "px " + _this.data.margins_and_padding().margin.bottom + "px " + _this.data.margins_and_padding().margin.left + "px ";
-          styles.padding = _this.data.margins_and_padding().padding.top + "px " + _this.data.margins_and_padding().padding.right + "px " + _this.data.margins_and_padding().padding.bottom + "px " + _this.data.margins_and_padding().padding.left + "px ";
-        }
-
         return styles;
       }); // Force the columnStyles to update on changes to stored style attribute data
 

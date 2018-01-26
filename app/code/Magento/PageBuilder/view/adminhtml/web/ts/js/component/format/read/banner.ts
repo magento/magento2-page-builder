@@ -30,6 +30,12 @@ export default class Banner implements ReadInterface {
         return Promise.resolve(response);
     }
 
+    /**
+     * Decode background image back into object format
+     *
+     * @param value
+     * @returns {Object}
+     */
     private decodeBackground(value: any): string {
         value = decodeURIComponent((value as string).replace(window.location.href, ""));
         const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value);

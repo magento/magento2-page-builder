@@ -65,17 +65,6 @@ export default class PreviewBlock {
             if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
                 styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
             }
-            if (this.data.margins_and_paddings && typeof this.data.margins_and_paddings() === "object") {
-                styles.margins = this.data.margins_and_padding().margin.top + "px " +
-                    this.data.margins_and_padding().margin.right + "px " +
-                    this.data.margins_and_padding().margin.bottom + "px " +
-                    this.data.margins_and_padding().margin.left + "px ";
-                styles.padding = this.data.margins_and_padding().padding.top + "px " +
-                this.data.margins_and_padding().padding.right + "px " +
-                this.data.margins_and_padding().padding.bottom + "px " +
-                this.data.margins_and_padding().padding.left + "px ";
-            }
-
             return styles;
         });
 

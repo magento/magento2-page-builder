@@ -13,6 +13,11 @@ define([], function () {
 
     var _proto = StyleAttributeFilter.prototype;
 
+    /**
+     * GET allowed attributes
+     *
+     * @returns {Array<string>}
+     */
     _proto.getAllowedAttributes = function getAllowedAttributes() {
       return this.allowedAttributes;
     };

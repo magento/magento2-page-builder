@@ -9,9 +9,8 @@
     <!-- ko ifnot: preview.data.background_image() -->
         <i class="icon-pagebuilder-banner"></i> <span data-bind="text: $t('Banner');"></span>
     <!-- /ko -->
-    <pre data-bind="afterRender: function(){console.log(preview.previewStyle().backgroundImage)}"></pre>
     <!-- ko if: preview.data.background_image() && typeof preview.data.background_image()[0] !== 'undefined' -->
-        <div data-bind=" style: {backgroundImage: preview.previewStyle().backgroundImage}"
+        <div data-bind="style: {backgroundImage: preview.previewStyle().backgroundImage}"
              style="justify-content: center;
              background-repeat: no-repeat;
              background-size: 100%;
@@ -20,7 +19,7 @@
              min-height: 250px;">
             <div data-bind="style: {margin: preview.previewStyle().margin, padding: preview.previewStyle().padding}"
                  style="box-sizing: border-box; width: 50%;">
-                <div style="background: white; box-sizing: border-box; min-height: 100px; padding:35px;">
+                <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
                 </div>
             </div>
         </div>
