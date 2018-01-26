@@ -8,7 +8,7 @@ import "ko-draggable";
 import "ko-sortable";
 import uiComponent from "uiComponent";
 import _ from "underscore";
-import Config from "../config";
+import Config, {ConfigContentBlock} from "../config";
 import { StageInterface } from "../stage.d";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
@@ -128,7 +128,10 @@ export default class Panel extends uiComponent implements PanelInterface {
                             is_visible: true,
                         }), /* Retrieve content blocks with group id */
                         (contentBlock: ConfigContentBlock, identifier: string) => {
-                            return new GroupBlock(identifier, contentBlock);
+                            const groupBlock = new GroupBlock(identifier, contentBlock);
+                            groupBlock.on("dragStart", () => { this.stage.dragging(true); });
+                            groupBlock.on("dragStop", () => { this.stage.dragging(false); });
+                            return groupBlock;
                         },
                     ),
                 ));

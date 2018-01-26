@@ -111,6 +111,16 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       this.loading(false);
     };
     /**
+     * Set the dragging flat on the parent
+     *
+     * @param {boolean} flag
+     */
+
+
+    _proto.dragging = function dragging(flag) {
+      this.parent.dragging(flag);
+    };
+    /**
      * Tells the stage wrapper to expand to fullscreen
      */
 

@@ -298,27 +298,39 @@ define(["../../../../utils/array"], function (_array) {
         adjustedColumn = findShrinkableColumnForResize(column, "right");
       }
     } else {
-      if (history.right.length > 0) {
+      if (getColumnWidth(column) <= getSmallestColumnWidth()) {
+        adjustedColumn = findShrinkableColumnForResize(column, "left");
+
+        if (adjustedColumn) {
+          modifyColumnInPair = "right";
+        }
+      } else if (history.right.length > 0) {
         usedHistory = "right";
         adjustedColumn = history.right.reverse()[0].adjustedColumn;
         modifyColumnInPair = history.right.reverse()[0].modifyColumnInPair;
       } else {
-        // Detect if we're increasing the side of the right column, and we've hit the smallest limit on the
-        // current element
-        if (getColumnWidth(column) <= getSmallestColumnWidth()) {
-          adjustedColumn = findShrinkableColumnForResize(column, "left");
-
-          if (adjustedColumn) {
-            modifyColumnInPair = "right";
-          }
-        } else {
-          // If we're shrinking our column we can just increase the adjacent column
-          adjustedColumn = getAdjacentColumn(column, "+1");
-        }
+        // If we're shrinking our column we can just increase the adjacent column
+        adjustedColumn = getAdjacentColumn(column, "+1");
       }
     }
 
     return [adjustedColumn, modifyColumnInPair, usedHistory];
+  }
+  /**
+   * Compare if two numbers are within a certain threshold of each other
+   *
+   * comparator(10,11,2) => true
+   * comparator(1.1,1.11,0.5) => true
+   *
+   * @param {number} num1
+   * @param {number} num2
+   * @param {number} threshold
+   * @returns {boolean}
+   */
+
+
+  function comparator(num1, num2, threshold) {
+    return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
   }
 
   return {
@@ -335,7 +347,8 @@ define(["../../../../utils/array"], function (_array) {
     findShrinkableColumn: findShrinkableColumn,
     getRoundedColumnWidth: getRoundedColumnWidth,
     calculateGhostWidth: calculateGhostWidth,
-    determineAdjustedColumn: determineAdjustedColumn
+    determineAdjustedColumn: determineAdjustedColumn,
+    comparator: comparator
   };
 });
 //# sourceMappingURL=resizing.js.map

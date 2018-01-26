@@ -118,6 +118,15 @@ export default class Stage extends EditableArea implements StageInterface {
     }
 
     /**
+     * Set the dragging flat on the parent
+     *
+     * @param {boolean} flag
+     */
+    public dragging(flag: boolean) {
+        this.parent.dragging(flag);
+    }
+
+    /**
      * Tells the stage wrapper to expand to fullscreen
      */
     public goFullScreen(): void {

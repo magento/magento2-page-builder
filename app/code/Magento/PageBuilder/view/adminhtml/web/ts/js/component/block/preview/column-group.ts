@@ -14,7 +14,7 @@ import {calculateDropPositions, DropPosition} from "./column-group/dragdrop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./column-group/registry";
 import {
     calculateGhostWidth,
-    ColumnWidth, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth, getAdjacentColumn,
+    ColumnWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth, getAdjacentColumn,
     getColumnWidth, getMaxColumns, MaxGhostWidth,
     ResizeHistory,
 } from "./column-group/resizing";
@@ -35,6 +35,7 @@ export default class ColumnGroup extends PreviewBlock {
     private resizeLeftLastColumnShrunk: Column;
     private resizeRightLastColumnShrunk: Column;
     private resizeLastPosition: number;
+    private resizeLastColumnInPair: string;
     private resizeHistory: ResizeHistory = {
         left: [],
         right: [],
@@ -123,7 +124,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     public registerResizeHandle(column: Column, handle: JQuery<HTMLElement>) {
         handle.off("mousedown");
-        handle.on("mousedown",(event) => {
+        handle.on("mousedown", (event) => {
             event.preventDefault();
             this.resizing(true);
 
@@ -244,7 +245,10 @@ export default class ColumnGroup extends PreviewBlock {
             this.handleDroppingMouseMove(event, group);
         }).mouseleave(() => {
             this.movePlaceholder.css("left", "").removeClass("active");
-        }).mouseup(() => {
+        });
+
+        // As the mouse might be released outside of the group, attach to the body
+        $("body").mouseup(() => {
             this.endAllInteractions();
         });
     }
@@ -279,7 +283,7 @@ export default class ColumnGroup extends PreviewBlock {
      * @param {JQuery<HTMLElement>} group
      */
     private handleResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
-        let currentCol: ColumnWidth;
+        let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
             event.preventDefault();
@@ -313,12 +317,11 @@ export default class ColumnGroup extends PreviewBlock {
             this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
             if (adjustedColumn && this.resizeColumnWidths) {
-                currentCol = this.resizeColumnWidths.find((val) => {
-                    return (currentPos > (val.position - 35) && currentPos < (val.position + 35)) &&
-                        val.forColumn === modifyColumnInPair;
+                newColumnWidth = this.resizeColumnWidths.find((val) => {
+                    return comparator(currentPos, val.position, 35) && val.forColumn === modifyColumnInPair;
                 });
 
-                if (currentCol) {
+                if (newColumnWidth) {
                     let mainColumn = this.resizeColumnInstance;
                     // If we're using the left data set, we're actually resizing the right column of the group
                     if (modifyColumnInPair === "right") {
@@ -326,19 +329,33 @@ export default class ColumnGroup extends PreviewBlock {
                     }
 
                     // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
-                    // one being performed now. This occurs as we re-calculate the column positions on resize
-                    if (getColumnWidth(mainColumn) !== currentCol.width &&
-                        this.resizeLastPosition !== currentCol.position
+                    // one being performed now. This occurs as we re-calculate the column positions on resize, we have
+                    // to use the comparator as the calculation may result in slightly different numbers due to rounding
+                    if (getColumnWidth(mainColumn) !== newColumnWidth.width &&
+                        !comparator(this.resizeLastPosition, newColumnWidth.position, 10)
                     ) {
+                        // If our previous action was to resize the right column in pair, and we're now dragging back
+                        // to the right, but have matched a column for the left we need to fix the columns being
+                        // affected
+                        if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" &&
+                            newColumnWidth.forColumn === "left"
+                        ) {
+                            const originalMainColumn = mainColumn;
+                            mainColumn = adjustedColumn;
+                            adjustedColumn = getAdjacentColumn(originalMainColumn, "+1");
+                        }
+
                         this.recordResizeHistory(
                             usedHistory,
                             direction,
                             adjustedColumn,
                             modifyColumnInPair,
                         );
-                        this.resizeLastPosition = currentCol.position;
+                        this.resizeLastPosition = newColumnWidth.position;
 
-                        this.parent.handleColumnResize(mainColumn, currentCol.width, adjustedColumn);
+                        this.resizeLastColumnInPair = modifyColumnInPair;
+
+                        this.parent.handleColumnResize(mainColumn, newColumnWidth.width, adjustedColumn);
 
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
@@ -382,13 +399,10 @@ export default class ColumnGroup extends PreviewBlock {
                     // Only ever look for the left placement, except the last item where we look on the right
                     const placement = (currentX >= insertLastPos ? "right" : "left");
                     // There is 200px area over each column borders
-                    return (currentX > position[placement] - 100 &&
-                        currentX < position[placement] + 100 &&
-                        // Verify we're not dropping next to the current columns right position
-                        !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) &&
+                    return comparator(currentX, position[placement], 100) &&
+                        !comparator(currentX, currentColumnRight, 100) &&
                         position.affectedColumn !== columnInstance && // Check affected column isn't the current column
-                        position.placement === placement// Verify the position, we only check left on sorting
-                    );
+                        position.placement === placement; // Verify the position, we only check left on sorting
                 });
 
                 if (this.movePosition) {
@@ -463,7 +477,6 @@ export default class ColumnGroup extends PreviewBlock {
             deactivate: () => {
                 this.dropOverElement = null;
                 this.dropPlaceholder.removeClass("left right");
-                // Delay the removal of the flag so other systems have time to execute
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 if (this.dropOverElement && this.dropPosition) {

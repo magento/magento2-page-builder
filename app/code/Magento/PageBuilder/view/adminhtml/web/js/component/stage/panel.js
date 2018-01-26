@@ -82,7 +82,14 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
           }),
           /* Retrieve content blocks with group id */
           function (contentBlock, identifier) {
-            return new _block.Block(identifier, contentBlock);
+            var groupBlock = new _block.Block(identifier, contentBlock);
+            groupBlock.on("dragStart", function () {
+              _this2.stage.dragging(true);
+            });
+            groupBlock.on("dragStop", function () {
+              _this2.stage.dragging(false);
+            });
+            return groupBlock;
           })));
         }); // Display the panel
 

@@ -24,7 +24,8 @@ define(["../../config", "../factory", "../preview/column-group/resizing"], funct
 
     if (difference && shrinkableColumn) {
       var currentShrinkable = (0, _resizing.getColumnWidth)(shrinkableColumn);
-      updateColumnWidth(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)((currentShrinkable + -difference).toString()));
+      var shrinkableSize = (0, _resizing.getAcceptedColumnWidth)((currentShrinkable + -difference).toString());
+      updateColumnWidth(shrinkableColumn, shrinkableSize);
     }
   }
   /**

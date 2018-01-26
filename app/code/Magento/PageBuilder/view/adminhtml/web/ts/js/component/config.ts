@@ -268,13 +268,13 @@ export interface ConfigContentBlock {
     contentType: string;
     group: string;
     fields: ConfigFieldConfig[];
-    visible: boolean;
     preview_template: string;
     render_template: string;
     preview_component: string;
     component: string;
     appearances: any[];
     allowed_parents: string[];
+    is_visible: boolean;
 }
 export interface ConfigContentBlocks {
     [key: string]: ConfigContentBlock;

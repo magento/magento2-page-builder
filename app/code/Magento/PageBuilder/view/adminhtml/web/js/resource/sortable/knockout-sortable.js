@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, registry) {
+define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function(ko, jQuery, registry, _) {
 
     /**
      * Retrieve the view model for an element
@@ -158,7 +158,7 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                 newParentEl = blockEl.parent()[0],
                 newIndex = blockEl.index();
 
-            if (blockEl && (newParentEl === this)) {
+            if (blockEl && newParentEl && (newParentEl === this)) {
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
@@ -281,7 +281,9 @@ define(["knockout", "jquery", "uiRegistry", "jquery/ui"], function(ko, jQuery, r
                 }
             } else {
                 if (!ui.helper && ui.item) {
-                    jQuery(ui.item).remove();
+                    _.defer(() => {
+                        jQuery(ui.item).remove();
+                    });
                 }
             }
         }

@@ -30,6 +30,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
       _this.resizeLeftLastColumnShrunk = void 0;
       _this.resizeRightLastColumnShrunk = void 0;
       _this.resizeLastPosition = void 0;
+      _this.resizeLastColumnInPair = void 0;
       _this.resizeHistory = {
         left: [],
         right: []
@@ -249,7 +250,9 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         _this5.handleDroppingMouseMove(event, group);
       }).mouseleave(function () {
         _this5.movePlaceholder.css("left", "").removeClass("active");
-      }).mouseup(function () {
+      }); // As the mouse might be released outside of the group, attach to the body
+
+      (0, _jquery)("body").mouseup(function () {
         _this5.endAllInteractions();
       });
     };
@@ -284,7 +287,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     _proto.handleResizingMouseMove = function handleResizingMouseMove(event, group) {
       var _this6 = this;
 
-      var currentCol;
+      var newColumnWidth;
 
       if (this.resizeMouseDown) {
         event.preventDefault();
@@ -309,23 +312,34 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
         if (adjustedColumn && this.resizeColumnWidths) {
-          currentCol = this.resizeColumnWidths.find(function (val) {
-            return currentPos > val.position - 35 && currentPos < val.position + 35 && val.forColumn === modifyColumnInPair;
+          newColumnWidth = this.resizeColumnWidths.find(function (val) {
+            return (0, _resizing.comparator)(currentPos, val.position, 35) && val.forColumn === modifyColumnInPair;
           });
 
-          if (currentCol) {
+          if (newColumnWidth) {
             var mainColumn = this.resizeColumnInstance; // If we're using the left data set, we're actually resizing the right column of the group
 
             if (modifyColumnInPair === "right") {
               mainColumn = (0, _resizing.getAdjacentColumn)(this.resizeColumnInstance, "+1");
             } // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
-            // one being performed now. This occurs as we re-calculate the column positions on resize
+            // one being performed now. This occurs as we re-calculate the column positions on resize, we have
+            // to use the comparator as the calculation may result in slightly different numbers due to rounding
 
 
-            if ((0, _resizing.getColumnWidth)(mainColumn) !== currentCol.width && this.resizeLastPosition !== currentCol.position) {
+            if ((0, _resizing.getColumnWidth)(mainColumn) !== newColumnWidth.width && !(0, _resizing.comparator)(this.resizeLastPosition, newColumnWidth.position, 10)) {
+              // If our previous action was to resize the right column in pair, and we're now dragging back
+              // to the right, but have matched a column for the left we need to fix the columns being
+              // affected
+              if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" && newColumnWidth.forColumn === "left") {
+                var originalMainColumn = mainColumn;
+                mainColumn = adjustedColumn;
+                adjustedColumn = (0, _resizing.getAdjacentColumn)(originalMainColumn, "+1");
+              }
+
               this.recordResizeHistory(usedHistory, direction, adjustedColumn, modifyColumnInPair);
-              this.resizeLastPosition = currentCol.position;
-              this.parent.handleColumnResize(mainColumn, currentCol.width, adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+              this.resizeLastPosition = newColumnWidth.position;
+              this.resizeLastColumnInPair = modifyColumnInPair;
+              this.parent.handleColumnResize(mainColumn, newColumnWidth.width, adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
@@ -366,10 +380,8 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
             // Only ever look for the left placement, except the last item where we look on the right
             var placement = currentX >= insertLastPos ? "right" : "left"; // There is 200px area over each column borders
 
-            return currentX > position[placement] - 100 && currentX < position[placement] + 100 && // Verify we're not dropping next to the current columns right position
-            !(currentX > currentColumnRight - 100 && currentX < currentColumnRight + 100) && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
-            position.placement === placement // Verify the position, we only check left on sorting
-            ;
+            return (0, _resizing.comparator)(currentX, position[placement], 100) && !(0, _resizing.comparator)(currentX, currentColumnRight, 100) && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
+            position.placement === placement; // Verify the position, we only check left on sorting
           });
 
           if (this.movePosition) {
@@ -443,8 +455,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         deactivate: function deactivate() {
           _this7.dropOverElement = null;
 
-          _this7.dropPlaceholder.removeClass("left right"); // Delay the removal of the flag so other systems have time to execute
-
+          _this7.dropPlaceholder.removeClass("left right");
         },
         drop: function drop(event, ui) {
           if (_this7.dropOverElement && _this7.dropPosition) {

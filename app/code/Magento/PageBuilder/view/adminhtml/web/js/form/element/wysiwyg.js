@@ -41,6 +41,7 @@ define([
             panel: new Panel(),
             isFullScreen: false,
             originalScrollTop: false,
+            dragging: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -64,7 +65,7 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen dragging');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {

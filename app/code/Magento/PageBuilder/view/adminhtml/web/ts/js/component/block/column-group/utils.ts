@@ -29,9 +29,10 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
     // Also shrink the closest shrinkable column
     if (difference && shrinkableColumn) {
         const currentShrinkable = getColumnWidth(shrinkableColumn);
+        const shrinkableSize = getAcceptedColumnWidth((currentShrinkable + -difference).toString());
         updateColumnWidth(
             shrinkableColumn,
-            getAcceptedColumnWidth((currentShrinkable + -difference).toString()),
+            shrinkableSize,
         );
     }
 }
