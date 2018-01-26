@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="CanAddColumn">
+        <annotations>
+            <title value="Add a column into a row"/>
+            <description value="A user should be able to add a column into a row."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-82860"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
+    </test>
+    <test name="CanRemoveColumn">
+        <annotations>
+            <title value="Remove a column from a row"/>
+            <description value="A user should be able to remove columns from rows."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-82861"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
+        <actionGroup ref="removePageBuilderColumn" stepKey="removeColumn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
+    </test>
+    <test name="SlideOutPanelWithSettingsContainRequiredFields">
+        <annotations>
+            <title value="Displays requires column settings"/>
+            <description value="Slide out panel with required settings appear"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-82227"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
+            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundPositionPropertyIsRequired">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundSizePropertyIsRequired">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundRepeatPropertyIsRequired">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundAttachmentPropertyIsRequired">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundAttachmentPropertyIsRequired">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnCanInteractEditPanel">
+        <annotations>
+            <title value="Can close the edit panel"/>
+            <description value="A user should be able to open the edit form on an added column."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-82862"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <seeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="seeEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementNotVisible time="2" selector="{{PageBuilderColumnSection.editFormSpinner}}" stepKey="waitForSpinner" />
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.editFormCancel}}" stepKey="waitForEditFormCancel"/>
+        <click selector="{{PageBuilderActionsSection.editFormCancel}}" stepKey="clickEditFormCancel"/>
+        <waitForElementNotVisible time="2" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitClose" />
+        <dontSeeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="dontSeeEditForm"/>
+    </test>
+    <test name="ColumnSettingsAppearOnFrontend">
+        <annotations>
+            <title value="Column settings appear on frontend"/>
+            <description value="Validate selected column settings appear on the frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSizePropertyContain">
+            <argument name="property" value="PageBuilderBackgroundSizePropertyContain"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyBottom">
+            <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
+        <wait time="1" stepKey="waitForClick10"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait5"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait6"/>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait7"/>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeDefaultRow1DisplayApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundSize}}" stepKey="seeColumn1BackgroundSizeApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundRepeatApplied}}" stepKey="seeColumn1BackgroundRepeatApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundAttachment}}" stepKey="seeColumn1BackgroundAttachmentFixedApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundImage}}" stepKey="seeColumn1BackgroundImageApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" stepKey="seeColumn2BackgroundSizeAutoApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeatNotApplied}}" stepKey="seeColumn2BackgroundRepeatNotApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundAttachment}}" stepKey="seeColumn2BackgroundAttachmentScrollApplied"/>
+    </test>
+    <test name="ColumnAppearanceSettingsShowOnFrontend">
+        <annotations>
+            <title value="Column appearance settings show on frontend"/>
+            <description value="Validate column appearance settings appear on the frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragThirdColumn"/>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyBottom">
+            <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyCentered">
+            <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait1"/>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel3" stepKey="openEditPanel3"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings3"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceCenteredApplied"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceTopDefaultApplied"/>
+    </test>
+    <test name="ColumnChangesPreserved">
+        <annotations>
+            <title value="Column settings appear on the column form after page save"/>
+            <description value="Validate selected column settings appear on the form after page save"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel1"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSizePropertyCover">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait3"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
+        <wait time="1" stepKey="waitForClick{{property.fieldName}}"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage2"/>
+        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
+        <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
+        <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
+        <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible" />
+        <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
+        <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForPageLoad stepKey="waitForSpinner" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForPageLoad stepKey="waitForSpinner2" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderAppearanceMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+    </test>
+    <test name="CantDragColumnIntoColumn">
+        <annotations>
+            <title value="Columns cannot be dragged into other columns"/>
+            <description value="Validate that a user cannot drag one column into another"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnInStage2DropArea}}" stepKey="dropColumnIntoStage"/>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnInStage2Children}}" userInput="0" stepKey="seeNoChildren"/>
+    </test>
+    <test name="CantSortColumnIntoColumn">
+        <annotations>
+            <title value="Columns cannot be sorted into other columns"/>
+            <description value="Validate that a user cannot drag one column into another"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" stepKey="onMouseOverColumn"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnOptionsMenu}}" stepKey="seeColumnOptionsMenu"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.dragColumn}}" selector2="{{PageBuilderColumnSection.columnInStage2DropArea}}" stepKey="dropColumnOntoColumn"/>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnInStage2Children}}" userInput="0" stepKey="seeNoChildren"/>
+    </test>
+    <test name="PreviewBackgroundImage">
+        <annotations>
+            <title value="Upload and preview an image for column background style"/>
+            <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <wait time="1" stepKey="wait3"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
+    </test>
+    <test name="ValidateBackgroundImageUrl">
+        <annotations>
+            <title value="Background Image Url is displayed on front end"/>
+            <description value="Validate background image appears on the frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <wait time="1" stepKey="wait1"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
+        <wait time="1" stepKey="waitForDataStoreUpdate"/>
+        <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForSavePage" />
+        <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
+        <wait time="1" stepKey="wait3"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <wait time="5" stepKey="wait5"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImageProperty.path,PageBuilderBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
+        <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
+    </test>
+    <test name="ColumnBackgroundColorPreserved">
+        <annotations>
+            <title value="Column background color is preserved on edit"/>
+            <description value="Validate column background color is preserved on edit"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragThirdColumn"/>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty1">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearanceProperty1">
+            <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings1"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty2">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearanceProperty2">
+            <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <wait time="1" stepKey="wait1"/>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel3" stepKey="openEditPanel3"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty3">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
+        </actionGroup>
+
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty3">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings3"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderFirstColumnInStage.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" stepKey="seeColumn1WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" stepKey="seeColumn2WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" stepKey="seeColumn3WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
+        <amOnPage url="/admin/cms/page" stepKey="goToPagesList"/>
+        <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
+        <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
+        <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible" />
+        <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
+        <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForPageLoad stepKey="waitForSpinner" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForPageLoad stepKey="waitForSpinner2" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2AfterSave"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundWidthProperty">
+            <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
+            <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceMinHeightProperty">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettingsWithoutModifying"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" stepKey="seeColumn1WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" stepKey="seeColumn2WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" stepKey="seeColumn3WidthApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
+    </test>
+    <test name="ColumnHasAdvancedFormSection">
+        <annotations>
+            <title value="Column has Advanced form section"/>
+            <description value="A user should be able to configure advanced settings for a column"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+    </test>
+</tests>
