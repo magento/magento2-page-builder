@@ -20,7 +20,7 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
       this.config = void 0;
       this.data = {};
       this.parent = parent;
-      this.config = config || {}; // Create an empty observable for all fields
+      this.config = config; // Create an empty observable for all fields
 
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {

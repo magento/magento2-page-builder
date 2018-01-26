@@ -22,7 +22,7 @@ define(["Magento_PageBuilder/js/component/loader", "./appearance"], function (_l
 
       return new Promise(function (resolve, reject) {
         try {
-          if (typeof data !== "undefined" && data.appearances.length) {
+          if (data.appearances.length) {
             (0, _loader)(data.appearances, function () {
               for (var _len = arguments.length, components = new Array(_len), _key = 0; _key < _len; _key++) {
                 components[_key] = arguments[_key];

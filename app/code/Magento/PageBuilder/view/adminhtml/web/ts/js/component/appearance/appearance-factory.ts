@@ -17,7 +17,7 @@ export default class AppearanceFactory {
     public create(data: DataObject): Promise<Appearance> {
         return new Promise((resolve: (Appearance: Appearance) => void, reject: (e: Error) => void) => {
             try {
-                if (typeof data !== "undefined" && data.appearances.length) {
+                if (data.appearances.length) {
                     loadModule(data.appearances, (...components: object[]) => {
                         resolve(new Appearance(this.createAppearanceComponents(components)));
                     });

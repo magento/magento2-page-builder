@@ -44,14 +44,7 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
 
 
   function get(block, blockConfig) {
-    var code;
-
-    if (typeof blockConfig !== "undefined") {
-      code = blockConfig.name;
-    } else {
-      code = "";
-    }
-
+    var code = blockConfig.name;
     var instance;
 
     if (typeof previews[code] === "undefined") {
