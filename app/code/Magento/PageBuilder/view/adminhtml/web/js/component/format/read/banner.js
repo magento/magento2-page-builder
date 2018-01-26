@@ -28,22 +28,12 @@ define(["../../../component/config"], function (_config) {
         minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
         mobile_image: element.querySelector('.pagebuilder-banner-mobile') ? this.generateImageObject(element.querySelector('.pagebuilder-banner-mobile').getAttribute('style').split(';')[0]) : "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
-        overlay_color: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-        overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor),
-        show_button: element.querySelector(".pagebuilder-banner-show-button") ? "on_hover" : "always",
-        show_overlay: element.querySelector(".pagebuilder-banner-show-overlay-hover") ? "on_hover" : this.getShowOverlay(element.querySelector('.pagebuilder-poster-overlay').style.backgroundColor)
+        overlay_color: element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color') === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color')),
+        overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color') === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color')),
+        show_button: element.getAttribute('data-show-button'),
+        show_overlay: element.getAttribute('data-show-overlay')
       };
       return Promise.resolve(response);
-    };
-    /**
-     * Get show overlay setting
-     *
-     * @returns string
-     */
-
-
-    _proto.getShowOverlay = function getShowOverlay(value) {
-      return value === "transparent" ? "never_show" : "always";
     };
     /**
      * Convert RGBA to HEX for content overlay color

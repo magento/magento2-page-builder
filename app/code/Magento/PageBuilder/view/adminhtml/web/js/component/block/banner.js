@@ -41,8 +41,10 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var backgroundColor = data.show_overlay === "never_show" ? "transparent" : this.convertHexToRgba();
+      var backgroundColor = data.show_overlay === "never_show" || data.show_overlay === "on_hover" ? "transparent" : this.convertHexToRgba(),
+          backgroundColorAttr = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
       return {
+        "data-background-color": backgroundColorAttr,
         style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
       };
     };

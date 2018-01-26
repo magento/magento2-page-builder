@@ -34,8 +34,12 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let backgroundColor:string = data.show_overlay === "never_show" ? "transparent" : this.convertHexToRgba();
-        return {style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"};
+        let backgroundColor:string = data.show_overlay === "never_show" || data.show_overlay === "on_hover"  ? "transparent" : this.convertHexToRgba(),
+            backgroundColorAttr:string = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
+        return {
+            "data-background-color" : backgroundColorAttr,
+            style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
+        };
     }
 
     /**

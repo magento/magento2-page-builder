@@ -40,7 +40,7 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
 
-        $('div[data-role="banner"] .pagebuilder-banner-show-button').each(function (index, element) {
+        $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
             var overlayEl = $(element).find('.pagebuilder-banner-button');
             $(element).hover(
                 function() {
@@ -57,10 +57,9 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
             );
         });
 
-        $('div[data-role="banner"] .pagebuilder-banner-show-overlay-hover').each(function (index, element) {
+        $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
             var overlayEl = $(element).find('.pagebuilder-poster-overlay'),
-                overlayColor = overlayEl.css('background-color');
-            overlayEl.css('background-color', 'transparent');
+                overlayColor = overlayEl.attr('data-background-color');
             $(element).hover(
                 function() {
                     overlayEl.css('background-color', overlayColor);
