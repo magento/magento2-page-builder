@@ -24,7 +24,7 @@ export default class PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         this.parent = parent;
-        this.config = config || {};
+        this.config = config;
 
         // Create an empty observable for all fields
         if (this.config.fields) {

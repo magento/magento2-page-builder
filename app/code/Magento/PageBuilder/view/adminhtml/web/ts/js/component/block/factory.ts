@@ -21,10 +21,7 @@ interface ConfigObject {
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigObject): string {
-    if (typeof config !== "undefined") {
-        return config.component || "Magento_PageBuilder/js/component/block/block";
-    }
-    return "Magento_PageBuilder/js/component/block/block";
+    return config.component || "Magento_PageBuilder/js/component/block/block";
 }
 
 /**
