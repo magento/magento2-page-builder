@@ -121,6 +121,11 @@ define(["knockout", "mage/translate", "underscore", "../../format/attribute-filt
 
     _proto.getStyle = function getStyle() {
       var styleAttributes = this.getData();
+
+      if (typeof styleAttributes.appearance !== "undefined" && typeof styleAttributes.appearances !== "undefined" && typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
+        _underscore.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+      }
+
       return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     };
     /**

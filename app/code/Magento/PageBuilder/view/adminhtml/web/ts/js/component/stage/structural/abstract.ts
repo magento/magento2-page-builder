@@ -158,6 +158,11 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public getStyle() {
         const styleAttributes = this.getData();
+        if (typeof styleAttributes.appearance !== "undefined" &&
+            typeof styleAttributes.appearances !== "undefined" &&
+            typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
+            _.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+        }
         return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
     }
 
