@@ -66,7 +66,7 @@ class Product implements RendererInterface
         $connection = $this->resourceConnection->getConnection();
         $productMetadata = $this->metadataPool->getMetadata(ProductInterface::class);
         $select = $connection->select()
-            ->from('catalog_product_entity', ['sku'])
+            ->from($this->resourceConnection->getTableName('catalog_product_entity'), ['sku'])
             ->where($productMetadata->getIdentifierField() . ' = ?', (int) $eavData['product_id']);
         $productSku = $connection->fetchOne($select);
         if (!$productSku) {

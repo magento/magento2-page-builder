@@ -66,7 +66,7 @@ class Block implements RendererInterface
         $connection = $this->resourceConnection->getConnection();
         $blockMetadata = $this->metadataPool->getMetadata(BlockInterface::class);
         $select = $connection->select()
-            ->from('cms_block', ['identifier'])
+            ->from($this->resourceConnection->getTableName('cms_block'), ['identifier'])
             ->where($blockMetadata->getIdentifierField() . ' = ?', (int) $eavData['block_id']);
         $blockIdentifier = $connection->fetchOne($select);
         if (!$blockIdentifier) {

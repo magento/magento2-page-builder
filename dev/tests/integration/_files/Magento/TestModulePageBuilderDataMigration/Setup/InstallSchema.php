@@ -24,7 +24,6 @@ class InstallSchema implements InstallSchemaInterface
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
-        $installer->startSetup();
 
         /**
          * Create table 'gene_bluefoot_entity'
@@ -767,7 +766,5 @@ class InstallSchema implements InstallSchemaInterface
             'Updated At'
         );
         $installer->getConnection()->createTable($table);
-
-        $installer->endSetup();
     }
 }

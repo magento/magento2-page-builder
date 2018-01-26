@@ -6,8 +6,8 @@
   */
 -->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
@@ -23,4 +23,4 @@
         <element name="requiredField" type="text" selector="//label[contains(@class, 'admin__field-error')]" />
         <element name="openInNewTab" type="button" selector="[data-role='banner'] a[target='_blank']"/>
     </section>
-</config>
+</sections>

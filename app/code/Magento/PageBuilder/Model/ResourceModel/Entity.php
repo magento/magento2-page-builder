@@ -64,6 +64,6 @@ class Entity extends \Magento\Eav\Model\Entity\VersionControl\AbstractEntity
      */
     public function getMainTable()
     {
-        return \Magento\PageBuilder\Model\Entity::ENTITY;
+        return $this->getTable(\Magento\PageBuilder\Model\Entity::ENTITY);
     }
 }

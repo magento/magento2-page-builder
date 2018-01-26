@@ -3,14 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
-// @codingStandardsIgnoreFile
 ?>
 
 <?php
-/**
- * @var \Magento\PageBuilder\Block\ContentType\ProductList $block
- */
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\PageBuilder\Block\ContentType\ProductList $block */
 
 $uniqueIdentifier = uniqid();
 $_productCollection = $block->getProductCollection();
@@ -156,7 +154,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
     <?php endif; ?>
 
     <?php if (!$block->getIsPreview()) : ?>
-    <script type="text/javascript">
+    <script>
         require(['jquery', 'pagebuilder/normalise-heights'], function (jQuery) {
             jQuery(function () {
                 jQuery('#pagebuilder-product-list-<?= /* @noEscape */ $uniqueIdentifier ?>').pagebuilderNormaliseHeights();
