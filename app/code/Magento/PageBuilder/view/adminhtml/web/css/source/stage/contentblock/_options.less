@@ -1,0 +1,117 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+.pagebuilder-options {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    height: 40px;
+    transform: translateY(-50%);
+
+    .pagebuilder-options-wrapper {
+        background: white;
+        border: 1px solid #cccccc;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+        display: none;
+
+        i {
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Admin Icons';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            speak: none;
+            text-decoration: none;
+        }
+
+        .move-structural {
+            cursor: move;
+            display: inline-block;
+            height: 38px;
+            padding: 10px 8px;
+            vertical-align: middle;
+        }
+
+        .pagebuilder-name {
+            display: inline-block;
+            height: 38px;
+            padding: 10px 0 10px 10px;
+            font-size: 14px;
+            vertical-align: bottom;
+        }
+
+        ul.pagebuilder-options-links {
+            list-style: none;
+            display: inline-block;
+            padding: 0 8px;
+            margin: 0;
+            vertical-align: middle;
+
+            li.pagebuilder-options-link {
+                display: inline-block;
+                vertical-align: top;
+
+                .remove-structural {
+                    &.disabled {
+                        cursor: not-allowed;
+                        color: #808080;
+                        &:hover {
+                            color: #808080
+                        }
+                    }
+                }
+
+                > a, > div.block-title {
+                    display: block;
+                    padding: 10px 8px;
+                    height: 38px;
+                    text-decoration: none;
+                    color: @color-very-dark-grayish-orange;
+
+                    &.block-title {
+                        font-size: 14px;
+                        line-height: 18px;
+                        cursor: default;
+                        text-decoration: none;
+                    }
+
+                    &:hover {
+                        color: @color-very-dark-gray-black;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.pagebuilder-entity {
+    .pagebuilder-options {
+        text-align: right;
+        transform: translateY(0);
+        width: auto;
+        left: auto;
+        right: 0;
+    }
+
+    &.pagebuilder-live-edit {
+        .pagebuilder-options {
+            top: 0;
+        }
+    }
+}
+
+.pagebuilder-structure {
+    &:hover {
+        > .pagebuilder-options {
+            .pagebuilder-options-wrapper {
+                display: inline-block;
+            }
+        }
+    }
+}

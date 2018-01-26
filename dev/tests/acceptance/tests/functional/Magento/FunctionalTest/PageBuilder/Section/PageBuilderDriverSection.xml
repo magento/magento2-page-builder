@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="DriverOnFrontend">
+        <element name="imageDisplay" type="button" selector="[data-role='driver'] img"/>
+        <element name="linkText" type="text" selector="[data-role='driver'] a div" />
+        <element name="linkUrl" type="button" selector="[data-role='driver'] a[href='{{arg1}}']" parameterized="true"/>
+        <element name="openInNewWindow" type="button" selector="[data-role='driver'] a[target='_blank']" />
+    </section>
+</sections>

@@ -1,0 +1,22 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-options">
+    <div class="pagebuilder-options-wrapper">
+        <div class="pagebuilder-name" data-bind="text: config.label"></div>
+        <ul class="pagebuilder-options-links" data-bind="foreach: options">
+            <li class="pagebuilder-options-link">
+                <!-- ko if: template -->
+                    <!-- ko template: template --><!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: template -->
+                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action.call($parent, $data); }, css: classes"></a>
+                <!-- /ko -->
+            </li>
+        </ul>
+    </div>
+</div>
