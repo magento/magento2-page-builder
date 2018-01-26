@@ -12,7 +12,7 @@ use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 /**
  * Render banner to PageBuilder format
  */
-class Banner implements RendererInterface
+class Driver implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
