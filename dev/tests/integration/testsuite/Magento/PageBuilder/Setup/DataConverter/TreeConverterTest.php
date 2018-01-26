@@ -1159,7 +1159,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             if (!in_array($key, $this->dropdownAttributeCodes)) {
                 continue;
             }
+
             $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
+
             if ($attribute && $attribute->getOptions()) {
                 foreach ($attribute->getOptions() as $option) {
                     if ($option['label'] === $value) {
@@ -1198,7 +1200,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $contentBlockResource->load(
             $contentBlock,
             $contentTypeCode,
-            'entity_type.identifier'
+            sprintf('%s.identifier', self::$resourceConnection->getTableName('entity_type'))
         );
         if (!$contentBlock->getId()) {
             throw \Magento\Framework\Exception\NoSuchEntityException::singleField(

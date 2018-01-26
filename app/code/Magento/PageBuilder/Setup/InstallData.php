@@ -30,14 +30,14 @@ class InstallData implements InstallDataInterface
     /**
      * Detect if PageBuilder was previously installed and convert data to the new format
      *
-     * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
-     * @param \Magento\Framework\Setup\ModuleContextInterface $context
+     * @param ModuleDataSetupInterface $setup
+     * @param ModuleContextInterface $context
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->tableExists('gene_bluefoot_entity')) {
-            $this->updateEavConfiguration($setup->getConnection());
+            $this->updateEavConfiguration($setup);
             $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
         }
     }
@@ -45,12 +45,13 @@ class InstallData implements InstallDataInterface
     /**
      * Update EAV configuration for entity and attributes
      *
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface $connection
+     * @param ModuleDataSetupInterface
      */
-    private function updateEavConfiguration($connection)
+    private function updateEavConfiguration($setup)
     {
+        $connection = $setup->getConnection();
         $connection->update(
-            'eav_entity_type',
+            $setup->getTable('eav_entity_type'),
             [
                 'entity_model' => \Magento\PageBuilder\Model\ResourceModel\Entity::class,
                 'attribute_model' => \Magento\PageBuilder\Model\Attribute::class,
@@ -60,12 +61,12 @@ class InstallData implements InstallDataInterface
         );
 
         $entityTypeIdSelect = $connection->select()
-            ->from('eav_entity_type', ['entity_type_id'])
+            ->from($setup->getTable('eav_entity_type'), ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
         $entityTypeId = $connection->fetchOne($entityTypeIdSelect);
 
         $attributeIdsSelect = $connection->select()
-            ->from('eav_attribute', ['attribute_id'])
+            ->from($setup->getTable('eav_attribute'), ['attribute_id'])
             ->where(
                 'attribute_code IN (?)',
                 [
@@ -78,7 +79,7 @@ class InstallData implements InstallDataInterface
             )
             ->where('entity_type_id = ?', $entityTypeId);
         $connection->update(
-            'gene_bluefoot_eav_attribute',
+            $setup->getTable('gene_bluefoot_eav_attribute'),
             [
                 'data_model' => new \Zend_Db_Expr('NULL')
             ],
@@ -86,7 +87,7 @@ class InstallData implements InstallDataInterface
         );
 
         $attributeIdsSelect = $connection->select()
-            ->from('eav_attribute', ['attribute_id'])
+            ->from($setup->getTable('eav_attribute'), ['attribute_id'])
             ->where(
                 'attribute_code IN (?)',
                 [
@@ -99,7 +100,7 @@ class InstallData implements InstallDataInterface
             )
             ->where('entity_type_id = ?', $entityTypeId);
         $connection->update(
-            'eav_attribute',
+            $setup->getTable('eav_attribute'),
             [
                 'source_model' => new \Zend_Db_Expr('NULL')
             ],
