@@ -16,7 +16,7 @@ define([
 
     return Abstract.extend({
         defaults: {
-            elementTmpl: 'Magento_PageBuilder/form/element/margins_and_padding',
+            elementTmpl: 'Magento_PageBuilder/form/element/margins-and-padding',
             marginTop: defaultValue,
             marginRight: defaultValue,
             marginBottom: defaultValue,

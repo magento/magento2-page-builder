@@ -22,7 +22,7 @@ export default class Collage implements ReadInterface {
         const response: BannerObject = {background_image: null};
         let background;
         background = element.
-        getElementsByClassName("pagebuilder-banner-collage-container")[0].
+        children[0].
             style.backgroundImage;
         response.background_image = this.decodeBackground(background);
 

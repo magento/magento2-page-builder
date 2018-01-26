@@ -22,7 +22,7 @@ define(["../../../../config"], function (_config) {
         background_image: null
       };
       var background;
-      background = element.getElementsByClassName("pagebuilder-banner-collage-container")[0].style.backgroundImage;
+      background = element.children[0].style.backgroundImage;
       response.background_image = this.decodeBackground(background);
       return Promise.resolve(response);
     };

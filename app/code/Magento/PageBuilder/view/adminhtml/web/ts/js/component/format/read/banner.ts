@@ -23,7 +23,7 @@ export default class Banner implements ReadInterface {
         const response: BannerObject = {background_image: null};
         let background;
         background = element.
-        getElementsByClassName("pagebuilder-banner-poster")[0].
+            children[0].
             style.backgroundImage;
         response.background_image = this.decodeBackground(background);
 
