@@ -74,26 +74,15 @@ define(["../../../component/config"], function (_config) {
       return value;
     };
     /**
-     * Extract the Alpha component from RGBA for overlay transparency
+     * Extract the Alpha component from RGBA and convert from decimal to percent for overlay transparency
      *
      * @returns int
      */
 
 
     _proto.extractAlphaFromRgba = function extractAlphaFromRgba(value) {
-      var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]);
-      return a * 100;
-    };
-    /**
-     * Convert decimal to percent for transparent overlay for the element
-     *
-     * @param {string} value
-     * @returns {string}
-     */
-
-
-    _proto.convertDecimalToPercent = function convertDecimalToPercent(value) {
-      return (parseInt(value, 10) * 100).toString();
+      var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
+      return ~~(a * 100);
     };
     /**
      * Fetch the image object
