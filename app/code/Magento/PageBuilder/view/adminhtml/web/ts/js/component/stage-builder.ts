@@ -5,6 +5,7 @@
 
 import $t from "mage/translate";
 import * as _ from "underscore";
+import ko from "knockout";
 import Block from "./block/block";
 import createBlock from "./block/factory";
 import Config from "./config";
@@ -54,11 +55,12 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
         }
 
         // Wait for all the promises to finish and add the instances to the stage
-        return Promise.all(childPromises).then((childrenPromises) =>
-            childrenPromises.forEach((child: Structural, index) => {
-            parent.addChild(child);
-            buildElementIntoStage(childElements[index], child, stage);
-        }));
+        return Promise.all(childPromises).then(function(childrenPromises) {
+            return Promise.all(childrenPromises.map(function(child, index) {
+                parent.addChild(child);
+                return buildElementIntoStage(childElements[index], child, stage);
+            }));
+        });
     }
 }
 
@@ -74,12 +76,14 @@ function createElementBlock(element: HTMLElement, parent: EditableArea, stage: S
     parent = parent || stage;
     const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
 
-    return getElementData(element).then((data: object) => createBlock(
-        Config.getInitConfig("contentTypes")[role],
-        parent,
-        stage,
-        data,
-    ));
+    return getElementData(element).then(
+        (data: object) => createBlock(
+            Config.getInitConfig("contentTypes")[role],
+            parent,
+            stage,
+            data,
+        )
+    );
 }
 
 /**
@@ -136,7 +140,7 @@ function getElementChildren(element: Element) {
 function buildEmpty(stage: Stage, initialValue: string) {
     return new Promise((resolve) => {
         const rowConfig = Config.getContentType("row");
-        const textConfig = Config.getContentType("text");
+        const textConfig = Config.getContentType("html");
         if (rowConfig) {
             createBlock(rowConfig, stage, stage, {}).then((row: Block) => {
                 stage.addChild(row);
@@ -146,7 +150,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
                         stage,
                         stage,
                         {
-                            content: initialValue,
+                            html: initialValue,
                         },
                     ).then((text: Block) => {
                         row.addChild(text);
@@ -197,7 +201,11 @@ export default function build(
 
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
-        currentBuild = buildFromContent(stage, content);
+        currentBuild = buildFromContent(stage, content)
+            .catch(e => {
+                stageContent([]);
+                currentBuild = buildEmpty(stage, content);
+            });
     } else {
         currentBuild = buildEmpty(stage, content);
     }

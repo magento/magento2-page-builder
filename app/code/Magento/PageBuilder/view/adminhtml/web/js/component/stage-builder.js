@@ -43,10 +43,10 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
 
       return Promise.all(childPromises).then(function (childrenPromises) {
-        return childrenPromises.forEach(function (child, index) {
+        return Promise.all(childrenPromises.map(function (child, index) {
           parent.addChild(child);
-          buildElementIntoStage(childElements[index], child, stage);
-        });
+          return buildElementIntoStage(childElements[index], child, stage);
+        }));
       });
     }
   }
@@ -126,7 +126,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
     return new Promise(function (resolve) {
       var rowConfig = _config.getContentType("row");
 
-      var textConfig = _config.getContentType("text");
+      var textConfig = _config.getContentType("html");
 
       if (rowConfig) {
         (0, _factory)(rowConfig, stage, stage, {}).then(function (row) {
@@ -134,7 +134,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
           if (textConfig && initialValue) {
             (0, _factory)(textConfig, stage, stage, {
-              content: initialValue
+              html: initialValue
             }).then(function (text) {
               row.addChild(text);
               resolve();
@@ -174,7 +174,10 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
     panel.bindStage(stage); // Determine if we're building from existing page builder content
 
     if ((0, _formatValidator)(content)) {
-      currentBuild = buildFromContent(stage, content);
+      currentBuild = buildFromContent(stage, content).catch(function (e) {
+        stageContent([]);
+        currentBuild = buildEmpty(stage, content);
+      });
     } else {
       currentBuild = buildEmpty(stage, content);
     } // Once the build process is finished the stage is ready
