@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="PageBuilderTabsEditPanel">
+        <element name="addNewTabButton" type="button" selector="//button/span[contains(text(), 'Add New Tab')]"/>
+        <element name="tabTitle" type="input" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
+        <element name="tabContent" type="input" selector="//*[@name='tabs[{{arg1}}][content]']" parameterized="true"/>
+    </section>
+</sections>

@@ -1,0 +1,16 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-map pagebuilder-no-blur pagebuilder-live-edit">
+    <!-- ko ifnot: preview.data.position -->
+        <i class="icon-pagebuilder-map"></i> <span data-bind="text: $t('Map');"></span>
+    <!-- /ko -->
+    <!-- ko if: preview.data.position -->
+        <iframe data-bind="attr: { src: preview.getMapUrl(), width: preview.data.width(), height: preview.data.height() }" frameborder="0" />
+    <!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>
