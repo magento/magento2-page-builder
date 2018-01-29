@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="template" xsi:type="string">templates/edit_form</item>
+    </argument>
+    <dataSource name="pagebuilder_modal_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_modal_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <modal name="modal">
+        <settings>
+            <options>
+                <option name="title" xsi:type="string">Edit</option>
+            </options>
+        </settings>
+        <insertForm name="insert_form" component="Magento_Ui/js/form/components/insert-form">
+            <settings>
+                <ns>pagebuilder_modal_form_insert_form</ns>
+                <externalProvider>${ $.ns }.pagebuilder_modal_form_data_source</externalProvider>
+                <toolbarContainer>${ $.parentName }</toolbarContainer>
+            </settings>
+        </insertForm>
+    </modal>
+</container>

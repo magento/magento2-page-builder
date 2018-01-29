@@ -1,12 +1,11 @@
 const gulp  = require('gulp'),
     path = require('path'),
     fs = require('fs'),
-    jestConfig = require('./jest.config'),
-    plugins = require('gulp-load-plugins')()
-;
+    plugins = require('gulp-load-plugins')(),
+    header = require('gulp-header');
 
 const config = {
-    basePath: 'app/code/Gene/BlueFoot',
+    basePath: 'app/code/Magento/PageBuilder',
     tsPath: 'view/adminhtml/web/ts/',
     buildPath: 'view/adminhtml/web/',
     testsPath: 'dev/tests/js/',
@@ -15,13 +14,14 @@ const config = {
 
 const buildTask = function (inputStream) {
     return inputStream
-            .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.init()))
-            .pipe(plugins.babel())
-            .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.write('./', {
-                includeContent: false,
-                sourceRoot: './ts'
-            })))
-            .pipe(gulp.dest(path.join(config.basePath, config.buildPath)))
+        .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.init()))
+        .pipe(plugins.babel())
+        .pipe(header("/*eslint-disable */\n"))
+        .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.write('./', {
+            includeContent: false,
+            sourceRoot: './ts'
+        })))
+        .pipe(gulp.dest(path.join(config.basePath, config.buildPath)));
 };
 
 /**
@@ -55,11 +55,4 @@ gulp.task('watch', function () {
     gulp.watch([
         path.join(config.basePath, config.tsPath, '**/*.ts')
     ], ['buildChanged']);
-});
-
-gulp.task('jestConfig', function () {
-   fs.writeFile(
-       'jest.config.json',
-       JSON.stringify(jestConfig), () => {}
-   );
 });

@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class TreeConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -16,12 +19,17 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     private static $objectManager;
 
     /**
+     * @var \Magento\Framework\App\ResourceConnection
+     */
+    private static $resourceConnection;
+
+    /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
      */
     private static $dbAdapter;
 
     /**
-     * @var \Gene\BlueFoot\Setup\DataConverter\TreeConverter
+     * @var \Magento\PageBuilder\Setup\DataConverter\TreeConverter
      */
     private static $treeConverter;
 
@@ -36,7 +44,6 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         'gene_bluefoot_entity_varchar',
         'gene_bluefoot_eav_attribute',
         'gene_bluefoot_entity_type',
-        'gene_bluefoot_entity_type_group',
         'gene_bluefoot_stage_template',
         'gene_bluefoot_entity'
     ];
@@ -51,10 +58,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         self::$objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Setup\InstallSchemaInterface $installSchema */
-        $installSchema = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallSchema::class);
+        $installSchema = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallSchema::class
+        );
 
         /** @var \Magento\Framework\Setup\InstallDataInterface $installData */
-        $installData = self::$objectManager->create(\Magento\PageBuilder\Setup\DataConverter\InstallData::class);
+        $installData = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Setup\InstallData::class
+        );
 
         /** @var \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup */
         $schemaSetup = self::$objectManager->create(\Magento\Setup\Module\Setup::class);
@@ -69,37 +80,43 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         );
 
         /** @var \Magento\Framework\App\ResourceConnection $resourceConnection */
-        $resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
+        self::$resourceConnection = self::$objectManager->create(\Magento\Framework\App\ResourceConnection::class);
 
-        self::$dbAdapter = $resourceConnection->getConnection();
+        self::$dbAdapter = self::$resourceConnection->getConnection();
 
         $entityTypeSelect = self::$dbAdapter->select()
-            ->from('eav_entity_type', ['entity_type_id'])
+            ->from(self::$resourceConnection->getTableName('eav_entity_type'), ['entity_type_id'])
             ->where('entity_type_code = ?', 'gene_bluefoot_entity');
 
         $entityTypeId = self::$dbAdapter->fetchOne($entityTypeSelect);
 
         foreach (self::$dropTableNames as $tableName) {
-            self::$dbAdapter->dropTable($tableName);
+            self::$dbAdapter->dropTable(self::$resourceConnection->getTableName($tableName));
         }
 
         if ($entityTypeId) {
-            self::$dbAdapter->delete('eav_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_attribute', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity', 'entity_type_id = ' . $entityTypeId);
-            self::$dbAdapter->delete('eav_entity_type', 'entity_type_id = ' . $entityTypeId);
+            $entityTypeIdWhere = 'entity_type_id = ' . $entityTypeId;
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_attribute'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(
+                self::$resourceConnection->getTableName('eav_entity_attribute'),
+                $entityTypeIdWhere
+            );
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity'), $entityTypeIdWhere);
+            self::$dbAdapter->delete(self::$resourceConnection->getTableName('eav_entity_type'), $entityTypeIdWhere);
         }
 
         $installSchema->install($schemaSetup, $moduleContext);
 
         $installData->install($moduleDataSetup, $moduleContext);
 
-        self::$treeConverter = self::$objectManager->create(\Gene\BlueFoot\Setup\DataConverter\TreeConverter::class);
+        self::$treeConverter = self::$objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\TreeConverter::class
+        );
     }
 
     protected function setUp()
     {
-        self::$dbAdapter->delete('gene_bluefoot_entity');
+        self::$dbAdapter->delete(self::$resourceConnection->getTableName('gene_bluefoot_entity'));
     }
 
     /**
@@ -109,8 +126,12 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @param callable|null $callSetupEntity
      * @dataProvider convertDataProvider
      */
-    public function testConvert($contentTypes, $jsonFormatFileName, $masterFormatFileName, $callSetupEntity = null)
-    {
+    public function testConvert(
+        $contentTypes,
+        $jsonFormatFileName,
+        $masterFormatFileName,
+        $callSetupEntity = null
+    ) {
         if ($callSetupEntity) {
             $this->$callSetupEntity();
         }
@@ -129,6 +150,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function convertDataProvider()
     {
@@ -209,7 +232,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 0px 10px 0px\",\"padding\":\"0px 9px 0px 3px\"}',
                             'align' => 'right',
-                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p><p><strong>World!</strong></p>',
+                            'textarea' => '<p><span style="text-decoration: underline;">Hello</span></p>'
+                                . '<p><strong>World!</strong></p>',
                         ]
                     ]
                 ],
@@ -224,7 +248,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'center',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],
@@ -239,7 +265,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"5px 5px 5px 5px\",\"padding\":\"1px 1px 1px 1px\"}',
                             'align' => 'left',
-                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown</strong></span> cow <span style="text-decoration: underline;">jumped</span> over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
+                            'html' => '<p style="text-align: center;">The <span style="color: #800000;"><strong>brown'
+                                . '</strong></span> cow <span style="text-decoration: underline;">jumped</span>'
+                                . ' over the <span style="color: #ffff00;"><em>yellow</em></span> moon.</p>',
                         ]
                     ]
                 ],
@@ -1037,12 +1065,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 ],
                 'non_existent_entity.json',
                 'non_existent_entity.html'
-            ],
+            ]
         ];
     }
 
     /**
      * Creates and saves a CMS Block to database
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createCmsBlock()
     {
@@ -1066,6 +1096,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $blockRepository->save($block);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
     private function createProduct()
     {
         /** @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
@@ -1105,24 +1138,19 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $contentTypeCode
-     * @param array $data
-     * @return int
+     * Save a content type into the database
+     *
+     * @param $contentTypeCode
+     * @param $data
+     * @throws \Exception
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function saveContentType($contentTypeCode, $data)
     {
-        /** @var \Gene\BlueFoot\Model\Entity */
-        $entity = self::$objectManager->create(\Gene\BlueFoot\Model\Entity::class);
+        /** @var \Magento\PageBuilder\Model\Entity */
+        $entity = self::$objectManager->create(\Magento\PageBuilder\Model\Entity::class);
 
-        /** @var \Gene\BlueFoot\Api\ContentBlockRepositoryInterface $contentBlockRepository */
-        $contentBlockRepository = self::$objectManager->create(
-            \Gene\BlueFoot\Api\ContentBlockRepositoryInterface::class
-        );
-
-        /** @var \Gene\BlueFoot\Model\Attribute\ContentBlock $contentBlock */
-        $contentBlock = $contentBlockRepository->getByIdentifier($contentTypeCode);
-
-        $data['attribute_set_id'] = $contentBlock->getId();
+        $data['attribute_set_id'] = $this->getContentBlockId($contentTypeCode);
 
         /** @var \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository */
         $attributeRepository = self::$objectManager->create(\Magento\Eav\Api\AttributeRepositoryInterface::class);
@@ -1131,7 +1159,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
             if (!in_array($key, $this->dropdownAttributeCodes)) {
                 continue;
             }
+
             $attribute = $attributeRepository->get('gene_bluefoot_entity', $key);
+
             if ($attribute && $attribute->getOptions()) {
                 foreach ($attribute->getOptions() as $option) {
                     if ($option['label'] === $value) {
@@ -1143,11 +1173,42 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entity->setData($data);
 
-        /** @var \Gene\BlueFoot\Api\EntityRepositoryInterface $entityRepository */
-        $entityRepository = self::$objectManager->create(\Gene\BlueFoot\Api\EntityRepositoryInterface::class);
+        /* @var \Magento\PageBuilder\Model\ResourceModel\Entity $entityResource */
+        $entityResource = self::$objectManager->create(
+            \Magento\PageBuilder\Model\ResourceModel\Entity::class
+        );
+        $entityResource->save($entity);
+    }
 
-        $entityRepository->save($entity);
+    /**
+     * @param $contentTypeCode
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function getContentBlockId($contentTypeCode)
+    {
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory */
+        $contentBlockFactory = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory::class
+        );
+        $contentBlock = $contentBlockFactory->create();
 
-        return $entity->getId();
+        $contentBlockResource = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
+        );
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock */
+        $contentBlockResource->load(
+            $contentBlock,
+            $contentTypeCode,
+            sprintf('%s.identifier', self::$resourceConnection->getTableName('entity_type'))
+        );
+        if (!$contentBlock->getId()) {
+            throw \Magento\Framework\Exception\NoSuchEntityException::singleField(
+                'identifier',
+                $contentTypeCode
+            );
+        }
+
+        return $contentBlock->getId();
     }
 }

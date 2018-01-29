@@ -17,27 +17,11 @@ class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function testConvert($originalContentFileName, $migratedContentFileName)
     {
-        $serializer = new \Magento\Framework\Serialize\Serializer\Json();
-        $rendererPool = new \Gene\BlueFoot\Setup\DataConverter\RendererPool(
-            [
-                'default' => new \Gene\BlueFoot\Setup\DataConverter\Renderer\Unmigrated($serializer),
-                'custom' => new \Magento\PageBuilder\Setup\DataConverter\Renderer\Custom()
-            ]
+        $objectManager = Bootstrap::getObjectManager();
+        $mixedToPageBuilderConverter = $objectManager->create(
+            \Magento\PageBuilder\Setup\DataConverter\MixedToPageBuilder::class
         );
-        $childrenExtractorPool = new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractorPool(
-            [
-                'default' => new \Gene\BlueFoot\Setup\DataConverter\ChildrenExtractor\Dummy()
-            ]
-        );
-        $treeConverter = new \Gene\BlueFoot\Setup\DataConverter\TreeConverter(
-            $rendererPool,
-            $childrenExtractorPool,
-            $serializer
-        );
-        $mixedToPageBuilderConverter = new \Gene\BlueFoot\Setup\DataConverter\MixedToPageBuilder(
-            $treeConverter,
-            new \Gene\BlueFoot\Setup\DataConverter\Validator($serializer)
-        );
+
         $this->assertEquals(
             file_get_contents(__DIR__ . '/../../_files/' . $migratedContentFileName),
             $mixedToPageBuilderConverter->convert(

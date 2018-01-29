@@ -1,0 +1,18 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-block pagebuilder-no-blur pagebuilder-live-edit">
+    <div class="pagebuilder-block">
+        <!-- ko if: preview.data.html() -->
+            <div data-bind="html: preview.data.html"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: preview.data.html() -->
+            <span data-bind="html: $t('Block')"></span>
+        <!-- /ko -->
+    </div>
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>

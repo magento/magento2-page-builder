@@ -1,0 +1,20 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-code">
+    <div class="pagebuilder-code">
+        <!-- ko if: preview.data.html() -->
+            <pre>
+                <code data-bind="html: preview.data.html"></code>
+            </pre>
+        <!-- /ko -->
+        <!-- ko ifnot: preview.data.html() -->
+            <span data-bind="html: $t('Code')"></span>
+        <!-- /ko -->
+    </div>
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+</div>
