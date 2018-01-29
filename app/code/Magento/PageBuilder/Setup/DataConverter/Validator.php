@@ -35,7 +35,7 @@ class Validator
     {
         try {
             $structure = $this->serializer->unserialize($json);
-            if (is_array($structure) && (!isset($structure['type']) || !isset($structure['contentType']))) {
+            if (is_array($structure) && (!isset($structure['type']) && !isset($structure['contentType']))) {
                 $structure = current($structure);
             }
             $result = is_array($structure) && (isset($structure['type']) || isset($structure['contentType']));

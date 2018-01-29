@@ -39,18 +39,24 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return \Magento\Framework\DB\Select
      * @throws \Magento\Framework\Exception\LocalizedException
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function _getLoadSelect($field, $value, $object)
     {
         $select = $this->getConnection()->select()->from($this->getMainTable());
         $select->joinLeft(
-            ['entity_type' => $this->getTable('gene_bluefoot_entity_type')],
-            'eav_attribute_set.attribute_set_id = entity_type.attribute_set_id',
+            [$this->getTable('entity_type') => $this->getTable('gene_bluefoot_entity_type')],
+            sprintf(
+                '%s.attribute_set_id = %s.attribute_set_id',
+                $this->getTable('eav_attribute_set'),
+                $this->getTable('entity_type')
+            ),
             '*'
         );
 
         // If the field isn't directly specifying which table to join on assume the main table
-        if (!strpos($field, '.')) {
+        if (false === strpos($field, '.')) {
             $field = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), $field));
         } else {
             $field = $this->getConnection()->quoteIdentifier($field);
@@ -80,6 +86,8 @@ class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {

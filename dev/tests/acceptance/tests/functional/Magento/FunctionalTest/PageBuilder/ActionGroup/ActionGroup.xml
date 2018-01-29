@@ -6,8 +6,8 @@
   */
 -->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateGroupsAndContentTypes">
         <see userInput="General" selector="{{PageBuilderActionsSection.generalGroup}}" stepKey="seeGeneralGroup"/>
         <see userInput="Row" selector="{{PageBuilderActionsSection.generalGroupBlock}}" stepKey="seeGeneralGroupRow"/>
@@ -334,4 +334,4 @@
         <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
-</config>
+</actionGroups>

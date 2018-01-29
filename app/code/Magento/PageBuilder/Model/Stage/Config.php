@@ -93,6 +93,8 @@ class Config
      * @param $contentType
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function flattenContentTypeData($name, $contentType)
     {

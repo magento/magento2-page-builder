@@ -52,6 +52,9 @@ class Filter
      *
      * @param string $html
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function filter($html)
     {

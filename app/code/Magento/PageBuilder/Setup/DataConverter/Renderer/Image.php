@@ -34,6 +34,9 @@ class Image implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = [])
     {

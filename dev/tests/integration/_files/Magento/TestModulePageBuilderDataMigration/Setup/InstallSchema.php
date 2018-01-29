@@ -17,11 +17,13 @@ class InstallSchema implements InstallSchemaInterface
      * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
      * @param \Magento\Framework\Setup\ModuleContextInterface $context
      * @throws \Zend_Db_Exception
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
-        $installer->startSetup();
 
         /**
          * Create table 'gene_bluefoot_entity'
@@ -764,7 +766,5 @@ class InstallSchema implements InstallSchemaInterface
             'Updated At'
         );
         $installer->getConnection()->createTable($table);
-
-        $installer->endSetup();
     }
 }

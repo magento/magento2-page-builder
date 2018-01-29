@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Model;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Stdlib\DateTime\DateTimeFormatterInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Attribute extends \Magento\Eav\Model\Attribute
 {
     /**
@@ -57,6 +60,8 @@ class Attribute extends \Magento\Eav\Model\Attribute
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -147,8 +152,9 @@ class Attribute extends \Magento\Eav\Model\Attribute
      */
     public function getAdditional()
     {
-        if ($additional = $this->getAdditionalData()) {
-            return json_decode($this->getAdditionalData(), true);
+        $additional = $this->getAdditionalData();
+        if ($additional) {
+            return json_decode($additional, true);
         }
 
         return null;
