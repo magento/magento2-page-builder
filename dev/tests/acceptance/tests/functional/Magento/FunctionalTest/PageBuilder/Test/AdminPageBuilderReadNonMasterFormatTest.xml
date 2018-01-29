@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="ReadTextAndConvertToMasterFormat">
+        <annotations>
+            <title value="Text in WYSIWYG converted to master format"/>
+            <description value="Text in WYSIWYG converted into a HTML content type"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder1"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+        <click selector="{{CmsPageSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.content}}" stepKey="waitForContentField" />
+        <fillField selector="{{CmsPageSection.content}}" userInput="{{simpleCmsPage.content}}" stepKey="enterContent"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="waitForContentBlockInStage" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
+        <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnBackend.content}}" stepKey="assertHtmlContent"/>
+    </test>
+    <test name="ReadHtmlAndConvertToMasterFormat">
+        <annotations>
+            <title value="HTML in WYSIWYG converted to master format"/>
+            <description value="HTML in WYSIWYG converted into a HTML content type"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder1"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+        <click selector="{{CmsPageSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.content}}" stepKey="waitForContentField" />
+        <fillField selector="{{CmsPageSection.content}}" userInput="{{cmsPageArbitraryHtml.content}}" stepKey="enterContent"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="waitForContentBlockInStage" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
+        <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
+    </test>
+    <test name="ReadHtmlWithNonexistentDataRoleAndConvertToHtmlContentType">
+        <annotations>
+            <title value="HTML with element that has nonexistent data-role converted into HTML content type"/>
+            <description value="HTML with element that has nonexistent data-role converted into HTML content type"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder1"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+        <click selector="{{CmsPageSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.content}}" stepKey="waitForContentField" />
+        <fillField selector="{{CmsPageSection.content}}" userInput="{{cmsPageNonexistentDataRole.content}}" stepKey="enterContent"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent2"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="waitForContentBlockInStage" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
+        <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
+    </test>
+</tests>
