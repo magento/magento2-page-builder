@@ -3,10 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import $t from "mage/translate";
 import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
+
+    public showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the preview
@@ -27,7 +30,7 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getPreviewOverlayAttributes() {
-        let backgroundColor:string = this.data.show_overlay() === "never_show" ? "transparent" : this.convertHexToRgba();
+        let backgroundColor:string = this.data.show_overlay() === "always" || this.showOverlayHover() ? this.convertHexToRgba() : "transparent";
         return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
     }
 
@@ -120,6 +123,26 @@ export default class Banner extends PreviewBlock {
             return $t("Edit Button Text");
         } else {
             return $t(this.data.button_text());
+        }
+    }
+
+    /**
+     * Set state based on overlay mouseover event for the preview
+     *
+     */
+    public mouseoverBanner() {
+        if (this.preview.data.show_overlay() === 'on_hover') {
+            this.preview.showOverlayHover(true);
+        }
+    }
+
+    /**
+     * Set state based on overlay mouseout event for the preview
+     *
+     */
+    public mouseoutBanner() {
+        if (this.preview.data.show_overlay() === 'on_hover') {
+            this.preview.showOverlayHover(false);
         }
     }
 }

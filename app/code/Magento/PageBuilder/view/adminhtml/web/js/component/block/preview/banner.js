@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "./block"], function (_translate, _block) {
+define(["knockout", "mage/translate", "./block"], function (_knockout, _translate, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -8,7 +8,13 @@ define(["mage/translate", "./block"], function (_translate, _block) {
     _inheritsLoose(Banner, _PreviewBlock);
 
     function Banner() {
-      return _PreviewBlock.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.showOverlayHover = _knockout.observable(false), _temp) || _this;
     }
 
     var _proto = Banner.prototype;
@@ -37,7 +43,7 @@ define(["mage/translate", "./block"], function (_translate, _block) {
 
 
     _proto.getPreviewOverlayAttributes = function getPreviewOverlayAttributes() {
-      var backgroundColor = this.data.show_overlay() === "never_show" ? "transparent" : this.convertHexToRgba();
+      var backgroundColor = this.data.show_overlay() === "always" || this.showOverlayHover() ? this.convertHexToRgba() : "transparent";
       return {
         style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
       };
@@ -130,6 +136,28 @@ define(["mage/translate", "./block"], function (_translate, _block) {
         return (0, _translate)("Edit Button Text");
       } else {
         return (0, _translate)(this.data.button_text());
+      }
+    };
+    /**
+     * Set state based on overlay mouseover event for the preview
+     *
+     */
+
+
+    _proto.mouseoverBanner = function mouseoverBanner() {
+      if (this.preview.data.show_overlay() === 'on_hover') {
+        this.preview.showOverlayHover(true);
+      }
+    };
+    /**
+     * Set state based on overlay mouseout event for the preview
+     *
+     */
+
+
+    _proto.mouseoutBanner = function mouseoutBanner() {
+      if (this.preview.data.show_overlay() === 'on_hover') {
+        this.preview.showOverlayHover(false);
       }
     };
 
