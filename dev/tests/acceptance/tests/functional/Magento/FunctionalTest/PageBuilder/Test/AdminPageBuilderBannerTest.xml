@@ -282,17 +282,19 @@
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Good Night!')" stepKey="addTextToWYSIWYG"/>
+        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
     </test>
-    <test name="BannerCanPreviewFrontend">
+    <test name="BannerCanRenderFrontend">
         <annotations>
             <title value="Banner is rendered correctly in frontend"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
@@ -331,6 +333,7 @@
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Good Night!')" stepKey="addTextToWYSIWYG"/>
+        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -398,5 +401,4 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
     </test>
-
 </tests>
