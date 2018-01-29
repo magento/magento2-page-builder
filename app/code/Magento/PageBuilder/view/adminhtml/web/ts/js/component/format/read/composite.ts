@@ -14,7 +14,7 @@ export default class AttributeReaderComposite implements ReadInterface {
     private contentTypeConfig: any;
 
     constructor() {
-        this.contentTypeConfig = Config.getInitConfig("contentTypes");
+        this.contentTypeConfig = Config.getInitConfig("content_types");
     }
 
     /**

@@ -43,8 +43,8 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
 
 
     Config.getContentType = function getContentType(contentType) {
-      if (typeof Config.getInitConfig("contentTypes")[contentType] !== "undefined") {
-        return Config.getInitConfig("contentTypes")[contentType];
+      if (typeof Config.getInitConfig("content_types")[contentType] !== "undefined") {
+        return Config.getInitConfig("content_types")[contentType];
       }
 
       return null;

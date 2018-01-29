@@ -41,8 +41,8 @@ export default class Config {
      * @returns {any}
      */
     public static getContentType(contentType: string): any {
-        if (typeof Config.getInitConfig("contentTypes")[contentType] !== "undefined") {
-            return Config.getInitConfig("contentTypes")[contentType];
+        if (typeof Config.getInitConfig("content_types")[contentType] !== "undefined") {
+            return Config.getInitConfig("content_types")[contentType];
         }
 
         return null;

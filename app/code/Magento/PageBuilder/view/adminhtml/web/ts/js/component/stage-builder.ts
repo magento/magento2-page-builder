@@ -78,7 +78,7 @@ function createElementBlock(element: HTMLElement, parent: EditableArea, stage: S
 
     return getElementData(element).then(
         (data: object) => createBlock(
-            Config.getInitConfig("contentTypes")[role],
+            Config.getInitConfig("content_types")[role],
             parent,
             stage,
             data,
@@ -139,14 +139,18 @@ function getElementChildren(element: Element) {
  */
 function buildEmpty(stage: Stage, initialValue: string) {
     return new Promise((resolve) => {
-        const rowConfig = Config.getContentType("row");
-        const textConfig = Config.getContentType("html");
-        if (rowConfig) {
-            createBlock(rowConfig, stage, stage, {}).then((row: Block) => {
+        const rootContentTypeConfig = Config.getContentType(
+            Config.getInitConfig('stage_config').root_content_type
+        );
+        const htmlDisplayContentTypeConfig = Config.getContentType(
+            Config.getInitConfig('stage_config').html_display_content_type
+        );
+        if (rootContentTypeConfig) {
+            createBlock(rootContentTypeConfig, stage, stage, {}).then((row: Block) => {
                 stage.addChild(row);
-                if (textConfig && initialValue) {
+                if (htmlDisplayContentTypeConfig && initialValue) {
                     createBlock(
-                        textConfig,
+                        htmlDisplayContentTypeConfig,
                         stage,
                         stage,
                         {

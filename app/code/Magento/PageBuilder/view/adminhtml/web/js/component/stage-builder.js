@@ -64,7 +64,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
     parent = parent || stage;
     var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
     return getElementData(element).then(function (data) {
-      return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, stage, data);
+      return (0, _factory)(_config.getInitConfig("content_types")[role], parent, stage, data);
     });
   }
   /**
@@ -124,16 +124,16 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
   function buildEmpty(stage, initialValue) {
     return new Promise(function (resolve) {
-      var rowConfig = _config.getContentType("row");
+      var rootContentTypeConfig = _config.getContentType(_config.getInitConfig('stage_config').root_content_type);
 
-      var textConfig = _config.getContentType("html");
+      var htmlDisplayContentTypeConfig = _config.getContentType(_config.getInitConfig('stage_config').html_display_content_type);
 
-      if (rowConfig) {
-        (0, _factory)(rowConfig, stage, stage, {}).then(function (row) {
+      if (rootContentTypeConfig) {
+        (0, _factory)(rootContentTypeConfig, stage, stage, {}).then(function (row) {
           stage.addChild(row);
 
-          if (textConfig && initialValue) {
-            (0, _factory)(textConfig, stage, stage, {
+          if (htmlDisplayContentTypeConfig && initialValue) {
+            (0, _factory)(htmlDisplayContentTypeConfig, stage, stage, {
               html: initialValue
             }).then(function (text) {
               row.addChild(text);

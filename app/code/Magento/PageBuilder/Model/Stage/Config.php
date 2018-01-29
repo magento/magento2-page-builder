@@ -5,7 +5,7 @@
  */
 namespace Magento\PageBuilder\Model\Stage;
 
-class Config extends \Magento\Framework\Model\AbstractModel
+class Config
 {
     const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/component/block/block';
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/component/block/preview/block';
@@ -13,12 +13,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface
      */
-    private $configInterface;
-
-    /**
-     * @var \Magento\Framework\View\LayoutFactory
-     */
-    private $layoutFactory;
+    private $config;
 
     /**
      * @var Config\UiComponentConfig
@@ -26,32 +21,25 @@ class Config extends \Magento\Framework\Model\AbstractModel
     private $uiComponentConfig;
 
     /**
-     * Config constructor.
+     * @var array
+     */
+    private $data;
+
+    /**
+     * Constructor
      *
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface
-     * @param \Magento\Framework\View\LayoutFactory $layoutFactory
+     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface,
-        \Magento\Framework\View\LayoutFactory $layoutFactory,
+        \Magento\PageBuilder\Model\Config\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->configInterface = $configInterface;
-        $this->layoutFactory = $layoutFactory;
+        $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
-
-        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        $this->data = $data;
     }
 
     /**
@@ -63,8 +51,8 @@ class Config extends \Magento\Framework\Model\AbstractModel
     {
         return [
             'groups' => $this->getGroups(),
-            'contentTypes' => $this->getContentTypes(),
-            'templates' => $this->getTemplateData()
+            'content_types' => $this->getContentTypes(),
+            'stage_config' => $this->data
         ];
     }
 
@@ -73,19 +61,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getGroups()
+    private function getGroups()
     {
-        return $this->configInterface->getGroups();
-    }
-
-    /**
-     * Build up template data
-     *
-     * @return array
-     */
-    public function getTemplateData()
-    {
-        return [];
+        return $this->config->getGroups();
     }
 
     /**
@@ -93,9 +71,9 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getContentTypes()
+    private function getContentTypes()
     {
-        $contentTypes = $this->configInterface->getContentTypes();
+        $contentTypes = $this->config->getContentTypes();
 
         $contentBlockData = [];
         foreach ($contentTypes as $name => $contentType) {
@@ -116,7 +94,7 @@ class Config extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function flattenContentTypeData($name, $contentType)
+    private function flattenContentTypeData($name, $contentType)
     {
         return [
             'name' => $name,
