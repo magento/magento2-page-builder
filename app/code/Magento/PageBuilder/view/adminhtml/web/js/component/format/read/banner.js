@@ -44,9 +44,9 @@ define(["../../../component/config"], function (_config) {
 
     _proto.convertRgbaToHex = function convertRgbaToHex(value) {
       var values = value.match(/\d+/g);
-      var r = parseInt(values[0]).toString(16);
-      var g = parseInt(values[1]).toString(16);
-      var b = parseInt(values[2]).toString(16);
+      var r = parseInt(values[0], 10).toString(16);
+      var g = parseInt(values[1], 10).toString(16);
+      var b = parseInt(values[2], 10).toString(16);
       return this.padZero(r) + this.padZero(g) + this.padZero(b);
     };
     /**
@@ -57,7 +57,7 @@ define(["../../../component/config"], function (_config) {
 
 
     _proto.padZero = function padZero(value) {
-      if (value.length == 1) {
+      if (value.length === 1) {
         value = "0" + value;
       }
 
@@ -72,7 +72,7 @@ define(["../../../component/config"], function (_config) {
 
     _proto.extractAlphaFromRgba = function extractAlphaFromRgba(value) {
       var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
-      return ~~(a * 100);
+      return Math.floor(a * 100);
     };
     /**
      * Fetch the image object

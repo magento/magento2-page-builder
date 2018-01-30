@@ -65,9 +65,9 @@ export default class Banner implements ReadInterface {
      */
     private convertRgbaToHex(value: string) {
         const values = value.match(/\d+/g);
-        const r = parseInt(values[0]).toString(16);
-        const g = parseInt(values[1]).toString(16);
-        const b = parseInt(values[2]).toString(16);
+        const r = parseInt(values[0], 10).toString(16);
+        const g = parseInt(values[1], 10).toString(16);
+        const b = parseInt(values[2], 10).toString(16);
         return this.padZero(r) + this.padZero(g) + this.padZero(b);
     }
 
@@ -77,7 +77,7 @@ export default class Banner implements ReadInterface {
      * @returns string
      */
     private padZero(value: string) {
-        if (value.length == 1) {
+        if (value.length === 1) {
             value = "0" + value;
         }
         return value;
@@ -90,7 +90,7 @@ export default class Banner implements ReadInterface {
      */
     private extractAlphaFromRgba(value: string) {
         const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
-        return ~~(a * 100);
+        return Math.floor(a * 100);
     }
 
     /**
