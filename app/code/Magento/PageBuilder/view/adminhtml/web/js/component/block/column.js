@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "../config", "../stage/structural/options/option", "./block", "./column-group"], function (_jquery, _knockout, _translate, _config, _option, _block, _columnGroup) {
+define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "../stage/structural/options/option", "./block", "./column-group"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -24,10 +24,16 @@ define(["jquery", "knockout", "mage/translate", "../config", "../stage/structura
     var _proto = Column.prototype;
 
     _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
+
       _Block.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        this.on("blockReady", this.createColumnGroup.bind(this));
+        _eventBus.on("column:mount", function (event, params) {
+          if (params.id === _this2.id) {
+            _this2.createColumnGroup();
+          }
+        });
       }
     };
     /**
@@ -52,13 +58,11 @@ define(["jquery", "knockout", "mage/translate", "../config", "../stage/structura
      *
      * @param handle
      */
-    _proto.initResizeHandle = function initResizeHandle(handle) {
-      var _this2 = this;
-
-      _.defer(function () {
-        _this2.emit("initResizing", {
-          handle: (0, _jquery)(handle)
-        });
+    _proto.bindResizeHandle = function bindResizeHandle(handle) {
+      _eventBus.trigger("column:bindResizeHandle", {
+        column: this,
+        handle: (0, _jquery)(handle),
+        parent: this.parent
       });
     };
     /**

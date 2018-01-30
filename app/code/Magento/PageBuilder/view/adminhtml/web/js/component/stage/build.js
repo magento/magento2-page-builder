@@ -1,24 +1,20 @@
 /*eslint-disable */
-define(["underscore", "../block/factory", "../config", "../event-emitter", "../format/read/composite"], function (_, _factory, _config, _eventEmitter, _composite) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+define(["underscore", "../block/factory", "../config", "../format/read/composite"], function (_, _factory, _config, _composite) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Build =
   /*#__PURE__*/
-  function (_EventEmitter) {
-    _inheritsLoose(Build, _EventEmitter);
-
+  function () {
     function Build(fieldValue) {
-      var _this;
-
-      _this = _EventEmitter.call(this) || this;
-      _this.stage = void 0;
-      _this.stageElement = void 0;
-      _this.attributeReaderComposite = void 0;
-      _this.fieldValue = void 0;
-      _this.stageDocument = void 0;
-      _this.attributeReaderComposite = new _composite();
-      _this.fieldValue = fieldValue;
-      return _this;
+      this.stage = void 0;
+      this.stageElement = void 0;
+      this.attributeReaderComposite = void 0;
+      this.fieldValue = void 0;
+      this.stageDocument = void 0;
+      this.attributeReaderComposite = new _composite();
+      this.fieldValue = fieldValue;
     }
     /**
      * Can we build Page Builder from the fields value?
@@ -60,7 +56,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
 
 
     _proto.buildElement = function buildElement(element, parent) {
-      var _this2 = this;
+      var _this = this;
 
       if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
         var childPromises = [];
@@ -69,7 +65,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
 
         if (elementChildren.length > 0) {
           _.forEach(elementChildren, function (childElement) {
-            childPromises.push(_this2.createBlock(childElement, parent || _this2.stage));
+            childPromises.push(_this.createBlock(childElement, parent || _this.stage));
             childElements.push(childElement);
           });
         } // Wait for all the promises to finish and add the instances to the stage
@@ -79,7 +75,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
           return children.forEach(function (child, index) {
             parent.addChild(child);
 
-            _this2.buildElement(childElements[index], child);
+            _this.buildElement(childElements[index], child);
           });
         });
       }
@@ -94,12 +90,12 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
 
 
     _proto.createBlock = function createBlock(element, parent) {
-      var _this3 = this;
+      var _this2 = this;
 
       parent = parent || this.stage;
       var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
       return this.getElementData(element).then(function (data) {
-        return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, _this3.stage, data);
+        return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, _this2.stage, data);
       });
     };
     /**
@@ -126,7 +122,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
 
 
     _proto.getElementChildren = function getElementChildren(element) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (element.hasChildNodes()) {
         var children = []; // Find direct children of the element
@@ -137,7 +133,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
             if (child.hasAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
               children.push(child);
             } else {
-              children = _this4.getElementChildren(child);
+              children = _this3.getElementChildren(child);
             }
           }
         });
@@ -151,7 +147,7 @@ define(["underscore", "../block/factory", "../config", "../event-emitter", "../f
     };
 
     return Build;
-  }(_eventEmitter);
+  }();
 
   return Build;
 });

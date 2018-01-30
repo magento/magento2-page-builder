@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import Config from "../config";
+import EventBus from "../event-bus";
 import {Option} from "../stage/structural/options/option";
 import Block from "./block";
 import ColumnGroup from "./column-group";
@@ -18,7 +19,11 @@ export default class Column extends Block {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            this.on("blockReady", this.createColumnGroup.bind(this));
+            EventBus.on("column:mount", (event: Event, params: {[key: string]: any}) => {
+                if (params.id === this.id) {
+                    this.createColumnGroup();
+                }
+            });
         }
     }
 
@@ -52,11 +57,11 @@ export default class Column extends Block {
      *
      * @param handle
      */
-    public initResizeHandle(handle: Element) {
-        _.defer(() => {
-            this.emit("initResizing", {
-                handle: $(handle),
-            });
+    public bindResizeHandle(handle: Element) {
+        EventBus.trigger("column:bindResizeHandle", {
+            column: this,
+            handle: $(handle),
+            parent: this.parent,
         });
     }
 

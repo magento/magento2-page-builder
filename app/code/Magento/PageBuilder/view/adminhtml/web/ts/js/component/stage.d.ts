@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import { EditableAreaInterface } from 'stage/structural/editable-area.d';
+import { EditableAreaInterface } from "stage/structural/editable-area.d";
 import DataStore from "./data-store";
 import Build from "./stage/build";
 
@@ -18,9 +18,7 @@ export interface StageInterface extends EditableAreaInterface {
     store: DataStore;
 
     build(buildInstance: Build, buildStructure: HTMLElement): void;
-    ready(): void
-    goFullScreen(): void
-    onSortingStart(): void
-    onSortingStop(): void
-    isFullScreen(): boolean
+    ready(): void;
+    goFullScreen(): void;
+    isFullScreen(): boolean;
 }

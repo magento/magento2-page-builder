@@ -7,6 +7,7 @@ import _ from "underscore";
 import {moveArrayItem} from "../../utils/array";
 import Appearance from "../appearance/appearance";
 import {ConfigContentBlock} from "../config";
+import EventBus from "../event-bus";
 import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
@@ -27,7 +28,11 @@ export default class ColumnGroup extends Block {
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, formData, appearance);
 
-        this.on("blockRemoved", this.spreadWidth.bind(this));
+        EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
+            if (params.parent.id === this.id) {
+                this.spreadWidth(event, params);
+            }
+        });
 
         this.children.subscribe(
             _.debounce(
@@ -256,6 +261,7 @@ export default class ColumnGroup extends Block {
 }
 
 interface BlockRemovedParams {
+    parent: ColumnGroup;
     block: Column;
     index: number;
 }

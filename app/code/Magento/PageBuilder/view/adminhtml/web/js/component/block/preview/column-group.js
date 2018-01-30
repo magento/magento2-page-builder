@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing", "../../event-bus"], function (_jquery, _knockout, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -64,13 +64,13 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
       this.parent.children.subscribe(this.debounceBindDraggable.bind(this));
       this.debounceBindDraggable(); // Listen for resizing events from child columns
 
-      this.parent.children.subscribe(function (newColumns) {
-        newColumns.forEach(function (column) {
-          column.on("initResizing", function (event, params) {
-            _this2.registerResizeHandle(column, params.handle);
-          });
-        });
+      _eventBus.on("column:bindResizeHandle", function (event, params) {
+        // Does the events parent match the previews parent? (e.g. column group)
+        if (params.parent.id === _this2.parent.id) {
+          _this2.registerResizeHandle(params.column, params.handle);
+        }
       }); // Handle the mouse leaving the window
+
 
       (0, _jquery)("body").mouseleave(this.endAllInteractions.bind(this));
     };

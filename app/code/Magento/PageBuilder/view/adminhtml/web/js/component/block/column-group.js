@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/array", "./block", "./column-group/utils", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _underscore, _array, _block, _utils, _registry, _resizing) {
+define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/utils", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _underscore, _array, _eventBus, _block, _utils, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -12,7 +12,11 @@ define(["mage/translate", "underscore", "../../utils/array", "./block", "./colum
 
       _this = _Block.call(this, parent, stage, config, formData, appearance) || this;
 
-      _this.on("blockRemoved", _this.spreadWidth.bind(_this));
+      _eventBus.on("block:removed", function (event, params) {
+        if (params.parent.id === _this.id) {
+          _this.spreadWidth(event, params);
+        }
+      });
 
       _this.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
 

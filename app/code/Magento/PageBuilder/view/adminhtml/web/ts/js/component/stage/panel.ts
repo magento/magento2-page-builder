@@ -9,6 +9,7 @@ import "ko-sortable";
 import uiComponent from "uiComponent";
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../config";
+import EventBus from "../event-bus";
 import { StageInterface } from "../stage.d";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
@@ -50,9 +51,11 @@ export default class Panel extends uiComponent implements PanelInterface {
      */
     public bindStage(stage: StageInterface): void {
         this.stage = stage;
-        stage.on("stageReady", () => {
-            this.populateContentBlocks();
-            this.isVisible(true);
+        EventBus.on("stage:ready", (event, params) => {
+            if (this.stage.id === params.stage.id) {
+                this.populateContentBlocks();
+                this.isVisible(true);
+            }
         });
     }
 
@@ -129,8 +132,6 @@ export default class Panel extends uiComponent implements PanelInterface {
                         }), /* Retrieve content blocks with group id */
                         (contentBlock: ConfigContentBlock, identifier: string) => {
                             const groupBlock = new GroupBlock(identifier, contentBlock);
-                            groupBlock.on("dragStart", () => { this.stage.dragging(true); });
-                            groupBlock.on("dragStop", () => { this.stage.dragging(false); });
                             return groupBlock;
                         },
                     ),
