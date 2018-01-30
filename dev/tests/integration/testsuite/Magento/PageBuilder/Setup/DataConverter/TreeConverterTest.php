@@ -932,7 +932,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'custom.json',
                 'custom.html'
             ],
-            'banner' => [
+            'driver' => [
                 [
                     'driver' => [
                         [
@@ -947,7 +947,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'driver.json',
                 'banner.html'
             ],
-            'banner mobile image' => [
+            'driver mobile image' => [
                 [
                     'driver' => [
                         [
@@ -963,7 +963,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'driver_mobile_image.json',
                 'banner_mobile_image.html'
             ],
-            'banner open in new window' => [
+            'driver open in new window' => [
                 [
                     'driver' => [
                         [
