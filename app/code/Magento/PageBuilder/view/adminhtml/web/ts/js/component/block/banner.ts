@@ -4,12 +4,35 @@
  */
 
 import ko from "knockout";
-import _ from "underscore";
 import $t from "mage/translate";
+import _ from "underscore";
 import Config from "../config";
 import Block from "./block";
 
 export default class Banner extends Block {
+
+    /**
+     * Convert percent to decimal for transparent overlay for the preview
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    private static convertPercentToDecimal(value: string) {
+        return (parseInt(value, 10) / 100).toString();
+    }
+
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {Array} image
+     * @returns {string}
+     */
+    private static getImageUrl(image: any[]) {
+        const imageUrl = image[0].url;
+        const mediaUrl = Config.getInitConfig("media_url");
+        const mediaPath = imageUrl.split(mediaUrl);
+        return "{{media url=" + mediaPath[1] + "}}";
+    }
 
     /**
      * Get the banner wrapper attributes for the storefront
@@ -19,12 +42,17 @@ export default class Banner extends Block {
     public getBannerAttributes(type: string) {
         const data = this.getData();
         let backgroundImage: string = "";
-        if (type === 'image') {
+        if (type === "image") {
             backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-        } else if (type === 'mobileImage') {
+        } else if (type === "mobileImage") {
             backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
         }
-        return {style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"};
+        return {
+            style:
+            "background-image: " + backgroundImage + "; " +
+            "min-height: " + data.minimum_height + "px; " +
+            "background-size: " + data.background_size + ";",
+        };
     }
 
     /**
@@ -34,41 +62,18 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let backgroundColor:string = data.show_overlay === "never_show" || data.show_overlay === "on_hover"  ? "transparent" : this.convertHexToRgba(),
-            backgroundColorAttr:string = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
-        return {
-            "data-background-color" : backgroundColorAttr,
-            style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
-        };
-    }
+        let bgColor: string = "transparent";
+        const bgColorAttr: string = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
 
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
-    private convertHexToRgba() {
-        const data = this.getData();
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-            let colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color),
-                red = parseInt(colors[1], 16),
-                green = parseInt(colors[2], 16),
-                blue = parseInt(colors[3], 16),
-                alpha = this.convertPercentToDecimal(data.overlay_transparency);
-            return "rgba(" + red + "," + green +"," + blue + "," + alpha + ")";
+        if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
+            bgColor = "transparent";
         } else {
-            return "transparent";
+            bgColor = this.convertHexToRgba();
         }
-    }
-
-    /**
-     * Convert percent to decimal for transparent overlay for the preview
-     *
-     * @param {string} value
-     * @returns {string}
-     */
-    private convertPercentToDecimal(value: string) {
-        return (parseInt(value, 10) / 100).toString();
+        return {
+            "data-background-color" : bgColorAttr,
+            "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";",
+        };
     }
 
     /**
@@ -78,14 +83,14 @@ export default class Banner extends Block {
      */
     public getContentAttributes() {
         const data = this.getData();
-        const marginTop = data.fields.margins_and_padding.default.margin.top || "0",
-              marginRight = data.fields.margins_and_padding.default.margin.right || "0",
-              marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0",
-              marginLeft = data.fields.margins_and_padding.default.margin.left || "0",
-              paddingTop = data.fields.margins_and_padding.default.padding.top || "0",
-              paddingRight = data.fields.margins_and_padding.default.padding.right || "0",
-              paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0",
-              paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
+        const marginTop = data.fields.margins_and_padding.default.margin.top || "0";
+        const marginRight = data.fields.margins_and_padding.default.margin.right || "0";
+        const marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0";
+        const marginLeft = data.fields.margins_and_padding.default.margin.left || "0";
+        const paddingTop = data.fields.margins_and_padding.default.padding.top || "0";
+        const paddingRight = data.fields.margins_and_padding.default.padding.right || "0";
+        const paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0";
+        const paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
         return {
             style:
             "margin-top: " + marginTop + "px; " +
@@ -95,7 +100,7 @@ export default class Banner extends Block {
             "padding-top: " + paddingTop + "px; " +
             "padding-right: " + paddingRight + "px; " +
             "padding-bottom: " + paddingBottom + "px; " +
-            "padding-left: " + paddingLeft + "px;"
+            "padding-left: " + paddingLeft + "px;",
         };
     }
 
@@ -126,7 +131,7 @@ export default class Banner extends Block {
         if (_.isEmpty(data.image[0])) {
             return;
         }
-        return this.getImageUrl(data.image);
+        return Banner.getImageUrl(data.image);
     }
 
     /**
@@ -142,20 +147,25 @@ export default class Banner extends Block {
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
-        return this.getImageUrl(data.mobile_image);
+        return Banner.getImageUrl(data.mobile_image);
     }
 
     /**
-     * Retrieve the image URL with directive
+     * Convert HEX to RGBA for transparent overlay for the preview
      *
-     * @param {Array} image
      * @returns {string}
      */
-    private getImageUrl(image: any[]) {
-        const imageUrl = image[0].url;
-        const mediaUrl = Config.getInitConfig("media_url");
-        const mediaPath = imageUrl.split(mediaUrl);
-        const directive = "{{media url=" + mediaPath[1] + "}}";
-        return directive;
+    private convertHexToRgba() {
+        const data = this.getData();
+        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+            const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color);
+            const red = parseInt(colors[1], 16);
+            const green = parseInt(colors[2], 16);
+            const blue = parseInt(colors[3], 16);
+            const alpha = Banner.convertPercentToDecimal(data.overlay_transparency);
+            return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+        } else {
+            return "transparent";
+        }
     }
 }

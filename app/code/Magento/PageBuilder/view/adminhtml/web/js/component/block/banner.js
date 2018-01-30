@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "mage/translate", "../config", "./block"], function (_underscore, _translate, _config, _block) {
+define(["mage/translate", "underscore", "../config", "./block"], function (_translate, _underscore, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -11,25 +11,52 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = Banner.prototype;
+    /**
+     * Convert percent to decimal for transparent overlay for the preview
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    Banner.convertPercentToDecimal = function convertPercentToDecimal(value) {
+      return (parseInt(value, 10) / 100).toString();
+    };
+    /**
+     * Retrieve the image URL with directive
+     *
+     * @param {Array} image
+     * @returns {string}
+     */
 
+
+    Banner.getImageUrl = function getImageUrl(image) {
+      var imageUrl = image[0].url;
+
+      var mediaUrl = _config.getInitConfig("media_url");
+
+      var mediaPath = imageUrl.split(mediaUrl);
+      return "{{media url=" + mediaPath[1] + "}}";
+    };
     /**
      * Get the banner wrapper attributes for the storefront
      *
      * @returns {any}
      */
+
+
+    var _proto = Banner.prototype;
+
     _proto.getBannerAttributes = function getBannerAttributes(type) {
       var data = this.getData();
       var backgroundImage = "";
 
-      if (type === 'image') {
+      if (type === "image") {
         backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-      } else if (type === 'mobileImage') {
+      } else if (type === "mobileImage") {
         backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; min-height: " + data.minimum_height + "px; background-size: " + data.background_size + ";"
+        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.minimum_height + "px; " + "background-size: " + data.background_size + ";"
       };
     };
     /**
@@ -41,44 +68,19 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var backgroundColor = data.show_overlay === "never_show" || data.show_overlay === "on_hover" ? "transparent" : this.convertHexToRgba(),
-          backgroundColorAttr = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
-      return {
-        "data-background-color": backgroundColorAttr,
-        style: "min-height: " + data.minimum_height + "px; background-color: " + backgroundColor + ";"
-      };
-    };
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
+      var bgColor = "transparent";
+      var bgColorAttr = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
 
-
-    _proto.convertHexToRgba = function convertHexToRgba() {
-      var data = this.getData();
-
-      if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-        var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color),
-            red = parseInt(colors[1], 16),
-            green = parseInt(colors[2], 16),
-            blue = parseInt(colors[3], 16),
-            alpha = this.convertPercentToDecimal(data.overlay_transparency);
-        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+      if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
+        bgColor = "transparent";
       } else {
-        return "transparent";
+        bgColor = this.convertHexToRgba();
       }
-    };
-    /**
-     * Convert percent to decimal for transparent overlay for the preview
-     *
-     * @param {string} value
-     * @returns {string}
-     */
 
-
-    _proto.convertPercentToDecimal = function convertPercentToDecimal(value) {
-      return (parseInt(value, 10) / 100).toString();
+      return {
+        "data-background-color": bgColorAttr,
+        "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";"
+      };
     };
     /**
      * Get the banner content attributes for the storefront
@@ -89,14 +91,14 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
 
     _proto.getContentAttributes = function getContentAttributes() {
       var data = this.getData();
-      var marginTop = data.fields.margins_and_padding.default.margin.top || "0",
-          marginRight = data.fields.margins_and_padding.default.margin.right || "0",
-          marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0",
-          marginLeft = data.fields.margins_and_padding.default.margin.left || "0",
-          paddingTop = data.fields.margins_and_padding.default.padding.top || "0",
-          paddingRight = data.fields.margins_and_padding.default.padding.right || "0",
-          paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0",
-          paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
+      var marginTop = data.fields.margins_and_padding.default.margin.top || "0";
+      var marginRight = data.fields.margins_and_padding.default.margin.right || "0";
+      var marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0";
+      var marginLeft = data.fields.margins_and_padding.default.margin.left || "0";
+      var paddingTop = data.fields.margins_and_padding.default.padding.top || "0";
+      var paddingRight = data.fields.margins_and_padding.default.padding.right || "0";
+      var paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0";
+      var paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
       return {
         style: "margin-top: " + marginTop + "px; " + "margin-right: " + marginRight + "px; " + "margin-bottom: " + marginBottom + "px; " + "margin-left: " + marginLeft + "px; " + "padding-top: " + paddingTop + "px; " + "padding-right: " + paddingRight + "px; " + "padding-bottom: " + paddingBottom + "px; " + "padding-left: " + paddingLeft + "px;"
       };
@@ -135,7 +137,7 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
         return;
       }
 
-      return this.getImageUrl(data.image);
+      return Banner.getImageUrl(data.image);
     };
     /**
      * Get the mobile image attributes for the render
@@ -155,24 +157,28 @@ define(["underscore", "mage/translate", "../config", "./block"], function (_unde
         return;
       }
 
-      return this.getImageUrl(data.mobile_image);
+      return Banner.getImageUrl(data.mobile_image);
     };
     /**
-     * Retrieve the image URL with directive
+     * Convert HEX to RGBA for transparent overlay for the preview
      *
-     * @param {Array} image
      * @returns {string}
      */
 
 
-    _proto.getImageUrl = function getImageUrl(image) {
-      var imageUrl = image[0].url;
+    _proto.convertHexToRgba = function convertHexToRgba() {
+      var data = this.getData();
 
-      var mediaUrl = _config.getInitConfig("media_url");
-
-      var mediaPath = imageUrl.split(mediaUrl);
-      var directive = "{{media url=" + mediaPath[1] + "}}";
-      return directive;
+      if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+        var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color);
+        var red = parseInt(colors[1], 16);
+        var green = parseInt(colors[2], 16);
+        var blue = parseInt(colors[3], 16);
+        var alpha = Banner.convertPercentToDecimal(data.overlay_transparency);
+        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+      } else {
+        return "transparent";
+      }
     };
 
     return Banner;
