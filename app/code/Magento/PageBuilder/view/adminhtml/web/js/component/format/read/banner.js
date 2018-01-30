@@ -22,16 +22,16 @@ define(["../../../component/config"], function (_config) {
       var response = {
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
-        image: this.generateImageObject(element.querySelector('.pagebuilder-banner-image').getAttribute('style').split(';')[0]),
+        image: this.generateImageObject(element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0]),
         link_url: element.querySelector("a").getAttribute("href"),
-        message: element.querySelector('.pagebuilder-poster-content div').innerHTML,
-        minimum_height: element.querySelector('.pagebuilder-banner-wrapper').style.minHeight.split('px')[0],
-        mobile_image: element.querySelector('.pagebuilder-banner-mobile') ? this.generateImageObject(element.querySelector('.pagebuilder-banner-mobile').getAttribute('style').split(';')[0]) : "",
+        message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+        minimum_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
+        mobile_image: element.querySelector(".pagebuilder-banner-mobile") ? this.generateImageObject(element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0]) : "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
-        overlay_color: element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color') === "transparent" ? "" : this.convertRgbaToHex(element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color')),
-        overlay_transparency: element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color') === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector('.pagebuilder-poster-overlay').getAttribute('data-background-color')),
-        show_button: element.getAttribute('data-show-button'),
-        show_overlay: element.getAttribute('data-show-overlay')
+        overlay_color: element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color") === "transparent" ? "" : this.convertRgbaToHex(element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color")),
+        overlay_transparency: element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color") === "transparent" ? "0" : this.extractAlphaFromRgba(element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color")),
+        show_button: element.getAttribute("data-show-button"),
+        show_overlay: element.getAttribute("data-show-overlay")
       };
       return Promise.resolve(response);
     };
