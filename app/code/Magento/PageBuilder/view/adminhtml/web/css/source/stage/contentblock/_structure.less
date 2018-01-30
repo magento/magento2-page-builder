@@ -109,10 +109,21 @@
         margin-bottom: 30px;
     }
 
+    &.children-min-height {
+        >.element-children {
+            min-height: 190px;
+            padding: 30px;
+        }
+        >div {
+            >.element-children {
+                min-height: 190px;
+                padding: 30px;
+            }
+        }
+    }
+
     .element-children {
-        min-height: 190px;
         font-size: 0;
-        padding: 30px;
         position: relative;
         z-index: 10;
         .ui-draggable {

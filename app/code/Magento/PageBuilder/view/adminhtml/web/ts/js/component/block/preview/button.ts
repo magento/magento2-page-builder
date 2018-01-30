@@ -4,10 +4,15 @@
  */
 
 import ko from "knockout";
-import PreviewBlock from "./block";
 import Block from "../block";
+import PreviewBlock from "./block";
 
-export default class Buttons extends PreviewBlock {
+export default class Button extends PreviewBlock {
+
+    /**
+     * @param {Block} parent
+     * @param {Object} config
+     */
     constructor(parent: Block, config: object) {
         super(parent, config);
     }

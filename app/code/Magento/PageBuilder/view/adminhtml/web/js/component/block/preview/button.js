@@ -2,18 +2,22 @@
 define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Buttons =
+  var Button =
   /*#__PURE__*/
   function (_PreviewBlock) {
-    _inheritsLoose(Buttons, _PreviewBlock);
+    _inheritsLoose(Button, _PreviewBlock);
 
-    function Buttons(parent, config) {
+    /**
+     * @param {Block} parent
+     * @param {Object} config
+     */
+    function Button(parent, config) {
       return _PreviewBlock.call(this, parent, config) || this;
     }
 
-    return Buttons;
+    return Button;
   }(_block);
 
-  return Buttons;
+  return Button;
 });
-//# sourceMappingURL=buttons.js.map
+//# sourceMappingURL=button.js.map
