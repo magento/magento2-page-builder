@@ -10,7 +10,7 @@ use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render banner to PageBuilder format
+ * Render driver to PageBuilder format
  */
 class Driver implements RendererInterface
 {
