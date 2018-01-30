@@ -8,9 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddHeader">
+    <test name="AddHeaderContentBlockToCMSPage">
         <annotations>
-            <title value="Add a header into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Header MAGETWO-83923"/>
+            <title value="Add Header in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add a header into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84258"/>
@@ -49,12 +51,14 @@
         <seeElement selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="seeH5HeaderStyleApplied"/>
         <see userInput="{{PageBuilderHeadingTitleProperty.value}}" selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="assertHeadingTitleShowsFrontend"/>
     </test>
-    <test name="CanRemoveHeader">
+    <test name="RemoveHeaderFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Header MAGETWO-83923"/>
             <title value="Remove a header content block from stage"/>
             <description value="A user should be able to remove a header block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -78,9 +82,12 @@
     </test>
     <test name="HeaderHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Header MAGETWO-83923"/>
             <title value="Header has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for header"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

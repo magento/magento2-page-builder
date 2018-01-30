@@ -8,11 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddBlock">
+    <test name="AddBlockContentBlockToCMSPage">
         <annotations>
-            <title value="Can add block"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Block MAGETWO-83941"/>
+            <title value="Add Block in PageBuilder for new CMS page and view on Storefront"/>
             <description value="The user should be able to add block content types and they should be visible on frontend"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84276"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -54,12 +57,14 @@
         <amOnPage url="block{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BlockOnFrontend.hr}}" stepKey="seeBlockContentFrontend"/>
     </test>
-    <test name="CanRemoveBlock">
+    <test name="RemoveBlockFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Block MAGETWO-83941"/>
             <title value="Remove block content block from stage"/>
             <description value="A user should be able to remove block block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -88,9 +93,12 @@
     </test>
     <test name="BlockHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Block MAGETWO-83941"/>
             <title value="Block has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for block"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

@@ -10,9 +10,12 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="VideoHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Video MAGETWO-83929"/>
             <title value="Video has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for video"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -49,12 +52,14 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
     </test>
-    <test name="CanAddVideo">
+    <test name="AddVideoContentBlockToCMSPage">
         <annotations>
-            <title value="Add an video content block into stage"/>
-            <description value="A user should be able to add an video into a row."/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Video MAGETWO-83929"/>
+            <title value="Add Video in PageBuilder for new CMS page and view on Storefront"/>
+            <description value="A user should be able to add an video content block into a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84896"/>
+            <testCaseId value="MAGETWO-84271"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -99,12 +104,14 @@
         <seeElementInDOM selector="{{VideoOnFrontend.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidth"/>
         <seeElementInDOM selector="{{VideoOnFrontend.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeight"/>
     </test>
-    <test name="CanRemoveVideo">
+    <test name="RemoveVideoFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Video MAGETWO-83929"/>
             <title value="Remove an video content block from stage"/>
             <description value="A user should be able to remove a video from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -129,8 +136,10 @@
     </test>
     <test name="VideoUrlPreservedOnEdit">
         <annotations>
-            <title value="Verify video url shows in stage on edit"/>
-            <description value="Values saved for video should be preserved and shown."/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Video MAGETWO-83929"/>
+            <title value="Edit Video after saving and changes preserved on form"/>
+            <description value="Values saved for video should be preserved and shown on Edit form."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-85679"/>
             <group value="pagebuilder"/>

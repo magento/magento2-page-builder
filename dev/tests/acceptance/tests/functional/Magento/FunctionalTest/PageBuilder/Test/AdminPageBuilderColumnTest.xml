@@ -8,8 +8,10 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddColumn">
+    <test name="AddColumnContentBlockToCMSPage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Add a column into a row"/>
             <description value="A user should be able to add a column into a row."/>
             <severity value="CRITICAL"/>
@@ -32,8 +34,10 @@
         </actionGroup>
         <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
     </test>
-    <test name="CanRemoveColumn">
+    <test name="RemoveColumnFromStage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Remove a column from a row"/>
             <description value="A user should be able to remove columns from rows."/>
             <severity value="CRITICAL"/>
@@ -61,6 +65,8 @@
     </test>
     <test name="SlideOutPanelWithSettingsContainRequiredFields">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Displays requires column settings"/>
             <description value="Slide out panel with required settings appear"/>
             <severity value="CRITICAL"/>
@@ -119,6 +125,8 @@
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Can close the edit panel"/>
             <description value="A user should be able to open the edit form on an added column."/>
             <severity value="CRITICAL"/>
@@ -148,6 +156,8 @@
     </test>
     <test name="ColumnSettingsAppearOnFrontend">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column settings appear on frontend"/>
             <description value="Validate selected column settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -222,6 +232,8 @@
     </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column appearance settings show on frontend"/>
             <description value="Validate column appearance settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -279,10 +291,11 @@
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column settings appear on the column form after page save"/>
             <description value="Validate selected column settings appear on the form after page save"/>
             <severity value="CRITICAL"/>
-            <testCaseId value=""/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -365,6 +378,8 @@
     </test>
     <test name="CantDragColumnIntoColumn">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Columns cannot be dragged into other columns"/>
             <description value="Validate that a user cannot drag one column into another"/>
             <severity value="CRITICAL"/>
@@ -388,6 +403,8 @@
     </test>
     <test name="CantSortColumnIntoColumn">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Columns cannot be sorted into other columns"/>
             <description value="Validate that a user cannot drag one column into another"/>
             <severity value="CRITICAL"/>
@@ -413,6 +430,8 @@
     </test>
     <test name="PreviewBackgroundImage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Upload and preview an image for column background style"/>
             <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
             <severity value="CRITICAL"/>
@@ -443,6 +462,8 @@
     </test>
     <test name="ValidateBackgroundImageUrl">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Background Image Url is displayed on front end"/>
             <description value="Validate background image appears on the frontend"/>
             <severity value="CRITICAL"/>
@@ -482,6 +503,8 @@
     </test>
     <test name="ColumnBackgroundColorPreserved">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column background color is preserved on edit"/>
             <description value="Validate column background color is preserved on edit"/>
             <severity value="CRITICAL"/>
@@ -538,11 +561,9 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
         </actionGroup>
-
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty3">
             <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
-
         <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderFirstColumnInStage.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -615,9 +636,12 @@
     </test>
     <test name="ColumnHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for a column"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
