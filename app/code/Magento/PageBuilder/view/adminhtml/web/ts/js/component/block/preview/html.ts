@@ -11,7 +11,7 @@ import PreviewBlock from "./block";
 import Config from "../../config";
 
 
-export default class Code extends PreviewBlock {
+export default class Html extends PreviewBlock {
     /**
      * Constructor
      *
