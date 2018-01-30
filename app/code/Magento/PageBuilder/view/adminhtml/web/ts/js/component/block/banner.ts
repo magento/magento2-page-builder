@@ -3,23 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
+import Conversion from "../../utils/conversion";
 import Config from "../config";
 import Block from "./block";
 
 export default class Banner extends Block {
-
-    /**
-     * Convert percent to decimal for transparent overlay for the preview
-     *
-     * @param {string} value
-     * @returns {string}
-     */
-    private static convertPercentToDecimal(value: string) {
-        return (parseInt(value, 10) / 100).toString();
-    }
 
     /**
      * Retrieve the image URL with directive
@@ -62,13 +52,29 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
+        let bgColorAttr: string = "transparent";
         let bgColor: string = "transparent";
-        const bgColorAttr: string = data.show_overlay !== "never_show" ? this.convertHexToRgba() : "transparent";
-
+        if (data.show_overlay !== "never_show") {
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                bgColorAttr = Conversion.colorConverter(
+                    data.overlay_color,
+                    Conversion.convertPercentToDecimal(data.overlay_transparency),
+                );
+            } else {
+                bgColorAttr = "transparent";
+            }
+        }
         if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
             bgColor = "transparent";
         } else {
-            bgColor = this.convertHexToRgba();
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                bgColor = Conversion.colorConverter(
+                    data.overlay_color,
+                    Conversion.convertPercentToDecimal(data.overlay_transparency),
+                );
+            } else {
+                bgColor = "transparent";
+            }
         }
         return {
             "data-background-color" : bgColorAttr,
@@ -162,7 +168,7 @@ export default class Banner extends Block {
             const red = parseInt(colors[1], 16);
             const green = parseInt(colors[2], 16);
             const blue = parseInt(colors[3], 16);
-            const alpha = Banner.convertPercentToDecimal(data.overlay_transparency);
+            const alpha = Conversion.convertPercentToDecimal(data.overlay_transparency);
             return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
         } else {
             return "transparent";

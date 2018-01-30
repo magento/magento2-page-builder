@@ -5,19 +5,10 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import Conversion from "../../../utils/conversion";
 import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
-
-    /**
-     * Convert percent to decimal for transparent overlay for the preview
-     *
-     * @param {string} value
-     * @returns {string}
-     */
-    private static convertPercentToDecimal(value: string) {
-        return (parseInt(value, 10) / 100).toString();
-    }
 
     public showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
 
@@ -47,7 +38,13 @@ export default class Banner extends PreviewBlock {
     public getPreviewOverlayAttributes() {
         let backgroundColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
-            backgroundColor = this.convertHexToRgba();
+            if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
+                const colors = this.data.overlay_color();
+                const alpha = Conversion.convertPercentToDecimal(this.data.overlay_transparency());
+                backgroundColor = Conversion.colorConverter(colors, alpha);
+            } else {
+                backgroundColor = "transparent";
+            }
         }
         return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
     }
@@ -131,24 +128,6 @@ export default class Banner extends PreviewBlock {
     public mouseoutBanner() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
-        }
-    }
-
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
-    private convertHexToRgba() {
-        if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
-            const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.data.overlay_color());
-            const red = parseInt(colors[1], 16);
-            const green = parseInt(colors[2], 16);
-            const blue = parseInt(colors[3], 16);
-            const alpha = Banner.convertPercentToDecimal(this.data.overlay_transparency());
-            return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
-        } else {
-            return "transparent";
         }
     }
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "./block"], function (_knockout, _translate, _block) {
+define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], function (_knockout, _translate, _conversion, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -16,16 +16,6 @@ define(["knockout", "mage/translate", "./block"], function (_knockout, _translat
 
       return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.showOverlayHover = _knockout.observable(false), _temp) || _this;
     }
-
-    /**
-     * Convert percent to decimal for transparent overlay for the preview
-     *
-     * @param {string} value
-     * @returns {string}
-     */
-    Banner.convertPercentToDecimal = function convertPercentToDecimal(value) {
-      return (parseInt(value, 10) / 100).toString();
-    };
 
     var _proto = Banner.prototype;
 
@@ -56,7 +46,15 @@ define(["knockout", "mage/translate", "./block"], function (_knockout, _translat
       var backgroundColor = "transparent";
 
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
-        backgroundColor = this.convertHexToRgba();
+        if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
+          var colors = this.data.overlay_color();
+
+          var alpha = _conversion.convertPercentToDecimal(this.data.overlay_transparency());
+
+          backgroundColor = _conversion.colorConverter(colors, alpha);
+        } else {
+          backgroundColor = "transparent";
+        }
       }
 
       return {
@@ -141,25 +139,6 @@ define(["knockout", "mage/translate", "./block"], function (_knockout, _translat
     _proto.mouseoutBanner = function mouseoutBanner() {
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(false);
-      }
-    };
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
-
-
-    _proto.convertHexToRgba = function convertHexToRgba() {
-      if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
-        var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.data.overlay_color());
-        var red = parseInt(colors[1], 16);
-        var green = parseInt(colors[2], 16);
-        var blue = parseInt(colors[3], 16);
-        var alpha = Banner.convertPercentToDecimal(this.data.overlay_transparency());
-        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
-      } else {
-        return "transparent";
       }
     };
 
