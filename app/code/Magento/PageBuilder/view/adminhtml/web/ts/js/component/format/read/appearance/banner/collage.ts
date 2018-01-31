@@ -3,9 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../../../config";
 import {ReadInterface} from "../../../read-interface";
-import StyleAttributeMapper from "../../../style-attribute-mapper";
+import {decodeUrl} from "../../../../../utils/image";
 
 interface BannerObject {
     background_image?: string;
@@ -13,8 +12,6 @@ interface BannerObject {
 }
 
 export default class Collage implements ReadInterface {
-    private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
-
     /**
      * Read background from the element
      *
@@ -26,13 +23,13 @@ export default class Collage implements ReadInterface {
         let background;
         let mobile;
         background = element.children[0].style.backgroundImage;
-        response.background_image = this.styleAttributeMapper.decodeBackground(background);
+        response.background_image = decodeUrl(background);
         if (element.children[1] !== undefined
             && element.children[1].style.backgroundImage !== ""
             && background !== element.children[1].style.backgroundImage
         ) {
             mobile = element.children[1].style.backgroundImage;
-            response.mobile_image = this.styleAttributeMapper.decodeBackground(mobile);
+            response.mobile_image = decodeUrl(mobile);
         }
         return Promise.resolve(response);
     }

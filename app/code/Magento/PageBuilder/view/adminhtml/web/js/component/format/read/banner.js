@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../style-attribute-mapper"], function (_styleAttributeMapper) {
+define(["../../../utils/image"], function (_image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,9 +7,7 @@ define(["../style-attribute-mapper"], function (_styleAttributeMapper) {
   var Banner =
   /*#__PURE__*/
   function () {
-    function Banner() {
-      this.styleAttributeMapper = new _styleAttributeMapper();
-    }
+    function Banner() {}
 
     var _proto = Banner.prototype;
 
@@ -25,7 +23,7 @@ define(["../style-attribute-mapper"], function (_styleAttributeMapper) {
       };
       var background;
       background = element.children[0].style.backgroundImage;
-      response.background_image = this.styleAttributeMapper.decodeBackground(background);
+      response.background_image = (0, _image.decodeUrl)(background);
       return Promise.resolve(response);
     };
 

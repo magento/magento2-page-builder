@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../style-attribute-mapper"], function (_styleAttributeMapper) {
+define(["../../../../../utils/image"], function (_image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,9 +7,7 @@ define(["../../../style-attribute-mapper"], function (_styleAttributeMapper) {
   var Collage =
   /*#__PURE__*/
   function () {
-    function Collage() {
-      this.styleAttributeMapper = new _styleAttributeMapper();
-    }
+    function Collage() {}
 
     var _proto = Collage.prototype;
 
@@ -27,11 +25,11 @@ define(["../../../style-attribute-mapper"], function (_styleAttributeMapper) {
       var background;
       var mobile;
       background = element.children[0].style.backgroundImage;
-      response.background_image = this.styleAttributeMapper.decodeBackground(background);
+      response.background_image = (0, _image.decodeUrl)(background);
 
       if (element.children[1] !== undefined && element.children[1].style.backgroundImage !== "" && background !== element.children[1].style.backgroundImage) {
         mobile = element.children[1].style.backgroundImage;
-        response.mobile_image = this.styleAttributeMapper.decodeBackground(mobile);
+        response.mobile_image = (0, _image.decodeUrl)(mobile);
       }
 
       return Promise.resolve(response);

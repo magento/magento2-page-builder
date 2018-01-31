@@ -4,15 +4,13 @@
  */
 
 import {ReadInterface} from "../read-interface";
-import StyleAttributeMapper from "../style-attribute-mapper";
+import {decodeUrl} from "../../../utils/image";
 
 interface BannerObject {
     background_image?: string;
 }
 
 export default class Banner implements ReadInterface {
-    private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
-
     /**
      * Read heading type and title from the element
      *
@@ -23,7 +21,7 @@ export default class Banner implements ReadInterface {
         const response: BannerObject = {background_image: null};
         let background;
         background = element.children[0].style.backgroundImage;
-        response.background_image = this.styleAttributeMapper.decodeBackground(background);
+        response.background_image = decodeUrl(background);
         return Promise.resolve(response);
     }
 }
