@@ -5,6 +5,8 @@
  */
 namespace Magento\PageBuilder\Block\Element;
 
+use \Magento\PageBuilder\Model\Wysiwyg\EditorNameProvider;
+
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
     /**
@@ -16,7 +18,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getToggleButtonHtml($visible = true)
     {
         $buttonHtml = '';
-        if ($this->getConfig()->getData('pagebuilder_button') !== false) {
+        if ($this->getConfig()->getData('pagebuilder_button') === true) {
             $buttonHtml .= $this->_getButtonHtml(
                 [
                     'title' => $this->translate('Enable Advanced CMS'),
@@ -45,5 +47,33 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function isStageEnabled()
     {
         return true;
+    }
+
+    /**
+     * @param string $jsSetupObject
+     * @param string $forceLoad
+     * @return string
+     */
+    protected function getInlineJs($jsSetupObject, $forceLoad)
+    {
+        if ($this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter') {
+
+            $jsString = '
+                <script type="text/javascript">
+                require([
+                    "Magento_PageBuilder/js/form/element/setup"
+                ], function() {' .
+                 $jsSetupObject . ' = new pageBuilderWysiwygSetup("' .
+                $this->getHtmlId() .
+                '", ' .
+                $this->getJsonConfig() .
+                ');
+                })
+                </script>';
+
+            return $jsString;
+        }
+
+        return parent::getInlineJs($jsSetupObject, $forceLoad);
     }
 }

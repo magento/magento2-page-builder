@@ -91,13 +91,15 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
-            var buildInstance = new Build(this.initialValue);
+            var buildInstance = new Build(this.initialValue),
+                isButtonsEnabled = !$(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').length;
 
             this.domNode = node;
             this.bindPageBuilderButton(node);
-            if (buildInstance.canBuild()) {
+
+            if (buildInstance.canBuild() ||  isButtonsEnabled) {
                 this.loading(true);
-                return this.buildPageBuilder(false, buildInstance);
+                return this.buildPageBuilder(false);
             }
 
             $(node).bindings({
