@@ -47,18 +47,9 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                     // Ensure the dimensions are retained on the element
                     ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
                     require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
-                    // Attach the view model to the element for knockout sortable
-                    getViewModelFromEvent(event).emit('dragStart', {
-                        event: event,
-                        ui: ui
-                    });
                 })
                 .on('dragstop', function (event, ui) {
                     require("uiRegistry").remove('dragElementViewModel');
-                    getViewModelFromEvent(event).emit('dragStop', {
-                        event: event,
-                        ui: ui
-                    });
                 });
         },
 

@@ -10,8 +10,10 @@ import Block from "./block/block";
 import createBlock from "./block/factory";
 import Config from "./config";
 import DataStore from "./data-store";
+import EventBus from "./event-bus";
 import { StageInterface } from "./stage.d";
 import Build from "./stage/build";
+import {handleEvents} from "./stage/event-handling-delegate";
 import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
 import EditableArea from "./stage/structural/editable-area";
@@ -30,6 +32,13 @@ export default class Stage extends EditableArea implements StageInterface {
     public store: DataStore;
     public userSelect: KnockoutObservable<boolean>;
     private save: Save = new Save();
+    private saveRenderTree = _.debounce(
+        () => {
+            this.save.renderTree(this.children)
+                .then((renderedOutput) => this.parent.value(renderedOutput));
+        },
+        500,
+    );
 
     /**
      * Stage constructor
@@ -52,25 +61,20 @@ export default class Stage extends EditableArea implements StageInterface {
         this.store = new DataStore();
 
         // Any store state changes trigger a stage update event
-        this.store.subscribe(() => this.emit("stageUpdated"));
+        this.store.subscribe(() => EventBus.trigger("stage:updated", {stage: this}));
 
-        _.bindAll(
-            this,
-            "onSortingStart",
-            "onSortingStop",
-        );
-
-        this.on("sortingStart", this.onSortingStart);
-        this.on("sortingStop", this.onSortingStop);
+        // Handle events for this stage instance
+        handleEvents(this);
 
         /**
          * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
          * can occur concurrently.
          */
-        this.on("stageUpdated", _.debounce(() => {
-            this.save.renderTree(stageContent)
-                .then((renderedOutput) => this.parent.value(renderedOutput));
-        }, 500));
+        EventBus.on("stage:updated", (event, params) => {
+            if (params.stage.id === this.id) {
+                this.saveRenderTree.call(this);
+            }
+        });
     }
 
     /**
@@ -89,8 +93,8 @@ export default class Stage extends EditableArea implements StageInterface {
                         content: $t("An error has occurred while initiating the content area."),
                         title: $t("Advanced CMS Error"),
                     });
-                    self.emit("stageError", error);
-                    console.error( error );
+                    EventBus.trigger("stage:error", {stage: this, error});
+                    console.error(error);
                 });
         } else {
             // Add an initial row to the stage if the stage is currently empty
@@ -112,7 +116,7 @@ export default class Stage extends EditableArea implements StageInterface {
      * The stage has been initiated fully and is ready
      */
     public ready() {
-        this.emit("stageReady");
+        EventBus.trigger("stage:ready", {stage: this});
         this.children.valueHasMutated();
         this.loading(false);
     }
@@ -151,20 +155,6 @@ export default class Stage extends EditableArea implements StageInterface {
      */
     public isFullScreen(): boolean {
         return this.parent.isFullScreen();
-    }
-
-    /**
-     * Event handler for any element being sorted in the stage
-     */
-    public onSortingStart() {
-        this.showBorders(true);
-    }
-
-    /**
-     * Event handler for when sorting stops
-     */
-    public onSortingStop() {
-        this.showBorders(false);
     }
 
     /**

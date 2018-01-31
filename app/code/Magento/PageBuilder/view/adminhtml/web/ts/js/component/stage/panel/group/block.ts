@@ -5,9 +5,8 @@
 
 import ko from "knockout";
 import {ConfigContentBlock} from "../../../config";
-import EventEmitter from "../../../event-emitter";
 
-export class Block extends EventEmitter {
+export class Block {
     public droppable: boolean = true;
     private config: ConfigContentBlock;
     private icon: KnockoutObservable<string> = ko.observable("");
@@ -21,7 +20,6 @@ export class Block extends EventEmitter {
      * @param {ConfigContentBlock} config
      */
     constructor(identifier: string, config: ConfigContentBlock) {
-        super();
         this.config = config;
         this.identifier(identifier);
         this.label(config.label);

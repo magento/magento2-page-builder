@@ -18,6 +18,7 @@ import {
     getColumnWidth, getMaxColumns, MaxGhostWidth,
     ResizeHistory,
 } from "./column-group/resizing";
+import EventBus from "../../event-bus";
 
 export default class ColumnGroup extends PreviewBlock {
     public parent: ColumnGroupBlock;
@@ -77,12 +78,11 @@ export default class ColumnGroup extends PreviewBlock {
         this.debounceBindDraggable();
 
         // Listen for resizing events from child columns
-        this.parent.children.subscribe((newColumns: Column[]) => {
-            newColumns.forEach((column) => {
-                column.on("initResizing", (event: Event, params: {handle: JQuery<HTMLElement>}) => {
-                    this.registerResizeHandle(column, params.handle);
-                });
-            });
+        EventBus.on("column:bindResizeHandle", (event, params) => {
+            // Does the events parent match the previews parent? (e.g. column group)
+            if (params.parent.id === this.parent.id) {
+                this.registerResizeHandle(params.column, params.handle);
+            }
         });
 
         // Handle the mouse leaving the window

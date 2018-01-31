@@ -1,12 +1,12 @@
 /*eslint-disable */
-define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitter) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+define(["knockout"], function (_knockout) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Block =
   /*#__PURE__*/
-  function (_EventEmitter) {
-    _inheritsLoose(Block, _EventEmitter);
-
+  function () {
     /**
      * Block Constructor
      *
@@ -14,23 +14,15 @@ define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitte
      * @param {ConfigContentBlock} config
      */
     function Block(identifier, config) {
-      var _this;
-
-      _this = _EventEmitter.call(this) || this;
-      _this.droppable = true;
-      _this.config = void 0;
-      _this.icon = _knockout.observable("");
-      _this.identifier = _knockout.observable("");
-      _this.label = _knockout.observable("");
-      _this.config = config;
-
-      _this.identifier(identifier);
-
-      _this.label(config.label);
-
-      _this.icon(config.icon);
-
-      return _this;
+      this.droppable = true;
+      this.config = void 0;
+      this.icon = _knockout.observable("");
+      this.identifier = _knockout.observable("");
+      this.label = _knockout.observable("");
+      this.config = config;
+      this.identifier(identifier);
+      this.label(config.label);
+      this.icon(config.icon);
     }
     /**
      * Retrieve the config object
@@ -58,7 +50,7 @@ define(["knockout", "../../../event-emitter"], function (_knockout, _eventEmitte
     };
 
     return Block;
-  }(_eventEmitter);
+  }();
 
   return {
     Block: Block

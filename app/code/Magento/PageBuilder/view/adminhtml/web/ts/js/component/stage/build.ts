@@ -6,13 +6,12 @@
 import * as _ from "underscore";
 import createBlock from "../block/factory";
 import Config from "../config";
-import EventEmitter from "../event-emitter";
 import AttributeReaderComposite from "../format/read/composite";
 import Stage from "../stage";
 import EditableArea from "./structural/editable-area";
 import {EditableAreaInterface} from "./structural/editable-area.d";
 
-export default class Build extends EventEmitter {
+export default class Build {
     public stage: Stage;
     private stageElement: Element;
     private attributeReaderComposite: AttributeReaderComposite;
@@ -20,7 +19,6 @@ export default class Build extends EventEmitter {
     private stageDocument: Element;
 
     constructor(fieldValue: string) {
-        super();
         this.attributeReaderComposite = new AttributeReaderComposite();
         this.fieldValue = fieldValue;
     }

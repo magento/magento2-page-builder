@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", "../config", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _uiComponent, _underscore, _config, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", "../config", "../event-bus", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _uiComponent, _underscore, _config, _eventBus, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -33,10 +33,13 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
       var _this = this;
 
       this.stage = stage;
-      stage.on("stageReady", function () {
-        _this.populateContentBlocks();
 
-        _this.isVisible(true);
+      _eventBus.on("stage:ready", function (event, params) {
+        if (_this.stage.id === params.stage.id) {
+          _this.populateContentBlocks();
+
+          _this.isVisible(true);
+        }
       });
     },
     getTemplate: function getTemplate() {
@@ -83,12 +86,6 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
           /* Retrieve content blocks with group id */
           function (contentBlock, identifier) {
             var groupBlock = new _block.Block(identifier, contentBlock);
-            groupBlock.on("dragStart", function () {
-              _this2.stage.dragging(true);
-            });
-            groupBlock.on("dragStop", function () {
-              _this2.stage.dragging(false);
-            });
             return groupBlock;
           })));
         }); // Display the panel

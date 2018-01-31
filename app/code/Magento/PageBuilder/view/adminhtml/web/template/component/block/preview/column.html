@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-structure pagebuilder-column" data-bind="style: preview.columnStyles, afterRender: initColumn">
-    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: initResizeHandle, visible: $index() < parent.children().length - 1"></div>
+<div class="pagebuilder-content-type pagebuilder-column" data-bind="style: preview.columnStyles, afterRender: initColumn">
+    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < parent.children().length - 1"></div>
     <div class="pagebuilder-resizing" data-bind="css: {active: resizing}"></div>
 
     <!-- ko template: optionsInstance.template --><!-- /ko -->

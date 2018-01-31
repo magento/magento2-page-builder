@@ -60,11 +60,6 @@
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
-    <actionGroup name="dragPageBuilderColumnIntoStage">
-        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
-        <seeElement selector="{{PageBuilderColumnSection.column}}" stepKey="seeElementColumn"/>
-    </actionGroup>
     <actionGroup name="openPageBuilderEditColumnPanel">
         <arguments>
             <argument name="column" defaultValue="" />
@@ -104,6 +99,22 @@
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
+    </actionGroup>
+    <actionGroup name="dragContentBlockToContainer">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="containerBlockType" defaultValue=""/>
+            <argument name="containerTarget" defaultValue="1" />
+        </arguments>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerBlockType.role, containerTarget.index)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
+    </actionGroup>
+    <actionGroup name="dragColumnContentBlockToStage">
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
+        <seeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="seeElementColumnGroup" />
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>

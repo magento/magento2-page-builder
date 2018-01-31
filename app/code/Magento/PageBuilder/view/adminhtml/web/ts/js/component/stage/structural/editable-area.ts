@@ -3,25 +3,22 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import $t from "mage/translate";
 import mageUtils from "mageUtils";
-import _ from "underscore";
-import {  moveArrayItem, moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
+import { moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
 import Block from "../../block/block";
-import { Block as BlockInterface } from "../../block/block.d";
-import createBlock, {ConfigObject} from "../../block/factory";
-import EventEmitter from "../../event-emitter";
+import EventBus from "../../event-bus";
 import Stage from "../../stage";
+import {SortParams} from "../event-handler";
 import Structural from "./abstract";
 import { EditableAreaInterface } from "./editable-area.d";
-import {ConfigContentBlock, ConfigFieldConfig} from "../../config";
 
-export default class EditableArea extends EventEmitter implements EditableAreaInterface {
+export default class EditableArea implements EditableAreaInterface {
     public id: string = mageUtils.uniqueid();
     public children: KnockoutObservableArray<Structural>;
     public stage: Stage;
     public title: string = $t("Editable");
+    public parent: EditableArea;
 
     /**
      * EditableArea constructor
@@ -29,38 +26,11 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
      * @param stage
      */
     constructor(stage?: Stage) {
-        super();
         if (stage) {
             this.stage = stage;
         }
 
-        this.bindEvents();
-    }
-
-    /**
-     * Bind any events to the current instance of the class
-     */
-    public bindEvents() {
-        _.bindAll(
-            this,
-            "onBlockDropped",
-            "onBlockInstanceDropped",
-            "onBlockRemoved",
-            "onBlockSorted",
-            "onSortStart",
-        );
-        // Attach events to structural elements
-        // Block dropped from left hand panel
-        this.on("blockDropped", this.onBlockDropped);
-
-        // Block instance being moved between structural elements
-        this.on("blockInstanceDropped", this.onBlockInstanceDropped);
-        this.on("blockRemoved", this.onBlockRemoved);
-
-        // Block sorted within the same structural element
-        this.on("blockSorted", this.onBlockSorted);
-
-        this.on("sortStart", this.onSortStart);
+        EventBus.on("block:sortStart", this.onSortStart.bind(this));
     }
 
     /**
@@ -150,99 +120,22 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
     }
 
     /**
-     * Handle a block being dropped into the structural element
-     *
-     * @param event
-     * @param params
-     * @returns {Promise<Block|T>}
-     */
-    public onBlockDropped(event: Event, params: BlockDroppedParams): void {
-        const index = params.index || 0;
-
-        new Promise<BlockInterface>((resolve, reject) => {
-            if (params.block) {
-                this.createBlock(params.block.config, this, index);
-            } else {
-                reject("Parameter block missing from event.");
-            }
-        }).catch((error: string) => {
-            console.error( error );
-        });
-    }
-
-    /**
-     * Create a new instance of the block
-     *
-     * @param {ConfigContentBlock} config
-     * @param {EditableArea} parent
-     * @param {number} index
-     * @param {{}} formData
-     * @returns {Promise<Block>}
-     */
-    public createBlock(config: ConfigContentBlock, parent: EditableArea, index: number, formData?: {}): Promise<Block> {
-        return createBlock(config, parent, parent.stage, formData).then((block: Block) => {
-            parent.addChild(block, index);
-            block.emit("blockReady");
-            return block;
-        });
-    }
-
-    /**
-     * Capture a block instance being dropped onto this element
-     *
-     * @param event
-     * @param params
-     */
-    public onBlockInstanceDropped(event: Event, params: BlockInstanceDroppedParams): void {
-        params.blockInstance.parent = this;
-        this.addChild(params.blockInstance, params.index);
-
-        params.blockInstance.emit("blockMoved");
-    }
-
-    /**
-     * Handle event to remove block
-     *
-     * @param event
-     * @param params
-     */
-    public onBlockRemoved(event: Event, params: BlockRemovedParams): void {
-        params.block.emit("blockBeforeRemoved");
-        this.removeChild(params.block);
-
-        // Remove the instance from the data store
-        this.stage.store.remove(params.block.id);
-    }
-
-    /**
-     * Handle event when a block is sorted within it's current container
-     *
-     * @param event
-     * @param params
-     */
-    public onBlockSorted(event: Event, params: BlockSortedParams): void {
-        const originalIndex = ko.utils.arrayIndexOf(this.children(), params.block);
-        if (originalIndex !== params.index) {
-            moveArrayItem(this.children, originalIndex, params.index);
-        }
-        params.block.emit("blockMoved");
-    }
-
-    /**
      * Event called when starting starts on this element
      *
      * @param event
      * @param params
      */
     public onSortStart(event: Event, params: SortParams): void {
-        const originalEle = jQuery(params.originalEle);
-        originalEle.show();
-        originalEle.addClass("pagebuilder-sorting-original");
+        if (params.block.id === this.id) {
+            const originalEle = jQuery(params.originalEle);
+            originalEle.show();
+            originalEle.addClass("pagebuilder-sorting-original");
 
-        // Reset the width & height of the helper
-        jQuery(params.helper)
-            .css({width: "", height: ""})
-            .html(jQuery("<h3 />").text(this.title).html());
+            // Reset the width & height of the helper
+            jQuery(params.helper)
+                .css({width: "", height: ""})
+                .html(jQuery("<h3 />").text(this.title).html());
+        }
     }
 
     /**
@@ -254,38 +147,6 @@ export default class EditableArea extends EventEmitter implements EditableAreaIn
         this.children = children;
 
         // Attach a subscription to the children of every editable area to fire the stageUpdated event
-        children.subscribe(() => this.stage.emit("stageUpdated"));
+        children.subscribe(() => EventBus.trigger("stage:updated", {stage: this.stage}));
     }
-
-}
-
-export interface BlockDroppedParams {
-    index: number;
-    block: {
-        config: ConfigContentBlock,
-    };
-}
-
-export interface BlockInstanceDroppedParams {
-    blockInstance: Block;
-    index?: number;
-}
-
-export interface BlockRemovedParams {
-    block: Block;
-}
-
-export interface BlockSortedParams {
-    block: Block;
-    index: number;
-}
-
-export interface SortParams {
-    originalEle: JQuery;
-    placeholder: JQuery;
-    helper?: any;
-}
-
-export interface BlockCreatedParams {
-    parent: EditableArea;
 }

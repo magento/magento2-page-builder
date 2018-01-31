@@ -17,11 +17,12 @@ define([
     'uiRegistry',
     'jquery',
     'Magento_PageBuilder/js/component/stage',
+    'Magento_PageBuilder/js/component/event-bus',
     'Magento_PageBuilder/js/component/stage/build',
     'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
     'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
+], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, EventBus, Build, Panel, utils) {
     'use strict';
 
     /**
@@ -145,9 +146,11 @@ define([
             );
 
             // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
+            EventBus.on("stage:ready", function (event, params) {
+                if (params.stage.id === self.stage.id) {
+                    self.stageActive(true); // Display the stage UI
+                    self.visible(false); // Hide the original WYSIWYG editor
+                }
             });
 
             // Create a new instance of the panel

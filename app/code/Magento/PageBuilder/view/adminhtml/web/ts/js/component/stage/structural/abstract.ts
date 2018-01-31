@@ -8,6 +8,7 @@ import $t from "mage/translate";
 import _ from "underscore";
 import Appearance from "../../appearance/appearance";
 import {DataObject} from "../../data-store";
+import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
@@ -24,7 +25,6 @@ export default class Structural extends EditableArea implements StructuralInterf
     public config: any;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
-    public parent: EditableArea;
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
@@ -129,9 +129,10 @@ export default class Structural extends EditableArea implements StructuralInterf
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element
-                    this.parent.emit('blockRemoved', {
+                    EventBus.trigger("block:removed", {
                         block: this,
-                        index: this.parent.children().indexOf(this)
+                        index: this.parent.children().indexOf(this),
+                        parent: this.parent,
                     });
                 },
             },

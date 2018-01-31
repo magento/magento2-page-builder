@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "underscore", "./block/factory", "./config", "./data-store", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _factory, _config, _dataStore, _save, _editableArea) {
+define(["jquery", "mage/translate", "underscore", "./block/factory", "./config", "./data-store", "./event-bus", "./stage/event-handling-delegate", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _factory, _config, _dataStore, _eventBus, _eventHandlingDelegate, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
@@ -30,6 +30,11 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       _this.store = void 0;
       _this.userSelect = void 0;
       _this.save = new _save();
+      _this.saveRenderTree = _underscore.debounce(function () {
+        _this.save.renderTree(_this.children).then(function (renderedOutput) {
+          return _this.parent.value(renderedOutput);
+        });
+      }, 500);
 
       _this.setChildren(stageContent);
 
@@ -43,25 +48,23 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       _this.store = new _dataStore(); // Any store state changes trigger a stage update event
 
       _this.store.subscribe(function () {
-        return _this.emit("stageUpdated");
-      });
+        return _eventBus.trigger("stage:updated", {
+          stage: _this
+        });
+      }); // Handle events for this stage instance
 
-      _underscore.bindAll(_this, "onSortingStart", "onSortingStop");
 
-      _this.on("sortingStart", _this.onSortingStart);
-
-      _this.on("sortingStop", _this.onSortingStop);
+      (0, _eventHandlingDelegate.handleEvents)(_this);
       /**
        * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
        * can occur concurrently.
        */
 
-
-      _this.on("stageUpdated", _underscore.debounce(function () {
-        _this.save.renderTree(stageContent).then(function (renderedOutput) {
-          return _this.parent.value(renderedOutput);
-        });
-      }, 500));
+      _eventBus.on("stage:updated", function (event, params) {
+        if (params.stage.id === _this.id) {
+          _this.saveRenderTree.call(_this);
+        }
+      });
 
       return _this;
     }
@@ -86,7 +89,12 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
             content: (0, _translate)("An error has occurred while initiating the content area."),
             title: (0, _translate)("Advanced CMS Error")
           });
-          self.emit("stageError", error);
+
+          _eventBus.trigger("stage:error", {
+            stage: _this2,
+            error: error
+          });
+
           console.error(error);
         });
       } else {
@@ -106,7 +114,10 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
 
 
     _proto.ready = function ready() {
-      this.emit("stageReady");
+      _eventBus.trigger("stage:ready", {
+        stage: this
+      });
+
       this.children.valueHasMutated();
       this.loading(false);
     };
@@ -151,22 +162,6 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
 
     _proto.isFullScreen = function isFullScreen() {
       return this.parent.isFullScreen();
-    };
-    /**
-     * Event handler for any element being sorted in the stage
-     */
-
-
-    _proto.onSortingStart = function onSortingStart() {
-      this.showBorders(true);
-    };
-    /**
-     * Event handler for when sorting stops
-     */
-
-
-    _proto.onSortingStop = function onSortingStop() {
-      this.showBorders(false);
     };
     /**
      * Remove a child from the observable array

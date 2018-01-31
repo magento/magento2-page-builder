@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function(ko, jQuery, registry, _) {
+define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, registry, _, EventBus) {
 
     /**
      * Retrieve the view model for an element
@@ -98,23 +98,23 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function
          * @param ui
          */
         onSortStart: function (event, ui) {
-            var block = getViewModelFromUi(ui),
-                eventData = {
+            var block = getViewModelFromUi(ui);
+
+            // Store the original parent for use in the update call
+            block.originalParent = block.parent || false;
+
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && jQuery(ui.helper).data('sorting')) {
+                var eventData = {
+                    block: block,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item
                 };
 
-            // Store the original parent for use in the update call
-            block.originalParent = block.parent || false;
-
-            // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
-                block.emit('sortStart', eventData);
-                eventData['block'] = block;
-                block.stage.emit('sortingStart', eventData);
+                EventBus.trigger("block:sortStart", eventData);
             }
         },
 
@@ -128,20 +128,20 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function
             // Always remove the sorting original class from an element
             ui.item.removeClass('pagebuilder-sorting-original');
 
-            var block = getViewModelFromUi(ui),
-                eventData = {
+            var block = getViewModelFromUi(ui);
+
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && jQuery(ui.helper).data('sorting')) {
+                var eventData = {
+                    block: block,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item
                 };
 
-            // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
-                block.emit('sortStop', eventData);
-                eventData['block'] = block;
-                block.stage.emit('sortingStop', eventData);
+                EventBus.trigger("block:sortStop", eventData);
             }
 
             ui.item.css('opacity', 1);
@@ -195,13 +195,15 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function
                 if (block !== newParent) {
                     ui.item.remove();
                     if (block.originalParent === newParent) {
-                        newParent.emit('blockSorted', {
+                        EventBus.trigger("block:sorted", {
+                            parent: newParent,
                             block: block,
                             index: newIndex
                         });
                     } else {
                         block.originalParent.removeChild(block);
-                        newParent.emit('blockInstanceDropped', {
+                        EventBus.trigger("block:instanceDropped", {
+                            parent: newParent,
                             blockInstance: block,
                             index: newIndex
                         });
@@ -273,7 +275,8 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "jquery/ui"], function
                 if (block.droppable) {
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
-                    target.emit('blockDropped', {
+                    EventBus.trigger("block:dropped", {
+                        parent: target,
                         block: block,
                         index: this.draggedItem.index()
                     });
