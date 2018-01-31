@@ -14,6 +14,7 @@ import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
 import {createColumn, resizeColumn, updateColumnWidth} from "./column-group/utils";
+import {default as ColumnGroupPreview} from "./preview/column-group";
 import {DropPosition} from "./preview/column-group/dragdrop";
 import {getDragColumn} from "./preview/column-group/registry";
 import {
@@ -31,6 +32,14 @@ export default class ColumnGroup extends Block {
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
                 this.spreadWidth(event, params);
+            }
+        });
+
+        // Listen for resizing events from child columns
+        EventBus.on("column:bindResizeHandle", (event, params) => {
+            // Does the events parent match the previews parent? (e.g. column group)
+            if (params.parent.id === this.id) {
+                (this.preview as ColumnGroupPreview).registerResizeHandle(params.column, params.handle);
             }
         });
 
@@ -146,9 +155,10 @@ export default class ColumnGroup extends Block {
         updateColumnWidth(column, getSmallestColumnWidth());
 
         column.parent.removeChild(column);
-        this.emit("blockInstanceDropped", {
+        EventBus.trigger("block:instanceDropped", {
             blockInstance: column,
             index: movePosition.insertIndex,
+            parent: this,
         });
 
         // Modify the old neighbour

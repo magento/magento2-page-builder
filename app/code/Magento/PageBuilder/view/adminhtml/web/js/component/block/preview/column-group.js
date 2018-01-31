@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing", "../../event-bus"], function (_jquery, _knockout, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing, _eventBus) {
+define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -55,22 +55,12 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     var _proto = ColumnGroup.prototype;
 
     _proto.bindInteractions = function bindInteractions(group) {
-      var _this2 = this;
-
       this.groupElement = (0, _jquery)(group);
       this.initDroppable(this.groupElement);
       this.initMouseMove(this.groupElement); // We have to re-bind the draggable library to any new children that appear inside the group
 
       this.parent.children.subscribe(this.debounceBindDraggable.bind(this));
-      this.debounceBindDraggable(); // Listen for resizing events from child columns
-
-      _eventBus.on("column:bindResizeHandle", function (event, params) {
-        // Does the events parent match the previews parent? (e.g. column group)
-        if (params.parent.id === _this2.parent.id) {
-          _this2.registerResizeHandle(params.column, params.handle);
-        }
-      }); // Handle the mouse leaving the window
-
+      this.debounceBindDraggable(); // Handle the mouse leaving the window
 
       (0, _jquery)("body").mouseleave(this.endAllInteractions.bind(this));
     };
@@ -113,29 +103,29 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
-      var _this3 = this;
+      var _this2 = this;
 
       handle.off("mousedown");
       handle.on("mousedown", function (event) {
         event.preventDefault();
 
-        _this3.resizing(true);
+        _this2.resizing(true);
 
-        _this3.resizeColumnInstance = column;
-        _this3.resizeColumnWidths = (0, _resizing.determineColumnWidths)(_this3.resizeColumnInstance, _this3.groupElement);
-        _this3.resizeMaxGhostWidth = (0, _resizing.determineMaxGhostWidth)(_this3.resizeColumnWidths); // Set a flag of the columns which are currently being resized
+        _this2.resizeColumnInstance = column;
+        _this2.resizeColumnWidths = (0, _resizing.determineColumnWidths)(_this2.resizeColumnInstance, _this2.groupElement);
+        _this2.resizeMaxGhostWidth = (0, _resizing.determineMaxGhostWidth)(_this2.resizeColumnWidths); // Set a flag of the columns which are currently being resized
 
-        _this3.setColumnsAsResizing(column, (0, _resizing.getAdjacentColumn)(column, "+1")); // Force the cursor to resizing
+        _this2.setColumnsAsResizing(column, (0, _resizing.getAdjacentColumn)(column, "+1")); // Force the cursor to resizing
 
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
-        _this3.resizeHistory = {
+        _this2.resizeHistory = {
           left: [],
           right: []
         };
-        _this3.resizeLastPosition = null;
-        _this3.resizeMouseDown = true;
+        _this2.resizeLastPosition = null;
+        _this2.resizeMouseDown = true;
       });
     };
     /**
@@ -170,7 +160,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.bindDraggable = function bindDraggable() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.parent.children().forEach(function (column) {
         column.element.draggable({
@@ -191,26 +181,26 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
           start: function start(event) {
             // Use the global state as columns can be dragged between groups
             (0, _registry.setDragColumn)(_knockout.dataFor((0, _jquery)(event.target)[0]));
-            _this4.dropPositions = (0, _dragdrop.calculateDropPositions)(_this4.parent);
+            _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
           },
           stop: function stop() {
             var draggedColumn = (0, _registry.getDragColumn)();
 
-            if (_this4.movePosition && draggedColumn) {
+            if (_this3.movePosition && draggedColumn) {
               // Check if we're moving within the same group, even though this function will
               // only ever run on the group that bound the draggable event
-              if (draggedColumn.parent === _this4.parent) {
-                _this4.parent.handleColumnSort(draggedColumn, _this4.movePosition.insertIndex);
+              if (draggedColumn.parent === _this3.parent) {
+                _this3.parent.handleColumnSort(draggedColumn, _this3.movePosition.insertIndex);
 
-                _this4.movePosition = null;
+                _this3.movePosition = null;
               }
             }
 
             (0, _registry.removeDragColumn)();
 
-            _this4.dropPlaceholder.removeClass("left right");
+            _this3.dropPlaceholder.removeClass("left right");
 
-            _this4.movePlaceholder.removeClass("active");
+            _this3.movePlaceholder.removeClass("active");
           }
         });
       });
@@ -240,20 +230,20 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.initMouseMove = function initMouseMove(group) {
-      var _this5 = this;
+      var _this4 = this;
 
       group.mousemove(function (event) {
-        _this5.handleResizingMouseMove(event, group);
+        _this4.handleResizingMouseMove(event, group);
 
-        _this5.handleDraggingMouseMove(event, group);
+        _this4.handleDraggingMouseMove(event, group);
 
-        _this5.handleDroppingMouseMove(event, group);
+        _this4.handleDroppingMouseMove(event, group);
       }).mouseleave(function () {
-        _this5.movePlaceholder.css("left", "").removeClass("active");
+        _this4.movePlaceholder.css("left", "").removeClass("active");
       }); // As the mouse might be released outside of the group, attach to the body
 
       (0, _jquery)("body").mouseup(function () {
-        _this5.endAllInteractions();
+        _this4.endAllInteractions();
       });
     };
     /**
@@ -285,7 +275,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.handleResizingMouseMove = function handleResizingMouseMove(event, group) {
-      var _this6 = this;
+      var _this5 = this;
 
       var newColumnWidth;
 
@@ -343,8 +333,8 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
-                _this6.resizeColumnWidths = (0, _resizing.determineColumnWidths)(_this6.resizeColumnInstance, _this6.groupElement);
-                _this6.resizeMaxGhostWidth = (0, _resizing.determineMaxGhostWidth)(_this6.resizeColumnWidths);
+                _this5.resizeColumnWidths = (0, _resizing.determineColumnWidths)(_this5.resizeColumnInstance, _this5.groupElement);
+                _this5.resizeMaxGhostWidth = (0, _resizing.determineMaxGhostWidth)(_this5.resizeColumnWidths);
               });
             }
           }
@@ -445,7 +435,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.initDroppable = function initDroppable(group) {
-      var _this7 = this;
+      var _this6 = this;
 
       var currentDraggedBlock;
       group.droppable({
@@ -453,39 +443,39 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
           currentDraggedBlock = _knockout.dataFor(event.currentTarget);
         },
         deactivate: function deactivate() {
-          _this7.dropOverElement = null;
+          _this6.dropOverElement = null;
 
-          _this7.dropPlaceholder.removeClass("left right");
+          _this6.dropPlaceholder.removeClass("left right");
         },
         drop: function drop(event, ui) {
-          if (_this7.dropOverElement && _this7.dropPosition) {
-            _this7.parent.handleNewColumnDrop(event, ui, _this7.dropPosition);
+          if (_this6.dropOverElement && _this6.dropPosition) {
+            _this6.parent.handleNewColumnDrop(event, ui, _this6.dropPosition);
 
-            _this7.dropOverElement = null;
+            _this6.dropOverElement = null;
           }
 
           var column = (0, _registry.getDragColumn)();
 
-          if (_this7.movePosition && column && column.parent !== _this7.parent) {
-            _this7.parent.handleExistingColumnDrop(event, _this7.movePosition);
+          if (_this6.movePosition && column && column.parent !== _this6.parent) {
+            _this6.parent.handleExistingColumnDrop(event, _this6.movePosition);
           }
 
-          _this7.dropPositions = [];
+          _this6.dropPositions = [];
 
-          _this7.dropPlaceholder.removeClass("left right");
+          _this6.dropPlaceholder.removeClass("left right");
         },
         greedy: true,
         out: function out() {
-          _this7.dropOverElement = null;
+          _this6.dropOverElement = null;
 
-          _this7.dropPlaceholder.removeClass("left right");
+          _this6.dropPlaceholder.removeClass("left right");
         },
         over: function over() {
           // Always calculate drop positions when an element is dragged over
-          _this7.dropPositions = (0, _dragdrop.calculateDropPositions)(_this7.parent); // Is the element currently being dragged a column?
+          _this6.dropPositions = (0, _dragdrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
 
           if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
-            _this7.dropOverElement = true;
+            _this6.dropOverElement = true;
           }
         }
       });

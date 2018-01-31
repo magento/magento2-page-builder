@@ -11,10 +11,14 @@ import EventBus from "../event-bus";
 import {Option} from "../stage/structural/options/option";
 import Block from "./block";
 import ColumnGroup from "./column-group";
+import createBlock from "./factory";
 
 export default class Column extends Block {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
+    /**
+     * Bind events for the current instance
+     */
     public bindEvents() {
         super.bindEvents();
 
@@ -76,18 +80,36 @@ export default class Column extends Block {
             // Remove child instantly to stop content jumping around
             this.parent.removeChild(this);
             // Create a new instance of column group to wrap our columns with
-            return super.createBlock(
+            return createBlock(
                 Config.getContentTypeConfig("column-group"),
                 this.parent,
-                index,
-            ).then((columnGroup) => {
+                this.parent.stage,
+            ).then((columnGroup: ColumnGroup) => {
                 return Promise.all([
-                    super.createBlock(this.config, columnGroup, 0, {width: "50%"}),
-                    super.createBlock(this.config, columnGroup, 1, {width: "50%"}),
-                ]).then(() => {
+                    createBlock(this.config, columnGroup, columnGroup.stage, {width: "50%"}),
+                    createBlock(this.config, columnGroup, columnGroup.stage, {width: "50%"}),
+                ]).then((columns: [Column, Column]) => {
+                    columnGroup.addChild(columns[0], 0);
+                    columnGroup.addChild(columns[1], 1);
+                    this.parent.addChild(columnGroup, index);
+
+                    this.fireMountEvent(columnGroup, columns[0], columns[1]);
+
                     return columnGroup;
                 });
             });
         }
+    }
+
+    /**
+     * Fire the mount event for blocks
+     *
+     * @param {Block} blocks
+     */
+    private fireMountEvent(...blocks: Block[]) {
+        blocks.forEach((block) => {
+            EventBus.trigger("block:mount", {id: block.id, block});
+            EventBus.trigger(block.config.name + ":mount", {id: block.id, block});
+        });
     }
 }

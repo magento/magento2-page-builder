@@ -275,6 +275,8 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                 if (block.droppable) {
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
+                    // Detect if the target is the parent UI component, if so swap the target to the stage
+                    target = typeof target.uid !== "undefined" ? target.stage : target;
                     EventBus.trigger("block:dropped", {
                         parent: target,
                         block: block,
@@ -284,7 +286,7 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                 }
             } else {
                 if (!ui.helper && ui.item) {
-                    _.defer(() => {
+                    _.defer(function () {
                         jQuery(ui.item).remove();
                     });
                 }

@@ -16,6 +16,14 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
         if (params.parent.id === _this.id) {
           _this.spreadWidth(event, params);
         }
+      }); // Listen for resizing events from child columns
+
+
+      _eventBus.on("column:bindResizeHandle", function (event, params) {
+        // Does the events parent match the previews parent? (e.g. column group)
+        if (params.parent.id === _this.id) {
+          _this.preview.registerResizeHandle(params.column, params.handle);
+        }
       });
 
       _this.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
@@ -125,10 +133,13 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
 
       (0, _utils.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)());
       column.parent.removeChild(column);
-      this.emit("blockInstanceDropped", {
+
+      _eventBus.trigger("block:instanceDropped", {
         blockInstance: column,
-        index: movePosition.insertIndex
+        index: movePosition.insertIndex,
+        parent: this
       }); // Modify the old neighbour
+
 
       if (modifyOldNeighbour) {
         var oldNeighbourWidth = (0, _resizing.getAcceptedColumnWidth)((oldWidth + (0, _resizing.getColumnWidth)(modifyOldNeighbour)).toString());
