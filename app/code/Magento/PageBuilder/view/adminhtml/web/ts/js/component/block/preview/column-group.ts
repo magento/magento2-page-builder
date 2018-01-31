@@ -77,14 +77,6 @@ export default class ColumnGroup extends PreviewBlock {
         this.parent.children.subscribe(this.debounceBindDraggable.bind(this));
         this.debounceBindDraggable();
 
-        // Listen for resizing events from child columns
-        EventBus.on("column:bindResizeHandle", (event, params) => {
-            // Does the events parent match the previews parent? (e.g. column group)
-            if (params.parent.id === this.parent.id) {
-                this.registerResizeHandle(params.column, params.handle);
-            }
-        });
-
         // Handle the mouse leaving the window
         $("body").mouseleave(this.endAllInteractions.bind(this));
     }

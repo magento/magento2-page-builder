@@ -9,7 +9,7 @@ import { moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
 import Block from "../../block/block";
 import EventBus from "../../event-bus";
 import Stage from "../../stage";
-import {SortParams} from "../event-handler";
+import {SortParams} from "../event-handling-delegate";
 import Structural from "./abstract";
 import { EditableAreaInterface } from "./editable-area.d";
 
@@ -30,6 +30,13 @@ export default class EditableArea implements EditableAreaInterface {
             this.stage = stage;
         }
 
+        this.bindEvents();
+    }
+
+    /**
+     * Bind events for the current instance
+     */
+    protected bindEvents() {
         EventBus.on("block:sortStart", this.onSortStart.bind(this));
     }
 

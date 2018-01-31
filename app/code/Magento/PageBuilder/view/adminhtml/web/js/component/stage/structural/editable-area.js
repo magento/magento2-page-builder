@@ -23,16 +23,24 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
         this.stage = stage;
       }
 
-      _eventBus.on("block:sortStart", this.onSortStart.bind(this));
+      this.bindEvents();
     }
+    /**
+     * Bind events for the current instance
+     */
+
+
+    var _proto = EditableArea.prototype;
+
+    _proto.bindEvents = function bindEvents() {
+      _eventBus.on("block:sortStart", this.onSortStart.bind(this));
+    };
     /**
      * Retrieve the child template
      *
      * @returns {string}
      */
 
-
-    var _proto = EditableArea.prototype;
 
     /**
      * Return the children of the current element

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "../stage/structural/options/option", "./block", "./column-group"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup) {
+define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "../stage/structural/options/option", "./block", "./column-group", "./factory"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup, _factory) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -23,6 +23,9 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
 
     var _proto = Column.prototype;
 
+    /**
+     * Bind events for the current instance
+     */
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
@@ -80,16 +83,47 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
 
         this.parent.removeChild(this); // Create a new instance of column group to wrap our columns with
 
-        return _Block.prototype.createBlock.call(this, _config.getContentTypeConfig("column-group"), this.parent, index).then(function (columnGroup) {
-          return Promise.all([_Block.prototype.createBlock.call(_this3, _this3.config, columnGroup, 0, {
+        return (0, _factory)(_config.getContentTypeConfig("column-group"), this.parent, this.parent.stage).then(function (columnGroup) {
+          return Promise.all([(0, _factory)(_this3.config, columnGroup, columnGroup.stage, {
             width: "50%"
-          }), _Block.prototype.createBlock.call(_this3, _this3.config, columnGroup, 1, {
+          }), (0, _factory)(_this3.config, columnGroup, columnGroup.stage, {
             width: "50%"
-          })]).then(function () {
+          })]).then(function (columns) {
+            columnGroup.addChild(columns[0], 0);
+            columnGroup.addChild(columns[1], 1);
+
+            _this3.parent.addChild(columnGroup, index);
+
+            _this3.fireMountEvent(columnGroup, columns[0], columns[1]);
+
             return columnGroup;
           });
         });
       }
+    };
+    /**
+     * Fire the mount event for blocks
+     *
+     * @param {Block} blocks
+     */
+
+
+    _proto.fireMountEvent = function fireMountEvent() {
+      for (var _len2 = arguments.length, blocks = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        blocks[_key2] = arguments[_key2];
+      }
+
+      blocks.forEach(function (block) {
+        _eventBus.trigger("block:mount", {
+          id: block.id,
+          block: block
+        });
+
+        _eventBus.trigger(block.config.name + ":mount", {
+          id: block.id,
+          block: block
+        });
+      });
     };
 
     _createClass(Column, [{
