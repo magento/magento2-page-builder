@@ -24,7 +24,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      *
      * @returns {any}
      */
-    _proto.getPreviewBannerAttributes = function getPreviewBannerAttributes() {
+    _proto.getAttributes = function getAttributes() {
       var backgroundImage = "none";
 
       if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
@@ -42,7 +42,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      */
 
 
-    _proto.getPreviewOverlayAttributes = function getPreviewOverlayAttributes() {
+    _proto.getOverlayAttributes = function getOverlayAttributes() {
       var backgroundColor = "transparent";
 
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
@@ -68,7 +68,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      */
 
 
-    _proto.isBannerEmpty = function isBannerEmpty() {
+    _proto.isContentEmpty = function isContentEmpty() {
       return this.data.message() === "" || this.data.message() === undefined;
     };
     /**
@@ -78,7 +78,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      */
 
 
-    _proto.getPreviewContentAttributes = function getPreviewContentAttributes() {
+    _proto.getContentAttributes = function getContentAttributes() {
       if (this.data.margins_and_padding() !== "" && this.data.margins_and_padding() !== undefined) {
         var marginTop = this.data.margins_and_padding().margin.top || "0";
         var marginRight = this.data.margins_and_padding().margin.right || "0";
@@ -101,7 +101,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
 
 
     _proto.getContentHtml = function getContentHtml() {
-      if (this.data.message() === "" || this.data.message() === undefined) {
+      if (this.isContentEmpty()) {
         return (0, _translate)("Write banner text here...");
       } else {
         return (0, _translate)(this.data.message());
@@ -126,7 +126,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      */
 
 
-    _proto.mouseoverBanner = function mouseoverBanner() {
+    _proto.onMouseOver = function onMouseOver() {
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(true);
       }
@@ -136,7 +136,7 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
      */
 
 
-    _proto.mouseoutBanner = function mouseoutBanner() {
+    _proto.onMouseOut = function onMouseOut() {
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(false);
       }

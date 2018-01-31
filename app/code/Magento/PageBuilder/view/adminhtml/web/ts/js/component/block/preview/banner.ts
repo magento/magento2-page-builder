@@ -17,7 +17,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getPreviewBannerAttributes() {
+    public getAttributes() {
         let backgroundImage: string = "none";
         if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
             backgroundImage = "url(" + this.data.image()[0].url + ")";
@@ -35,7 +35,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getPreviewOverlayAttributes() {
+    public getOverlayAttributes() {
         let backgroundColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
@@ -54,7 +54,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {boolean}
      */
-    public isBannerEmpty(): boolean {
+    public isContentEmpty(): boolean {
         return this.data.message() === "" || this.data.message() === undefined;
     }
 
@@ -63,7 +63,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getPreviewContentAttributes() {
+    public getContentAttributes() {
         if (this.data.margins_and_padding() !== "" && this.data.margins_and_padding() !== undefined) {
             const marginTop = this.data.margins_and_padding().margin.top || "0";
             const marginRight = this.data.margins_and_padding().margin.right || "0";
@@ -93,7 +93,7 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getContentHtml() {
-        if (this.data.message() === "" || this.data.message() === undefined) {
+        if (this.isContentEmpty()) {
             return $t("Write banner text here...");
         } else {
             return $t(this.data.message());
@@ -116,7 +116,7 @@ export default class Banner extends PreviewBlock {
     /**
      * Set state based on overlay mouseover event for the preview
      */
-    public mouseoverBanner() {
+    public onMouseOver() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(true);
         }
@@ -125,7 +125,7 @@ export default class Banner extends PreviewBlock {
     /**
      * Set state based on overlay mouseout event for the preview
      */
-    public mouseoutBanner() {
+    public onMouseOut() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
         }

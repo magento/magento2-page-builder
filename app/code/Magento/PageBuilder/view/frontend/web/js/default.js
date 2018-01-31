@@ -39,7 +39,6 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
             $(element).addClass('pagebuilder-parallax');
         });
 
-
         $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
             var overlayEl = $(element).find('.pagebuilder-banner-button');
             $(element).hover(

@@ -155,23 +155,4 @@ export default class Banner extends Block {
         }
         return Banner.getImageUrl(data.mobile_image);
     }
-
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
-    private convertHexToRgba() {
-        const data = this.getData();
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-            const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color);
-            const red = parseInt(colors[1], 16);
-            const green = parseInt(colors[2], 16);
-            const blue = parseInt(colors[3], 16);
-            const alpha = Conversion.convertPercentToDecimal(data.overlay_transparency);
-            return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
-        } else {
-            return "transparent";
-        }
-    }
 }

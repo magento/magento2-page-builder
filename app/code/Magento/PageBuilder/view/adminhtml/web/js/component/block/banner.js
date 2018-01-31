@@ -160,29 +160,6 @@ define(["mage/translate", "underscore", "../../utils/conversion", "../config", "
 
       return Banner.getImageUrl(data.mobile_image);
     };
-    /**
-     * Convert HEX to RGBA for transparent overlay for the preview
-     *
-     * @returns {string}
-     */
-
-
-    _proto.convertHexToRgba = function convertHexToRgba() {
-      var data = this.getData();
-
-      if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-        var colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.overlay_color);
-        var red = parseInt(colors[1], 16);
-        var green = parseInt(colors[2], 16);
-        var blue = parseInt(colors[3], 16);
-
-        var alpha = _conversion.convertPercentToDecimal(data.overlay_transparency);
-
-        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
-      } else {
-        return "transparent";
-      }
-    };
 
     return Banner;
   }(_block);
