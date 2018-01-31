@@ -5,6 +5,7 @@
 
 import Config from "../../../component/config";
 import {DataObject} from "../../data-store";
+import Colors from "../../../utils/colors";
 import ReadInterface from "../read-interface";
 
 interface ImageObject {
@@ -47,7 +48,7 @@ export default class Banner implements ReadInterface {
         if (value === "transparent") {
             return "";
         } else {
-            return Banner.convertRgbaToHex(value);
+            return Colors.toHex(value);
         }
     }
 
@@ -62,31 +63,6 @@ export default class Banner implements ReadInterface {
         } else {
             return Banner.extractAlphaFromRgba(value);
         }
-    }
-
-    /**
-     * Convert RGBA to HEX for overlay color
-     *
-     * @returns string
-     */
-    private static convertRgbaToHex(value: string) {
-        const values = value.match(/\d+/g);
-        const r = parseInt(values[0], 10).toString(16);
-        const g = parseInt(values[1], 10).toString(16);
-        const b = parseInt(values[2], 10).toString(16);
-        return Banner.padZero(r) + Banner.padZero(g) + Banner.padZero(b);
-    }
-
-    /**
-     * Adds 0 if hex value is string character
-     *
-     * @returns string
-     */
-    private static padZero(value: string) {
-        if (value.length === 1) {
-            value = "0" + value;
-        }
-        return value;
     }
 
     /**

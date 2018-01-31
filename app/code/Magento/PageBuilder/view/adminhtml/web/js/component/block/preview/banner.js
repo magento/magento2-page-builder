@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "../../../utils/conversion", "../../format/style-attribute-mapper", "./block"], function (_knockout, _translate, _conversion, _styleAttributeMapper, _block) {
+define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/numbers", "../../format/style-attribute-mapper", "./block"], function (_knockout, _translate, _colors, _numbers, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -49,9 +49,9 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "../../format
         if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
           var colors = this.data.overlay_color();
 
-          var alpha = _conversion.convertPercentToDecimal(this.data.overlay_transparency());
+          var alpha = _numbers.convertPercentToDecimal(this.data.overlay_transparency());
 
-          backgroundColor = _conversion.colorConverter(colors, alpha);
+          backgroundColor = _colors.colorConverter(colors, alpha);
         } else {
           backgroundColor = "transparent";
         }

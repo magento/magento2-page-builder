@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/config"], function (_config) {
+define(["../../../component/config", "../../../utils/colors"], function (_config, _colors) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,7 +43,7 @@ define(["../../../component/config"], function (_config) {
       if (value === "transparent") {
         return "";
       } else {
-        return Banner.convertRgbaToHex(value);
+        return _colors.toHex(value);
       }
     };
     /**
@@ -59,34 +59,6 @@ define(["../../../component/config"], function (_config) {
       } else {
         return Banner.extractAlphaFromRgba(value);
       }
-    };
-    /**
-     * Convert RGBA to HEX for overlay color
-     *
-     * @returns string
-     */
-
-
-    Banner.convertRgbaToHex = function convertRgbaToHex(value) {
-      var values = value.match(/\d+/g);
-      var r = parseInt(values[0], 10).toString(16);
-      var g = parseInt(values[1], 10).toString(16);
-      var b = parseInt(values[2], 10).toString(16);
-      return Banner.padZero(r) + Banner.padZero(g) + Banner.padZero(b);
-    };
-    /**
-     * Adds 0 if hex value is string character
-     *
-     * @returns string
-     */
-
-
-    Banner.padZero = function padZero(value) {
-      if (value.length === 1) {
-        value = "0" + value;
-      }
-
-      return value;
     };
     /**
      * Extract the Alpha component from RGBA and convert from decimal to percent for overlay transparency

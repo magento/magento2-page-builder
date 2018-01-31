@@ -5,9 +5,10 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import Conversion from "../../utils/conversion";
+import Colors from "../../utils/colors";
 import Config from "../config";
 import Block from "./block";
+import Numbers from "../../utils/numbers";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
 
 export default class Banner extends Block {
@@ -40,9 +41,9 @@ export default class Banner extends Block {
         }
         return {
             style:
-            "background-image: " + backgroundImage + "; " +
-            "min-height: " + data.minimum_height + "px; " +
-            "background-size: " + data.background_size + ";",
+                "background-image: " + backgroundImage + "; " +
+                "min-height: " + data.minimum_height + "px; " +
+                "background-size: " + data.background_size + ";",
         };
     }
 
@@ -57,9 +58,9 @@ export default class Banner extends Block {
         let bgColor: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColorAttr = Conversion.colorConverter(
+                bgColorAttr = Colors.colorConverter(
                     data.overlay_color,
-                    Conversion.convertPercentToDecimal(data.overlay_transparency),
+                    Numbers.convertPercentToDecimal(data.overlay_transparency),
                 );
             } else {
                 bgColorAttr = "transparent";
@@ -69,9 +70,9 @@ export default class Banner extends Block {
             bgColor = "transparent";
         } else {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = Conversion.colorConverter(
+                bgColor = Colors.colorConverter(
                     data.overlay_color,
-                    Conversion.convertPercentToDecimal(data.overlay_transparency),
+                    Numbers.convertPercentToDecimal(data.overlay_transparency),
                 );
             } else {
                 bgColor = "transparent";
@@ -93,10 +94,10 @@ export default class Banner extends Block {
         const toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
         return {
             style:
-            "padding-top: " + toDomPadding.top + "px; " +
-            "padding-right: " + toDomPadding.right + "px; " +
-            "padding-bottom: " + toDomPadding.bottom + "px; " +
-            "padding-left: " + toDomPadding.left + "px;",
+                "padding-top: " + toDomPadding.top + "px; " +
+                "padding-right: " + toDomPadding.right + "px; " +
+                "padding-bottom: " + toDomPadding.bottom + "px; " +
+                "padding-left: " + toDomPadding.left + "px;",
         };
     }
 

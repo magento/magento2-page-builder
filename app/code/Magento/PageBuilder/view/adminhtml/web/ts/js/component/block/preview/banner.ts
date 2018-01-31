@@ -5,7 +5,8 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import Conversion from "../../../utils/conversion";
+import Colors from "../../../utils/colors";
+import Numbers from "../../../utils/numbers";
 import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
@@ -25,9 +26,9 @@ export default class Banner extends PreviewBlock {
         }
         return {
             style:
-            "background-image: " + backgroundImage + "; " +
-            "background-size: " + this.data.background_size() + ";" +
-            "min-height: " + this.data.minimum_height() + "px; ",
+                "background-image: " + backgroundImage + "; " +
+                "background-size: " + this.data.background_size() + ";" +
+                "min-height: " + this.data.minimum_height() + "px; ",
         };
     }
 
@@ -41,8 +42,8 @@ export default class Banner extends PreviewBlock {
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
                 const colors = this.data.overlay_color();
-                const alpha = Conversion.convertPercentToDecimal(this.data.overlay_transparency());
-                backgroundColor = Conversion.colorConverter(colors, alpha);
+                const alpha = Numbers.convertPercentToDecimal(this.data.overlay_transparency());
+                backgroundColor = Colors.colorConverter(colors, alpha);
             } else {
                 backgroundColor = "transparent";
             }

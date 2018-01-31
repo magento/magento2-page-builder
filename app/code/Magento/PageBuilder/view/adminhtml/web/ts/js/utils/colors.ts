@@ -4,16 +4,6 @@
  */
 
 /**
- * Convert percent to decimal
- *
- * @param {string} value
- * @returns {string}
- */
-export function convertPercentToDecimal(value: string) {
-    return (parseInt(value, 10) / 100).toString();
-}
-
-/**
  * Convert HEX value to RGB or RGBA
  *
  * @param hexValue
@@ -31,4 +21,31 @@ export function colorConverter(hexValue: string, alphaValue: string) {
     } else {
         return "rgba(" + red + "," + green + "," + blue + ")";
     }
+}
+
+/**
+ * Adds 0 if HEX value is string character
+ *
+ * @returns string
+ */
+function padZero(value: string) {
+    if (value.length === 1) {
+        value = "0" + value;
+    }
+    return value;
+}
+
+/**
+ * Convert RGB or RGBA value to HEX
+ *
+ * @param value "rgba(255,85,51,0.2)"
+ * @returns {string}
+ */
+
+export function toHex(value: string) {
+    const values = value.match(/\d+/g);
+    const r = parseInt(values[0], 10).toString(16);
+    const g = parseInt(values[1], 10).toString(16);
+    const b = parseInt(values[2], 10).toString(16);
+    return padZero(r) + padZero(g) + padZero(b);
 }
