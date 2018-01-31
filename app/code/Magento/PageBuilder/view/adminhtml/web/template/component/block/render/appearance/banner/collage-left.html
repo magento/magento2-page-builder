@@ -6,13 +6,7 @@
 -->
 
 <div data-bind="css: getCss(), attr: getAttributes()">
-    <div data-bind="style: {
-            backgroundImage: getStyle().backgroundImage,
-            margin: getStyle().margin,
-            paddingTop: getData().margins_and_padding.padding.top + 'px',
-            paddingLeft: getData().margins_and_padding.padding.left + 'px',
-            paddingRight: 'calc(50% + ' + getData().margins_and_padding.padding.right + 'px)',
-            paddingBottom: getData().margins_and_padding.padding.bottom + 'px'}"
+    <div data-bind="style: Object.assign(getStyle(), {paddingRight: 'calc(50% + ' + getData().margins_and_padding.padding.right + 'px)'})"
         class="pagebuilder-mobile-hidden"
         style="background-repeat: no-repeat;
             background-size: 100%;
@@ -23,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div data-bind="style: {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage , margin: getStyle().margin, padding: getStyle().padding}"
+    <div data-bind="style: Object.assign(getStyle(), {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage})"
          class="pagebuilder-mobile-only"
          style="background-repeat: no-repeat;
          background-size: 100%;
