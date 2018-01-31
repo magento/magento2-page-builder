@@ -5,7 +5,7 @@
  */
 -->
 
-<div data-bind="attr: getAttributes()">
+<div data-bind="css: getCss(), attr: getAttributes()">
     <div data-bind="style: {
             backgroundImage: getStyle().backgroundImage,
             margin: getStyle().margin,
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div data-bind="css: getCss(), style: {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage , margin: getStyle().margin, padding: getStyle().padding}"
+    <div data-bind="style: {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage , margin: getStyle().margin, padding: getStyle().padding}"
          class="pagebuilder-mobile-only"
          style="background-repeat: no-repeat;
          background-size: 100%;
