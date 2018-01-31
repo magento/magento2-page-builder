@@ -101,11 +101,11 @@ class Driver implements RendererInterface
 
         if ($itemData['formData']['metric'] != '') {
             $marginsAndPaddings = $this->styleExtractor->extractStyle(['metric' => $itemData['formData']['metric']]);
-            $posterHtml = '<div class="pagebuilder-poster-content" style="' . $marginsAndPaddings . '">';
+            $paddings = explode("; ", $marginsAndPaddings)[1];
+            $posterHtml = '<div class="pagebuilder-poster-content" style="' . $paddings . '">';
         } else {
-            $posterHtml = '<div class="pagebuilder-poster-content" style="margin-top: 0px; margin-right: 0px; ' .
-                'margin-bottom: 0px; margin-left: 0px; padding-top: 40px; padding-right: 40px; padding-bottom: 40px; ' .
-                'padding-left: 40px;">';
+            $posterHtml = '<div class="pagebuilder-poster-content" style="padding-top: 40px; padding-right: 40px; ' .
+                'padding-bottom: 40px; padding-left: 40px;">';
         }
 
         $buttonHtml = '<button class="pagebuilder-banner-button action primary" ' .
