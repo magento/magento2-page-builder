@@ -17,58 +17,64 @@ interface ImageObject {
 export default class Banner implements ReadInterface {
 
     /**
-     * Read heading type and title from the element
+     * Fetch the image object
      *
-     * @param element HTMLElement
-     * @returns {Promise<any>}
+     * @param {string} src
+     * @returns {ImageObject}
      */
-    public read(element: HTMLElement): Promise<any> {
-        const target = element.querySelector("a").getAttribute("target");
-        const response: DataObject = {
-            background_size: element.style.backgroundSize,
-            button_text: element.dataset.buttonText,
-            image: this.generateImageObject(
-                element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0]),
-            link_url: element.querySelector("a").getAttribute("href"),
-            message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-            minimum_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
-            mobile_image:
-                element.querySelector(".pagebuilder-banner-mobile") ?
-                this.generateImageObject(element.querySelector(".pagebuilder-banner-mobile")
-                    .getAttribute("style")
-                    .split(";")[0]) : "",
-            open_in_new_tab: target && target === "_blank" ? "1" : "0",
-            overlay_color:
-                element.querySelector(".pagebuilder-poster-overlay")
-                    .getAttribute("data-background-color") === "transparent" ?
-                    "" : this.convertRgbaToHex(
-                        element.querySelector(".pagebuilder-poster-overlay")
-                            .getAttribute("data-background-color"),
-                    ),
-            overlay_transparency:
-                element.querySelector(".pagebuilder-poster-overlay")
-                    .getAttribute("data-background-color") === "transparent" ?
-                    "0" : this.extractAlphaFromRgba(
-                        element.querySelector(".pagebuilder-poster-overlay")
-                            .getAttribute("data-background-color"),
-                    ),
-            show_button: element.getAttribute("data-show-button"),
-            show_overlay: element.getAttribute("data-show-overlay"),
-        };
-        return Promise.resolve(response);
+    private static generateImageObject(src: string): string | ImageObject[] {
+        // Match the URL & type from the directive
+        if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
+            const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src));
+            return [
+                {
+                    name: url.split("/").pop(),
+                    size: 0,
+                    type: "image/" + type,
+                    url: Config.getInitConfig("media_url") + url,
+                },
+            ];
+        }
+        return "";
     }
 
     /**
-     * Convert RGBA to HEX for content overlay color
+     * Get overlay color
      *
      * @returns string
      */
-    private convertRgbaToHex(value: string) {
+    private static getOverlayColor(value: string) {
+        if (value === "transparent") {
+            return "";
+        } else {
+            return Banner.convertRgbaToHex(value);
+        }
+    }
+
+    /**
+     * Get overlay transparency
+     *
+     * @returns string
+     */
+    private static getOverlayTransparency(value: string) {
+        if (value === "transparent") {
+            return "0";
+        } else {
+            return Banner.extractAlphaFromRgba(value);
+        }
+    }
+
+    /**
+     * Convert RGBA to HEX for overlay color
+     *
+     * @returns string
+     */
+    private static convertRgbaToHex(value: string) {
         const values = value.match(/\d+/g);
         const r = parseInt(values[0], 10).toString(16);
         const g = parseInt(values[1], 10).toString(16);
         const b = parseInt(values[2], 10).toString(16);
-        return this.padZero(r) + this.padZero(g) + this.padZero(b);
+        return Banner.padZero(r) + Banner.padZero(g) + Banner.padZero(b);
     }
 
     /**
@@ -76,7 +82,7 @@ export default class Banner implements ReadInterface {
      *
      * @returns string
      */
-    private padZero(value: string) {
+    private static padZero(value: string) {
         if (value.length === 1) {
             value = "0" + value;
         }
@@ -88,32 +94,37 @@ export default class Banner implements ReadInterface {
      *
      * @returns int
      */
-    private extractAlphaFromRgba(value: string) {
+    private static extractAlphaFromRgba(value: string) {
         const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
         return Math.floor(a * 100);
     }
 
     /**
-     * Fetch the image object
+     * Read heading type and title from the element
      *
-     * @param {string} src
-     * @returns {ImageObject}
+     * @param element HTMLElement
+     * @returns {Promise<any>}
      */
-    private generateImageObject(src: string): string | ImageObject[] {
-        // Match the URL & type from the directive
-        if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
-            const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src));
-
-            return [
-                {
-                    name: url.split("/").pop(),
-                    size: 0,
-                    type: "image/" + type,
-                    url: Config.getInitConfig("media_url") + url,
-                },
-            ];
-        }
-
-        return "";
+    public read(element: HTMLElement): Promise<any> {
+        const target = element.querySelector("a").getAttribute("target");
+        const bgImage = element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0];
+        const bgMobileImageEl = element.querySelector(".pagebuilder-banner-mobile");
+        const bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0];
+        const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
+        const response: DataObject = {
+            background_size: element.style.backgroundSize,
+            button_text: element.dataset.buttonText,
+            image: Banner.generateImageObject(bgImage),
+            link_url: element.querySelector("a").getAttribute("href"),
+            message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+            minimum_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
+            mobile_image: bgMobileImageEl ? Banner.generateImageObject(bgMobileImage) : "",
+            open_in_new_tab: target && target === "_blank" ? "1" : "0",
+            overlay_color: Banner.getOverlayColor(overlayColor),
+            overlay_transparency: Banner.getOverlayTransparency(overlayColor),
+            show_button: element.getAttribute("data-show-button"),
+            show_overlay: element.getAttribute("data-show-overlay"),
+        };
+        return Promise.resolve(response);
     }
 }
