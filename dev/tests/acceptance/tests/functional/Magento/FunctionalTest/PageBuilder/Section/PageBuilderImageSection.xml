@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="ImageOnFrontend">
+        <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
+        <element name="imageSource" type="button" selector="img.pagebuilder-mobile-hidden[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
+        <element name="imageLink" type="button" selector="figure[data-role='image'] a[href='{{arg1}}']" parameterized="true"/>
+        <element name="imageLinkTarget" type="button" selector="figure[data-role='image'] a[target='{{arg1}}']" parameterized="true"/>
+        <element name="imageHasAltText" type="button" selector="img.pagebuilder-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
+        <element name="imageHasTitleTag" type="button" selector="img.pagebuilder-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
+        <element name="imageHasCaption" type="button" selector="figcaption"/>
+    </section>
+</sections>
