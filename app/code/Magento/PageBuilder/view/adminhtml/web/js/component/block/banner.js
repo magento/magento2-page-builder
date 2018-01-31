@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../config", "./block", "../../utils/numbers", "../format/style-attribute-mapper"], function (_translate, _underscore, _colors, _config, _block, _numbers, _styleAttributeMapper) {
+define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../config", "./block", "../../utils/numbers", "../format/style-attribute-mapper"], function (_translate, _underscore, _colors, _directives, _config, _block, _numbers, _styleAttributeMapper) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -11,29 +11,13 @@ define(["mage/translate", "underscore", "../../utils/colors", "../config", "./bl
       return _Block.apply(this, arguments) || this;
     }
 
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {Array} image
-     * @returns {string}
-     */
-    Banner.getImageUrl = function getImageUrl(image) {
-      var imageUrl = image[0].url;
+    var _proto = Banner.prototype;
 
-      var mediaUrl = _config.getInitConfig("media_url");
-
-      var mediaPath = imageUrl.split(mediaUrl);
-      return "{{media url=" + mediaPath[1] + "}}";
-    };
     /**
      * Get the banner wrapper attributes for the storefront
      *
      * @returns {any}
      */
-
-
-    var _proto = Banner.prototype;
-
     _proto.getBannerAttributes = function getBannerAttributes(type) {
       var data = this.getData();
       var backgroundImage = "";
@@ -131,7 +115,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../config", "./bl
         return;
       }
 
-      return Banner.getImageUrl(data.image);
+      return (0, _directives.getImageUrl)(data.image, _config.getInitConfig("media_url"));
     };
     /**
      * Get the mobile image attributes for the render
@@ -151,7 +135,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../config", "./bl
         return;
       }
 
-      return Banner.getImageUrl(data.mobile_image);
+      return (0, _directives.getImageUrl)(data.mobile_image, _config.getInitConfig("media_url"));
     };
 
     return Banner;

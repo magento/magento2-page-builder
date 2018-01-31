@@ -56,10 +56,25 @@ define([], function () {
       return "url(\'" + fromDataUrl(url) + "\')";
     });
   }
+  /**
+   * Retrieve the image URL with directive
+   *
+   * @param {Array} image
+   * @param {string} media
+   * @returns {string}
+   */
+
+
+  function getImageUrl(image, media) {
+    var imageUrl = image[0].url;
+    var mediaPath = imageUrl.split(media);
+    return "{{media url=" + mediaPath[1] + "}}";
+  }
 
   return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
-    fromDataUrl: fromDataUrl
+    fromDataUrl: fromDataUrl,
+    getImageUrl: getImageUrl
   });
 });
 //# sourceMappingURL=directives.js.map

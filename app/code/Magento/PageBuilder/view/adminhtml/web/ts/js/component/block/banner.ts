@@ -6,25 +6,13 @@
 import $t from "mage/translate";
 import _ from "underscore";
 import Colors from "../../utils/colors";
+import {getImageUrl} from "../../utils/directives";
 import Config from "../config";
 import Block from "./block";
 import Numbers from "../../utils/numbers";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
 
 export default class Banner extends Block {
-
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {Array} image
-     * @returns {string}
-     */
-    private static getImageUrl(image: any[]) {
-        const imageUrl = image[0].url;
-        const mediaUrl = Config.getInitConfig("media_url");
-        const mediaPath = imageUrl.split(mediaUrl);
-        return "{{media url=" + mediaPath[1] + "}}";
-    }
 
     /**
      * Get the banner wrapper attributes for the storefront
@@ -128,7 +116,7 @@ export default class Banner extends Block {
         if (_.isEmpty(data.image[0])) {
             return;
         }
-        return Banner.getImageUrl(data.image);
+        return getImageUrl(data.image, Config.getInitConfig("media_url"));
     }
 
     /**
@@ -144,6 +132,6 @@ export default class Banner extends Block {
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
-        return Banner.getImageUrl(data.mobile_image);
+        return getImageUrl(data.mobile_image, Config.getInitConfig("media_url"));
     }
 }
