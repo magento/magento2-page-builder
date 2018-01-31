@@ -6,14 +6,30 @@
 -->
 
 <div data-bind="attr: getAttributes()">
-    <div data-bind="css: getCss(), style: {backgroundImage: getStyle().backgroundImage}"
-         style="justify-content: flex-end;
-         background-repeat: no-repeat;
+    <div data-bind="style: {
+            backgroundImage: getStyle().backgroundImage,
+            margin: getStyle().margin,
+            paddingTop: getData().margins_and_padding.padding.top + 'px',
+            paddingRight: getData().margins_and_padding.padding.right + 'px',
+            paddingLeft: 'calc(50% + ' + getData().margins_and_padding.padding.left + 'px)',
+            paddingBottom: getData().margins_and_padding.padding.bottom + 'px'}"
+         class="pagebuilder-mobile-hidden"
+         style="background-repeat: no-repeat;
+            background-size: 100%;
+            box-sizing: border-box;
+            min-height: 250px;">
+        <div style="box-sizing: border-box; width: 100%;">
+            <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
+            </div>
+        </div>
+    </div>
+    <div data-bind="css: getCss(), style: {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage , margin: getStyle().margin, padding: getStyle().padding}"
+         class="pagebuilder-mobile-only"
+         style="background-repeat: no-repeat;
          background-size: 100%;
          box-sizing: border-box;
-         display: flex;
          min-height: 250px;">
-        <div data-bind="style: {margin: getStyle().margin, padding: getStyle().padding}" style="box-sizing: border-box; width: 50%;">
+        <div style="box-sizing: border-box; width: 100%;">
             <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
             </div>
         </div>

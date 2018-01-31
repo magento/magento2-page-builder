@@ -44,7 +44,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
           value = "";
         }
 
-        if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
+        if (key === "background_image" && Array.isArray(value) && value[0] !== undefined || key === "mobile_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
           var imageUrl = value[0].url;
 
@@ -137,7 +137,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
           }
         }
 
-        if (key === "background-image") {
+        if (key === "background-image" || key === "mobile-image") {
           // Replace the location.href if it exists and decode the value
           value = decodeURIComponent(value.replace(window.location.href, ""));
 

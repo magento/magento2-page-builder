@@ -65,6 +65,14 @@ export default class PreviewBlock {
             if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
                 styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
             }
+
+            // The style attribute mapper converts images to directives, override it to include the correct URL
+            if (typeof this.data.mobile_image === "function"
+                && this.data.mobile_image() !== ""
+                && this.data.mobile_image()
+                && typeof this.data.mobile_image()[0] === "object") {
+                styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+            }
             return styles;
         });
 

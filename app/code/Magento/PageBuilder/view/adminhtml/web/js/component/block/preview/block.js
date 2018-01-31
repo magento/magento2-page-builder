@@ -51,6 +51,11 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
 
         if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
           styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
+        } // The style attribute mapper converts images to directives, override it to include the correct URL
+
+
+        if (typeof _this.data.mobile_image === "function" && _this.data.mobile_image() !== "" && _this.data.mobile_image() && _typeof(_this.data.mobile_image()[0]) === "object") {
+          styles.mobileImage = "url(" + _this.data.mobile_image()[0].url + ")";
         }
 
         return styles;
