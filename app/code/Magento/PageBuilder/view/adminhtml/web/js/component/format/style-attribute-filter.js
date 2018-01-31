@@ -14,7 +14,7 @@ define([], function () {
     var _proto = StyleAttributeFilter.prototype;
 
     /**
-     * GET allowed attributes
+     * Get allowed attributes
      *
      * @returns {Array<string>}
      */

@@ -38,13 +38,20 @@
 
 /* close commented backslash hack */
 
-/*-- Responsive Classes --*/
+//
+//  Responsive Classes
+//  ---------------------------------------------
 
-.pagebuilder-mobile-only { display:none!important; }
+.pagebuilder-mobile-only {
+    display: none !important;
+}
 
 @media all and (max-width: @mobile) {
+    .pagebuilder-mobile-only {
+        display: block !important;
+    }
 
-    .pagebuilder-mobile-only { display:block!important; }
-    .pagebuilder-mobile-hidden { display:none!important; }
-
+    .pagebuilder-mobile-hidden {
+        display: none !important;
+    }
 }

@@ -39,7 +39,7 @@ export default class StyleAttributeFilter {
     ];
 
     /**
-     * GET allowed attributes
+     * Get allowed attributes
      *
      * @returns {Array<string>}
      */

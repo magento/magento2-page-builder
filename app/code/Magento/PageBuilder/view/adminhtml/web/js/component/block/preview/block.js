@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper"], function (_knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -47,17 +45,7 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           }
 
           return value;
-        }))); // The style attribute mapper converts images to directives, override it to include the correct URL
-
-        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
-          styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
-        } // The style attribute mapper converts images to directives, override it to include the correct URL
-
-
-        if (typeof _this.data.mobile_image === "function" && _this.data.mobile_image() !== "" && _this.data.mobile_image() && _typeof(_this.data.mobile_image()[0]) === "object") {
-          styles.mobileImage = "url(" + _this.data.mobile_image()[0].url + ")";
-        }
-
+        })));
         return styles;
       }); // Force the columnStyles to update on changes to stored style attribute data
 
