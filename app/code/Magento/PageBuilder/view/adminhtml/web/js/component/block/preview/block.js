@@ -46,7 +46,7 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
 
           return value;
         })));
-        return styles;
+        return _this.afterContent(styles);
       }); // Force the columnStyles to update on changes to stored style attribute data
 
       Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
@@ -82,6 +82,10 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           this.data[key] = _knockout.observable(value);
         }
       }
+    };
+
+    _proto.afterContent = function afterContent(styles) {
+      return styles;
     };
 
     _createClass(PreviewBlock, [{

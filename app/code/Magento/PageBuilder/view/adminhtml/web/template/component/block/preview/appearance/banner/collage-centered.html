@@ -10,13 +10,9 @@
         <i class="icon-pagebuilder-banner"></i><span data-bind="text: $t('Banner');"></span>
     <!-- /ko -->
     <!-- ko if: preview.data.background_image() && typeof preview.data.background_image()[0] !== 'undefined' -->
-    <div data-bind="style: {
-        backgroundImage: preview.previewStyle().backgroundImage,
-        margin: preview.previewStyle().margin,
-        paddingTop: preview.data.margins_and_padding().padding.top + 'px',
+    <div data-bind="style: Object.assign(preview.previewStyle(), {
         paddingLeft: 'calc(25% + ' + preview.data.margins_and_padding().padding.left + 'px)',
-        paddingRight: 'calc(25% + ' + preview.data.margins_and_padding().padding.right + 'px)',
-        paddingBottom: preview.data.margins_and_padding().padding.bottom + 'px'}"
+        paddingRight: 'calc(25% + ' + preview.data.margins_and_padding().padding.right + 'px)'})"
         style="background-repeat: no-repeat;
             background-size: 100%;
             box-sizing: border-box;

@@ -61,7 +61,7 @@ export default class PreviewBlock {
                     }),
                 ),
             );
-            return styles;
+            return this.afterContent(styles);
         });
 
         // Force the columnStyles to update on changes to stored style attribute data
@@ -102,5 +102,9 @@ export default class PreviewBlock {
                 this.data[key] = ko.observable(value);
             }
         }
+    }
+
+    private afterContent(styles: {}) {
+        return styles;
     }
 }
