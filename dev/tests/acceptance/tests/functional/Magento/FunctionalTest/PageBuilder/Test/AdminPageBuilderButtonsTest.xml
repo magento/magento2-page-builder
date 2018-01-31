@@ -33,22 +33,19 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{ButtonsEditSection.addNewButton}}" stepKey="waitForAddButtonsElementVisible"/>
         <click selector="{{ButtonsEditSection.addNewButton}}" stepKey="clickOnAddButtonsElement"/>
-        <waitForElement time="2" selector="{{ButtonsEditSection.buttonText('0')}}" stepKey="waitForButtonRow0TextVisible"/>
-        <fillField selector="{{ButtonsEditSection.buttonText('0')}}" userInput="{{PageBuilderButtonsProperty.text}}" stepKey="fillButtonRow0TextField"/>
-        <fillField selector="{{ButtonsEditSection.buttonLink('0')}}" userInput="{{PageBuilderButtonsProperty.link}}" stepKey="fillButtonRow0LinkField"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
+            <argument name="property" value="PageBuilderButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonLinkProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonElement(PageBuilderButtonsProperty.link, PageBuilderButtonsProperty.text)}}" stepKey="seeButtonOnStorefront"/>
-        <click selector="{{ButtonsFrontendSection.buttonElement(PageBuilderButtonsProperty.link, PageBuilderButtonsProperty.text)}}" stepKey="clickOnButtonElementOnStorefront"/>
-        <seeInCurrentUrl url="{{StorefrontProductPage.url}}{{PageBuilderButtonsProperty.link}}" stepKey="seeButtonClickUrl"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonElement(PageBuilderButtonLinkProperty.value, PageBuilderButtonTextProperty.value)}}" stepKey="seeButtonOnStorefront"/>
     </test>
     <test name="CanRemoveButton">
         <annotations>
@@ -104,9 +101,6 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
