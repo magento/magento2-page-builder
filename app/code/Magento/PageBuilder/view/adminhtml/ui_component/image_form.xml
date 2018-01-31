@@ -112,23 +112,22 @@
                 <dataScope>link_url</dataScope>
             </settings>
         </field>
-        <field name="open_in_new_tab" sortOrder="20" formElement="checkbox">
+        <field name="link_target" sortOrder="20" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="string">_self</item>
                 </item>
             </argument>
             <settings>
-                <dataType>boolean</dataType>
+                <dataType>string</dataType>
                 <label translate="true">Open in New Tab?</label>
-                <dataScope>open_in_new_tab</dataScope>
             </settings>
             <formElements>
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">_self</map>
+                            <map name="true" xsi:type="string">_blank</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>

@@ -52,20 +52,10 @@ export default class Image extends Block {
             return;
         }
         return {
-            class: (data.lightbox === "Yes" ? "pagebuilder-lightbox" : ""),
-            href: this.getImageUrl(data.image),
-            title: data.title_tag,
+            href: data.link_url || this.getImageUrl(data.image),
+            target: data.link_target || "_self",
+            title: data.title_tag
         };
-    }
-
-    /**
-     * Retrieve the caption for the image
-     *
-     * @returns {any}
-     */
-    public getCaption(): string {
-        const data = this.getData();
-        return (data.show_caption === "Yes" ? data.title_tag as string : "");
     }
 
     /**

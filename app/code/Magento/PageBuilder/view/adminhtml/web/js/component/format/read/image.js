@@ -21,9 +21,10 @@ define(["../../../component/config"], function (_config) {
       var response = {
         alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
         image: this.generateImageObject(element.querySelector("img:nth-child(1)").getAttribute("src")),
-        lightbox: !!element.querySelector("a.pagebuilder-lightbox") ? "Yes" : "No",
         mobile_image: "",
-        show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
+        image_caption: element.querySelector("figcaption").textContent,
+        link_url: element.querySelector("a").getAttribute("href"),
+        link_target: element.querySelector("a").getAttribute("target"),
         title_tag: element.querySelector("a").getAttribute("title")
       }; // Detect if there is a mobile image and update the response
 

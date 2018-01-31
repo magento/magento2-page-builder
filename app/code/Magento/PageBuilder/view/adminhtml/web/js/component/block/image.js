@@ -72,21 +72,10 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
       }
 
       return {
-        class: data.lightbox === "Yes" ? "pagebuilder-lightbox" : "",
-        href: this.getImageUrl(data.image),
+        href: data.link_url || this.getImageUrl(data.image),
+        target: data.link_target || "_self",
         title: data.title_tag
       };
-    };
-    /**
-     * Retrieve the caption for the image
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCaption = function getCaption() {
-      var data = this.getData();
-      return data.show_caption === "Yes" ? data.title_tag : "";
     };
     /**
      * Retrieve the image URL with directive
