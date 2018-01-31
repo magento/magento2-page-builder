@@ -7,22 +7,19 @@
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" style="box-sizing: border-box;">
     <!-- ko ifnot: preview.data.background_image() -->
-        <i class="icon-pagebuilder-banner"></i> <span data-bind="text: $t('Banner');"></span>
+        <i class="icon-pagebuilder-banner"></i><span data-bind="text: $t('Banner');"></span>
     <!-- /ko -->
     <!-- ko if: preview.data.background_image() && typeof preview.data.background_image()[0] !== 'undefined' -->
-        <div data-bind="style: {backgroundImage: preview.previewStyle().backgroundImage}"
-             style="justify-content: flex-start;
-                 background-repeat: no-repeat;
-                 background-size: 100%;
-                 box-sizing: border-box;
-                 display: flex;
-                 min-height: 250px;">
-            <div data-bind="style: {margin: preview.previewStyle().margin, padding: preview.previewStyle().padding}"
-                 style="box-sizing: border-box; width: 50%;">
-                <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
-                </div>
+    <div data-bind="style: Object.assign(preview.previewStyle(), {paddingRight: 'calc(50% + ' + preview.data.margins_and_padding().padding.right + 'px)'})"
+        style="background-repeat: no-repeat;
+             background-size: 100%;
+             box-sizing: border-box;
+             min-height: 250px;">
+        <div style="box-sizing: border-box; width: 100%;">
+            <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
             </div>
         </div>
+    </div>
     <!-- /ko -->
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

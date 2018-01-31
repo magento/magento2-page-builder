@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config"], function (_config) {
+define(["../style-attribute-mapper"], function (_styleAttributeMapper) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,9 @@ define(["../../config"], function (_config) {
   var Banner =
   /*#__PURE__*/
   function () {
-    function Banner() {}
+    function Banner() {
+      this.styleAttributeMapper = new _styleAttributeMapper();
+    }
 
     var _proto = Banner.prototype;
 
@@ -23,32 +25,8 @@ define(["../../config"], function (_config) {
       };
       var background;
       background = element.children[0].style.backgroundImage;
-      response.background_image = this.decodeBackground(background);
+      response.background_image = this.styleAttributeMapper.decodeBackground(background);
       return Promise.resolve(response);
-    };
-    /**
-     * Decode background image back into object format
-     *
-     * @param value
-     * @returns {Object}
-     */
-
-
-    _proto.decodeBackground = function decodeBackground(value) {
-      value = decodeURIComponent(value.replace(window.location.href, ""));
-
-      var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
-          url = _$exec[1],
-          type = _$exec[2];
-
-      var image = {
-        name: url.split("/").pop(),
-        size: 0,
-        type: "image/" + type,
-        url: _config.getInitConfig("media_url") + url
-      };
-      value = [image];
-      return value;
     };
 
     return Banner;

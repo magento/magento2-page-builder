@@ -5,15 +5,27 @@
  */
 -->
 
-<div data-bind="attr: getAttributes()">
-    <div data-bind="css: getCss(), style: {backgroundImage: getStyle().backgroundImage}"
-         style="justify-content: center;
-         background-repeat: no-repeat;
+<div data-bind="css: getCss(), attr: getAttributes()">
+    <div data-bind="style: Object.assign(getStyle(), {
+            paddingLeft: 'calc(25% + ' + getData().margins_and_padding.padding.left + 'px)',
+            paddingRight: 'calc(25% + ' + getData().margins_and_padding.padding.right + 'px)'})"
+         class="pagebuilder-mobile-hidden"
+         style="background-repeat: no-repeat;
+            background-size: 100%;
+            box-sizing: border-box;
+            min-height: 250px;">
+        <div style="box-sizing: border-box; width: 100%;">
+            <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
+            </div>
+        </div>
+    </div>
+    <div data-bind="style: Object.assign(getStyle(), {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage})"
+         class="pagebuilder-mobile-only"
+         style="background-repeat: no-repeat;
          background-size: 100%;
          box-sizing: border-box;
-         display: flex;
          min-height: 250px;">
-        <div data-bind="style: {margin: getStyle().margin, padding: getStyle().padding}" style="box-sizing: border-box; width: 50%;">
+        <div style="box-sizing: border-box; width: 100%;">
             <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
             </div>
         </div>

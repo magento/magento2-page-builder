@@ -61,11 +61,7 @@ export default class PreviewBlock {
                     }),
                 ),
             );
-            // The style attribute mapper converts images to directives, override it to include the correct URL
-            if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-                styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-            }
-            return styles;
+            return this.afterContent(styles);
         });
 
         // Force the columnStyles to update on changes to stored style attribute data
@@ -106,5 +102,9 @@ export default class PreviewBlock {
                 this.data[key] = ko.observable(value);
             }
         }
+    }
+
+    private afterContent(styles: {}) {
+        return styles;
     }
 }
