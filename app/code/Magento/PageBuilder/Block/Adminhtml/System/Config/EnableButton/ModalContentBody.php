@@ -10,8 +10,16 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class ModalContentBody extends Template implements ArgumentInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $_template = 'Magento_PageBuilder::system/config/enableButton/modalContentBody.phtml';
 
+    /**
+     * Get HTML content for block
+     *
+     * @return string
+     */
     public function render()
     {
         return $this->_toHtml();
