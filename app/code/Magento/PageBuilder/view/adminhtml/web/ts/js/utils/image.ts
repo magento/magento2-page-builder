@@ -5,20 +5,13 @@
 
 import Config from "../component/config";
 
-interface ImageObject {
-    name: string;
-    size: number;
-    type: string;
-    url: string;
-}
-
 /**
  * Decode image background URL to object
  *
  * @param value
  * @returns {Object}
  */
-export function decodeUrl(value: any): string | ImageObject[] {
+export function decodeUrl(value: any): string | [object] {
     let result: any = "";
     value = decodeURIComponent((value as string).replace(window.location.href, ""));
     const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/;

@@ -18,14 +18,14 @@ define(["../component/config"], function (_config) {
 
     if (regexp.test(value)) {
       var _regexp$exec = regexp.exec(value),
-          _url = _regexp$exec[1],
-          _type = _regexp$exec[2];
+          url = _regexp$exec[1],
+          type = _regexp$exec[2];
 
       var image = {
-        name: _url.split("/").pop(),
+        name: url.split("/").pop(),
         size: 0,
-        type: "image/" + _type,
-        url: _config.getInitConfig("media_url") + _url
+        type: "image/" + type,
+        url: _config.getInitConfig("media_url") + url
       };
       result = [image];
     }

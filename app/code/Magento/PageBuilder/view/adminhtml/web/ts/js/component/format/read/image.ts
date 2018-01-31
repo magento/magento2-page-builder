@@ -4,7 +4,7 @@
  */
 
 import {DataObject} from "../../data-store";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 import {decodeUrl} from "../../../utils/image";
 
 export default class Image implements ReadInterface {
