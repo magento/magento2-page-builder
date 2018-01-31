@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], function (_knockout, _translate, _conversion, _block) {
+define(["knockout", "mage/translate", "../../../utils/conversion", "../../format/style-attribute-mapper", "./block"], function (_knockout, _translate, _conversion, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -79,19 +79,11 @@ define(["knockout", "mage/translate", "../../../utils/conversion", "./block"], f
 
 
     _proto.getContentAttributes = function getContentAttributes() {
-      if (this.data.margins_and_padding() !== "" && this.data.margins_and_padding() !== undefined) {
-        var marginTop = this.data.margins_and_padding().margin.top || "0";
-        var marginRight = this.data.margins_and_padding().margin.right || "0";
-        var marginBottom = this.data.margins_and_padding().margin.bottom || "0";
-        var marginLeft = this.data.margins_and_padding().margin.left || "0";
-        var paddingTop = this.data.margins_and_padding().padding.top || "0";
-        var paddingRight = this.data.margins_and_padding().padding.right || "0";
-        var paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
-        var paddingLeft = this.data.margins_and_padding().padding.left || "0";
-        return {
-          style: "margin-top: " + marginTop + "px; " + "margin-right: " + marginRight + "px; " + "margin-bottom: " + marginBottom + "px; " + "margin-left: " + marginLeft + "px; " + "padding-top: " + paddingTop + "px; " + "padding-right: " + paddingRight + "px; " + "padding-bottom: " + paddingBottom + "px; " + "padding-left: " + paddingLeft + "px;"
-        };
-      }
+      var styleMapper = new _styleAttributeMapper();
+      var toDomPadding = styleMapper.toDom(this.data.margins_and_padding().padding);
+      return {
+        style: "padding-top: " + toDomPadding.top + "px; " + "padding-right: " + toDomPadding.right + "px; " + "padding-bottom: " + toDomPadding.bottom + "px; " + "padding-left: " + toDomPadding.left + "px;"
+      };
     };
     /**
      * Get the content for the preview

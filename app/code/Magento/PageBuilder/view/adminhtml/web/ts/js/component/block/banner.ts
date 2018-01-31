@@ -8,6 +8,7 @@ import _ from "underscore";
 import Conversion from "../../utils/conversion";
 import Config from "../config";
 import Block from "./block";
+import StyleAttributeMapper from "../format/style-attribute-mapper";
 
 export default class Banner extends Block {
 
@@ -88,25 +89,14 @@ export default class Banner extends Block {
      * @returns {any}
      */
     public getContentAttributes() {
-        const data = this.getData();
-        const marginTop = data.fields.margins_and_padding.default.margin.top || "0";
-        const marginRight = data.fields.margins_and_padding.default.margin.right || "0";
-        const marginBottom = data.fields.margins_and_padding.default.margin.bottom || "0";
-        const marginLeft = data.fields.margins_and_padding.default.margin.left || "0";
-        const paddingTop = data.fields.margins_and_padding.default.padding.top || "0";
-        const paddingRight = data.fields.margins_and_padding.default.padding.right || "0";
-        const paddingBottom = data.fields.margins_and_padding.default.padding.bottom || "0";
-        const paddingLeft = data.fields.margins_and_padding.default.padding.left || "0";
+        const styleMapper = new StyleAttributeMapper();
+        const toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
         return {
             style:
-            "margin-top: " + marginTop + "px; " +
-            "margin-right: " + marginRight + "px; " +
-            "margin-bottom: " + marginBottom + "px; " +
-            "margin-left: " + marginLeft + "px; " +
-            "padding-top: " + paddingTop + "px; " +
-            "padding-right: " + paddingRight + "px; " +
-            "padding-bottom: " + paddingBottom + "px; " +
-            "padding-left: " + paddingLeft + "px;",
+            "padding-top: " + toDomPadding.top + "px; " +
+            "padding-right: " + toDomPadding.right + "px; " +
+            "padding-bottom: " + toDomPadding.bottom + "px; " +
+            "padding-left: " + toDomPadding.left + "px;",
         };
     }
 
