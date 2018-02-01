@@ -22,7 +22,6 @@ class EditorNameProvider
 
     const PAGEBUILDER_EDITOR = 'pagebuilder';
 
-
     /**
      * @var ScopeConfigInterface
      */
@@ -61,7 +60,7 @@ class EditorNameProvider
            self::IS_PAGEBUILDER_ENABLED
         );
 
-        if ($isWysiwygEnabled === WysiwygConfig::WYSIWYG_ENABLED && $isBlueFootEnabled == 0) {
+        if ($isWysiwygEnabled === WysiwygConfig::WYSIWYG_ENABLED && !$isBlueFootEnabled) {
             return self::WYSIWYG_EDITOR;
         } else {
             return self::PAGEBUILDER_EDITOR;

@@ -89,6 +89,7 @@ define([
         /**
          *
          * @param {HTMLElement} node
+         * @return {void}
          */
         setElementNode: function (node) {
             var buildInstance = new Build(this.initialValue),
@@ -97,7 +98,7 @@ define([
             this.domNode = node;
             this.bindPageBuilderButton(node);
 
-            if (buildInstance.canBuild() ||  isButtonsEnabled) {
+            if (buildInstance.canBuild() || isButtonsEnabled) {
                 this.loading(true);
                 return this.buildPageBuilder(false);
             }

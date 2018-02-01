@@ -14,7 +14,7 @@ define([
     pageBuilderWysiwyg.prototype = {
 
         /**
-         * @param {*} htmlId
+         * @param {String} htmlId
          * @param {Object} config
          */
         initialize: function (htmlId, config) {
@@ -29,5 +29,5 @@ define([
         }
     };
 
-     return pageBuilderWysiwyg.prototype;
+    return pageBuilderWysiwyg.prototype;
 });
