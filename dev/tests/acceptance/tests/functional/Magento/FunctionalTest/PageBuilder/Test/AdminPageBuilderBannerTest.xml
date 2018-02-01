@@ -13,7 +13,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -66,7 +66,7 @@
             <title value="Banner is rendered correctly in frontend"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -120,7 +120,7 @@
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -166,7 +166,7 @@
             <description value="A user should be able to remove banner block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -194,7 +194,7 @@
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86838"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -237,7 +237,7 @@
             <title value="Banner has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -278,7 +278,7 @@
             <title value="Banner requires all required fields in edit form"/>
             <description value="A user needs to fill all required fields in banner edit form"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -329,7 +329,7 @@
             <title value="Banner has the correct default values in edit form"/>
             <description value="A user should see the correct default values when edit button is clicked for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -367,7 +367,7 @@
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -411,7 +411,7 @@
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -456,6 +456,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
@@ -471,7 +477,7 @@
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -516,6 +522,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
@@ -531,7 +543,7 @@
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -576,6 +588,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
@@ -591,7 +609,7 @@
             <description value="Check value of a collage left mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -635,6 +653,12 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
@@ -661,7 +685,7 @@
             <description value="Check value of a collage centered mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -706,6 +730,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
@@ -731,7 +761,7 @@
             <description value="Check value of a collage right mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -776,6 +806,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
@@ -801,7 +837,7 @@
             <description value="Check value of a collage left mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -849,6 +885,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
@@ -874,7 +916,7 @@
             <description value="Check value of a collage centered mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -922,6 +964,12 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
@@ -947,7 +995,7 @@
             <description value="Check value of a collage right mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -994,6 +1042,12 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
