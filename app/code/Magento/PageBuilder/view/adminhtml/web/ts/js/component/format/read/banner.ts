@@ -4,8 +4,8 @@
  */
 
 import Config from "../../../component/config";
-import {DataObject} from "../../data-store";
 import Colors from "../../../utils/colors";
+import {DataObject} from "../../data-store";
 import ReadInterface from "../read-interface";
 
 interface ImageObject {
