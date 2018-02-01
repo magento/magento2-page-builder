@@ -165,30 +165,10 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{ImageOnBackend.imagePreview}}" stepKey="seeImagePreview1"/>
-        <!-- add image -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderImagePropertyJpg"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">
-            <argument name="property" value="PageBuilderImageAltTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <dontSeeElement selector="{{ImageOnBackend.imagePreview}}" stepKey="dontSeeImagePreview"/>
-        <!-- remove image -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelFieldRemoveAttachedFile(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="removeImage"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <seeElement selector="{{ImageOnBackend.imagePreview}}" stepKey="seeImagePreview2"/>
+        <seeElement selector="{{ImageOnBackend.imagePreview}}" stepKey="seeImagePreview"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <!-- check storefront -->
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <dontSeeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="dontSeeMainImageSource"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="dontSeeMainImageSource"/>
     </test>
 </tests>
