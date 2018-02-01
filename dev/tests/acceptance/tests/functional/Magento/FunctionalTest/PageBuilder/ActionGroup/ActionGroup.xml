@@ -334,4 +334,25 @@
         <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
+    <actionGroup name="enablePageBuilder1">
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
+        <uncheckOption selector="{{PageBuilderCollapsibleSection.UseSystemValue}}" stepKey="uncheckUseSystemValue"/>
+        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="selectYES"/>
+        <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+    </actionGroup>
+    <actionGroup name="verifyBluefootVisibleOnPage">
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seeBluefootVisible" />
+    </actionGroup>
+    <actionGroup name="verifyBluefootVisibleOnStaging">
+        <click selector="{{AdminStagingSlideOutSection.scheduleNewUpdateBtn}}" stepKey="clickOnStagingBtn" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
+        <waitForElementVisible selector="{{AdminStagingSlideOutSection.title}}" stepKey="waitForSlideOutOpen"/>
+        <click selector="{{AdminStagingSlideOutSection.contentTab}}" stepKey="expandContentTab" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilder" />
+    </actionGroup>
 </actionGroups>
