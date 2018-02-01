@@ -1,3 +1,8 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 define([
     'jquery',
     'mage/translate',
@@ -25,7 +30,7 @@ define([
                     class: 'action-secondary action-dismiss action-pagebuilder-disable-cancel',
 
                     /**
-                     * Click handler.
+                     * Close modal and trigger 'cancel' action on click
                      */
                     click: function (event) {
                         this.closeModal(event);
@@ -35,7 +40,7 @@ define([
                     class: 'action-primary action-accept',
 
                     /**
-                     * Click handler.
+                     * Close modal and trigger 'confirm' action on click
                      */
                     click: function (event) {
                         this.closeModal(event, true);
