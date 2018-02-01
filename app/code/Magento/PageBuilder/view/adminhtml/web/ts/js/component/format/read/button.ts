@@ -5,7 +5,7 @@
 
 import _ from "underscore";
 import {DataObject} from "../../data-store";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 export default class Buttons implements ReadInterface {
 
@@ -17,7 +17,8 @@ export default class Buttons implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const response: DataObject = {
-            buttons: [],
+            link: node.getAttribute("href"),
+            text: node.firstChild.innerText,
         };
 
         // Iterate through the tabs and retrieve their content

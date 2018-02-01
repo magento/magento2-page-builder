@@ -73,15 +73,15 @@
         <element name="savePageSuccessMessage" type="text" selector=".message-success"/>
     </section>
     <section name="PageBuilderRowSection">
-        <element name="row" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]'/>
-        <element name="row2" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[2]'/>
-        <element name="row3" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[3]'/>
-        <element name="row2header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row2header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row3header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="allRows" type="text" selector='//div[@class="pagebuilder-structure pagebuilder-row"]'/>
+        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[1]'/>
+        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[2]'/>
+        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[3]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-structure pagebuilder-row")]gi'/>
         <element name="rowOptionsMenu" type="button" selector='(//div[1][@class="pagebuilder-structure pagebuilder-row"])[1]/div[@class="pagebuilder-options"]'/>
-        <element name="removeRow" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-structure pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
     <section name="PageBuilderColumnSection">
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
