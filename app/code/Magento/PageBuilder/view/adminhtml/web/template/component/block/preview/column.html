@@ -7,10 +7,11 @@
 
 <div class="pagebuilder-structure pagebuilder-column">
     <div class="pagebuilder-column-resize-handle"></div>
-
     <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <!-- ko template: previewChildTemplate --><!-- /ko -->
-
-    <div class="pagebuilder-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')">
+    <div data-bind="style: preview.columnStyles">
+        <!-- ko template: previewChildTemplate --><!-- /ko -->
+        <!-- ko ifnot: preview.getData().backgroundColor || preview.getData().backgroundImage -->
+            <div class="pagebuilder-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')"></div>
+        <!-- /ko -->
     </div>
 </div>
