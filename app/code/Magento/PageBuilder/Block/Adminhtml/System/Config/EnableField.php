@@ -39,7 +39,7 @@ class EnableField extends \Magento\Config\Block\System\Config\Form\Field
 
         $jsString = '<script type="text/x-magento-init"> {"' .
             $enablePageBuilderSelector . '": {
-            "Magento_PageBuilder/js/system/config/enableButton": {"modalTitleText": ' .
+            "Magento_PageBuilder/js/system/config/enableField": {"modalTitleText": ' .
             $this->json->serialize($this->getModalTitleText()) . ', "modalContentBody": ' .
             $this->json->serialize($this->getModalContentBody())
             . '}}}</script>';
