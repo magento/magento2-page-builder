@@ -5,8 +5,6 @@
  */
 namespace Magento\PageBuilder\Block\Element;
 
-use \Magento\PageBuilder\Model\Wysiwyg\EditorNameProvider;
-
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
     /**

@@ -12,6 +12,13 @@ namespace Magento\PageBuilder\Model\Wysiwyg;
 class Config  implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
 {
     /**
+     * Page builder status configuration path
+     */
+    const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
+
+    const PAGEBUILDER_EDITOR = 'pagebuilder';
+
+    /**
      * @var \Magento\Cms\Model\Wysiwyg\DefaultConfigProvider
      */
     private $defaultWysiwygConfig;
@@ -32,7 +39,7 @@ class Config  implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
     public function getConfig($config)
     {
         $config = $this->defaultWysiwygConfig->getConfig($config);
-        $config->addData(['adapterType' => \Magento\PageBuilder\Model\Wysiwyg\EditorNameProvider::PAGEBUILDER_EDITOR]);
+        $config->addData(['adapterType' => self::PAGEBUILDER_EDITOR]);
         return $config;
     }
 }
