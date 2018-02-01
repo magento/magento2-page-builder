@@ -4,29 +4,29 @@
  */
 
 define([
-  'Magento_Ui/js/form/element/select'
+    'Magento_Ui/js/form/element/select'
 ], function (Select) {
-  'use strict';
+    'use strict';
 
-  return Select.extend({
-    defaults: {
-      visible: false
-    },
+    return Select.extend({
+        defaults: {
+            visible: false
+        },
 
-    /**
-     * Dependently display dropdown component if it contains more than one option
-     *
-     * @param {Array} data
-     * @returns {Object} Chainable
-     */
-    setOptions: function (data) {
-      this._super();
+        /**
+         * Dependently display dropdown component if it contains more than one option
+         *
+         * @param {Array} data
+         * @returns {Object} Chainable
+         */
+        setOptions: function (data) {
+            this._super();
 
-      if (this.options().length > 1) {
-        this.setVisible(true);
-      }
+            if (this.options().length > 1) {
+                this.setVisible(true);
+            }
 
-      return this;
-    }
-  });
+            return this;
+        }
+    });
 });
