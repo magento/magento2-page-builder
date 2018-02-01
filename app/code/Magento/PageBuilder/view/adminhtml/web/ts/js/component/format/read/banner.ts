@@ -43,7 +43,7 @@ export default class Banner implements ReadInterface {
      *
      * @returns string
      */
-    private static getOverlayColor(value: string) {
+    private getOverlayColor(value: string) {
         if (value === "transparent") {
             return "";
         } else {
@@ -56,7 +56,7 @@ export default class Banner implements ReadInterface {
      *
      * @returns string
      */
-    private static getOverlayTransparency(value: string) {
+    private getOverlayTransparency(value: string) {
         if (value === "transparent") {
             return "0";
         } else {

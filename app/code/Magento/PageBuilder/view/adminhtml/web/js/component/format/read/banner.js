@@ -46,7 +46,7 @@ define(["../../../utils/image"], function (_image) {
      */
 
 
-    Banner.getOverlayColor = function getOverlayColor(value) {
+    _proto.getOverlayColor = function getOverlayColor(value) {
       if (value === "transparent") {
         return "";
       } else {
@@ -60,7 +60,7 @@ define(["../../../utils/image"], function (_image) {
      */
 
 
-    Banner.getOverlayTransparency = function getOverlayTransparency(value) {
+    _proto.getOverlayTransparency = function getOverlayTransparency(value) {
       if (value === "transparent") {
         return "0";
       } else {

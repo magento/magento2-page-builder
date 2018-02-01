@@ -13,7 +13,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -36,8 +36,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
@@ -57,7 +57,7 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
-        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
     </test>
@@ -66,7 +66,7 @@
             <title value="Banner is rendered correctly in frontend"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -89,8 +89,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
@@ -108,7 +108,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
@@ -120,7 +120,7 @@
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -143,8 +143,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -166,7 +166,7 @@
             <description value="A user should be able to remove banner block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -194,7 +194,7 @@
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86838"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -217,8 +217,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
@@ -237,7 +237,7 @@
             <title value="Banner has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -278,7 +278,7 @@
             <title value="Banner requires all required fields in edit form"/>
             <description value="A user needs to fill all required fields in banner edit form"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -305,8 +305,8 @@
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
         <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
         <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
@@ -329,7 +329,7 @@
             <title value="Banner has the correct default values in edit form"/>
             <description value="A user should see the correct default values when edit button is clicked for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -367,7 +367,7 @@
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -390,8 +390,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerImageProperty"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
@@ -411,12 +411,11 @@
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -477,12 +476,11 @@
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -543,12 +541,11 @@
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -609,12 +606,11 @@
             <description value="Check value of a collage left mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -685,12 +681,11 @@
             <description value="Check value of a collage centered mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -761,12 +756,11 @@
             <description value="Check value of a collage right mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -837,12 +831,11 @@
             <description value="Check value of a collage left mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -916,12 +909,11 @@
             <description value="Check value of a collage centered mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -995,12 +987,11 @@
             <description value="Check value of a collage right mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
