@@ -104,6 +104,12 @@ export default class PreviewBlock {
         }
     }
 
+    /**
+     * Callback function to update the contents of styles
+     *
+     * @param {string} styles
+     * @return styles
+     */
     private afterContent(styles: {}) {
         return styles;
     }

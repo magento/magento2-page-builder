@@ -83,6 +83,13 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
         }
       }
     };
+    /**
+     * Callback function to update the contents of styles
+     *
+     * @param {string} styles
+     * @return styles
+     */
+
 
     _proto.afterContent = function afterContent(styles) {
       return styles;

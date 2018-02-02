@@ -28,7 +28,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
         styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
       }
 
-      if (typeof this.data.mobile_image === "function" && this.data.mobile_image() !== "" && this.data.mobile_image() && _typeof(this.data.mobile_image()[0]) === "object") {
+      if (_typeof(this.data.mobile_image) && this.data.mobile_image() !== "" && _typeof(this.data.mobile_image()[0]) === "object") {
         styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
       }
 
@@ -41,7 +41,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
      */
 
 
-    _proto.getAttributes = function getAttributes() {
+    _proto.getBackgroundAttributes = function getBackgroundAttributes() {
       var backgroundImage = "none";
 
       if (this.data.background_image && this.data.background_image() !== "" && this.data.background_image() !== undefined && this.data.background_image()[0] !== undefined) {
