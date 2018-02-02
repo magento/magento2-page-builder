@@ -8,13 +8,13 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddButton">
+    <test name="ButtonsCanAddButton">
         <annotations>
             <title value="Add a button onto stage"/>
             <description value="A user should be able to add a button into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84273"/>
-            <group value="m"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -47,13 +47,13 @@
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonElement(PageBuilderButtonLinkProperty.value, PageBuilderButtonTextProperty.value)}}" stepKey="seeButtonOnStorefront"/>
     </test>
-    <test name="CanRemoveButton">
+    <test name="ButtonsCanRemoveButton">
         <annotations>
             <title value="Remove button content block from stage"/>
             <description value="A user should be able to remove a button from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="m"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -79,7 +79,7 @@
             <title value="Buttons has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for buttons"/>
             <severity value="CRITICAL"/>
-            <group value="m"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -110,5 +110,53 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
+    </test>
+    <test name="ButtonsHaveFields">
+        <annotations>
+            <title value="Check if buttons and button have the required fields"/>
+            <description value="Check if buttons and button have the required fields"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-87235"/>
+            <group value="test"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonsAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearanceProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonsEditPanelSettings"/>
+        <click selector="{{ButtonsBackendSection.addNewButton}}" stepKey="clickOnAddButtonsElement"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
+            <argument name="property" value="PageBuilderButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonLinkProperty">
+            <argument name="property" value="PageBuilderButtonLinkProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTypePrimaryProperty">
+            <argument name="property" value="PageBuilderButtonTypePrimaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOpenInNewTabProperty">
+            <argument name="property" value="PageBuilderOpenInNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonEditPanelSettings"/>
     </test>
 </tests>
