@@ -3,6 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../component/config";
+
 /**
  * MIME type to use in place of the image
  * @type {string}
@@ -63,12 +65,11 @@ export default function decodeAllDataUrlsInString(str: string) {
  * Retrieve the image URL with directive
  *
  * @param {Array} image
- * @param {string} media
  * @returns {string}
  */
 
-export function getImageUrl(image: any[], media: string) {
+export function getImageUrl(image: any[]) {
     const imageUrl = image[0].url;
-    const mediaPath = imageUrl.split(media);
+    const mediaPath = imageUrl.split(Config.getInitConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
 }

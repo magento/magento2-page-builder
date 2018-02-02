@@ -8,7 +8,6 @@ import _ from "underscore";
 import Colors from "../../utils/colors";
 import {getImageUrl} from "../../utils/directives";
 import Numbers from "../../utils/numbers";
-import Config from "../config";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
 import Block from "./block";
 
@@ -116,7 +115,7 @@ export default class Banner extends Block {
         if (_.isEmpty(data.image[0])) {
             return;
         }
-        return getImageUrl(data.image, Config.getInitConfig("media_url"));
+        return getImageUrl(data.image);
     }
 
     /**
@@ -132,6 +131,6 @@ export default class Banner extends Block {
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
-        return getImageUrl(data.mobile_image, Config.getInitConfig("media_url"));
+        return getImageUrl(data.mobile_image);
     }
 }

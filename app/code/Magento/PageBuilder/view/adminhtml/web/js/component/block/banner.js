@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../config", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _config, _styleAttributeMapper, _block) {
+define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -115,7 +115,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.image);
     };
     /**
      * Get the mobile image attributes for the render
@@ -135,7 +135,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.mobile_image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.mobile_image);
     };
 
     return Banner;
