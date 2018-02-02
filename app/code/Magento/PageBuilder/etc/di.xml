@@ -50,7 +50,7 @@
                 <item name="tabs_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\TabsItem</item>
                 <item name="search" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Search</item>
                 <item name="static_block" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Block</item>
-                <item name="driver" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Banner</item>
+                <item name="driver" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Driver</item>
                 <item name="product_list" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ProductList</item>
                 <item name="product" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Product</item>
             </argument>
@@ -348,22 +348,19 @@
             <argument name="eavAttributeLoader" xsi:type="object">MapEavAttributeLoader</argument>
         </arguments>
     </type>
-    <virtualType name="BannerEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
+    <virtualType name="DriverEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
         <arguments>
             <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="alt_tag" xsi:type="string">alt_tag</item>
                 <item name="image" xsi:type="string">image</item>
-                <item name="link_text" xsi:type="string">link_text</item>
                 <item name="link_url" xsi:type="string">link_url</item>
                 <item name="mobile_image" xsi:type="string">mobile_image</item>
                 <item name="target_blank" xsi:type="string">target_blank</item>
-                <item name="title_tag" xsi:type="string">title_tag</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Banner">
+    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Driver">
         <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">BannerEavAttributeLoader</argument>
+            <argument name="eavAttributeLoader" xsi:type="object">DriverEavAttributeLoader</argument>
         </arguments>
     </type>
     <virtualType name="ProductEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">

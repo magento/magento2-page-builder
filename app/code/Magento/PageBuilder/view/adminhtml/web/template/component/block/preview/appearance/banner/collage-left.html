@@ -6,20 +6,13 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" style="box-sizing: border-box;">
-    <!-- ko ifnot: preview.data.background_image() -->
-        <i class="icon-pagebuilder-banner"></i><span data-bind="text: $t('Banner');"></span>
-    <!-- /ko -->
-    <!-- ko if: preview.data.background_image() && typeof preview.data.background_image()[0] !== 'undefined' -->
-    <div data-bind="style: Object.assign(preview.previewStyle(), {paddingRight: 'calc(50% + ' + preview.data.margins_and_padding().padding.right + 'px)'})"
-        style="background-repeat: no-repeat;
-             background-size: 100%;
-             box-sizing: border-box;
-             min-height: 250px;">
-        <div style="box-sizing: border-box; width: 100%;">
-            <div style="background: white; box-sizing: border-box; min-height: 100px; padding: 35px;">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <div data-bind="style: Object.assign(preview.previewStyle(), {paddingRight: 'calc(50% + ' + preview.data.margins_and_padding().padding.right + 'px)'}),  event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+        <div class="pagebuilder-collage-overlay" data-bind="attr: preview.getOverlayAttributes()">
+            <div style="padding: 35px 20px;">
+                <div data-bind="css: {'pagebuilder-empty-banner': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
+                <button class="pagebuilder-button-primary pagebuilder-banner-button" data-bind="text: preview.getButtonText(), attr: {'data-link-url': preview.data.link_url()}" disabled></button>
             </div>
         </div>
     </div>
-    <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

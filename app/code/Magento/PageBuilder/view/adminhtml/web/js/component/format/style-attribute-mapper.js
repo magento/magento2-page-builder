@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../component/config", "../../utils/directives"], function (_underscore, _config, _directives) {
+define(["underscore", "../../component/config", "../../utils/directives", "../../utils/image"], function (_underscore, _config, _directives, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -138,7 +138,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         }
 
         if (key === "background-image" || key === "mobile-image") {
-          value = _this2.decodeBackground(value);
+          value = (0, _image.decodeUrl)(value);
         }
 
         if (key.startsWith("margin") || key.startsWith("padding")) {
@@ -161,30 +161,6 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         result[key.replace("-", "_")] = value;
       });
       return result;
-    };
-    /**
-     * Decode background image back into object format
-     *
-     * @param value
-     * @returns {Object}
-     */
-
-
-    _proto.decodeBackground = function decodeBackground(value) {
-      value = decodeURIComponent(value.replace(window.location.href, ""));
-
-      var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
-          url = _$exec[1],
-          type = _$exec[2];
-
-      var image = {
-        name: url.split("/").pop(),
-        size: 0,
-        type: "image/" + type,
-        url: _config.getInitConfig("media_url") + url
-      };
-      value = [image];
-      return value;
     };
     /**
      * Convert from snake case to camel case

@@ -54,3 +54,16 @@ export default function decodeAllDataUrlsInString(str: string) {
         },
     );
 }
+
+/**
+ * Retrieve the image URL with directive
+ *
+ * @param {Array} image
+ * @param {string} media
+ * @returns {string}
+ */
+export function getImageUrl(image: any[], media: string) {
+    const imageUrl = image[0].url;
+    const mediaPath = imageUrl.split(media);
+    return "{{media url=" + mediaPath[1] + "}}";
+}

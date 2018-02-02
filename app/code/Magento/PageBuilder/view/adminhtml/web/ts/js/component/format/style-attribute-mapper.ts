@@ -7,6 +7,7 @@ import _ from "underscore";
 import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
+import {decodeUrl} from "../../utils/image";
 
 interface FromDomResult {
     [key: string]: any;
@@ -119,7 +120,7 @@ export default class StyleAttributeMapper {
                     }
                 }
                 if (key === "background-image" || key === "mobile-image") {
-                    value = this.decodeBackground(value);
+                    value = decodeUrl(value);
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
                     const spacingObj = {margin: {}, padding: {}};
@@ -135,25 +136,6 @@ export default class StyleAttributeMapper {
             },
         );
         return result;
-    }
-
-    /**
-     * Decode background image back into object format
-     *
-     * @param value
-     * @returns {Object}
-     */
-    public decodeBackground(value: any): string {
-        value = decodeURIComponent((value as string).replace(window.location.href, ""));
-        const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value);
-        const image = {
-            name: url.split("/").pop(),
-            size: 0,
-            type: "image/" + type,
-            url: Config.getInitConfig("media_url") + url,
-        };
-        value = [image];
-        return value;
     }
 
     /**
