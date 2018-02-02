@@ -37,17 +37,17 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getOverlayAttributes() {
-        let backgroundColor: string = "transparent";
+        let overlayColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
                 const colors = this.data.overlay_color();
                 const alpha = percentToDecimal(this.data.overlay_transparency());
-                backgroundColor = fromHex(colors, alpha);
+                overlayColor = fromHex(colors, alpha);
             } else {
-                backgroundColor = "transparent";
+                overlayColor = "transparent";
             }
         }
-        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
+        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + overlayColor + ";"};
     }
 
     /**

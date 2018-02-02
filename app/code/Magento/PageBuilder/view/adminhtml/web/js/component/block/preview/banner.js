@@ -43,20 +43,20 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
 
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
-      var backgroundColor = "transparent";
+      var overlayColor = "transparent";
 
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
         if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
           var colors = this.data.overlay_color();
           var alpha = (0, _numberConverter.percentToDecimal)(this.data.overlay_transparency());
-          backgroundColor = (0, _colorConverter.fromHex)(colors, alpha);
+          overlayColor = (0, _colorConverter.fromHex)(colors, alpha);
         } else {
-          backgroundColor = "transparent";
+          overlayColor = "transparent";
         }
       }
 
       return {
-        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
+        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + overlayColor + ";"
       };
     };
     /**
