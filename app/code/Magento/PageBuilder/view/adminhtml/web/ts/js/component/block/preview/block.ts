@@ -64,7 +64,6 @@ export default class PreviewBlock {
             return this.afterStyleMapped(styles);
         });
 
-        // Force the columnStyles to update on changes to stored style attribute data
         Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
             if (ko.isObservable(this.data[key])) {
                 this.data[key].subscribe(() => {

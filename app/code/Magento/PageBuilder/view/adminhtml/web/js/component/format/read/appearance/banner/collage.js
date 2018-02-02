@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../../../utils/colors", "../../../../../utils/extractAlphaFromRgba", "../../../../../utils/image", "../../default"], function (_colors, _extractAlphaFromRgba, _image, _default) {
+define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-rgba", "../../../../../utils/image", "../../default"], function (_colors, _extractAlphaFromRgba, _image, _default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,25 +21,25 @@ define(["../../../../../utils/colors", "../../../../../utils/extractAlphaFromRgb
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var mobile = "";
+      var mobileImage = "";
       var target = element.querySelector("a").getAttribute("target");
-      var bgImage = element.querySelector(".pagebuilder-mobile-hidden").style.backgroundImage;
-      var bgMobileImageEl = element.querySelector(".pagebuilder-mobile-only");
+      var backgroundImage = element.querySelector(".pagebuilder-mobile-hidden").style.backgroundImage;
+      var backgroundMobileImageElement = element.querySelector(".pagebuilder-mobile-only");
 
-      if (bgMobileImageEl !== undefined && bgMobileImageEl.style.backgroundImage !== "" && bgImage !== bgMobileImageEl.style.backgroundImage) {
-        mobile = (0, _image.decodeUrl)(bgMobileImageEl.style.backgroundImage);
+      if (backgroundMobileImageElement !== undefined && backgroundMobileImageElement.style.backgroundImage !== "" && backgroundImage !== backgroundMobileImageElement.style.backgroundImage) {
+        mobileImage = (0, _image.decodeUrl)(backgroundMobileImageElement.style.backgroundImage);
       }
 
       var advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-mobile-only"));
       var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-background-color");
       var response = {
-        background_image: (0, _image.decodeUrl)(bgImage),
+        background_image: (0, _image.decodeUrl)(backgroundImage),
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
         link_url: element.querySelector("a").getAttribute("href"),
         message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
         minimum_height: parseInt(element.querySelector(".pagebuilder-overlay").style.minHeight, 10),
-        mobile_image: mobile,
+        mobile_image: mobileImage,
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
