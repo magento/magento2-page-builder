@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _styleAttributeMapper, _block) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -67,10 +67,13 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
 
     _proto.getContentAttributes = function getContentAttributes() {
-      var styleMapper = new _styleAttributeMapper();
-      var toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+      var data = this.getData();
+      var paddingTop = data.margins_and_padding.padding.top || "0";
+      var paddingRight = data.margins_and_padding.padding.right || "0";
+      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
+      var paddingLeft = data.margins_and_padding.padding.left || "0";
       return {
-        style: "padding-top: " + toDomPadding.top + "px; " + "padding-right: " + toDomPadding.right + "px; " + "padding-bottom: " + toDomPadding.bottom + "px; " + "padding-left: " + toDomPadding.left + "px;"
+        style: "padding-top: " + paddingTop + "px; " + "padding-right: " + paddingRight + "px; " + "padding-bottom: " + paddingBottom + "px; " + "padding-left: " + paddingLeft + "px;"
       };
     };
     /**

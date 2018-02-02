@@ -7,7 +7,6 @@ import ko from "knockout";
 import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
@@ -66,14 +65,17 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.data.margins_and_padding().padding);
+        const paddingTop = this.data.margins_and_padding().padding.top || "0";
+        const paddingRight = this.data.margins_and_padding().padding.right || "0";
+        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
+        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
         return {
             style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
+                "padding-top: " + paddingTop + "px; " +
+                "padding-right: " + paddingRight + "px; " +
+                "padding-bottom: " + paddingBottom + "px; " +
+                "padding-left: " + paddingLeft + "px;",
+
         };
     }
 

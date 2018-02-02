@@ -8,7 +8,6 @@ import _ from "underscore";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
-import StyleAttributeMapper from "../format/style-attribute-mapper";
 import Block from "./block";
 
 export default class Banner extends Block {
@@ -63,14 +62,17 @@ export default class Banner extends Block {
      * @returns {any}
      */
     public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+        const data = this.getData();
+        const paddingTop = data.margins_and_padding.padding.top || "0";
+        const paddingRight = data.margins_and_padding.padding.right || "0";
+        const paddingBottom = data.margins_and_padding.padding.bottom || "0";
+        const paddingLeft = data.margins_and_padding.padding.left || "0";
         return {
             style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
+                "padding-top: " + paddingTop + "px; " +
+                "padding-right: " + paddingRight + "px; " +
+                "padding-bottom: " + paddingBottom + "px; " +
+                "padding-left: " + paddingLeft + "px;",
         };
     }
 
