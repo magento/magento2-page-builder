@@ -61,7 +61,7 @@ export default class PreviewBlock {
                     }),
                 ),
             );
-            return this.afterContent(styles);
+            return this.afterStyleMapped(styles);
         });
 
         // Force the columnStyles to update on changes to stored style attribute data
@@ -105,12 +105,12 @@ export default class PreviewBlock {
     }
 
     /**
-     * Callback function to update the contents of styles
+     * Callback function to update the styles are mapped
      *
      * @param {string} styles
      * @return styles
      */
-    private afterContent(styles: {}) {
+    private afterStyleMapped(styles: {}) {
         return styles;
     }
 }
