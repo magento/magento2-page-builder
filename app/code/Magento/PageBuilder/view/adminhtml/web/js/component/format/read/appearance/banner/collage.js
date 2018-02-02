@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../../../utils/image", "../../../../../utils/colors", "../../../../../utils/extractAlphaFromRgba", "../../default"], function (_image, _colors, _extractAlphaFromRgba, _default) {
+define(["../../../../../utils/colors", "../../../../../utils/extractAlphaFromRgba", "../../../../../utils/image", "../../default"], function (_colors, _extractAlphaFromRgba, _image, _default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,14 +31,14 @@ define(["../../../../../utils/image", "../../../../../utils/colors", "../../../.
       }
 
       var advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-mobile-only"));
-      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
+      var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-background-color");
       var response = {
+        background_image: (0, _image.decodeUrl)(bgImage),
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
-        background_image: (0, _image.decodeUrl)(bgImage),
         link_url: element.querySelector("a").getAttribute("href"),
-        message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-        minimum_height: parseInt(element.querySelector(".pagebuilder-poster-overlay").style.minHeight, 10),
+        message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
+        minimum_height: parseInt(element.querySelector(".pagebuilder-overlay").style.minHeight, 10),
         mobile_image: mobile,
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: this.getOverlayColor(overlayColor),
@@ -48,6 +48,7 @@ define(["../../../../../utils/image", "../../../../../utils/colors", "../../../.
       };
       return new Promise(function (resolve) {
         advancedData.then(function (data) {
+          delete data.css_classes;
           resolve(Object.assign(data, response));
         });
       });

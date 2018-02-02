@@ -21,26 +21,11 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
 
     var _proto = Banner.prototype;
 
-    _proto.afterContent = function afterContent(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-      }
-
-      if (_typeof(this.data.mobile_image) && this.data.mobile_image() !== "" && _typeof(this.data.mobile_image()[0]) === "object") {
-        styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
-      }
-
-      return styles;
-    };
     /**
      * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
-
-
     _proto.getBackgroundAttributes = function getBackgroundAttributes() {
       var backgroundImage = "none";
 
@@ -149,6 +134,26 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(false);
       }
+    };
+    /**
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
+     */
+
+
+    _proto.afterContent = function afterContent(styles) {
+      // Extract data values our of observable functions
+      // The style attribute mapper converts images to directives, override it to include the correct URL
+      if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
+        styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+      }
+
+      if (_typeof(this.data.mobile_image) && this.data.mobile_image() !== "" && _typeof(this.data.mobile_image()[0]) === "object") {
+        styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+      }
+
+      return styles;
     };
 
     return Banner;

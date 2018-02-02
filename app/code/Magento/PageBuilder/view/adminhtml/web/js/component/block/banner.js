@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../config", "./block", "../../utils/numbers", "../format/style-attribute-mapper"], function (_translate, _underscore, _colors, _directives, _config, _block, _numbers, _styleAttributeMapper) {
+define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../config", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _config, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =

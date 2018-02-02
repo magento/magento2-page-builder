@@ -10,30 +10,20 @@
         <div data-bind="style: Object.assign(getStyle(), {
                 paddingLeft: 'calc(25% + ' + getData().margins_and_padding.padding.left + 'px)',
                 paddingRight: 'calc(25% + ' + getData().margins_and_padding.padding.right + 'px)'})"
-             class="pagebuilder-mobile-hidden"
-             style="background-repeat: no-repeat;
-                    background-size: 100%;
-                    box-sizing: border-box;">
-            <div style="box-sizing: border-box; width: 100%;">
-                <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
-                    <div class="pagebuilder-poster-content" style="padding:35px 20px;">
-                        <div data-bind="html: getContentHtml()"></div>
-                        <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
-                    </div>
+             class="pagebuilder-mobile-hidden pagebuilder-banner-wrapper">
+            <div class="pagebuilder-overlay" data-bind="attr: getOverlayAttributes()">
+                <div class="pagebuilder-collage-content" style="padding:35px 20px;">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
                 </div>
             </div>
         </div>
         <div data-bind="style: Object.assign(getStyle(), {backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage})"
-             class="pagebuilder-mobile-only"
-             style="background-repeat: no-repeat;
-                 background-size: 100%;
-                 box-sizing: border-box;">
-            <div style="box-sizing: border-box; width: 100%;">
-                <div class="pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes()">
-                    <div class="pagebuilder-poster-content" style="padding:35px 20px;">
-                        <div data-bind="html: getContentHtml()"></div>
-                        <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
-                    </div>
+             class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
+            <div class="pagebuilder-overlay" data-bind="attr: getOverlayAttributes()">
+                <div class="pagebuilder-collage-content" style="padding:35px 20px;">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
                 </div>
             </div>
         </div>
