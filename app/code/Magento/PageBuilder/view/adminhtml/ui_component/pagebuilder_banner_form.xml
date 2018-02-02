@@ -8,17 +8,17 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">banner_form.banner_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_banner_form.banner_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Banner</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>banner_form.banner_form_data_source</dep>
+            <dep>pagebuilder_banner_form.banner_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>banner_form</namespace>
+        <namespace>pagebuilder_banner_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -300,13 +300,6 @@
                 </checkbox>
             </formElements>
         </field>
-    </fieldset>
-    <fieldset name="advanced">
-        <settings>
-            <label translate="true">Advanced</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
     </fieldset>
     <fieldset name="advanced">
         <settings>
