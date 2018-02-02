@@ -47,8 +47,7 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           return value;
         })));
         return _this.afterStyleMapped(styles);
-      }); // Force the columnStyles to update on changes to stored style attribute data
-
+      });
       Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
         if (_knockout.isObservable(_this.data[key])) {
           _this.data[key].subscribe(function () {

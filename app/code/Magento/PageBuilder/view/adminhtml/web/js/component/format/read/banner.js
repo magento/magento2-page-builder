@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/colors", "../../../utils/extractAlphaFromRgba", "../../../utils/image"], function (_colors, _extractAlphaFromRgba, _image) {
+define(["../../../utils/colors", "../../../utils/extract-alpha-from-rgba", "../../../utils/image"], function (_colors, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
