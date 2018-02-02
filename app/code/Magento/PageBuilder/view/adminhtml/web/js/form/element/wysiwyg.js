@@ -38,9 +38,9 @@ define([
             showBorders: false,
             loading: false,
             userSelect: true,
-            panel: new Panel(),
             isFullScreen: false,
             originalScrollTop: false,
+            isComponentInitialized: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -89,15 +89,18 @@ define([
         /**
          *
          * @param {HTMLElement} node
+         * @return {void}
          */
         setElementNode: function (node) {
             var buildInstance = new Build(this.initialValue);
 
             this.domNode = node;
             this.bindPageBuilderButton(node);
-            if (buildInstance.canBuild()) {
+
+            if (!this.isComponentInitialized) {
                 this.loading(true);
-                return this.buildPageBuilder(false, buildInstance);
+                this.buildPageBuilder(false);
+                this.isComponentInitialized = true;
             }
 
             $(node).bindings({
@@ -105,6 +108,18 @@ define([
             });
         },
 
+        /**
+         * Returns panel object
+         *
+         * @return {*}
+         */
+        getPanel: function () {
+            if (!(this.panel)) {
+
+                this.panel = new Panel();
+            }
+            return this.panel;
+        },
         /**
          * Any events fired on the WYSIWYG component should be ran on the stage
          *
@@ -150,7 +165,7 @@ define([
             });
 
             // Create a new instance of the panel
-            this.panel.bindStage(this.stage);
+            this.getPanel().bindStage(this.stage);
 
             // Build the stage instance using any existing build data
             this.stage.build(buildInstance);
