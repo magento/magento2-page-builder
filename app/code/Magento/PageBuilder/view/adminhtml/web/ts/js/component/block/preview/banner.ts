@@ -12,7 +12,7 @@ import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
 
-    public showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
+    private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the preview
@@ -86,7 +86,7 @@ export default class Banner extends PreviewBlock {
         if (this.isContentEmpty()) {
             return $t("Write banner text here...");
         } else {
-            return $t(this.data.message());
+            return this.data.message();
         }
     }
 

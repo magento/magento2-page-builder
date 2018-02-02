@@ -96,7 +96,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       if (this.isContentEmpty()) {
         return (0, _translate)("Write banner text here...");
       } else {
-        return (0, _translate)(this.data.message());
+        return this.data.message();
       }
     };
     /**

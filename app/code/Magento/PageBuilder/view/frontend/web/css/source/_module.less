@@ -1,35 +1,44 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
 .pagebuilder-full-width {
-  float: left;
-  width: 100%;
+    float: left;
+    width: 100%;
 }
 
 .pagebuilder-entity {
-  box-sizing: border-box;
-  margin-bottom: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
-/*-- Responsive Sizes --*/
+//
+//  Responsive Sizes
+//  _____________________________________________
 
-@wide:1500px;
-@desktop:1024px;
-@tablet:990px;
-@mobile:770px;
-@small:550px;
+@wide: 1500px;
+@desktop: 1024px;
+@tablet: 990px;
+@mobile: 770px;
+@small: 550px;
 
-/*-- Responsive Classes --*/
+//
+//  Responsive Classes
+//  _____________________________________________
 
-.pagebuilder-mobile-only { display:none!important; }
+.pagebuilder-mobile-only {
+    display: none !important;
+}
 
 @media all and (max-width: @mobile) {
+    .pagebuilder-mobile-only {
+        display: block !important;
+    }
 
-  .pagebuilder-mobile-only { display:block!important; }
-  .pagebuilder-mobile-hidden { display:none!important; }
-
+    .pagebuilder-mobile-hidden {
+        display: none !important;
+    }
 }
 
 @import 'hljs/hljs.less';
