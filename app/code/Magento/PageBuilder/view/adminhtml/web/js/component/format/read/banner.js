@@ -86,7 +86,7 @@ define(["../../../component/config", "../../../utils/color-converter"], function
       var bgImage = element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0];
       var bgMobileImageEl = element.querySelector(".pagebuilder-banner-mobile");
       var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0];
-      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
+      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
       var response = {
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,

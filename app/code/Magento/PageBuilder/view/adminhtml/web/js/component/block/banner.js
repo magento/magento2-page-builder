@@ -41,30 +41,22 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var bgColorAttr = "transparent";
-      var bgColor = "transparent";
+      var overlayColorAttr = "transparent";
+      var overlayColor = "transparent";
 
       if (data.show_overlay !== "never_show") {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
-        } else {
-          bgColorAttr = "transparent";
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
         }
       }
 
-      if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-        bgColor = "transparent";
-      } else {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
-        } else {
-          bgColor = "transparent";
-        }
+      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
       }
 
       return {
-        "data-background-color": bgColorAttr,
-        "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";"
+        "data-overlay-color": overlayColorAttr,
+        "style": "min-height: " + data.minimum_height + "px; background-color: " + overlayColor + ";"
       };
     };
     /**

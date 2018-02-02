@@ -86,7 +86,7 @@ export default class Banner implements ReadInterface {
         const bgImage = element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0];
         const bgMobileImageEl = element.querySelector(".pagebuilder-banner-mobile");
         const bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0];
-        const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
+        const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
         const response: DataObject = {
             background_size: element.style.backgroundSize,
             button_text: element.dataset.buttonText,

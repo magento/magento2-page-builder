@@ -41,33 +41,19 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let bgColorAttr: string = "transparent";
-        let bgColor: string = "transparent";
+        let overlayColorAttr: string = "transparent";
+        let overlayColor: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColorAttr = fromHex(
-                    data.overlay_color,
-                    percentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColorAttr = "transparent";
+                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
             }
         }
-        if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-            bgColor = "transparent";
-        } else {
-            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = fromHex(
-                    data.overlay_color,
-                    percentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColor = "transparent";
-            }
+        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
         }
         return {
-            "data-background-color" : bgColorAttr,
-            "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";",
+            "data-overlay-color" : overlayColorAttr,
+            "style": "min-height: " + data.minimum_height + "px; background-color: " + overlayColor + ";",
         };
     }
 

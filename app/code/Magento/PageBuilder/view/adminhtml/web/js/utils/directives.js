@@ -7,6 +7,7 @@ define(["../component/config"], function (_config) {
 
   /**
    * MIME type to use in place of the image
+   *
    * @type {string}
    */
   var mimeType = "text/magento-directive";
@@ -22,6 +23,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Convert a directive into our data URI
+   *
    * @param {string} directive
    * @returns {string}
    */
@@ -32,6 +34,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Convert a URI to it's directive equivalent
+   *
    * @param {string} url
    * @returns {string}
    */
@@ -46,6 +49,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Decode all data URIs present in a string
+   *
    * @param {string} str
    * @returns {string}
    */
