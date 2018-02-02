@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/image"], function (_image) {
+define(["../../../utils/colors", "../../../utils/extractAlphaFromRgba", "../../../utils/image"], function (_colors, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -47,11 +47,7 @@ define(["../../../utils/image"], function (_image) {
 
 
     _proto.getOverlayColor = function getOverlayColor(value) {
-      if (value === "transparent") {
-        return "";
-      } else {
-        return Colors.toHex(value);
-      }
+      return value === "transparent" ? "" : _colors.toHex(value);
     };
     /**
      * Get overlay transparency
@@ -61,22 +57,7 @@ define(["../../../utils/image"], function (_image) {
 
 
     _proto.getOverlayTransparency = function getOverlayTransparency(value) {
-      if (value === "transparent") {
-        return "0";
-      } else {
-        return Banner.extractAlphaFromRgba(value);
-      }
-    };
-    /**
-     * Extract the Alpha component from RGBA and convert from decimal to percent for overlay transparency
-     *
-     * @returns int
-     */
-
-
-    Banner.extractAlphaFromRgba = function extractAlphaFromRgba(value) {
-      var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
-      return Math.floor(a * 100);
+      return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
     };
 
     return Banner;

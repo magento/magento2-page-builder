@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import {decodeUrl} from "../../../utils/image";
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
-import {decodeUrl} from "../../../utils/image";
 
 export default class Image implements ReadInterface {
 
@@ -19,7 +19,7 @@ export default class Image implements ReadInterface {
         const response: DataObject = {
             alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
             image: decodeUrl(
-                element.querySelector("img:nth-child(1)").getAttribute("src")
+                element.querySelector("img:nth-child(1)").getAttribute("src"),
             ),
             lightbox: (!!element.querySelector("a.pagebuilder-lightbox")) ? "Yes" : "No",
             mobile_image: "",
@@ -32,7 +32,7 @@ export default class Image implements ReadInterface {
             && element.querySelector("img:nth-child(2)").getAttribute("src")
         ) {
             response.mobile_image = decodeUrl(
-                element.querySelector("img:nth-child(2)").getAttribute("src")
+                element.querySelector("img:nth-child(2)").getAttribute("src"),
             );
         }
 

@@ -13,30 +13,16 @@ import PreviewBlock from "./block";
 export default class Banner extends PreviewBlock {
     public showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
 
-    private afterContent(styles: {}) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-        }
-        if (typeof this.data.mobile_image === "function"
-            && this.data.mobile_image() !== ""
-            && this.data.mobile_image()
-            && typeof this.data.mobile_image()[0] === "object"
-        ) {
-            styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
-        }
-        return styles;
-    }
-
     /**
      * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
-    public getAttributes() {
+    public getBackgroundAttributes() {
         let backgroundImage: string = "none";
-        if (this.data.background_image && this.data.background_image() !== "" && this.data.background_image() !== undefined && this.data.background_image()[0] !== undefined) {
+        if (this.data.background_image && this.data.background_image() !== "" &&
+            this.data.background_image() !== undefined &&
+            this.data.background_image()[0] !== undefined) {
             backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }
         return {
@@ -134,5 +120,25 @@ export default class Banner extends PreviewBlock {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
         }
+    }
+
+    /**
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
+     */
+    private afterContent(styles: {}) {
+        // Extract data values our of observable functions
+        // The style attribute mapper converts images to directives, override it to include the correct URL
+        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
+            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+        }
+        if (typeof this.data.mobile_image
+            && this.data.mobile_image() !== ""
+            && typeof this.data.mobile_image()[0] === "object"
+        ) {
+            styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+        }
+        return styles;
     }
 }

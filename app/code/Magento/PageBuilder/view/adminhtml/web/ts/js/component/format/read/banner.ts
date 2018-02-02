@@ -3,10 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../../component/config";
-import {DataObject} from "../../data-store";
-import ReadInterface from "../read-interface";
+import Colors from "../../../utils/colors";
+import extractAlphaFromRgba from "../../../utils/extractAlphaFromRgba";
 import {decodeUrl} from "../../../utils/image";
+import {DataObject} from "../../data-store";
+import {ReadInterface} from "../read-interface";
 
 export default class Banner implements ReadInterface {
     /**
@@ -44,11 +45,7 @@ export default class Banner implements ReadInterface {
      * @returns string
      */
     private getOverlayColor(value: string) {
-        if (value === "transparent") {
-            return "";
-        } else {
-            return Colors.toHex(value);
-        }
+        return value === "transparent" ? "" : Colors.toHex(value);
     }
 
     /**
@@ -57,20 +54,6 @@ export default class Banner implements ReadInterface {
      * @returns string
      */
     private getOverlayTransparency(value: string) {
-        if (value === "transparent") {
-            return "0";
-        } else {
-            return Banner.extractAlphaFromRgba(value);
-        }
-    }
-
-    /**
-     * Extract the Alpha component from RGBA and convert from decimal to percent for overlay transparency
-     *
-     * @returns int
-     */
-    private static extractAlphaFromRgba(value: string) {
-        const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
-        return Math.floor(a * 100);
+        return value === "transparent" ? "0" : extractAlphaFromRgba(value);
     }
 }

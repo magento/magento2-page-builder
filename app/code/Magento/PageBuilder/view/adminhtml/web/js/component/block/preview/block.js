@@ -46,7 +46,7 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
 
           return value;
         })));
-        return _this.afterContent(styles);
+        return _this.afterStyleMapped(styles);
       }); // Force the columnStyles to update on changes to stored style attribute data
 
       Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
@@ -83,8 +83,15 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
         }
       }
     };
+    /**
+     * Callback function to update the styles are mapped
+     *
+     * @param {string} styles
+     * @return styles
+     */
 
-    _proto.afterContent = function afterContent(styles) {
+
+    _proto.afterStyleMapped = function afterStyleMapped(styles) {
       return styles;
     };
 

@@ -7,10 +7,10 @@ import $t from "mage/translate";
 import _ from "underscore";
 import Colors from "../../utils/colors";
 import {getImageUrl} from "../../utils/directives";
-import Config from "../config";
-import Block from "./block";
 import Numbers from "../../utils/numbers";
+import Config from "../config";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
+import Block from "./block";
 
 export default class Banner extends Block {
 

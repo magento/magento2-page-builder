@@ -58,7 +58,7 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
         $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-poster-overlay'),
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
                 overlayColor = overlayEl.attr('data-background-color');
             $(element).hover(
                 function() {

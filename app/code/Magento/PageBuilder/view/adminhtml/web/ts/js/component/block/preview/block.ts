@@ -61,7 +61,7 @@ export default class PreviewBlock {
                     }),
                 ),
             );
-            return this.afterContent(styles);
+            return this.afterStyleMapped(styles);
         });
 
         Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
@@ -103,7 +103,13 @@ export default class PreviewBlock {
         }
     }
 
-    private afterContent(styles: {}) {
+    /**
+     * Callback function to update the styles are mapped
+     *
+     * @param {string} styles
+     * @return styles
+     */
+    private afterStyleMapped(styles: {}) {
         return styles;
     }
 }
