@@ -76,12 +76,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         if (
             isset($wysiwygConfigData['enable_pagebuilder'])
             && !$wysiwygConfigData['enable_pagebuilder']
-            && $isActiveEditorInConfigBluefoot
+            || !$isActiveEditorInConfigBluefoot
         ) {
             return false;
-        } elseif ($isActiveEditorInConfigBluefoot) {
-            return true;
         }
-        return false;
+        return true;
     }
 }
