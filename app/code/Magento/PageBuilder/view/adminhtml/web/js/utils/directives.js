@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["../component/config"], function (_config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -56,10 +56,24 @@ define([], function () {
       return "url(\'" + fromDataUrl(url) + "\')";
     });
   }
+  /**
+   * Retrieve the image URL with directive
+   *
+   * @param {Array} image
+   * @returns {string}
+   */
+
+
+  function getImageUrl(image) {
+    var imageUrl = image[0].url;
+    var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
+    return "{{media url=" + mediaPath[1] + "}}";
+  }
 
   return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
-    fromDataUrl: fromDataUrl
+    fromDataUrl: fromDataUrl,
+    getImageUrl: getImageUrl
   });
 });
 //# sourceMappingURL=directives.js.map

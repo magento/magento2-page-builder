@@ -3,10 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../component/config";
+
 /**
  * MIME type to use in place of the image
  * @type {string}
  */
+
 const mimeType = "text/magento-directive";
 
 /**
@@ -25,6 +28,7 @@ function isDirectiveDataUrl(url: string): boolean {
  * @param {string} directive
  * @returns {string}
  */
+
 export function toDataUrl(directive: string): string {
     return "data:" + mimeType + "," + encodeURIComponent(directive);
 }
@@ -34,6 +38,7 @@ export function toDataUrl(directive: string): string {
  * @param {string} url
  * @returns {string}
  */
+
 export function fromDataUrl(url: string): string {
     if (!isDirectiveDataUrl(url)) {
         throw Error(url + " is not a magento directive data url");
@@ -46,6 +51,7 @@ export function fromDataUrl(url: string): string {
  * @param {string} str
  * @returns {string}
  */
+
 export default function decodeAllDataUrlsInString(str: string) {
     return str.replace(
         new RegExp("url\\s*\\(\\s*(?:&quot;|\'|\")?(data:" + mimeType + ",.+?)(?:&quot;|\'|\")?\\s*\\)", "g"),
@@ -53,4 +59,17 @@ export default function decodeAllDataUrlsInString(str: string) {
             return "url(\'" + fromDataUrl(url) + "\')";
         },
     );
+}
+
+/**
+ * Retrieve the image URL with directive
+ *
+ * @param {Array} image
+ * @returns {string}
+ */
+
+export function getImageUrl(image: any[]) {
+    const imageUrl = image[0].url;
+    const mediaPath = imageUrl.split(Config.getInitConfig("media_url"));
+    return "{{media url=" + mediaPath[1] + "}}";
 }
