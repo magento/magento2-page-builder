@@ -142,7 +142,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
      */
 
 
-    _proto.afterContent = function afterContent(styles) {
+    _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // Extract data values our of observable functions
       // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
