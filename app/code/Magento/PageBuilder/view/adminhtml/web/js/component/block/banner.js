@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _styleAttributeMapper, _block) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -46,7 +46,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
 
       if (data.show_overlay !== "never_show") {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
+          bgColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
         } else {
           bgColorAttr = "transparent";
         }
@@ -56,7 +56,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
         bgColor = "transparent";
       } else {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColor = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
+          bgColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
         } else {
           bgColor = "transparent";
         }

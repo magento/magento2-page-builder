@@ -5,9 +5,9 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import Colors from "../../utils/colors";
+import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
-import Numbers from "../../utils/numbers";
+import {percentToDecimal} from "../../utils/number-converter";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
 import Block from "./block";
 
@@ -45,9 +45,9 @@ export default class Banner extends Block {
         let bgColor: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColorAttr = Colors.colorConverter(
+                bgColorAttr = fromHex(
                     data.overlay_color,
-                    Numbers.convertPercentToDecimal(data.overlay_transparency),
+                    percentToDecimal(data.overlay_transparency),
                 );
             } else {
                 bgColorAttr = "transparent";
@@ -57,9 +57,9 @@ export default class Banner extends Block {
             bgColor = "transparent";
         } else {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = Colors.colorConverter(
+                bgColor = fromHex(
                     data.overlay_color,
-                    Numbers.convertPercentToDecimal(data.overlay_transparency),
+                    percentToDecimal(data.overlay_transparency),
                 );
             } else {
                 bgColor = "transparent";

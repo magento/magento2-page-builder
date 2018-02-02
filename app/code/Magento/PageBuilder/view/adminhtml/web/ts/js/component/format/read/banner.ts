@@ -4,7 +4,7 @@
  */
 
 import Config from "../../../component/config";
-import Colors from "../../../utils/colors";
+import {toHex} from "../../../utils/color-converter";
 import {DataObject} from "../../data-store";
 import ReadInterface from "../read-interface";
 
@@ -48,7 +48,7 @@ export default class Banner implements ReadInterface {
         if (value === "transparent") {
             return "";
         } else {
-            return Colors.toHex(value);
+            return toHex(value);
         }
     }
 

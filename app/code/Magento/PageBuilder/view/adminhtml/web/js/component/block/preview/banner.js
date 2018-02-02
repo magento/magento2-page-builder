@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/numbers", "../../format/style-attribute-mapper", "./block"], function (_knockout, _translate, _colors, _numbers, _styleAttributeMapper, _block) {
+define(["knockout", "mage/translate", "../../../utils/color-converter", "../../../utils/number-converter", "../../format/style-attribute-mapper", "./block"], function (_knockout, _translate, _colorConverter, _numberConverter, _styleAttributeMapper, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -48,10 +48,8 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
         if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
           var colors = this.data.overlay_color();
-
-          var alpha = _numbers.convertPercentToDecimal(this.data.overlay_transparency());
-
-          backgroundColor = _colors.colorConverter(colors, alpha);
+          var alpha = (0, _numberConverter.percentToDecimal)(this.data.overlay_transparency());
+          backgroundColor = (0, _colorConverter.fromHex)(colors, alpha);
         } else {
           backgroundColor = "transparent";
         }

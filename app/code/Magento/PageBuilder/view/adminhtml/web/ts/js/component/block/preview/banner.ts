@@ -5,8 +5,8 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import Colors from "../../../utils/colors";
-import Numbers from "../../../utils/numbers";
+import {fromHex} from "../../../utils/color-converter";
+import {percentToDecimal} from "../../../utils/number-converter";
 import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
@@ -42,8 +42,8 @@ export default class Banner extends PreviewBlock {
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
                 const colors = this.data.overlay_color();
-                const alpha = Numbers.convertPercentToDecimal(this.data.overlay_transparency());
-                backgroundColor = Colors.colorConverter(colors, alpha);
+                const alpha = percentToDecimal(this.data.overlay_transparency());
+                backgroundColor = fromHex(colors, alpha);
             } else {
                 backgroundColor = "transparent";
             }

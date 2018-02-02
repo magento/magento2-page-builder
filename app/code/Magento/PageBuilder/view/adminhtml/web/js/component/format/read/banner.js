@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/config", "../../../utils/colors"], function (_config, _colors) {
+define(["../../../component/config", "../../../utils/color-converter"], function (_config, _colorConverter) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,7 +43,7 @@ define(["../../../component/config", "../../../utils/colors"], function (_config
       if (value === "transparent") {
         return "";
       } else {
-        return _colors.toHex(value);
+        return (0, _colorConverter.toHex)(value);
       }
     };
     /**
