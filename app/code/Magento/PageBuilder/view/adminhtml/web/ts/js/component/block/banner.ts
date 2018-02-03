@@ -30,7 +30,7 @@ export default class Banner extends Block {
         return {
             style:
                 "background-image: " + backgroundImage + "; " +
-                "min-height: " + data.minimum_height + "px; " +
+                "min-height: " + data.min_height + "px; " +
                 "background-size: " + data.background_size + ";",
         };
     }
@@ -43,17 +43,27 @@ export default class Banner extends Block {
     public getOverlayAttributes() {
         const data = this.getData();
         let bgColorAttr: string = "transparent";
-        let bgColor: string = "transparent";
-        if (data.show_overlay !== "never_show") {
-            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColorAttr = Colors.colorConverter(
-                    data.overlay_color,
-                    Numbers.convertPercentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColorAttr = "transparent";
-            }
+        if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+            bgColorAttr = Colors.colorConverter(
+                data.overlay_color,
+                Numbers.convertPercentToDecimal(data.overlay_transparency),
+            );
+        } else {
+            bgColorAttr = "transparent";
         }
+        return {
+            "data-background-color" : bgColorAttr,
+        };
+    }
+
+    /**
+     * Get the banner overlay attributes for the storefront
+     *
+     * @returns {any}
+     */
+    public getOverlayStyles() {
+        const data = this.getData();
+        let bgColor: string = "transparent";
         if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
             bgColor = "transparent";
         } else {
@@ -67,10 +77,12 @@ export default class Banner extends Block {
             }
         }
         return {
-            "data-background-color" : bgColorAttr,
-            "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";",
+            minHeight: data.min_height + "px",
+            backgroundColor: bgColor,
         };
     }
+
+
 
     /**
      * Get the banner content attributes for the storefront

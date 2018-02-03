@@ -33,6 +33,10 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "min_height" || key === "border_width" || key === "border_radius") {
+          if (typeof value === "number") {
+            value = value.toString();
+          }
+
           value = value.replace("px", "") + "px";
         }
 

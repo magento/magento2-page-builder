@@ -28,7 +28,7 @@ export default class Banner implements ReadInterface {
             image: decodeUrl(bgImage),
             link_url: element.querySelector("a").getAttribute("href"),
             message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-            minimum_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
+            min_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
             mobile_image: bgMobileImageEl ? decodeUrl(bgMobileImage) : "",
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: this.getOverlayColor(overlayColor),

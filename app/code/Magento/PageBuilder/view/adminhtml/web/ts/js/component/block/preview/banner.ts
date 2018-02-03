@@ -29,7 +29,7 @@ export default class Banner extends PreviewBlock {
             style:
                 "background-image: " + backgroundImage + "; " +
                 "background-size: " + this.data.background_size() + ";" +
-                "min-height: " + this.data.minimum_height() + "px; ",
+                "min-height: " + this.data.min_height() + "px; ",
         };
     }
 
@@ -38,7 +38,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getOverlayAttributes() {
+    public getOverlayStyles() {
         let backgroundColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
@@ -49,7 +49,7 @@ export default class Banner extends PreviewBlock {
                 backgroundColor = "transparent";
             }
         }
-        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
+        return {minHeight: this.data.min_height() + 'px', backgroundColor: backgroundColor};
     }
 
     /**

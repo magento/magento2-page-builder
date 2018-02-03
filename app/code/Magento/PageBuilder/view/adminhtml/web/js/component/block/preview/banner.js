@@ -34,7 +34,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "background-size: " + this.data.background_size() + ";" + "min-height: " + this.data.minimum_height() + "px; "
+        style: "background-image: " + backgroundImage + "; " + "background-size: " + this.data.background_size() + ";" + "min-height: " + this.data.min_height() + "px; "
       };
     };
     /**
@@ -44,7 +44,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
      */
 
 
-    _proto.getOverlayAttributes = function getOverlayAttributes() {
+    _proto.getOverlayStyles = function getOverlayStyles() {
       var backgroundColor = "transparent";
 
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
@@ -60,7 +60,8 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       }
 
       return {
-        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
+        minHeight: this.data.min_height() + 'px',
+        backgroundColor: backgroundColor
       };
     };
     /**
