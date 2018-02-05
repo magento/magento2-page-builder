@@ -6,6 +6,7 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-textarea pagebuilder-no-blur pagebuilder-live-edit pagebuilder-button">
-    <button type="button" data-bind="text: preview.data.button_text(), attr:{class: preview.data.button_type()}" class="button"></button>
+    <pre data-bind="afterRender: function(){console.log(preview.data)}"></pre>
+    <button type="button" data-bind="text: preview.data.button_text() !== '' ? preview.data.button_text(): $t('Edit Button Text'), attr:{class: preview.data.button_type()}" class="button"></button>
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>
