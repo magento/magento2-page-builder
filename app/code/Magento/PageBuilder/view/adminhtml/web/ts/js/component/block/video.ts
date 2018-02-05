@@ -24,15 +24,15 @@ export default class Video extends Block {
      * @returns {any}
      */
     public getVideoUrl(url: any) {
-        const youtubeRegExp = new RegExp('^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?' +
-                '(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])');
-        const vimeoRegExp = new RegExp('https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/' +
-                '(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)');
+        const youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" +
+                "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
+        const vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" +
+                "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
 
         if (youtubeRegExp.test(url)) {
-            return 'https://www.youtube.com/embed/' + youtubeRegExp.exec(url)[1];
+            return "https://www.youtube.com/embed/" + youtubeRegExp.exec(url)[1];
         } else if (vimeoRegExp.test(url)) {
-            return 'https://player.vimeo.com/video/' + vimeoRegExp.exec(url)[3] + '?title=0&byline=0&portrait=0';
+            return "https://player.vimeo.com/video/" + vimeoRegExp.exec(url)[3] + "?title=0&byline=0&portrait=0";
         }
 
         return url;
