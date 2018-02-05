@@ -1,10 +1,20 @@
 # Magento_PageBuilder module
 
-The Magento_PageBuilder module provides an alternative interface for building content.
+The Magento_PageBuilder module provides an enhancement for the default Magento WYSIWYG editor. It installs an alternative editor in the Admin area for building content.
+
+The PageBuilder editor can be used on the following content pages:
+
+* Category Pages
+* CMS Pages
+* CMS Blocks
+* Dynamic Blocks
 
 ## Enable the module
 
-The PageBuilder module is enabled by default after installation.
+The PageBuilder module and the editor is enabled by default after installation.
+
+The editor itself is enabled globally in the Admin area under *Stores > Configuration > Content Management > Advanced Content Tool > Enable Page Builder*.
+This setting determines the `is_pagebuilder_enabled` configuration value.
 
 ## Disable the module
 
@@ -36,3 +46,5 @@ The following example disables the PageBuilder editor for the content field.
     </fieldset>
 </form>
 ```
+
+**Note:** Disabling the editor this way overrides the value of `is_pagebuilder_enabled` for the specified field.
