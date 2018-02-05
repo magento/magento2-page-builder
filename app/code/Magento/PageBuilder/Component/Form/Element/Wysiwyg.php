@@ -36,21 +36,36 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $data = [],
         array $config = []
     ) {
+        $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
+        $isEditorNameBlueFoot = (int)$scopeConfig->getValue(
+            \Magento\PageBuilder\Model\Wysiwyg\Config::IS_PAGEBUILDER_ENABLED
+        );
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
                 if ($attribute = $attrRepository->get($data['name'])) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
+                    if (!isset($wysiwygConfigData['enable_pagebuilder'])) {
+                        //disable pagebuilder for product attributes
+                        $wysiwygConfigData['enable_pagebuilder'] = false;
+                    }
                 }
             } catch (NoSuchEntityException $e) {
                 // This model is used by non product attributes
             }
         }
-        $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
-        $isEditorNameBlueFoot = (int)$scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Wysiwyg\Config::IS_PAGEBUILDER_ENABLED
-        );
-        if ($this->isRenderBluefoot($isEditorNameBlueFoot, $wysiwygConfigData)) {
+        if (isset($wysiwygConfigData['enable_pagebuilder'])
+            && !$wysiwygConfigData['enable_pagebuilder']
+            || !$isEditorNameBlueFoot) {
+            return parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+        }
+
+            if (isset($config['componentType'])) {
+                unset($config['componentType']);
+            }
+            if (isset($config['dataType'])) {
+                unset($config['dataType']);
+            }
             // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
             $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
@@ -59,27 +74,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
             $config['wysiwygConfigData'] = $wysiwygConfigData;
-        }
 
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
-    }
-
-    /**
-     * Return information if we need add/update page builder specific settings.
-     *
-     * @param bool $isActiveEditorInConfigBluefoot
-     * @param array $wysiwygConfigData
-     * @return bool
-     */
-    private function isRenderBluefoot($isActiveEditorInConfigBluefoot, $wysiwygConfigData)
-    {
-        if (
-            isset($wysiwygConfigData['enable_pagebuilder'])
-            && !$wysiwygConfigData['enable_pagebuilder']
-            || !$isActiveEditorInConfigBluefoot
-        ) {
-            return false;
-        }
-        return true;
     }
 }
