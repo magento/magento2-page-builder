@@ -8,17 +8,17 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">banner_form.banner_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_banner_form.banner_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Banner</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>banner_form.banner_form_data_source</dep>
+            <dep>pagebuilder_banner_form.banner_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>banner_form</namespace>
+        <namespace>pagebuilder_banner_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -164,9 +164,6 @@
                 <dataType>text</dataType>
                 <label translate="true">Show Button</label>
                 <dataScope>show_button</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -195,9 +192,6 @@
                 <dataType>text</dataType>
                 <label translate="true">Show Content Overlay</label>
                 <dataScope>show_overlay</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -282,10 +276,12 @@
         <field name="message" sortOrder="0" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
                     <item name="source" xsi:type="string">page</item>
                     <item name="wysiwygConfigData" xsi:type="array">
                         <item name="pagebuilder_button" xsi:type="boolean">false</item>
                         <item name="toggle_button" xsi:type="boolean">false</item>
+                        <item name="height" xsi:type="string">500px</item>
                     </item>
                 </item>
             </argument>
@@ -339,6 +335,7 @@
                             <map name="false" xsi:type="number">0</map>
                             <map name="true" xsi:type="number">1</map>
                         </valueMap>
+                        <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
             </formElements>

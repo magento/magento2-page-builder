@@ -5,9 +5,9 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import Colors from "../../utils/colors";
+import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
-import Numbers from "../../utils/numbers";
+import {percentToDecimal} from "../../utils/number-converter";
 import Config from "../config";
 import StyleAttributeMapper from "../format/style-attribute-mapper";
 import Block from "./block";
@@ -42,17 +42,14 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let bgColorAttr: string = "transparent";
-        if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            bgColorAttr = Colors.colorConverter(
-                data.overlay_color,
-                Numbers.convertPercentToDecimal(data.overlay_transparency),
-            );
-        } else {
-            bgColorAttr = "transparent";
+        let overlayColorAttr: string = "transparent";
+        if (data.show_overlay !== "never_show") {
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+            }
         }
         return {
-            "data-background-color" : bgColorAttr,
+            "data-overlay-color" : overlayColorAttr,
         };
     }
 
@@ -63,26 +60,15 @@ export default class Banner extends Block {
      */
     public getOverlayStyles() {
         const data = this.getData();
-        let bgColor: string = "transparent";
-        if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-            bgColor = "transparent";
-        } else {
-            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = Colors.colorConverter(
-                    data.overlay_color,
-                    Numbers.convertPercentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColor = "transparent";
-            }
+        let overlayColor: string = "transparent";
+        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
         }
         return {
             minHeight: data.min_height + "px",
             backgroundColor: bgColor,
         };
     }
-
-
 
     /**
      * Get the banner content attributes for the storefront

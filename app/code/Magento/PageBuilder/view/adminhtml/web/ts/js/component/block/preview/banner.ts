@@ -5,13 +5,12 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import Colors from "../../../utils/colors";
-import Numbers from "../../../utils/numbers";
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
+import {fromHex} from "../../../utils/color-converter";
+import {percentToDecimal} from "../../../utils/number-converter";
 import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
-    public showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
+    private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the preview
@@ -39,17 +38,17 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getOverlayStyles() {
-        let backgroundColor: string = "transparent";
+        let overlayColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
                 const colors = this.data.overlay_color();
-                const alpha = Numbers.convertPercentToDecimal(this.data.overlay_transparency());
-                backgroundColor = Colors.colorConverter(colors, alpha);
+                const alpha = percentToDecimal(this.data.overlay_transparency());
+                overlayColor = fromHex(colors, alpha);
             } else {
-                backgroundColor = "transparent";
+                overlayColor = "transparent";
             }
         }
-        return {minHeight: this.data.min_height() + 'px', backgroundColor: backgroundColor};
+        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + overlayColor + ";"};
     }
 
     /**
@@ -67,14 +66,17 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.data.margins_and_padding().padding);
+        const paddingTop = this.data.margins_and_padding().padding.top || "0";
+        const paddingRight = this.data.margins_and_padding().padding.right || "0";
+        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
+        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
         return {
             style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
+                "padding-top: " + paddingTop + "px; " +
+                "padding-right: " + paddingRight + "px; " +
+                "padding-bottom: " + paddingBottom + "px; " +
+                "padding-left: " + paddingLeft + "px;",
+
         };
     }
 

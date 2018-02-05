@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../config", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _config, _styleAttributeMapper, _block) {
+define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../config", "./block", "../../utils/numbers", "../format/style-attribute-mapper"], function (_translate, _underscore, _colors, _directives, _config, _block, _numbers, _styleAttributeMapper) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -29,7 +29,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.min_height + "px; " + "background-size: " + data.background_size + ";"
+        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.minimum_height + "px; " + "background-size: " + data.background_size + ";"
       };
     };
     /**
@@ -42,27 +42,15 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
       var bgColorAttr = "transparent";
-
-      if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-      } else {
-        bgColorAttr = "transparent";
-      }
-
-      return {
-        "data-background-color": bgColorAttr
-      };
-    };
-    /**
-     * Get the banner overlay attributes for the storefront
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getOverlayStyles = function getOverlayStyles() {
-      var data = this.getData();
       var bgColor = "transparent";
+
+      if (data.show_overlay !== "never_show") {
+        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+          bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
+        } else {
+          bgColorAttr = "transparent";
+        }
+      }
 
       if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
         bgColor = "transparent";
@@ -75,8 +63,8 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
       }
 
       return {
-        minHeight: data.min_height + "px",
-        backgroundColor: bgColor
+        "data-background-color": bgColorAttr,
+        "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";"
       };
     };
     /**
@@ -119,15 +107,15 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     _proto.getImage = function getImage() {
       var data = this.getData();
 
-      if (data.background_image === "" || data.background_image === undefined) {
+      if (data.image === "" || data.image === undefined) {
         return {};
       }
 
-      if (_underscore.isEmpty(data.background_image[0])) {
+      if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.background_image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.image, _config.getInitConfig("media_url"));
     };
     /**
      * Get the mobile image attributes for the render
