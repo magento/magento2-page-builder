@@ -126,9 +126,6 @@
                 <dataType>text</dataType>
                 <label translate="true">Show Button</label>
                 <dataScope>show_button</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -157,9 +154,6 @@
                 <dataType>text</dataType>
                 <label translate="true">Show Content Overlay</label>
                 <dataScope>show_overlay</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -239,10 +233,12 @@
         <field name="message" sortOrder="0" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
                     <item name="source" xsi:type="string">page</item>
                     <item name="wysiwygConfigData" xsi:type="array">
                         <item name="pagebuilder_button" xsi:type="boolean">false</item>
                         <item name="toggle_button" xsi:type="boolean">false</item>
+                        <item name="height" xsi:type="string">500px</item>
                     </item>
                 </item>
             </argument>
@@ -296,6 +292,7 @@
                             <map name="false" xsi:type="number">0</map>
                             <map name="true" xsi:type="number">1</map>
                         </valueMap>
+                        <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
             </formElements>

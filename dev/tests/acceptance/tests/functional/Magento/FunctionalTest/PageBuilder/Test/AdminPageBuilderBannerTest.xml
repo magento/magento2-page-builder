@@ -152,7 +152,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <checkOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="checkOption"/>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
+        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
+        <wait time="1" stepKey="waitForClick{{PageBuilderBannerNewTabProperty.fieldName}}"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
