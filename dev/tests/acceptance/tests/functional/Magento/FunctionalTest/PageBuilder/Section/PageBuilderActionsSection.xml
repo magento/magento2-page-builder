@@ -233,19 +233,18 @@
         <element name="addNewSlide" type="button" selector="//div[contains(@class, 'pagebuilder-advanced-slider')][1]/button"/>
     </section>
     <section name="SlideOnFrontend">
-        <element name="slide1" type="button" selector="[data-role='slide']"/>
-        <element name="slideTitle1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content h3"/>
-        <element name="slideContent1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content div.slider-content"/>
-        <element name="slideLinkText1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a span span"/>
-        <element name="slideLinkURL1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
-        <element name="slideHasOverlay1" type="text" selector="[data-role='slide']:nth-of-type(1) .pagebuilder-content.has-overlay-background"/>
-        <element name="slide2" type="button" selector="[data-role='slide']"/>
-        <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
-        <element name="slideTitle2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content h3"/>
-        <element name="slideContent2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content div.slider-content"/>
-        <element name="slideLinkText2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a span span"/>
-        <element name="slideLinkURL2" type="text" selector="[data-role='slide']:nth-of-type(2) .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
-        <element name="slideBackgroundImage" type="text" selector="[data-role='slide']:nth-of-type({{arg1}})[style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
+        <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
+        <element name="slideTitle1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content h3"/>
+        <element name="slideContent1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a span span"/>
+        <element name="slideLinkURL1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
+        <element name="slide2" type="button" selector="[data-slick-index='1'][data-role='slide']"/>
+        <element name="slideTitle2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content h3"/>
+        <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a span span"/>
+        <element name="slideLinkURL2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'][data-role='slide'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
     </section>
     <section name="SearchOnStage">
         <element name="searchInput" type="input" selector="//*[@type='search']" />

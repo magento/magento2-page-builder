@@ -1,0 +1,18 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <div class="pagebuilder-banner-wrapper" data-bind="attr: preview.getBackgroundAttributes(), event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+        <div class="pagebuilder-poster-overlay" data-bind="style: preview.getOverlayStyles()">
+            <div class="pagebuilder-poster-content" data-bind="attr: preview.getContentAttributes()">
+                <div data-bind="css: {'pagebuilder-empty-banner': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
+                <button class="pagebuilder-button-primary pagebuilder-banner-button" data-bind="text: preview.getButtonText(), attr: {'data-link-url': preview.data.link_url()}" disabled></button>
+            </div>
+        </div>
+    </div>
+</div>
