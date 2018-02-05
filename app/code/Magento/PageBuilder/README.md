@@ -2,6 +2,10 @@
 
 The Magento_PageBuilder module provides an alternative interface for building content.
 
+## Enable the module
+
+The PageBuilder module is enabled by default after installation.
+
 ## Disable the module
 
 You can disable the PageBuilder module for a specific field by adding the following entry to a field configuration in an XML configuration file:
