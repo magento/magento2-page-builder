@@ -99,7 +99,11 @@ define([
 
             if (!this.isComponentInitialized) {
                 this.loading(true);
-                this.buildPageBuilder(false);
+                if (buildInstance.canBuild()) {
+                    this.buildPageBuilder(false, buildInstance);
+                } else {
+                    this.buildPageBuilder(false);
+                }
                 this.isComponentInitialized = true;
             }
 
