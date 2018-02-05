@@ -6,6 +6,6 @@
 -->
 
 <div class="element-children" data-bind="foreach: getChildren(), sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-structure-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof preview !== 'undefined' && typeof preview.afterChildrenRender === 'function') { preview.afterChildrenRender(element) } }">
-    <div class="pagebuilder-structure-wrapper" data-bind="template: previewTemplate, attr: {id: id}"></div>
+    <div class="pagebuilder-structure-wrapper" data-bind="template: previewTemplate, attr: {id: id}, style: (typeof preview !== 'undefined' && typeof preview.childrenStyle === 'function') ? preview.childrenStyle(): {}"></div>
     <!-- remove css: widthClasses from above element -->
 </div>

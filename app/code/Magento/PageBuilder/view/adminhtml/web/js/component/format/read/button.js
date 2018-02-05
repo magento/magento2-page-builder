@@ -1,15 +1,15 @@
 /*eslint-disable */
-define(["underscore"], function (_underscore) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Buttons =
+  var Button =
   /*#__PURE__*/
   function () {
-    function Buttons() {}
+    function Button() {}
 
-    var _proto = Buttons.prototype;
+    var _proto = Button.prototype;
 
     /**
      * Read heading type and title from the element
@@ -19,23 +19,17 @@ define(["underscore"], function (_underscore) {
      */
     _proto.read = function read(element) {
       var response = {
-        link: node.getAttribute("href"),
-        text: node.firstChild.innerText
-      }; // Iterate through the tabs and retrieve their content
-
-      _underscore.forEach(element.querySelectorAll("a"), function (node, index) {
-        response.buttons[index] = {
-          link: node.getAttribute("href"),
-          text: node.firstChild.innerText
-        };
-      });
-
+        button_link: element.getElementsByTagName('a')[0].getAttribute("href"),
+        button_text: element.getAttribute("data-button-text"),
+        button_type: element.getAttribute("data-button-type"),
+        open_in_new_tab: element.getElementsByTagName('a')[0].getAttribute("target") === "_blank" ? '1' : '0'
+      };
       return Promise.resolve(response);
     };
 
-    return Buttons;
+    return Button;
   }();
 
-  return Buttons;
+  return Button;
 });
 //# sourceMappingURL=button.js.map

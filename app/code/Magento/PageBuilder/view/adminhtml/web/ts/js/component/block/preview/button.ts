@@ -15,5 +15,14 @@ export default class Button extends PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
+
+    }
+
+    /**
+     * After child render record element
+     *
+     */
+    public childrenStyle() {
+        return this.parent.parent.preview.config.appearances[this.parent.parent.preview.data.appearance()];
     }
 }

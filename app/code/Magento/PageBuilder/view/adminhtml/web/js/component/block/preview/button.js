@@ -14,6 +14,17 @@ define(["./block"], function (_block) {
     function Button(parent, config) {
       return _PreviewBlock.call(this, parent, config) || this;
     }
+    /**
+     * After child render record element
+     *
+     */
+
+
+    var _proto = Button.prototype;
+
+    _proto.childrenStyle = function childrenStyle() {
+      return this.parent.parent.preview.config.appearances[this.parent.parent.preview.data.appearance()];
+    };
 
     return Button;
   }(_block);
