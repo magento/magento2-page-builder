@@ -15,7 +15,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
      * Map style attribute keys to DOM key names and normalize values
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
     _proto.toDom = function toDom(data) {
       var _this = this;
@@ -69,7 +69,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
      * Map DOM key names and values to internal format
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
 
 

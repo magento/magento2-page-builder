@@ -7,7 +7,7 @@ import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
     // Allowed style attributes
-    public allowedAttributes: [string] = [
+    private allowedAttributes: [string] = [
         "align_self",
         "background_color",
         "background_image",
@@ -36,6 +36,15 @@ export default class StyleAttributeFilter {
         "margins_and_padding",
         "width",
     ];
+
+    /**
+     * Get allowed attributes
+     *
+     * @returns {Array<string>}
+     */
+    public getAllowedAttributes(): [string] {
+        return this.allowedAttributes;
+    }
 
     /**
      * Filter allowed attributes from object

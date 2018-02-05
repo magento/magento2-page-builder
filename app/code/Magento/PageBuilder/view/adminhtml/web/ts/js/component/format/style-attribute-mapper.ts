@@ -8,8 +8,8 @@ import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
 
-interface FromDomResult {
-    [key: string]: any;
+export interface StyleAttributeMapperResult {
+    [key: string]: string | number;
 }
 
 export default class StyleAttributeMapper {
@@ -17,10 +17,10 @@ export default class StyleAttributeMapper {
      * Map style attribute keys to DOM key names and normalize values
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
-    public toDom(data: DataObject): DataObject {
-        const result: DataObject = {};
+    public toDom(data: DataObject): StyleAttributeMapperResult {
+        const result: StyleAttributeMapperResult = {};
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
@@ -64,10 +64,10 @@ export default class StyleAttributeMapper {
      * Map DOM key names and values to internal format
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
-    public fromDom(data: DataObject): DataObject {
-        const result: FromDomResult = {};
+    public fromDom(data: DataObject): StyleAttributeMapperResult {
+        const result: StyleAttributeMapperResult = {};
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
