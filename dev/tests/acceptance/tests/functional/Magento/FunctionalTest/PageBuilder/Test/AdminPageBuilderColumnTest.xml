@@ -636,4 +636,51 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
     </test>
+    <test name="ColumnFullHeightShowsOnFrontend">
+        <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-71365"/>
+            <title value="Bluefoot columns to be the same height in the row"/>
+            <description value="Validate columns are the same height on the frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="fullheight"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader1ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader2ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader3ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <wait time="1" stepKey="wait1"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage1"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
+    </test>
 </tests>
