@@ -18,14 +18,17 @@ define(["../../../utils/image"], function (_image) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var mainImageElement = element.querySelector("img:nth-child(1)");
+      var imageLinkElement = element.querySelector("a");
+      var captionElement = element.querySelector("figcaption");
       var response = {
-        alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
-        image: (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").getAttribute("src")),
+        alt: mainImageElement.getAttribute("alt"),
+        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
+        image_caption: captionElement ? captionElement.textContent : "",
+        link_target: imageLinkElement ? imageLinkElement.getAttribute("target") : "",
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
         mobile_image: "",
-        image_caption: element.querySelector("figcaption").textContent,
-        link_url: element.querySelector("a").getAttribute("href"),
-        link_target: element.querySelector("a").getAttribute("target"),
-        title_tag: element.querySelector("a").getAttribute("title")
+        title_tag: mainImageElement.getAttribute("title")
       }; // Detect if there is a mobile image and update the response
 
       if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {

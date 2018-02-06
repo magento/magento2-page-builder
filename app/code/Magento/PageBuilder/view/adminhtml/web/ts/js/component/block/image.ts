@@ -44,17 +44,12 @@ export default class Image extends Block {
      *
      * @returns {any}
      */
-    public getImageAttributes() {
+    public getImageLinkAttributes() {
         const data = this.getData();
-        if (data.image === "" || data.image === undefined) {
-            return {};
-        } else if (_.isEmpty(data.image[0])) {
-            return;
-        }
         return {
-            href: data.link_url || this.getImageUrl(data.image),
+            href: data.link_url || "",
             target: data.link_target || "_self",
-            title: data.title_tag
+            title: data.title_tag,
         };
     }
 

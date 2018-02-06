@@ -62,17 +62,10 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
      */
 
 
-    _proto.getImageAttributes = function getImageAttributes() {
+    _proto.getImageLinkAttributes = function getImageLinkAttributes() {
       var data = this.getData();
-
-      if (data.image === "" || data.image === undefined) {
-        return {};
-      } else if (_underscore.isEmpty(data.image[0])) {
-        return;
-      }
-
       return {
-        href: data.link_url || this.getImageUrl(data.image),
+        href: data.link_url || "",
         target: data.link_target || "_self",
         title: data.title_tag
       };

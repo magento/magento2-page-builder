@@ -5,14 +5,24 @@
  */
 -->
 
-<figure class="pagebuilder-image pagebuilder-entity" data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
-    <a data-bind="attr: getImageAttributes()">
-        <img data-bind="attr: getMainImageAttributes(), css: {'pagebuilder-mobile-hidden': getData().mobile_image}" />
-        <!-- ko if: getData().mobile_image -->
-        <img data-bind="attr: getMobileImageAttributes()" class="pagebuilder-mobile-only" />
+<figure data-bind="attr: getAttributes(), style: Object.assign({ width: '100%' }, getStyle()), css: getCss()">
+    <!-- ko if: getData().link_url -->
+        <a data-bind="attr: getImageLinkAttributes()">
+            <img data-bind="attr: getMainImageAttributes(), css: {'pagebuilder-mobile-hidden': getData().mobile_image.length}, style: { maxWidth: '100%', height: 'auto' }" />
+            <!-- ko if: getData().mobile_image.length -->
+                <img data-bind="attr: getMobileImageAttributes(), style: { maxWidth: '100%', height: 'auto' }" class="pagebuilder-mobile-only" />
+            <!-- /ko -->
+        </a>
+    <!-- /ko -->
+
+    <!-- ko ifnot: getData().link_url -->
+        <img data-bind="attr: getMainImageAttributes(), css: {'pagebuilder-mobile-hidden': getData().mobile_image.length}, style: { maxWidth: '100%', height: 'auto' }" />
+        <!-- ko if: getData().mobile_image.length -->
+            <img data-bind="attr: getMobileImageAttributes(), style: { maxWidth: '100%', height: 'auto' }" class="pagebuilder-mobile-only" />
         <!-- /ko -->
-    </a>
+    <!-- /ko -->
+
     <!-- ko if: getData().image_caption -->
-    <figcaption data-bind="text: getData().image_caption"></figcaption>
+        <figcaption data-bind="text: getData().image_caption"></figcaption>
     <!-- /ko -->
 </figure>

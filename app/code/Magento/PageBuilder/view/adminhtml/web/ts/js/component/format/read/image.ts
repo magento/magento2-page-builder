@@ -16,16 +16,19 @@ export default class Image implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
+        const mainImageElement: Element | null = element.querySelector("img:nth-child(1)");
+        const imageLinkElement: Element | null = element.querySelector("a");
+        const captionElement: Element | null = element.querySelector("figcaption");
         const response: DataObject = {
-            alt: element.querySelector("img:nth-child(1)").getAttribute("alt"),
+            alt: mainImageElement.getAttribute("alt"),
             image: decodeUrl(
-                element.querySelector("img:nth-child(1)").getAttribute("src"),
+                mainImageElement.getAttribute("src") || "",
             ),
+            image_caption: captionElement ? captionElement.textContent : "",
+            link_target: imageLinkElement ? imageLinkElement.getAttribute("target") : "",
+            link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
             mobile_image: "",
-            image_caption: element.querySelector("figcaption").textContent,
-            link_url: element.querySelector("a").getAttribute("href"),
-            link_target: element.querySelector("a").getAttribute("target"),
-            title_tag: element.querySelector("a").getAttribute("title"),
+            title_tag: mainImageElement.getAttribute("title"),
         };
 
         // Detect if there is a mobile image and update the response
