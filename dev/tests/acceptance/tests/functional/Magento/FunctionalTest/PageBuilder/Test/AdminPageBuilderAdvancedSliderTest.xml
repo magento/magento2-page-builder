@@ -8,12 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddAdvancedSlider">
+    <test name="AddAdvancedSliderContentBlockToCMSPage">
         <annotations>
-            <title value="Can add Advanced Slider to Stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Slider MAGETWO-83933"/>
+            <title value="Add Advanced Slider in PageBuilder for new CMS page and view on Storefront"/>
             <description value="The user should be able to add the slides media content type to advanced slider media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84897"/>
+            <testCaseId value="MAGETWO-84920"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -109,12 +111,14 @@
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('2',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
     </test>
-    <test name="CanRemoveAdvancedSlider">
+    <test name="RemoveAdvancedSliderFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Slider MAGETWO-83933"/>
             <title value="Remove advanced slider content block from stage"/>
             <description value="A user should be able to remove advanced slider block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -140,9 +144,12 @@
     </test>
     <test name="AdvancedSliderHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Slider MAGETWO-83933"/>
             <title value="Advanced Slider has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for advanced slider"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

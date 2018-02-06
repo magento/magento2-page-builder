@@ -8,9 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddTabs">
+    <test name="AddTabsContentBlockToCMSPage">
         <annotations>
-            <title value="Add Tabs onto stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Tabs MAGETWO-83942"/>
+            <title value="Add Tabs in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add Tabs into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84922"/>
@@ -69,12 +71,14 @@
         <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="dontSeeTab1ContentOnStorefront"/>
         <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="seeTab2ContentOnStorefront"/>
     </test>
-    <test name="CanRemoveTabs">
+    <test name="RemoveTabsFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Tabs MAGETWO-83942"/>
             <title value="Remove tabs content block from stage"/>
             <description value="A user should be able to remove tabs block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -100,9 +104,12 @@
     </test>
     <test name="TabsHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Tabs MAGETWO-83942"/>
             <title value="Tabs has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for tabs"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

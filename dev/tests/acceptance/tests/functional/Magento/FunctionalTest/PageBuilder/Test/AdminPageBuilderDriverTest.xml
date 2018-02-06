@@ -8,9 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddDriver">
+    <test name="AddDriverContentBlockToCMSPage">
         <annotations>
-            <title value="Add an driver content block into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Driver MAGETWO-83928"/>
+            <title value="Add Driver in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add an driver into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84673"/>
@@ -71,12 +73,14 @@
         <seeElementInDOM selector="{{DriverOnFrontend.linkUrl(PageBuilderLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
         <seeElementInDOM selector="{{DriverOnFrontend.openInNewWindow}}" stepKey="verifyLinkOpensNewWindow"/>
     </test>
-    <test name="CanRemoveDriver">
+    <test name="RemoveDriverFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Driver MAGETWO-83928"/>
             <title value="Remove driver content block from stage"/>
             <description value="A user should be able to remove driver block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -101,9 +105,12 @@
     </test>
     <test name="DriverHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Driver MAGETWO-83928"/>
             <title value="Driver has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for driver"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

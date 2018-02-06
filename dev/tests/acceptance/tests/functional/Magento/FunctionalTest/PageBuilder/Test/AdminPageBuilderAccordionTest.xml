@@ -8,12 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddAccordion">
+    <test name="AddAccordionContentBlockToCMSPage">
         <annotations>
-            <title value="Can add an Accordion"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Accordion MAGETWO-83940"/>
+            <title value="Add Accordion in PageBuilder for new CMS page and view on Storefront"/>
             <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84675"/>
+            <testCaseId value="MAGETWO-84915"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -50,12 +52,14 @@
         <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" stepKey="seeAccordionTitleOnStorefront"/>
         <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" stepKey="seeAccordionContentOnStorefront"/>
     </test>
-    <test name="CanRemoveAccordion">
+    <test name="RemoveAccordionFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Accordion MAGETWO-83940"/>
             <title value="Remove accordion content block from stage"/>
             <description value="A user should be able to remove accordion block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -81,8 +85,11 @@
     </test>
     <test name="AccordionHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Accordion MAGETWO-83940"/>
             <title value="Accordion has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for accordion"/>
+            <testCaseId value="MAGETWO-84275"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
         </annotations>
