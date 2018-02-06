@@ -32,7 +32,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
       _Block.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _eventBus.on("column:mount", function (event, params) {
+        _eventBus.on("column:block:mount", function (event, params) {
           if (params.id === _this2.id) {
             _this2.createColumnGroup();
           }
@@ -48,6 +48,12 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
 
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
+
+      _eventBus.trigger("column:initElement", {
+        column: this,
+        element: (0, _jquery)(element),
+        parent: this.parent
+      });
     };
     /**
      * Return an array of options
@@ -119,7 +125,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
           block: block
         });
 
-        _eventBus.trigger(block.config.name + ":mount", {
+        _eventBus.trigger(block.config.name + ":block:mount", {
           id: block.id,
           block: block
         });

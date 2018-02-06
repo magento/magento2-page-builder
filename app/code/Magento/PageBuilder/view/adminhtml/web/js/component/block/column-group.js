@@ -26,6 +26,13 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
         }
       });
 
+      _eventBus.on("column:initElement", function (event, params) {
+        // Does the events parent match the previews parent? (e.g. column group)
+        if (params.parent.id === _this.id) {
+          _this.preview.bindDraggable(params.column);
+        }
+      });
+
       _this.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
 
       return _this;
@@ -208,17 +215,21 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
       } // Determine how we can spread the empty space across the columns
 
 
-      traverseChildren: for (var _i = totalChildColumns; _i > 0; _i--) {
-        var potentialWidth = formattedAvailableWidth / _i;
+      for (var _i = totalChildColumns; _i > 0; _i--) {
+        var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
         for (var _i2 = 0; _i2 < allowedColumnWidths.length; _i2++) {
           var width = allowedColumnWidths[_i2];
 
-          if (Math.floor(potentialWidth) === Math.floor(width)) {
+          if (potentialWidth === Math.floor(width)) {
             spreadAcross = _i;
             spreadAmount = formattedAvailableWidth / _i;
-            break traverseChildren;
+            break;
           }
+        }
+
+        if (spreadAmount) {
+          break;
         }
       } // Let's spread the width across the columns
 

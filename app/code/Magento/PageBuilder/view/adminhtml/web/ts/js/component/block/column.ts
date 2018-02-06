@@ -23,7 +23,7 @@ export default class Column extends Block {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            EventBus.on("column:mount", (event: Event, params: {[key: string]: any}) => {
+            EventBus.on("column:block:mount", (event: Event, params: {[key: string]: any}) => {
                 if (params.id === this.id) {
                     this.createColumnGroup();
                 }
@@ -38,6 +38,11 @@ export default class Column extends Block {
      */
     public initColumn(element: Element) {
         this.element = $(element);
+        EventBus.trigger("column:initElement", {
+            column: this,
+            element: $(element),
+            parent: this.parent,
+        });
     }
 
     /**
@@ -109,7 +114,7 @@ export default class Column extends Block {
     private fireMountEvent(...blocks: Block[]) {
         blocks.forEach((block) => {
             EventBus.trigger("block:mount", {id: block.id, block});
-            EventBus.trigger(block.config.name + ":mount", {id: block.id, block});
+            EventBus.trigger(block.config.name + ":block:mount", {id: block.id, block});
         });
     }
 }

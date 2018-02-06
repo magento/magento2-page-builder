@@ -9,6 +9,7 @@ import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import Block from "../block";
 import PreviewBlock from "./block";
+import {getColumnWidth} from "./column-group/resizing";
 
 export default class Column extends PreviewBlock {
     public columnStyles: KnockoutComputed<{}>;

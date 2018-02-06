@@ -39,9 +39,6 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
       _this.dropPositions = [];
       _this.dropPosition = void 0;
       _this.movePosition = void 0;
-      _this.debounceBindDraggable = _underscore.debounce(function () {
-        return _this.bindDraggable();
-      }, 150);
       _this.parent = parent;
       return _this;
     }
@@ -57,10 +54,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     _proto.bindInteractions = function bindInteractions(group) {
       this.groupElement = (0, _jquery)(group);
       this.initDroppable(this.groupElement);
-      this.initMouseMove(this.groupElement); // We have to re-bind the draggable library to any new children that appear inside the group
-
-      this.parent.children.subscribe(this.debounceBindDraggable.bind(this));
-      this.debounceBindDraggable(); // Handle the mouse leaving the window
+      this.initMouseMove(this.groupElement); // Handle the mouse leaving the window
 
       (0, _jquery)("body").mouseleave(this.endAllInteractions.bind(this));
     };
@@ -129,6 +123,55 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
       });
     };
     /**
+     * Bind draggable instances to the child columns
+     */
+
+
+    _proto.bindDraggable = function bindDraggable(column) {
+      var _this3 = this;
+
+      column.element.draggable({
+        appendTo: "body",
+        containment: "body",
+        handle: ".move-column",
+        revertDuration: 250,
+        helper: function helper() {
+          var helper = (0, _jquery)(this).clone();
+          helper.css({
+            opacity: 0.5,
+            pointerEvents: "none",
+            width: (0, _jquery)(this).width() + "px",
+            zIndex: 100
+          });
+          return helper;
+        },
+        start: function start(event) {
+          // Use the global state as columns can be dragged between groups
+          (0, _registry.setDragColumn)(_knockout.dataFor((0, _jquery)(event.target)[0]));
+          _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
+        },
+        stop: function stop() {
+          var draggedColumn = (0, _registry.getDragColumn)();
+
+          if (_this3.movePosition && draggedColumn) {
+            // Check if we're moving within the same group, even though this function will
+            // only ever run on the group that bound the draggable event
+            if (draggedColumn.parent === _this3.parent) {
+              _this3.parent.handleColumnSort(draggedColumn, _this3.movePosition.insertIndex);
+
+              _this3.movePosition = null;
+            }
+          }
+
+          (0, _registry.removeDragColumn)();
+
+          _this3.dropPlaceholder.removeClass("left right");
+
+          _this3.movePlaceholder.removeClass("active");
+        }
+      });
+    };
+    /**
      * Set columns in the group as resizing
      *
      * @param {Column} columns
@@ -152,57 +195,6 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     _proto.unsetResizingColumns = function unsetResizingColumns() {
       this.parent.children().forEach(function (column) {
         column.resizing(false);
-      });
-    };
-    /**
-     * Bind draggable instances to the child columns
-     */
-
-
-    _proto.bindDraggable = function bindDraggable() {
-      var _this3 = this;
-
-      this.parent.children().forEach(function (column) {
-        column.element.draggable({
-          appendTo: "body",
-          containment: "body",
-          handle: ".move-column",
-          revertDuration: 250,
-          helper: function helper() {
-            var helper = (0, _jquery)(this).clone();
-            helper.css({
-              opacity: 0.5,
-              pointerEvents: "none",
-              width: (0, _jquery)(this).width() + "px",
-              zIndex: 100
-            });
-            return helper;
-          },
-          start: function start(event) {
-            // Use the global state as columns can be dragged between groups
-            (0, _registry.setDragColumn)(_knockout.dataFor((0, _jquery)(event.target)[0]));
-            _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
-          },
-          stop: function stop() {
-            var draggedColumn = (0, _registry.getDragColumn)();
-
-            if (_this3.movePosition && draggedColumn) {
-              // Check if we're moving within the same group, even though this function will
-              // only ever run on the group that bound the draggable event
-              if (draggedColumn.parent === _this3.parent) {
-                _this3.parent.handleColumnSort(draggedColumn, _this3.movePosition.insertIndex);
-
-                _this3.movePosition = null;
-              }
-            }
-
-            (0, _registry.removeDragColumn)();
-
-            _this3.dropPlaceholder.removeClass("left right");
-
-            _this3.movePlaceholder.removeClass("active");
-          }
-        });
       });
     };
     /**
@@ -286,30 +278,33 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         var resizeColumnWidth = this.resizeColumnInstance.element.outerWidth();
         var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
         var direction = currentPos >= resizeHandlePosition ? "right" : "left";
-        var adjustedColumn;
-        var modifyColumnInPair; // We need to know if we're modifying the left or right column in the pair
+
+        var _adjustedColumn;
+
+        var _modifyColumnInPair; // We need to know if we're modifying the left or right column in the pair
+
 
         var usedHistory; // Was the adjusted column pulled from history?
         // Determine which column in the group should be adjusted for this action
 
         var _determineAdjustedCol = (0, _resizing.determineAdjustedColumn)(group, currentPos, this.resizeColumnInstance, this.resizeHistory);
 
-        adjustedColumn = _determineAdjustedCol[0];
-        modifyColumnInPair = _determineAdjustedCol[1];
+        _adjustedColumn = _determineAdjustedCol[0];
+        _modifyColumnInPair = _determineAdjustedCol[1];
         usedHistory = _determineAdjustedCol[2];
         // Calculate the ghost width based on mouse position and bounds of allowed sizes
-        var ghostWidth = (0, _resizing.calculateGhostWidth)(group, currentPos, this.resizeColumnInstance, modifyColumnInPair, this.resizeMaxGhostWidth);
+        var ghostWidth = (0, _resizing.calculateGhostWidth)(group, currentPos, this.resizeColumnInstance, _modifyColumnInPair, this.resizeMaxGhostWidth);
         this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
-        if (adjustedColumn && this.resizeColumnWidths) {
+        if (_adjustedColumn && this.resizeColumnWidths) {
           newColumnWidth = this.resizeColumnWidths.find(function (val) {
-            return (0, _resizing.comparator)(currentPos, val.position, 35) && val.forColumn === modifyColumnInPair;
+            return (0, _resizing.comparator)(currentPos, val.position, 35) && val.forColumn === _modifyColumnInPair;
           });
 
           if (newColumnWidth) {
             var mainColumn = this.resizeColumnInstance; // If we're using the left data set, we're actually resizing the right column of the group
 
-            if (modifyColumnInPair === "right") {
+            if (_modifyColumnInPair === "right") {
               mainColumn = (0, _resizing.getAdjacentColumn)(this.resizeColumnInstance, "+1");
             } // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
             // one being performed now. This occurs as we re-calculate the column positions on resize, we have
@@ -322,14 +317,14 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
               // affected
               if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" && newColumnWidth.forColumn === "left") {
                 var originalMainColumn = mainColumn;
-                mainColumn = adjustedColumn;
-                adjustedColumn = (0, _resizing.getAdjacentColumn)(originalMainColumn, "+1");
+                mainColumn = _adjustedColumn;
+                _adjustedColumn = (0, _resizing.getAdjacentColumn)(originalMainColumn, "+1");
               }
 
-              this.recordResizeHistory(usedHistory, direction, adjustedColumn, modifyColumnInPair);
+              this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
-              this.resizeLastColumnInPair = modifyColumnInPair;
-              this.parent.handleColumnResize(mainColumn, newColumnWidth.width, adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+              this.resizeLastColumnInPair = _modifyColumnInPair;
+              this.parent.handleColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
