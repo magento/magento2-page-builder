@@ -12,7 +12,9 @@
 </div>
 
 <div class="pagebuilder-stage-wrapper" visible="stageActive" css="{'stage-full-screen': isFullScreen}" style="min-height:650px">
-    <!-- ko template: getStageTemplate() --><!-- /ko -->
+    <!-- ko if: isComponentInitialized -->
+        <!-- ko template: getStageTemplate() --><!-- /ko -->
+    <!-- /ko -->
 </div>
 
 <div data-role="spinner"

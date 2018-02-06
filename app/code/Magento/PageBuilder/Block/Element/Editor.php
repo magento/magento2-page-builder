@@ -38,6 +38,17 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        if ($this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter') {
+            return true;
+        }
+        return parent::isEnabled();
+    }
+
+    /**
      * Is the stage aspect of the system enabled
      *
      * @return bool
@@ -48,9 +59,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
-     * @param string $jsSetupObject
-     * @param string $forceLoad
-     * @return string
+     * {@inheritdoc}
      */
     protected function getInlineJs($jsSetupObject, $forceLoad)
     {

@@ -40,7 +40,8 @@ define([
             userSelect: true,
             isFullScreen: false,
             originalScrollTop: false,
-            isComponentInitialized: false,
+            isComponentInitialized: ko.observable(false),
+            wysiwygConfig: ko.observable(false),
             links: {
                 stageActive: false,
                 stage: {},
@@ -83,6 +84,9 @@ define([
                 }
             });
 
+            this.wysiwygConfig.subscribe(function(config) {
+                this.displayPageBuilder(config);
+            }, this);
             return this;
         },
 
@@ -92,21 +96,8 @@ define([
          * @return {void}
          */
         setElementNode: function (node) {
-            var buildInstance = new Build(this.initialValue);
-
+            
             this.domNode = node;
-            this.bindPageBuilderButton(node);
-
-            if (!this.isComponentInitialized) {
-                this.loading(true);
-                if (buildInstance.canBuild()) {
-                    this.buildPageBuilder(false, buildInstance);
-                } else {
-                    this.buildPageBuilder(false);
-                }
-                this.isComponentInitialized = true;
-            }
-
             $(node).bindings({
                 value: this.value
             });
@@ -144,6 +135,34 @@ define([
         },
 
         /**
+         * Displays page builder based on configuration
+         * @param config
+         * @return void
+         */
+        displayPageBuilder: function(config)
+        {
+            //@todo add some logic to display based on config
+
+            var buildInstance = new Build(this.initialValue),
+                isPageBuilderButtonExists =  config.pagebuilder_button || false,
+                isFullScreen = config.isFullScreenMode || false;
+
+            if (isPageBuilderButtonExists) {
+                this.bindPageBuilderButton(this.domNode);
+
+            }
+            //@todo simplify that logic
+            if (!this.isComponentInitialized() && !isPageBuilderButtonExists) {
+                this.loading(true);
+                if (buildInstance.canBuild() && isPageBuilderButtonExists) {
+                    this.buildPageBuilder(false, buildInstance);
+                } else {
+                    this.buildPageBuilder(false);
+                }
+            }
+        },
+
+        /**
          * Handle a click event requesting that we build PageBuilder
          *
          * @param event
@@ -173,6 +192,7 @@ define([
 
             // Build the stage instance using any existing build data
             this.stage.build(buildInstance);
+            this.isComponentInitialized(true);
         },
 
         /**

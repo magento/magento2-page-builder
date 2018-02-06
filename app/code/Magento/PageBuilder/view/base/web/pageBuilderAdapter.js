@@ -5,8 +5,10 @@
 
 /* eslint-disable strict */
 define([
-    'jquery'
-], function () {
+    'jquery',
+    'ko',
+    'Magento_PageBuilder/js/form/element/wysiwyg'
+], function ($, ko, wysiwyg) {
     'use strict';
 
     var pageBuilderWysiwyg = Class.create();
@@ -18,7 +20,10 @@ define([
          * @param {Object} config
          */
         initialize: function (htmlId, config) {
-            this.config = config;
+
+            //initialize wysiwyg component
+            wysiwyg.defaults.wysiwygConfig(config);
+
         },
 
         /**
