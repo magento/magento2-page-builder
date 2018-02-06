@@ -34,7 +34,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "background-size: " + this.data.background_size() + ";" + "min-height: " + this.data.minimum_height() + "px; "
+        style: "background-image: " + backgroundImage + "; " + "background-size: " + this.data.background_size() + ";" + "min-height: " + this.data.min_height() + "px; "
       };
     };
     /**
@@ -44,7 +44,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
      */
 
 
-    _proto.getOverlayAttributes = function getOverlayAttributes() {
+    _proto.getOverlayStyles = function getOverlayStyles() {
       var backgroundColor = "transparent";
 
       if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
@@ -60,7 +60,8 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
       }
 
       return {
-        style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"
+        minHeight: this.data.min_height() + 'px',
+        backgroundColor: backgroundColor
       };
     };
     /**
@@ -142,7 +143,7 @@ define(["knockout", "mage/translate", "../../../utils/colors", "../../../utils/n
      */
 
 
-    _proto.afterContent = function afterContent(styles) {
+    _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // Extract data values our of observable functions
       // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {

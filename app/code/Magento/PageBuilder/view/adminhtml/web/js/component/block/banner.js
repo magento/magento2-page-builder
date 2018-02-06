@@ -29,7 +29,7 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.minimum_height + "px; " + "background-size: " + data.background_size + ";"
+        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.min_height + "px; " + "background-size: " + data.background_size + ";"
       };
     };
     /**
@@ -42,15 +42,27 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
       var bgColorAttr = "transparent";
-      var bgColor = "transparent";
 
-      if (data.show_overlay !== "never_show") {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-        } else {
-          bgColorAttr = "transparent";
-        }
+      if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+        bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
+      } else {
+        bgColorAttr = "transparent";
       }
+
+      return {
+        "data-background-color": bgColorAttr
+      };
+    };
+    /**
+     * Get the banner overlay attributes for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getOverlayStyles = function getOverlayStyles() {
+      var data = this.getData();
+      var bgColor = "transparent";
 
       if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
         bgColor = "transparent";
@@ -63,8 +75,8 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
       }
 
       return {
-        "data-background-color": bgColorAttr,
-        "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";"
+        minHeight: data.min_height + "px",
+        backgroundColor: bgColor
       };
     };
     /**

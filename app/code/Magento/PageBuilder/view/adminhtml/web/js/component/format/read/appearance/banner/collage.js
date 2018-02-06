@@ -38,7 +38,7 @@ define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-
         button_text: element.dataset.buttonText,
         link_url: element.querySelector("a").getAttribute("href"),
         message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
-        minimum_height: parseInt(element.querySelector(".pagebuilder-overlay").style.minHeight, 10),
+        min_height: parseInt(element.querySelector(".pagebuilder-banner-wrapper").style.minHeight, 10),
         mobile_image: mobileImage,
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: this.getOverlayColor(overlayColor),
