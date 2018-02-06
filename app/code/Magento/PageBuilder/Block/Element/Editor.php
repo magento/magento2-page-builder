@@ -19,9 +19,8 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
         if ($this->getConfig()->getData('pagebuilder_button') === true) {
             $buttonHtml .= $this->_getButtonHtml(
                 [
-                    'title' => $this->translate('Enable Advanced CMS'),
-                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action'
-                        . ' action-secondary',
+                    'title' => $this->translate('Edit with Page Builder'),
+                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action',
                     'id' => 'magento-pagebuilder' . $this->getHtmlId()
                 ]
             );

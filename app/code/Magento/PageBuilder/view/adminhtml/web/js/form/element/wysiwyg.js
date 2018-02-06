@@ -42,6 +42,7 @@ define([
             originalScrollTop: false,
             isComponentInitialized: ko.observable(false),
             wysiwygConfig: ko.observable(false),
+            showSpinner: ko.observable(false),
             links: {
                 stageActive: false,
                 stage: {},
@@ -141,11 +142,9 @@ define([
          */
         displayPageBuilder: function(config)
         {
-            //@todo add some logic to display based on config
-
+            this.config = config;
             var buildInstance = new Build(this.initialValue),
-                isPageBuilderButtonExists =  config.pagebuilder_button || false,
-                isFullScreen = config.isFullScreenMode || false;
+                isPageBuilderButtonExists =  config.pagebuilder_button || false;
 
             if (isPageBuilderButtonExists) {
                 this.bindPageBuilderButton(this.domNode);
@@ -153,6 +152,7 @@ define([
             }
             //@todo simplify that logic
             if (!this.isComponentInitialized() && !isPageBuilderButtonExists) {
+                this.showSpinner(true);
                 this.loading(true);
                 if (buildInstance.canBuild() && isPageBuilderButtonExists) {
                     this.buildPageBuilder(false, buildInstance);
@@ -169,7 +169,9 @@ define([
          * @param buildInstance
          */
         buildPageBuilder: function (event, buildInstance) {
-            var self = this;
+            var self = this,
+                isFullScreen = this.config.isFullScreenMode || false;
+            this.isFullScreen(isFullScreen);
 
             if (event) {
                 event.stopPropagation();
