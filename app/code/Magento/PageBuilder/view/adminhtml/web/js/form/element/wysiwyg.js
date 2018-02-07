@@ -118,13 +118,14 @@ define([
         /**
          * Returns panel object
          *
-         * @return {*}
+         * @return {Panel}
          */
         getPanel: function () {
             if (!(this.panel)) {
 
                 this.panel = new Panel();
             }
+
             return this.panel;
         },
 
