@@ -16,12 +16,28 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
+    'mageUtils',
     'Magento_PageBuilder/js/component/format/format-validator',
     'Magento_PageBuilder/js/component/stage-builder',
     'Magento_PageBuilder/js/component/stage/panel',
-    'mageUtils',
-    'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, validateFormat, buildStage, Panel, utils) {
+    'Magento_PageBuilder/js/utils/directives'
+], function (
+    _,
+    Wysiwyg,
+    $,
+    confirmationPrompt,
+    alertPrompt,
+    $t,
+    applyMain,
+    ko,
+    registry,
+    jQuery,
+    utils,
+    validateFormat,
+    buildStage,
+    Panel,
+    directives
+) {
     'use strict';
 
     /**
@@ -148,7 +164,7 @@ define([
                 this,
                 this.panel,
                 this.stageContent,
-                this.initialValue,
+                directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
         },

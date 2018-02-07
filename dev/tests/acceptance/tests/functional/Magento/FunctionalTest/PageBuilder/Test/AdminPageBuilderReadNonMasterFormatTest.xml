@@ -99,6 +99,40 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
     </test>
+    <test name="ReadHtmlWithImage">
+        <annotations>
+            <title value="HTML in WYSIWYG converted to HTML content type"/>
+            <description value="HTML in WYSIWYG converted to HTML content type"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder1"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad1"/>
+        </after>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+        <click selector="{{CmsPageSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+        <waitForElementVisible time="1" selector="{{CmsPageSection.content}}" stepKey="waitForContentField" />
+        <fillField selector="{{CmsPageSection.content}}" userInput="{{cmsPageWithImage.content}}" stepKey="enterContent"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="waitForContentBlockInStage" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
+        <seeElementInDOM selector="{{HtmlOnBackendWithImage.content}}" stepKey="assertHtmlContent"/>
+        <amOnPage url="{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        <seeElementInDOM selector="{{HtmlOnFrontendWithImage.content}}" stepKey="assertHtmlContent"/>
+    </test>
     <test name="ReadHtmlWithMediaUrlDirective">
         <annotations>
             <title value="HTML with media url directive converted to HTML content type"/>
