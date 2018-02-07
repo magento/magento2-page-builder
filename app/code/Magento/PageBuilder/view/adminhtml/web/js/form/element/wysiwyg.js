@@ -94,15 +94,14 @@ define([
          * @return {void}
          */
         setElementNode: function (node) {
-
             this.isButtonEnable($(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').length > 0);
             this.domNode = node;
 
             if (!this.isComponentInitialized) {
-
                 if (this.isButtonEnable()) {
                     //process case when page builder is initialized using button
                     this.bindPageBuilderButton(node);
+                    this.handleUseDefaultButton(node);
                 } else {
                     this.buildPageBuilder(false);
                 }
@@ -158,8 +157,33 @@ define([
             //hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
             $('#toggle' + node.id).hide();
+
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
+        },
+
+        /**
+         * Handles the 'Use Default Value' checkbox
+         *
+         * @param node
+         */
+        handleUseDefaultButton: function(node) {
+            var defaultButton = $("div.admin__field-service input[id='" + this.uid + "_default']"),
+                editPageBuilderButton = $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')[0];
+
+            if (defaultButton.is(":checked")) {
+                editPageBuilderButton.disable();
+                editPageBuilderButton.style.pointerEvents = "none";
+            }
+            $(document).on('click', "div.admin__field-service input[id='" + this.uid + "_default']", function() {
+                if (this.checked) {
+                    editPageBuilderButton.disable();
+                    editPageBuilderButton.style.pointerEvents = "none";
+                } else {
+                    editPageBuilderButton.enable();
+                    editPageBuilderButton.style.pointerEvents = "auto";
+                }
+            });
         },
 
         /**
