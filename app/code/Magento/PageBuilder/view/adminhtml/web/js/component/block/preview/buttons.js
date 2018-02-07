@@ -20,7 +20,7 @@ define(["../../block/factory", "../../config", "./block"], function (_factory, _
     _proto.addButton = function addButton() {
       var _this = this;
 
-      (0, _factory)(_config.getInitConfig("contentTypes").button, this.parent, this.stage, {}).then(function (button) {
+      (0, _factory)(_config.getInitConfig("contentTypes")["button-item"], this.parent, this.stage, {}).then(function (button) {
         _this.addChild(button);
 
         button.edit.open();

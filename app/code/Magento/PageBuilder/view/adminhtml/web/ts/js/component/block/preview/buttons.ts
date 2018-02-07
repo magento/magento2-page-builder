@@ -17,7 +17,7 @@ export default class Buttons extends PreviewBlock {
      * Add a button into the buttons container
      */
     public addButton() {
-        createBlock(Config.getInitConfig("contentTypes").button,
+        createBlock(Config.getInitConfig("contentTypes")["button-item"],
             this.parent, this.stage, {}).then((button) => {
             this.addChild(button);
             button.edit.open();

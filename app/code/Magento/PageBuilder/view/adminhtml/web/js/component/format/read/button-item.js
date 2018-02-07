@@ -4,14 +4,14 @@ define(["./default"], function (_default) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Button =
+  var ButtonItem =
   /*#__PURE__*/
   function () {
-    function Button() {
+    function ButtonItem() {
       this.defaultReader = new _default();
     }
 
-    var _proto = Button.prototype;
+    var _proto = ButtonItem.prototype;
 
     /**
      * Read heading type and title from the element
@@ -35,9 +35,9 @@ define(["./default"], function (_default) {
       });
     };
 
-    return Button;
+    return ButtonItem;
   }();
 
-  return Button;
+  return ButtonItem;
 });
-//# sourceMappingURL=button.js.map
+//# sourceMappingURL=button-item.js.map

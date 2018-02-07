@@ -7,7 +7,7 @@ import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
 import Default from "./default";
 
-export default class Button implements ReadInterface {
+export default class ButtonItem implements ReadInterface {
     private defaultReader: Default = new Default();
 
     /**

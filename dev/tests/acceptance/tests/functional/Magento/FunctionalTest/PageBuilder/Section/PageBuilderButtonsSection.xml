@@ -9,11 +9,11 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="ButtonsBackendSection">
-        <element name="addNewButton" type="button" selector="//button[contains(text(), 'Add Button')]"/>
+        <element name="addNewButtonItem" type="button" selector="//button[contains(text(), 'Add Button')]"/>
         <element name="buttonText" type="input" selector="//*[@name='buttons[{{arg1}}][text]']" parameterized="true"/>
         <element name="buttonLink" type="input" selector="//*[@name='buttons[{{arg1}}][link]']" parameterized="true"/>
     </section>
     <section name="ButtonsFrontendSection">
-        <element name="buttonElement" type="button" selector="//div[@data-role='button']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemElement" type="button" selector="//div[@data-role='button-item']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
     </section>
 </sections>

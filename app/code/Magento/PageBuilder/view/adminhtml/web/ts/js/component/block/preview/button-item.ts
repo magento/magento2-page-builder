@@ -15,7 +15,6 @@ export default class Button extends PreviewBlock {
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
-
     }
 
     /**

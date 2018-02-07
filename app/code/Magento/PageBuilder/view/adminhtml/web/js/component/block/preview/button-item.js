@@ -31,4 +31,4 @@ define(["./block"], function (_block) {
 
   return Button;
 });
-//# sourceMappingURL=button.js.map
+//# sourceMappingURL=button-item.js.map

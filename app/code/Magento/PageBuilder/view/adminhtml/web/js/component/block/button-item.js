@@ -31,4 +31,4 @@ define(["../block/factory", "../config", "./block"], function (_factory, _config
 
   return button;
 });
-//# sourceMappingURL=button.js.map
+//# sourceMappingURL=button-item.js.map
