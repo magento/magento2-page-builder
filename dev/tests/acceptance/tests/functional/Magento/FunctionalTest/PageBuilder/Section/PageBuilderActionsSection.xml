@@ -90,6 +90,7 @@
         <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][2]"/>
+        <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}};')]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
         <element name="addRow" type="button" selector='//*[@class="pagebuilder-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>

@@ -636,4 +636,45 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
     </test>
+    <test name="RemovingColumnDistributesWidth">
+        <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Delete Columns From Container MAGETWO-83556"/>
+            <title value="Column Width Distribution"/>
+            <description value="Removing a column distributes column widths"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
+        </actionGroup>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
+    </test>
 </tests>
