@@ -26,12 +26,12 @@ export default class Banner extends Block {
         }
 
         if (type === "mobileImage") {
-            if(this.getMobileImage()) {
+            if (this.getMobileImage()) {
                 backgroundImage = this.getStyle().mobileImage;
-            }else {
-                if(this.getImage()) {
+            } else {
+                if (this.getImage()) {
                     backgroundImage = this.getStyle().backgroundImage;
-                }else {
+                } else {
                     backgroundImage = "none";
                 }
             }
