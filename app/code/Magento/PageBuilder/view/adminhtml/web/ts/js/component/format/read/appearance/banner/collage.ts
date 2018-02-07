@@ -3,15 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import Colors from "../../../../../utils/colors";
+import {toHex} from "../../../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../../../utils/image";
 import {DataObject} from "../../../../data-store";
 import {ReadInterface} from "../../../read-interface";
-import Default from "../../default";
 
 export default class Collage implements ReadInterface {
-    private defaultReader: Default = new Default();
 
     /**
      * Read background from the element
@@ -31,13 +29,28 @@ export default class Collage implements ReadInterface {
         ) {
             mobileImage = decodeUrl(backgroundMobileImageElement.style.backgroundImage);
         }
-        const advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-mobile-only"));
-        const overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-background-color");
-        const response: DataObject = {
+        const overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
+        const paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
+        const marginSrc = element.style;
+        const response: any = {
             background_image: decodeUrl(backgroundImage),
             background_size: element.style.backgroundSize,
             button_text: element.dataset.buttonText,
             link_url: element.querySelector("a").getAttribute("href"),
+            margins_and_padding: {
+                margin: {
+                    bottom: marginSrc.marginBottom.replace("px", ""),
+                    left: marginSrc.marginLeft.replace("px", ""),
+                    right: marginSrc.marginRight.replace("px", ""),
+                    top: marginSrc.marginTop.replace("px", ""),
+                },
+                padding: {
+                    bottom: paddingSrc.paddingBottom.replace("px", ""),
+                    left: paddingSrc.paddingLeft.replace("px", ""),
+                    right: paddingSrc.paddingRight.replace("px", ""),
+                    top: paddingSrc.paddingTop.replace("px", ""),
+                },
+            },
             message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
             min_height: parseInt(element.querySelector(".pagebuilder-banner-wrapper").style.minHeight, 10),
             mobile_image: mobileImage,
@@ -47,14 +60,7 @@ export default class Collage implements ReadInterface {
             show_button: element.getAttribute("data-show-button"),
             show_overlay: element.getAttribute("data-show-overlay"),
         };
-        return new Promise((resolve: (object: object) => void) => {
-            advancedData.then((data) => {
-                delete data.css_classes;
-                resolve(
-                    Object.assign(data, response),
-                );
-            });
-       });
+        return Promise.resolve(response);
     }
 
     /**
@@ -63,7 +69,7 @@ export default class Collage implements ReadInterface {
      * @returns string
      */
     private getOverlayColor(value: string) {
-        return value === "transparent" ? "" : Colors.toHex(value);
+        return value === "transparent" ? "" : toHex(value);
     }
 
     /**

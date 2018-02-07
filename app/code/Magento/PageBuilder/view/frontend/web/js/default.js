@@ -41,15 +41,15 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
         $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-banner-button');
+            var buttonEl = $(element).find('.pagebuilder-banner-button');
             $(element).hover(
                 function() {
-                    overlayEl.css({
+                    buttonEl.css({
                         'opacity' : '1',
                         'visibility' : 'visible'
                     });
                 }, function() {
-                    overlayEl.css({
+                    buttonEl.css({
                         'opacity' : '0',
                         'visibility' : 'hidden'
                     });
@@ -59,7 +59,7 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
 
         $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
             var overlayEl = $(element).find('.pagebuilder-overlay'),
-                overlayColor = overlayEl.attr('data-background-color');
+                overlayColor = overlayEl.attr('data-overlay-color');
             $(element).hover(
                 function() {
                     overlayEl.css('background-color', overlayColor);

@@ -5,33 +5,40 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import Colors from "../../utils/colors";
+import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
-import Numbers from "../../utils/numbers";
+import {percentToDecimal} from "../../utils/number-converter";
 import Config from "../config";
-import StyleAttributeMapper from "../format/style-attribute-mapper";
 import Block from "./block";
 
 export default class Banner extends Block {
 
     /**
-     * Get the banner wrapper attributes for the storefront
+     * Get the banner wrapper styles for the storefront
      *
      * @returns {any}
      */
-    public getBannerAttributes(type: string) {
+    public getBannerStyles(type: string) {
         const data = this.getData();
         let backgroundImage: string = "";
         if (type === "image") {
-            backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-        } else if (type === "mobileImage") {
-            backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+            backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+        }
+
+        if (type === "mobileImage") {
+            if (this.getMobileImage()) {
+                backgroundImage = this.getStyle().mobileImage;
+            } else {
+                if (this.getImage()) {
+                    backgroundImage = this.getStyle().backgroundImage;
+                } else {
+                    backgroundImage = "none";
+                }
+            }
         }
         return {
-            style:
-                "background-image: " + backgroundImage + "; " +
-                "min-height: " + data.min_height + "px; " +
-                "background-size: " + data.background_size + ";",
+            backgroundImage,
+            backgroundSize: data.background_size,
         };
     }
 
@@ -42,62 +49,52 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let bgColorAttr: string = "transparent";
-        if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            bgColorAttr = Colors.colorConverter(
-                data.overlay_color,
-                Numbers.convertPercentToDecimal(data.overlay_transparency),
-            );
-        } else {
-            bgColorAttr = "transparent";
+        let overlayColorAttr: string = "transparent";
+        if (data.show_overlay !== "never_show") {
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+            }
         }
         return {
-            "data-background-color" : bgColorAttr,
+            "data-overlay-color" : overlayColorAttr,
         };
     }
 
     /**
-     * Get the banner overlay attributes for the storefront
+     * Get the banner overlay styles for the storefront
      *
      * @returns {any}
      */
     public getOverlayStyles() {
         const data = this.getData();
-        let bgColor: string = "transparent";
-        if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-            bgColor = "transparent";
-        } else {
-            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = Colors.colorConverter(
-                    data.overlay_color,
-                    Numbers.convertPercentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColor = "transparent";
-            }
-        }
+        const paddingTop = data.margins_and_padding.padding.top || "0";
+        const paddingRight = data.margins_and_padding.padding.right || "0";
+        const paddingBottom = data.margins_and_padding.padding.bottom || "0";
+        const paddingLeft = data.margins_and_padding.padding.left || "0";
         return {
+            backgroundColor: this.getOverlayColorStyle().backgroundColor,
+            boxSizing: "border-box",
             minHeight: data.min_height + "px",
-            backgroundColor: bgColor,
+            paddingBottom: paddingBottom + "px",
+            paddingLeft: paddingLeft + "px",
+            paddingRight: paddingRight + "px",
+            paddingTop: paddingTop + "px",
         };
     }
 
-
-
     /**
-     * Get the banner content attributes for the storefront
+     * Get the overlay color style only for the storefront
      *
      * @returns {any}
      */
-    public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+    public getOverlayColorStyle() {
+        const data = this.getData();
+        let overlayColor: string = "transparent";
+        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+        }
         return {
-            style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
+            backgroundColor: overlayColor,
         };
     }
 

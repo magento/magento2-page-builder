@@ -11,7 +11,7 @@
  * @returns {string}
  */
 
-export function colorConverter(hexValue: string, alphaValue: string) {
+export function fromHex(hexValue: string, alphaValue: string) {
     const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
     const red = parseInt(colors[1], 16);
     const green = parseInt(colors[2], 16);

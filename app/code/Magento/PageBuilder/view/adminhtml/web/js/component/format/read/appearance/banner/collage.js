@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-rgba", "../../../../../utils/image", "../../default"], function (_colors, _extractAlphaFromRgba, _image, _default) {
+define(["../../../../../utils/color-converter", "../../../../../utils/extract-alpha-from-rgba", "../../../../../utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,9 +7,7 @@ define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-
   var Collage =
   /*#__PURE__*/
   function () {
-    function Collage() {
-      this.defaultReader = new _default();
-    }
+    function Collage() {}
 
     var _proto = Collage.prototype;
 
@@ -30,13 +28,28 @@ define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-
         mobileImage = (0, _image.decodeUrl)(backgroundMobileImageElement.style.backgroundImage);
       }
 
-      var advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-mobile-only"));
-      var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-background-color");
+      var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
+      var paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
+      var marginSrc = element.style;
       var response = {
         background_image: (0, _image.decodeUrl)(backgroundImage),
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
         link_url: element.querySelector("a").getAttribute("href"),
+        margins_and_padding: {
+          margin: {
+            bottom: marginSrc.marginBottom.replace("px", ""),
+            left: marginSrc.marginLeft.replace("px", ""),
+            right: marginSrc.marginRight.replace("px", ""),
+            top: marginSrc.marginTop.replace("px", "")
+          },
+          padding: {
+            bottom: paddingSrc.paddingBottom.replace("px", ""),
+            left: paddingSrc.paddingLeft.replace("px", ""),
+            right: paddingSrc.paddingRight.replace("px", ""),
+            top: paddingSrc.paddingTop.replace("px", "")
+          }
+        },
         message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
         min_height: parseInt(element.querySelector(".pagebuilder-banner-wrapper").style.minHeight, 10),
         mobile_image: mobileImage,
@@ -46,12 +59,7 @@ define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-
         show_button: element.getAttribute("data-show-button"),
         show_overlay: element.getAttribute("data-show-overlay")
       };
-      return new Promise(function (resolve) {
-        advancedData.then(function (data) {
-          delete data.css_classes;
-          resolve(Object.assign(data, response));
-        });
-      });
+      return Promise.resolve(response);
     };
     /**
      * Get overlay color
@@ -61,7 +69,7 @@ define(["../../../../../utils/colors", "../../../../../utils/extract-alpha-from-
 
 
     _proto.getOverlayColor = function getOverlayColor(value) {
-      return value === "transparent" ? "" : _colors.toHex(value);
+      return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
     /**
      * Get overlay transparency
