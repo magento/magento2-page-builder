@@ -21,6 +21,17 @@ export default class StyleAttributeMapper {
      */
     public toDom(data: DataObject): DataObject {
         const result: DataObject = {};
+        data = _.extend({}, data);
+
+        // If the border is set to default we don't persist any border related style attributes
+        if (typeof data.border !== "undefined") {
+            if (data.border === "none") {
+                data.border_color = "";
+                data.border_width = "";
+                data.border_radius = "";
+            }
+        }
+
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
@@ -68,13 +79,16 @@ export default class StyleAttributeMapper {
      */
     public fromDom(data: DataObject): DataObject {
         const result: FromDomResult = {};
+        data = _.extend({}, data);
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
                 if (value === "") {
                     return;
                 }
-                if (key === "border-top-width") {
+
+                // The border values will be translated through as their top, left etc. so map them to the border-width
+                if (key === "border-top-width" && value !== "initial") {
                     key = "border-width";
                 }
                 if (key === "border-top-style") {
@@ -83,6 +97,7 @@ export default class StyleAttributeMapper {
                 if (key === "border-top-left-radius") {
                     key = "border-radius";
                 }
+
                 if (key === "min-height" || key === "border-width" || key === "border-radius") {
                     value = value.replace("px", "");
                 }

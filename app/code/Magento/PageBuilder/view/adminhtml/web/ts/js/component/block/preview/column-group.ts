@@ -13,12 +13,9 @@ import PreviewBlock from "./block";
 import {calculateDropPositions, DropPosition} from "./column-group/dragdrop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./column-group/registry";
 import {
-    calculateGhostWidth,
-    ColumnWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth, getAdjacentColumn,
-    getColumnWidth, getMaxColumns, MaxGhostWidth,
-    ResizeHistory,
+    calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
+    getAdjacentColumn, getColumnWidth, getMaxColumns,
 } from "./column-group/resizing";
-import EventBus from "../../event-bus";
 
 export default class ColumnGroup extends PreviewBlock {
     public parent: ColumnGroupBlock;
@@ -47,11 +44,6 @@ export default class ColumnGroup extends PreviewBlock {
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
 
-    private debounceBindDraggable = _.debounce(
-        () => this.bindDraggable(),
-        150,
-    );
-
     /**
      * PreviewBlock constructor
      *
@@ -72,10 +64,6 @@ export default class ColumnGroup extends PreviewBlock {
         this.groupElement = $(group);
         this.initDroppable(this.groupElement);
         this.initMouseMove(this.groupElement);
-
-        // We have to re-bind the draggable library to any new children that appear inside the group
-        this.parent.children.subscribe(this.debounceBindDraggable.bind(this));
-        this.debounceBindDraggable();
 
         // Handle the mouse leaving the window
         $("body").mouseleave(this.endAllInteractions.bind(this));
@@ -142,6 +130,49 @@ export default class ColumnGroup extends PreviewBlock {
     }
 
     /**
+     * Bind draggable instances to the child columns
+     */
+    public bindDraggable(column: Column) {
+        column.element.draggable({
+            appendTo: "body",
+            containment: "body",
+            handle: ".move-column",
+            revertDuration: 250,
+            helper() {
+                const helper = $(this).clone();
+                helper.css({
+                    opacity: 0.5,
+                    pointerEvents: "none",
+                    width: $(this).width() + "px",
+                    zIndex: 100,
+                });
+                return helper;
+            },
+            start: (event: Event) => {
+                // Use the global state as columns can be dragged between groups
+                setDragColumn(ko.dataFor($(event.target)[0]) as Column);
+                this.dropPositions = calculateDropPositions(this.parent);
+            },
+            stop: () => {
+                const draggedColumn: Column = getDragColumn();
+                if (this.movePosition && draggedColumn) {
+                    // Check if we're moving within the same group, even though this function will
+                    // only ever run on the group that bound the draggable event
+                    if (draggedColumn.parent === this.parent) {
+                        this.parent.handleColumnSort(draggedColumn, this.movePosition.insertIndex);
+                        this.movePosition = null;
+                    }
+                }
+
+                removeDragColumn();
+
+                this.dropPlaceholder.removeClass("left right");
+                this.movePlaceholder.removeClass("active");
+            },
+        });
+    }
+
+    /**
      * Set columns in the group as resizing
      *
      * @param {Column} columns
@@ -158,51 +189,6 @@ export default class ColumnGroup extends PreviewBlock {
     private unsetResizingColumns() {
         this.parent.children().forEach((column: Column) => {
             column.resizing(false);
-        });
-    }
-
-    /**
-     * Bind draggable instances to the child columns
-     */
-    private bindDraggable() {
-        this.parent.children().forEach((column: Column) => {
-            column.element.draggable({
-                appendTo: "body",
-                containment: "body",
-                handle: ".move-column",
-                revertDuration: 250,
-                helper() {
-                    const helper = $(this).clone();
-                    helper.css({
-                        opacity: 0.5,
-                        pointerEvents: "none",
-                        width: $(this).width() + "px",
-                        zIndex: 100,
-                    });
-                    return helper;
-                },
-                start: (event: Event) => {
-                    // Use the global state as columns can be dragged between groups
-                    setDragColumn(ko.dataFor($(event.target)[0]) as Column);
-                    this.dropPositions = calculateDropPositions(this.parent);
-                },
-                stop: () => {
-                    const draggedColumn: Column = getDragColumn();
-                    if (this.movePosition && draggedColumn) {
-                        // Check if we're moving within the same group, even though this function will
-                        // only ever run on the group that bound the draggable event
-                        if (draggedColumn.parent === this.parent) {
-                            this.parent.handleColumnSort(draggedColumn, this.movePosition.insertIndex);
-                            this.movePosition = null;
-                        }
-                    }
-
-                    removeDragColumn();
-
-                    this.dropPlaceholder.removeClass("left right");
-                    this.movePlaceholder.removeClass("active");
-                },
-            });
         });
     }
 
@@ -502,4 +488,27 @@ export default class ColumnGroup extends PreviewBlock {
             },
         });
     }
+}
+
+export interface ResizeHistory {
+    left: ResizeHistoryItem[];
+    right: ResizeHistoryItem[];
+    [key: string]: ResizeHistoryItem[];
+}
+
+export interface ResizeHistoryItem {
+    adjustedColumn: Column;
+    modifyColumnInPair: string;
+}
+
+export interface MaxGhostWidth {
+    left: number;
+    right: number;
+}
+
+export interface ColumnWidth {
+    name: string;
+    position: number;
+    width: number;
+    forColumn: string;
 }

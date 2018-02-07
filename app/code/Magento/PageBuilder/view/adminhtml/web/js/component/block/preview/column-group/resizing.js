@@ -122,9 +122,9 @@ define(["../../../../utils/array"], function (_array) {
     // Iterate through the amount of columns generating the position for both left & right interactions
 
     for (var i = getMaxColumns(); i > 0; i--) {
-      var _position = Math.round(columnLeft + singleColumnWidth * i);
+      var position = Math.round(columnLeft + singleColumnWidth * i);
 
-      if (_position > Math.round(leftMaxWidthFromChildren)) {
+      if (position > Math.round(leftMaxWidthFromChildren)) {
         continue;
       }
 
@@ -132,15 +132,15 @@ define(["../../../../utils/array"], function (_array) {
         forColumn: "left",
         // These positions are for the left column in the pair
         name: i + "/" + getMaxColumns(),
-        position: _position,
+        position: position,
         width: getRoundedColumnWidth(100 / getMaxColumns() * i)
       });
     }
 
     for (var _i = 1; _i < getMaxColumns(); _i++) {
-      var _position2 = Math.floor(adjacentRightPosition - _i * singleColumnWidth);
+      var _position = Math.floor(adjacentRightPosition - _i * singleColumnWidth);
 
-      if (_position2 < Math.floor(rightMaxWidthFromChildren)) {
+      if (_position < Math.floor(rightMaxWidthFromChildren)) {
         continue;
       } // The right interaction is only used when we're crushing a column that isn't adjacent
 
@@ -149,7 +149,7 @@ define(["../../../../utils/array"], function (_array) {
         forColumn: "right",
         // These positions are for the left column in the pair
         name: _i + "/" + getMaxColumns(),
-        position: _position2,
+        position: _position,
         width: getRoundedColumnWidth(100 / getMaxColumns() * _i)
       });
     }

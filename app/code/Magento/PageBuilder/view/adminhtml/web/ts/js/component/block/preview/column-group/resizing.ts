@@ -5,6 +5,7 @@
 import {outwardSearch} from "../../../../utils/array";
 import Column from "../../column";
 import ColumnGroup from "../../column-group";
+import {ColumnWidth, MaxGhostWidth, ResizeHistory} from "../column-group";
 
 /**
  * Get the maximum columns allowed
@@ -330,27 +331,4 @@ export function determineAdjustedColumn(
  */
 export function comparator(num1: number, num2: number, threshold: number): boolean {
     return (num1 > (num2 - (threshold / 2)) && num1 < (num2 + (threshold / 2)));
-}
-
-export interface ResizeHistory {
-    left: ResizeHistoryItem[];
-    right: ResizeHistoryItem[];
-    [key: string]: ResizeHistoryItem[];
-}
-
-export interface ResizeHistoryItem {
-    adjustedColumn: Column;
-    modifyColumnInPair: string;
-}
-
-export interface MaxGhostWidth {
-    left: number;
-    right: number;
-}
-
-export interface ColumnWidth {
-    name: string;
-    position: number;
-    width: number;
-    forColumn: string;
 }
