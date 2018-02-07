@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import AppearanceInterface from "../component/appearance/appearance-interface";
-import {DataObject} from "../component/data-store";
+import {AppearanceInterface} from "../appearance/appearance-interface";
+import {DataObject} from "../data-store";
 
 interface AppearanceList {
     [key: string]: AppearanceInterface;
