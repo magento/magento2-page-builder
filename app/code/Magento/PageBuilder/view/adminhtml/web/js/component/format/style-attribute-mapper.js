@@ -21,6 +21,16 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
       var _this = this;
 
       var result = {};
+      data = _underscore.extend({}, data); // If the border is set to default we don't persist any border related style attributes
+
+      if (typeof data.border !== "undefined") {
+        if (data.border === "none") {
+          data.border_color = "";
+          data.border_width = "";
+          data.border_radius = "";
+        }
+      }
+
       Object.keys(data).map(function (key) {
         var value = data[key];
 
@@ -77,14 +87,16 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
       var _this2 = this;
 
       var result = {};
+      data = _underscore.extend({}, data);
       Object.keys(data).map(function (key) {
         var value = data[key];
 
         if (value === "") {
           return;
-        }
+        } // The border values will be translated through as their top, left etc. so map them to the border-width
 
-        if (key === "border-top-width") {
+
+        if (key === "border-top-width" && value !== "initial") {
           key = "border-width";
         }
 

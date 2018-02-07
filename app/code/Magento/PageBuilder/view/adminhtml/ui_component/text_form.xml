@@ -85,11 +85,6 @@
             </settings>
         </field>
         <field name="text_align" sortOrder="10" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">left</item>
-                </item>
-            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Alignment</label>
@@ -99,14 +94,18 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string" />
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
                                 <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
-                            <option name="1" xsi:type="array">
+                            <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
                                 <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
-                            <option name="2" xsi:type="array">
+                            <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
                                 <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
@@ -115,7 +114,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>
