@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="VerifyPagebuilderSwitcherAndDisclaimerMessage">
+        <annotations>
+            <title value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
+            <description value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="Advanced Content Tools" stepKey="seeAdvancedContentToolTab"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
+        <uncheckOption selector="{{PageBuilderCollapsibleSection.UseSystemValue}}" stepKey="uncheckUseSystemValue"/>
+        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
+        <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enabled']/td[@class='value']//span" stepKey="grabTextFromDisclaimerMsg"/>
+        <assertEquals stepKey="assertEquals2" expected="Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content." expectedType="string" actual="grabTextFromElement" actualType="variable" message="pass"/>
+    </test>
+    <test name="VerifyPageBuilderVisibleOnCatalog">
+        <annotations>
+            <title value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilder1" stepKey="enablePageBuilder"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Verify PageBuilder visible on creation form of Catalog Page-->
+        <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToNewCatalog"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
+        <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
+        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <click userInput="Edit with Page Builder" stepKey="clickOnPageBuilderBtn" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seeBluefootVisible" />
+        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <!--Verify PageBuilder visible on staging slideout of Catalog Page-->
+        <click selector="{{AdminStagingSlideOutSection.scheduleNewUpdateBtn}}" stepKey="clickOnStagingBtn" />
+        <waitForElementVisible selector="{{AdminStagingSlideOutSection.title}}" stepKey="waitForSlideOutOpen"/>
+        <click selector="{{AdminStagingSlideOutSection.contentTab}}" stepKey="expandContentTab" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <click userInput="Edit with Page Builder" stepKey="clickOnPageBuilderBtn" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seeBluefootVisible" />
+    </test>
+    <test name="VerifyPageBuilderVisibleOnPages">
+        <annotations>
+            <title value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilder1" stepKey="enablePageBuilder"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Verify PageBuilder visible on CMS Page creation form-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToCMSPagesGrid"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortIdByDescendingToSearchLatestCreatedCMSPage"/>
+        <click selector="{{CmsPagesPageActionsSection.select('$$createPreReqCMSPage.identifier$$')}}" stepKey="clickSelectCreatedCMSPage" />
+        <click selector="{{CmsPagesPageActionsSection.edit($$createPreReqCMSPage.identifier$$)}}" stepKey="navigateToCreatedCMSPage" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentTab1"/>
+        <actionGroup ref="verifyBluefootVisibleOnPage" stepKey="verifyBluefootVisibleOnCMSPage"/>
+        <!--Verify PageBuilder visible on staging slideout of CMS Page-->
+        <actionGroup ref="verifyBluefootVisibleOnStaging" stepKey="verifyBluefootVisibleOnStagingCMS"/>
+
+        <!--Verify PageBuilder visible on CMS Block creation form-->
+        <amOnPage url="{{CmsBlocksPage.url}}" stepKey="navigateToCMSBlocksGrid"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortIdByDescendingToSearchLatestCreatedCMSPage"/>
+        <click selector="{{CmsPagesPageActionsSection.select('$$createPreReqBlock.identifier$$')}}" stepKey="clickSelectCreatedCMSBlock" />
+        <click selector="{{CmsPagesPageActionsSection.edit($$createPreReqBlock.identifier$$)}}" stepKey="navigateToCreatedCMSBlock" />
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="verifyBluefootVisibleOnPage" stepKey="verifyBluefootVisibleOnBlockPage"/>
+        <!--Verify PageBuilder visible on staging slideout of CMS Block-->
+        <actionGroup ref="verifyBluefootVisibleOnStaging" stepKey="verifyBluefootVisibleOnStagingBlock"/>
+
+        <!--Verify PageBuilder visible on Dynamic Block creation form -->
+        <amOnPage url="{{AdminBannerPage.url}}" stepKey="openNewBannerForm"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <actionGroup ref="verifyBluefootVisibleOnPage" stepKey="verifyBluefootVisibleOnBlockPage"/>
+
+        <!--Verify PageBuilder visible on Newsletter creation form-->
+        <amOnPage url="{{NewsletterTemplateForm.url}}" stepKey="amOnNewsletterTemplatePage"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <dontSee selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="dontSeeBluefootVisible" />
+    </test>
+</tests>
