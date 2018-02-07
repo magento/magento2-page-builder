@@ -73,11 +73,64 @@ define(["../component/config"], function (_config) {
     var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
   }
+  /**
+   * Remove quotes in media directives, {{media url="wysiwyg/image.png"}} convert to {{media url=wysiwyg/image.png}}
+   *
+   * @param {string} html
+   * @returns {string}
+   */
+
+
+  function removeQuotesInMediaDirectives(html) {
+    var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
+    var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
+    var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
+
+    if (mediaDirectiveMatches) {
+      mediaDirectiveMatches.forEach(function (mediaDirective) {
+        var urlMatches = mediaDirective.match(urlRegExp);
+
+        if (urlMatches && urlMatches[1] !== undefined) {
+          var directiveWithOutQuotes = '{{media url=' + urlMatches[1].replace(/("|&quot;|\s)/g, "") + '}}';
+          html = html.replace(mediaDirective, directiveWithOutQuotes);
+        }
+      });
+    }
+
+    return html;
+  }
+  /**
+   * Replace media directives with actual media URLs
+   *
+   * @param {string} html
+   * @returns {string}
+   */
+
+
+  function convertMediaDirectivesToUrls(html) {
+    var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
+    var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
+
+    if (mediaDirectiveMatches) {
+      mediaDirectiveMatches.forEach(function (mediaDirective) {
+        var urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
+        var urlMatches = mediaDirective.match(urlRegExp);
+
+        if (urlMatches && urlMatches[1] !== "undefined") {
+          html = html.replace(mediaDirective, _config.getInitConfig('media_url') + urlMatches[1]);
+        }
+      });
+    }
+
+    return html;
+  }
 
   return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
     fromDataUrl: fromDataUrl,
-    getImageUrl: getImageUrl
+    getImageUrl: getImageUrl,
+    removeQuotesInMediaDirectives: removeQuotesInMediaDirectives,
+    convertMediaDirectivesToUrls: convertMediaDirectivesToUrls
   });
 });
 //# sourceMappingURL=directives.js.map
