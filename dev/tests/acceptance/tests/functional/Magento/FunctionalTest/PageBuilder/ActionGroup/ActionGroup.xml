@@ -173,6 +173,20 @@
         <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldIsDisabled">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{PageBuilderColumnSection.panelFieldDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
+    </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldIsNotDisabled">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{PageBuilderColumnSection.panelFieldNotDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
+    </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsRequired">
         <arguments>
             <argument name="property" defaultValue=""/>
