@@ -19,26 +19,10 @@ class Config  implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
     const PAGEBUILDER_EDITOR = 'pagebuilder';
 
     /**
-     * @var \Magento\Cms\Model\Wysiwyg\DefaultConfigProvider
-     */
-    private $defaultWysiwygConfig;
-
-    /**
-     * Config constructor.
-     * @param \Magento\Cms\Model\Wysiwyg\DefaultConfigProvider $defaultConfigProvider
-     */
-    public function __construct(
-        \Magento\Cms\Model\Wysiwyg\DefaultConfigProvider $defaultConfigProvider
-    ) {
-        $this->defaultWysiwygConfig = $defaultConfigProvider;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getConfig($config)
     {
-        $config = $this->defaultWysiwygConfig->getConfig($config);
         $config->addData(['adapterType' => self::PAGEBUILDER_EDITOR]);
         return $config;
     }

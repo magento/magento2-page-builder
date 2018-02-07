@@ -62,17 +62,17 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             }
             //to fix product form
         }
+        if (isset($wysiwygConfigData['enable_pagebuilder'])
+            && !$wysiwygConfigData['enable_pagebuilder']
+            || !$isEditorNameBlueFoot) {
+            return parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+        }
         // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
         $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
         // Override the templates to include our KnockoutJS code
         $data['config']['template'] = 'Magento_PageBuilder/wysiwyg';
         $data['config']['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
-        if (isset($wysiwygConfigData['enable_pagebuilder'])
-            && !$wysiwygConfigData['enable_pagebuilder']
-            || !$isEditorNameBlueFoot) {
-            return parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
-        }
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
             $config['wysiwygConfigData'] = $wysiwygConfigData;
 

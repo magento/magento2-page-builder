@@ -40,9 +40,8 @@ define([
             userSelect: true,
             isFullScreen: false,
             originalScrollTop: false,
-            isComponentInitialized: ko.observable(false),
-            wysiwygConfig: ko.observable(false),
-            showSpinner: ko.observable(false),
+            isComponentInitialized: false,
+            isButtonEnable: ko.observable(false),
             links: {
                 stageActive: false,
                 stage: {},
@@ -81,12 +80,10 @@ define([
                 if (!fullScreen) {
                     _.defer(function () {
                         jQuery(window).scrollTop(self.originalScrollTop);
+                        //hide page builder area in case if we open full screen mode from button
+                        self.hidePageBuilderArea();
                     });
                 }
-            });
-
-            this.wysiwygConfig.subscribe(function(config) {
-                this.displayPageBuilder(config);
             }, this);
             return this;
         },
@@ -97,8 +94,19 @@ define([
          * @return {void}
          */
         setElementNode: function (node) {
-            
+
+            this.isButtonEnable($(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').length > 0);
             this.domNode = node;
+
+            if (!this.isComponentInitialized) {
+
+                if (this.isButtonEnable()) {
+                    //process case when page builder is initialized using button
+                    this.bindPageBuilderButton(node);
+                } else {
+                    this.buildPageBuilder(false);
+                }
+            }
             $(node).bindings({
                 value: this.value
             });
@@ -116,6 +124,21 @@ define([
             }
             return this.panel;
         },
+
+        /**
+         * Hide page builder area
+         *
+         * @return void
+         */
+        hidePageBuilderArea: function () {
+            if (this.isButtonEnable()) {
+                this.isComponentInitialized = false;
+                this.stageActive(false);
+                this.visible(true);
+                $(this.domNode).hide();
+            }
+        },
+
         /**
          * Any events fired on the WYSIWYG component should be ran on the stage
          *
@@ -132,33 +155,29 @@ define([
          * @param node
          */
         bindPageBuilderButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').on('click', this.buildPageBuilder.bind(this));
+            //hide wysiwyg text area and toogle buttons
+            $('#' + node.id).hide();
+            $('#toggle' + node.id).hide();
+            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
+                .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
 
         /**
          * Displays page builder based on configuration
-         * @param config
+         * @param event
          * @return void
          */
-        displayPageBuilder: function(config)
+        displayPageBuilderInFullScreenMode: function(event)
         {
-            this.config = config;
-            var buildInstance = new Build(this.initialValue),
-                isPageBuilderButtonExists =  config.pagebuilder_button || false;
+            this.isComponentInitialized = true;
+            this.isFullScreen(true);
 
-            if (isPageBuilderButtonExists) {
-                this.bindPageBuilderButton(this.domNode);
-
-            }
-            //@todo simplify that logic
-            if (!this.isComponentInitialized() && !isPageBuilderButtonExists) {
-                this.showSpinner(true);
-                this.loading(true);
-                if (buildInstance.canBuild() && isPageBuilderButtonExists) {
-                    this.buildPageBuilder(false, buildInstance);
-                } else {
-                    this.buildPageBuilder(false);
-                }
+            if (!$.isEmptyObject(this.stage)) {
+                //handle case, when pagebuilder was previously opened
+                this.stageActive(true);
+            } else {
+                //initialize page builder on first click
+                this.buildPageBuilder(event);
             }
         },
 
@@ -166,13 +185,13 @@ define([
          * Handle a click event requesting that we build PageBuilder
          *
          * @param event
-         * @param buildInstance
+         * @return void
          */
-        buildPageBuilder: function (event, buildInstance) {
+        buildPageBuilder: function (event) {
             var self = this,
-                isFullScreen = this.config.isFullScreenMode || false;
-            this.isFullScreen(isFullScreen);
+                buildInstance = new Build(this.initialValue);
 
+            this.loading(true);
             if (event) {
                 event.stopPropagation();
             }
@@ -193,8 +212,12 @@ define([
             this.getPanel().bindStage(this.stage);
 
             // Build the stage instance using any existing build data
-            this.stage.build(buildInstance);
-            this.isComponentInitialized(true);
+            if (buildInstance.canBuild()) {
+                this.stage.build(buildInstance)
+            } else {
+                this.stage.build();
+            };
+            this.isComponentInitialized = true;
         },
 
         /**

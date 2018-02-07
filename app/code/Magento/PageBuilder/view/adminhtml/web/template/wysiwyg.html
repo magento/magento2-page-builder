@@ -11,7 +11,9 @@
      data-bind="attr: {'data-namespace': inputName}">
 </div>
 
-<div class="pagebuilder-stage-wrapper" visible="stageActive" css="{'stage-full-screen': isFullScreen}" style="min-height:650px">
+<div class="pagebuilder-stage-wrapper"
+     visible="stageActive"
+     css="{'stage-full-screen': isFullScreen}" style="min-height:650px">
     <!-- ko if: isComponentInitialized -->
         <!-- ko template: getStageTemplate() --><!-- /ko -->
     <!-- /ko -->
@@ -19,8 +21,7 @@
 
 <div data-role="spinner"
      class="admin__data-grid-loading-mask"
-     visible="loading"
-     if="showSpinner">
+     visible="loading">
     <div class="spinner">
         <span repeat="8"/>
     </div>
