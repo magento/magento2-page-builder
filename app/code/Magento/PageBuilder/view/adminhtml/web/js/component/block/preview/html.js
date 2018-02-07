@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["knockout", "jquery", "./block", "../../config"], function (_knockout, _jquery, _block, _config) {
+define(["knockout", "./block", "../../config"], function (_knockout, _block, _config) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Code =
+  var Html =
   /*#__PURE__*/
   function (_PreviewBlock) {
-    _inheritsLoose(Code, _PreviewBlock);
+    _inheritsLoose(Html, _PreviewBlock);
 
     /**
      * Constructor
@@ -13,7 +13,7 @@ define(["knockout", "jquery", "./block", "../../config"], function (_knockout, _
      * @param {Block} parent
      * @param {Object} config
      */
-    function Code(parent, config) {
+    function Html(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
@@ -34,24 +34,29 @@ define(["knockout", "jquery", "./block", "../../config"], function (_knockout, _
      */
 
 
-    var _proto = Code.prototype;
+    var _proto = Html.prototype;
 
     _proto.normalizeImageUrls = function normalizeImageUrls(html) {
-      var container = (0, _jquery)('<div />');
-      container.append(html);
-      container.find("img").each(function (index, value) {
-        var matches = /url="?([^"\\\s\}]+)"?/.exec((0, _jquery)(value).attr('src'));
+      var mediaDirectiveRegExp = /\{\{media url="?[^"\s\}]+"?\}\}/g;
+      var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
 
-        if (typeof matches[1] != "undefined") {
-          (0, _jquery)(value).attr('src', _config.getInitConfig('media_url') + matches[1]);
+      if (mediaDirectiveMatches && mediaDirectiveMatches.length != "undefined") {
+        for (var i = 0; i < mediaDirectiveMatches.length; i++) {
+          var urlRegExp = /\{\{media url="?([^"\s\}]+)"?\}\}/;
+          var urlMatches = mediaDirectiveMatches[i].match(urlRegExp);
+
+          if (urlMatches && urlMatches[1] != "undefined") {
+            html = html.replace(mediaDirectiveMatches[i], _config.getInitConfig('media_url') + urlMatches[1]);
+          }
         }
-      });
-      return container.html();
+      }
+
+      return html;
     };
 
-    return Code;
+    return Html;
   }(_block);
 
-  return Code;
+  return Html;
 });
 //# sourceMappingURL=html.js.map

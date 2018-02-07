@@ -36,14 +36,20 @@ export default class Html extends PreviewBlock {
      * @returns {string}
      */
     normalizeImageUrls(html) {
-        const container = $('<div />');
-        container.append(html);
-        container.find("img").each((index, value) => {
-            const matches = /url="?([^"\\\s\}]+)"?/.exec($(value).attr('src'));
-            if (typeof matches[1] != "undefined") {
-                $(value).attr('src', Config.getInitConfig('media_url') + matches[1]);
+        const mediaDirectiveRegExp = /\{\{media url="?[^"\s\}]+"?\}\}/g;
+        const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
+        if (mediaDirectiveMatches && mediaDirectiveMatches.length != "undefined") {
+            for (let i = 0; i < mediaDirectiveMatches.length; i++) {
+                const urlRegExp = /\{\{media url="?([^"\s\}]+)"?\}\}/;
+                const urlMatches = mediaDirectiveMatches[i].match(urlRegExp);
+                if (urlMatches && urlMatches[1] != "undefined") {
+                    html = html.replace(
+                        mediaDirectiveMatches[i],
+                        Config.getInitConfig('media_url') + urlMatches[1]
+                    );
+                }
             }
-        });
-        return container.html();
+        }
+        return html;
     }
 }
