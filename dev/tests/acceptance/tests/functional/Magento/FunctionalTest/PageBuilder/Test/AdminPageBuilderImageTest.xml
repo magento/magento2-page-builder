@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddImage">
+    <test name="CanAddFullWidthImage">
         <annotations>
             <title value="Add an image content block into stage"/>
             <description value="A user should be able to add an image into a row."/>
@@ -37,6 +37,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
+        <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
+        <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
+        <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderImagePropertyJpg"/>
         </actionGroup>
@@ -56,18 +59,29 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
             <argument name="property" value="PageBuilderImageTitleTagProperty"/>
         </actionGroup>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesProperty.fieldName}}']" stepKey="cssPropertiesValue"/>
+        <assertEmpty actual="cssPropertiesValue" actualType="variable" message="pass" stepKey="assertCssPropertiesIsEmpty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
+        <assertElementContainsAttribute selector="{{ImageOnFrontend.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>
+        <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageElement('1')}}" stepKey="dontSeeMainImageOnMobile"/>
+        <seeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="seeMobileImageElementOnMobile"/>
+        <assertElementContainsAttribute selector="{{ImageOnFrontend.imageElement('2')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertMobileImageHasFullWidthStyle"/>
+        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
     <test name="CanRemoveImage">
         <annotations>
