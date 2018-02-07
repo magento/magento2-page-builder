@@ -5,6 +5,8 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import Appearance from "../../appearance/appearance";
+import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
@@ -20,48 +22,36 @@ export default class PreviewBlock {
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
 
     /**
-     * PreviewBlock constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object) {
+    constructor(parent: Block, config: object, appearance: Appearance) {
         const styleAttributeMapper = new StyleAttributeMapper();
         const styleAttributeFilter = new StyleAttributeFilter();
 
         this.parent = parent;
         this.config = config || {};
 
-        // Create an empty observable for all fields
-        if (this.config.fields) {
-            _.keys(this.config.fields).forEach((key: string) => {
-                this.updateDataValue(key, "");
-            });
-        }
+        this.setupDataFields();
 
-        // Subscribe to this blocks data in the store
-        this.parent.stage.store.subscribe(
-            (data: Dictionary<{}>) => {
-                _.forEach(data, (value, key) => {
-                    this.updateDataValue(key, value);
-                });
-            },
-            this.parent.id,
-        );
-
+        // Calculate the preview style utilising the style attribute mapper & appearance system
         this.previewStyle = ko.computed(() => {
+            let data = _.mapObject(this.data, (value) => {
+                if (ko.isObservable(value)) {
+                    return value();
+                }
+                return value;
+            });
+            if (appearance && appearance.hasAppearances(data)) {
+                data = appearance.add(data);
+            }
             // Extract data values our of observable functions
-            const styles = styleAttributeMapper.toDom(
-                styleAttributeFilter.filter(
-                    _.mapObject(this.data, (value) => {
-                        if (ko.isObservable(value)) {
-                            return value();
-                        }
-                        return value;
-                    }),
+            return this.afterStyleMapped(
+                styleAttributeMapper.toDom(
+                    styleAttributeFilter.filter(data),
                 ),
             );
-            return this.afterStyleMapped(styles);
         });
 
         Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
@@ -101,6 +91,28 @@ export default class PreviewBlock {
                 this.data[key] = ko.observable(value);
             }
         }
+    }
+
+    /**
+     * Setup fields observables within the data class property
+     */
+    protected setupDataFields() {
+        // Create an empty observable for all fields
+        if (this.config.fields) {
+            _.keys(this.config.fields).forEach((key: string) => {
+                this.updateDataValue(key, "");
+            });
+        }
+
+        // Subscribe to this blocks data in the store
+        this.parent.stage.store.subscribe(
+            (data: DataObject) => {
+                _.forEach(data, (value, key) => {
+                    this.updateDataValue(key, value);
+                });
+            },
+            this.parent.id,
+        );
     }
 
     /**

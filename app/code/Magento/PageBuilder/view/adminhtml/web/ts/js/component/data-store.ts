@@ -6,11 +6,7 @@
 import $ from "jquery";
 
 interface DataStoreEvent {
-    state: State;
-}
-
-interface State {
-    state: object | null;
+    state: DataObject;
 }
 
 export interface DataObject {
@@ -106,10 +102,10 @@ export default class DataStore {
     /**
      * Subscribe to data changes on an editable area
      *
-     * @param handler
-     * @param id
+     * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string} id
      */
-    public subscribe(handler: (state: State, event: Event) => void, id?: string): void {
+    public subscribe(handler: (state: DataObject, event: Event) => void, id?: string): void {
         const eventName = (id ? "state_" + id : "state");
         this.events.on(eventName, (event: Event, data: DataStoreEvent) => {
             handler(data.state, event);

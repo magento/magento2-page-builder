@@ -19,12 +19,22 @@ export default class Appearance {
     }
 
     /**
+     * Does the instance and data have an appearance to apply?
+     *
+     * @param {} data
+     * @returns {boolean}
+     */
+    public hasAppearances(data: DataObject): boolean {
+        return (typeof this.appearances[data.appearance] !== "undefined");
+    }
+
+    /**
      * @param data
      * @returns {DataObject}
      */
     public add(data: DataObject): DataObject {
         if (data.appearance !== undefined) {
-            if (this.appearances[data.appearance] === undefined) {
+            if (!this.hasAppearances(data)) {
                 console.error( "No appearances specified for content type." );
             }
             return this.appearances[data.appearance].add(data);

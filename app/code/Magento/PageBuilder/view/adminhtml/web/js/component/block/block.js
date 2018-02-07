@@ -28,7 +28,7 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
       _this.editOnInsert = true;
       _this.preview = void 0;
       _this.childEntityKeys = [];
-      _this.preview = (0, _previews)(_this, config);
+      _this.preview = (0, _previews)(_this, config, appearance);
       var defaults = {};
 
       if (config.fields) {

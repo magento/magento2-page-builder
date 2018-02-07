@@ -35,7 +35,7 @@ export default class Block extends Structural implements BlockInterface {
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, appearance);
 
-        this.preview = getPreviewInstance(this, config);
+        this.preview = getPreviewInstance(this, config, appearance);
 
         const defaults: FieldDefaults = {};
         if (config.fields) {

@@ -13,16 +13,27 @@ define([], function () {
       this.appearances = appearances;
     }
     /**
-     * @param data
-     * @returns {DataObject}
+     * Does the instance and data have an appearance to apply?
+     *
+     * @param {} data
+     * @returns {boolean}
      */
 
 
     var _proto = Appearance.prototype;
 
+    _proto.hasAppearances = function hasAppearances(data) {
+      return typeof this.appearances[data.appearance] !== "undefined";
+    };
+    /**
+     * @param data
+     * @returns {DataObject}
+     */
+
+
     _proto.add = function add(data) {
       if (data.appearance !== undefined) {
-        if (this.appearances[data.appearance] === undefined) {
+        if (!this.hasAppearances(data)) {
           console.error("No appearances specified for content type.");
         }
 

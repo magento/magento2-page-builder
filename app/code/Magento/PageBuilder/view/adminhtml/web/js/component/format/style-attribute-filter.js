@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -34,7 +34,7 @@ define([], function () {
 
       var result = {};
       Object.keys(data).map(function (key) {
-        if (Object.values(_this.allowedAttributes).indexOf(key) > -1) {
+        if (_underscore.values(_this.allowedAttributes).indexOf(key) > -1) {
           result[key] = data[key];
         }
       });

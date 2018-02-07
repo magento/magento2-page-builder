@@ -102,8 +102,8 @@ define(["jquery"], function (_jquery) {
     /**
      * Subscribe to data changes on an editable area
      *
-     * @param handler
-     * @param id
+     * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string} id
      */
 
 

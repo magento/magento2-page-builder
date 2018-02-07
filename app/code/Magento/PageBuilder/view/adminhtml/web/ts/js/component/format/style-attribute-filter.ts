@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import {DataObject} from "../data-store";
 
 export default class StyleAttributeFilter {
@@ -56,7 +57,7 @@ export default class StyleAttributeFilter {
         const result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                if (Object.values(this.allowedAttributes).indexOf(key) > -1) {
+                if (_.values(this.allowedAttributes).indexOf(key) > -1) {
                     result[key] = data[key];
                 }
             },

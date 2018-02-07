@@ -39,11 +39,12 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
    *
    * @param {Block} block
    * @param blockConfig
+   * @param {Appearance} appearance
    * @returns {PreviewBlock}
    */
 
 
-  function get(block, blockConfig) {
+  function get(block, blockConfig, appearance) {
     var code = blockConfig.name;
     var instance;
 
@@ -53,7 +54,7 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
       instance = previews[code];
     }
 
-    return new instance(block, blockConfig);
+    return new instance(block, blockConfig, appearance);
   }
 
   return Object.assign(get, {

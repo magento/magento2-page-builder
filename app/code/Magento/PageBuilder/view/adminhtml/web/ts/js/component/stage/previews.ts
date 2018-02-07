@@ -6,7 +6,8 @@
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import Block from "../block/block";
 import PreviewBlock from "../block/preview/block";
-import Config from "../config";
+import Config, {ConfigContentBlocks} from "../config";
+import Appearance from "../appearance/appearance";
 
 const previews: any[] = [];
 
@@ -38,9 +39,10 @@ export function load(): void {
  *
  * @param {Block} block
  * @param blockConfig
+ * @param {Appearance} appearance
  * @returns {PreviewBlock}
  */
-export default function get(block: Block, blockConfig: any): PreviewBlock {
+export default function get(block: Block, blockConfig: any, appearance: Appearance): PreviewBlock {
     const code = blockConfig.name;
     let instance: typeof PreviewBlock;
     if (typeof previews[code] === "undefined") {
@@ -49,5 +51,5 @@ export default function get(block: Block, blockConfig: any): PreviewBlock {
         instance = previews[code];
     }
 
-    return new instance(block, blockConfig);
+    return new instance(block, blockConfig, appearance);
 }
