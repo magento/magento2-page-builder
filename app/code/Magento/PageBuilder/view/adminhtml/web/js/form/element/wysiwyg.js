@@ -42,6 +42,7 @@ define([
             originalScrollTop: false,
             isComponentInitialized: false,
             isButtonEnable: ko.observable(false),
+            wysiwygConfigData: {},
             links: {
                 stageActive: false,
                 stage: {},
@@ -50,7 +51,8 @@ define([
                 showBorders: false,
                 loading: false,
                 userSelect: true,
-                isFullScreen: false
+                isFullScreen: false,
+                wysiwygConfigData: {}
             },
             config: {
                 name: 'stage'
@@ -65,7 +67,8 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect '
+                    + 'isFullScreen wysiwygConfigData');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -94,11 +97,12 @@ define([
          * @return {void}
          */
         setElementNode: function (node) {
-            this.isButtonEnable($(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').length > 0);
+
             this.domNode = node;
 
             if (!this.isComponentInitialized) {
-                if (this.isButtonEnable()) {
+
+                if (this.wysiwygConfigData().pagebuilder_button) {
                     //process case when page builder is initialized using button
                     this.bindPageBuilderButton(node);
                     this.handleUseDefaultButton(node);
@@ -130,7 +134,8 @@ define([
          * @return void
          */
         hidePageBuilderArea: function () {
-            if (this.isButtonEnable()) {
+
+            if (this.wysiwygConfigData().enable_pagebuilder) {
                 this.isComponentInitialized = false;
                 this.stageActive(false);
                 this.visible(true);
@@ -156,8 +161,10 @@ define([
         bindPageBuilderButton: function (node) {
             //hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
-            $('#toggle' + node.id).hide();
 
+            if (this.wysiwygConfigData().hide_toogle_buttons) {
+                $('#toggle' + node.id).hide()
+            };
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
@@ -193,15 +200,18 @@ define([
          */
         displayPageBuilderInFullScreenMode: function(event)
         {
+            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+
             this.isComponentInitialized = true;
-            this.isFullScreen(true);
 
             if (!$.isEmptyObject(this.stage)) {
+
+                this.isFullScreen(isFullScreen);
                 //handle case, when pagebuilder was previously opened
                 this.stageActive(true);
             } else {
                 //initialize page builder on first click
-                this.buildPageBuilder(event);
+                this.buildPageBuilder(event, isFullScreen);
             }
         },
 
@@ -211,9 +221,11 @@ define([
          * @param event
          * @return void
          */
-        buildPageBuilder: function (event) {
+        buildPageBuilder: function (event, isFullScreeMode) {
             var self = this,
-                buildInstance = new Build(this.initialValue);
+                buildInstance = new Build(this.initialValue),
+                isFullScreeMode = isFullScreeMode || false;
+            this.isFullScreen(isFullScreeMode);
 
             this.loading(true);
             if (event) {
@@ -235,7 +247,6 @@ define([
             // Create a new instance of the panel
             this.getPanel().bindStage(this.stage);
 
-            // Build the stage instance using any existing build data
             if (buildInstance.canBuild()) {
                 this.stage.build(buildInstance)
             } else {
