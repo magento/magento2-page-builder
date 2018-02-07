@@ -5,6 +5,7 @@
 
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
+import {getColumnWidth} from "./column-group/resizing";
 
 export default class Column extends PreviewBlock {
     /**

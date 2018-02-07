@@ -90,6 +90,7 @@
         <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][2]"/>
+        <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}};')]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
         <element name="addRow" type="button" selector='//*[@class="pagebuilder-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
@@ -142,6 +143,7 @@
     </section>
     <section name="ColumnsOnFrontend">
         <element name="column1Height" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'min-height: 500px;')]"/>
+        <element name="column1HeightFull" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: stretch;')]"/>
         <element name="column1BackgroundColor" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
         <element name="column1BackgroundColorPeacock" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-color: rgb(8, 126, 139);')]"/>
         <element name="column1BackgroundSize" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-size: contain;')]"/>
@@ -153,6 +155,7 @@
         <element name="column1BackgroundImage" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-image: url(')]"/>
         <element name="column2Height" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 500px;')]"/>
         <element name="column2Height300" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 300px;')]"/>
+        <element name="column2HeightFull" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'align-self: stretch;')]"/>
         <element name="column2BackgroundSize" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-size: auto;')]"/>
         <element name="column2BackgroundRepeatNotApplied" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-repeat: no-repeat;')]"/>
         <element name="column2BackgroundAttachment" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-attachment: scroll;')]"/>

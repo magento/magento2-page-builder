@@ -8,12 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddMap">
+    <test name="AddMapContentBlockToCMSPage">
         <annotations>
-            <title value="Add a map into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Map MAGETWO-83935"/>
+            <title value="Add Map in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add a map into a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84676"/>
+            <testCaseId value="MAGETWO-84914"/>
             <group value="pagebuilder"/>
             <group value="skip"/>
         </annotations>
@@ -57,12 +59,14 @@
         <seeElementInDOM selector="{{MapOnFrontend.map1Width}}" stepKey="seeMapWidthStyleApplied"/>
         <seeElementInDOM selector="{{MapOnFrontend.map1Height}}" stepKey="seeMapHeightStyleApplied"/>
     </test>
-    <test name="CanRemoveMap">
+    <test name="RemoveMapFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Map MAGETWO-83935"/>
             <title value="Remove map content block from stage"/>
             <description value="A user should be able to remove map block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -88,9 +92,12 @@
     </test>
     <test name="MapHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Map MAGETWO-83935"/>
             <title value="Map has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for map"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

@@ -8,8 +8,10 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddColumn">
+    <test name="AddColumnContentBlockToCMSPage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Add a column into a row"/>
             <description value="A user should be able to add a column into a row."/>
             <severity value="CRITICAL"/>
@@ -32,8 +34,10 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </test>
-    <test name="CanRemoveColumns">
+    <test name="RemoveColumnFromStage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Remove a column from a row"/>
             <description value="A user should be able to remove columns from rows."/>
             <severity value="CRITICAL"/>
@@ -69,6 +73,8 @@
     </test>
     <test name="SlideOutPanelWithSettingsContainRequiredFields">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Displays requires column settings"/>
             <description value="Slide out panel with required settings appear"/>
             <severity value="CRITICAL"/>
@@ -130,6 +136,8 @@
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Can close the edit panel"/>
             <description value="A user should be able to open the edit form on an added column."/>
             <severity value="CRITICAL"/>
@@ -162,6 +170,8 @@
     </test>
     <test name="ColumnSettingsAppearOnFrontend">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column settings appear on frontend"/>
             <description value="Validate selected column settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -233,6 +243,8 @@
     </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column appearance settings show on frontend"/>
             <description value="Validate column appearance settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -296,6 +308,8 @@
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column settings appear on the column form after page save"/>
             <description value="Validate selected column settings appear on the form after page save"/>
             <severity value="CRITICAL"/>
@@ -383,6 +397,8 @@
     </test>
     <test name="PreviewBackgroundImage">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Upload and preview an image for column background style"/>
             <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
             <severity value="CRITICAL"/>
@@ -414,6 +430,8 @@
     </test>
     <test name="ValidateBackgroundImageUrl">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Background Image Url is displayed on front end"/>
             <description value="Validate background image appears on the frontend"/>
             <severity value="CRITICAL"/>
@@ -454,6 +472,8 @@
     </test>
     <test name="ColumnBackgroundColorPreserved">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column background color is preserved on edit"/>
             <description value="Validate column background color is preserved on edit"/>
             <severity value="CRITICAL"/>
@@ -577,9 +597,12 @@
     </test>
     <test name="ColumnHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-66176"/>
             <title value="Column has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for a column"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -712,5 +735,93 @@
         <seeElement selector="{{ColumnsOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
         <seeElement selector="{{ColumnsOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
         <seeElement selector="{{ColumnsOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
+    </test>
+    <test name="RemovingColumnDistributesWidth">
+        <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Delete Columns From Container MAGETWO-83556"/>
+            <title value="Column Width Distribution"/>
+            <description value="Removing a column distributes column widths"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
+        </actionGroup>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
+    </test>
+    <test name="ColumnFullHeightShowsOnFrontend">
+        <annotations>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Column Configuration MAGETWO-71365"/>
+            <title value="Bluefoot columns to be the same height in the row"/>
+            <description value="Validate columns are the same height on the frontend"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader1ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader2ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeader3ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+        </actionGroup>
+        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <wait time="1" stepKey="wait1"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage1"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
 </tests>

@@ -52,7 +52,7 @@ function onBlockDropped(event: Event, params: BlockDroppedParams) {
             return createBlock(params.block.config, params.parent, params.parent.stage).then((block: Block) => {
                 params.parent.addChild(block, index);
                 EventBus.trigger("block:mount", {id: block.id, block});
-                EventBus.trigger(params.block.config.name + ":mount", {id: block.id, block});
+                EventBus.trigger(params.block.config.name + ":block:mount", {id: block.id, block});
                 return block;
             });
         } else {
