@@ -117,6 +117,8 @@
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
+        <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled="true"]' parameterized="true"/>
+        <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled="true")]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
     </section>
     <section name="HtmlOnFrontend">
@@ -165,6 +167,14 @@
         <element name="column3BackgroundWidthThird" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='.{{arg2}}']" parameterized="true"/>
+
+        <element name="columnDisplay" type="button" selector="[data-role='column']:first-child"/>
+        <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: center;']"/>
+        <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border: 10px dotted rgb(255, 255, 255);']"/>
+        <element name="columnBorderRadius" type="button" selector="[data-role='column']:first-child[style*='border-radius: 12px;']"/>
+        <element name="columnMargin" type="button" selector="[data-role='column']:first-child[style*='margin: 5px;']"/>
+        <element name="columnPadding" type="button" selector="[data-role='column']:first-child[style*='padding: 5px;']"/>
+        <element name="columnClass" type="button" selector="[data-role='column']:first-child.first-class.second-class.third-class"/>
     </section>
     <section name="AdvancedForm">
         <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
@@ -181,6 +191,7 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedBorder" type="select" selector="//select[@name='border']"/>
         <element name="advancedBorderColor" type="input" selector="//input[@name='border_color']"/>
+        <element name="advancedBorderWidth" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
         <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
