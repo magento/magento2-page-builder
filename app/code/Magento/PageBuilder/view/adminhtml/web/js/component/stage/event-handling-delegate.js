@@ -51,7 +51,7 @@ define(["knockout", "../../utils/array", "../block/factory", "../event-bus"], fu
             block: block
           });
 
-          _eventBus.trigger(params.block.config.name + ":mount", {
+          _eventBus.trigger(params.block.config.name + ":block:mount", {
             id: block.id,
             block: block
           });

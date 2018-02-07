@@ -18,10 +18,8 @@ import {default as ColumnGroupPreview} from "./preview/column-group";
 import {DropPosition} from "./preview/column-group/dragdrop";
 import {getDragColumn} from "./preview/column-group/registry";
 import {
-    findShrinkableColumn,
-    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
-    getRoundedColumnWidth,
-    getSmallestColumnWidth,
+    findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
+    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "./preview/column-group/resizing";
 
 export default class ColumnGroup extends Block {
@@ -40,6 +38,12 @@ export default class ColumnGroup extends Block {
             // Does the events parent match the previews parent? (e.g. column group)
             if (params.parent.id === this.id) {
                 (this.preview as ColumnGroupPreview).registerResizeHandle(params.column, params.handle);
+            }
+        });
+        EventBus.on("column:initElement", (event, params) => {
+            // Does the events parent match the previews parent? (e.g. column group)
+            if (params.parent.id === this.id) {
+                (this.preview as ColumnGroupPreview).bindDraggable(params.column);
             }
         });
 
@@ -229,14 +233,17 @@ export default class ColumnGroup extends Block {
         }
 
         // Determine how we can spread the empty space across the columns
-        traverseChildren: for (let i = totalChildColumns; i > 0; i--) {
-            const potentialWidth = formattedAvailableWidth / i;
+        for (let i = totalChildColumns; i > 0; i--) {
+            const potentialWidth = Math.floor(formattedAvailableWidth / i);
             for (const width of allowedColumnWidths) {
-                if (Math.floor(potentialWidth) === Math.floor(width)) {
+                if (potentialWidth === Math.floor(width)) {
                     spreadAcross = i;
                     spreadAmount = formattedAvailableWidth / i;
-                    break traverseChildren;
+                    break;
                 }
+            }
+            if (spreadAmount) {
+                break;
             }
         }
 
