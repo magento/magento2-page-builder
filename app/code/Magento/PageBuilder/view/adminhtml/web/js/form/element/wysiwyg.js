@@ -102,7 +102,7 @@ define([
 
             if (!this.isComponentInitialized) {
 
-                if (this.wysiwygConfigData().pagebuilder_button) {
+                if (this.wysiwygConfigData()['pagebuilder_button']) {
                     //process case when page builder is initialized using button
                     this.bindPageBuilderButton(node);
                     this.handleUseDefaultButton(node);
@@ -135,7 +135,7 @@ define([
          */
         hidePageBuilderArea: function () {
 
-            if (this.wysiwygConfigData().enable_pagebuilder) {
+            if (this.wysiwygConfigData()['enable_pagebuilder']) {
                 this.isComponentInitialized = false;
                 this.stageActive(false);
                 this.visible(true);
@@ -162,7 +162,7 @@ define([
             //hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
 
-            if (this.wysiwygConfigData().hide_toogle_buttons) {
+            if (this.wysiwygConfigData()['hide_toogle_buttons']) {
                 $('#toggle' + node.id).hide()
             };
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
@@ -200,7 +200,7 @@ define([
          */
         displayPageBuilderInFullScreenMode: function(event)
         {
-            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+            var isFullScreen = this.wysiwygConfigData()['openInFullScreen'] || false;
 
             this.isComponentInitialized = true;
 
@@ -219,6 +219,7 @@ define([
          * Handle a click event requesting that we build PageBuilder
          *
          * @param event
+         * @param {Boolean} isFullScreeMode
          * @return void
          */
         buildPageBuilder: function (event, isFullScreeMode) {
