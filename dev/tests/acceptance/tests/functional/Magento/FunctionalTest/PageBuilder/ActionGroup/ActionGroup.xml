@@ -420,5 +420,20 @@
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="navigateToCreatedCategory">
+        <arguments>
+            <argument name="Category"/>
+        </arguments>
+        <amOnPage url="{{AdminCategoryPage.page}}" stepKey="amOnCategoryPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <click selector="{{AdminCategorySidebarTreeSection.CategoryName(Category.Name)}}" stepKey="navigateToCreatedCategory" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner" />
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <waitForText userInput="Category Image" stepKey="waitForText" />
+    </actionGroup>
+
+
+
 
 </actionGroups>
