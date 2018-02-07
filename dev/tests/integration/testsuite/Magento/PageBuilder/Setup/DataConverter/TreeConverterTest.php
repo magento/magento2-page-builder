@@ -938,17 +938,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'alt_tag' => 'Alternative text',
                             'image' => '/m/a/magento.png',
-                            'link_text' => 'Domain',
                             'link_url' => 'http://domain.com/',
-                            'target_blank' => '0',
-                            'title_tag' => 'Title'
+                            'target_blank' => '0'
                         ]
                     ]
                 ],
                 'driver.json',
-                'driver.html'
+                'banner.html'
             ],
             'driver mobile image' => [
                 [
@@ -956,35 +953,15 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'alt_tag' => 'Alternative text',
                             'image' => '/m/a/magento1.png',
                             'mobile_image' => '/m/a/magento2.png',
-                            'link_text' => 'Domain',
                             'link_url' => 'http://domain.com/',
-                            'target_blank' => '0',
-                            'title_tag' => 'Title'
+                            'target_blank' => '0'
                         ]
                     ]
                 ],
                 'driver_mobile_image.json',
-                'driver_mobile_image.html'
-            ],
-            'driver no link text' => [
-                [
-                    'driver' => [
-                        [
-                            'entity_id' => 1,
-                            'css_classes' => 'one two',
-                            'alt_tag' => 'Alternative text',
-                            'image' => '/m/a/magento.png',
-                            'link_url' => 'http://domain.com/',
-                            'target_blank' => '0',
-                            'title_tag' => 'Title'
-                        ]
-                    ]
-                ],
-                'driver_no_link_text.json',
-                'driver_no_link_text.html'
+                'banner_mobile_image.html'
             ],
             'driver open in new window' => [
                 [
@@ -992,16 +969,14 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'alt_tag' => 'Alternative text',
                             'image' => '/m/a/magento.png',
                             'link_url' => 'http://domain.com/',
                             'target_blank' => '1',
-                            'title_tag' => 'Title'
                         ]
                     ]
                 ],
                 'driver_new_window.json',
-                'driver_new_window.html'
+                'banner_new_window.html'
             ],
             'product' => [
                 [

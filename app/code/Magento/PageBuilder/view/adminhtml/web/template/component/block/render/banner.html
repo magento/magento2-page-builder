@@ -1,0 +1,27 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div data-bind="attr: getAttributes(), style: Object.assign(getStyle(), {backgroundImage: '', padding: '', paddingLeft: '', paddingTop: '', paddingRight: '', paddingBottom: ''}), css: getCss()">
+    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }">
+        <div class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only" data-bind="style: getBannerStyles('mobileImage')">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+                <div class="pagebuilder-poster-content">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                </div>
+            </div>
+        </div>
+        <div class="pagebuilder-banner-wrapper pagebuilder-banner-image" data-bind="style: getBannerStyles('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+                <div class="pagebuilder-poster-content">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

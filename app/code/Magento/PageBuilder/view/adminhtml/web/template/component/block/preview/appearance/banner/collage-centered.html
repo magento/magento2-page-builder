@@ -1,0 +1,19 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <div data-bind="style: Object.assign(preview.previewStyle(), {
+        paddingLeft: 'calc(25% + ' + preview.data.margins_and_padding().padding.left + 'px)',
+        paddingRight: 'calc(25% + ' + preview.data.margins_and_padding().padding.right + 'px)'}),
+        event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+        <div class="pagebuilder-collage-overlay" data-bind="style: preview.getOverlayColorStyle()">
+            <div data-bind="css: {'pagebuilder-empty-banner': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
+            <button class="pagebuilder-button-primary pagebuilder-banner-button" data-bind="text: preview.getButtonText(), attr: {'data-link-url': preview.data.link_url()}, style: preview.getButtonStyles()" disabled></button>
+        </div>
+    </div>
+</div>

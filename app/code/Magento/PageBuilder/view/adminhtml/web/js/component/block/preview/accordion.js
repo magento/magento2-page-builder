@@ -4,13 +4,13 @@ define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockou
 
   var Accordion =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Accordion, _Block);
+  function (_PreviewBlock) {
+    _inheritsLoose(Accordion, _PreviewBlock);
 
     function Accordion(parent, config) {
       var _this;
 
-      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
+      _this = _PreviewBlock.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
 
       _this.element = void 0;
       _this.renderCounter = 0;

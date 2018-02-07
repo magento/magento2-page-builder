@@ -7,6 +7,7 @@ define(["../component/config"], function (_config) {
 
   /**
    * MIME type to use in place of the image
+   *
    * @type {string}
    */
   var mimeType = "text/magento-directive";
@@ -22,6 +23,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Convert a directive into our data URI
+   *
    * @param {string} directive
    * @returns {string}
    */
@@ -32,6 +34,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Convert a URI to it's directive equivalent
+   *
    * @param {string} url
    * @returns {string}
    */
@@ -46,6 +49,7 @@ define(["../component/config"], function (_config) {
   }
   /**
    * Decode all data URIs present in a string
+   *
    * @param {string} str
    * @returns {string}
    */
@@ -57,62 +61,23 @@ define(["../component/config"], function (_config) {
     });
   }
   /**
-   * Remove quotes in media directives, {{media url="wysiwyg/image.png"}} convert to {{media url=wysiwyg/image.png}}
+   * Retrieve the image URL with directive
    *
-   * @param {string} html
+   * @param {Array} image
    * @returns {string}
    */
 
 
-  function removeQuotesInMediaDirectives(html) {
-    var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
-    var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
-    var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
-
-    if (mediaDirectiveMatches) {
-      mediaDirectiveMatches.forEach(function (mediaDirective) {
-        var urlMatches = mediaDirective.match(urlRegExp);
-
-        if (urlMatches && urlMatches[1] !== undefined) {
-          var directiveWithOutQuotes = '{{media url=' + urlMatches[1].replace(/("|&quot;|\s)/g, "") + '}}';
-          html = html.replace(mediaDirective, directiveWithOutQuotes);
-        }
-      });
-    }
-
-    return html;
-  }
-  /**
-   * Replace media directives with actual media URLs
-   *
-   * @param {string} html
-   * @returns {string}
-   */
-
-
-  function convertMediaDirectivesToUrls(html) {
-    var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
-    var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
-
-    if (mediaDirectiveMatches) {
-      mediaDirectiveMatches.forEach(function (mediaDirective) {
-        var urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
-        var urlMatches = mediaDirective.match(urlRegExp);
-
-        if (urlMatches && urlMatches[1] !== "undefined") {
-          html = html.replace(mediaDirective, _config.getInitConfig('media_url') + urlMatches[1]);
-        }
-      });
-    }
-
-    return html;
+  function getImageUrl(image) {
+    var imageUrl = image[0].url;
+    var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
+    return "{{media url=" + mediaPath[1] + "}}";
   }
 
   return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
     fromDataUrl: fromDataUrl,
-    removeQuotesInMediaDirectives: removeQuotesInMediaDirectives,
-    convertMediaDirectivesToUrls: convertMediaDirectivesToUrls
+    getImageUrl: getImageUrl
   });
 });
 //# sourceMappingURL=directives.js.map

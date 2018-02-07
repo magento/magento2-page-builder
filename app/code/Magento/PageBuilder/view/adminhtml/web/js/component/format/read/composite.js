@@ -32,8 +32,16 @@ define(["Magento_PageBuilder/js/component/loader", "underscore", "../../config"]
         if (!_this.contentTypeConfig.hasOwnProperty(role)) {
           resolve(result);
         } else {
+          var contentTypeConfig = _this.contentTypeConfig[role];
+
           try {
-            (0, _loader)(_this.contentTypeConfig[role].readers, function () {
+            var readerComponents = contentTypeConfig.readers;
+
+            if (typeof element.dataset.appearance !== "undefined" && typeof contentTypeConfig.appearances !== "undefined" && typeof contentTypeConfig.appearances[element.dataset.appearance] !== "undefined" && typeof contentTypeConfig.appearances[element.dataset.appearance].readers !== "undefined") {
+              readerComponents = contentTypeConfig.appearances[element.dataset.appearance].readers;
+            }
+
+            (0, _loader)(readerComponents, function () {
               var readerPromises = [];
 
               for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
