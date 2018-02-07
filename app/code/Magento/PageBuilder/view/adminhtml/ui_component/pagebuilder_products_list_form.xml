@@ -5,33 +5,34 @@
  * See COPYING.txt for license details.
  */
 -->
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">video_form.video_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_products_list_form.pagebuilder_products_list_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Video</item>
+        <item name="label" xsi:type="string" translate="true">Product List</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>video_form.video_form_data_source</dep>
+            <dep>pagebuilder_products_list_form.pagebuilder_products_list_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>video_form</namespace>
+        <namespace>pagebuilder_products_list_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
             <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
-    <dataSource name="video_form_data_source">
+    <dataSource name="pagebuilder_products_list_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="video_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_products_list_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -42,51 +43,31 @@
         <settings>
             <label/>
         </settings>
-        <field name="src" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                </item>
-            </argument>
+        <field name="category_id" sortOrder="10" formElement="input">
             <settings>
+                <dataType>text</dataType>
+                <label translate="true">Category</label>
+                <dataScope>category_id</dataScope>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
-                <dataType>text</dataType>
-                <label translate="true">Video Embed URL</label>
-                <notice translate="true">Supports YouTube &amp; Vimeo.</notice>
-                <tooltip>
-                    <description translate="true">Please enter the full embed URL for the video e.g. https://www.youtube.com/embed/slOtnjsbff0. You can retrieve this URL via the "Share" option under the video.</description>
-                </tooltip>
-                <dataScope>src</dataScope>
             </settings>
         </field>
-        <field name="width" formElement="input">
+    </fieldset>
+    <fieldset name="display">
+        <settings>
+            <label translate="true">Display</label>
+        </settings>
+        <field name="product_count" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
+                    <item name="default" xsi:type="number">4</item>
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
-                <label translate="true">Width</label>
-                <dataScope>width</dataScope>
-                <addAfter>px or %</addAfter>
-                <notice translate="true">Example: 50px or 100%</notice>
-            </settings>
-        </field>
-        <field name="height" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Height</label>
-                <dataScope>height</dataScope>
-                <addAfter>px or %</addAfter>
-                <notice translate="true">Example: 50px or 100%</notice>
+                <dataType>number</dataType>
+                <label translate="true">Product Count</label>
+                <dataScope>product_count</dataScope>
             </settings>
         </field>
     </fieldset>
@@ -134,7 +115,8 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input"
+               component="Magento_PageBuilder/js/form/element/margins_and_padding">
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>

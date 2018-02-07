@@ -8,30 +8,30 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">products_form.products_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_divider_form.pagebuilder_divider_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Products</item>
+        <item name="label" xsi:type="string" translate="true">Divider</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>products_form.products_form_data_source</dep>
+            <dep>pagebuilder_divider_form.pagebuilder_divider_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>products_form</namespace>
+        <namespace>pagebuilder_divider_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
             <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
-    <dataSource name="products_form_data_source">
+    <dataSource name="pagebuilder_divider_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="products_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_divider_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -42,38 +42,42 @@
         <settings>
             <label/>
         </settings>
-        <field name="view_mode" sortOrder="1" formElement="select">
+        <field name="border_color" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">grid</item>
+                    <item name="default" xsi:type="string">#CECECE</item>
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
-                <label translate="true">Product Display</label>
+                <label translate="true">Line Color</label>
+                <addAfter>hex code</addAfter>
+                <notice translate="true">Example: #FF5733</notice>
             </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">grid</item>
-                                <item name="label" xsi:type="string" translate="true">Grid</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">list</item>
-                                <item name="label" xsi:type="string" translate="true">List</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
         </field>
-        <field name="sku" sortOrder="10" formElement="input">
+        <field name="border_width" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
             <settings>
-                <dataType>text</dataType>
-                <label translate="true">Product SKU</label>
-                <dataScope>sku</dataScope>
+                <label translate="true">Line Thickness</label>
+                <addAfter>px</addAfter>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="width" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">100%</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Line Width</label>
+                <addAfter>px or %</addAfter>
+                <notice translate="true">Example: 50px or 100%</notice>
             </settings>
         </field>
     </fieldset>

@@ -8,30 +8,30 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">heading_form.heading_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_segmented_block_form.pagebuilder_segmented_block_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Heading</item>
+        <item name="label" xsi:type="string" translate="true">Segmented Block</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>heading_form.heading_form_data_source</dep>
+            <dep>pagebuilder_segmented_block_form.pagebuilder_segmented_block_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>heading_form</namespace>
+        <namespace>pagebuilder_segmented_block_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
             <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
-    <dataSource name="heading_form_data_source">
+    <dataSource name="pagebuilder_segmented_block_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="heading_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_segmented_block_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -42,61 +42,16 @@
         <settings>
             <label/>
         </settings>
-        <field name="heading_type" formElement="select" sortOrder="1">
+        <field name="heading_type" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="default" xsi:type="string">h2</item>
                 </item>
             </argument>
             <settings>
-                <label translate="true">Heading Type</label>
-                <dataType>text</dataType>
                 <dataScope>heading_type</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="h2" xsi:type="array">
-                                <item name="value" xsi:type="string">h2</item>
-                                <item name="label" xsi:type="string" translate="false">H2</item>
-                            </option>
-                            <option name="h3" xsi:type="array">
-                                <item name="value" xsi:type="string">h3</item>
-                                <item name="label" xsi:type="string" translate="false">H3</item>
-                            </option>
-                            <option name="h4" xsi:type="array">
-                                <item name="value" xsi:type="string">h4</item>
-                                <item name="label" xsi:type="string" translate="false">H4</item>
-                            </option>
-                            <option name="h5" xsi:type="array">
-                                <item name="value" xsi:type="string">h5</item>
-                                <item name="label" xsi:type="string" translate="false">H5</item>
-                            </option>
-                            <option name="h6" xsi:type="array">
-                                <item name="value" xsi:type="string">h6</item>
-                                <item name="label" xsi:type="string" translate="false">H6</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="title" sortOrder="10" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">page</item>
-                    <item name="default" xsi:type="string" translate="true">Header</item>
-                </item>
-            </argument>
-            <settings>
-                <dataScope>title</dataScope>
                 <dataType>text</dataType>
-                <label translate="true">Title</label>
+                <label translate="true">Segmented Block Form</label>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
