@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-button" data-bind=" attr: getAttributes(), style: parent.getData().appearance === 'inlined' ? {display: 'inline-block'}: {display: 'block'}">
-    <a data-bind="attr: {target: getData().open_in_new_tab === '1' ? '_blank': '' , href: getData().button_link}, style: getStyle(), css: 'pagebuilder-button-' + getData().button_type">
+<div data-bind="attr: getAttributes(), style: parent.getData().appearance === 'inlined' ? {display: 'inline-block'}: {display: 'block'}, css: getCss()">
+    <a class="pagebuilder-button" data-bind="attr: {target: getData().open_in_new_tab === '1' ? '_blank': '' , href: getData().button_link}, style: getStyle(), css: 'pagebuilder-button-' + getData().button_type">
         <span data-bind="text: getData().button_text"></span>
     </a>
 </div>
