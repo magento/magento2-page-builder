@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../config", "./block", "../../utils/numbers", "../format/style-attribute-mapper"], function (_translate, _underscore, _colors, _directives, _config, _block, _numbers, _styleAttributeMapper) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "../config", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -14,22 +14,33 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     var _proto = Banner.prototype;
 
     /**
-     * Get the banner wrapper attributes for the storefront
+     * Get the banner wrapper styles for the storefront
      *
      * @returns {any}
      */
-    _proto.getBannerAttributes = function getBannerAttributes(type) {
+    _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
       var backgroundImage = "";
 
       if (type === "image") {
-        backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-      } else if (type === "mobileImage") {
-        backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+        backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+      }
+
+      if (type === "mobileImage") {
+        if (this.getMobileImage()) {
+          backgroundImage = this.getStyle().mobileImage;
+        } else {
+          if (this.getImage()) {
+            backgroundImage = this.getStyle().backgroundImage;
+          } else {
+            backgroundImage = "none";
+          }
+        }
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.minimum_height + "px; " + "background-size: " + data.background_size + ";"
+        backgroundImage: backgroundImage,
+        backgroundSize: data.background_size
       };
     };
     /**
@@ -41,44 +52,58 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var bgColorAttr = "transparent";
-      var bgColor = "transparent";
+      var overlayColorAttr = "transparent";
 
       if (data.show_overlay !== "never_show") {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-        } else {
-          bgColorAttr = "transparent";
-        }
-      }
-
-      if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-        bgColor = "transparent";
-      } else {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColor = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-        } else {
-          bgColor = "transparent";
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
         }
       }
 
       return {
-        "data-background-color": bgColorAttr,
-        "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";"
+        "data-overlay-color": overlayColorAttr
       };
     };
     /**
-     * Get the banner content attributes for the storefront
+     * Get the banner overlay styles for the storefront
      *
      * @returns {any}
      */
 
 
-    _proto.getContentAttributes = function getContentAttributes() {
-      var styleMapper = new _styleAttributeMapper();
-      var toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+    _proto.getOverlayStyles = function getOverlayStyles() {
+      var data = this.getData();
+      var paddingTop = data.margins_and_padding.padding.top || "0";
+      var paddingRight = data.margins_and_padding.padding.right || "0";
+      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
+      var paddingLeft = data.margins_and_padding.padding.left || "0";
       return {
-        style: "padding-top: " + toDomPadding.top + "px; " + "padding-right: " + toDomPadding.right + "px; " + "padding-bottom: " + toDomPadding.bottom + "px; " + "padding-left: " + toDomPadding.left + "px;"
+        backgroundColor: this.getOverlayColorStyle().backgroundColor,
+        boxSizing: "border-box",
+        minHeight: data.min_height + "px",
+        paddingBottom: paddingBottom + "px",
+        paddingLeft: paddingLeft + "px",
+        paddingRight: paddingRight + "px",
+        paddingTop: paddingTop + "px"
+      };
+    };
+    /**
+     * Get the overlay color style only for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getOverlayColorStyle = function getOverlayColorStyle() {
+      var data = this.getData();
+      var overlayColor = "transparent";
+
+      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+      }
+
+      return {
+        backgroundColor: overlayColor
       };
     };
     /**
@@ -107,15 +132,15 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     _proto.getImage = function getImage() {
       var data = this.getData();
 
-      if (data.image === "" || data.image === undefined) {
+      if (data.background_image === "" || data.background_image === undefined) {
         return {};
       }
 
-      if (_underscore.isEmpty(data.image[0])) {
+      if (_underscore.isEmpty(data.background_image[0])) {
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.background_image, _config.getInitConfig("media_url"));
     };
     /**
      * Get the mobile image attributes for the render

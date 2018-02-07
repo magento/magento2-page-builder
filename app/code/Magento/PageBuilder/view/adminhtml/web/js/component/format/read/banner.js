@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/colors", "../../../utils/extract-alpha-from-rgba", "../../../utils/image"], function (_colors, _extractAlphaFromRgba, _image) {
+define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgba", "../../../utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,19 +18,39 @@ define(["../../../utils/colors", "../../../utils/extract-alpha-from-rgba", "../.
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
       var target = element.querySelector("a").getAttribute("target");
-      var bgImage = element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0];
-      var bgMobileImageEl = element.querySelector(".pagebuilder-banner-mobile");
-      var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0];
-      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
+      var bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
+      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
+      var paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
+      var marginSrc = element.style;
+
+      if (bgImage === bgMobileImage) {
+        bgMobileImage = false;
+      }
+
       var response = {
+        background_image: (0, _image.decodeUrl)(bgImage),
         background_size: element.style.backgroundSize,
         button_text: element.dataset.buttonText,
-        image: (0, _image.decodeUrl)(bgImage),
         link_url: element.querySelector("a").getAttribute("href"),
+        margins_and_padding: {
+          margin: {
+            bottom: marginSrc.marginBottom.replace("px", ""),
+            left: marginSrc.marginLeft.replace("px", ""),
+            right: marginSrc.marginRight.replace("px", ""),
+            top: marginSrc.marginTop.replace("px", "")
+          },
+          padding: {
+            bottom: paddingSrc.paddingBottom.replace("px", ""),
+            left: paddingSrc.paddingLeft.replace("px", ""),
+            right: paddingSrc.paddingRight.replace("px", ""),
+            top: paddingSrc.paddingTop.replace("px", "")
+          }
+        },
         message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-        min_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
-        mobile_image: bgMobileImageEl ? (0, _image.decodeUrl)(bgMobileImage) : "",
+        min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
+        mobile_image: bgMobileImage ? (0, _image.decodeUrl)(bgMobileImage) : "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
@@ -47,7 +67,7 @@ define(["../../../utils/colors", "../../../utils/extract-alpha-from-rgba", "../.
 
 
     _proto.getOverlayColor = function getOverlayColor(value) {
-      return value === "transparent" ? "" : _colors.toHex(value);
+      return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
     /**
      * Get overlay transparency

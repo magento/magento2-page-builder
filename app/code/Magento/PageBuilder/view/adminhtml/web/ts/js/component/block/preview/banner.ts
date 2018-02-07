@@ -11,13 +11,14 @@ import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
+    private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
-    public getBackgroundAttributes() {
+    public getBackgroundStyles() {
         let backgroundImage: string = "none";
         if (this.data.background_image && this.data.background_image() !== "" &&
             this.data.background_image() !== undefined &&
@@ -25,10 +26,14 @@ export default class Banner extends PreviewBlock {
             backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }
         return {
-            style:
-                "background-image: " + backgroundImage + "; " +
-                "background-size: " + this.data.background_size() + ";" +
-                "min-height: " + this.data.min_height() + "px; ",
+            backgroundColor: "",
+            backgroundImage,
+            backgroundSize: this.data.background_size(),
+            minHeight: this.data.min_height() + "px",
+            paddingBottom: "",
+            paddingLeft: "",
+            paddingRight: "",
+            paddingTop: "",
         };
     }
 
@@ -38,6 +43,27 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getOverlayStyles() {
+        const paddingTop = this.data.margins_and_padding().padding.top || "0";
+        const paddingRight = this.data.margins_and_padding().padding.right || "0";
+        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
+        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
+        return {
+            backgroundColor: this.getOverlayColorStyle().backgroundColor,
+            boxSizing: "border-box",
+            minHeight: this.data.min_height() + "px",
+            paddingBottom: paddingBottom + "px",
+            paddingLeft: paddingLeft + "px",
+            paddingRight: paddingRight + "px",
+            paddingTop: paddingTop + "px",
+        };
+    }
+
+    /**
+     * Get the overlay background style for the preview
+     *
+     * @returns {any}
+     */
+    public getOverlayColorStyle() {
         let overlayColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
@@ -48,7 +74,9 @@ export default class Banner extends PreviewBlock {
                 overlayColor = "transparent";
             }
         }
-        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + overlayColor + ";"};
+        return {
+            backgroundColor: overlayColor,
+        };
     }
 
     /**
@@ -58,26 +86,6 @@ export default class Banner extends PreviewBlock {
      */
     public isContentEmpty(): boolean {
         return this.data.message() === "" || this.data.message() === undefined;
-    }
-
-    /**
-     * Get the banner content attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getContentAttributes() {
-        const paddingTop = this.data.margins_and_padding().padding.top || "0";
-        const paddingRight = this.data.margins_and_padding().padding.right || "0";
-        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
-        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
-        return {
-            style:
-                "padding-top: " + paddingTop + "px; " +
-                "padding-right: " + paddingRight + "px; " +
-                "padding-bottom: " + paddingBottom + "px; " +
-                "padding-left: " + paddingLeft + "px;",
-
-        };
     }
 
     /**
@@ -107,11 +115,33 @@ export default class Banner extends PreviewBlock {
     }
 
     /**
+     * Get the button text for the preview
+     *
+     * @returns {any}
+     */
+    public getButtonStyles() {
+        let buttonStyle = {
+            opacity : "0",
+            visibility : "hidden",
+        };
+        if (this.data.show_button() === "always" || this.showButtonHover()) {
+            buttonStyle = {
+                opacity : "1",
+                visibility : "visible",
+            };
+        }
+        return buttonStyle;
+    }
+
+    /**
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOver() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(true);
+        }
+        if (this.preview.data.show_button() === "on_hover") {
+            this.preview.showButtonHover(true);
         }
     }
 
@@ -121,6 +151,9 @@ export default class Banner extends PreviewBlock {
     public onMouseOut() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
+        }
+        if (this.preview.data.show_button() === "on_hover") {
+            this.preview.showButtonHover(false);
         }
     }
 
