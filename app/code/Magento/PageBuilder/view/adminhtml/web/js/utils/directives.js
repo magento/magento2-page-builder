@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["../component/config"], function (_config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,6 +7,7 @@ define([], function () {
 
   /**
    * MIME type to use in place of the image
+   *
    * @type {string}
    */
   var mimeType = "text/magento-directive";
@@ -22,6 +23,7 @@ define([], function () {
   }
   /**
    * Convert a directive into our data URI
+   *
    * @param {string} directive
    * @returns {string}
    */
@@ -32,6 +34,7 @@ define([], function () {
   }
   /**
    * Convert a URI to it's directive equivalent
+   *
    * @param {string} url
    * @returns {string}
    */
@@ -46,6 +49,7 @@ define([], function () {
   }
   /**
    * Decode all data URIs present in a string
+   *
    * @param {string} str
    * @returns {string}
    */
@@ -60,14 +64,13 @@ define([], function () {
    * Retrieve the image URL with directive
    *
    * @param {Array} image
-   * @param {string} media
    * @returns {string}
    */
 
 
-  function getImageUrl(image, media) {
+  function getImageUrl(image) {
     var imageUrl = image[0].url;
-    var mediaPath = imageUrl.split(media);
+    var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
   }
 

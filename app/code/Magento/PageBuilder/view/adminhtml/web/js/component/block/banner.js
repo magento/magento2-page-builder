@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/colors", "../../utils/directives", "../../utils/numbers", "../config", "../format/style-attribute-mapper", "./block"], function (_translate, _underscore, _colors, _directives, _numbers, _config, _styleAttributeMapper, _block) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "../config", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -14,22 +14,33 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
     var _proto = Banner.prototype;
 
     /**
-     * Get the banner wrapper attributes for the storefront
+     * Get the banner wrapper styles for the storefront
      *
      * @returns {any}
      */
-    _proto.getBannerAttributes = function getBannerAttributes(type) {
+    _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
       var backgroundImage = "";
 
       if (type === "image") {
-        backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-      } else if (type === "mobileImage") {
-        backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+        backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+      }
+
+      if (type === "mobileImage") {
+        if (this.getMobileImage()) {
+          backgroundImage = this.getStyle().mobileImage;
+        } else {
+          if (this.getImage()) {
+            backgroundImage = this.getStyle().backgroundImage;
+          } else {
+            backgroundImage = "none";
+          }
+        }
       }
 
       return {
-        style: "background-image: " + backgroundImage + "; " + "min-height: " + data.min_height + "px; " + "background-size: " + data.background_size + ";"
+        backgroundImage: backgroundImage,
+        backgroundSize: data.background_size
       };
     };
     /**
@@ -41,20 +52,20 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
       var data = this.getData();
-      var bgColorAttr = "transparent";
+      var overlayColorAttr = "transparent";
 
-      if (data.show_overlay !== "never_show" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        bgColorAttr = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-      } else {
-        bgColorAttr = "transparent";
+      if (data.show_overlay !== "never_show") {
+        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+        }
       }
 
       return {
-        "data-background-color": bgColorAttr
+        "data-overlay-color": overlayColorAttr
       };
     };
     /**
-     * Get the banner overlay attributes for the storefront
+     * Get the banner overlay styles for the storefront
      *
      * @returns {any}
      */
@@ -62,35 +73,37 @@ define(["mage/translate", "underscore", "../../utils/colors", "../../utils/direc
 
     _proto.getOverlayStyles = function getOverlayStyles() {
       var data = this.getData();
-      var bgColor = "transparent";
-
-      if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-        bgColor = "transparent";
-      } else {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          bgColor = _colors.colorConverter(data.overlay_color, _numbers.convertPercentToDecimal(data.overlay_transparency));
-        } else {
-          bgColor = "transparent";
-        }
-      }
-
+      var paddingTop = data.margins_and_padding.padding.top || "0";
+      var paddingRight = data.margins_and_padding.padding.right || "0";
+      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
+      var paddingLeft = data.margins_and_padding.padding.left || "0";
       return {
+        backgroundColor: this.getOverlayColorStyle().backgroundColor,
+        boxSizing: "border-box",
         minHeight: data.min_height + "px",
-        backgroundColor: bgColor
+        paddingBottom: paddingBottom + "px",
+        paddingLeft: paddingLeft + "px",
+        paddingRight: paddingRight + "px",
+        paddingTop: paddingTop + "px"
       };
     };
     /**
-     * Get the banner content attributes for the storefront
+     * Get the overlay color style only for the storefront
      *
      * @returns {any}
      */
 
 
-    _proto.getContentAttributes = function getContentAttributes() {
-      var styleMapper = new _styleAttributeMapper();
-      var toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+    _proto.getOverlayColorStyle = function getOverlayColorStyle() {
+      var data = this.getData();
+      var overlayColor = "transparent";
+
+      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+      }
+
       return {
-        style: "padding-top: " + toDomPadding.top + "px; " + "padding-right: " + toDomPadding.right + "px; " + "padding-bottom: " + toDomPadding.bottom + "px; " + "padding-left: " + toDomPadding.left + "px;"
+        backgroundColor: overlayColor
       };
     };
     /**

@@ -9,6 +9,6 @@
  * @param {string} value
  * @returns {string}
  */
-export function convertPercentToDecimal(value: string) {
+export function percentToDecimal(value: string) {
     return (parseInt(value, 10) / 100).toString();
 }
