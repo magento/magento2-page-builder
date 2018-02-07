@@ -5,17 +5,19 @@
  */
 -->
 
-<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-image">
+<div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="style: getStyle()">
     <!-- ko template: optionsInstance.template --><!-- /ko -->
     <!-- ko ifnot: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-    <div class="pagebuilder-image-empty-preview">
-        <span data-bind="text: $t('Empty Image');"></span>
-    </div>
+        <div class="pagebuilder-image-empty-preview">
+            <span data-bind="text: $t('Empty Image');"></span>
+        </div>
     <!-- /ko -->
+
     <!-- ko if: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-    <img data-bind="attr: preview.getPreviewImageAttributes()" />
+        <img data-bind="attr: {src: preview.data.image()[0].url}, style: { maxWidth: '100%', height: 'auto' }" />
     <!-- /ko -->
-    <!-- ko if: preview.data.show_caption() == "Yes" -->
-    <figcaption data-bind="text: preview.data.title_tag()"></figcaption>
+
+    <!-- ko if: preview.data.image_caption -->
+        <figcaption data-bind="text: preview.data.image_caption"></figcaption>
     <!-- /ko -->
 </div>
