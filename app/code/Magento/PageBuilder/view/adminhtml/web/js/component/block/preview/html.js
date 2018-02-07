@@ -37,18 +37,18 @@ define(["knockout", "./block", "../../config"], function (_knockout, _block, _co
     var _proto = Html.prototype;
 
     _proto.normalizeImageUrls = function normalizeImageUrls(html) {
-      var mediaDirectiveRegExp = /\{\{media url="?[^"\s\}]+"?\}\}/g;
+      var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
       var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
 
-      if (mediaDirectiveMatches && mediaDirectiveMatches.length != "undefined") {
-        for (var i = 0; i < mediaDirectiveMatches.length; i++) {
-          var urlRegExp = /\{\{media url="?([^"\s\}]+)"?\}\}/;
-          var urlMatches = mediaDirectiveMatches[i].match(urlRegExp);
+      if (mediaDirectiveMatches) {
+        mediaDirectiveMatches.forEach(function (mediaDirective) {
+          var urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
+          var urlMatches = mediaDirective.match(urlRegExp);
 
-          if (urlMatches && urlMatches[1] != "undefined") {
-            html = html.replace(mediaDirectiveMatches[i], _config.getInitConfig('media_url') + urlMatches[1]);
+          if (urlMatches && urlMatches[1] !== "undefined") {
+            html = html.replace(mediaDirective, _config.getInitConfig('media_url') + urlMatches[1]);
           }
-        }
+        });
       }
 
       return html;

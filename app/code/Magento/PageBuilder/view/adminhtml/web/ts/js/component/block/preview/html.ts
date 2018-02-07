@@ -35,20 +35,20 @@ export default class Html extends PreviewBlock {
      * @param {string} html
      * @returns {string}
      */
-    normalizeImageUrls(html) {
-        const mediaDirectiveRegExp = /\{\{media url="?[^"\s\}]+"?\}\}/g;
+    normalizeImageUrls(html: string): string {
+        const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
         const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
-        if (mediaDirectiveMatches && mediaDirectiveMatches.length != "undefined") {
-            for (let i = 0; i < mediaDirectiveMatches.length; i++) {
-                const urlRegExp = /\{\{media url="?([^"\s\}]+)"?\}\}/;
-                const urlMatches = mediaDirectiveMatches[i].match(urlRegExp);
-                if (urlMatches && urlMatches[1] != "undefined") {
+        if (mediaDirectiveMatches) {
+            mediaDirectiveMatches.forEach((mediaDirective: string) => {
+                const urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
+                const urlMatches = mediaDirective.match(urlRegExp);
+                if (urlMatches && urlMatches[1] !== "undefined") {
                     html = html.replace(
-                        mediaDirectiveMatches[i],
+                        mediaDirective,
                         Config.getInitConfig('media_url') + urlMatches[1]
                     );
                 }
-            }
+            });
         }
         return html;
     }
