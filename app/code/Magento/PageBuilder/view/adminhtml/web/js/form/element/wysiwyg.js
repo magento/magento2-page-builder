@@ -74,7 +74,7 @@ define([
                         jQuery(window).scrollTop(0);
                     });
                 }
-            }, this, "beforeChange");
+            }, this, 'beforeChange');
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
                     _.defer(function () {

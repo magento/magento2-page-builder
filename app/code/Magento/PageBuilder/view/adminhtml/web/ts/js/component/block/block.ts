@@ -4,7 +4,6 @@
  */
 
 import _ from "underscore";
-import Appearance from "../../component/appearance/appearance";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
 import Stage from "../stage";
 import getPreviewInstance from "../stage/previews";
@@ -30,13 +29,10 @@ export default class Block extends Structural implements BlockInterface {
      * @param {Stage} stage
      * @param {ConfigContentBlock} config
      * @param formData
-     * @param {Appearance} appearance
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
-        super(parent, stage, config, appearance);
-
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
+        super(parent, stage, config);
         this.preview = getPreviewInstance(this, config);
-
         const defaults: FieldDefaults = {};
         if (config.fields) {
             _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
@@ -56,6 +52,15 @@ export default class Block extends Structural implements BlockInterface {
      * @returns {string}
      */
     get previewTemplate(): string {
+        if (typeof this.preview.data.appearance !== "undefined") {
+            const appearance = this.preview.data.appearance();
+            if (typeof this.config.appearances !== "undefined" &&
+                typeof this.config.appearances[appearance] !== "undefined" &&
+                typeof this.config.appearances[appearance].preview_template !== "undefined") {
+                return this.config.appearances[appearance].preview_template;
+            }
+        }
+
         if (this.config.preview_template) {
             return this.config.preview_template;
         }
@@ -68,6 +73,15 @@ export default class Block extends Structural implements BlockInterface {
      * @returns {string}
      */
     get renderTemplate(): string {
+        if (typeof this.getData().appearance !== "undefined") {
+            const appearance = this.getData().appearance as string;
+            if (typeof this.config.appearances !== "undefined" &&
+                typeof this.config.appearances[appearance] !== "undefined" &&
+                typeof this.config.appearances[appearance].render_template !== "undefined") {
+                return this.config.appearances[appearance].render_template;
+            }
+        }
+
         if (this.config.render_template) {
             return this.config.render_template;
         }

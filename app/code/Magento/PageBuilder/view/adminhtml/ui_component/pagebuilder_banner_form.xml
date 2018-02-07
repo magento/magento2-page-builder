@@ -8,17 +8,17 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">banner_form.banner_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_banner_form.banner_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Banner</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>banner_form.banner_form_data_source</dep>
+            <dep>pagebuilder_banner_form.banner_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>banner_form</namespace>
+        <namespace>pagebuilder_banner_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
@@ -44,10 +44,48 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="image" formElement="fileUploader">
+        <field name="appearance" sortOrder="1" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">poster</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Appearance</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="10" xsi:type="array">
+                                <item name="value" xsi:type="string">poster</item>
+                                <item name="label" xsi:type="string" translate="true">Poster</item>
+                            </option>
+                            <option name="20" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-left</item>
+                                <item name="label" xsi:type="string" translate="true">Collage on the left</item>
+                            </option>
+                            <option name="30" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-centered</item>
+                                <item name="label" xsi:type="string" translate="true">Collage centered</item>
+                            </option>
+                            <option name="40" xsi:type="array">
+                                <item name="value" xsi:type="string">collage-right</item>
+                                <item name="label" xsi:type="string" translate="true">Collage on the right</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="background_image" formElement="fileUploader">
             <settings>
                 <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
-                <label translate="true">Image</label>
+                <label translate="true">Background Image</label>
                 <componentType>fileUploader</componentType>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
@@ -126,9 +164,6 @@
                 <dataType>text</dataType>
                 <label translate="true">Show Button</label>
                 <dataScope>show_button</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -150,16 +185,13 @@
         <field name="show_overlay" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">never_show</item>
+                    <item name="default" xsi:type="string">always</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Show Content Overlay</label>
                 <dataScope>show_overlay</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <select>
@@ -183,6 +215,11 @@
             </formElements>
         </field>
         <field name="overlay_color" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">ffffff</item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Content Overlay Color</label>
                 <additionalClasses>
@@ -197,7 +234,7 @@
         <field name="overlay_transparency" sortOrder="50" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="number">70</item>
                 </item>
             </argument>
             <settings>
@@ -213,7 +250,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="minimum_height" sortOrder="60" formElement="input">
+        <field name="min_height" sortOrder="60" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">250</item>
@@ -226,7 +263,7 @@
                 </additionalClasses>
                 <addAfter>px</addAfter>
                 <dataType>text</dataType>
-                <dataScope>minimum_height</dataScope>
+                <dataScope>min_height</dataScope>
             </settings>
         </field>
     </fieldset>
@@ -239,10 +276,12 @@
         <field name="message" sortOrder="0" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
                     <item name="source" xsi:type="string">page</item>
                     <item name="wysiwygConfigData" xsi:type="array">
                         <item name="pagebuilder_button" xsi:type="boolean">false</item>
                         <item name="toggle_button" xsi:type="boolean">false</item>
+                        <item name="height" xsi:type="string">500px</item>
                     </item>
                 </item>
             </argument>
@@ -296,17 +335,11 @@
                             <map name="false" xsi:type="number">0</map>
                             <map name="true" xsi:type="number">1</map>
                         </valueMap>
+                        <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
             </formElements>
         </field>
-    </fieldset>
-    <fieldset name="advanced">
-        <settings>
-            <label translate="true">Advanced</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
     </fieldset>
     <fieldset name="advanced">
         <settings>
@@ -459,7 +492,7 @@
                 <notice translate="true">Space separated list of classes.</notice>
             </settings>
         </field>
-        <field name="margins_and_padding" sortOrder="70" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
+        <field name="margins_and_padding" sortOrder="70" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="array">

@@ -5,6 +5,8 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import StyleAttributeFilter from "../../format/style-attribute-filter";
+import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import Block from "../block";
 
 interface PreviewData {
@@ -15,6 +17,7 @@ export default class PreviewBlock {
     public parent: Block;
     public config: any;
     public data: PreviewData = {};
+    public previewStyle: KnockoutComputed<{}>;
 
     /**
      * PreviewBlock constructor
@@ -23,8 +26,11 @@ export default class PreviewBlock {
      * @param {Object} config
      */
     constructor(parent: Block, config: object) {
+        const styleAttributeMapper = new StyleAttributeMapper();
+        const styleAttributeFilter = new StyleAttributeFilter();
+
         this.parent = parent;
-        this.config = config;
+        this.config = config || {};
 
         // Create an empty observable for all fields
         if (this.config.fields) {
@@ -42,6 +48,29 @@ export default class PreviewBlock {
             },
             this.parent.id,
         );
+
+        this.previewStyle = ko.computed(() => {
+            // Extract data values our of observable functions
+            const styles = styleAttributeMapper.toDom(
+                styleAttributeFilter.filter(
+                    _.mapObject(this.data, (value) => {
+                        if (ko.isObservable(value)) {
+                            return value();
+                        }
+                        return value;
+                    }),
+                ),
+            );
+            return this.afterStyleMapped(styles);
+        });
+
+        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
+            if (ko.isObservable(this.data[key])) {
+                this.data[key].subscribe(() => {
+                    this.previewStyle.notifySubscribers();
+                });
+            }
+        });
     }
 
     /**
@@ -53,7 +82,6 @@ export default class PreviewBlock {
         if (this.config.preview_template) {
             return this.config.preview_template;
         }
-
         return "";
     }
 
@@ -73,5 +101,15 @@ export default class PreviewBlock {
                 this.data[key] = ko.observable(value);
             }
         }
+    }
+
+    /**
+     * Callback function to update the styles are mapped
+     *
+     * @param {string} styles
+     * @return styles
+     */
+    private afterStyleMapped(styles: {}) {
+        return styles;
     }
 }

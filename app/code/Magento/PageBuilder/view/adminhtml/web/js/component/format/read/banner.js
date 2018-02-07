@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/config", "../../../utils/color-converter"], function (_config, _colorConverter) {
+define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgba", "../../../utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,28 +9,55 @@ define(["../../../component/config", "../../../utils/color-converter"], function
   function () {
     function Banner() {}
 
-    /**
-     * Fetch the image object
-     *
-     * @param {string} src
-     * @returns {ImageObject}
-     */
-    Banner.generateImageObject = function generateImageObject(src) {
-      // Match the URL & type from the directive
-      if (/{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.test(decodeURIComponent(src))) {
-        var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(decodeURIComponent(src)),
-            _url = _$exec[1],
-            _type = _$exec[2];
+    var _proto = Banner.prototype;
 
-        return [{
-          name: _url.split("/").pop(),
-          size: 0,
-          type: "image/" + _type,
-          url: _config.getInitConfig("media_url") + _url
-        }];
+    /**
+     * Read heading type and title from the element
+     *
+     * @param element HTMLElement
+     * @returns {Promise<any>}
+     */
+    _proto.read = function read(element) {
+      var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
+      var target = element.querySelector("a").getAttribute("target");
+      var bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
+      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
+      var paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
+      var marginSrc = element.style;
+
+      if (bgImage === bgMobileImage) {
+        bgMobileImage = false;
       }
 
-      return "";
+      var response = {
+        background_image: (0, _image.decodeUrl)(bgImage),
+        background_size: element.style.backgroundSize,
+        button_text: element.dataset.buttonText,
+        link_url: element.querySelector("a").getAttribute("href"),
+        margins_and_padding: {
+          margin: {
+            bottom: marginSrc.marginBottom.replace("px", ""),
+            left: marginSrc.marginLeft.replace("px", ""),
+            right: marginSrc.marginRight.replace("px", ""),
+            top: marginSrc.marginTop.replace("px", "")
+          },
+          padding: {
+            bottom: paddingSrc.paddingBottom.replace("px", ""),
+            left: paddingSrc.paddingLeft.replace("px", ""),
+            right: paddingSrc.paddingRight.replace("px", ""),
+            top: paddingSrc.paddingTop.replace("px", "")
+          }
+        },
+        message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+        min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
+        mobile_image: bgMobileImage ? (0, _image.decodeUrl)(bgMobileImage) : "",
+        open_in_new_tab: target && target === "_blank" ? "1" : "0",
+        overlay_color: this.getOverlayColor(overlayColor),
+        overlay_transparency: this.getOverlayTransparency(overlayColor),
+        show_button: element.getAttribute("data-show-button"),
+        show_overlay: element.getAttribute("data-show-overlay")
+      };
+      return Promise.resolve(response);
     };
     /**
      * Get overlay color
@@ -39,12 +66,8 @@ define(["../../../component/config", "../../../utils/color-converter"], function
      */
 
 
-    Banner.getOverlayColor = function getOverlayColor(value) {
-      if (value === "transparent") {
-        return "";
-      } else {
-        return (0, _colorConverter.toHex)(value);
-      }
+    _proto.getOverlayColor = function getOverlayColor(value) {
+      return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
     /**
      * Get overlay transparency
@@ -53,55 +76,8 @@ define(["../../../component/config", "../../../utils/color-converter"], function
      */
 
 
-    Banner.getOverlayTransparency = function getOverlayTransparency(value) {
-      if (value === "transparent") {
-        return "0";
-      } else {
-        return Banner.extractAlphaFromRgba(value);
-      }
-    };
-    /**
-     * Extract the Alpha component from RGBA and convert from decimal to percent for overlay transparency
-     *
-     * @returns int
-     */
-
-
-    Banner.extractAlphaFromRgba = function extractAlphaFromRgba(value) {
-      var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
-      return Math.floor(a * 100);
-    };
-    /**
-     * Read heading type and title from the element
-     *
-     * @param element HTMLElement
-     * @returns {Promise<any>}
-     */
-
-
-    var _proto = Banner.prototype;
-
-    _proto.read = function read(element) {
-      var target = element.querySelector("a").getAttribute("target");
-      var bgImage = element.querySelector(".pagebuilder-banner-image").getAttribute("style").split(";")[0];
-      var bgMobileImageEl = element.querySelector(".pagebuilder-banner-mobile");
-      var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").getAttribute("style").split(";")[0];
-      var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-background-color");
-      var response = {
-        background_size: element.style.backgroundSize,
-        button_text: element.dataset.buttonText,
-        image: Banner.generateImageObject(bgImage),
-        link_url: element.querySelector("a").getAttribute("href"),
-        message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-        minimum_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight.split("px")[0],
-        mobile_image: bgMobileImageEl ? Banner.generateImageObject(bgMobileImage) : "",
-        open_in_new_tab: target && target === "_blank" ? "1" : "0",
-        overlay_color: Banner.getOverlayColor(overlayColor),
-        overlay_transparency: Banner.getOverlayTransparency(overlayColor),
-        show_button: element.getAttribute("data-show-button"),
-        show_overlay: element.getAttribute("data-show-overlay")
-      };
-      return Promise.resolve(response);
+    _proto.getOverlayTransparency = function getOverlayTransparency(value) {
+      return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
     };
 
     return Banner;

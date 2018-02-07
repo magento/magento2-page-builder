@@ -45,9 +45,30 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             $output['types'][$name][$childNode->nodeName][] = $component;
                         }
                     } elseif ('appearances' === $childNode->nodeName) {
-                        foreach ($childNode->getElementsByTagName('appearance') as $reader) {
-                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
-                            $output['types'][$name][$childNode->nodeName][] = $component;
+                        foreach ($childNode->getElementsByTagName('appearance') as $appearance) {
+                            $appearanceName = $appearance->attributes->getNamedItem('name')->nodeValue;
+                            $appearanceData = [];
+                            foreach ($appearance->getElementsByTagName('data') as $argument) {
+                                $argumentName = $argument->attributes->getNamedItem('name')->nodeValue;
+                                $appearanceData[$argumentName] = $argument->nodeValue;
+                            }
+                            $previewTemplateNode = $appearance->getElementsByTagName('preview_template')->item(0);
+                            if ($previewTemplateNode) {
+                                $appearanceData['preview_template'] = $previewTemplateNode->nodeValue;
+                            }
+                            $renderTemplateNode = $appearance->getElementsByTagName('render_template')->item(0);
+                            if ($renderTemplateNode) {
+                                $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
+                            }
+                            $readersNode = $appearance->getElementsByTagName('readers')->item(0);
+                            if ($readersNode) {
+                                $readers = [];
+                                foreach ($readersNode->getElementsByTagName('reader') as $reader) {
+                                    $readers[] = $reader->attributes->getNamedItem('component')->nodeValue;
+                                }
+                                $appearanceData['readers'] = $readers;
+                            }
+                            $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
                     } else {
                         $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;

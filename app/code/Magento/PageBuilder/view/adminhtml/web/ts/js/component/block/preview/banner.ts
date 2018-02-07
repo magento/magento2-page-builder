@@ -7,28 +7,33 @@ import ko from "knockout";
 import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
 export default class Banner extends PreviewBlock {
-
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
+    private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
 
     /**
      * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
-    public getAttributes() {
+    public getBackgroundStyles() {
         let backgroundImage: string = "none";
-        if (this.data.image() !== "" && this.data.image() !== undefined && this.data.image()[0] !== undefined) {
-            backgroundImage = "url(" + this.data.image()[0].url + ")";
+        if (this.data.background_image && this.data.background_image() !== "" &&
+            this.data.background_image() !== undefined &&
+            this.data.background_image()[0] !== undefined) {
+            backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }
         return {
-            style:
-                "background-image: " + backgroundImage + "; " +
-                "background-size: " + this.data.background_size() + ";" +
-                "min-height: " + this.data.minimum_height() + "px; ",
+            backgroundColor: "",
+            backgroundImage,
+            backgroundSize: this.data.background_size(),
+            minHeight: this.data.min_height() + "px",
+            paddingBottom: "",
+            paddingLeft: "",
+            paddingRight: "",
+            paddingTop: "",
         };
     }
 
@@ -37,18 +42,41 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getOverlayAttributes() {
-        let backgroundColor: string = "transparent";
+    public getOverlayStyles() {
+        const paddingTop = this.data.margins_and_padding().padding.top || "0";
+        const paddingRight = this.data.margins_and_padding().padding.right || "0";
+        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
+        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
+        return {
+            backgroundColor: this.getOverlayColorStyle().backgroundColor,
+            boxSizing: "border-box",
+            minHeight: this.data.min_height() + "px",
+            paddingBottom: paddingBottom + "px",
+            paddingLeft: paddingLeft + "px",
+            paddingRight: paddingRight + "px",
+            paddingTop: paddingTop + "px",
+        };
+    }
+
+    /**
+     * Get the overlay background style for the preview
+     *
+     * @returns {any}
+     */
+    public getOverlayColorStyle() {
+        let overlayColor: string = "transparent";
         if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
             if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
                 const colors = this.data.overlay_color();
                 const alpha = percentToDecimal(this.data.overlay_transparency());
-                backgroundColor = fromHex(colors, alpha);
+                overlayColor = fromHex(colors, alpha);
             } else {
-                backgroundColor = "transparent";
+                overlayColor = "transparent";
             }
         }
-        return {style: "min-height: " + this.data.minimum_height() + "px; background-color: " + backgroundColor + ";"};
+        return {
+            backgroundColor: overlayColor,
+        };
     }
 
     /**
@@ -61,23 +89,6 @@ export default class Banner extends PreviewBlock {
     }
 
     /**
-     * Get the banner content attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.data.margins_and_padding().padding);
-        return {
-            style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
-        };
-    }
-
-    /**
      * Get the content for the preview
      *
      * @returns {any}
@@ -86,7 +97,7 @@ export default class Banner extends PreviewBlock {
         if (this.isContentEmpty()) {
             return $t("Write banner text here...");
         } else {
-            return this.data.message();
+            return $t(this.data.message());
         }
     }
 
@@ -104,11 +115,33 @@ export default class Banner extends PreviewBlock {
     }
 
     /**
+     * Get the button text for the preview
+     *
+     * @returns {any}
+     */
+    public getButtonStyles() {
+        let buttonStyle = {
+            opacity : "0",
+            visibility : "hidden",
+        };
+        if (this.data.show_button() === "always" || this.showButtonHover()) {
+            buttonStyle = {
+                opacity : "1",
+                visibility : "visible",
+            };
+        }
+        return buttonStyle;
+    }
+
+    /**
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOver() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(true);
+        }
+        if (this.preview.data.show_button() === "on_hover") {
+            this.preview.showButtonHover(true);
         }
     }
 
@@ -119,5 +152,28 @@ export default class Banner extends PreviewBlock {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
         }
+        if (this.preview.data.show_button() === "on_hover") {
+            this.preview.showButtonHover(false);
+        }
+    }
+
+    /**
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
+     */
+    private afterStyleMapped(styles: {}) {
+        // Extract data values our of observable functions
+        // The style attribute mapper converts images to directives, override it to include the correct URL
+        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
+            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+        }
+        if (typeof this.data.mobile_image
+            && this.data.mobile_image() !== ""
+            && typeof this.data.mobile_image()[0] === "object"
+        ) {
+            styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+        }
+        return styles;
     }
 }

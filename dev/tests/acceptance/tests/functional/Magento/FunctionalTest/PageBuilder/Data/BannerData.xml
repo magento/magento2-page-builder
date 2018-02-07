@@ -8,21 +8,23 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
-    <entity name="PageBuilderBannerImageProperty" type="pagebuilder_banner_image_property">
-        <data key="name">Image</data>
+    <entity name="PageBuilderBannerBackgroundImageProperty" type="pagebuilder_background_image_property">
+        <data key="name">Background Image</data>
         <data key="section">appearance</data>
-        <data key="fieldName">image</data>
+        <data key="fieldName">background_image</data>
         <data key="value">magento.jpg</data>
         <data key="fileType">jpg</data>
         <data key="path">wysiwyg/pagebuilder/m/a/magento</data>
+        <data key="url">/(\b(https?|ftp|file):\/\/)[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]/g</data>
     </entity>
-    <entity name="PageBuilderBannerMobileImageProperty" type="pagebuilder_banner_mobileImage_property">
+    <entity name="PageBuilderBannerMobileImageProperty" type="pagebuilder_background_image_property">
         <data key="name">Mobile Image</data>
         <data key="section">appearance</data>
         <data key="fieldName">mobile_image</data>
-        <data key="value">magento2.jpg</data>
-        <data key="fileType">jpg</data>
-        <data key="path">wysiwyg/pagebuilder/m/a/magento2</data>
+        <data key="value">m-logo.gif</data>
+        <data key="fileType">gif</data>
+        <data key="path">wysiwyg/pagebuilder/m/-/m-logo</data>
+        <data key="url">/(\b(https?|ftp|file):\/\/)[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]/g</data>
     </entity>
     <entity name="PageBuilderBannerBackgroundSizeProperty" type="pagebuilder_banner_backgroundSize_property">
         <data key="name">Background Size</data>
@@ -36,17 +38,35 @@
         <data key="fieldName">show_button</data>
         <data key="value">always</data>
     </entity>
+    <entity name="PageBuilderBannerShowButtonOnHoverProperty" type="pagebuilder_banner_showButton_property">
+        <data key="name">Show Button</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">on_hover</data>
+    </entity>
     <entity name="PageBuilderBannerShowContentOverlayProperty" type="pagebuilder_banner_showContentOverlay_property">
         <data key="name">Show Content Overlay</data>
         <data key="section">appearance</data>
         <data key="fieldName">show_overlay</data>
         <data key="value">always</data>
     </entity>
-    <entity name="PageBuilderBannerShowContentOverlayDefaultProperty" type="pagebuilder_banner_showContentOverlayDefault_property">
+    <entity name="PageBuilderBannerShowContentOverlayOnHoverProperty" type="pagebuilder_banner_showContentOverlay_property">
+        <data key="name">Show Content Overlay</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">on_hover</data>
+    </entity>
+    <entity name="PageBuilderBannerShowContentOverlayNeverShowProperty" type="pagebuilder_banner_showContentOverlay_property">
         <data key="name">Show Content Overlay</data>
         <data key="section">appearance</data>
         <data key="fieldName">show_overlay</data>
         <data key="value">never_show</data>
+    </entity>
+    <entity name="PageBuilderBannerShowContentOverlayDefaultProperty" type="pagebuilder_banner_showContentOverlayDefault_property">
+        <data key="name">Show Content Overlay</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">always</data>
     </entity>
     <entity name="PageBuilderBannerContentOverlayColorProperty" type="pagebuilder_banner_contentOverlayColor_property">
         <data key="name">Content Overlay Color</data>
@@ -69,13 +89,13 @@
     <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
         <data key="name">Minimum Height</data>
         <data key="section">appearance</data>
-        <data key="fieldName">minimum_height</data>
+        <data key="fieldName">min_height</data>
         <data key="value">500</data>
     </entity>
     <entity name="PageBuilderBannerMinimumHeightDefaultProperty" type="pagebuilder_banner_minimumHeightDefault_property">
         <data key="name">Minimum Height</data>
         <data key="section">appearance</data>
-        <data key="fieldName">minimum_height</data>
+        <data key="fieldName">min_height</data>
         <data key="value">250</data>
     </entity>
     <entity name="PageBuilderBannerMessageProperty" type="pagebuilder_banner_message_property">
@@ -103,5 +123,72 @@
         <data key="section">content</data>
         <data key="fieldName">open_in_new_tab</data>
         <data key="value">1</data>
+    </entity>
+    <entity name="PageBuilderLinkTextProperty" type="pagebuilder_linktext_property">
+        <data key="name">Link Text</data>
+        <data key="section">link</data>
+        <data key="fieldName">link_text</data>
+        <data key="value">Banner link goes here</data>
+    </entity>
+    <entity name="PageBuilderLinkUrlProperty" type="pagebuilder_linkurl_property">
+        <data key="name">Link URL</data>
+        <data key="section">link</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">http://www.google.com</data>
+    </entity>
+    <entity name="PageBuilderNewWindowProperty" type="pagebuilder_newwindow_property">
+        <data key="name">Open in New Window?</data>
+        <data key="section">link</data>
+        <data key="fieldName">open_in_new_window</data>
+        <data key="value">1</data>
+    </entity>
+
+    <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">Poster</data>
+    </entity>
+    <entity name="PageBuilderBannerDefaultPaddingTopProperty" type="pagebuilder_padding_top_property">
+        <data key="name">Padding Top</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">paddingTop</data>
+        <data key="value">40</data>
+    </entity>
+    <entity name="PageBuilderBannerDefaultPaddingRightProperty" type="pagebuilder_padding_right_property">
+        <data key="name">Padding Right</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">paddingRight</data>
+        <data key="value">40</data>
+    </entity>
+    <entity name="PageBuilderBannerDefaultPaddingLeftProperty" type="pagebuilder_padding_left_property">
+        <data key="name">Padding Left</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">paddingLeft</data>
+        <data key="value">40</data>
+    </entity>
+    <entity name="PageBuilderBannerDefaultPaddingBottomProperty" type="pagebuilder_padding_bottom_property">
+        <data key="name">Padding Bottom</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">paddingBottom</data>
+        <data key="value">40</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">Collage on the left</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageRightProperty" type="pagebuilder_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">Collage on the right</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageCenteredProperty" type="pagebuilder_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">Collage centered</data>
     </entity>
 </entities>

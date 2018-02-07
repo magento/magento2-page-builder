@@ -6,6 +6,7 @@
 /*global requirejs */
 
 requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+    'use strict';
     $(document).ready(function() {
         $('.pagebuilder-lightbox').fancybox();
 
@@ -40,15 +41,15 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
         $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-banner-button');
+            var buttonEl = $(element).find('.pagebuilder-banner-button');
             $(element).hover(
                 function() {
-                    overlayEl.css({
+                    buttonEl.css({
                         'opacity' : '1',
                         'visibility' : 'visible'
                     });
                 }, function() {
-                    overlayEl.css({
+                    buttonEl.css({
                         'opacity' : '0',
                         'visibility' : 'hidden'
                     });
@@ -57,8 +58,8 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
         });
 
         $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-poster-overlay'),
-                overlayColor = overlayEl.attr('data-background-color');
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
+                overlayColor = overlayEl.attr('data-overlay-color');
             $(element).hover(
                 function() {
                     overlayEl.css('background-color', overlayColor);

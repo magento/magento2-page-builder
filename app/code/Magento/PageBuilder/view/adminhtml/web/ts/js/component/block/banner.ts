@@ -8,29 +8,37 @@ import _ from "underscore";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
-import StyleAttributeMapper from "../format/style-attribute-mapper";
+import Config from "../config";
 import Block from "./block";
 
 export default class Banner extends Block {
 
     /**
-     * Get the banner wrapper attributes for the storefront
+     * Get the banner wrapper styles for the storefront
      *
      * @returns {any}
      */
-    public getBannerAttributes(type: string) {
+    public getBannerStyles(type: string) {
         const data = this.getData();
         let backgroundImage: string = "";
         if (type === "image") {
-            backgroundImage = this.getImage() ? "url(" + this.getImage() + ")" : "none";
-        } else if (type === "mobileImage") {
-            backgroundImage = this.getMobileImage() ? "url(" + this.getMobileImage() + ")" : "none";
+            backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+        }
+
+        if (type === "mobileImage") {
+            if(this.getMobileImage()) {
+                backgroundImage = this.getStyle().mobileImage;
+            }else {
+                if(this.getImage()) {
+                    backgroundImage = this.getStyle().backgroundImage;
+                }else {
+                    backgroundImage = "none";
+                }
+            }
         }
         return {
-            style:
-                "background-image: " + backgroundImage + "; " +
-                "min-height: " + data.minimum_height + "px; " +
-                "background-size: " + data.background_size + ";",
+            backgroundImage,
+            backgroundSize: data.background_size,
         };
     }
 
@@ -41,50 +49,52 @@ export default class Banner extends Block {
      */
     public getOverlayAttributes() {
         const data = this.getData();
-        let bgColorAttr: string = "transparent";
-        let bgColor: string = "transparent";
+        let overlayColorAttr: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColorAttr = fromHex(
-                    data.overlay_color,
-                    percentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColorAttr = "transparent";
-            }
-        }
-        if (data.show_overlay === "never_show" || data.show_overlay === "on_hover") {
-            bgColor = "transparent";
-        } else {
-            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                bgColor = fromHex(
-                    data.overlay_color,
-                    percentToDecimal(data.overlay_transparency),
-                );
-            } else {
-                bgColor = "transparent";
+                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
             }
         }
         return {
-            "data-background-color" : bgColorAttr,
-            "style": "min-height: " + data.minimum_height + "px; background-color: " + bgColor + ";",
+            "data-overlay-color" : overlayColorAttr,
         };
     }
 
     /**
-     * Get the banner content attributes for the storefront
+     * Get the banner overlay styles for the storefront
      *
      * @returns {any}
      */
-    public getContentAttributes() {
-        const styleMapper = new StyleAttributeMapper();
-        const toDomPadding = styleMapper.toDom(this.getData().fields.margins_and_padding.default.padding);
+    public getOverlayStyles() {
+        const data = this.getData();
+        const paddingTop = data.margins_and_padding.padding.top || "0";
+        const paddingRight = data.margins_and_padding.padding.right || "0";
+        const paddingBottom = data.margins_and_padding.padding.bottom || "0";
+        const paddingLeft = data.margins_and_padding.padding.left || "0";
         return {
-            style:
-                "padding-top: " + toDomPadding.top + "px; " +
-                "padding-right: " + toDomPadding.right + "px; " +
-                "padding-bottom: " + toDomPadding.bottom + "px; " +
-                "padding-left: " + toDomPadding.left + "px;",
+            backgroundColor: this.getOverlayColorStyle().backgroundColor,
+            boxSizing: "border-box",
+            minHeight: data.min_height + "px",
+            paddingBottom: paddingBottom + "px",
+            paddingLeft: paddingLeft + "px",
+            paddingRight: paddingRight + "px",
+            paddingTop: paddingTop + "px",
+        };
+    }
+
+    /**
+     * Get the overlay color style only for the storefront
+     *
+     * @returns {any}
+     */
+    public getOverlayColorStyle() {
+        const data = this.getData();
+        let overlayColor: string = "transparent";
+        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+        }
+        return {
+            backgroundColor: overlayColor,
         };
     }
 
@@ -109,13 +119,13 @@ export default class Banner extends Block {
      */
     public getImage() {
         const data = this.getData();
-        if (data.image === "" || data.image === undefined) {
+        if (data.background_image === "" || data.background_image === undefined) {
             return {};
         }
-        if (_.isEmpty(data.image[0])) {
+        if (_.isEmpty(data.background_image[0])) {
             return;
         }
-        return getImageUrl(data.image);
+        return getImageUrl(data.background_image, Config.getInitConfig("media_url"));
     }
 
     /**
@@ -131,6 +141,6 @@ export default class Banner extends Block {
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
-        return getImageUrl(data.mobile_image);
+        return getImageUrl(data.mobile_image, Config.getInitConfig("media_url"));
     }
 }
