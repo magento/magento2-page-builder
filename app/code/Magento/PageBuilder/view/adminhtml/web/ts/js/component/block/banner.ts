@@ -15,7 +15,7 @@ export default class Banner extends Block {
     /**
      * Get the banner wrapper styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getBannerStyles(type: string): {} {
         const data = this.getData();
@@ -44,7 +44,7 @@ export default class Banner extends Block {
     /**
      * Get the banner overlay attributes for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getOverlayAttributes(): {} {
         const data = this.getData();
@@ -62,7 +62,7 @@ export default class Banner extends Block {
     /**
      * Get the banner overlay styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getOverlayStyles(): {} {
         const data = this.getData();
@@ -81,7 +81,7 @@ export default class Banner extends Block {
     /**
      * Get the overlay color style only for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getOverlayColorStyle(): {} {
         const data = this.getData();
@@ -97,7 +97,7 @@ export default class Banner extends Block {
     /**
      * Get the banner content for the storefront
      *
-     * @returns {any}
+     * @returns {string}
      */
     public getContentHtml(): string {
         const data = this.getData();
@@ -111,7 +111,7 @@ export default class Banner extends Block {
     /**
      * Get the desktop (main) image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getImage(): {} {
         const data = this.getData();
@@ -127,7 +127,7 @@ export default class Banner extends Block {
     /**
      * Get the mobile image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getMobileImage(): {} {
         const data = this.getData();
@@ -143,7 +143,7 @@ export default class Banner extends Block {
     /**
      * Get the link attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getLinkAttribute(): {} {
         const data = this.getData();
@@ -156,7 +156,7 @@ export default class Banner extends Block {
     /**
      * Get the button style for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getButtonStyle(): {} {
         const data = this.getData();
@@ -167,12 +167,13 @@ export default class Banner extends Block {
     }
 
     /**
-     * Get collage container style only for the storefront
+     * Get banner container style only for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     public getBannerContainerStyle(): {} {
-        return Object.assign(this.getStyle(),
+        return Object.assign(
+            this.getStyle(),
             {
                 backgroundImage: "",
                 minHeight: "",
