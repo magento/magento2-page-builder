@@ -8,13 +8,13 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ButtonsCanAddButtonItem">
+    <test name="ButtonsCanAddAndEditButtonItem">
         <annotations>
-            <title value="Add a button onto stage"/>
-            <description value="A user should be able to add a button into a row."/>
+            <title value="Can add and edit button item"/>
+            <description value="A user should be able to add and edit a button item."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84273"/>
-            <group value="michael"/>
+            <testCaseId value="MAGETWO-87572"/>
+            <group value="pagebuilderButton"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -27,6 +27,7 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
+        <!-- Add button -->
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -42,10 +43,76 @@
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront"/>
+        <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage1"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront1"/>
+        <!-- Edit advanced section of button -->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
+        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
+        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
+        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="buttons{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
+        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
+        <waitForPageLoad stepKey="waitForSearchResults" />
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForPageLoad stepKey="waitForEditCmsPage" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderPropertyDotted">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <seeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeBorderSet"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <waitForPageLoad stepKey="waitForCmsPageToSave"/>
+        <see userInput="You saved the page." stepKey="assertPageSaved"/>
+        <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront2"/>
+        <seeElementInDOM selector="{{ButtonsFrontendSection.borderStyle(PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeBorderSetOnFrontend"/>
+        <!-- Edit advanced section back to default -->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid2"/>
+        <waitForPageLoad stepKey="waitForCmsPagesGridLoad2"/>
+        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn2" />
+        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="buttons{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey2" />
+        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn2" />
+        <waitForPageLoad stepKey="waitForSearchResults2" />
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem2"/>
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton2" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
+        <waitForPageLoad stepKey="waitForEditCmsPage2" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm2"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection2"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderPropertyDotted">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderPropertyDefault">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <seeElementInDOM selector="{{ButtonsBackendSection.borderDefaultStyle(PageBuilderAdvancedBorderPropertyDefault.value)}}" stepKey="seeBorderUnset"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm3"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection3"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection3"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderPropertyDefault">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
     </test>
     <test name="ButtonsCanRemoveButtonItem">
         <annotations>
@@ -53,7 +120,7 @@
             <description value="A user should be able to remove a button from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="michael"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -79,7 +146,7 @@
             <title value="Buttons has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for buttons"/>
             <severity value="CRITICAL"/>
-            <group value="michael"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -117,7 +184,7 @@
             <description value="Check if buttons and button have the required fields"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87235"/>
-            <group value="michael"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

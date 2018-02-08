@@ -12,8 +12,11 @@
         <element name="addNewButtonItem" type="button" selector="//button[contains(text(), 'Add Button')]"/>
         <element name="buttonText" type="input" selector="//*[@name='buttons[{{arg1}}][text]']" parameterized="true"/>
         <element name="buttonLink" type="input" selector="//*[@name='buttons[{{arg1}}][link]']" parameterized="true"/>
+        <element name="borderStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'border-style: {{arg1}}')]" parameterized="true"/>
+        <element name="borderDefaultStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'border: {{arg1}}')]" parameterized="true"/>
     </section>
     <section name="ButtonsFrontendSection">
         <element name="buttonItemElement" type="button" selector="//div[@data-role='button-item']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
+        <element name="borderStyle" type="button" selector="div[data-role='button-item'] a[style*='border-style: {{arg1}}']" parameterized="true"/>
     </section>
 </sections>
