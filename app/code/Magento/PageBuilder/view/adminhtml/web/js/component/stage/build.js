@@ -94,20 +94,28 @@ define(["underscore", "../block/factory", "../config", "../format/read/composite
 
       parent = parent || this.stage;
       var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
-      return this.getElementData(element).then(function (data) {
-        return (0, _factory)(_config.getInitConfig("contentTypes")[role], parent, _this2.stage, data);
+
+      var config = _config.getInitConfig("contentTypes")[role];
+
+      return this.getElementData(element, config).then(function (data) {
+        return (0, _factory)(config, parent, _this2.stage, data);
       });
     };
     /**
      * Retrieve the elements data
      *
-     * @param element
-     * @returns {{}}
+     * @param {Element} element
+     * @param {ConfigContentBlock} config
+     * @returns {Promise<any>}
      */
 
 
-    _proto.getElementData = function getElementData(element) {
-      var result = {};
+    _proto.getElementData = function getElementData(element, config) {
+      // Create an object with all fields for the content type with an empty value
+      var result = _.mapObject(config.fields, function () {
+        return "";
+      });
+
       var readPromise = this.attributeReaderComposite.read(element);
       return readPromise.then(function (data) {
         return result ? _.extend(result, data) : {};

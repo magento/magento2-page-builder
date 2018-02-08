@@ -65,10 +65,15 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    result.margin = `${value.margin.top}px ${value.margin.right}px`
-                        + ` ${value.margin.bottom}px ${value.margin.left}px`;
-                    result.padding = `${value.padding.top}px ${value.padding.right}px`
-                        + ` ${value.padding.bottom}px ${value.padding.left}px`;
+                    result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+                    result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+                    result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+                    result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+
+                    result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+                    result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+                    result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+                    result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
                     return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
@@ -86,6 +91,23 @@ export default class StyleAttributeMapper {
     public fromDom(data: DataObject): DataObject {
         const result: FromDomResult = {};
         data = _.extend({}, data);
+
+        // Set the initial state of margins & paddings and allow the reader below to populate it as desired
+        result.margins_and_padding = {
+            margin: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+            padding: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+        };
+
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
@@ -151,9 +173,7 @@ export default class StyleAttributeMapper {
                     value = [image];
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
-                    const spacingObj = {margin: {}, padding: {}};
                     const [attributeType, attributeDirection] = key.split("-");
-                    result.margins_and_padding = result.margins_and_padding || spacingObj;
                     result.margins_and_padding[attributeType] = _.extend(
                         result.margins_and_padding[attributeType],
                         {[attributeDirection]: value.replace("px", "")},

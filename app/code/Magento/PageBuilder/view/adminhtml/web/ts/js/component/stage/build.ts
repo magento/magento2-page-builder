@@ -5,7 +5,7 @@
 
 import * as _ from "underscore";
 import createBlock from "../block/factory";
-import Config from "../config";
+import Config, {ConfigContentBlock} from "../config";
 import AttributeReaderComposite from "../format/read/composite";
 import Stage from "../stage";
 import EditableArea from "./structural/editable-area";
@@ -91,9 +91,10 @@ export default class Build {
     public createBlock(element: Element, parent: EditableArea): Promise<EditableArea> {
         parent = parent || this.stage;
         const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
+        const config = Config.getInitConfig("contentTypes")[role];
 
-        return this.getElementData(element).then((data) => createBlock(
-            Config.getInitConfig("contentTypes")[role],
+        return this.getElementData(element, config).then((data) => createBlock(
+            config,
             parent,
             this.stage,
             data,
@@ -103,11 +104,15 @@ export default class Build {
     /**
      * Retrieve the elements data
      *
-     * @param element
-     * @returns {{}}
+     * @param {Element} element
+     * @param {ConfigContentBlock} config
+     * @returns {Promise<any>}
      */
-    public getElementData(element: Element) {
-        const result = {};
+    public getElementData(element: Element, config: ConfigContentBlock) {
+        // Create an object with all fields for the content type with an empty value
+        const result = _.mapObject(config.fields, () => {
+            return "";
+        });
         const readPromise = this.attributeReaderComposite.read(element);
         return readPromise.then((data) => {
             return result ? _.extend(result, data) : {};
