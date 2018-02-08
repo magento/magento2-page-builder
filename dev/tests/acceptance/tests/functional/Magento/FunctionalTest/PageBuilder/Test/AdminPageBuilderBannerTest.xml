@@ -421,11 +421,11 @@
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
-        <after>
+        <!--<after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
+        </after>-->
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
@@ -466,9 +466,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <!--<actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
-        </actionGroup>-->
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -494,6 +494,9 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
@@ -578,6 +581,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -586,6 +592,41 @@
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <!-- Validate settings persisted and appear on form -->
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>-->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+        </actionGroup>
+        <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend"/>
@@ -655,6 +696,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -663,6 +707,44 @@
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <!-- Validate settings persisted and appear on form -->
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>-->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearanceCollageRightOnForm">
+            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+        </actionGroup>
+        <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
