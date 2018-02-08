@@ -252,7 +252,7 @@ define([
             this.getPanel().bindStage(this.stage);
 
             if (buildInstance.canBuild()) {
-                this.stage.build(buildInstance)
+                this.stage.build(buildInstance);
             } else {
                 this.stage.build();
             }
