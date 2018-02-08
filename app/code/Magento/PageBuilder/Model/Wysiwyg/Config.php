@@ -9,7 +9,7 @@ namespace Magento\PageBuilder\Model\Wysiwyg;
 /**
  * Page Builder Config for Editor HTML Element
  */
-class Config  implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
+class Config implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
 {
     /**
      * Page builder status configuration path

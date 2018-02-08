@@ -62,7 +62,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
             $config['wysiwygConfigData'] = $wysiwygConfigData;
-
         }
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
     }
