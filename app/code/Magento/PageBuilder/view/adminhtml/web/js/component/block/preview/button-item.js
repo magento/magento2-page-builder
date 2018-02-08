@@ -24,7 +24,7 @@ define(["./block"], function (_block) {
 
     _proto.childrenStyle = function childrenStyle() {
       return {
-        display: 'inline-block'
+        display: "inline-block"
       };
     };
 

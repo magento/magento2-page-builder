@@ -22,10 +22,10 @@ define(["./default"], function (_default) {
     _proto.read = function read(element) {
       var advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-button-item"));
       var response = {
-        button_link: element.getElementsByTagName('a')[0].getAttribute("href"),
+        button_link: element.getElementsByTagName("a")[0].getAttribute("href"),
         button_text: element.getAttribute("data-button-text"),
         button_type: element.getAttribute("data-button-type"),
-        open_in_new_tab: element.getElementsByTagName('a')[0].getAttribute("target") === "_blank" ? '1' : '0'
+        open_in_new_tab: element.getElementsByTagName("a")[0].getAttribute("target") === "_blank" ? "1" : "0"
       };
       return new Promise(function (resolve) {
         advancedData.then(function (data) {

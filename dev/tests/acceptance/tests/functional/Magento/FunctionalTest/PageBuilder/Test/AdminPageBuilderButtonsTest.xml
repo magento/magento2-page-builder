@@ -146,7 +146,7 @@
             <title value="Buttons has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for buttons"/>
             <severity value="CRITICAL"/>
-            <group value="michael"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -206,6 +206,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+
         <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonsEditPanelSettings"/>
         <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickOnAddButtonsElement"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>

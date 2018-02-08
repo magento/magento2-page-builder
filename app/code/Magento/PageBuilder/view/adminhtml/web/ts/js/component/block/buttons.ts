@@ -13,7 +13,7 @@ export default class Buttons extends Block {
             Config.getInitConfig("contentTypes")["button-item"],
             this.parent,
             this.stage,
-            {}
+            {},
         ];
         createBlock(...createBlockParams).then((button: any) => {
             this.addChild(button);

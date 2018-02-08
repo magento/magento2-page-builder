@@ -22,6 +22,6 @@ export default class Button extends PreviewBlock {
      *
      */
     public childrenStyle() {
-        return {display: 'inline-block'};
+        return {display: "inline-block"};
     }
 }

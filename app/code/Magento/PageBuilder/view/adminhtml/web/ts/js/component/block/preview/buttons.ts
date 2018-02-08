@@ -5,8 +5,8 @@
 
 import createBlock from "../../block/factory";
 import Config from "../../config";
-import PreviewBlock from "./block";
 import Block from "../block";
+import PreviewBlock from "./block";
 
 export default class Buttons extends PreviewBlock {
     constructor(parent: Block, config: object) {

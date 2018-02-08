@@ -24,7 +24,7 @@ export default class Banner implements ReadInterface {
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
         const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
         const marginSrc = element.style;
-        if(bgImage === bgMobileImage) {
+        if (bgImage === bgMobileImage) {
             bgMobileImage = false;
         }
         const response: any = {

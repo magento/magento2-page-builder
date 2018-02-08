@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-
 import Block from "./block";
 
 export default class ButtonItem extends Block {
