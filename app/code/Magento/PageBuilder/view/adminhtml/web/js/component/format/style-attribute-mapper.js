@@ -50,6 +50,13 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
 
           var mediaUrl = _config.getInitConfig("media_url");
 
+          // if imageUrl begins with forward slash, remove host
+          if (imageUrl.indexOf('/') === 0) {
+              var a = document.createElement('a');
+              a.href = mediaUrl;
+              mediaUrl = a.pathname;
+          }
+
           var mediaPath = imageUrl.split(mediaUrl);
           var directive = "{{media url=" + mediaPath[1] + "}}";
           value = "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";

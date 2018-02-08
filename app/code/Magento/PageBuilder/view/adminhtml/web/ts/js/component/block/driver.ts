@@ -59,7 +59,15 @@ export default class Driver extends Block {
      */
     private getImageUrl(image: any[]) {
         const imageUrl = image[0].url;
-        const mediaUrl = Config.getInitConfig("media_url");
+        let mediaUrl = Config.getInitConfig("media_url");
+
+        // if imageUrl begins with forward slash, remove host
+        if (imageUrl.indexOf('/') === 0) {
+            const a = document.createElement('a');
+            a.href = mediaUrl;
+            mediaUrl = a.pathname;
+        }
+
         const mediaPath = imageUrl.split(mediaUrl);
         const directive = "{{media url=" + mediaPath[1] + "}}";
         return directive;

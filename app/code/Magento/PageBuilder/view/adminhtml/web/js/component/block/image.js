@@ -101,6 +101,13 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
 
       var mediaUrl = _config.getInitConfig("media_url");
 
+      // if imageUrl begins with forward slash, remove host
+      if (imageUrl.indexOf('/') === 0) {
+          var a = document.createElement('a');
+          a.href = mediaUrl;
+          mediaUrl = a.pathname;
+      }
+
       var mediaPath = imageUrl.split(mediaUrl);
       var directive = "{{media url=" + mediaPath[1] + "}}";
       return directive;

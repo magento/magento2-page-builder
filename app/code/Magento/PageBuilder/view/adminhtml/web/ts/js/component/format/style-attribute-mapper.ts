@@ -42,7 +42,15 @@ export default class StyleAttributeMapper {
                 if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
                     // convert to media directive
                     const imageUrl = value[0].url;
-                    const mediaUrl = Config.getInitConfig("media_url");
+                    let mediaUrl = Config.getInitConfig("media_url");
+
+                    // if imageUrl begins with forward slash, remove host
+                    if (imageUrl.indexOf('/') === 0) {
+                        const a = document.createElement('a');
+                        a.href = mediaUrl;
+                        mediaUrl = a.pathname;
+                    }
+
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";
                     value = "url(\'" + toDataUrl(directive) + "\')";
