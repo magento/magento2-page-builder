@@ -10,7 +10,6 @@
  * @param alphaValue optional
  * @returns {string}
  */
-
 export function fromHex(hexValue: string, alphaValue: string) {
     const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
     const red = parseInt(colors[1], 16);
@@ -41,7 +40,6 @@ function padZero(value: string) {
  * @param value "rgba(255,85,51,0.2)"
  * @returns {string}
  */
-
 export function toHex(value: string) {
     const values = value.match(/\d+/g);
     const r = parseInt(values[0], 10).toString(16);

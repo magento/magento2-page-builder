@@ -125,7 +125,7 @@ export default class Banner extends Block {
         if (_.isEmpty(data.background_image[0])) {
             return;
         }
-        return getImageUrl(data.background_image, Config.getInitConfig("media_url"));
+        return getImageUrl(data.background_image);
     }
 
     /**
@@ -141,6 +141,6 @@ export default class Banner extends Block {
         if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
-        return getImageUrl(data.mobile_image, Config.getInitConfig("media_url"));
+        return getImageUrl(data.mobile_image);
     }
 }
