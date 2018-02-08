@@ -25,7 +25,7 @@ define([
          * @param value
          */
         setDisabled: function (value) {
-            if (!value || _.indexOf(_.values(this.disabledValues), value) !== -1) {
+            if (_.indexOf(_.values(this.disabledValues), value) !== -1) {
                 this.disable();
             } else {
                 this.enable();

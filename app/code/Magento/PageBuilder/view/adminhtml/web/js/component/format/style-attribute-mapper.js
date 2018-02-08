@@ -21,7 +21,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
       var _this = this;
 
       var result = {};
-      data = _underscore.extend({}, data); // If the border is set to default we don't persist any border related style attributes
+      data = _underscore.extend({}, data); // Handle the border being set to none and default
 
       if (typeof data.border !== "undefined") {
         if (data.border === "none") {
@@ -33,8 +33,12 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
 
       Object.keys(data).map(function (key) {
         var value = data[key];
+        /**
+         * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+         * empty value but can't as the field has a default value
+         */
 
-        if (value === "") {
+        if (value === "" || value === "_default") {
           return;
         }
 
@@ -71,8 +75,14 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
             value = JSON.parse(value);
           }
 
-          result.margin = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
-          result.padding = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
+          result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+          result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+          result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+          result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+          result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+          result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+          result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+          result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
           return;
         }
 
@@ -92,7 +102,22 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
       var _this2 = this;
 
       var result = {};
-      data = _underscore.extend({}, data);
+      data = _underscore.extend({}, data); // Set the initial state of margins & paddings and allow the reader below to populate it as desired
+
+      result.margins_and_padding = {
+        margin: {
+          bottom: "",
+          left: "",
+          right: "",
+          top: ""
+        },
+        padding: {
+          bottom: "",
+          left: "",
+          right: "",
+          top: ""
+        }
+      };
       Object.keys(data).map(function (key) {
         var value = data[key];
 
@@ -174,16 +199,10 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         if (key.startsWith("margin") || key.startsWith("padding")) {
           var _$extend;
 
-          var spacingObj = {
-            margin: {},
-            padding: {}
-          };
-
           var _key$split = key.split("-"),
               attributeType = _key$split[0],
               attributeDirection = _key$split[1];
 
-          result.margins_and_padding = result.margins_and_padding || spacingObj;
           result.margins_and_padding[attributeType] = _underscore.extend(result.margins_and_padding[attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace("px", ""), _$extend));
           return;
         }

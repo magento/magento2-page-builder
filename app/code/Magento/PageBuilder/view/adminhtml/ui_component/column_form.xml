@@ -303,7 +303,7 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string" />
+                                <item name="value" xsi:type="string">_default</item>
                                 <item name="label" xsi:type="string" translate="true">Default</item>
                             </option>
                             <option name="1" xsi:type="array">
@@ -352,7 +352,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="disabledValues" xsi:type="array">
-                        <item name="default" xsi:type="string" />
                         <item name="none" xsi:type="string">none</item>
                     </item>
                 </item>
@@ -362,6 +361,7 @@
                 <label translate="true">Border Color</label>
                 <addAfter>hex color</addAfter>
                 <dataScope>border_color</dataScope>
+                <placeholder>Default</placeholder>
                 <imports>
                     <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
                 </imports>
@@ -373,7 +373,6 @@
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">1</item>
                     <item name="disabledValues" xsi:type="array">
-                        <item name="default" xsi:type="string" />
                         <item name="none" xsi:type="string">none</item>
                     </item>
                 </item>
@@ -383,9 +382,7 @@
                 <label translate="true">Border Width</label>
                 <addAfter>px</addAfter>
                 <dataScope>border_width</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <placeholder>Default</placeholder>
                 <imports>
                     <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
                 </imports>
@@ -402,9 +399,7 @@
                 <label translate="true">Border Radius</label>
                 <addAfter>px</addAfter>
                 <dataScope>border_radius</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <placeholder>Default</placeholder>
             </settings>
         </field>
         <field name="css_classes" sortOrder="60" formElement="input">
@@ -423,6 +418,7 @@
             </argument>
             <settings>
                 <label translate="true">Margins and Padding</label>
+                <placeholder>Default</placeholder>
             </settings>
         </field>
     </fieldset>

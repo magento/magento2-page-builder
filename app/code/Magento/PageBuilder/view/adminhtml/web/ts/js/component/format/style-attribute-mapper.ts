@@ -23,7 +23,7 @@ export default class StyleAttributeMapper {
         const result: StyleAttributeMapperResult = {};
         data = _.extend({}, data);
 
-        // If the border is set to default we don't persist any border related style attributes
+        // Handle the border being set to none and default
         if (typeof data.border !== "undefined") {
             if (data.border === "none") {
                 data.border_color = "";
@@ -35,9 +35,15 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
-                if (value === "") {
+
+                /**
+                 * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+                 * empty value but can't as the field has a default value
+                 */
+                if (value === "" || value === "_default") {
                     return;
                 }
+
                 if (key === "color" && (value === "default" || value === "Default")) {
                     value = "inherit";
                 }
@@ -63,10 +69,15 @@ export default class StyleAttributeMapper {
                     if (_.isString(value)) {
                         value = JSON.parse(value);
                     }
-                    result.margin = `${value.margin.top}px ${value.margin.right}px`
-                        + ` ${value.margin.bottom}px ${value.margin.left}px`;
-                    result.padding = `${value.padding.top}px ${value.padding.right}px`
-                        + ` ${value.padding.bottom}px ${value.padding.left}px`;
+                    result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+                    result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+                    result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+                    result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+
+                    result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+                    result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+                    result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+                    result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
                     return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
@@ -84,6 +95,23 @@ export default class StyleAttributeMapper {
     public fromDom(data: DataObject): StyleAttributeMapperResult {
         const result: StyleAttributeMapperResult = {};
         data = _.extend({}, data);
+
+        // Set the initial state of margins & paddings and allow the reader below to populate it as desired
+        result.margins_and_padding = {
+            margin: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+            padding: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+        };
+
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
@@ -149,9 +177,7 @@ export default class StyleAttributeMapper {
                     value = [image];
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
-                    const spacingObj = {margin: {}, padding: {}};
                     const [attributeType, attributeDirection] = key.split("-");
-                    result.margins_and_padding = result.margins_and_padding || spacingObj;
                     result.margins_and_padding[attributeType] = _.extend(
                         result.margins_and_padding[attributeType],
                         {[attributeDirection]: value.replace("px", "")},

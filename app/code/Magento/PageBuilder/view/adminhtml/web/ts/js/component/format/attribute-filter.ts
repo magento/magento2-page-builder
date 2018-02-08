@@ -33,6 +33,7 @@ export default class AttributeFilter {
         "has_overlay_background",
         "enable_parallax",
         "parallax_speed",
+        "border",
     ];
 
     /**
