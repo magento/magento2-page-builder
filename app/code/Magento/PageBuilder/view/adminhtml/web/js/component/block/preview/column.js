@@ -30,7 +30,7 @@ define(["./block"], function (_block) {
 
       if (this.data.margins_and_padding && this.data.margins_and_padding().margin) {
         var margins = this.data.margins_and_padding().margin;
-        var horizontalMargin = parseInt(margins.left, 10) + parseInt(margins.right, 10);
+        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
         styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
       }
 

@@ -23,7 +23,8 @@ export default class Column extends PreviewBlock {
         // If we have left and right margins we need to minus this from the total width
         if (this.data.margins_and_padding && this.data.margins_and_padding().margin) {
             const margins = this.data.margins_and_padding().margin;
-            const horizontalMargin = (parseInt(margins.left, 10) + parseInt(margins.right, 10));
+            const horizontalMargin = parseInt(margins.left || 0, 10) +
+                parseInt(margins.right || 0, 10);
             styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
         }
 
