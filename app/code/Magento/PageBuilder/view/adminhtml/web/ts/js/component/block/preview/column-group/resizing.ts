@@ -105,16 +105,17 @@ export function getColumnsWidth(group: ColumnGroup): number {
  * @returns {ColumnWidth[]}
  */
 export function determineColumnWidths(column: Column, group: JQuery): ColumnWidth[] {
-    const singleColumnWidth = group.width() / getMaxColumns();
+    const singleColumnWidth = group.outerWidth() / getMaxColumns();
     const adjacentColumn = getAdjacentColumn(column, "+1");
     const columnWidths = [];
-    const columnLeft = column.element.offset().left;
+    const columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
     const adjacentRightPosition = adjacentColumn.element.offset().left +
-        adjacentColumn.element.outerWidth();
+        adjacentColumn.element.outerWidth(true);
 
     // Determine the maximum size (in pixels) that this column can be dragged to
     const columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
-    const leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - columnsToRight * singleColumnWidth + 10;
+    const leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - (columnsToRight * singleColumnWidth)
+        + 10;
     const rightMaxWidthFromChildren = group.offset().left +
         (column.parent.children().length - columnsToRight) * singleColumnWidth - 10;
     // Due to rounding we add a threshold of 10
@@ -246,7 +247,7 @@ export function calculateGhostWidth(
 
     switch (modifyColumnInPair) {
         case "left":
-            const singleColumnWidth = column.element.position().left + group.width() / getMaxColumns();
+            const singleColumnWidth = column.element.position().left + group.outerWidth() / getMaxColumns();
             // Don't allow the ghost widths be less than the smallest column
             if (ghostWidth <= singleColumnWidth) {
                 ghostWidth = singleColumnWidth;
@@ -283,8 +284,8 @@ export function determineAdjustedColumn(
 ): [Column, string, string] {
     let modifyColumnInPair: string = "left";
     let usedHistory: string;
-    const resizeColumnLeft = column.element.offset().left;
-    const resizeColumnWidth = column.element.outerWidth();
+    const resizeColumnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
+    const resizeColumnWidth = column.element.outerWidth(true);
     const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
 
     let adjustedColumn: Column;

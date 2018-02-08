@@ -4,7 +4,7 @@
  */
 import Column from "../../column";
 import ColumnGroup from "../../column-group";
-import {getColumnWidth, getSmallestColumnWidth} from "./resizing";
+import {getAcceptedColumnWidth, getColumnWidth, getSmallestColumnWidth} from "./resizing";
 
 /**
  * Calculate the drop positions of a column group
@@ -16,8 +16,8 @@ export function calculateDropPositions(group: ColumnGroup): DropPosition[] {
     const dropPositions: any[] = [];
     group.children().forEach((column: Column, index: number) => {
         const left = column.element.position().left;
-        const width = column.element.outerWidth();
-        const canShrink = getColumnWidth(column) > getSmallestColumnWidth();
+        const width = column.element.outerWidth(true);
+        const canShrink = getAcceptedColumnWidth(getColumnWidth(column).toString()) > getSmallestColumnWidth();
         dropPositions.push(
             {
                 affectedColumn: column,

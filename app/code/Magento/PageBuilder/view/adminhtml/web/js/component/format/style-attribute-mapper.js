@@ -66,6 +66,11 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         }
 
         if (key === "margins_and_padding") {
+          // The default value is set as a string
+          if (_underscore.isString(value)) {
+            value = JSON.parse(value);
+          }
+
           result.margin = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
           result.padding = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
           return;

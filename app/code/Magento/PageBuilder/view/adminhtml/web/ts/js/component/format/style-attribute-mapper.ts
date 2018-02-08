@@ -59,6 +59,10 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
+                    // The default value is set as a string
+                    if (_.isString(value)) {
+                        value = JSON.parse(value);
+                    }
                     result.margin = `${value.margin.top}px ${value.margin.right}px`
                         + ` ${value.margin.bottom}px ${value.margin.left}px`;
                     result.padding = `${value.padding.top}px ${value.padding.right}px`

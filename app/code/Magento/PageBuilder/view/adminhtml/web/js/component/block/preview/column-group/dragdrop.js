@@ -15,8 +15,8 @@ define(["./resizing"], function (_resizing) {
     var dropPositions = [];
     group.children().forEach(function (column, index) {
       var left = column.element.position().left;
-      var width = column.element.outerWidth();
-      var canShrink = (0, _resizing.getColumnWidth)(column) > (0, _resizing.getSmallestColumnWidth)();
+      var width = column.element.outerWidth(true);
+      var canShrink = (0, _resizing.getAcceptedColumnWidth)((0, _resizing.getColumnWidth)(column).toString()) > (0, _resizing.getSmallestColumnWidth)();
       dropPositions.push({
         affectedColumn: column,
         canShrink: canShrink,

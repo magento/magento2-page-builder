@@ -110,11 +110,11 @@ define(["../../../../utils/array"], function (_array) {
 
 
   function determineColumnWidths(column, group) {
-    var singleColumnWidth = group.width() / getMaxColumns();
+    var singleColumnWidth = group.outerWidth() / getMaxColumns();
     var adjacentColumn = getAdjacentColumn(column, "+1");
     var columnWidths = [];
-    var columnLeft = column.element.offset().left;
-    var adjacentRightPosition = adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(); // Determine the maximum size (in pixels) that this column can be dragged to
+    var columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
+    var adjacentRightPosition = adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
 
     var columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
     var leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - columnsToRight * singleColumnWidth + 10;
@@ -245,7 +245,7 @@ define(["../../../../utils/array"], function (_array) {
 
     switch (modifyColumnInPair) {
       case "left":
-        var singleColumnWidth = column.element.position().left + group.width() / getMaxColumns(); // Don't allow the ghost widths be less than the smallest column
+        var singleColumnWidth = column.element.position().left + group.outerWidth() / getMaxColumns(); // Don't allow the ghost widths be less than the smallest column
 
         if (ghostWidth <= singleColumnWidth) {
           ghostWidth = singleColumnWidth;
@@ -281,8 +281,8 @@ define(["../../../../utils/array"], function (_array) {
   function determineAdjustedColumn(group, currentPos, column, history) {
     var modifyColumnInPair = "left";
     var usedHistory;
-    var resizeColumnLeft = column.element.offset().left;
-    var resizeColumnWidth = column.element.outerWidth();
+    var resizeColumnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
+    var resizeColumnWidth = column.element.outerWidth(true);
     var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
     var adjustedColumn;
 

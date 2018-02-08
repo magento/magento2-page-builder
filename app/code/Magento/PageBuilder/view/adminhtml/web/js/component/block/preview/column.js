@@ -25,6 +25,13 @@ define(["./block"], function (_block) {
       // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
         styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+      } // If we have left and right margins we need to minus this from the total width
+
+
+      if (this.data.margins_and_padding && this.data.margins_and_padding().margin) {
+        var margins = this.data.margins_and_padding().margin;
+        var horizontalMargin = parseInt(margins.left, 10) + parseInt(margins.right, 10);
+        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
       }
 
       return styles;
