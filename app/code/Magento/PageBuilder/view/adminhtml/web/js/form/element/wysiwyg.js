@@ -78,7 +78,7 @@ define([
                         jQuery(window).scrollTop(0);
                     });
                 }
-            }, this, "beforeChange");
+            }, this, 'beforeChange');
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
                     _.defer(function () {
@@ -88,6 +88,7 @@ define([
                     });
                 }
             }, this);
+
             return this;
         },
 
@@ -121,7 +122,7 @@ define([
          * @return {Panel}
          */
         getPanel: function () {
-            if (!(this.panel)) {
+            if (!this.panel) {
 
                 this.panel = new Panel();
             }
@@ -147,8 +148,8 @@ define([
         /**
          * Any events fired on the WYSIWYG component should be ran on the stage
          *
-         * @param eventName
-         * @param params
+         * @param {String} eventName
+         * @param {String} params
          */
         emit: function (eventName, params) {
             return this.stage.emit(eventName, params);
@@ -157,15 +158,15 @@ define([
         /**
          * Bind a click event to the PageBuilder init button
          *
-         * @param node
+         * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
             //hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
 
             if (this.wysiwygConfigData()['hide_toogle_buttons']) {
-                $('#toggle' + node.id).hide()
-            };
+                $('#toggle' + node.id).hide();
+            }
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
@@ -173,35 +174,34 @@ define([
         /**
          * Handles the 'Use Default Value' checkbox
          *
-         * @param node
+         * @param {HTMLElement} node
          */
-        handleUseDefaultButton: function(node) {
-            var defaultButton = $("div.admin__field-service input[id='" + this.uid + "_default']"),
+        handleUseDefaultButton: function (node) {
+            var defaultButton = $('div.admin__field-service input[id="' + this.uid + '_default"]'),
                 editPageBuilderButton = $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')[0];
 
-            if (defaultButton.is(":checked")) {
+            if (defaultButton.is(':checked')) {
                 editPageBuilderButton.disable();
-                editPageBuilderButton.style.pointerEvents = "none";
+                editPageBuilderButton.style.pointerEvents = 'none';
             }
-            $(document).on('click', "div.admin__field-service input[id='" + this.uid + "_default']", function() {
+            $(document).on('click', 'div.admin__field-service input[id="' + this.uid + '_default"]', function () {
                 if (this.checked) {
                     editPageBuilderButton.disable();
-                    editPageBuilderButton.style.pointerEvents = "none";
+                    editPageBuilderButton.style.pointerEvents = 'none';
                 } else {
                     editPageBuilderButton.enable();
-                    editPageBuilderButton.style.pointerEvents = "auto";
+                    editPageBuilderButton.style.pointerEvents = 'auto';
                 }
             });
         },
 
         /**
          * Displays page builder based on configuration
-         * @param event
+         * @param  {Event} event
          * @return void
          */
-        displayPageBuilderInFullScreenMode: function(event)
-        {
-            var isFullScreen = this.wysiwygConfigData()['openInFullScreen'] || false;
+        displayPageBuilderInFullScreenMode: function (event) {
+            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
 
             this.isComponentInitialized = true;
 
@@ -219,17 +219,19 @@ define([
         /**
          * Handle a click event requesting that we build PageBuilder
          *
-         * @param event
-         * @param {Boolean} isFullScreeMode
+         * @param {Event} event
+         * @param {Boolean} isFullScreenMode
          * @return void
          */
-        buildPageBuilder: function (event, isFullScreeMode) {
+        buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
                 buildInstance = new Build(this.initialValue),
-                isFullScreeMode = isFullScreeMode || false;
+                isFullScreeMode = isFullScreenMode || false;
+
             this.isFullScreen(isFullScreeMode);
 
             this.loading(true);
+
             if (event) {
                 event.stopPropagation();
             }
@@ -253,14 +255,15 @@ define([
                 this.stage.build(buildInstance)
             } else {
                 this.stage.build();
-            };
+            }
+
             this.isComponentInitialized = true;
         },
 
         /**
          * Return the PageBuilder stage templage
          *
-         * @returns {string}
+         * @returns {String}
          */
         getStageTemplate: function () {
             return 'Magento_PageBuilder/component/stage.html';
@@ -269,8 +272,8 @@ define([
         /**
          * Throw a confirmation dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         confirmationDialog: function (options) {
             if (options.actions &&
@@ -287,8 +290,8 @@ define([
         /**
          * Throw an alert dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         alertDialog: function (options) {
             if (options.content) {
