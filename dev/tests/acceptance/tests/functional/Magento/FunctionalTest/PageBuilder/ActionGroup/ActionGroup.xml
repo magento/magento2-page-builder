@@ -55,8 +55,6 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElementVisible" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.openPageBuilder}}" stepKey="waitForPageBuilderButton" />
-        <click selector="{{PageBuilderActionsSection.openPageBuilder}}" stepKey="clickEnableAdvancedCMS"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
@@ -333,5 +331,15 @@
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
         <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
+    </actionGroup>
+    <actionGroup name="enablePageBuilderSetting">
+        <amOnPage url="admin/admin/system_config/edit/section/cms/" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="wait1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
+        <uncheckOption selector="{{ContentManagementSection.EnablePageBuilderSystemValue}}" stepKey="uncheckUseSystemValue"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
     </actionGroup>
 </actionGroups>

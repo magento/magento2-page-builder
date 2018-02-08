@@ -16,12 +16,11 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getToggleButtonHtml($visible = true)
     {
         $buttonHtml = '';
-        if ($this->getConfig()->getData('pagebuilder_button') !== false) {
+        if ($this->getConfig()->getData('pagebuilder_button') === true && $this->isPageBuilderUsed()) {
             $buttonHtml .= $this->_getButtonHtml(
                 [
-                    'title' => $this->translate('Enable Advanced CMS'),
-                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action'
-                        . ' action-secondary',
+                    'title' => $this->translate('Edit with Page Builder'),
+                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action',
                     'id' => 'magento-pagebuilder' . $this->getHtmlId()
                 ]
             );
@@ -38,6 +37,17 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        if ($this->isPageBuilderUsed()) {
+            return true;
+        }
+        return parent::isEnabled();
+    }
+
+    /**
      * Is the stage aspect of the system enabled
      *
      * @return bool
@@ -45,5 +55,27 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function isStageEnabled()
     {
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getInlineJs($jsSetupObject, $forceLoad)
+    {
+        if ($this->isPageBuilderUsed()) {
+            return '';
+        }
+
+        return parent::getInlineJs($jsSetupObject, $forceLoad);
+    }
+
+    /**
+     * Return if page builder will be used instead of wysiwyg editor
+     *
+     * @return bool
+     */
+    private function isPageBuilderUsed()
+    {
+        return $this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter';
     }
 }
