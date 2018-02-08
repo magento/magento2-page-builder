@@ -146,7 +146,7 @@ define([
             );
 
             // On stage ready show the interface
-            EventBus.on("stage:ready", function (event, params) {
+            EventBus.on("stage:ready", function (stageReadyEvent, params) {
                 if (params.stage.id === self.stage.id) {
                     self.stageActive(true); // Display the stage UI
                     self.visible(false); // Hide the original WYSIWYG editor

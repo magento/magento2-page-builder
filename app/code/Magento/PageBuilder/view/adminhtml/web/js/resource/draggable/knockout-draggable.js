@@ -28,6 +28,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
             appendTo: document.body,
             helper: function(event) {
                 var clone = jQuery(event.currentTarget).clone();
+
                 clone.css('pointerEvents', 'none');
                 return clone;
             }
@@ -48,7 +49,7 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                     ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
                     require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
                 })
-                .on('dragstop', function (event, ui) {
+                .on('dragstop', function () {
                     require("uiRegistry").remove('dragElementViewModel');
                 });
         },

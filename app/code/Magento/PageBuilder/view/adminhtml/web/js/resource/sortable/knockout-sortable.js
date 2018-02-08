@@ -158,7 +158,7 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                 newParentEl = blockEl.parent()[0],
                 newIndex = blockEl.index();
 
-            if (blockEl && newParentEl && (newParentEl === this)) {
+            if (blockEl && newParentEl && newParentEl === this) {
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
@@ -284,12 +284,10 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                     });
                     this.draggedItem.remove();
                 }
-            } else {
-                if (!ui.helper && ui.item) {
-                    _.defer(function () {
-                        jQuery(ui.item).remove();
-                    });
-                }
+            } else if (!ui.helper && ui.item) {
+                _.defer(function () {
+                    jQuery(ui.item).remove();
+                });
             }
         }
     };
