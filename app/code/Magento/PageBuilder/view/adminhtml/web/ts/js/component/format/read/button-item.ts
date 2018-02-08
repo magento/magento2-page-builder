@@ -17,7 +17,7 @@ export default class ButtonItem implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-button"));
+        const advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-button-item"));
         const response: DataObject = {
             button_link: element.getElementsByTagName('a')[0].getAttribute("href"),
             button_text: element.getAttribute("data-button-text"),

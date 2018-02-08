@@ -22,6 +22,6 @@ export default class Button extends PreviewBlock {
      *
      */
     public childrenStyle() {
-        return this.parent.parent.preview.config.appearances[this.parent.parent.preview.data.appearance()];
+        return {display: 'inline-block'};
     }
 }

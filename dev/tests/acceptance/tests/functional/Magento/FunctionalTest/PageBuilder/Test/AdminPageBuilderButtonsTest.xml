@@ -14,7 +14,7 @@
             <description value="A user should be able to add and edit a button item."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87572"/>
-            <group value="pagebuilderButton"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -103,7 +103,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.borderDefaultStyle(PageBuilderAdvancedBorderPropertyDefault.value)}}" stepKey="seeBorderUnset"/>
+        <seeElementInDOM selector="{{ButtonsBackendSection.borderDefaultStyle}}" stepKey="seeBorderDefault"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
@@ -120,7 +120,7 @@
             <description value="A user should be able to remove a button from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -146,7 +146,7 @@
             <title value="Buttons has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for buttons"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -184,7 +184,7 @@
             <description value="Check if buttons and button have the required fields"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87235"/>
-            <group value="pagebuilder"/>
+            <group value="michael"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -205,9 +205,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonsAppearanceProperty">
-            <argument name="property" value="PageBuilderAppearanceProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonsEditPanelSettings"/>
         <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickOnAddButtonsElement"/>

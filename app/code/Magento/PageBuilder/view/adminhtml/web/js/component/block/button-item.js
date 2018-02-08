@@ -1,34 +1,19 @@
 /*eslint-disable */
-define(["../block/factory", "../config", "./block"], function (_factory, _config, _block) {
+define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var button =
+  var ButtonItem =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(button, _Block);
+    _inheritsLoose(ButtonItem, _Block);
 
-    function button() {
+    function ButtonItem() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = button.prototype;
-
-    /**
-     * Add a button into the buttons container
-     */
-    _proto.addButton = function addButton() {
-      var _this = this;
-
-      (0, _factory)(_config.getInitConfig("contentTypes").button, this.parent.parent, this.stage, {}).then(function (button) {
-        _this.addChild(button);
-
-        button.edit.open();
-      });
-    };
-
-    return button;
+    return ButtonItem;
   }(_block);
 
-  return button;
+  return ButtonItem;
 });
 //# sourceMappingURL=button-item.js.map

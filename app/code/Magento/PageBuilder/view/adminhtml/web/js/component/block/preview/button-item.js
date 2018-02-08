@@ -23,7 +23,9 @@ define(["./block"], function (_block) {
     var _proto = Button.prototype;
 
     _proto.childrenStyle = function childrenStyle() {
-      return this.parent.parent.preview.config.appearances[this.parent.parent.preview.data.appearance()];
+      return {
+        display: 'inline-block'
+      };
     };
 
     return Button;
