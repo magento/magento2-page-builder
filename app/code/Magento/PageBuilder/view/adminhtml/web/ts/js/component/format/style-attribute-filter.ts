@@ -20,6 +20,7 @@ export default class StyleAttributeFilter {
         "border_width",
         "border_color",
         "border_radius",
+        "box_sizing",
         "color",
         "display",
         "height",
