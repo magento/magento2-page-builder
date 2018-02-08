@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
+define(["underscore", "../config", "./block", "../../utils/url"], function (_underscore, _config, _block, _urlUtils) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -102,10 +102,8 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
       var mediaUrl = _config.getInitConfig("media_url");
 
       // if imageUrl begins with forward slash, remove host
-      if (imageUrl.indexOf('/') === 0) {
-          var a = document.createElement('a');
-          a.href = mediaUrl;
-          mediaUrl = a.pathname;
+      if (_urlUtils.isPathOnly(imageUrl)) {
+          mediaUrl = _urlUtils.getPathFromUrl(mediaUrl);
       }
 
       var mediaPath = imageUrl.split(mediaUrl);

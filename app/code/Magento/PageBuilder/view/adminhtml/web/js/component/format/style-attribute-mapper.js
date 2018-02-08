@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../component/config", "../../utils/directives"], function (_underscore, _config, _directives) {
+define(["underscore", "../../component/config", "../../utils/directives", "../../utils/url"], function (_underscore, _config, _directives, _urlUtils) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -51,10 +51,8 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
           var mediaUrl = _config.getInitConfig("media_url");
 
           // if imageUrl begins with forward slash, remove host
-          if (imageUrl.indexOf('/') === 0) {
-              var a = document.createElement('a');
-              a.href = mediaUrl;
-              mediaUrl = a.pathname;
+          if (_urlUtils.isPathOnly(imageUrl)) {
+              mediaUrl = _urlUtils.getPathFromUrl(mediaUrl);
           }
 
           var mediaPath = imageUrl.split(mediaUrl);

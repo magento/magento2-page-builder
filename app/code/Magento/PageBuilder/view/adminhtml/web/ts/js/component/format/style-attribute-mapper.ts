@@ -7,6 +7,7 @@ import _ from "underscore";
 import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
+import {isPathOnly, getPathFromUrl} from "../../utils/url";
 
 interface FromDomResult {
     [key: string]: any;
@@ -45,10 +46,8 @@ export default class StyleAttributeMapper {
                     let mediaUrl = Config.getInitConfig("media_url");
 
                     // if imageUrl begins with forward slash, remove host
-                    if (imageUrl.indexOf('/') === 0) {
-                        const a = document.createElement('a');
-                        a.href = mediaUrl;
-                        mediaUrl = a.pathname;
+                    if (isPathOnly(imageUrl)) {
+                        mediaUrl = getPathFromUrl(mediaUrl);
                     }
 
                     const mediaPath = imageUrl.split(mediaUrl);
