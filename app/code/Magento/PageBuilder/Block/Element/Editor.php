@@ -16,12 +16,11 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     protected function _getToggleButtonHtml($visible = true)
     {
         $buttonHtml = '';
-        if ($this->getConfig()->getData('pagebuilder_button') === true) {
+        if ($this->getConfig()->getData('pagebuilder_button') === true && $this->isPageBuilderUsed()) {
             $buttonHtml .= $this->_getButtonHtml(
                 [
-                    'title' => $this->translate('Enable Advanced CMS'),
-                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action'
-                        . ' action-secondary',
+                    'title' => $this->translate('Edit with Page Builder'),
+                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action',
                     'id' => 'magento-pagebuilder' . $this->getHtmlId()
                 ]
             );
@@ -38,6 +37,17 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        if ($this->isPageBuilderUsed()) {
+            return true;
+        }
+        return parent::isEnabled();
+    }
+
+    /**
      * Is the stage aspect of the system enabled
      *
      * @return bool
@@ -48,30 +58,24 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
-     * @param string $jsSetupObject
-     * @param string $forceLoad
-     * @return string
+     * {@inheritdoc}
      */
     protected function getInlineJs($jsSetupObject, $forceLoad)
     {
-        if ($this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter') {
-
-            $jsString = '
-                <script type="text/javascript">
-                require([
-                    "Magento_PageBuilder/js/form/element/setup"
-                ], function() {' .
-                 $jsSetupObject . ' = new pageBuilderWysiwygSetup("' .
-                $this->getHtmlId() .
-                '", ' .
-                $this->getJsonConfig() .
-                ');
-                })
-                </script>';
-
-            return $jsString;
+        if ($this->isPageBuilderUsed()) {
+            return '';
         }
 
         return parent::getInlineJs($jsSetupObject, $forceLoad);
+    }
+
+    /**
+     * Return if page builder will be used instead of wysiwyg editor
+     *
+     * @return bool
+     */
+    private function isPageBuilderUsed()
+    {
+        return $this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter';
     }
 }

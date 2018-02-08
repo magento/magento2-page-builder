@@ -41,6 +41,8 @@ define([
             isFullScreen: false,
             originalScrollTop: false,
             isComponentInitialized: false,
+            isButtonEnable: ko.observable(false),
+            wysiwygConfigData: {},
             links: {
                 stageActive: false,
                 stage: {},
@@ -49,7 +51,8 @@ define([
                 showBorders: false,
                 loading: false,
                 userSelect: true,
-                isFullScreen: false
+                isFullScreen: false,
+                wysiwygConfigData: {}
             },
             config: {
                 name: 'stage'
@@ -64,7 +67,8 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect '
+                    + 'isFullScreen wysiwygConfigData');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -74,14 +78,16 @@ define([
                         jQuery(window).scrollTop(0);
                     });
                 }
-            }, this, "beforeChange");
+            }, this, 'beforeChange');
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
                     _.defer(function () {
                         jQuery(window).scrollTop(self.originalScrollTop);
+                        //hide page builder area in case if we open full screen mode from button
+                        self.hidePageBuilderArea();
                     });
                 }
-            });
+            }, this);
 
             return this;
         },
@@ -92,21 +98,19 @@ define([
          * @return {void}
          */
         setElementNode: function (node) {
-            var buildInstance = new Build(this.initialValue);
 
             this.domNode = node;
-            this.bindPageBuilderButton(node);
 
             if (!this.isComponentInitialized) {
-                this.loading(true);
-                if (buildInstance.canBuild()) {
-                    this.buildPageBuilder(false, buildInstance);
+
+                if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    //process case when page builder is initialized using button
+                    this.bindPageBuilderButton(node);
+                    this.handleUseDefaultButton(node);
                 } else {
                     this.buildPageBuilder(false);
                 }
-                this.isComponentInitialized = true;
             }
-
             $(node).bindings({
                 value: this.value
             });
@@ -115,20 +119,37 @@ define([
         /**
          * Returns panel object
          *
-         * @return {*}
+         * @return {Panel}
          */
         getPanel: function () {
-            if (!(this.panel)) {
+            if (!this.panel) {
 
                 this.panel = new Panel();
             }
+
             return this.panel;
         },
+
+        /**
+         * Hide page builder area
+         *
+         * @return void
+         */
+        hidePageBuilderArea: function () {
+
+            if (this.wysiwygConfigData()['enable_pagebuilder']) {
+                this.isComponentInitialized = false;
+                this.stageActive(false);
+                this.visible(true);
+                $(this.domNode).hide();
+            }
+        },
+
         /**
          * Any events fired on the WYSIWYG component should be ran on the stage
          *
-         * @param eventName
-         * @param params
+         * @param {String} eventName
+         * @param {String} params
          */
         emit: function (eventName, params) {
             return this.stage.emit(eventName, params);
@@ -137,20 +158,79 @@ define([
         /**
          * Bind a click event to the PageBuilder init button
          *
-         * @param node
+         * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').on('click', this.buildPageBuilder.bind(this));
+            //hide wysiwyg text area and toogle buttons
+            $('#' + node.id).hide();
+
+            if (this.wysiwygConfigData()['hide_toogle_buttons']) {
+                $('#toggle' + node.id).hide();
+            }
+            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
+                .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
+        },
+
+        /**
+         * Handles the 'Use Default Value' checkbox
+         *
+         * @param {HTMLElement} node
+         */
+        handleUseDefaultButton: function (node) {
+            var defaultButton = $('div.admin__field-service input[id="' + this.uid + '_default"]'),
+                editPageBuilderButton = $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')[0];
+
+            if (defaultButton.is(':checked')) {
+                editPageBuilderButton.disable();
+                editPageBuilderButton.style.pointerEvents = 'none';
+            }
+            $(document).on('click', 'div.admin__field-service input[id="' + this.uid + '_default"]', function () {
+                if (this.checked) {
+                    editPageBuilderButton.disable();
+                    editPageBuilderButton.style.pointerEvents = 'none';
+                } else {
+                    editPageBuilderButton.enable();
+                    editPageBuilderButton.style.pointerEvents = 'auto';
+                }
+            });
+        },
+
+        /**
+         * Displays page builder based on configuration
+         * @param  {Event} event
+         * @return void
+         */
+        displayPageBuilderInFullScreenMode: function (event) {
+            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+
+            this.isComponentInitialized = true;
+
+            if (!$.isEmptyObject(this.stage)) {
+
+                this.isFullScreen(isFullScreen);
+                //handle case, when pagebuilder was previously opened
+                this.stageActive(true);
+            } else {
+                //initialize page builder on first click
+                this.buildPageBuilder(event, isFullScreen);
+            }
         },
 
         /**
          * Handle a click event requesting that we build PageBuilder
          *
-         * @param event
-         * @param buildInstance
+         * @param {Event} event
+         * @param {Boolean} isFullScreenMode
+         * @return void
          */
-        buildPageBuilder: function (event, buildInstance) {
-            var self = this;
+        buildPageBuilder: function (event, isFullScreenMode) {
+            var self = this,
+                buildInstance = new Build(this.initialValue),
+                isFullScreeMode = isFullScreenMode || false;
+
+            this.isFullScreen(isFullScreeMode);
+
+            this.loading(true);
 
             if (event) {
                 event.stopPropagation();
@@ -171,14 +251,19 @@ define([
             // Create a new instance of the panel
             this.getPanel().bindStage(this.stage);
 
-            // Build the stage instance using any existing build data
-            this.stage.build(buildInstance);
+            if (buildInstance.canBuild()) {
+                this.stage.build(buildInstance)
+            } else {
+                this.stage.build();
+            }
+
+            this.isComponentInitialized = true;
         },
 
         /**
          * Return the PageBuilder stage templage
          *
-         * @returns {string}
+         * @returns {String}
          */
         getStageTemplate: function () {
             return 'Magento_PageBuilder/component/stage.html';
@@ -187,8 +272,8 @@ define([
         /**
          * Throw a confirmation dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         confirmationDialog: function (options) {
             if (options.actions &&
@@ -205,8 +290,8 @@ define([
         /**
          * Throw an alert dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         alertDialog: function (options) {
             if (options.content) {
