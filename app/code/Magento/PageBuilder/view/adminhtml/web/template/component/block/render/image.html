@@ -7,8 +7,10 @@
 
 <figure class="pagebuilder-image pagebuilder-entity" data-bind="attr: getAttributes(), style: getStyle(), css: getCss()">
     <a data-bind="attr: getImageAttributes()">
+        <!-- ko if: getData().image && typeof getData().image[0] !== 'undefined' -->
         <img data-bind="attr: getMainImageAttributes(), css: {'pagebuilder-mobile-hidden': getData().mobile_image}" />
-        <!-- ko if: getData().mobile_image -->
+        <!-- /ko -->
+        <!-- ko if: getData().mobile_image && typeof getData().mobile_image[0] !== 'undefined' -->
         <img data-bind="attr: getMobileImageAttributes()" class="pagebuilder-mobile-only" />
         <!-- /ko -->
     </a>

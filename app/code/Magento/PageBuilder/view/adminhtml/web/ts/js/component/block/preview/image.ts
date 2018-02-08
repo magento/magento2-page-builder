@@ -18,16 +18,4 @@ export default class Image extends PreviewBlock {
         }
         return {src: this.data.image()[0].url, style: "visibility: visible; width: 20%"};
     }
-
-    /**
-     * Get the preview icon attributes
-     *
-     * @returns {any}
-     */
-    public getPreviewIconAttributes() {
-        if (this.data.image() === "" || this.data.image() === undefined) {
-            return {class: "icon-pagebuilder-image", style: "visibility: visible"};
-        }
-        return {style: "visibility: hidden"};
-    }
 }
