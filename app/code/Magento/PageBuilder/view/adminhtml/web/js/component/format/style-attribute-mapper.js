@@ -21,7 +21,7 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
       var _this = this;
 
       var result = {};
-      data = _underscore.extend({}, data); // If the border is set to default we don't persist any border related style attributes
+      data = _underscore.extend({}, data); // Handle the border being set to none and default
 
       if (typeof data.border !== "undefined") {
         if (data.border === "none") {
@@ -33,8 +33,12 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
 
       Object.keys(data).map(function (key) {
         var value = data[key];
+        /**
+         * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+         * empty value but can't as the field has a default value
+         */
 
-        if (value === "") {
+        if (value === "" || value === "_default") {
           return;
         }
 

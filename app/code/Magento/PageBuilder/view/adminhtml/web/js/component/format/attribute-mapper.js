@@ -13,6 +13,7 @@ define([], function () {
         appearance: "data-appearance",
         autoplay: "data-autoplay",
         autoplay_speed: "data-autoplay-speed",
+        border: "data-border",
         button_text: "data-button-text",
         category_id: "data-category-id",
         enable_parallax: "data-enable-parallax",

@@ -23,7 +23,7 @@ export default class StyleAttributeMapper {
         const result: DataObject = {};
         data = _.extend({}, data);
 
-        // If the border is set to default we don't persist any border related style attributes
+        // Handle the border being set to none and default
         if (typeof data.border !== "undefined") {
             if (data.border === "none") {
                 data.border_color = "";
@@ -35,9 +35,15 @@ export default class StyleAttributeMapper {
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
-                if (value === "") {
+
+                /**
+                 * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+                 * empty value but can't as the field has a default value
+                 */
+                if (value === "" || value === "_default") {
                     return;
                 }
+
                 if (key === "color" && (value === "default" || value === "Default")) {
                     value = "inherit";
                 }
