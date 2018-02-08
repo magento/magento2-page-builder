@@ -421,11 +421,11 @@
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
-        <!--<after>
+        <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>-->
+        </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
@@ -453,6 +453,21 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
@@ -483,12 +498,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
-        </actionGroup>-->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -501,6 +510,21 @@
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingTopOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
@@ -515,6 +539,9 @@
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -569,6 +596,21 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
@@ -598,12 +640,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
-        </actionGroup>-->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -614,6 +650,21 @@
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
             <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
@@ -630,6 +681,9 @@
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -684,6 +738,21 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingRightInAdmin">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
@@ -713,12 +782,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
-        </actionGroup>-->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -731,6 +794,21 @@
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearanceCollageRightOnForm">
             <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
@@ -748,6 +826,9 @@
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -1242,6 +1323,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
         </actionGroup>
@@ -1257,6 +1341,18 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -1269,6 +1365,8 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
     </test>
     <test name="BannerCollageCenteredContentCanPreviewAdmin">
         <annotations>
@@ -1298,6 +1396,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
@@ -1313,6 +1414,18 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -1325,6 +1438,8 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
     </test>
     <test name="BannerCollageLeftContentCanPreviewAdmin">
         <annotations>
@@ -1354,6 +1469,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
@@ -1369,6 +1487,18 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -1381,6 +1511,9 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
+
     </test>
     <test name="BannerCollageLeftButtonOnHover">
         <annotations>
