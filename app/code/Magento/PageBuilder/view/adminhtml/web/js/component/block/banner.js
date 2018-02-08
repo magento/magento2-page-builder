@@ -202,7 +202,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
      */
 
 
-    _proto.getCollageContainerStyle = function getCollageContainerStyle() {
+    _proto.getBannerContainerStyle = function getBannerContainerStyle() {
       return Object.assign(this.getStyle(), {
         backgroundImage: "",
         minHeight: "",
@@ -212,44 +212,6 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         paddingRight: "",
         paddingTop: ""
       });
-    };
-    /**
-     * Get collage desktop image background style only for the storefront
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCollageDesktopBackgroundStyle = function getCollageDesktopBackgroundStyle(additionalStyle) {
-      var style = this.getStyle();
-      var data = this.getData();
-      var baseStyle = {
-        backgroundImage: style.backgroundImage,
-        backgroundSize: style.backgroundSize,
-        boxSizing: "border-box",
-        minHeight: style.minHeight,
-        paddingBottom: data.margins_and_padding.padding.bottom + "px",
-        paddingLeft: data.margins_and_padding.padding.left + "px",
-        paddingRight: data.margins_and_padding.padding.right + "px",
-        paddingTop: data.margins_and_padding.padding.top + "px"
-      };
-      return Object.assign(baseStyle, additionalStyle);
-    };
-    /**
-     * Get collage mobile image background style only for the storefront
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCollageMobileBackgroundStyle = function getCollageMobileBackgroundStyle() {
-      var data = this.getStyle();
-      return {
-        backgroundImage: data.mobileImage && typeof data.mobileImage !== "undefined" && data.mobileImage.length !== 0 ? data.mobileImage : data.backgroundImage,
-        boxSizing: "border-box",
-        minHeight: data.minHeight,
-        padding: data.padding
-      };
     };
 
     return Banner;

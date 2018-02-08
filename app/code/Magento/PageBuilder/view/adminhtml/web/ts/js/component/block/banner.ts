@@ -171,7 +171,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getCollageContainerStyle(): {} {
+    public getBannerContainerStyle(): {} {
         return Object.assign(this.getStyle(),
             {
                 backgroundImage: "",
@@ -183,43 +183,5 @@ export default class Banner extends Block {
                 paddingTop: "",
             },
         );
-    }
-
-    /**
-     * Get collage desktop image background style only for the storefront
-     *
-     * @returns {any}
-     */
-    public getCollageDesktopBackgroundStyle(additionalStyle: {}): {} {
-        const style = this.getStyle();
-        const data = this.getData();
-        const baseStyle = {
-            backgroundImage: style.backgroundImage,
-            backgroundSize: style.backgroundSize,
-            boxSizing: "border-box",
-            minHeight: style.minHeight,
-            paddingBottom: data.margins_and_padding.padding.bottom + "px",
-            paddingLeft: data.margins_and_padding.padding.left + "px",
-            paddingRight: data.margins_and_padding.padding.right + "px",
-            paddingTop: data.margins_and_padding.padding.top + "px",
-        };
-        return Object.assign(baseStyle, additionalStyle);
-    }
-
-    /**
-     * Get collage mobile image background style only for the storefront
-     *
-     * @returns {any}
-     */
-    public getCollageMobileBackgroundStyle(): {} {
-        const data = this.getStyle();
-        return {
-            backgroundImage: data.mobileImage &&
-            typeof data.mobileImage !== "undefined" &&
-            data.mobileImage.length !== 0 ? data.mobileImage : data.backgroundImage,
-            boxSizing: "border-box",
-            minHeight: data.minHeight,
-            padding: data.padding,
-        };
     }
 }
