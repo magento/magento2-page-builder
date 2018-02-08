@@ -21,15 +21,15 @@ define(["../../../utils/image"], function (_image) {
       var response = {
         alt: "",
         image: "",
-        mobile_image: "",
         lightbox: !!element.querySelector("a.pagebuilder-lightbox") ? "Yes" : "No",
+        mobile_image: "",
         show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
         title_tag: element.querySelector("a").getAttribute("title")
       }; // Detect if there is an image and update the response
 
       if (element.querySelector("img:nth-child(1)")) {
-        if (element.querySelector("img:nth-child(1)").getAttribute("src")) {
-          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").getAttribute("src"));
+        if (element.querySelector("img:nth-child(1)").src) {
+          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").src);
         }
 
         if (element.querySelector("img:nth-child(1)").getAttribute("alt")) {

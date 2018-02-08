@@ -73,18 +73,23 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
     _proto.getOverlayStyles = function getOverlayStyles() {
       var data = this.getData();
-      var paddingTop = data.margins_and_padding.padding.top || "0";
-      var paddingRight = data.margins_and_padding.padding.right || "0";
-      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
-      var paddingLeft = data.margins_and_padding.padding.left || "0";
+      var _data$margins_and_pad = data.margins_and_padding.padding,
+          _data$margins_and_pad2 = _data$margins_and_pad.top,
+          top = _data$margins_and_pad2 === void 0 ? 0 : _data$margins_and_pad2,
+          _data$margins_and_pad3 = _data$margins_and_pad.right,
+          right = _data$margins_and_pad3 === void 0 ? 0 : _data$margins_and_pad3,
+          _data$margins_and_pad4 = _data$margins_and_pad.bottom,
+          bottom = _data$margins_and_pad4 === void 0 ? 0 : _data$margins_and_pad4,
+          _data$margins_and_pad5 = _data$margins_and_pad.left,
+          left = _data$margins_and_pad5 === void 0 ? 0 : _data$margins_and_pad5;
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
         boxSizing: "border-box",
         minHeight: data.min_height + "px",
-        paddingBottom: paddingBottom + "px",
-        paddingLeft: paddingLeft + "px",
-        paddingRight: paddingRight + "px",
-        paddingTop: paddingTop + "px"
+        paddingBottom: bottom + "px",
+        paddingLeft: left + "px",
+        paddingRight: right + "px",
+        paddingTop: top + "px"
       };
     };
     /**
@@ -161,6 +166,90 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       }
 
       return (0, _directives.getImageUrl)(data.mobile_image);
+    };
+    /**
+     * Get the link attributes for the render
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getLinkAttribute = function getLinkAttribute() {
+      var data = this.getData();
+      return {
+        href: data.link_url,
+        target: data.open_in_new_tab === "1" ? "_blank" : false
+      };
+    };
+    /**
+     * Get the button style for the render
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getButtonStyle = function getButtonStyle() {
+      var data = this.getData();
+      return {
+        opacity: data.show_button === "always" ? "1" : "0",
+        visibility: data.show_button === "always" ? "visible" : "hidden"
+      };
+    };
+    /**
+     * Get collage container style only for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getCollageContainerStyle = function getCollageContainerStyle() {
+      return Object.assign(this.getStyle(), {
+        backgroundImage: "",
+        minHeight: "",
+        padding: "",
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
+    };
+    /**
+     * Get collage desktop image background style only for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getCollageDesktopBackgroundStyle = function getCollageDesktopBackgroundStyle(additionalStyle) {
+      var style = this.getStyle();
+      var data = this.getData();
+      var baseStyle = {
+        backgroundImage: style.backgroundImage,
+        backgroundSize: style.backgroundSize,
+        boxSizing: "border-box",
+        minHeight: style.minHeight,
+        paddingBottom: data.margins_and_padding.padding.bottom + "px",
+        paddingLeft: data.margins_and_padding.padding.left + "px",
+        paddingRight: data.margins_and_padding.padding.right + "px",
+        paddingTop: data.margins_and_padding.padding.top + "px"
+      };
+      return Object.assign(baseStyle, additionalStyle);
+    };
+    /**
+     * Get collage mobile image background style only for the storefront
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getCollageMobileBackgroundStyle = function getCollageMobileBackgroundStyle() {
+      var data = this.getStyle();
+      return {
+        backgroundImage: data.mobileImage && typeof data.mobileImage !== "undefined" && data.mobileImage.length !== 0 ? data.mobileImage : data.backgroundImage,
+        boxSizing: "border-box",
+        minHeight: data.minHeight,
+        padding: data.padding
+      };
     };
 
     return Banner;

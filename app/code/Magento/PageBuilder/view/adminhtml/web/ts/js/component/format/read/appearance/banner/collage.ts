@@ -53,7 +53,7 @@ export default class Collage implements ReadInterface {
             },
             message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
             min_height: element.querySelector(".pagebuilder-banner-wrapper").style.minHeight ?
-                parseInt(element.querySelector(".pagebuilder-banner-wrapper").style.minHeight, 10): 0,
+                parseInt(element.querySelector(".pagebuilder-banner-wrapper").style.minHeight, 10) : 0,
             mobile_image: mobileImage,
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: this.getOverlayColor(overlayColor),

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "./block", "../../../utils/directives"], function (_knockout, _block, _directives) {
+define(["knockout", "../../../utils/directives", "./block"], function (_knockout, _directives, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Html =

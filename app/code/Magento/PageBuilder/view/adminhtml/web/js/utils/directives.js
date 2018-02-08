@@ -91,7 +91,7 @@ define(["../component/config"], function (_config) {
         var urlMatches = mediaDirective.match(urlRegExp);
 
         if (urlMatches && urlMatches[1] !== undefined) {
-          var directiveWithOutQuotes = '{{media url=' + urlMatches[1].replace(/("|&quot;|\s)/g, "") + '}}';
+          var directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + "}}";
           html = html.replace(mediaDirective, directiveWithOutQuotes);
         }
       });
@@ -117,7 +117,7 @@ define(["../component/config"], function (_config) {
         var urlMatches = mediaDirective.match(urlRegExp);
 
         if (urlMatches && urlMatches[1] !== "undefined") {
-          html = html.replace(mediaDirective, _config.getInitConfig('media_url') + urlMatches[1]);
+          html = html.replace(mediaDirective, _config.getInitConfig("media_url") + urlMatches[1]);
         }
       });
     }

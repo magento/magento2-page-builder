@@ -28,13 +28,9 @@ define(["Magento_PageBuilder/js/component/loader"], function (_loader) {
   function createBlock(config, parent, stage, formData) {
     stage = stage || parent.stage;
     formData = formData || {};
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
       (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
-        try {
-          resolve(new blockComponent(parent, stage, config, formData));
-        } catch (e) {
-          reject(e);
-        }
+        resolve(new blockComponent(parent, stage, config, formData));
       });
     });
   }

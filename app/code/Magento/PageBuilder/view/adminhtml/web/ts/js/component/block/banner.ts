@@ -8,7 +8,6 @@ import _ from "underscore";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
-import Config from "../config";
 import Block from "./block";
 
 export default class Banner extends Block {
@@ -18,9 +17,9 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getBannerStyles(type: string) {
+    public getBannerStyles(type: string): {} {
         const data = this.getData();
-        let backgroundImage: string = "";
+        let backgroundImage: any = "";
         if (type === "image") {
             backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
         }
@@ -47,7 +46,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getOverlayAttributes() {
+    public getOverlayAttributes(): {} {
         const data = this.getData();
         let overlayColorAttr: string = "transparent";
         if (data.show_overlay !== "never_show") {
@@ -65,20 +64,17 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getOverlayStyles() {
+    public getOverlayStyles(): {} {
         const data = this.getData();
-        const paddingTop = data.margins_and_padding.padding.top || "0";
-        const paddingRight = data.margins_and_padding.padding.right || "0";
-        const paddingBottom = data.margins_and_padding.padding.bottom || "0";
-        const paddingLeft = data.margins_and_padding.padding.left || "0";
+        const { top = 0, right = 0, bottom = 0, left = 0 } = data.margins_and_padding.padding;
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
             boxSizing: "border-box",
             minHeight: data.min_height + "px",
-            paddingBottom: paddingBottom + "px",
-            paddingLeft: paddingLeft + "px",
-            paddingRight: paddingRight + "px",
-            paddingTop: paddingTop + "px",
+            paddingBottom: bottom + "px",
+            paddingLeft: left + "px",
+            paddingRight: right + "px",
+            paddingTop: top + "px",
         };
     }
 
@@ -87,7 +83,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getOverlayColorStyle() {
+    public getOverlayColorStyle(): {} {
         const data = this.getData();
         let overlayColor: string = "transparent";
         if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
@@ -103,7 +99,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getContentHtml() {
+    public getContentHtml(): string {
         const data = this.getData();
         if (data.message === "" || data.message === undefined) {
             return;
@@ -117,7 +113,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getImage() {
+    public getImage(): {} {
         const data = this.getData();
         if (data.background_image === "" || data.background_image === undefined) {
             return {};
@@ -133,7 +129,7 @@ export default class Banner extends Block {
      *
      * @returns {any}
      */
-    public getMobileImage() {
+    public getMobileImage(): {} {
         const data = this.getData();
         if (data.mobile_image === "" || data.mobile_image === undefined) {
             return {};
@@ -142,5 +138,88 @@ export default class Banner extends Block {
             return;
         }
         return getImageUrl(data.mobile_image);
+    }
+
+    /**
+     * Get the link attributes for the render
+     *
+     * @returns {any}
+     */
+    public getLinkAttribute(): {} {
+        const data = this.getData();
+        return {
+            href: data.link_url,
+            target: data.open_in_new_tab === "1" ? "_blank" : false ,
+        };
+    }
+
+    /**
+     * Get the button style for the render
+     *
+     * @returns {any}
+     */
+    public getButtonStyle(): {} {
+        const data = this.getData();
+        return {
+            opacity: data.show_button === "always" ? "1" : "0",
+            visibility: data.show_button === "always" ? "visible" : "hidden",
+        };
+    }
+
+    /**
+     * Get collage container style only for the storefront
+     *
+     * @returns {any}
+     */
+    public getCollageContainerStyle(): {} {
+        return Object.assign(this.getStyle(),
+            {
+                backgroundImage: "",
+                minHeight: "",
+                padding: "",
+                paddingBottom: "",
+                paddingLeft: "",
+                paddingRight: "",
+                paddingTop: "",
+            },
+        );
+    }
+
+    /**
+     * Get collage desktop image background style only for the storefront
+     *
+     * @returns {any}
+     */
+    public getCollageDesktopBackgroundStyle(additionalStyle: {}): {} {
+        const style = this.getStyle();
+        const data = this.getData();
+        const baseStyle = {
+            backgroundImage: style.backgroundImage,
+            backgroundSize: style.backgroundSize,
+            boxSizing: "border-box",
+            minHeight: style.minHeight,
+            paddingBottom: data.margins_and_padding.padding.bottom + "px",
+            paddingLeft: data.margins_and_padding.padding.left + "px",
+            paddingRight: data.margins_and_padding.padding.right + "px",
+            paddingTop: data.margins_and_padding.padding.top + "px",
+        };
+        return Object.assign(baseStyle, additionalStyle);
+    }
+
+    /**
+     * Get collage mobile image background style only for the storefront
+     *
+     * @returns {any}
+     */
+    public getCollageMobileBackgroundStyle(): {} {
+        const data = this.getStyle();
+        return {
+            backgroundImage: data.mobileImage &&
+            typeof data.mobileImage !== "undefined" &&
+            data.mobileImage.length !== 0 ? data.mobileImage : data.backgroundImage,
+            boxSizing: "border-box",
+            minHeight: data.minHeight,
+            padding: data.padding,
+        };
     }
 }

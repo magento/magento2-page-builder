@@ -5,29 +5,22 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: Object.assign(getStyle(), {minHeight: '', backgroundImage: '', padding: '', paddingLeft: '', paddingTop: '', paddingRight: '', paddingBottom: ''}), css: getCss()">
-    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }">
-        <div data-bind="style: {
-            backgroundImage: getStyle().backgroundImage,
-            paddingTop: getData().margins_and_padding.padding.top + 'px',
-            paddingBottom: getData().margins_and_padding.padding.bottom + 'px',
-            paddingLeft: getData().margins_and_padding.padding.left + 'px',
-            paddingRight: 'calc(50% + ' + getData().margins_and_padding.padding.right + 'px)',
-            backgroundSize: getStyle().backgroundSize,
-            minHeight: getStyle().minHeight}"
+<div data-bind="attr: getAttributes(), style: getCollageContainerStyle(), css: getCss()">
+    <a data-bind="attr: getLinkAttribute()">
+        <div data-bind="style: getCollageDesktopBackgroundStyle({paddingRight: 'calc(50% + ' + getData().margins_and_padding.padding.right + 'px)'})"
              class="pagebuilder-mobile-hidden pagebuilder-banner-wrapper">
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>
-        <div data-bind="style: {minHeight: getStyle().minHeight, backgroundSize: getStyle().backgroundSize, padding: getStyle().padding, backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage}"  class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
+        <div data-bind="style: getCollageMobileBackgroundStyle()" class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>

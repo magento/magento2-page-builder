@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import $t from "mage/translate";
 import * as _ from "underscore";
-import ko from "knockout";
 import Block from "./block/block";
 import createBlock from "./block/factory";
 import Config from "./config";
@@ -55,8 +55,8 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
         }
 
         // Wait for all the promises to finish and add the instances to the stage
-        return Promise.all(childPromises).then(function(childrenPromises) {
-            return Promise.all(childrenPromises.map(function(child, index) {
+        return Promise.all(childPromises).then((childrenPromises) => {
+            return Promise.all(childrenPromises.map((child, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
@@ -72,7 +72,7 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
  * @param {stage} stage
  * @returns {Promise<EditableAreaInterface>}
  */
-function createElementBlock(element: HTMLElement, parent: EditableArea, stage: Stage): Promise<EditableArea> {
+function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
 
@@ -82,7 +82,7 @@ function createElementBlock(element: HTMLElement, parent: EditableArea, stage: S
             parent,
             stage,
             data,
-        )
+        ),
     );
 }
 
@@ -97,12 +97,12 @@ function getElementData(element: HTMLElement) {
     const attributeReaderComposite = new AttributeReaderComposite();
     const readPromise = attributeReaderComposite.read(element);
     return readPromise.then((data) => {
-        return result ? _.extend(result, data) : {};
+        return _.extend(result, data);
     });
 }
 
 /**
- * Return elements children, search for direct decedents, or traverse through to find deeper children
+ * Return elements children, search for direct descendants, or traverse through to find deeper children
  *
  * @param element
  * @returns {Array}
@@ -122,9 +122,7 @@ function getElementChildren(element: Element) {
             }
         });
 
-        if (children.length > 0) {
-            return children;
-        }
+        return children;
     }
 
     return [];
@@ -137,38 +135,31 @@ function getElementChildren(element: Element) {
  * @param {string} initialValue
  * @returns {Promise<any>}
  */
+
 function buildEmpty(stage: Stage, initialValue: string) {
-    return new Promise((resolve) => {
-        const rootContentTypeConfig = Config.getContentType(
-            Config.getInitConfig('stage_config').root_content_type
-        );
-        const htmlDisplayContentTypeConfig = Config.getContentType(
-            Config.getInitConfig('stage_config').html_display_content_type
-        );
-        if (rootContentTypeConfig) {
-            createBlock(rootContentTypeConfig, stage, stage, {}).then((row: Block) => {
-                stage.addChild(row);
-                if (htmlDisplayContentTypeConfig && initialValue) {
-                    createBlock(
-                        htmlDisplayContentTypeConfig,
-                        stage,
-                        stage,
-                        {
-                            html: initialValue,
-                        },
-                    ).then((text: Block) => {
-                        row.addChild(text);
-                        resolve();
-                    });
-                } else {
-                    resolve();
-                }
-            });
-        } else {
-            // The row content type can not exist and the system be functional
-            resolve();
-        }
-    });
+    const stageConfig = Config.getInitConfig("stage_config");
+    const rootContentTypeConfig = Config.getContentType(stageConfig.root_content_type);
+    const htmlDisplayContentTypeConfig = Config.getContentType(stageConfig.html_display_content_type);
+
+    if (rootContentTypeConfig) {
+        return createBlock(rootContentTypeConfig, stage, stage, {}).then((row: Block) => {
+            stage.addChild(row);
+            if (htmlDisplayContentTypeConfig && initialValue) {
+                return createBlock(
+                    htmlDisplayContentTypeConfig,
+                    stage,
+                    stage,
+                    {
+                        html: initialValue,
+                    },
+                ).then((text: Block) => {
+                    row.addChild(text);
+                });
+            }
+        });
+    }
+
+    return Promise.resolve();
 }
 
 /**
@@ -189,7 +180,7 @@ export default function build(
     afterCreateCallback: (stage: Stage) => void,
 ) {
     // Create a new instance of the stage
-    const stage: any = new Stage(
+    const stage: Stage = new Stage(
         parent,
         stageContent,
     );
@@ -206,7 +197,7 @@ export default function build(
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
-            .catch(e => {
+            .catch((e) => {
                 stageContent([]);
                 currentBuild = buildEmpty(stage, content);
             });

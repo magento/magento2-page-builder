@@ -87,7 +87,7 @@ export function removeQuotesInMediaDirectives(html: string): string {
         mediaDirectiveMatches.forEach((mediaDirective: string) => {
             const urlMatches = mediaDirective.match(urlRegExp);
             if (urlMatches && urlMatches[1] !== undefined) {
-                const directiveWithOutQuotes = '{{media url=' + urlMatches[1].replace(/("|&quot;|\s)/g, "") + '}}';
+                const directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + "}}";
                 html = html.replace(mediaDirective, directiveWithOutQuotes);
             }
         });
@@ -111,7 +111,7 @@ export function convertMediaDirectivesToUrls(html: string): string {
             if (urlMatches && urlMatches[1] !== "undefined") {
                 html = html.replace(
                     mediaDirective,
-                    Config.getInitConfig('media_url') + urlMatches[1]
+                    Config.getInitConfig("media_url") + urlMatches[1],
                 );
             }
         });

@@ -60,7 +60,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
    */
 
 
-  function createElementBlock(element, parent, stage) {
+  function createElementBlock(element, stage, parent) {
     parent = parent || stage;
     var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
     return getElementData(element).then(function (data) {
@@ -80,11 +80,11 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
     var attributeReaderComposite = new _composite();
     var readPromise = attributeReaderComposite.read(element);
     return readPromise.then(function (data) {
-      return result ? _.extend(result, data) : {};
+      return _.extend(result, data);
     });
   }
   /**
-   * Return elements children, search for direct decedents, or traverse through to find deeper children
+   * Return elements children, search for direct descendants, or traverse through to find deeper children
    *
    * @param element
    * @returns {Array}
@@ -106,9 +106,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
         }
       });
 
-      if (children.length > 0) {
-        return children;
-      }
+      return children;
     }
 
     return [];
@@ -123,31 +121,27 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
 
   function buildEmpty(stage, initialValue) {
-    return new Promise(function (resolve) {
-      var rootContentTypeConfig = _config.getContentType(_config.getInitConfig('stage_config').root_content_type);
+    var stageConfig = _config.getInitConfig("stage_config");
 
-      var htmlDisplayContentTypeConfig = _config.getContentType(_config.getInitConfig('stage_config').html_display_content_type);
+    var rootContentTypeConfig = _config.getContentType(stageConfig.root_content_type);
 
-      if (rootContentTypeConfig) {
-        (0, _factory)(rootContentTypeConfig, stage, stage, {}).then(function (row) {
-          stage.addChild(row);
+    var htmlDisplayContentTypeConfig = _config.getContentType(stageConfig.html_display_content_type);
 
-          if (htmlDisplayContentTypeConfig && initialValue) {
-            (0, _factory)(htmlDisplayContentTypeConfig, stage, stage, {
-              html: initialValue
-            }).then(function (text) {
-              row.addChild(text);
-              resolve();
-            });
-          } else {
-            resolve();
-          }
-        });
-      } else {
-        // The row content type can not exist and the system be functional
-        resolve();
-      }
-    });
+    if (rootContentTypeConfig) {
+      return (0, _factory)(rootContentTypeConfig, stage, stage, {}).then(function (row) {
+        stage.addChild(row);
+
+        if (htmlDisplayContentTypeConfig && initialValue) {
+          return (0, _factory)(htmlDisplayContentTypeConfig, stage, stage, {
+            html: initialValue
+          }).then(function (text) {
+            row.addChild(text);
+          });
+        }
+      });
+    }
+
+    return Promise.resolve();
   }
   /**
    * Build a stage with the provided parent, content observable and initial value

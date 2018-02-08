@@ -5,9 +5,9 @@
 
 import ko from "knockout";
 import {Dictionary} from "underscore";
+import {convertMediaDirectivesToUrls} from "../../../utils/directives";
 import Block from "../block";
 import PreviewBlock from "./block";
-import {convertMediaDirectivesToUrls} from "../../../utils/directives";
 
 export default class Html extends PreviewBlock {
     /**
