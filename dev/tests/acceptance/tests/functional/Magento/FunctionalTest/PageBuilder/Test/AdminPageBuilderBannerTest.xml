@@ -466,6 +466,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <!--<actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>-->
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -474,6 +477,38 @@
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <!-- Validate settings persisted and appear on form -->
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingLeftInAdmin">
+            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>-->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
+            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
+        </actionGroup>
+        <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
@@ -557,7 +592,7 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
