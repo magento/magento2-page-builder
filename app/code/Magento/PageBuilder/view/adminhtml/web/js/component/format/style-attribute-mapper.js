@@ -33,7 +33,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "border" && value === "default") {
-          value = " ";
+          value = "";
         }
 
         if (key === "min_height" || key === "border_width" || key === "border_radius") {
@@ -152,7 +152,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "border") {
-          if (value === " ") {
+          if (value === "") {
             value = "default";
           }
         }

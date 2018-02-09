@@ -18,11 +18,12 @@ export default class ButtonItem implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-button-item"));
+        const button = element.getElementsByTagName("a")[0];
         const response: DataObject = {
-            button_link: element.getElementsByTagName("a")[0].getAttribute("href"),
-            button_text: element.getAttribute("data-button-text"),
-            button_type: element.getAttribute("data-button-type"),
-            open_in_new_tab: element.getElementsByTagName("a")[0].getAttribute("target") === "_blank" ? "1" : "0",
+            button_link: button.getAttribute("href"),
+            button_text: button.innerText,
+            button_type: button.classList[1],
+            open_in_new_tab: button.getAttribute("target") === "_blank" ? "1" : "0",
         };
         return new Promise((resolve: (object: object) => void) => {
             advancedData.then((data) => {
