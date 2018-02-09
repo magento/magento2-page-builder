@@ -5,15 +5,22 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import require from "require";
-import Block from "./block";
+import _ from "underscore";
+import Appearance from "../../appearance/appearance";
+import AccordionBlock from "../accordion";
+import PreviewBlock from "./block";
 
-export default class Accordion extends Block {
+export default class Accordion extends PreviewBlock {
     private element: Element;
     private renderCounter: number = 0;
 
-    constructor(parent: Block, config: object) {
-        super(parent, config);
+    /**
+     * @param {Accordion} parent
+     * @param {object} config
+     * @param {Appearance} appearance
+     */
+    constructor(parent: AccordionBlock, config: object, appearance: Appearance) {
+        super(parent, config, appearance);
 
         // Declare our tabs, they'll get populated later
         this.data.items = ko.observableArray([]);
@@ -40,7 +47,9 @@ export default class Accordion extends Block {
         if (this.data.items().length === this.renderCounter) {
             require(["accordion"], () => {
                 _.delay(
-                    () => $(this.element).accordion({ active: this.parent.getActive() }),
+                    () => $(this.element).accordion({
+                        active: (this.parent as AccordionBlock).getActive(),
+                    }),
                     50,
                 );
             });

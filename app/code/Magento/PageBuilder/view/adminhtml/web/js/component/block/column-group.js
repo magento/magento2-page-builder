@@ -7,6 +7,13 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
   function (_Block) {
     _inheritsLoose(ColumnGroup, _Block);
 
+    /**
+     * @param {EditableArea} parent
+     * @param {Stage} stage
+     * @param {ConfigContentBlock} config
+     * @param formData
+     * @param {Appearance} appearance
+     */
     function ColumnGroup(parent, stage, config, formData, appearance) {
       var _this;
 

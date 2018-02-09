@@ -6,11 +6,14 @@
 import $ from "jquery";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _, {Dictionary} from "underscore";
+import Appearance from "../../appearance/appearance";
 import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class AdvancedSlider extends PreviewBlock {
     private ready: boolean = false;
+    private element: Element;
+
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -28,14 +31,14 @@ export default class AdvancedSlider extends PreviewBlock {
             }
         }, 100);
     }, 20);
-    private element: Element;
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object) {
-        super(parent, config);
+    constructor(parent: Block, config: object, appearance: Appearance) {
+        super(parent, config, appearance);
 
         parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);

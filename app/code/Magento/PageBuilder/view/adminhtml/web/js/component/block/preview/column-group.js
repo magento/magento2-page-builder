@@ -8,15 +8,14 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     _inheritsLoose(ColumnGroup, _PreviewBlock);
 
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * @param {ColumnGroup} parent
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    function ColumnGroup(parent, config) {
+    function ColumnGroup(parent, config, appearance) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
       _this.parent = void 0;
       _this.resizing = _knockout.observable(false);
       _this.dropPlaceholder = void 0;

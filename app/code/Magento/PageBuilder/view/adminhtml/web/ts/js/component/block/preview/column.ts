@@ -7,6 +7,7 @@ import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
 export default class Column extends PreviewBlock {
+
     /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *

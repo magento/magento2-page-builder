@@ -24,6 +24,13 @@ import {
 
 export default class ColumnGroup extends Block {
 
+    /**
+     * @param {EditableArea} parent
+     * @param {Stage} stage
+     * @param {ConfigContentBlock} config
+     * @param formData
+     * @param {Appearance} appearance
+     */
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
         super(parent, stage, config, formData, appearance);
 

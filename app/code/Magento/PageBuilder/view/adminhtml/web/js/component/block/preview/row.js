@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "./block", "../../format/style-attribute-mapper", "../../format/style-attribute-filter"], function (_knockout, _underscore, _block, _styleAttributeMapper, _styleAttributeFilter) {
+define(["knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./block"], function (_knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper, _block) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -11,12 +11,13 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    function Row(parent, config) {
+    function Row(parent, config, appearance) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
       _this.rowStyles = void 0;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
@@ -32,14 +33,14 @@ define(["knockout", "underscore", "./block", "../../format/style-attribute-mappe
           return value;
         }))); // The style attribute mapper converts images to directives, override it to include the correct URL
 
-        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === 'object') {
-          styles['backgroundImage'] = 'url(' + _this.data.background_image()[0].url + ')';
+        if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {
+          styles.backgroundImage = "url(" + _this.data.background_image()[0].url + ")";
         }
 
         return styles;
       }); // Force the rowStyles to update on changes to stored style attribute data
 
-      Object.keys(styleAttributeFilter.allowedAttributes).forEach(function (key) {
+      Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
         if (_knockout.isObservable(_this.data[key])) {
           _this.data[key].subscribe(function () {
             _this.rowStyles.notifySubscribers();

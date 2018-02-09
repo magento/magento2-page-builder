@@ -65,7 +65,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     get options(): Option[] {
         return [
-            new Option(this, "move", "<i></i>", $t("Move"), false, ["move-structural"], 10),
+            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
             new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
             new Option(
                 this,
@@ -151,7 +151,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public getCss() {
         const cssClasses: any = {};
         if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-            this.getData().css_classes.split(" ").map(
+            this.getData().css_classes.toString().split(" ").map(
                 (value: any, index: number) => cssClasses[value] = true,
             );
         }

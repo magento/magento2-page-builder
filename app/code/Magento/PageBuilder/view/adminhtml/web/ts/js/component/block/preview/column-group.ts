@@ -5,6 +5,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
+import Appearance from "../../appearance/appearance";
 import Config from "../../config";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
 import Column from "../column";
@@ -45,13 +46,12 @@ export default class ColumnGroup extends PreviewBlock {
     private movePosition: DropPosition;
 
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * @param {ColumnGroup} parent
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    constructor(parent: ColumnGroupBlock, config: object) {
-        super(parent, config);
+    constructor(parent: ColumnGroupBlock, config: object, appearance: Appearance) {
+        super(parent, config, appearance);
         this.parent = parent;
     }
 

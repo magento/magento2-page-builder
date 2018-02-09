@@ -57,10 +57,10 @@ define([], function () {
         }
 
         if (key === "position") {
-          var _value$split = value.split(","),
-              lat = _value$split[0],
-              lng = _value$split[1],
-              zoom = _value$split[2];
+          var _value$toString$split = value.toString().split(","),
+              lat = _value$toString$split[0],
+              lng = _value$toString$split[1],
+              zoom = _value$toString$split[2];
 
           key = "src";
           value = "https://www.google.com/maps/embed/v1/place?q=" + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
@@ -78,6 +78,7 @@ define([], function () {
     };
     /**
      * Convert attributes from the DOM into the data store
+     *
      * @param {} data
      * @returns {}
      */

@@ -113,7 +113,7 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
       var cssClasses = {};
 
       if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-        this.getData().css_classes.split(" ").map(function (value, index) {
+        this.getData().css_classes.toString().split(" ").map(function (value, index) {
           return cssClasses[value] = true;
         });
       }
@@ -166,7 +166,7 @@ define(["knockout", "mage/translate", "underscore", "../../appearance/appearance
     _createClass(Structural, [{
       key: "options",
       get: function get() {
-        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), false, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
+        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
       }
       /**
        * Retrieve the template for the structural

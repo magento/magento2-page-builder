@@ -6,18 +6,16 @@
 import ko from "knockout";
 import {Dictionary} from "underscore";
 import Config from "../../config";
-import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class Newsletter extends PreviewBlock {
+
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * Setup fields observables within the data class property
      */
-    constructor(parent: Block, config: object) {
-        super(parent, config);
+    protected setupDataFields() {
+        super.setupDataFields();
+
         this.updateDataValue("html", ko.observable(""));
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {

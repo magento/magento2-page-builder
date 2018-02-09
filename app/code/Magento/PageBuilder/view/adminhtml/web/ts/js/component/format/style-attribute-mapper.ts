@@ -8,11 +8,8 @@ import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
 
-export interface StyleAttributeMapperResult {
-    [key: string]: string | number;
-}
-
 export default class StyleAttributeMapper {
+
     /**
      * Map style attribute keys to DOM key names and normalize values
      *
@@ -178,8 +175,8 @@ export default class StyleAttributeMapper {
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
                     const [attributeType, attributeDirection] = key.split("-");
-                    result.margins_and_padding[attributeType] = _.extend(
-                        result.margins_and_padding[attributeType],
+                    result.margins_and_padding[(attributeType as "margin" | "padding")] = _.extend(
+                        result.margins_and_padding[(attributeType as "margin" | "padding")],
                         {[attributeDirection]: value.replace("px", "")},
                     );
                     return;
@@ -222,7 +219,7 @@ export default class StyleAttributeMapper {
      * @param {string} value
      * @returns {string}
      */
-    private convertRgbToHex(value: string) {
+    private convertRgbToHex(value: string): string {
         if (value) {
             const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
             const matches = regexp.exec(value);
@@ -235,4 +232,24 @@ export default class StyleAttributeMapper {
         }
         return value;
     }
+}
+
+export interface StyleAttributeMapperResult {
+    [key: string]: string | number | StyleAttributeMarginsAndPadding;
+    margins_and_padding?: StyleAttributeMarginsAndPadding;
+}
+
+export interface StyleAttributeMarginsAndPadding {
+    margin: {
+        bottom: string,
+        left: string,
+        right: string,
+        top: string,
+    };
+    padding: {
+        bottom: string,
+        left: string,
+        right: string,
+        top: string,
+    };
 }

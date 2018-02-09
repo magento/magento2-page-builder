@@ -3,14 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
-import Block from "./block";
+import PreviewBlock from "./block";
 
-export default class Buttons extends Block {
-    constructor(parent: Block, config: object) {
-        super(parent, config);
+export default class Buttons extends PreviewBlock {
+
+    /**
+     * Setup fields observables within the data class property
+     */
+    protected setupDataFields() {
+        super.setupDataFields();
 
         // Declare our buttons, they'll get populated later
-        this.data.buttons = ko.observableArray([]);
+        this.updateDataValue("buttons", []);
     }
 }

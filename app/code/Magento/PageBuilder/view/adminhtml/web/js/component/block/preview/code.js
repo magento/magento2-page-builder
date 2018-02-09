@@ -8,15 +8,14 @@ define(["knockout", "pagebuilder/highlight", "./block"], function (_knockout, _h
     _inheritsLoose(Code, _PreviewBlock);
 
     /**
-     * Constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    function Code(parent, config) {
+    function Code(parent, config, appearance) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
 
       _this.updateDataValue("html", _knockout.observable(""));
 

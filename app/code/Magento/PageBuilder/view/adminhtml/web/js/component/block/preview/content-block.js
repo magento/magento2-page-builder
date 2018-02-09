@@ -8,15 +8,14 @@ define(["knockout", "../../config", "./block"], function (_knockout, _config, _b
     _inheritsLoose(ContentBlock, _PreviewBlock);
 
     /**
-     * PreviewBlock constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
+     * @param {Appearance} appearance
      */
-    function ContentBlock(parent, config) {
+    function ContentBlock(parent, config, appearance) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
 
       _this.updateDataValue("html", _knockout.observable(""));
 

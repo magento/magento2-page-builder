@@ -4,7 +4,7 @@
  */
 
 import {DataObject} from "../../data-store";
-import AppearanceInterface from "../appearance-interface";
+import {AppearanceInterface} from "../appearance-interface";
 
 export default class AlignTop implements AppearanceInterface {
     /**

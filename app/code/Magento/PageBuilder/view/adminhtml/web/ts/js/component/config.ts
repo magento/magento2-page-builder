@@ -272,7 +272,8 @@ export interface ConfigContentBlock {
     render_template: string;
     preview_component: string;
     component: string;
-    appearances: any[];
+    appearances: string[];
+    readers: string[];
     allowed_parents: string[];
     is_visible: boolean;
 }
