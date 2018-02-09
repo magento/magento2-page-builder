@@ -16,12 +16,28 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'Magento_PageBuilder/js/component/stage',
-    'Magento_PageBuilder/js/component/stage/build',
-    'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
-    'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
+    'Magento_PageBuilder/js/component/format/format-validator',
+    'Magento_PageBuilder/js/component/stage-builder',
+    'Magento_PageBuilder/js/component/stage/panel',
+    'Magento_PageBuilder/js/utils/directives'
+], function (
+    _,
+    Wysiwyg,
+    $,
+    confirmationPrompt,
+    alertPrompt,
+    $t,
+    applyMain,
+    ko,
+    registry,
+    jQuery,
+    utils,
+    validateFormat,
+    buildStage,
+    Panel,
+    directives
+) {
     'use strict';
 
     /**
@@ -35,6 +51,7 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
+            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
@@ -100,6 +117,12 @@ define([
         setElementNode: function (node) {
 
             this.domNode = node;
+            this.bindPageBuilderButton(node);
+
+            // Detect if we can build the contents of the stage within Page Builder
+            if (validateFormat(this.initialValue)) {
+                this.loading(true);
+                return this.buildPageBuilder();
 
             if (!this.isComponentInitialized) {
 
@@ -226,20 +249,29 @@ define([
         buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
                 buildInstance = new Build(this.initialValue),
-                isFullScreeMode = isFullScreenMode || false;
+                isFullScreeMode = isFullScreenMode || false,
+                bindStage = function (stage) {
+                    self.stage = stage;
+                    stage.on('stageReady', function() {
+                        self.stageActive(true);
+                        self.visible(false);
+                    });
+                };
 
             this.isFullScreen(isFullScreeMode);
 
             this.loading(true);
 
-            if (event) {
+            if (typeof event !== 'undefined') {
                 event.stopPropagation();
             }
 
-            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            buildStage(
                 this,
-                this.stageContent
+                this.panel,
+                this.stageContent,
+                directives.removeQuotesInMediaDirectives(this.initialValue),
+                bindStage
             );
 
             // On stage ready show the interface
@@ -283,7 +315,7 @@ define([
             ) {
                 confirmationPrompt(options);
             } else {
-                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one \"always\", \"confirm\", or \"cancel\" callback');
             }
         },
 
