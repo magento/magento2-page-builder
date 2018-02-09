@@ -11,9 +11,9 @@ import Config from "../component/config";
  * @param value
  * @returns {Object}
  */
-export function decodeUrl(value: any): string | [object] {
+export function decodeUrl(value: string): string | [object] {
     let result: any = "";
-    value = decodeURIComponent((value as string).replace(window.location.href, ""));
+    value = decodeURIComponent((value).replace(window.location.href, ""));
     const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/;
     if (regexp.test(value)) {
         const [, url, type] = regexp.exec(value);

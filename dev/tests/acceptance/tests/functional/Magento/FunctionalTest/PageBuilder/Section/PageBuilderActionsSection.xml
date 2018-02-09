@@ -43,7 +43,7 @@
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
-        <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
+        <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='pagebuilder-column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
         <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>
         <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
         <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
@@ -60,6 +60,8 @@
         <element name="cmsPageSaveAndContinueEditButton" type="button" selector="#save_and_continue" timeout="30"/>
         <element name="cmsPageTitle" type="text" selector=".page-header .page-title"/>
         <element name="pageTitle" type="input" selector="//*[@name='title']"/>
+        <element name="showHideEditor" type="button" selector="//*[@id='togglecms_page_form_content']"/>
+        <element name="content" type="input" selector="//textarea[@name='content']"/>
     </section>
     <section name="CmsPageGrid">
         <element name="addNewPageButton" type="button" selector="#add"/>
@@ -111,7 +113,6 @@
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
-        <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
     </section>
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>

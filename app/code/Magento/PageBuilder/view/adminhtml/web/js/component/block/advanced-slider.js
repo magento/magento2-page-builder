@@ -19,7 +19,7 @@ define(["../block/factory", "../config", "./block"], function (_factory, _config
     _proto.addSlide = function addSlide() {
       var _this = this;
 
-      (0, _factory)(_config.getInitConfig("contentTypes").slide, this.parent, this.stage, {}).then(function (slide) {
+      (0, _factory)(_config.getInitConfig("content_types").slide, this.parent, this.stage, {}).then(function (slide) {
         _this.addChild(slide);
 
         slide.edit.open();

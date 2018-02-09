@@ -6,15 +6,15 @@
 /*eslint-disable vars-on-top, strict*/
 
 (function (factory) {
-    if (typeof define === "function" && define.amd) {
+    if (typeof define === 'function' && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", "Magento_PageBuilder/js/resource/dropzone/dropzone", "mage/translate"], factory);
-    } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
+        define(['knockout', 'jquery', 'Magento_PageBuilder/js/resource/dropzone/dropzone', 'mage/translate'], factory);
+    } else if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
         // CommonJS module
-        var ko = require("knockout"),
-            jQuery = require("jquery"),
-            Dropzone = require("Magento_PageBuilder/js/resource/dropzone/dropzone"),
-            translate = require("mage/translate");
+        var ko = require('knockout'),
+            jQuery = require('jquery'),
+            Dropzone = require('Magento_PageBuilder/js/resource/dropzone/dropzone'),
+            translate = require('mage/translate');
 
         factory(ko, jQuery, Dropzone, translate);
     } else {
@@ -39,7 +39,7 @@
                     uploadMultiple: false,
                     createImageThumbnails: false,
                     addRemoveLinks: false,
-                    dictDefaultMessage: $t("Drop files here, or click to upload"),
+                    dictDefaultMessage: $t('Drop files here, or click to upload'),
                     init: function () {
                         // Add the current formKey into the request
                         this.on('sending', function (file, xhr, formData) {
