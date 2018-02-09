@@ -6,6 +6,8 @@
 /*global requirejs */
 
 requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+    'use strict';
+
     $(document).ready(function() {
         $('.pagebuilder-lightbox').fancybox();
 

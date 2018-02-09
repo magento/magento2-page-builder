@@ -1,3 +1,4 @@
+/*eslint-disable */
 // Uses AMD or browser globals to create a jQuery plugin.
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
