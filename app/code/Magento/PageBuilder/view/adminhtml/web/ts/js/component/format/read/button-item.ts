@@ -20,18 +20,14 @@ export default class ButtonItem implements ReadInterface {
         const button = element.getElementsByTagName("a")[0];
         const advancedData = this.defaultReader.read(button);
         const response: DataObject = {
-            button_link: button.getAttribute("href"),
+            button_link: button.href,
             button_text: button.innerText,
             button_type: button.classList[0],
-            open_in_new_tab: button.getAttribute("target") === "_blank" ? "1" : "0",
+            open_in_new_tab: button.target === "_blank" ? "1" : "0",
         };
-        return new Promise((resolve: (object: object) => void) => {
-            advancedData.then((data) => {
-                delete data.css_classes;
-                resolve(
-                    Object.assign(data, response),
-                );
-            });
+        return advancedData.then(data => {
+            delete data.css_classes;
+            return Object.assign(data, response);
         });
     }
 }
