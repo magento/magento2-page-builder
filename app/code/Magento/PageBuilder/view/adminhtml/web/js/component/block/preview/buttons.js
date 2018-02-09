@@ -13,6 +13,9 @@ define(["../../block/factory", "../../config", "./block"], function (_factory, _
 
     var _proto = Buttons.prototype;
 
+    /**
+     * Adds button-item to parent buttons
+     */
     _proto.addButton = function addButton() {
       var _this = this;
 

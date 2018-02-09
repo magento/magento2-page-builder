@@ -20,8 +20,8 @@ define(["./default"], function (_default) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var advancedData = this.defaultReader.read(element.querySelector(".pagebuilder-button-item"));
       var button = element.getElementsByTagName("a")[0];
+      var advancedData = this.defaultReader.read(button);
       var response = {
         button_link: button.getAttribute("href"),
         button_text: button.innerText,

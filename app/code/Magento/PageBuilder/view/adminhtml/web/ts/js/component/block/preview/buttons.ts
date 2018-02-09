@@ -8,6 +8,10 @@ import Config from "../../config";
 import PreviewBlock from "./block";
 
 export default class Buttons extends PreviewBlock {
+
+    /**
+     * Adds button-item to parent buttons
+     */
     public addButton() {
         const createBlockParams = [
             Config.getInitConfig("content_types")["button-item"],

@@ -11,6 +11,20 @@ define(["./block"], function (_block) {
       return _Block.apply(this, arguments) || this;
     }
 
+    var _proto = ButtonItem.prototype;
+
+    /**
+     * Get the attributes for link
+     * returns {object}
+     */
+    _proto.getLinkAttributes = function getLinkAttributes() {
+      var data = this.getData();
+      return {
+        href: data.button_link,
+        target: data.open_in_new_tab === "1" ? "_blank" : ""
+      };
+    };
+
     return ButtonItem;
   }(_block);
 

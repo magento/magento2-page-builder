@@ -7,21 +7,16 @@ define(["./block"], function (_block) {
   function (_PreviewBlock) {
     _inheritsLoose(Button, _PreviewBlock);
 
-    /**
-     * @param {Block} parent
-     * @param {Object} config
-     */
-    function Button(parent, config) {
-      return _PreviewBlock.call(this, parent, config) || this;
+    function Button() {
+      return _PreviewBlock.apply(this, arguments) || this;
     }
-    /**
-     * After child render record element
-     *
-     */
-
 
     var _proto = Button.prototype;
 
+    /**
+     * After child render record element
+     * returns {object}
+     */
     _proto.childrenStyle = function childrenStyle() {
       return {
         display: "inline-block"
