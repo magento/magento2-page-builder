@@ -46,19 +46,16 @@ class Image implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'image'
+            'data-appearance' => 'full-width',
+            'data-role' => 'image',
+            'class' => $eavData['css_classes'] ?? '',
+            'style' => 'width: 100%; box-sizing: border-box;'
         ];
-
-        if (isset($eavData['css_classes'])) {
-            $rootElementAttributes['class'] = 'pagebuilder-image pagebuilder-entity ' . $eavData['css_classes'];
-        } else {
-            $rootElementAttributes['class'] = 'pagebuilder-image pagebuilder-entity';
-        }
 
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] = $style;
+                $rootElementAttributes['style'] .= " $style";
             }
         }
 
@@ -66,15 +63,14 @@ class Image implements RendererInterface
 
         $linkAttributes = [
             'href' => '{{media url=gene-cms' . $eavData['image'] . '}}',
-            'title' => $eavData['title_tag'] ?? '',
-            'class' => (isset($eavData['has_lightbox']) && $eavData['has_lightbox'] == 1) ?
-                'pagebuilder-lightbox' : '',
+            'title' => $eavData['title_tag'] ?? ''
         ];
 
         $imageAttributes = [
             'src' => '{{media url=gene-cms' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
-            'title' => $eavData['title_tag'] ?? ''
+            'title' => $eavData['title_tag'] ?? '',
+            'style' => 'max-width: 100%; height: auto;'
         ];
 
         $mobileImageHtml = '';
@@ -82,7 +78,8 @@ class Image implements RendererInterface
             $mobileImageAttributes = [
                 'src' => '{{media url=gene-cms' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
-                'title' => $eavData['title_tag'] ?? ''
+                'title' => $eavData['title_tag'] ?? '',
+                'style' => 'max-width: 100%; height: auto;'
             ];
             $imageAttributes['class'] = 'pagebuilder-mobile-hidden';
 

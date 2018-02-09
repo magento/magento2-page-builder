@@ -135,7 +135,6 @@
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
             <component>Magento_PageBuilder/js/component/block/image</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/image</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
             <form>pagebuilder_image_form</form>
@@ -145,6 +144,12 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
                 <reader name="image" component="Magento_PageBuilder/js/component/format/read/image"/>
             </readers>
+            <appearances>
+                <appearance name="full-width">
+                    <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
+                </appearance>
+            </appearances>
         </type>
         <type name="banner" translate="label" sortOrder="1">
             <label>Banner</label>

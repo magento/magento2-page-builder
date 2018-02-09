@@ -18,25 +18,18 @@ define(["../../../utils/image"], function (_image) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var mainImageElement = element.querySelector("img:nth-child(1)");
+      var imageLinkElement = element.querySelector("a");
+      var captionElement = element.querySelector("figcaption");
       var response = {
-        alt: "",
-        image: "",
-        lightbox: !!element.querySelector("a.pagebuilder-lightbox") ? "Yes" : "No",
+        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
         mobile_image: "",
-        show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
-        title_tag: element.querySelector("a").getAttribute("title")
-      }; // Detect if there is an image and update the response
-
-      if (element.querySelector("img:nth-child(1)")) {
-        if (element.querySelector("img:nth-child(1)").src) {
-          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").src);
-        }
-
-        if (element.querySelector("img:nth-child(1)").getAttribute("alt")) {
-          response.alt = element.querySelector("img:nth-child(1)").getAttribute("alt");
-        }
-      } // Detect if there is a mobile image and update the response
-
+        alt: mainImageElement.getAttribute("alt"),
+        title_tag: mainImageElement.getAttribute("title"),
+        image_caption: captionElement ? captionElement.textContent : "",
+        link_target: imageLinkElement ? imageLinkElement.getAttribute("target") : "",
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : ""
+      }; // Detect if there is a mobile image and update the response
 
       if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
         response.mobile_image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(2)").getAttribute("src"));
