@@ -345,34 +345,31 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragSecondColumn">
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderSecondRowInStage" />
+            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
         </actionGroup>
         <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyCentered">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
         <wait time="1" stepKey="wait1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
@@ -384,11 +381,11 @@
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceCenteredApplied"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceTopDefaultApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
