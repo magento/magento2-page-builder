@@ -6,11 +6,11 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-video">
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
     <!-- ko ifnot: preview.data.src -->
     <i class="icon-pagebuilder-video"></i> <span data-bind="text: $t('Video');"></span>
     <!-- /ko -->
     <!-- ko if: preview.data.src -->
-    <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr:{ width: preview.data.width() || '100%', height: preview.data.height() || '400', src: preview.data.src }"></iframe>
+    <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr:{ width: preview.data.width() || '100%', height: preview.data.height() || '400', src: preview.parent.getVideoUrl(preview.data.src()) }"></iframe>
     <!-- /ko -->
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

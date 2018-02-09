@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "underscore", "./block/factory", "./config", "./data-store", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _factory, _config, _dataStore, _save, _editableArea) {
+define(["jquery", "mage/translate", "underscore", "./data-store", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _dataStore, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
@@ -8,10 +8,10 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
     _inheritsLoose(Stage, _EditableArea);
 
     /**
-     * Stage constructor
+     * Constructor
      *
      * @param parent
-     * @param stageContent
+     * @param {KnockoutObservableArray<Structural>} stageContent
      */
     function Stage(parent, stageContent) {
       var _this;
@@ -24,7 +24,6 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       _this.loading = void 0;
       _this.originalScrollTop = void 0;
       _this.parent = void 0;
-      _this.serializeRole = "stage";
       _this.showBorders = void 0;
       _this.stage = void 0;
       _this.store = void 0;
@@ -66,44 +65,11 @@ define(["jquery", "mage/translate", "underscore", "./block/factory", "./config",
       return _this;
     }
     /**
-     * Run the build system to initiate from existing structures
-     *
-     * @param {Build} buildInstance
+     * The stage has been initiated fully and is ready
      */
 
 
     var _proto = Stage.prototype;
-
-    _proto.build = function build(buildInstance) {
-      var _this2 = this;
-
-      var self = this;
-
-      if (buildInstance) {
-        buildInstance.buildStage(this).then(self.ready.bind(self)).catch(function (error) {
-          // Inform the user that an issue has occurred
-          self.parent.alertDialog({
-            content: (0, _translate)("An error has occurred while initiating the content area."),
-            title: (0, _translate)("Advanced CMS Error")
-          });
-          self.emit("stageError", error);
-          console.error(error);
-        });
-      } else {
-        // Add an initial row to the stage if the stage is currently empty
-        if (typeof _config.getInitConfig("contentTypes").row !== "undefined") {
-          (0, _factory)(_config.getInitConfig("contentTypes").row, this, this, {}).then(function (row) {
-            _this2.addChild(row);
-          });
-        }
-
-        this.ready();
-      }
-    };
-    /**
-     * The stage has been initiated fully and is ready
-     */
-
 
     _proto.ready = function ready() {
       this.emit("stageReady");

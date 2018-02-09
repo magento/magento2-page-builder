@@ -7,14 +7,14 @@ import loadComponent from "Magento_PageBuilder/js/component/loader";
 import _ from "underscore";
 import Config from "../../config";
 import {DataObject} from "../../data-store";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
     private contentTypeConfig: any;
 
     constructor() {
-        this.contentTypeConfig = Config.getInitConfig("contentTypes");
+        this.contentTypeConfig = Config.getInitConfig("content_types");
     }
 
     /**
@@ -30,8 +30,17 @@ export default class AttributeReaderComposite implements ReadInterface {
             if (!this.contentTypeConfig.hasOwnProperty(role)) {
                 resolve(result);
             } else {
+                const contentTypeConfig = this.contentTypeConfig[role];
                 try {
-                    loadComponent(this.contentTypeConfig[role].readers, (...readers: any[]) => {
+                    let readerComponents = contentTypeConfig.readers;
+                    if (typeof element.dataset.appearance !== "undefined"
+                        && typeof contentTypeConfig.appearances !== "undefined"
+                        && typeof contentTypeConfig.appearances[element.dataset.appearance] !== "undefined"
+                        && typeof contentTypeConfig.appearances[element.dataset.appearance].readers !== "undefined"
+                    ) {
+                        readerComponents = contentTypeConfig.appearances[element.dataset.appearance].readers;
+                    }
+                    loadComponent(readerComponents, (...readers: any[]) => {
                         const readerPromises: Array<Promise<any>> = [];
                         for (const Reader of readers) {
                             const reader = new Reader();

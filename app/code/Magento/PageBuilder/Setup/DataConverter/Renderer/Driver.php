@@ -43,7 +43,9 @@ class Driver implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'driver',
+            'data-role' => 'banner',
+            'data-show-button' => 'always',
+            'data-show-overlay' => 'never_show',
             'class' => $eavData['css_classes'] ?? ''
         ];
 
@@ -59,31 +61,31 @@ class Driver implements RendererInterface
 
         $linkAttributes = [
             'href' => $eavData['link_url'] ?? '',
-            'title' => $eavData['title_tag'] ?? '',
             'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
 
         $imageAttributes = [
-            'src' => '{{media url=gene-cms' . $eavData['image'] . '}}',
-            'alt' => $eavData['alt_tag'] ?? '',
-            'title' => $eavData['title_tag'] ?? ''
+            'style' => 'background-image: url(' . '{{media url=gene-cms' . $eavData['image'] . '}}); ' .
+                'min-height: 250px; background-size: default;',
+            'class' => 'pagebuilder-banner-wrapper pagebuilder-banner-image'
         ];
 
         $mobileImageHtml = '';
+        $mobileImageAttributes = [
+            'style' => 'background-image: none; min-height: 250px; background-size: default;',
+        ];
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
-                'src' => '{{media url=gene-cms' . $eavData['mobile_image'] . '}}',
-                'alt' => $eavData['alt_tag'] ?? '',
-                'title' => $eavData['title_tag'] ?? ''
+                'style' => 'background-image: url(' . '{{media url=gene-cms' . $eavData['mobile_image'] . '}}); ' .
+                    'min-height: 250px; background-size: default;',
             ];
-            $imageAttributes['class'] = 'pagebuilder-mobile-hidden';
-
-            $mobileImageHtml = '<img'
-                . $this->printAttributes($mobileImageAttributes)
-                . ' class="pagebuilder-mobile-only">';
+            $imageAttributes['class'] = 'pagebuilder-banner-wrapper pagebuilder-banner-image pagebuilder-mobile-hidden';
         }
+        $mobileImageHtml = '<div'
+            . $this->printAttributes($mobileImageAttributes)
+            . ' class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only">';
 
-        $imageHtml = '<img'
+        $imageHtml = '<div'
             . $this->printAttributes($imageAttributes)
             . '>';
 
@@ -94,13 +96,36 @@ class Driver implements RendererInterface
                 . '</div>';
         }
 
+        $overlayHtml = '<div class="pagebuilder-poster-overlay" data-background-color="transparent" ' .
+            'style="min-height: 250px; background-color: transparent;">';
+
+        if ($itemData['formData']['metric'] != '') {
+            $marginsAndPaddings = $this->styleExtractor->extractStyle(['metric' => $itemData['formData']['metric']]);
+            $paddings = explode("; ", $marginsAndPaddings)[1];
+            $posterHtml = '<div class="pagebuilder-poster-content" style="' . $paddings . '">';
+        } else {
+            $posterHtml = '<div class="pagebuilder-poster-content" style="padding-top: 40px; padding-right: 40px; ' .
+                'padding-bottom: 40px; padding-left: 40px;">';
+        }
+
+        $buttonHtml = '<button class="pagebuilder-banner-button action primary" ' .
+            'style="visibility: visible; opacity: 1;"></button>';
+
         $rootElementHtml .= '><a'
             . $this->printAttributes($linkAttributes)
             . '>'
-            . $imageHtml
             . $mobileImageHtml
-            . $descriptionHtml
-            . '</a></div>';
+            . $overlayHtml
+            . $posterHtml
+            . '<div></div>'
+            . $buttonHtml
+            . '</div></div></div>'
+            . $imageHtml
+            . $overlayHtml
+            . $posterHtml
+            . '<div></div>'
+            . $buttonHtml
+            . '</div></div></div></a></div>';
 
         return $rootElementHtml;
     }

@@ -91,7 +91,7 @@ export default class Panel extends uiComponent implements PanelInterface {
             this.searching(true);
             this.searchResults(_.map(
                 _.filter(
-                    Config.getInitConfig("contentTypes"),
+                    Config.getInitConfig("content_types"),
                     (contentBlock: ContentBlockConfig) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
@@ -112,7 +112,7 @@ export default class Panel extends uiComponent implements PanelInterface {
      */
     public populateContentBlocks(): void {
         const groups = Config.getInitConfig("groups");
-        const contentBlocks = Config.getInitConfig("contentTypes");
+        const contentBlocks = Config.getInitConfig("content_types");
 
         // Verify the configuration contains the required information
         if (groups && contentBlocks) {
