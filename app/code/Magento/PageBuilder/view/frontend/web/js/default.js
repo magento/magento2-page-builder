@@ -5,11 +5,9 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
     'use strict';
     $(document).ready(function() {
-        $('.pagebuilder-lightbox').fancybox();
-
         $('pre code:not(.hljs)').each(function (i, block) {
             $(block).html(
                 hljs.highlight('html', $(block).html()).value
