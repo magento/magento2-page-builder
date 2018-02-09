@@ -40,13 +40,9 @@ export default function createBlock(
 ): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
-    return new Promise((resolve: (blockComponent: any) => void, reject: (e: Error) => void) => {
+    return new Promise((resolve: (blockComponent: any) => void) => {
         loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
-            try {
-                resolve(new blockComponent(parent, stage, config, formData));
-            } catch (e) {
-                reject(e);
-            }
+            resolve(new blockComponent(parent, stage, config, formData));
         });
     });
 }

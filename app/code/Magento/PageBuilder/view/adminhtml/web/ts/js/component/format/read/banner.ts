@@ -17,14 +17,14 @@ export default class Banner implements ReadInterface {
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
-    public read(element: HTMLElement): Promise<any> {
+    public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
         const target = element.querySelector("a").getAttribute("target");
         const bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
         const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
         const marginSrc = element.style;
-        if(bgImage === bgMobileImage) {
+        if (bgImage === bgMobileImage) {
             bgMobileImage = false;
         }
         const response: any = {

@@ -238,7 +238,6 @@
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
         <wait time="1" stepKey="waitForClick{{property.fieldName}}"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
         <seeElement selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelField">
@@ -301,13 +300,6 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForElementVisible time="10" selector="{{PageBuilderColumnSection.panelFieldUploadSummary(property.value)}}" stepKey="waitForImageUploadSummary" />
-    </actionGroup>
-    <actionGroup name="saveColumnSettings">
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>

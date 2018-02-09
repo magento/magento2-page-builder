@@ -44,7 +44,7 @@ export default class StyleAttributeFilter {
      *
      * @returns {Array<string>}
      */
-    public getAllowedAttributes(): [string] {
+    public getAllowedAttributes(): string[] {
         return this.allowedAttributes;
     }
 

@@ -10,7 +10,6 @@ import Config from "../component/config";
  *
  * @type {string}
  */
-
 const mimeType = "text/magento-directive";
 
 /**
@@ -19,6 +18,7 @@ const mimeType = "text/magento-directive";
  * @param {string} url
  * @returns {boolean}
  */
+
 function isDirectiveDataUrl(url: string): boolean {
     return url.indexOf("data:" + mimeType) === 0;
 }
@@ -71,4 +71,50 @@ export function getImageUrl(image: any[]) {
     const imageUrl = image[0].url;
     const mediaPath = imageUrl.split(Config.getInitConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
+}
+
+/**
+ * Remove quotes in media directives, {{media url="wysiwyg/image.png"}} convert to {{media url=wysiwyg/image.png}}
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+export function removeQuotesInMediaDirectives(html: string): string {
+    const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
+    const urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
+    const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
+    if (mediaDirectiveMatches) {
+        mediaDirectiveMatches.forEach((mediaDirective: string) => {
+            const urlMatches = mediaDirective.match(urlRegExp);
+            if (urlMatches && urlMatches[1] !== undefined) {
+                const directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + "}}";
+                html = html.replace(mediaDirective, directiveWithOutQuotes);
+            }
+        });
+    }
+    return html;
+}
+
+/**
+ * Replace media directives with actual media URLs
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+export function convertMediaDirectivesToUrls(html: string): string {
+    const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
+    const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
+    if (mediaDirectiveMatches) {
+        mediaDirectiveMatches.forEach((mediaDirective: string) => {
+            const urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
+            const urlMatches = mediaDirective.match(urlRegExp);
+            if (urlMatches && urlMatches[1] !== "undefined") {
+                html = html.replace(
+                    mediaDirective,
+                    Config.getInitConfig("media_url") + urlMatches[1],
+                );
+            }
+        });
+    }
+    return html;
 }

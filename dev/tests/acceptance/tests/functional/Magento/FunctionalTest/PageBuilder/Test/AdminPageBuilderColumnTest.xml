@@ -196,13 +196,13 @@
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
         <wait time="1" stepKey="wait6"/>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
         <wait time="1" stepKey="wait7"/>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeDefaultRow1DisplayApplied"/>
@@ -252,7 +252,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -261,12 +261,12 @@
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
         </actionGroup>
         <wait time="1" stepKey="wait1"/>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditColumnPanel3" stepKey="openEditPanel3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings3"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>
@@ -321,7 +321,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage2"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
         <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
@@ -470,7 +470,7 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
-        <click selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <wait time="1" stepKey="waitForDataStoreUpdate"/>
         <waitForElementVisible time="2" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForSavePage" />
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
@@ -515,7 +515,7 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty2">
             <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
@@ -530,7 +530,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
         <wait time="1" stepKey="wait1"/>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditColumnPanel3" stepKey="openEditPanel3"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundWidthProperty3">
             <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
@@ -543,7 +543,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
 
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettings3"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderFirstColumnInStage.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -596,7 +596,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
-        <actionGroup ref="saveColumnSettings" stepKey="saveColumnSettingsWithoutModifying"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>

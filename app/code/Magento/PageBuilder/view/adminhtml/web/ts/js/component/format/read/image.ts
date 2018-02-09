@@ -20,15 +20,15 @@ export default class Image implements ReadInterface {
         const imageLinkElement: Element | null = element.querySelector("a");
         const captionElement: Element | null = element.querySelector("figcaption");
         const response: DataObject = {
-            alt: mainImageElement.getAttribute("alt"),
             image: decodeUrl(
                 mainImageElement.getAttribute("src") || "",
             ),
+            mobile_image: "",
+            alt: mainImageElement.getAttribute("alt"),
+            title_tag: mainImageElement.getAttribute("title"),
             image_caption: captionElement ? captionElement.textContent : "",
             link_target: imageLinkElement ? imageLinkElement.getAttribute("target") : "",
             link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
-            mobile_image: "",
-            title_tag: mainImageElement.getAttribute("title"),
         };
 
         // Detect if there is a mobile image and update the response

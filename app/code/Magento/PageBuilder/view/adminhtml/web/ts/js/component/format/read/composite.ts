@@ -7,14 +7,14 @@ import loadComponent from "Magento_PageBuilder/js/component/loader";
 import _ from "underscore";
 import Config from "../../config";
 import {DataObject} from "../../data-store";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
     private contentTypeConfig: any;
 
     constructor() {
-        this.contentTypeConfig = Config.getInitConfig("contentTypes");
+        this.contentTypeConfig = Config.getInitConfig("content_types");
     }
 
     /**

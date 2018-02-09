@@ -16,15 +16,22 @@
         <element name="openInNewTab" type="button" selector="//a[contains(@target, '_blank')]"/>
         <element name="banner" type="button" selector="div[data-role='banner']" />
         <element name="poster" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image"/>
-        <element name="collageLeft" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*= '40px calc(50% + 40px) 40px 40px'][style*= 'magento']"/>
-        <element name="collageCentered" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*= '40px calc(25% + 40px)'][style*= 'magento']"/>
-        <element name="collageRight" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*= '40px 40px 40px calc(50% + 40px)'][style*= 'magento']"/>
-        <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*= 'padding: 40px;'][style*= 'magento']"/>
-        <element name="collageMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*= 'padding: 40px;'][style*= 'm-logo']"/>
-        <element name="posterMobileWithoutMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*= 'magento']"/>
-        <element name="posterMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*= 'm-logo']"/>
-        <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*= 'rgba(255, 255, 255, 0.7)']"/>
-        <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*= 'rgba(255, 255, 255, 0.7)']"/>
+        <element name="collageLeft" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
+        <element name="collageCentered" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
+        <element name="collageRight" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
+        <element name="collageMargin" type="button" selector="div[data-role='banner'][style*='margin: 1px 2px 3px 4px']"/>
+        <element name="collageMinHeight" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
+        <element name="collageAlignment" type="button" selector="div[data-role='banner'][style*='text-align: center']"/>
+        <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='magento']"/>
+        <element name="collageMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='m-logo']"/>
+        <element name="posterMobileWithoutMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='magento']"/>
+        <element name="posterMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='m-logo']"/>
+        <element name="collageMinHeightMobile" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
+        <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
+        <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
+        <element name="bannerBorderStyle" type="button" selector="div[data-role='banner'][style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderRadiusStyle" type="button" selector="div[data-role='banner'][style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="bannerClass" type="button" selector="div[data-role='banner'][class='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
@@ -38,11 +45,19 @@
         <element name="paddingLeftInput" type="button" selector="[name='paddingLeft']"/>
         <element name="paddingBottomInput" type="button" selector="[name='paddingBottom']"/>
         <element name="paddingRightInput" type="button" selector="[name='paddingRight']"/>
-        <element name="poster" type="button" selector=".pagebuilder-banner-wrapper[style*= 'magento']"/>
-        <element name="collageLeft" type="button" selector="div[style*= '40px calc(50% + 40px) 40px 40px'][style*= 'magento']"/>
-        <element name="collageCentered" type="button" selector="div[style*= '40px calc(25% + 40px)'][style*= 'magento']"/>
-        <element name="collageRight" type="button" selector="div[style*= '40px 40px 40px calc(50% + 40px)'][style*= 'magento']"/>
-        <element name="collageOverlay" type="button" selector=".pagebuilder-collage-overlay[style*= 'rgba(255, 255, 255, 0.7)']"/>
-        <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*= 'rgba(255, 255, 255, 0.7)']"/>
+        <element name="poster" type="button" selector=".pagebuilder-banner-wrapper[style*='magento']"/>
+        <element name="collageLeft" type="button" selector="div[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
+        <element name="collageCentered" type="button" selector="div[style*='40px calc(25% + 40px)'][style*='magento']"/>
+        <element name="collageRight" type="button" selector="div[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
+        <element name="collageOverlay" type="button" selector=".pagebuilder-collage-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
+        <element name="collageMargin" type="button" selector="div[style*='1px 2px 3px 4px'][style*='magento']"/>
+        <element name="collageMinHeight" type="button" selector="div[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
+        <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
+        <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
+        <element name="contentSectionName" type="button" selector="/div[@data-index='content']"/>
+        <element name="bannerBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
+        <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
     </section>
 </sections>
