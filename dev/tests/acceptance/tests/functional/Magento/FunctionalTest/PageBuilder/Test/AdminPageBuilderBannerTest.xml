@@ -484,6 +484,15 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -536,6 +545,24 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginLeftOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -547,6 +574,9 @@
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
+        <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -627,6 +657,15 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -679,6 +718,24 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginLeftOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -690,6 +747,9 @@
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
+        <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -770,6 +830,15 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
@@ -825,6 +894,24 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingRightOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingRightProperty"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginLeftOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginTopOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginTopProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginBottomOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginBottomProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMarginRightOnForm">
+            <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -836,6 +923,9 @@
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
+        <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -1344,6 +1434,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
@@ -1355,6 +1448,12 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1370,6 +1469,9 @@
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageAlignment}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
     <test name="BannerCollageCenteredContentCanPreviewAdmin">
         <annotations>
@@ -1417,6 +1519,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
@@ -1428,6 +1533,12 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1443,6 +1554,9 @@
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageAlignment}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
     <test name="BannerCollageLeftContentCanPreviewAdmin">
         <annotations>
@@ -1490,6 +1604,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
@@ -1501,6 +1618,12 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1516,6 +1639,9 @@
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
+        <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageAlignment}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
     <test name="BannerCollageLeftButtonOnHover">
         <annotations>
@@ -1571,6 +1697,7 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
@@ -1579,6 +1706,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -1590,6 +1718,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
+        <!-- Validate settings on frontend mobile-->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
@@ -1658,6 +1787,7 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -1666,6 +1796,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -1677,6 +1808,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
@@ -1739,12 +1871,14 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{BannerOnBackend.collageLeft}}" stepKey="moveMouseOverBackendBanner"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -1754,6 +1888,7 @@
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
@@ -1824,6 +1959,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -1834,6 +1970,7 @@
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -1847,6 +1984,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
@@ -1918,6 +2056,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
@@ -1926,6 +2065,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -1937,6 +2077,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
@@ -2005,6 +2146,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2013,6 +2155,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2024,6 +2167,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
@@ -2086,12 +2230,14 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{BannerOnBackend.collageRight}}" stepKey="moveMouseOverBackendBanner"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2101,6 +2247,7 @@
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
@@ -2171,6 +2318,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2181,6 +2329,7 @@
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2194,6 +2343,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
@@ -2265,6 +2415,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
@@ -2273,6 +2424,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2284,6 +2436,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageCenteredInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
@@ -2352,6 +2505,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2360,6 +2514,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2371,6 +2526,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageCenteredInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
@@ -2433,12 +2589,14 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{BannerOnBackend.collageCentered}}" stepKey="moveMouseOverBackendBanner"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2448,6 +2606,7 @@
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageCenteredInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
@@ -2518,6 +2677,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2528,6 +2688,7 @@
         <seeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2541,6 +2702,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageCenteredInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
@@ -2609,6 +2771,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin" />
         <seeElement selector="{{BannerOnBackend.poster}}" stepKey="verifyPosterInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
@@ -2617,6 +2780,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextBackend" />
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2628,6 +2792,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
@@ -2693,6 +2858,7 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin" />
         <seeElement selector="{{BannerOnBackend.poster}}" stepKey="verifyPosterInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2701,6 +2867,7 @@
         <waitForElement time="2" selector="{{BannerOnBackend.posterOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2712,6 +2879,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.posterOverlay}}" stepKey="waitForOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
@@ -2771,12 +2939,14 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin" />
         <seeElement selector="{{BannerOnBackend.poster}}" stepKey="verifyPosterInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{BannerOnBackend.poster}}" stepKey="moveMouseOverBackendBanner"/>
         <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2786,6 +2956,7 @@
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBanner"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
@@ -2853,6 +3024,7 @@
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin" />
         <seeElement selector="{{BannerOnBackend.poster}}" stepKey="verifyPosterInAdmin"/>
         <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -2863,6 +3035,7 @@
         <seeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate settings on frontend -->
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
@@ -2876,6 +3049,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
+        <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
