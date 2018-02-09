@@ -28,11 +28,9 @@ define(["./default"], function (_default) {
         button_type: button.classList[0],
         open_in_new_tab: button.target === "_blank" ? "1" : "0"
       };
-      return new Promise(function (resolve) {
-        advancedData.then(function (data) {
-          delete data.css_classes;
-          resolve(Object.assign(data, response));
-        });
+      return advancedData.then(function (data) {
+        delete data.css_classes;
+        return Object.assign(data, response);
       });
     };
 
