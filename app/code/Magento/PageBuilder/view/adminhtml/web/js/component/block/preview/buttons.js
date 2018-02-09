@@ -16,7 +16,7 @@ define(["../../block/factory", "../../config", "./block"], function (_factory, _
     _proto.addButton = function addButton() {
       var _this = this;
 
-      var createBlockParams = [_config.getInitConfig("contentTypes")["button-item"], this.parent, this.stage, {}];
+      var createBlockParams = [_config.getInitConfig("content_types")["button-item"], this.parent, this.stage, {}];
 
       _factory.apply(void 0, createBlockParams).then(function (button) {
         _this.addChild(button);

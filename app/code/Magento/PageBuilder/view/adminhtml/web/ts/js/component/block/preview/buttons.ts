@@ -10,7 +10,7 @@ import PreviewBlock from "./block";
 export default class Buttons extends PreviewBlock {
     public addButton() {
         const createBlockParams = [
-            Config.getInitConfig("contentTypes")["button-item"],
+            Config.getInitConfig("content_types")["button-item"],
             this.parent,
             this.stage,
             {},
