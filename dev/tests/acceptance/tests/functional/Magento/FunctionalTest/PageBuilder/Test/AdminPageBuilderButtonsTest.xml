@@ -46,7 +46,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage1"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront1"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront1"/>
         <!-- Edit advanced section of button -->
         <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
@@ -94,13 +94,14 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
         <waitForElementVisible selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="waitForButtonToShow"/>
+        <seeElement selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButton"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.marginStyle(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMarginSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.paddingStyle(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seePaddingSet"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront2"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront2"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSetOnStorefront"/>
@@ -267,7 +268,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-
         <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonsEditPanelSettings"/>
         <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickOnAddButtonsElement"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
