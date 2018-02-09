@@ -51,4 +51,12 @@
         <click selector="{{MediaGallerySection.InsertFile}}" stepKey="clickInsertBtn" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="verifyOversizeValidationMsg">
+        <see userInput="this is oversize" stepKey="seeValidationMsg"/>
+        <click selector="#OK" stepKey="clickOKBtn"/>
+    </actionGroup>
+    <actionGroup name="verifyWrongExtensionValidationMsg">
+        <see userInput="this is wrong extension" stepKey="seeValidationMsg"/>
+        <click selector="#OK" stepKey="clickOKBtn"/>
+    </actionGroup>
 </actionGroups>
