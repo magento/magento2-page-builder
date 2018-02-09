@@ -12,11 +12,19 @@
         <element name="addNewButtonItem" type="button" selector="//button[contains(text(), 'Add Button')]"/>
         <element name="buttonText" type="input" selector="//*[@name='buttons[{{arg1}}][text]']" parameterized="true"/>
         <element name="buttonLink" type="input" selector="//*[@name='buttons[{{arg1}}][link]']" parameterized="true"/>
-        <element name="borderStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'border: {{arg1}}')]" parameterized="true"/>
-        <element name="borderDefaultStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]"/>
+        <element name="alignmentStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'text-align: {{arg1}}')]" parameterized="true"/>
+        <element name="borderStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'border: {{arg1}}px {{arg2}} {{arg3}}')]" parameterized="true"/>
+        <element name="borderRadiusStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'border-radius: {{arg1}}px')]" parameterized="true"/>
+        <element name="marginStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'margin: {{arg1}}px')]" parameterized="true"/>
+        <element name="paddingStyle" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')][1]//a[contains(@style, 'padding: {{arg1}}px')]" parameterized="true"/>
     </section>
     <section name="ButtonsFrontendSection">
         <element name="buttonItemElement" type="button" selector="//div[@data-role='button-item']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
-        <element name="borderStyle" type="button" selector="div[data-role='button-item'] a[style*='border: {{arg1}}']" parameterized="true"/>
+        <element name="alignmentStyle" type="button" selector="div[data-role='button-item'] a[style*='text-align: {{arg1}}']" parameterized="true"/>
+        <element name="borderStyle" type="button" selector="div[data-role='button-item'] a[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="borderRadiusStyle" type="button" selector="div[data-role='button-item'] a[style*='border-radius: {{arg1}}px']" parameterized="true"/>
+        <element name="marginStyle" type="button" selector="div[data-role='button-item'] a[style*='margin: {{arg1}}px']" parameterized="true"/>
+        <element name="paddingStyle" type="button" selector="div[data-role='button-item'] a[style*='padding: {{arg1}}px']" parameterized="true"/>
+        <element name="class" type="button" selector="div[data-role='button-item'][class*='{{arg1}}']" parameterized="true"/>
     </section>
 </sections>
