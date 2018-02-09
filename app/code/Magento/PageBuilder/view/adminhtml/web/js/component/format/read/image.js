@@ -23,16 +23,16 @@ define(["../../../utils/image"], function (_image) {
       var captionElement = element.querySelector("figcaption");
       var response = {
         alt: mainImageElement.alt,
-        image: (0, _image.decodeUrl)(mainImageElement.src || ""),
+        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
         image_caption: captionElement ? captionElement.textContent : "",
         link_target: imageLinkElement ? imageLinkElement.target : "",
-        link_url: imageLinkElement ? imageLinkElement.href : "",
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
         mobile_image: "",
         title_tag: mainImageElement.title
       }; // Detect if there is a mobile image and update the response
 
-      if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").src) {
-        response.mobile_image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(2)").src);
+      if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
+        response.mobile_image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(2)").getAttribute("src"));
       }
 
       return Promise.resolve(response);
