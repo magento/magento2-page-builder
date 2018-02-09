@@ -48,14 +48,13 @@ class Image implements RendererInterface
         $rootElementAttributes = [
             'data-appearance' => 'full-width',
             'data-role' => 'image',
-            'class' => $eavData['css_classes'] ?? '',
-            'style' => 'width: 100%; box-sizing: border-box;'
+            'class' => $eavData['css_classes'] ?? ''
         ];
 
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] .= " $style";
+                $rootElementAttributes['style'] = $style;
             }
         }
 
