@@ -22,13 +22,13 @@ define(["../../../utils/image"], function (_image) {
       var imageLinkElement = element.querySelector("a");
       var captionElement = element.querySelector("figcaption");
       var response = {
-        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
-        mobile_image: "",
         alt: mainImageElement.getAttribute("alt"),
-        title_tag: mainImageElement.getAttribute("title"),
+        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
         image_caption: captionElement ? captionElement.textContent : "",
         link_target: imageLinkElement ? imageLinkElement.getAttribute("target") : "",
-        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : ""
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
+        mobile_image: "",
+        title_tag: mainImageElement.getAttribute("title")
       }; // Detect if there is a mobile image and update the response
 
       if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
