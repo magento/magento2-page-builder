@@ -46,13 +46,15 @@ class ButtonItem implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'button-item',
+            'style' => 'display: inline-block;',
             'class' => $cssClasses
         ];
 
+        $buttonStyleAttribute = '';
         if (isset($itemData['formData'])) {
-            $style = $this->styleExtractor->extractStyle($itemData['formData']);
-            if ($style) {
-                $rootElementAttributes['style'] = $style;
+            $styleAttributeValue = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($styleAttributeValue) {
+                $buttonStyleAttribute = ' style="' . $styleAttributeValue . '"';
             }
         }
 
@@ -63,7 +65,9 @@ class ButtonItem implements RendererInterface
 
         $rootElementHtml .= '><a href="'
             . ($eavData['link_url'] ?? '')
-            . '" target="_self" class="pagebuilder-button-primary"><span>'
+            . '" target="_self"'
+            . $buttonStyleAttribute
+            . ' class="pagebuilder-button-primary"><span>'
             . ($eavData['link_text'] ?? '')
             . '</span></a></div>';
 
