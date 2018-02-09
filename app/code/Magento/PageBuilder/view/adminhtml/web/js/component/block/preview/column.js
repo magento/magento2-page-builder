@@ -32,6 +32,11 @@ define(["./block"], function (_block) {
         var margins = this.data.margins_and_padding().margin;
         var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
         styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
+      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
+
+
+      if (this.data.border && this.data.border() === "_default") {
+        styles.border = "none";
       }
 
       return styles;
