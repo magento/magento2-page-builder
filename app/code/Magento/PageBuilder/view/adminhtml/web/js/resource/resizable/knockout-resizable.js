@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-nested-callbacks*/
 
-define(["ko", "jquery", "Magento_PageBuilder/js/component/config"], function (ko, jQuery, Config) {
+define(['ko', 'jquery', 'Magento_PageBuilder/js/component/config'], function (ko, jQuery, Config) {
 
     var allowedSizes = Config.getInitConfig('column_definitions') || [],
         largestColumn = {breakpoint: 0},
@@ -41,9 +41,9 @@ define(["ko", "jquery", "Magento_PageBuilder/js/component/config"], function (ko
                         return;
                     }
 
-                    var column = jQuery("#" + context.currentColumn.id),
+                    var column = jQuery('#' + context.currentColumn.id),
                         ghostWidth = context.startingWidth + (event.clientX - context.startingX),
-                        ghost = column.find(".pagebuilder-resize-ghost"),
+                        ghost = column.find('.pagebuilder-resize-ghost'),
                         biggestWidth = Math.floor(column.parent().outerWidth() * largestPercentage) - 6,
                         smallestWidth = Math.floor(column.parent().outerWidth() * smallestPercentage) - 6;
 

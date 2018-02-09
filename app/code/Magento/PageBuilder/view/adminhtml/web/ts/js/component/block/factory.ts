@@ -4,7 +4,6 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import AppearanceFactory from "../appearance/appearance-factory";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
@@ -41,19 +40,9 @@ export default function createBlock(
 ): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
-    const appearanceFactory: AppearanceFactory = new AppearanceFactory();
-    return new Promise((resolve: (blockComponent: any) => void, reject: (e: Error) => void) => {
-        appearanceFactory.create(config)
-            .then((appearance) => {
-                loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
-                    try {
-                        resolve(new blockComponent(parent, stage, config, formData, appearance));
-                    } catch (e) {
-                        reject(e);
-                    }
-                });
-            }).catch((e) => {
-                reject(e);
-            });
+    return new Promise((resolve: (blockComponent: any) => void) => {
+        loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
+            resolve(new blockComponent(parent, stage, config, formData));
+        });
     });
 }

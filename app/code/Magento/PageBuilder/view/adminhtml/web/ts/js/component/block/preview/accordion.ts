@@ -6,13 +6,13 @@
 import $ from "jquery";
 import ko from "knockout";
 import require from "require";
-import Block from "./block";
+import PreviewBlock from "./block";
 
-export default class Accordion extends Block {
+export default class Accordion extends PreviewBlock {
     private element: Element;
     private renderCounter: number = 0;
 
-    constructor(parent: Block, config: object) {
+    constructor(parent: PreviewBlock, config: object) {
         super(parent, config);
 
         // Declare our tabs, they'll get populated later

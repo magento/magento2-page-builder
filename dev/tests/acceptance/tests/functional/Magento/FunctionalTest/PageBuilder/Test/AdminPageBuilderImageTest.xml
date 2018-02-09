@@ -139,4 +139,36 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
     </test>
+    <test name="CanAddEmptyImagePreview">
+        <annotations>
+            <title value="Add empty image preview"/>
+            <description value="A user should be able to add an empty image preview to stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-87266"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <seeElement selector="{{ImageOnBackend.imagePreview}}" stepKey="seeImagePreview"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="dontSeeMainImageSource"/>
+    </test>
 </tests>

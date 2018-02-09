@@ -30,25 +30,6 @@ define(["./block"], function (_block) {
         style: "visibility: visible; width: 20%"
       };
     };
-    /**
-     * Get the preview icon attributes
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getPreviewIconAttributes = function getPreviewIconAttributes() {
-      if (this.data.image() === "" || this.data.image() === undefined) {
-        return {
-          class: "icon-pagebuilder-image",
-          style: "visibility: visible"
-        };
-      }
-
-      return {
-        style: "visibility: hidden"
-      };
-    };
 
     return Image;
   }(_block);
