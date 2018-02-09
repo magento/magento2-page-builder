@@ -23,7 +23,15 @@
                 </div>
             </div>
         </div>
-        <div data-bind="style: {minHeight: getStyle().minHeight, backgroundSize: getStyle().backgroundSize, padding: getStyle().padding, backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage}"  class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
+        <div data-bind="style: {
+            minHeight: getStyle().minHeight,
+            backgroundSize: getStyle().backgroundSize,
+            paddingTop: getStyle().paddingTop,
+            paddingBottom: getStyle().paddingBottom,
+            paddingLeft: getStyle().paddingLeft,
+            paddingRight: getStyle().paddingRight,
+            backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage}"
+             class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
