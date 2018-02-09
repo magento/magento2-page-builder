@@ -22,6 +22,8 @@ export default class Buttons extends PreviewBlock {
         createBlock(...createBlockParams).then((button: any) => {
             this.addChild(button);
             button.edit.open();
+        }).catch((error: Error) => {
+            console.error(error);
         });
     }
 }

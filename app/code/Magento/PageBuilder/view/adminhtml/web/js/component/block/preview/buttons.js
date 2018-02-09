@@ -25,6 +25,8 @@ define(["../../block/factory", "../../config", "./block"], function (_factory, _
         _this.addChild(button);
 
         button.edit.open();
+      }).catch(function (error) {
+        console.error(error);
       });
     };
 

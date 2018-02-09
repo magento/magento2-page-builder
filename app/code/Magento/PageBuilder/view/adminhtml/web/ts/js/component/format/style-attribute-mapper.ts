@@ -58,15 +58,19 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    result.marginTop = value.margin.top ? `${value.margin.top}px` : "";
-                    result.marginRight = value.margin.right ? `${value.margin.right}px` : "";
-                    result.marginLeft = value.margin.left ? `${value.margin.left}px` : "";
-                    result.marginBottom = value.margin.bottom ? `${value.margin.bottom}px` : "";
-                    result.paddingTop = value.padding.top ? `${value.padding.top}px` : "";
-                    result.paddingRight = value.padding.right ? `${value.padding.right}px` : "";
-                    result.paddingLeft = value.padding.left ? `${value.padding.left}px` : "";
-                    result.paddingBottom = value.padding.bottom ? `${value.padding.bottom}px` : "";
-                    return;
+                    const toPxStr = (val: number) => typeof val === "number" ? `${val}px` : "";
+                    const { padding, margin } = value;
+                    const paddingAndMargins = {
+                        marginBottom: toPxStr(margin.bottom),
+                        marginLeft: toPxStr(margin.left),
+                        marginRight: toPxStr(margin.right),
+                        marginTop: toPxStr(margin.top),
+                        paddingBottom: toPxStr(padding.bottom),
+                        paddingLeft: toPxStr(padding.left),
+                        paddingRight: toPxStr(padding.right),
+                        paddingTop: toPxStr(padding.top),
+                    };
+                    Object.assign(result, paddingAndMargins);
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
             },

@@ -64,15 +64,24 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "margins_and_padding") {
-          result.marginTop = value.margin.top ? value.margin.top + "px" : "";
-          result.marginRight = value.margin.right ? value.margin.right + "px" : "";
-          result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
-          result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
-          result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
-          result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
-          result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
-          result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
-          return;
+          var toPxStr = function toPxStr(val) {
+            return typeof val === "number" ? val + "px" : "";
+          };
+
+          var _value = value,
+              padding = _value.padding,
+              margin = _value.margin;
+          var paddingAndMargins = {
+            marginBottom: toPxStr(margin.bottom),
+            marginLeft: toPxStr(margin.left),
+            marginRight: toPxStr(margin.right),
+            marginTop: toPxStr(margin.top),
+            paddingBottom: toPxStr(padding.bottom),
+            paddingLeft: toPxStr(padding.left),
+            paddingRight: toPxStr(padding.right),
+            paddingTop: toPxStr(padding.top)
+          };
+          Object.assign(result, paddingAndMargins);
         }
 
         result[_this.fromSnakeToCamelCase(key)] = value;
