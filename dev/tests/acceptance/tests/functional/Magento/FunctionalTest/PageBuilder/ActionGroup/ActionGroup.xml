@@ -376,6 +376,16 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
         <waitForElementVisible selector="{{AdminStagingSlideOutSection.title}}" stepKey="waitForSlideOutOpen"/>
     </actionGroup>
+    <actionGroup name="enablePageBuilderSetting">
+        <amOnPage url="admin/admin/system_config/edit/section/cms/" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="wait1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
+        <uncheckOption selector="{{ContentManagementSection.EnablePageBuilderSystemValue}}" stepKey="uncheckUseSystemValue"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+    </actionGroup>
     <actionGroup name="navigateToCreatedCMSPage">
         <arguments>
             <argument name="CMSPage" defaultValue=""/>
@@ -428,5 +438,4 @@
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
-
 </actionGroups>
