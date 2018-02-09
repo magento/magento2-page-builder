@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
@@ -26,7 +27,7 @@ export default class PreviewBlock {
      * @param {Block} parent
      * @param {object} config
      */
-    constructor(parent: Block, config: object) {
+    constructor(parent: Block, config: ConfigContentBlock) {
         const styleAttributeMapper = new StyleAttributeMapper();
         const styleAttributeFilter = new StyleAttributeFilter();
 
@@ -45,9 +46,9 @@ export default class PreviewBlock {
             });
 
             if (typeof data.appearance !== "undefined" &&
-                typeof data.appearances !== "undefined" &&
-                typeof data.appearances[data.appearance] !== "undefined") {
-                _.extend(data, data.appearances[data.appearance]);
+                typeof config.appearances !== "undefined" &&
+                typeof config.appearances[data.appearance] !== "undefined") {
+                _.extend(data, config.appearances[data.appearance]);
             }
 
             // Extract data values our of observable functions

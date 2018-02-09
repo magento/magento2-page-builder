@@ -35,8 +35,8 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           return value;
         });
 
-        if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
-          _underscore.extend(data, data.appearances[data.appearance]);
+        if (typeof data.appearance !== "undefined" && typeof config.appearances !== "undefined" && typeof config.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, config.appearances[data.appearance]);
         } // Extract data values our of observable functions
 
 
