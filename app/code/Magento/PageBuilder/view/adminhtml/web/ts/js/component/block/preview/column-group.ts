@@ -5,7 +5,6 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import Appearance from "../../appearance/appearance";
 import Config from "../../config";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
 import Column from "../column";
@@ -50,8 +49,8 @@ export default class ColumnGroup extends PreviewBlock {
      * @param {object} config
      * @param {Appearance} appearance
      */
-    constructor(parent: ColumnGroupBlock, config: object, appearance: Appearance) {
-        super(parent, config, appearance);
+    constructor(parent: ColumnGroupBlock, config: object) {
+        super(parent, config);
         this.parent = parent;
     }
 
@@ -481,7 +480,7 @@ export default class ColumnGroup extends PreviewBlock {
 
                 // Is the element currently being dragged a column?
                 if (currentDraggedBlock instanceof GroupBlock &&
-                    currentDraggedBlock.getConfig() === Config.getContentTypeConfig("column")
+                    currentDraggedBlock.getConfig() === Config.getContentType("column")
                 ) {
                     this.dropOverElement = true;
                 }

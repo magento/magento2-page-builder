@@ -18,17 +18,16 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
      * @param {Stage} stage
      * @param {ConfigContentBlock} config
      * @param formData
-     * @param {Appearance} appearance
      */
-    function Block(parent, stage, config, formData, appearance) {
+    function Block(parent, stage, config, formData) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config, appearance) || this;
+      _this = _Structural.call(this, parent, stage, config) || this;
       _this.title = void 0;
       _this.editOnInsert = true;
       _this.preview = void 0;
       _this.childEntityKeys = [];
-      _this.preview = (0, _previews)(_this, config, appearance);
+      _this.preview = (0, _previews)(_this, config);
       var defaults = {};
 
       if (config.fields) {
@@ -51,6 +50,14 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
     _createClass(Block, [{
       key: "previewTemplate",
       get: function get() {
+        if (typeof this.preview.data.appearance !== "undefined") {
+          var appearance = this.preview.data.appearance();
+
+          if (typeof this.config.appearances !== "undefined" && typeof this.config.appearances[appearance] !== "undefined" && typeof this.config.appearances[appearance].preview_template !== "undefined") {
+            return this.config.appearances[appearance].preview_template;
+          }
+        }
+
         if (this.config.preview_template) {
           return this.config.preview_template;
         }
@@ -66,6 +73,14 @@ define(["underscore", "../stage/previews", "../stage/structural/abstract"], func
     }, {
       key: "renderTemplate",
       get: function get() {
+        if (typeof this.getData().appearance !== "undefined") {
+          var appearance = this.getData().appearance;
+
+          if (typeof this.config.appearances !== "undefined" && typeof this.config.appearances[appearance] !== "undefined" && typeof this.config.appearances[appearance].render_template !== "undefined") {
+            return this.config.appearances[appearance].render_template;
+          }
+        }
+
         if (this.config.render_template) {
           return this.config.render_template;
         }

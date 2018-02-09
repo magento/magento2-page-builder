@@ -50,7 +50,7 @@ define(["../../config", "../factory", "../preview/column-group/resizing"], funct
 
 
   function createColumn(parent, width, index) {
-    return (0, _factory)(_config.getContentTypeConfig("column"), parent, parent.stage, {
+    return (0, _factory)(_config.getContentType("column"), parent, parent.stage, {
       width: parseFloat(width.toString()) + "%"
     }).then(function (column) {
       parent.addChild(column, index);

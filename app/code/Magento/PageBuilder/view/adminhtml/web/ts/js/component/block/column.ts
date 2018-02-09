@@ -22,7 +22,7 @@ export default class Column extends Block {
     public bindEvents() {
         super.bindEvents();
 
-        if (Config.getContentTypeConfig("column-group")) {
+        if (Config.getContentType("column-group")) {
             EventBus.on("column:block:mount", (event: Event, params: {[key: string]: any}) => {
                 if (params.id === this.id) {
                     this.createColumnGroup();
@@ -86,7 +86,7 @@ export default class Column extends Block {
             this.parent.removeChild(this);
             // Create a new instance of column group to wrap our columns with
             return createBlock(
-                Config.getContentTypeConfig("column-group"),
+                Config.getContentType("column-group"),
                 this.parent,
                 this.parent.stage,
             ).then((columnGroup: ColumnGroup) => {

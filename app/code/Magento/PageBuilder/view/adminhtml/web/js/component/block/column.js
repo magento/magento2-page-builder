@@ -31,7 +31,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
 
       _Block.prototype.bindEvents.call(this);
 
-      if (_config.getContentTypeConfig("column-group")) {
+      if (_config.getContentType("column-group")) {
         _eventBus.on("column:block:mount", function (event, params) {
           if (params.id === _this2.id) {
             _this2.createColumnGroup();
@@ -89,7 +89,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
 
         this.parent.removeChild(this); // Create a new instance of column group to wrap our columns with
 
-        return (0, _factory)(_config.getContentTypeConfig("column-group"), this.parent, this.parent.stage).then(function (columnGroup) {
+        return (0, _factory)(_config.getContentType("column-group"), this.parent, this.parent.stage).then(function (columnGroup) {
           return Promise.all([(0, _factory)(_this3.config, columnGroup, columnGroup.stage, {
             width: "50%"
           }), (0, _factory)(_this3.config, columnGroup, columnGroup.stage, {

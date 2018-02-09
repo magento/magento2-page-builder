@@ -6,7 +6,6 @@
 import $ from "jquery";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _, {Dictionary} from "underscore";
-import Appearance from "../../appearance/appearance";
 import Block from "../block";
 import PreviewBlock from "./block";
 
@@ -35,10 +34,9 @@ export default class AdvancedSlider extends PreviewBlock {
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object, appearance: Appearance) {
-        super(parent, config, appearance);
+    constructor(parent: Block, config: object) {
+        super(parent, config);
 
         parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);

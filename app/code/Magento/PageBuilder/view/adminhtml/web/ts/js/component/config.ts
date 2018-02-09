@@ -35,17 +35,17 @@ export default class Config {
     }
 
     /**
-     * Return a content types configuration from the config
+     * Retrieve a content type from the configuration
      *
-     * @param type
+     * @param {string} contentType
      * @returns {any}
      */
-    static getContentTypeConfig(type: string): ConfigContentBlock {
-        if (typeof Config.initConfig.contentTypes === 'object' && typeof Config.initConfig.contentTypes[type] === 'object') {
-            return Config.initConfig.contentTypes[type];
+    public static getContentType(contentType: string): any {
+        if (typeof Config.getInitConfig("content_types")[contentType] !== "undefined") {
+            return Config.getInitConfig("content_types")[contentType];
         }
 
-        return {};
+        return null;
     }
 
     /**
@@ -143,8 +143,10 @@ export default class Config {
      */
     public static getPluginConfig(plugin: string, key: string): object | null {
         const config = Config.initConfig;
-        if (typeof config.plugins[plugin] !== "undefined" && typeof config.plugins[plugin].config !== "undefined"
-            && typeof config.plugins[plugin].config[key] !== "undefined"
+        if (
+            typeof config.plugins[plugin] !== "undefined" &&
+            typeof config.plugins[plugin].config !== "undefined" &&
+            typeof config.plugins[plugin].config[key] !== "undefined"
         ) {
             return config.plugins[plugin].config[key];
         }

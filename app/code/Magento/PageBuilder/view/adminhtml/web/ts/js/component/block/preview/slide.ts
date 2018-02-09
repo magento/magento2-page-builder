@@ -12,10 +12,9 @@ export default class Slide extends PreviewBlock {
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object, appearance: Appearance) {
-        super(parent, config, appearance);
+    constructor(parent: Block, config: object) {
+        super(parent, config);
 
         this.backgroundImageStyle = ko.computed(() => {
             if (this.data.background_image && typeof this.data.background_image()[0] === "object") {

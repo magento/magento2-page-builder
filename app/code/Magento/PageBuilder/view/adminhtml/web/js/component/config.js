@@ -35,19 +35,19 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
       return Config.initConfig;
     };
     /**
-     * Return a content types configuration from the config
+     * Retrieve a content type from the configuration
      *
-     * @param type
+     * @param {string} contentType
      * @returns {any}
      */
 
 
-    Config.getContentTypeConfig = function getContentTypeConfig(type) {
-      if (_typeof(Config.initConfig.contentTypes) === 'object' && _typeof(Config.initConfig.contentTypes[type]) === 'object') {
-        return Config.initConfig.contentTypes[type];
+    Config.getContentType = function getContentType(contentType) {
+      if (typeof Config.getInitConfig("content_types")[contentType] !== "undefined") {
+        return Config.getInitConfig("content_types")[contentType];
       }
 
-      return {};
+      return null;
     };
     /**
      * Retrieve the entire config

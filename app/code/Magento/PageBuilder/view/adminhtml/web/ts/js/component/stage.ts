@@ -6,13 +6,9 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import _ from "underscore";
-import Block from "./block/block";
-import createBlock from "./block/factory";
-import Config from "./config";
 import DataStore from "./data-store";
 import EventBus from "./event-bus";
 import { StageInterface } from "./stage.d";
-import Build from "./stage/build";
 import {handleEvents} from "./stage/event-handling-delegate";
 import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
@@ -26,7 +22,6 @@ export default class Stage extends EditableArea implements StageInterface {
     public loading: KnockoutObservable<boolean>;
     public originalScrollTop: number;
     public parent: any;
-    public serializeRole: string = "stage";
     public showBorders: KnockoutObservable<boolean>;
     public stage: Stage;
     public store: DataStore;
@@ -41,10 +36,10 @@ export default class Stage extends EditableArea implements StageInterface {
     );
 
     /**
-     * Stage constructor
+     * Constructor
      *
      * @param parent
-     * @param stageContent
+     * @param {KnockoutObservableArray<Structural>} stageContent
      */
     constructor(parent: any, stageContent: KnockoutObservableArray<Structural>) {
         super();
@@ -75,41 +70,6 @@ export default class Stage extends EditableArea implements StageInterface {
                 this.saveRenderTree.call(this);
             }
         });
-    }
-
-    /**
-     * Run the build system to initiate from existing structures
-     *
-     * @param {Build} buildInstance
-     */
-    public build(buildInstance: Build) {
-        const self = this;
-        if (buildInstance) {
-            buildInstance.buildStage(this)
-                .then(self.ready.bind(self))
-                .catch((error) => {
-                    // Inform the user that an issue has occurred
-                    self.parent.alertDialog({
-                        content: $t("An error has occurred while initiating the content area."),
-                        title: $t("Advanced CMS Error"),
-                    });
-                    EventBus.trigger("stage:error", {stage: this, error});
-                    console.error(error);
-                });
-        } else {
-            // Add an initial row to the stage if the stage is currently empty
-            if (typeof Config.getInitConfig("contentTypes").row !== "undefined") {
-                createBlock(
-                    Config.getInitConfig("contentTypes").row,
-                    this,
-                    this,
-                    {},
-                ).then((row: Block) => {
-                    this.addChild(row);
-                });
-            }
-            this.ready();
-        }
     }
 
     /**

@@ -16,13 +16,30 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'Magento_PageBuilder/js/component/stage',
-    'Magento_PageBuilder/js/component/event-bus',
-    'Magento_PageBuilder/js/component/stage/build',
-    'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
-    'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, EventBus, Build, Panel, utils) {
+    'Magento_PageBuilder/js/component/event-bus',
+    'Magento_PageBuilder/js/component/format/format-validator',
+    'Magento_PageBuilder/js/component/stage-builder',
+    'Magento_PageBuilder/js/component/stage/panel',
+    'Magento_PageBuilder/js/utils/directives'
+], function (
+    _,
+    Wysiwyg,
+    $,
+    confirmationPrompt,
+    alertPrompt,
+    $t,
+    applyMain,
+    ko,
+    registry,
+    jQuery,
+    utils,
+    EventBus,
+    validateFormat,
+    buildStage,
+    Panel,
+    directives
+) {
     'use strict';
 
     /**
@@ -36,10 +53,10 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
+            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
-            panel: new Panel(),
             isFullScreen: false,
             originalScrollTop: false,
             dragging: false,
@@ -93,13 +110,13 @@ define([
          * @param {HTMLElement} node
          */
         setElementNode: function (node) {
-            var buildInstance = new Build(this.initialValue);
-
             this.domNode = node;
             this.bindPageBuilderButton(node);
-            if (buildInstance.canBuild()) {
+
+            // Detect if we can build the contents of the stage within Page Builder
+            if (validateFormat(this.initialValue)) {
                 this.loading(true);
-                return this.buildPageBuilder(false, buildInstance);
+                return this.buildPageBuilder();
             }
 
             $(node).bindings({
@@ -132,32 +149,29 @@ define([
          * @param event
          * @param buildInstance
          */
-        buildPageBuilder: function (event, buildInstance) {
+        buildPageBuilder: function (event) {
             var self = this;
+            var bindStage = function (stage) {
+                self.stage = stage;
+                EventBus.on("stage:ready", function (stageReadyEvent, params) {
+                    if (params.stage.id === self.stage.id) {
+                        self.stageActive(true); // Display the stage UI
+                        self.visible(false); // Hide the original WYSIWYG editor
+                    }
+                });
+            };
 
-            if (event) {
+            if (typeof event !== 'undefined') {
                 event.stopPropagation();
             }
 
-            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            buildStage(
                 this,
-                this.stageContent
+                this.panel,
+                this.stageContent,
+                directives.removeQuotesInMediaDirectives(this.initialValue),
+                bindStage
             );
-
-            // On stage ready show the interface
-            EventBus.on("stage:ready", function (stageReadyEvent, params) {
-                if (params.stage.id === self.stage.id) {
-                    self.stageActive(true); // Display the stage UI
-                    self.visible(false); // Hide the original WYSIWYG editor
-                }
-            });
-
-            // Create a new instance of the panel
-            this.panel.bindStage(this.stage);
-
-            // Build the stage instance using any existing build data
-            this.stage.build(buildInstance);
         },
 
         /**
@@ -183,7 +197,7 @@ define([
             ) {
                 confirmationPrompt(options);
             } else {
-                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one \"always\", \"confirm\", or \"cancel\" callback');
             }
         },
 

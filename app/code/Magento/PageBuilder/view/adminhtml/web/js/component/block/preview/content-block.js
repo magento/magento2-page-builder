@@ -10,12 +10,11 @@ define(["knockout", "../../config", "./block"], function (_knockout, _config, _b
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function ContentBlock(parent, config, appearance) {
+    function ContentBlock(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
 
       _this.updateDataValue("html", _knockout.observable(""));
 

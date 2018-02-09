@@ -15,7 +15,7 @@ const previews: any[] = [];
  * Load all preview instances into our cache
  */
 export function load(): void {
-    const contentBlocks = Config.getInitConfig("contentTypes") as ConfigContentBlocks;
+    const contentBlocks = Config.getInitConfig("content_types") as ConfigContentBlocks;
     const blocksToLoad: string[] = [];
     const blockCodes: any[] = []; // @todo should be string, but TS complains
     Object.keys(contentBlocks).forEach((blockKey) => {
@@ -39,10 +39,9 @@ export function load(): void {
  *
  * @param {Block} block
  * @param blockConfig
- * @param {Appearance} appearance
  * @returns {PreviewBlock}
  */
-export default function get(block: Block, blockConfig: any, appearance: Appearance): PreviewBlock {
+export default function get(block: Block, blockConfig: any): PreviewBlock {
     const code = blockConfig.name;
     let instance: typeof PreviewBlock;
     if (typeof previews[code] === "undefined") {
@@ -51,5 +50,5 @@ export default function get(block: Block, blockConfig: any, appearance: Appearan
         instance = previews[code];
     }
 
-    return new instance(block, blockConfig, appearance);
+    return new instance(block, blockConfig);
 }

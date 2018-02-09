@@ -16,12 +16,11 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function AdvancedSlider(parent, config, appearance) {
+    function AdvancedSlider(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
       _this.ready = false;
       _this.element = void 0;
       _this.buildSlick = _underscore.debounce(function () {

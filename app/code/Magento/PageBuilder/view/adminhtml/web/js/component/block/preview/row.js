@@ -12,12 +12,11 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function Row(parent, config, appearance) {
+    function Row(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
       _this.rowStyles = void 0;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);

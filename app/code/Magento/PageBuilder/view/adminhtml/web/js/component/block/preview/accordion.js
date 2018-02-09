@@ -10,12 +10,11 @@ define(["jquery", "knockout", "underscore", "./block"], function (_jquery, _knoc
     /**
      * @param {Accordion} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function Accordion(parent, config, appearance) {
+    function Accordion(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this; // Declare our tabs, they'll get populated later
+      _this = _PreviewBlock.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
 
       _this.element = void 0;
       _this.renderCounter = 0;

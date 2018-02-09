@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
    */
 
   function load() {
-    var contentBlocks = _config.getInitConfig("contentTypes");
+    var contentBlocks = _config.getInitConfig("content_types");
 
     var blocksToLoad = [];
     var blockCodes = []; // @todo should be string, but TS complains
@@ -39,12 +39,11 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
    *
    * @param {Block} block
    * @param blockConfig
-   * @param {Appearance} appearance
    * @returns {PreviewBlock}
    */
 
 
-  function get(block, blockConfig, appearance) {
+  function get(block, blockConfig) {
     var code = blockConfig.name;
     var instance;
 
@@ -54,7 +53,7 @@ define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "..
       instance = previews[code];
     }
 
-    return new instance(block, blockConfig, appearance);
+    return new instance(block, blockConfig);
   }
 
   return Object.assign(get, {

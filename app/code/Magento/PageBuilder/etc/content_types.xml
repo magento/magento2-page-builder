@@ -31,7 +31,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/row</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>
-            <form>row_form</form>
+            <form>pagebuilder_row_form</form>
             <group>general</group>
             <allowed_parents>stage</allowed_parents>
             <readers>
@@ -60,17 +60,25 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/column</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/column.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/column.html</render_template>
-            <form>column_form</form>
+            <form>pagebuilder_column_form</form>
             <group>general</group>
             <allowed_parents>row,column-group</allowed_parents>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
             <appearances>
-                <appearance name="full-height" component="Magento_PageBuilder/js/component/appearance/column/full-height"/>
-                <appearance name="align-top" component="Magento_PageBuilder/js/component/appearance/column/align-top"/>
-                <appearance name="align-center" component="Magento_PageBuilder/js/component/appearance/column/align-center"/>
-                <appearance name="align-bottom" component="Magento_PageBuilder/js/component/appearance/column/align-bottom"/>
+                <appearance name="full-height">
+                    <data name="align_self">stretch</data>
+                </appearance>
+                <appearance name="align-top">
+                    <data name="align_self">flex-start</data>
+                </appearance>
+                <appearance name="align-center">
+                    <data name="align_self">center</data>
+                </appearance>
+                <appearance name="align-bottom">
+                    <data name="align_self">flex-end</data>
+                </appearance>
             </appearances>
         </type>
         <type name="text" translate="label" sortOrder="20">
@@ -79,7 +87,7 @@
             <component>Magento_PageBuilder/js/component/block/inline</component>
             <preview_template>Magento_PageBuilder/component/block/preview/text.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/text.html</render_template>
-            <form>text_form</form>
+            <form>pagebuilder_text_form</form>
             <group>general</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -93,7 +101,7 @@
             <component>Magento_PageBuilder/js/component/block/inline</component>
             <preview_template>Magento_PageBuilder/component/block/preview/header.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/header.html</render_template>
-            <form>heading_form</form>
+            <form>pagebuilder_heading_form</form>
             <group>general</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -108,7 +116,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/buttons</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/buttons.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/buttons.html</render_template>
-            <form>button_form</form>
+            <form>pagebuilder_button_form</form>
             <group>general</group>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
@@ -122,7 +130,7 @@
             <component>Magento_PageBuilder/js/component/block/inline</component>
             <preview_template>Magento_PageBuilder/component/block/preview/divider.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/divider.html</render_template>
-            <form>divider_form</form>
+            <form>pagebuilder_divider_form</form>
             <group>general</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -136,7 +144,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/image</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
-            <form>image_form</form>
+            <form>pagebuilder_image_form</form>
             <group>media</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -144,26 +152,62 @@
                 <reader name="image" component="Magento_PageBuilder/js/component/format/read/image"/>
             </readers>
         </type>
-        <type name="driver" translate="label" sortOrder="1">
-            <label>Driver</label>
+        <type name="banner" translate="label" sortOrder="1">
+            <label>Banner</label>
             <icon>icon-pagebuilder-image</icon>
-            <component>Magento_PageBuilder/js/component/block/driver</component>
-            <preview_template>Magento_PageBuilder/component/block/preview/driver.html</preview_template>
-            <render_template>Magento_PageBuilder/component/block/render/driver.html</render_template>
-            <form>driver_form</form>
+            <component>Magento_PageBuilder/js/component/block/banner</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/banner</preview_component>
+            <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
+            <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+            <form>pagebuilder_banner_form</form>
             <group>media</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                <reader name="driver" component="Magento_PageBuilder/js/component/format/read/driver"/>
+                <reader name="banner" component="Magento_PageBuilder/js/component/format/read/banner"/>
             </readers>
+            <appearances>
+                <appearance name="collage-left">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-left.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-left.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-centered">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-centered.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-centered.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-right">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-right.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-right.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/banner/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="poster">
+                    <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="poster" component="Magento_PageBuilder/js/component/format/read/banner"/>
+                    </readers>
+                </appearance>
+            </appearances>
         </type>
         <type name="video" translate="label" sortOrder="10">
             <label>Video</label>
             <icon>icon-pagebuilder-video</icon>
+            <component>Magento_PageBuilder/js/component/block/video</component>
             <preview_template>Magento_PageBuilder/component/block/preview/video.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/video.html</render_template>
-            <form>video_form</form>
+            <form>pagebuilder_video_form</form>
             <group>media</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -177,7 +221,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/slide</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/slide.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/slide.html</render_template>
-            <form>slide_form</form>
+            <form>pagebuilder_slide_form</form>
             <group>media</group>
             <allowed_parents>advanced-slider</allowed_parents>
             <readers>
@@ -193,7 +237,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/advanced-slider</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/advanced-slider.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/advanced-slider.html</render_template>
-            <form>advanced_slider_form</form>
+            <form>pagebuilder_advanced_slider_form</form>
             <group>media</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -206,7 +250,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/tabs</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/tabs.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/tabs.html</render_template>
-            <form>tabs_form</form>
+            <form>pagebuilder_tabs_form</form>
             <group>interactive</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -221,7 +265,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/accordion</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/accordion.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/accordion.html</render_template>
-            <form>accordion_form</form>
+            <form>pagebuilder_accordion_form</form>
             <group>interactive</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -235,7 +279,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/map</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/map.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/map.html</render_template>
-            <form>map_form</form>
+            <form>pagebuilder_map_form</form>
             <group>interactive</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -250,7 +294,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/newsletter</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/newsletter.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/newsletter.html</render_template>
-            <form>newsletter_form</form>
+            <form>pagebuilder_newsletter_form</form>
             <group>interactive</group>
             <backend_block>Magento\PageBuilder\Block\ContentType\Newsletter</backend_block>
             <backend_template>Magento_PageBuilder::pagebuilder/blocks/core/newsletter.phtml</backend_template>
@@ -267,7 +311,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/content-block</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/block.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/block.html</render_template>
-            <form>block_form</form>
+            <form>pagebuilder_block_form</form>
             <group>magento</group>
             <backend_block>Magento\PageBuilder\Block\ContentType\Block</backend_block>
             <allowed_parents>row,column</allowed_parents>
@@ -278,7 +322,7 @@
         <type name="products" translate="label" sortOrder="20">
             <label>Product</label>
             <icon>icon-pagebuilder-products</icon>
-            <form>products_form</form>
+            <form>pagebuilder_products_form</form>
             <group>magento</group>
             <preview_component>Magento_PageBuilder/js/component/block/preview/product</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/product.html</preview_template>
@@ -293,7 +337,7 @@
         <type name="products-list" translate="label" sortOrder="20">
             <label>Product List</label>
             <icon>icon-pagebuilder-products</icon>
-            <form>products_list_form</form>
+            <form>pagebuilder_products_list_form</form>
             <group>magento</group>
             <preview_component>Magento_PageBuilder/js/component/block/preview/product-list</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/productlist.html</preview_template>
@@ -311,7 +355,7 @@
             <component>Magento_PageBuilder/js/component/block/inline</component>
             <preview_template>Magento_PageBuilder/component/block/preview/anchor.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/anchor.html</render_template>
-            <form>anchor_form</form>
+            <form>pagebuilder_anchor_form</form>
             <group>other</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -325,7 +369,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/code</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/code.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/code.html</render_template>
-            <form>code_form</form>
+            <form>pagebuilder_code_form</form>
             <group>other</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>
@@ -336,9 +380,10 @@
         <type name="html" translate="label" sortOrder="20">
             <label>HTML</label>
             <icon>icon-pagebuilder-code</icon>
-            <form>html_form</form>
+            <form>pagebuilder_html_form</form>
             <group>other</group>
             <allowed_parents>row,column</allowed_parents>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/html</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/html.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/html.html</render_template>
             <readers>
@@ -355,7 +400,7 @@
             <render_template>Magento_PageBuilder/component/block/render/search.html</render_template>
             <backend_block>Magento\PageBuilder\Block\ContentType\Search</backend_block>
             <backend_template>Magento_PageBuilder::pagebuilder/blocks/core/search.phtml</backend_template>
-            <form>search_form</form>
+            <form>pagebuilder_search_form</form>
             <group>other</group>
             <allowed_parents>row,column</allowed_parents>
             <readers>

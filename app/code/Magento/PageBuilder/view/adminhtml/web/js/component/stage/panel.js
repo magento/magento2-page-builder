@@ -57,7 +57,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
         this.searching(false);
       } else {
         this.searching(true);
-        this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig("contentTypes"), function (contentBlock) {
+        this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig("content_types"), function (contentBlock) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
           var matches = !!contentBlock.label.toLowerCase().match(regEx);
           return matches && contentBlock.is_visible === true;
@@ -72,7 +72,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "underscore", 
 
       var groups = _config.getInitConfig("groups");
 
-      var contentBlocks = _config.getInitConfig("contentTypes"); // Verify the configuration contains the required information
+      var contentBlocks = _config.getInitConfig("content_types"); // Verify the configuration contains the required information
 
 
       if (groups && contentBlocks) {

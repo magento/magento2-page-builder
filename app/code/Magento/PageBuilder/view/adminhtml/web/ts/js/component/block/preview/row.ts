@@ -5,7 +5,6 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import Appearance from "../../appearance/appearance";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper from "../../format/style-attribute-mapper";
 import Block from "../block";
@@ -19,10 +18,9 @@ export default class Row extends PreviewBlock {
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object, appearance: Appearance) {
-        super(parent, config, appearance);
+    constructor(parent: Block, config: object) {
+        super(parent, config);
         const styleAttributeMapper = new StyleAttributeMapper();
         const styleAttributeFilter = new StyleAttributeFilter();
 

@@ -10,12 +10,11 @@ define(["knockout", "pagebuilder/highlight", "./block"], function (_knockout, _h
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function Code(parent, config, appearance) {
+    function Code(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
 
       _this.updateDataValue("html", _knockout.observable(""));
 

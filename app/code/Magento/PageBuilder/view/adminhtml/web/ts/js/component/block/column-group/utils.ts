@@ -61,7 +61,7 @@ export function updateColumnWidth(column: Column, width: number): void {
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number) {
     return createBlock(
-        Config.getContentTypeConfig("column"),
+        Config.getContentType("column"),
         parent,
         parent.stage,
         {width: parseFloat(width.toString()) + "%"},

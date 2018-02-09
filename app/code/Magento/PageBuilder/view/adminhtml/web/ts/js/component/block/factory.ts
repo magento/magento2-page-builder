@@ -4,7 +4,6 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import AppearanceFactory from "../appearance/appearance-factory";
 import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
@@ -38,19 +37,9 @@ export default function createBlock(
 ): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
-    const appearanceFactory: AppearanceFactory = new AppearanceFactory();
-    return new Promise((resolve: (blockComponent: Block) => void, reject: (e: Error) => void) => {
-        appearanceFactory.create(config)
-            .then((appearance) => {
-                loadModule([getBlockComponentPath(config)], (blockComponent: typeof Block) => {
-                    try {
-                        resolve(new blockComponent(parent, stage, config, formData, appearance));
-                    } catch (e) {
-                        reject(e);
-                    }
-                });
-            }).catch((e) => {
-                reject(e);
-            });
+    return new Promise((resolve: (blockComponent: any) => void) => {
+        loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
+            resolve(new blockComponent(parent, stage, config, formData));
+        });
     });
 }

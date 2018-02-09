@@ -12,10 +12,10 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
      * @param {object} config
      * @param {Appearance} appearance
      */
-    function ColumnGroup(parent, config, appearance) {
+    function ColumnGroup(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
       _this.parent = void 0;
       _this.resizing = _knockout.observable(false);
       _this.dropPlaceholder = void 0;
@@ -468,7 +468,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
           // Always calculate drop positions when an element is dragged over
           _this6.dropPositions = (0, _dragdrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
 
-          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
+          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentType("column")) {
             _this6.dropOverElement = true;
           }
         }

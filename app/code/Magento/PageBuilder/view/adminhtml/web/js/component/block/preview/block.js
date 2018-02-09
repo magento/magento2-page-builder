@@ -8,11 +8,12 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
   /*#__PURE__*/
   function () {
     /**
+     * PreviewBlock constructor
+     *
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function PreviewBlock(parent, config, appearance) {
+    function PreviewBlock(parent, config) {
       var _this = this;
 
       this.parent = void 0;
@@ -34,8 +35,8 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
           return value;
         });
 
-        if (appearance && appearance.hasAppearances(data)) {
-          data = appearance.add(data);
+        if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, data.appearances[data.appearance]);
         } // Extract data values our of observable functions
 
 

@@ -12,12 +12,11 @@ define(["./block"], function (_block) {
     /**
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    function Slide(parent, config, appearance) {
+    function Slide(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, appearance) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
       _this.backgroundImageStyle = void 0;
       _this.backgroundImageStyle = ko.computed(function () {
         if (_this.data.background_image && _typeof(_this.data.background_image()[0]) === "object") {

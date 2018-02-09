@@ -5,7 +5,6 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
-import Appearance from "../../appearance/appearance";
 import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
@@ -22,11 +21,12 @@ export default class PreviewBlock {
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
 
     /**
+     * PreviewBlock constructor
+     *
      * @param {Block} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: Block, config: object, appearance: Appearance) {
+    constructor(parent: Block, config: object) {
         const styleAttributeMapper = new StyleAttributeMapper();
         const styleAttributeFilter = new StyleAttributeFilter();
 
@@ -37,15 +37,19 @@ export default class PreviewBlock {
 
         // Calculate the preview style utilising the style attribute mapper & appearance system
         this.previewStyle = ko.computed(() => {
-            let data = _.mapObject(this.data, (value) => {
+            const data = _.mapObject(this.data, (value) => {
                 if (ko.isObservable(value)) {
                     return value();
                 }
                 return value;
             });
-            if (appearance && appearance.hasAppearances(data)) {
-                data = appearance.add(data);
+
+            if (typeof data.appearance !== "undefined" &&
+                typeof data.appearances !== "undefined" &&
+                typeof data.appearances[data.appearance] !== "undefined") {
+                _.extend(data, data.appearances[data.appearance]);
             }
+
             // Extract data values our of observable functions
             return this.afterStyleMapped(
                 styleAttributeMapper.toDom(

@@ -6,7 +6,6 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import Appearance from "../../appearance/appearance";
 import AccordionBlock from "../accordion";
 import PreviewBlock from "./block";
 
@@ -17,10 +16,9 @@ export default class Accordion extends PreviewBlock {
     /**
      * @param {Accordion} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: AccordionBlock, config: object, appearance: Appearance) {
-        super(parent, config, appearance);
+    constructor(parent: AccordionBlock, config: object) {
+        super(parent, config);
 
         // Declare our tabs, they'll get populated later
         this.data.items = ko.observableArray([]);

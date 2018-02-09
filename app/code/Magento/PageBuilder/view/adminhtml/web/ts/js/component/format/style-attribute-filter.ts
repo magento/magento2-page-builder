@@ -29,6 +29,7 @@ export default class StyleAttributeFilter {
         "margin_left",
         "margin_right",
         "margin_top",
+        "mobile_image",
         "padding_bottom",
         "padding_left",
         "padding_right",
@@ -43,7 +44,7 @@ export default class StyleAttributeFilter {
      *
      * @returns {Array<string>}
      */
-    public getAllowedAttributes(): [string] {
+    public getAllowedAttributes(): string[] {
         return this.allowedAttributes;
     }
 
