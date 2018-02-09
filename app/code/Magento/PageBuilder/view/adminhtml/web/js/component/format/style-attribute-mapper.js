@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../component/config", "../../utils/directives"], function (_underscore, _config, _directives) {
+define(["underscore", "../../component/config", "../../utils/directives", "../../utils/image", "../../utils/url"], function (_underscore, _config, _directives, _image, _urlUtils) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -33,6 +33,10 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
         }
 
         if (key === "min_height" || key === "border_width" || key === "border_radius") {
+          if (typeof value === "number") {
+            value = value.toString();
+          }
+
           value = value.replace("px", "") + "px";
         }
 
@@ -44,11 +48,16 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
           value = "";
         }
 
-        if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
+        if (key === "background_image" && Array.isArray(value) && value[0] !== undefined || key === "mobile_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
           var imageUrl = value[0].url;
 
           var mediaUrl = _config.getInitConfig("media_url");
+
+          // if imageUrl begins with forward slash, remove host
+          if (_urlUtils.isPathOnly(imageUrl)) {
+              mediaUrl = _urlUtils.getPathFromUrl(mediaUrl);
+          }
 
           var mediaPath = imageUrl.split(mediaUrl);
           var directive = "{{media url=" + mediaPath[1] + "}}";
@@ -137,21 +146,8 @@ define(["underscore", "../../component/config", "../../utils/directives"], funct
           }
         }
 
-        if (key === "background-image") {
-          // Replace the location.href if it exists and decode the value
-          value = decodeURIComponent(value.replace(window.location.href, ""));
-
-          var _$exec = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value),
-              url = _$exec[1],
-              type = _$exec[2];
-
-          var image = {
-            name: url.split("/").pop(),
-            size: 0,
-            type: "image/" + type,
-            url: _config.getInitConfig("media_url") + url
-          };
-          value = [image];
+        if (key === "background-image" || key === "mobile-image") {
+          value = (0, _image.decodeUrl)(value);
         }
 
         if (key.startsWith("margin") || key.startsWith("padding")) {

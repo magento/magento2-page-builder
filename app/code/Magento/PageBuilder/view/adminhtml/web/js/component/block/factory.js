@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "../appearance/appearance-factory"], function (_loader, _appearanceFactory) {
+define(["Magento_PageBuilder/js/component/loader"], function (_loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -28,18 +28,9 @@ define(["Magento_PageBuilder/js/component/loader", "../appearance/appearance-fac
   function createBlock(config, parent, stage, formData) {
     stage = stage || parent.stage;
     formData = formData || {};
-    var appearanceFactory = new _appearanceFactory();
-    return new Promise(function (resolve, reject) {
-      appearanceFactory.create(config).then(function (appearance) {
-        (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
-          try {
-            resolve(new blockComponent(parent, stage, config, formData, appearance));
-          } catch (e) {
-            reject(e);
-          }
-        });
-      }).catch(function (e) {
-        reject(e);
+    return new Promise(function (resolve) {
+      (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
+        resolve(new blockComponent(parent, stage, config, formData));
       });
     });
   }

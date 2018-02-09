@@ -16,12 +16,29 @@ define([
     'ko',
     'uiRegistry',
     'jquery',
-    'Magento_PageBuilder/js/component/stage',
-    'Magento_PageBuilder/js/component/stage/build',
-    'Magento_PageBuilder/js/component/stage/panel',
     'mageUtils',
+    'Magento_PageBuilder/js/component/format/format-validator',
+    'Magento_PageBuilder/js/component/stage-builder',
+    'Magento_PageBuilder/js/component/stage/panel',
+    'Magento_PageBuilder/js/utils/directives',
     'Magento_Variable/variables'
-], function (_, Wysiwyg, $, confirmationPrompt, alertPrompt, $t, applyMain, ko, registry, jQuery, Stage, Build, Panel, utils) {
+], function (
+    _,
+    Wysiwyg,
+    $,
+    confirmationPrompt,
+    alertPrompt,
+    $t,
+    applyMain,
+    ko,
+    registry,
+    jQuery,
+    utils,
+    validateFormat,
+    buildStage,
+    Panel,
+    directives
+) {
     'use strict';
 
     /**
@@ -35,6 +52,7 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
+            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
@@ -87,7 +105,7 @@ define([
                         self.hidePageBuilderArea();
                     });
                 }
-            }, this);
+            });
 
             return this;
         },
@@ -102,15 +120,19 @@ define([
             this.domNode = node;
 
             if (!this.isComponentInitialized) {
-
                 if (this.wysiwygConfigData()['pagebuilder_button']) {
                     //process case when page builder is initialized using button
                     this.bindPageBuilderButton(node);
                     this.handleUseDefaultButton(node);
+                } else if (validateFormat(this.initialValue)) {
+                    // Detect if we can build the contents of the stage within Page Builder
+                    this.loading(true);
+                    this.buildPageBuilder();
                 } else {
                     this.buildPageBuilder(false);
                 }
             }
+
             $(node).bindings({
                 value: this.value
             });
@@ -225,10 +247,17 @@ define([
          */
         buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
-                buildInstance = new Build(this.initialValue),
-                isFullScreeMode = isFullScreenMode || false;
+                bindStage = function (stage) {
+                    self.stage = stage;
+                    stage.on('stageReady', function() {
+                        self.stageActive(true);
+                        self.visible(false);
+                    });
+                };
 
-            this.isFullScreen(isFullScreeMode);
+            isFullScreenMode = isFullScreenMode || false;
+
+            this.isFullScreen(isFullScreenMode);
 
             this.loading(true);
 
@@ -236,26 +265,13 @@ define([
                 event.stopPropagation();
             }
 
-            // Create a new instance of stage, a stage is created for every WYSIWYG that is replaced
-            this.stage = new Stage(
+            buildStage(
                 this,
-                this.stageContent
+                this.panel,
+                this.stageContent,
+                directives.removeQuotesInMediaDirectives(this.initialValue),
+                bindStage
             );
-
-            // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
-            });
-
-            // Create a new instance of the panel
-            this.getPanel().bindStage(this.stage);
-
-            if (buildInstance.canBuild()) {
-                this.stage.build(buildInstance)
-            } else {
-                this.stage.build();
-            }
 
             this.isComponentInitialized = true;
         },

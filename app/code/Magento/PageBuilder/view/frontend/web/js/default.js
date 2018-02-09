@@ -6,6 +6,7 @@
 /*global requirejs */
 
 requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function ($, fancybox, hljs) {
+    'use strict';
     $(document).ready(function() {
         $('.pagebuilder-lightbox').fancybox();
 
@@ -37,6 +38,35 @@ requirejs(['jquery', 'fancybox', 'highlight', 'slick', 'bg-parallax'], function 
 
         $('div[data-role="row"][data-enable-parallax="1"]').each(function (index, element) {
             $(element).addClass('pagebuilder-parallax');
+        });
+
+        $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
+            var buttonEl = $(element).find('.pagebuilder-banner-button');
+            $(element).hover(
+                function() {
+                    buttonEl.css({
+                        'opacity' : '1',
+                        'visibility' : 'visible'
+                    });
+                }, function() {
+                    buttonEl.css({
+                        'opacity' : '0',
+                        'visibility' : 'hidden'
+                    });
+                }
+            );
+        });
+
+        $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
+                overlayColor = overlayEl.attr('data-overlay-color');
+            $(element).hover(
+                function() {
+                    overlayEl.css('background-color', overlayColor);
+                }, function() {
+                    overlayEl.css('background-color', 'transparent');
+                }
+            );
         });
     });
 

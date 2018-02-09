@@ -7,6 +7,8 @@ import _ from "underscore";
 import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
+import {isPathOnly, getPathFromUrl} from "../../utils/url";
+import {decodeUrl} from "../../utils/image";
 
 interface FromDomResult {
     [key: string]: any;
@@ -31,6 +33,9 @@ export default class StyleAttributeMapper {
                     value = "inherit";
                 }
                 if (key === "min_height" || key === "border_width" || key === "border_radius") {
+                    if (typeof value === "number") {
+                        value = value.toString();
+                    }
                     value = value.replace("px", "") + "px";
                 }
                 if (key === "background_repeat") {
@@ -39,10 +44,17 @@ export default class StyleAttributeMapper {
                 if (key === "background_repeat-x" || key === "background_repeat-y") {
                     value = "";
                 }
-                if (key === "background_image" && Array.isArray(value) && value[0] !== undefined) {
+                if ((key === "background_image" && Array.isArray(value) && value[0] !== undefined)
+                    || (key === "mobile_image" && Array.isArray(value) && value[0] !== undefined)) {
                     // convert to media directive
                     const imageUrl = value[0].url;
-                    const mediaUrl = Config.getInitConfig("media_url");
+                    let mediaUrl = Config.getInitConfig("media_url");
+
+                    // if imageUrl begins with forward slash, remove host
+                    if (isPathOnly(imageUrl)) {
+                        mediaUrl = getPathFromUrl(mediaUrl);
+                    }
+
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";
                     value = "url(\'" + toDataUrl(directive) + "\')";
@@ -117,17 +129,8 @@ export default class StyleAttributeMapper {
                         value = this.convertRgbToHex(value);
                     }
                 }
-                if (key === "background-image") {
-                    // Replace the location.href if it exists and decode the value
-                    value = decodeURIComponent((value as string).replace(window.location.href, ""));
-                    const [, url, type] = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/.exec(value);
-                    const image = {
-                            name: url.split("/").pop(),
-                            size: 0,
-                            type: "image/" + type,
-                            url: Config.getInitConfig("media_url") + url,
-                        };
-                    value = [image];
+                if (key === "background-image" || key === "mobile-image") {
+                    value = decodeUrl(value);
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
                     const spacingObj = {margin: {}, padding: {}};

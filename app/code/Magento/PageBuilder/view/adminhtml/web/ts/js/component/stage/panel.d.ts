@@ -14,7 +14,6 @@ export interface PanelInterface {
     groups: KnockoutObservableArray<any>;
     originalScrollTop: number;
     defaults?: object;
-
     isVisible?: KnockoutObservable<boolean>;
     isCollapsed?: KnockoutObservable<boolean>;
 }

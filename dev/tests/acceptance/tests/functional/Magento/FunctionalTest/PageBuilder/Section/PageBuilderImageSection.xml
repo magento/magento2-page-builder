@@ -8,9 +8,11 @@
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="ImageOnBackend">
+        <element name="imagePreview" type="text" selector="//div[contains(@class, 'pagebuilder-image')][1]//div//span[text()='Empty Image']"/>
+    </section>
     <section name="UploadImageSection">
         <element name="PlaceholderContent" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
         <element name="SelectFromGalleryBtn" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//label[text()='Select from Gallery']" parameterized="true"/>
     </section>
 </sections>
-
