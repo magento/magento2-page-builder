@@ -119,11 +119,6 @@ define([
             this.domNode = node;
             this.bindPageBuilderButton(node);
 
-            // Detect if we can build the contents of the stage within Page Builder
-            if (validateFormat(this.initialValue)) {
-                this.loading(true);
-                return this.buildPageBuilder();
-
             if (!this.isComponentInitialized) {
 
                 if (this.wysiwygConfigData()['pagebuilder_button']) {
@@ -133,6 +128,8 @@ define([
                 } else {
                     this.buildPageBuilder(false);
                 }
+
+                return;
             }
             $(node).bindings({
                 value: this.value
@@ -328,6 +325,7 @@ define([
         alertDialog: function (options) {
             if (options.content) {
                 options.content = $t(options.content);
+
                 if (options.title) {
                     options.title = $t(options.title);
                 }
