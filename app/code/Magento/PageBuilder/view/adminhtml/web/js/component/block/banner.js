@@ -16,7 +16,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner wrapper styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
@@ -46,7 +46,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner overlay attributes for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -67,7 +67,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner overlay styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -95,7 +95,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the overlay color style only for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -114,7 +114,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner content for the storefront
      *
-     * @returns {any}
+     * @returns {string}
      */
 
 
@@ -130,7 +130,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the desktop (main) image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -150,7 +150,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the mobile image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -170,7 +170,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the link attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -184,7 +184,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the button style for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -196,13 +196,13 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       };
     };
     /**
-     * Get collage container style only for the storefront
+     * Get banner container style only for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
-    _proto.getCollageContainerStyle = function getCollageContainerStyle() {
+    _proto.getBannerContainerStyle = function getBannerContainerStyle() {
       return Object.assign(this.getStyle(), {
         backgroundImage: "",
         minHeight: "",
@@ -212,44 +212,6 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         paddingRight: "",
         paddingTop: ""
       });
-    };
-    /**
-     * Get collage desktop image background style only for the storefront
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCollageDesktopBackgroundStyle = function getCollageDesktopBackgroundStyle(additionalStyle) {
-      var style = this.getStyle();
-      var data = this.getData();
-      var baseStyle = {
-        backgroundImage: style.backgroundImage,
-        backgroundSize: style.backgroundSize,
-        boxSizing: "border-box",
-        minHeight: style.minHeight,
-        paddingBottom: data.margins_and_padding.padding.bottom + "px",
-        paddingLeft: data.margins_and_padding.padding.left + "px",
-        paddingRight: data.margins_and_padding.padding.right + "px",
-        paddingTop: data.margins_and_padding.padding.top + "px"
-      };
-      return Object.assign(baseStyle, additionalStyle);
-    };
-    /**
-     * Get collage mobile image background style only for the storefront
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCollageMobileBackgroundStyle = function getCollageMobileBackgroundStyle() {
-      var data = this.getStyle();
-      return {
-        backgroundImage: data.mobileImage && typeof data.mobileImage !== "undefined" && data.mobileImage.length !== 0 ? data.mobileImage : data.backgroundImage,
-        boxSizing: "border-box",
-        minHeight: data.minHeight,
-        padding: data.padding
-      };
     };
 
     return Banner;
