@@ -22,7 +22,7 @@ export default class ButtonItem implements ReadInterface {
         const response: DataObject = {
             button_link: button.getAttribute("href"),
             button_text: button.innerText,
-            button_type: button.classList[1],
+            button_type: button.classList[0],
             open_in_new_tab: button.getAttribute("target") === "_blank" ? "1" : "0",
         };
         return new Promise((resolve: (object: object) => void) => {

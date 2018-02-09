@@ -25,7 +25,7 @@ define(["./default"], function (_default) {
       var response = {
         button_link: button.getAttribute("href"),
         button_text: button.innerText,
-        button_type: button.classList[1],
+        button_type: button.classList[0],
         open_in_new_tab: button.getAttribute("target") === "_blank" ? "1" : "0"
       };
       return new Promise(function (resolve) {
