@@ -28,9 +28,14 @@ export default class StyleAttributeMapper {
                 if (value === "") {
                     return;
                 }
-                if (key === "color" && (value === "default" || value === "Default")) {
+                if (key === "color" && (value === "default" || value === "default")) {
                     value = "inherit";
                 }
+
+                if (key === "border" && value === "default") {
+                    value = " ";
+                }
+
                 if (key === "min_height" || key === "border_width" || key === "border_radius") {
                     if (typeof value === "number") {
                         value = value.toString();
@@ -121,9 +126,15 @@ export default class StyleAttributeMapper {
                 }
                 if (key === "color") {
                     if (value === "inherit") {
-                        value = "Default";
+                        value = "default";
                     } else {
                         value = this.convertRgbToHex(value);
+                    }
+                }
+
+                if (key === "border") {
+                    if (value === " ") {
+                        value = "default";
                     }
                 }
                 if (key === "background-image" || key === "mobile-image") {

@@ -28,8 +28,12 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
           return;
         }
 
-        if (key === "color" && (value === "default" || value === "Default")) {
+        if (key === "color" && (value === "default" || value === "default")) {
           value = "inherit";
+        }
+
+        if (key === "border" && value === "default") {
+          value = " ";
         }
 
         if (key === "min_height" || key === "border_width" || key === "border_radius") {
@@ -141,9 +145,15 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
 
         if (key === "color") {
           if (value === "inherit") {
-            value = "Default";
+            value = "default";
           } else {
             value = _this2.convertRgbToHex(value);
+          }
+        }
+
+        if (key === "border") {
+          if (value === " ") {
+            value = "default";
           }
         }
 

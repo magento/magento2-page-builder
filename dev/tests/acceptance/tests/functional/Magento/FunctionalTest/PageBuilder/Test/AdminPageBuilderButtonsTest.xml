@@ -160,7 +160,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
         <waitForElementVisible selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="waitForButtonToShow2"/>
-        <dontSeeElementInDOM selector="{{ButtonsBackendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="dontSeeAlignmentSet"/>
+        <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
         <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
