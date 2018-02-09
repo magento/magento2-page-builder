@@ -58,7 +58,7 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    const toPxStr = (val: number) => !isNaN(val) ? `${val}px` : "";
+                    const toPxStr = (val: string) => !isNaN(parseInt(val, 10)) ? `${val}px` : "";
                     const { padding, margin } = value;
                     const paddingAndMargins = {
                         marginBottom: toPxStr(margin.bottom),

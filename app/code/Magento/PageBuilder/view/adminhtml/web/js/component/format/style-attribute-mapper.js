@@ -65,7 +65,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
 
         if (key === "margins_and_padding") {
           var toPxStr = function toPxStr(val) {
-            return !isNaN(val) ? val + "px" : "";
+            return !isNaN(parseInt(val, 10)) ? val + "px" : "";
           };
 
           var _value = value,
