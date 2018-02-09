@@ -58,7 +58,7 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    const toPxStr = (val: number) => typeof val === "number" ? `${val}px` : "";
+                    const toPxStr = (val: number) => !isNaN(val) ? `${val}px` : "";
                     const { padding, margin } = value;
                     const paddingAndMargins = {
                         marginBottom: toPxStr(margin.bottom),
@@ -71,6 +71,7 @@ export default class StyleAttributeMapper {
                         paddingTop: toPxStr(padding.top),
                     };
                     Object.assign(result, paddingAndMargins);
+                    return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
             },

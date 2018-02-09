@@ -25,7 +25,7 @@ export default class ButtonItem implements ReadInterface {
             button_type: button.classList[0],
             open_in_new_tab: button.target === "_blank" ? "1" : "0",
         };
-        return advancedData.then(data => {
+        return advancedData.then((data) => {
             delete data.css_classes;
             return Object.assign(data, response);
         });

@@ -65,7 +65,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
 
         if (key === "margins_and_padding") {
           var toPxStr = function toPxStr(val) {
-            return typeof val === "number" ? val + "px" : "";
+            return !isNaN(val) ? val + "px" : "";
           };
 
           var _value = value,
@@ -82,6 +82,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
             paddingTop: toPxStr(padding.top)
           };
           Object.assign(result, paddingAndMargins);
+          return;
         }
 
         result[_this.fromSnakeToCamelCase(key)] = value;
