@@ -17,7 +17,7 @@ export default class Banner implements ReadInterface {
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
-    public read(element: HTMLElement): Promise<any> {
+    public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
         const target = element.querySelector("a").getAttribute("target");
         const bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;

@@ -5,13 +5,13 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: Object.assign(getStyle(), {backgroundImage: '', padding: '', paddingLeft: '', paddingTop: '', paddingRight: '', paddingBottom: ''}), css: getCss()">
-    <a data-bind="attr: { href: getData().link_url, target: getData().open_in_new_tab === '1' ? '_blank' : false }">
+<div data-bind="attr: getAttributes(), style: getBannerContainerStyle(), css: getCss()">
+    <a data-bind="attr: getLinkAttribute()">
         <div class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only" data-bind="style: getBannerStyles('mobileImage')">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: {visibility: getData().show_button === 'always' ? 'visible' : 'hidden', opacity: getData().show_button === 'always' ? '1' : '0'}"></button>
+                    <button type="button" class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>

@@ -6,12 +6,8 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import _ from "underscore";
-import Block from "./block/block";
-import createBlock from "./block/factory";
-import Config from "./config";
 import DataStore from "./data-store";
 import { StageInterface } from "./stage.d";
-import Build from "./stage/build";
 import Save from "./stage/save";
 import Structural from "./stage/structural/abstract";
 import EditableArea from "./stage/structural/editable-area";
@@ -24,7 +20,6 @@ export default class Stage extends EditableArea implements StageInterface {
     public loading: KnockoutObservable<boolean>;
     public originalScrollTop: number;
     public parent: any;
-    public serializeRole: string = "stage";
     public showBorders: KnockoutObservable<boolean>;
     public stage: Stage;
     public store: DataStore;
@@ -32,10 +27,10 @@ export default class Stage extends EditableArea implements StageInterface {
     private save: Save = new Save();
 
     /**
-     * Stage constructor
+     * Constructor
      *
      * @param parent
-     * @param stageContent
+     * @param {KnockoutObservableArray<Structural>} stageContent
      */
     constructor(parent: any, stageContent: KnockoutObservableArray<Structural>) {
         super();
@@ -71,41 +66,6 @@ export default class Stage extends EditableArea implements StageInterface {
             this.save.renderTree(stageContent)
                 .then((renderedOutput) => this.parent.value(renderedOutput));
         }, 500));
-    }
-
-    /**
-     * Run the build system to initiate from existing structures
-     *
-     * @param {Build} buildInstance
-     */
-    public build(buildInstance: Build) {
-        const self = this;
-        if (buildInstance) {
-            buildInstance.buildStage(this)
-                .then(self.ready.bind(self))
-                .catch((error) => {
-                    // Inform the user that an issue has occurred
-                    self.parent.alertDialog({
-                        content: $t("An error has occurred while initiating the content area."),
-                        title: $t("Advanced CMS Error"),
-                    });
-                    self.emit("stageError", error);
-                    console.error( error );
-                });
-        } else {
-            // Add an initial row to the stage if the stage is currently empty
-            if (typeof Config.getInitConfig("contentTypes").row !== "undefined") {
-                createBlock(
-                    Config.getInitConfig("contentTypes").row,
-                    this,
-                    this,
-                    {},
-                ).then((row: Block) => {
-                    this.addChild(row);
-                });
-            }
-            this.ready();
-        }
     }
 
     /**

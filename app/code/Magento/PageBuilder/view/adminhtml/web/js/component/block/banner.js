@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "../config", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _config, _block) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -16,7 +16,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner wrapper styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
     _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
@@ -46,7 +46,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner overlay attributes for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -67,30 +67,35 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner overlay styles for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
     _proto.getOverlayStyles = function getOverlayStyles() {
       var data = this.getData();
-      var paddingTop = data.margins_and_padding.padding.top || "0";
-      var paddingRight = data.margins_and_padding.padding.right || "0";
-      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
-      var paddingLeft = data.margins_and_padding.padding.left || "0";
+      var _data$margins_and_pad = data.margins_and_padding.padding,
+          _data$margins_and_pad2 = _data$margins_and_pad.top,
+          top = _data$margins_and_pad2 === void 0 ? 0 : _data$margins_and_pad2,
+          _data$margins_and_pad3 = _data$margins_and_pad.right,
+          right = _data$margins_and_pad3 === void 0 ? 0 : _data$margins_and_pad3,
+          _data$margins_and_pad4 = _data$margins_and_pad.bottom,
+          bottom = _data$margins_and_pad4 === void 0 ? 0 : _data$margins_and_pad4,
+          _data$margins_and_pad5 = _data$margins_and_pad.left,
+          left = _data$margins_and_pad5 === void 0 ? 0 : _data$margins_and_pad5;
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
         boxSizing: "border-box",
         minHeight: data.min_height + "px",
-        paddingBottom: paddingBottom + "px",
-        paddingLeft: paddingLeft + "px",
-        paddingRight: paddingRight + "px",
-        paddingTop: paddingTop + "px"
+        paddingBottom: bottom + "px",
+        paddingLeft: left + "px",
+        paddingRight: right + "px",
+        paddingTop: top + "px"
       };
     };
     /**
      * Get the overlay color style only for the storefront
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -109,7 +114,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the banner content for the storefront
      *
-     * @returns {any}
+     * @returns {string}
      */
 
 
@@ -125,7 +130,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     /**
      * Get the desktop (main) image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -140,12 +145,12 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.background_image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.background_image);
     };
     /**
      * Get the mobile image attributes for the render
      *
-     * @returns {any}
+     * @returns {object}
      */
 
 
@@ -160,7 +165,53 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         return;
       }
 
-      return (0, _directives.getImageUrl)(data.mobile_image, _config.getInitConfig("media_url"));
+      return (0, _directives.getImageUrl)(data.mobile_image);
+    };
+    /**
+     * Get the link attributes for the render
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getLinkAttribute = function getLinkAttribute() {
+      var data = this.getData();
+      return {
+        href: data.link_url,
+        target: data.open_in_new_tab === "1" ? "_blank" : false
+      };
+    };
+    /**
+     * Get the button style for the render
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getButtonStyle = function getButtonStyle() {
+      var data = this.getData();
+      return {
+        opacity: data.show_button === "always" ? "1" : "0",
+        visibility: data.show_button === "always" ? "visible" : "hidden"
+      };
+    };
+    /**
+     * Get banner container style only for the storefront
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getBannerContainerStyle = function getBannerContainerStyle() {
+      return Object.assign(this.getStyle(), {
+        backgroundImage: "",
+        minHeight: "",
+        padding: "",
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
     };
 
     return Banner;

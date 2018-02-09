@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/component/loader", "underscore", "../../config"]
     // Configuration for content types
     function AttributeReaderComposite() {
       this.contentTypeConfig = void 0;
-      this.contentTypeConfig = _config.getInitConfig("contentTypes");
+      this.contentTypeConfig = _config.getInitConfig("content_types");
     }
     /**
      * Read data from the element

@@ -43,9 +43,9 @@ class ButtonItem implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' action primary' : 'action primary';
 
         $rootElementAttributes = [
+            'data-role' => 'button-item',
             'class' => $cssClasses
         ];
 
@@ -56,16 +56,16 @@ class ButtonItem implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<a';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= ' href="'
+        $rootElementHtml .= '><a href="'
             . ($eavData['link_url'] ?? '')
-            . '"><span>'
+            . '" target="_self" class="pagebuilder-button-primary"><span>'
             . ($eavData['link_text'] ?? '')
-            . '</span></a>';
+            . '</span></a></div>';
 
         return $rootElementHtml;
     }
