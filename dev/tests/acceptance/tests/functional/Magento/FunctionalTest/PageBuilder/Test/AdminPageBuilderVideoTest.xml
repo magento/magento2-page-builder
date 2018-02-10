@@ -127,7 +127,7 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderVideoContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="VideoUrlPreservedOnEdit">
+    <test name="EditVideoUrlPreserved">
         <annotations>
             <title value="Verify video url shows in stage on edit"/>
             <description value="Values saved for video should be preserved and shown."/>
@@ -166,13 +166,13 @@
             <argument name="property" value="PageBuilderVideoHeightProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="5" selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="waitForVideoPreviewInStage"/>
         <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStage"/>
         <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStage"/>
         <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStage"/>
         <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
