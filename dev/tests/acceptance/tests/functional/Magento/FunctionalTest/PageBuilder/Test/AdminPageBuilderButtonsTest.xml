@@ -50,6 +50,9 @@
         <!-- Edit advanced section of button -->
         <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <conditionalClick selector="{{CmsPageGrid.clearAllButton}}" dependentSelector="{{CmsPageGrid.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
         <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
         <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="buttons{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
         <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />

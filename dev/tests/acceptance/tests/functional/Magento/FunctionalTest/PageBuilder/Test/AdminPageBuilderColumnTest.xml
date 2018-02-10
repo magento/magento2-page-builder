@@ -326,17 +326,20 @@
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
         <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
         <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <conditionalClick selector="{{CmsPageGrid.clearAllButton}}" dependentSelector="{{CmsPageGrid.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
         <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible3" />
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
         <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
         <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible5" />
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
         <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
@@ -538,11 +541,9 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
         </actionGroup>
-
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty3">
             <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
-
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderFirstColumnInStage.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -563,17 +564,20 @@
         <amOnPage url="/admin/cms/page" stepKey="goToPagesList"/>
         <waitForElementVisible time="5" selector="{{CmsPageGrid.cmsPageSearchInput}}" stepKey="waitForSearchField" />
         <waitForElementVisible time="5" selector="{{CmsPageGrid.searchButton}}" stepKey="waitForButton" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <conditionalClick selector="{{CmsPageGrid.clearAllButton}}" dependentSelector="{{CmsPageGrid.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
         <fillField selector="{{CmsPageGrid.cmsPageSearchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible3" />
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
         <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
         <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
+        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible5" />
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
         <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
