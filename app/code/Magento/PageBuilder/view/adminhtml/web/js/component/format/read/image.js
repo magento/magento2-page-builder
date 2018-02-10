@@ -18,18 +18,31 @@ define(["../../../utils/image"], function (_image) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var mainImageElement = element.querySelector("img:nth-child(1)");
       var imageLinkElement = element.querySelector("a");
       var captionElement = element.querySelector("figcaption");
       var response = {
-        alt: mainImageElement.alt,
-        image: (0, _image.decodeUrl)(mainImageElement.getAttribute("src") || ""),
+        alt: "",
+        image: "",
+        mobile_image: "",
+        title_tag: "",
         image_caption: captionElement ? captionElement.textContent : "",
         link_target: imageLinkElement ? imageLinkElement.target : "",
-        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
-        mobile_image: "",
-        title_tag: mainImageElement.title
-      }; // Detect if there is a mobile image and update the response
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : ""
+      };
+
+      if (element.querySelector("img:nth-child(1)")) {
+        if (element.querySelector("img:nth-child(1)").getAttribute("src")) {
+          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").getAttribute("src"));
+        }
+
+        if (element.querySelector("img:nth-child(1)").getAttribute("alt")) {
+          response.alt = element.querySelector("img:nth-child(1)").getAttribute("alt");
+        }
+
+        if (element.querySelector("img:nth-child(1)").getAttribute("title")) {
+          response.title_tag = element.querySelector("img:nth-child(1)").getAttribute("title");
+        }
+      }
 
       if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
         response.mobile_image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(2)").getAttribute("src"));
