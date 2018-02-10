@@ -76,6 +76,8 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
      */
     private function isPageBuilderUsed()
     {
-        return $this->getConfig()->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter';
+        $config = $this->getConfig();
+        return $config->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter'
+            && $config->getData('enable_pagebuilder') !== false;
     }
 }

@@ -20,8 +20,7 @@ define([
     'Magento_PageBuilder/js/component/format/format-validator',
     'Magento_PageBuilder/js/component/stage-builder',
     'Magento_PageBuilder/js/component/stage/panel',
-    'Magento_PageBuilder/js/utils/directives',
-    'Magento_Variable/variables'
+    'Magento_PageBuilder/js/utils/directives'
 ], function (
     _,
     Wysiwyg,
@@ -105,7 +104,7 @@ define([
                         self.hidePageBuilderArea();
                     });
                 }
-            });
+            }, this);
 
             return this;
         },
@@ -118,21 +117,20 @@ define([
         setElementNode: function (node) {
 
             this.domNode = node;
+            this.bindPageBuilderButton(node);
 
             if (!this.isComponentInitialized) {
+
                 if (this.wysiwygConfigData()['pagebuilder_button']) {
                     //process case when page builder is initialized using button
                     this.bindPageBuilderButton(node);
                     this.handleUseDefaultButton(node);
-                } else if (validateFormat(this.initialValue)) {
-                    // Detect if we can build the contents of the stage within Page Builder
-                    this.loading(true);
-                    this.buildPageBuilder();
                 } else {
                     this.buildPageBuilder(false);
                 }
-            }
 
+                return;
+            }
             $(node).bindings({
                 value: this.value
             });
@@ -247,6 +245,8 @@ define([
          */
         buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
+                buildInstance = new Build(this.initialValue),
+                isFullScreeMode = isFullScreenMode || false,
                 bindStage = function (stage) {
                     self.stage = stage;
                     stage.on('stageReady', function() {
@@ -255,13 +255,11 @@ define([
                     });
                 };
 
-            isFullScreenMode = isFullScreenMode || false;
-
-            this.isFullScreen(isFullScreenMode);
+            this.isFullScreen(isFullScreeMode);
 
             this.loading(true);
 
-            if (event) {
+            if (typeof event !== 'undefined') {
                 event.stopPropagation();
             }
 
@@ -272,6 +270,21 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
+
+            // On stage ready show the interface
+            this.stage.on('stageReady', function () {
+                self.stageActive(true); // Display the stage UI
+                self.visible(false); // Hide the original WYSIWYG editor
+            });
+
+            // Create a new instance of the panel
+            this.getPanel().bindStage(this.stage);
+
+            if (buildInstance.canBuild()) {
+                this.stage.build(buildInstance);
+            } else {
+                this.stage.build();
+            }
 
             this.isComponentInitialized = true;
         },
@@ -299,7 +312,7 @@ define([
             ) {
                 confirmationPrompt(options);
             } else {
-                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one "always", "confirm", or "cancel" callback');
+                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one \"always\", \"confirm\", or \"cancel\" callback');
             }
         },
 
@@ -312,6 +325,7 @@ define([
         alertDialog: function (options) {
             if (options.content) {
                 options.content = $t(options.content);
+
                 if (options.title) {
                     options.title = $t(options.title);
                 }

@@ -10,13 +10,16 @@ define([
     'jquery/ui',
     'domReady!'
 ], function ($, $t, confirm) {
+    'use strict';
+
     return function (config, enableSelectEl) {
+
         var $enableSelectEl = $(enableSelectEl),
-            isEnabledInDatabase = !!parseInt($enableSelectEl.val())
+            isEnabledInDatabase = !!parseInt($enableSelectEl.val(), 10)
         ;
 
         $enableSelectEl.on('change', function () {
-            var userIsDisabling = !parseInt($enableSelectEl.val());
+            var userIsDisabling = !parseInt($enableSelectEl.val(), 10);
 
             if (!isEnabledInDatabase || !userIsDisabling) {
                 return;
@@ -57,5 +60,5 @@ define([
                 }
             });
         });
-    }
+    };
 });
