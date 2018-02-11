@@ -166,7 +166,7 @@
             <argument name="property" value="PageBuilderVideoHeightProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible time="5" selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="waitForVideoPreviewInStage"/>
+        <waitForElementVisible time="10" selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="waitForVideoPreviewInStage"/>
         <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStage"/>
         <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStage"/>
         <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStage"/>
@@ -175,7 +175,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStageAfterSave"/>
         <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStageAfterSave"/>
         <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStageAfterSave"/>
