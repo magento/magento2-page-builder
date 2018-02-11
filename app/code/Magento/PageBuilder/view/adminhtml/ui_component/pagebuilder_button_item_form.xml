@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pagebuilder_button_item_form.pagebuilder_button_item_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Button Item</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <deps>
+            <dep>pagebuilder_button_item_form.pagebuilder_button_item_form_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+        <namespace>pagebuilder_button_item_form</namespace>
+        <buttons>
+            <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
+            <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
+            <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
+        </buttons>
+    </settings>
+    <dataSource name="pagebuilder_button_item_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_button_item_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="content">
+        <settings>
+            <label translate="true">Content</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="button_text" sortOrder="10" formElement="input">
+            <settings>
+                <label translate="true">Button Text</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="button_type" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">pagebuilder-button-primary</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Button Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-primary</item>
+                                <item name="label" xsi:type="string" translate="true">Primary</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-secondary</item>
+                                <item name="label" xsi:type="string" translate="true">Secondary</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-link</item>
+                                <item name="label" xsi:type="string" translate="true">Link</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="button_link" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Button Link</label>
+                <dataType>text</dataType>
+                <dataScope>button_link</dataScope>
+            </settings>
+        </field>
+        <field name="open_in_new_tab" sortOrder="40" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Open in new tab</label>
+                <dataScope>open_in_new_tab</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="advanced">
+        <settings>
+            <label translate="true">Advanced</label>
+            <collapsible>true</collapsible>
+        </settings>
+        <field name="text_align" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Text Alignment</label>
+                <notice translate="true">Default alignment will cause the element to inherit it's alignment from the parent elements.</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">default</item>
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">left</item>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">center</item>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
+                            </option>
+                            <option name="3" xsi:type="array">
+                                <item name="value" xsi:type="string">right</item>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="border" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">default</item>
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">none</item>
+                                <item name="label" xsi:type="string" translate="true">None</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">dotted</item>
+                                <item name="label" xsi:type="string" translate="true">Dotted</item>
+                            </option>
+                            <option name="3" xsi:type="array">
+                                <item name="value" xsi:type="string">dashed</item>
+                                <item name="label" xsi:type="string" translate="true">Dashed</item>
+                            </option>
+                            <option name="4" xsi:type="array">
+                                <item name="value" xsi:type="string">solid</item>
+                                <item name="label" xsi:type="string" translate="true">Solid</item>
+                            </option>
+                            <option name="5" xsi:type="array">
+                                <item name="value" xsi:type="string">double</item>
+                                <item name="label" xsi:type="string" translate="true">Double</item>
+                            </option>
+                            <option name="6" xsi:type="array">
+                                <item name="value" xsi:type="string">groove</item>
+                                <item name="label" xsi:type="string" translate="true">Groove</item>
+                            </option>
+                            <option name="7" xsi:type="array">
+                                <item name="value" xsi:type="string">ridge</item>
+                                <item name="label" xsi:type="string" translate="true">Ridge</item>
+                            </option>
+                            <option name="8" xsi:type="array">
+                                <item name="value" xsi:type="string">inset</item>
+                                <item name="label" xsi:type="string" translate="true">Inset</item>
+                            </option>
+                            <option name="9" xsi:type="array">
+                                <item name="value" xsi:type="string">outset</item>
+                                <item name="label" xsi:type="string" translate="true">Outset</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="border_color" sortOrder="30" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Color</label>
+                <addAfter>hex color</addAfter>
+                <dataScope>border_color</dataScope>
+                <placeholder>Default</placeholder>
+            </settings>
+        </field>
+        <field name="border_width" sortOrder="40" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Size</label>
+                <addAfter>px</addAfter>
+                <dataScope>border_width</dataScope>
+                <placeholder>Default</placeholder>
+            </settings>
+        </field>
+        <field name="border_radius" sortOrder="50" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Radius</label>
+                <addAfter>px</addAfter>
+                <dataScope>border_radius</dataScope>
+                <placeholder>Default</placeholder>
+            </settings>
+        </field>
+        <field name="css_classes" sortOrder="70" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">CSS Classes</label>
+                <dataScope>css_classes</dataScope>
+                <notice translate="true">Space separated list of classes.</notice>
+            </settings>
+        </field>
+        <field name="margins_and_padding" sortOrder="80" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
+            <settings>
+                <label translate="true">Margins and Padding</label>
+            </settings>
+        </field>
+    </fieldset>
+</form>

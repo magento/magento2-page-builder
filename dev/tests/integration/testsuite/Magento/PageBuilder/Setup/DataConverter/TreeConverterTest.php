@@ -143,7 +143,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         }
 
         $this->assertEquals(
-            file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName),
+            trim(file_get_contents(__DIR__ . '/../../_files/' . $masterFormatFileName)),
             self::$treeConverter->convert(file_get_contents(__DIR__ . '/../../_files/' . $jsonFormatFileName))
         );
     }
