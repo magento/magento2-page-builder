@@ -19,16 +19,23 @@
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>
-        <div data-bind="style: {minHeight: getStyle().minHeight, padding: getStyle().padding, backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage}"
+        <div data-bind="style: {
+            minHeight: getStyle().minHeight,
+            backgroundSize: getStyle().backgroundSize,
+            paddingTop: getStyle().paddingTop,
+            paddingBottom: getStyle().paddingBottom,
+            paddingLeft: getStyle().paddingLeft,
+            paddingRight: getStyle().paddingRight,
+            backgroundImage: getStyle().mobileImage && typeof getStyle().mobileImage !== 'undefined' && getStyle().mobileImage.length !== 0 ? getStyle().mobileImage : getStyle().backgroundImage}"
              class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button action primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
                 </div>
             </div>
         </div>

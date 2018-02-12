@@ -38,7 +38,7 @@
         <element name="contentBlockOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-{{arg1}}")][1]/div[@class="pagebuilder-options"]' parameterized="true"/>
         <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}} a.edit-block[title="Edit"]' parameterized="true"/>
         <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}} a.remove-structural[title="Remove"]' parameterized="true"/>
-        <element name="editColumn" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
         <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-structure.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
@@ -71,39 +71,41 @@
         <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
         <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
         <element name="firstItemEditButton" type="button" selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']"/>
+        <element name="clearAllButton" type="button" selector="(//div[@class = 'admin__data-grid-outer-wrap']/descendant::button[@data-action = 'grid-filter-reset'])[1]"/>
+        <element name="activeFilter" type="button" selector="(//div[contains(@class, 'admin__data-grid-filters-current') and contains(@class, '_show')])[1]"/>
     </section>
     <section name="CmsMessagesSection">
         <element name="savePageSuccessMessage" type="text" selector=".message-success"/>
     </section>
     <section name="PageBuilderRowSection">
-        <element name="row" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]'/>
-        <element name="row2" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[2]'/>
-        <element name="row3" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[3]'/>
-        <element name="row2header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row2header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row3header" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="allRows" type="text" selector='//div[@class="pagebuilder-structure pagebuilder-row"]'/>
-        <element name="rowOptionsMenu" type="button" selector='(//div[1][@class="pagebuilder-structure pagebuilder-row"])[1]/div[@class="pagebuilder-options"]'/>
-        <element name="removeRow" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-row"])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]'/>
+        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[2]'/>
+        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[3]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")]'/>
+        <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
+        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
     <section name="PageBuilderColumnSection">
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
-        <element name="column" type="text" selector="(//div[@class='pagebuilder-structure pagebuilder-column'])[1]"/>
-        <element name="allColumns" type="text" selector='//div[@class="pagebuilder-structure pagebuilder-column"]'/>
+        <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]"/>
+        <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')]"/>
         <element name="addRow" type="button" selector='//*[@class="pagebuilder-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
         <element name="dropAreaInDefaultStage" type="button" selector="//div[contains(@class, 'stage-container')]/div[contains(@class, 'pagebuilder-row-wrapper')][1]/div[contains(@class, 'pagebuilder-row')]/div[contains(@class, 'row-container')]"/>
         <element name="columnInStage" type="button" selector='//div[contains(@class, "pagebuilder-column")][1]'/>
-        <element name="columnInStage2" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[2]'/>
-        <element name="columnInStage2Children" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[2]/div[contains(@class, "column-container")]/div'/>
-        <element name="columnInStage2DropArea" type="text" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[2]/div[contains(@class, "column-container")]'/>
-        <element name="columnInStage3" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[3]'/>
+        <element name="columnInStage2" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]"/>
+        <element name="columnInStage2Children" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[contains(@class, 'column-container')]/div"/>
+        <element name="columnInStage2DropArea" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[contains(@class, 'column-container')]"/>
+        <element name="columnInStage3" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[3]"/>
         <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]'/>
         <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]'/>
-        <element name="editColumn" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="editColumn2" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[2]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="editColumn3" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[3]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="dragColumn" type="button" selector='(//div[@class="pagebuilder-structure pagebuilder-column"])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]'/>
+        <element name="editColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
+        <element name="editColumn2" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
+        <element name="editColumn3" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[3]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
+        <element name="dragColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='move-structural']"/>
         <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
         <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
@@ -193,29 +195,10 @@
     <section name="AnchorInAdmin">
         <element name="anchorIdentifier" type="button" selector="//div[contains(@class, 'pagebuilder-anchor')][1]"/>
     </section>
-    <section name="ButtonsEditSection">
-        <element name="addNewButton" type="button" selector="//button/span[contains(text(), 'Add New Button')]"/>
-        <element name="buttonText" type="input" selector="//*[@name='buttons[{{arg1}}][text]']" parameterized="true"/>
-        <element name="buttonLink" type="input" selector="//*[@name='buttons[{{arg1}}][link]']" parameterized="true"/>
-    </section>
-    <section name="ButtonsFrontendSection">
-        <element name="buttonElement" type="button" selector="//div[@data-role='button']/a[contains(@href, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
-    </section>
     <section name="DividerOnFrontend">
         <element name="dividerColor" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-color: rgb(255, 87, 51)')]"/>
         <element name="dividerThickness" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-width: 10px')]"/>
         <element name="dividerWidth" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'width: 50%')]"/>
-    </section>
-    <section name="ImageOnFrontend">
-        <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
-        <element name="imageSource" type="button" selector="img.pagebuilder-mobile-hidden[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
-        <element name="imageHasLightbox" type="button" selector="[data-role='image'] a.pagebuilder-lightbox"/>
-        <element name="imageHasAltText" type="button" selector="img.pagebuilder-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
-        <element name="imageHasTitleTag" type="button" selector="img.pagebuilder-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
-        <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
-        <element name="imageHasCaption" type="button" selector="figcaption"/>
-        <element name="fancyboxOpen" type="button" selector=".fancybox-overlay"/>
-        <element name="lightboxPopupDisplay" type="button" selector="img.fancybox-image[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
     </section>
     <section name="MapInAdmin">
         <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>

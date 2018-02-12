@@ -13,6 +13,7 @@ export default class AttributeMapper {
         autoplay: "data-autoplay",
         autoplay_speed: "data-autoplay-speed",
         button_text: "data-button-text",
+        button_type: "data-button-type",
         category_id: "data-category-id",
         enable_parallax: "data-enable-parallax",
         fade: "data-fade",

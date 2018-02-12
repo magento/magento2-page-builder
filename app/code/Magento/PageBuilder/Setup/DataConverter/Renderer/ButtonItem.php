@@ -43,29 +43,32 @@ class ButtonItem implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' action primary' : 'action primary';
 
         $rootElementAttributes = [
+            'data-role' => 'button-item',
+            'style' => 'display: inline-block;',
             'class' => $cssClasses
         ];
 
+        $buttonStyleAttribute = '';
         if (isset($itemData['formData'])) {
-            $style = $this->styleExtractor->extractStyle($itemData['formData']);
-            if ($style) {
-                $rootElementAttributes['style'] = $style;
+            $styleAttributeValue = $this->styleExtractor->extractStyle($itemData['formData']);
+            if ($styleAttributeValue) {
+                $buttonStyleAttribute = ' style="' . $styleAttributeValue . '"';
             }
         }
 
-        $rootElementHtml = '<a';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= ' href="'
+        $rootElementHtml .= '><a href="'
             . ($eavData['link_url'] ?? '')
-            . '"><span>'
+            . $buttonStyleAttribute
+            . ' class="pagebuilder-button-primary"><span>'
             . ($eavData['link_text'] ?? '')
-            . '</span></a>';
+            . '</span></a></div>';
 
         return $rootElementHtml;
     }
