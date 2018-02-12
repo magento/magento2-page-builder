@@ -29,9 +29,14 @@ export default class StyleAttributeMapper {
                 if (value === "") {
                     return;
                 }
-                if (key === "color" && (value === "default" || value === "Default")) {
-                    value = "inherit";
+                if (key === "color" && value === "default") {
+                    value = "";
                 }
+
+                if (key === "border" && value === "default") {
+                    value = "";
+                }
+
                 if (key === "min_height" || key === "border_width" || key === "border_radius") {
                     if (typeof value === "number") {
                         value = value.toString();
@@ -60,10 +65,19 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    result.margin = `${value.margin.top}px ${value.margin.right}px`
-                        + ` ${value.margin.bottom}px ${value.margin.left}px`;
-                    result.padding = `${value.padding.top}px ${value.padding.right}px`
-                        + ` ${value.padding.bottom}px ${value.padding.left}px`;
+                    const toPxStr = (val: string) => !isNaN(parseInt(val, 10)) ? `${val}px` : "";
+                    const { padding, margin } = value;
+                    const paddingAndMargins = {
+                        marginBottom: toPxStr(margin.bottom),
+                        marginLeft: toPxStr(margin.left),
+                        marginRight: toPxStr(margin.right),
+                        marginTop: toPxStr(margin.top),
+                        paddingBottom: toPxStr(padding.bottom),
+                        paddingLeft: toPxStr(padding.left),
+                        paddingRight: toPxStr(padding.right),
+                        paddingTop: toPxStr(padding.top),
+                    };
+                    Object.assign(result, paddingAndMargins);
                     return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
@@ -116,17 +130,23 @@ export default class StyleAttributeMapper {
                     key = "border-color";
                 }
                 if (key === "background-color" || key === "border-color") {
-                    if (value === "initial") {
+                    if (value === "default" || value === "") {
                         value = "";
                     } else {
                         value = this.convertRgbToHex(value);
                     }
                 }
                 if (key === "color") {
-                    if (value === "inherit") {
-                        value = "Default";
+                    if (value === "") {
+                        value = "default";
                     } else {
                         value = this.convertRgbToHex(value);
+                    }
+                }
+
+                if (key === "border") {
+                    if (value === "") {
+                        value = "default";
                     }
                 }
                 if (key === "background-image" || key === "mobile-image") {

@@ -88,18 +88,33 @@
                 <reader name="heading" component="Magento_PageBuilder/js/component/format/read/heading"/>
             </readers>
         </type>
-        <type name="button" translate="label" sortOrder="40">
+        <type name="button-item" translate="label">
+            <label>Button</label>
+            <icon>icon-pagebuilder-button</icon>
+            <component>Magento_PageBuilder/js/component/block/button-item</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/button-item</preview_component>
+            <preview_template>Magento_PageBuilder/component/block/preview/button-item.html</preview_template>
+            <render_template>Magento_PageBuilder/component/block/render/button-item.html</render_template>
+            <form>pagebuilder_button_item_form</form>
+            <group>general</group>
+            <allowed_parents>buttons</allowed_parents>
+            <readers>
+                <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                <reader name="button-item" component="Magento_PageBuilder/js/component/format/read/button-item"/>
+            </readers>
+            <is_visible>false</is_visible>
+        </type>
+        <type name="buttons" translate="label" sortOrder="40">
             <label>Buttons</label>
             <icon>icon-pagebuilder-button</icon>
             <component>Magento_PageBuilder/js/component/block/inline</component>
             <preview_component>Magento_PageBuilder/js/component/block/preview/buttons</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/buttons.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/buttons.html</render_template>
-            <form>pagebuilder_button_form</form>
+            <form>pagebuilder_buttons_form</form>
             <group>general</group>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                <reader name="buttons" component="Magento_PageBuilder/js/component/format/read/buttons"/>
             </readers>
             <allowed_parents>row,column</allowed_parents>
         </type>
@@ -120,7 +135,6 @@
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
             <component>Magento_PageBuilder/js/component/block/image</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/image</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
             <form>pagebuilder_image_form</form>
@@ -130,6 +144,12 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
                 <reader name="image" component="Magento_PageBuilder/js/component/format/read/image"/>
             </readers>
+            <appearances>
+                <appearance name="full-width">
+                    <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
+                </appearance>
+            </appearances>
         </type>
         <type name="banner" translate="label" sortOrder="1">
             <label>Banner</label>
@@ -193,7 +213,7 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="slide" translate="label" sortOrder="30">
+        <type name="slide" translate="label">
             <label>Slide</label>
             <icon>icon-pagebuilder-slider</icon>
             <component>Magento_PageBuilder/js/component/block/slide</component>

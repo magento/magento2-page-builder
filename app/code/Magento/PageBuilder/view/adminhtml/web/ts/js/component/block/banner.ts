@@ -69,7 +69,6 @@ export default class Banner extends Block {
         const { top = 0, right = 0, bottom = 0, left = 0 } = data.margins_and_padding.padding;
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            boxSizing: "border-box",
             minHeight: data.min_height + "px",
             paddingBottom: bottom + "px",
             paddingLeft: left + "px",

@@ -108,7 +108,7 @@ class Driver implements RendererInterface
                 'padding-bottom: 40px; padding-left: 40px;">';
         }
 
-        $buttonHtml = '<button class="pagebuilder-banner-button action primary" ' .
+        $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" ' .
             'style="visibility: visible; opacity: 1;"></button>';
 
         $rootElementHtml .= '><a'
