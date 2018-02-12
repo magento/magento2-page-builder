@@ -3,17 +3,27 @@
  * See COPYING.txt for license details.
  */
 
+import createBlock from "../../block/factory";
+import Config from "../../config";
 import PreviewBlock from "./block";
 
 export default class Buttons extends PreviewBlock {
 
     /**
-     * Setup fields observables within the data class property
+     * Adds button-item to parent buttons
      */
-    protected setupDataFields() {
-        super.setupDataFields();
-
-        // Declare our buttons, they'll get populated later
-        this.updateDataValue("buttons", []);
+    public addButton() {
+        const createBlockParams = [
+            Config.getInitConfig("content_types")["button-item"],
+            this.parent,
+            this.stage,
+            {},
+        ];
+        createBlock(...createBlockParams).then((button: any) => {
+            this.addChild(button);
+            button.edit.open();
+        }).catch((error: Error) => {
+            console.error(error);
+        });
     }
 }

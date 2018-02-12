@@ -6,13 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit pagebuilder-buttons">
-    <!-- ko if: preview.data.buttons().length == 0 -->
-        <i class="icon-pagebuilder-button"></i> <span data-bind="text: $t('Buttons');"></span>
-    <!-- /ko -->
-    <!-- ko if: preview.data.buttons().length > 0 -->
-        <!-- ko foreach: preview.data.buttons() -->
-            <button type="button" data-bind="text: text" class="button"></button>
-        <!-- /ko -->
-    <!-- /ko -->
+    <!-- ko template: previewChildTemplate --><!-- /ko -->
+    <button class="add-button" data-bind="click: preview.addButton, text: $t('Add Button')"></button>
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

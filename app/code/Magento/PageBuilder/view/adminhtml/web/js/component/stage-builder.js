@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "./block/factory", "./config", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _formatValidator, _composite, _stage) {
+define(["mage/translate", "underscore", "./block/factory", "./config", "./event-bus", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _eventBus, _formatValidator, _composite, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementBlock(childElement, stage, stage));
+          childPromises.push(createElementBlock(childElement, stage, parent));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -190,7 +190,9 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
         content: (0, _translate)("An error has occurred while initiating the content area."),
         title: (0, _translate)("Advanced CMS Error")
       });
-      stage.emit("stageError", error);
+
+      _eventBus.trigger("stage:error", error);
+
       console.error(error);
     });
     return stage;

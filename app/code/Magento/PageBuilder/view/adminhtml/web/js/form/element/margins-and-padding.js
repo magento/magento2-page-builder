@@ -12,7 +12,7 @@ define([
 ], function (_, ko, Abstract) {
     'use strict';
 
-    var defaultValue = 0;
+    var defaultValue = '';
 
     return Abstract.extend({
         defaults: {

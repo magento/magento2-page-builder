@@ -13,6 +13,7 @@ export default class AttributeFilter {
         "id",
         "src",
         "button_text",
+        "button_type",
         "label_text",
         "placeholder",
         "title",

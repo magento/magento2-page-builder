@@ -8,6 +8,7 @@ import * as _ from "underscore";
 import Block from "./block/block";
 import createBlock from "./block/factory";
 import Config, {ConfigContentBlock} from "./config";
+import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
@@ -48,7 +49,7 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
 
         if (children.length > 0) {
             _.forEach(children, (childElement: HTMLElement) => {
-                childPromises.push(createElementBlock(childElement, stage, stage));
+                childPromises.push(createElementBlock(childElement, stage, parent));
                 childElements.push(childElement);
             });
         }
@@ -216,7 +217,7 @@ export default function build(
                 content: $t("An error has occurred while initiating the content area."),
                 title: $t("Advanced CMS Error"),
             });
-            stage.emit("stageError", error);
+            EventBus.trigger("stage:error", error);
             console.error( error );
         });
     return stage;

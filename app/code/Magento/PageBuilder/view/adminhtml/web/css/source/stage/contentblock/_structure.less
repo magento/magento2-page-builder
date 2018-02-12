@@ -150,6 +150,19 @@
         margin-bottom: 30px;
     }
 
+    &.children-min-height {
+        > .element-children {
+            min-height: 190px;
+            padding: 30px;
+        }
+        > div {
+            > .element-children {
+                min-height: 190px;
+                padding: 30px;
+            }
+        }
+    }
+
     .element-children {
         font-size: 0;
         min-height: 190px;
@@ -184,6 +197,13 @@
 
         &.pagebuilder-entity-preview {
             font-size: 14px;
+        }
+
+        .pagebuilder-loading {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
         &.pagebuilder-image {

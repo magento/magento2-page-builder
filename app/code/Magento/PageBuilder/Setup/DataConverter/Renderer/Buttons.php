@@ -43,7 +43,7 @@ class Buttons implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'button',
+            'data-role' => 'buttons',
             'class' => $eavData['css_classes'] ?? ''
         ];
 
