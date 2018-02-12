@@ -58,7 +58,6 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       var paddingLeft = this.data.margins_and_padding().padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        boxSizing: "border-box",
         minHeight: this.data.min_height() + "px",
         paddingBottom: paddingBottom + "px",
         paddingLeft: paddingLeft + "px",

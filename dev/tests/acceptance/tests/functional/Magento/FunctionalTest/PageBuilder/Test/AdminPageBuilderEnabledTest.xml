@@ -26,7 +26,6 @@
         <see userInput="Advanced Content Tools" stepKey="seeAdvancedContentToolTab"/>
         <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
         <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <uncheckOption selector="{{PageBuilderCollapsibleSection.UseSystemValue}}" stepKey="uncheckUseSystemValue"/>
         <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
         <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enabled']/td[@class='value']//span" stepKey="grabTextFromDisclaimerMsg"/>
         <assertEquals stepKey="assertEquals2" expected="Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content." expectedType="string" actual="grabTextFromDisclaimerMsg" actualType="variable" message="pass"/>

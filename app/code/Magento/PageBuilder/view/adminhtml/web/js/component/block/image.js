@@ -62,31 +62,13 @@ define(["underscore", "../config", "./block", "../../utils/url"], function (_und
      */
 
 
-    _proto.getImageAttributes = function getImageAttributes() {
+    _proto.getImageLinkAttributes = function getImageLinkAttributes() {
       var data = this.getData();
-
-      if (data.image === "" || data.image === undefined) {
-        return {};
-      } else if (_underscore.isEmpty(data.image[0])) {
-        return;
-      }
-
       return {
-        class: data.lightbox === "Yes" ? "pagebuilder-lightbox" : "",
-        href: this.getImageUrl(data.image),
+        href: data.link_url || "",
+        target: data.link_target || "_self",
         title: data.title_tag
       };
-    };
-    /**
-     * Retrieve the caption for the image
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getCaption = function getCaption() {
-      var data = this.getData();
-      return data.show_caption === "Yes" ? data.title_tag : "";
     };
     /**
      * Retrieve the image URL with directive

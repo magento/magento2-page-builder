@@ -84,7 +84,6 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
           left = _data$margins_and_pad5 === void 0 ? 0 : _data$margins_and_pad5;
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        boxSizing: "border-box",
         minHeight: data.min_height + "px",
         paddingBottom: bottom + "px",
         paddingLeft: left + "px",

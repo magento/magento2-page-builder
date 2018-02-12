@@ -45,28 +45,13 @@ export default class Image extends Block {
      *
      * @returns {any}
      */
-    public getImageAttributes() {
+    public getImageLinkAttributes() {
         const data = this.getData();
-        if (data.image === "" || data.image === undefined) {
-            return {};
-        } else if (_.isEmpty(data.image[0])) {
-            return;
-        }
         return {
-            class: (data.lightbox === "Yes" ? "pagebuilder-lightbox" : ""),
-            href: this.getImageUrl(data.image),
+            href: data.link_url || "",
+            target: data.link_target || "_self",
             title: data.title_tag,
         };
-    }
-
-    /**
-     * Retrieve the caption for the image
-     *
-     * @returns {any}
-     */
-    public getCaption(): string {
-        const data = this.getData();
-        return (data.show_caption === "Yes" ? data.title_tag as string : "");
     }
 
     /**

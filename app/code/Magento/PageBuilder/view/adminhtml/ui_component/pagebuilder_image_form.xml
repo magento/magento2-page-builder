@@ -40,49 +40,113 @@
     </dataSource>
     <fieldset name="general">
         <settings>
-            <label translate="true">Images</label>
+            <label/>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="image" formElement="imageUploader">
+        <field name="appearance" formElement="select" component="Magento_PageBuilder/js/form/element/dependent-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">full-width</item>
+                </item>
+            </argument>
             <settings>
+                <label translate="true">Appearance</label>
+                <dataType>text</dataType>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="10" xsi:type="array">
+                                <item name="value" xsi:type="string">full-width</item>
+                                <item name="label" xsi:type="string" translate="true">Full Width Image</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="image" formElement="fileUploader">
+            <settings>
+                <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
                 <label translate="true">Image</label>
-                <componentType>imageUploader</componentType>
+                <componentType>fileUploader</componentType>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
             <formElements>
-                <imageUploader>
+                <fileUploader>
                     <settings>
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
                         <maxFileSize>4194304</maxFileSize>
                         <uploaderConfig>
                             <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
                         </uploaderConfig>
-                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview/image.html</previewTmpl>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview.html</previewTmpl>
                     </settings>
-                </imageUploader>
+                </fileUploader>
             </formElements>
         </field>
-        <field name="mobile_image" formElement="imageUploader">
+        <field name="mobile_image" formElement="fileUploader">
             <settings>
-
+                <notice translate="true">Allowed file types: jpeg, gif, png.</notice>
                 <label translate="true">Mobile Image</label>
-                <componentType>imageUploader</componentType>
+                <componentType>fileUploader</componentType>
             </settings>
             <formElements>
-                <imageUploader>
+                <fileUploader>
                     <settings>
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
                         <maxFileSize>2097152</maxFileSize>
                         <uploaderConfig>
                             <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
                         </uploaderConfig>
-                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview/image.html</previewTmpl>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview.html</previewTmpl>
                     </settings>
-                </imageUploader>
+                </fileUploader>
             </formElements>
+        </field>
+        <field name="link_url" sortOrder="10" formElement="input">
+            <settings>
+                <label translate="true">Link</label>
+                <dataType>text</dataType>
+                <dataScope>link_url</dataScope>
+            </settings>
+        </field>
+        <field name="link_target" sortOrder="20" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">_self</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Open in New Tab?</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">_self</map>
+                            <map name="true" xsi:type="string">_blank</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="image_caption" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Image Caption</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
         </field>
     </fieldset>
     <fieldset name="seo">
@@ -107,80 +171,6 @@
                 </validation>
             </settings>
         </field>
-    </fieldset>
-    <fieldset name="extra">
-        <settings>
-            <label translate="true">Extra</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="lightbox" sortOrder="10" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">No</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Has Lightbox?</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">No</item>
-                                <item name="label" xsi:type="string" translate="true">No</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">Yes</item>
-                                <item name="label" xsi:type="string" translate="true">Yes</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="show_caption" sortOrder="20" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">No</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Show Caption</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">No</item>
-                                <item name="label" xsi:type="string" translate="true">No</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">Yes</item>
-                                <item name="label" xsi:type="string" translate="true">Yes</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-    </fieldset>
-    <fieldset name="advanced">
-        <settings>
-            <label translate="true">Advanced</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
     </fieldset>
     <fieldset name="advanced">
         <settings>

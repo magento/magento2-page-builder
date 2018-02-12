@@ -126,7 +126,7 @@ define([
                     this.bindPageBuilderButton(node);
                     this.handleUseDefaultButton(node);
                 } else {
-                    this.buildPageBuilder(false);
+                    this.buildPageBuilder();
                 }
 
                 return;
@@ -245,7 +245,6 @@ define([
          */
         buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
-                buildInstance = new Build(this.initialValue),
                 isFullScreeMode = isFullScreenMode || false,
                 bindStage = function (stage) {
                     self.stage = stage;
@@ -265,7 +264,7 @@ define([
 
             buildStage(
                 this,
-                this.panel,
+                this.getPanel(),
                 this.stageContent,
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
@@ -276,15 +275,6 @@ define([
                 self.stageActive(true); // Display the stage UI
                 self.visible(false); // Hide the original WYSIWYG editor
             });
-
-            // Create a new instance of the panel
-            this.getPanel().bindStage(this.stage);
-
-            if (buildInstance.canBuild()) {
-                this.stage.build(buildInstance);
-            } else {
-                this.stage.build();
-            }
 
             this.isComponentInitialized = true;
         },

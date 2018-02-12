@@ -18,25 +18,31 @@ define(["../../../utils/image"], function (_image) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var imageLinkElement = element.querySelector("a");
+      var captionElement = element.querySelector("figcaption");
       var response = {
         alt: "",
         image: "",
-        lightbox: !!element.querySelector("a.pagebuilder-lightbox") ? "Yes" : "No",
         mobile_image: "",
-        show_caption: !!element.querySelector("figcaption") ? "Yes" : "No",
-        title_tag: element.querySelector("a").getAttribute("title")
-      }; // Detect if there is an image and update the response
+        title_tag: "",
+        image_caption: captionElement ? captionElement.textContent : "",
+        link_target: imageLinkElement ? imageLinkElement.target : "",
+        link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : ""
+      };
 
       if (element.querySelector("img:nth-child(1)")) {
-        if (element.querySelector("img:nth-child(1)").src) {
-          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").src);
+        if (element.querySelector("img:nth-child(1)").getAttribute("src")) {
+          response.image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(1)").getAttribute("src"));
         }
 
         if (element.querySelector("img:nth-child(1)").getAttribute("alt")) {
           response.alt = element.querySelector("img:nth-child(1)").getAttribute("alt");
         }
-      } // Detect if there is a mobile image and update the response
 
+        if (element.querySelector("img:nth-child(1)").getAttribute("title")) {
+          response.title_tag = element.querySelector("img:nth-child(1)").getAttribute("title");
+        }
+      }
 
       if (element.querySelector("img:nth-child(2)") && element.querySelector("img:nth-child(2)").getAttribute("src")) {
         response.mobile_image = (0, _image.decodeUrl)(element.querySelector("img:nth-child(2)").getAttribute("src"));

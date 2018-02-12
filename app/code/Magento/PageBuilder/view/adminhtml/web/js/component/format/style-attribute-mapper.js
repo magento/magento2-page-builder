@@ -28,8 +28,12 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
           return;
         }
 
-        if (key === "color" && (value === "default" || value === "Default")) {
-          value = "inherit";
+        if (key === "color" && value === "default") {
+          value = "";
+        }
+
+        if (key === "border" && value === "default") {
+          value = "";
         }
 
         if (key === "min_height" || key === "border_width" || key === "border_radius") {
@@ -65,8 +69,24 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "margins_and_padding") {
-          result.margin = value.margin.top + "px " + value.margin.right + "px" + (" " + value.margin.bottom + "px " + value.margin.left + "px");
-          result.padding = value.padding.top + "px " + value.padding.right + "px" + (" " + value.padding.bottom + "px " + value.padding.left + "px");
+          var toPxStr = function toPxStr(val) {
+            return !isNaN(parseInt(val, 10)) ? val + "px" : "";
+          };
+
+          var _value = value,
+              padding = _value.padding,
+              margin = _value.margin;
+          var paddingAndMargins = {
+            marginBottom: toPxStr(margin.bottom),
+            marginLeft: toPxStr(margin.left),
+            marginRight: toPxStr(margin.right),
+            marginTop: toPxStr(margin.top),
+            paddingBottom: toPxStr(padding.bottom),
+            paddingLeft: toPxStr(padding.left),
+            paddingRight: toPxStr(padding.right),
+            paddingTop: toPxStr(padding.top)
+          };
+          Object.assign(result, paddingAndMargins);
           return;
         }
 
@@ -131,7 +151,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "background-color" || key === "border-color") {
-          if (value === "initial") {
+          if (value === "default" || value === "") {
             value = "";
           } else {
             value = _this2.convertRgbToHex(value);
@@ -139,10 +159,16 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "color") {
-          if (value === "inherit") {
-            value = "Default";
+          if (value === "") {
+            value = "default";
           } else {
             value = _this2.convertRgbToHex(value);
+          }
+        }
+
+        if (key === "border") {
+          if (value === "") {
+            value = "default";
           }
         }
 

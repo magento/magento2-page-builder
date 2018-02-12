@@ -49,7 +49,6 @@ export default class Banner extends PreviewBlock {
         const paddingLeft = this.data.margins_and_padding().padding.left || "0";
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            boxSizing: "border-box",
             minHeight: this.data.min_height() + "px",
             paddingBottom: paddingBottom + "px",
             paddingLeft: paddingLeft + "px",
