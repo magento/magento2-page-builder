@@ -1,26 +1,35 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Options Panel
+//  _____________________________________________
 
 .pagebuilder-options {
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    z-index: 20;
     height: 40px;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 0;
     transform: translate(-50%, -50%);
+    z-index: 20;
 
     .pagebuilder-options-wrapper {
         background: white;
-        border: 1px solid #cccccc;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
         display: none;
+        -webkit-transition: all 1200ms ease 1200ms;
+        -moz-transition: all 1200ms ease 1200ms;
+        -o-transition: all 1200ms ease 1200ms;
+        transition: all 1200ms ease 1200ms;
 
         i {
+            font-family: 'Admin Icons', sans-serif;
             font-size: 18px;
             -webkit-font-smoothing: antialiased;
-            font-family: 'Admin Icons';
             font-style: normal;
             font-weight: normal;
             line-height: 1;
@@ -38,17 +47,17 @@
 
         .pagebuilder-name {
             display: inline-block;
+            font-size: 14px;
             height: 38px;
             padding: 10px 0 10px 10px;
-            font-size: 14px;
             vertical-align: bottom;
         }
 
         ul.pagebuilder-options-links {
-            list-style: none;
             display: inline-block;
-            padding: 0 8px;
+            list-style: none;
             margin: 0;
+            padding: 0 8px;
             vertical-align: middle;
 
             li.pagebuilder-options-link {
@@ -56,26 +65,29 @@
                 vertical-align: top;
 
                 .remove-structural {
+
                     &.disabled {
-                        cursor: not-allowed;
                         color: #808080;
+                        cursor: not-allowed;
+
                         &:hover {
                             color: #808080
                         }
                     }
                 }
 
-                > a, > div.block-title {
-                    display: block;
-                    padding: 10px 8px;
-                    height: 38px;
-                    text-decoration: none;
+                > a,
+                > div.block-title {
                     color: @color-very-dark-grayish-orange;
+                    display: block;
+                    height: 38px;
+                    padding: 10px 8px;
+                    text-decoration: none;
 
                     &.block-title {
+                        cursor: default;
                         font-size: 14px;
                         line-height: 18px;
-                        cursor: default;
                         text-decoration: none;
                     }
 
@@ -86,17 +98,9 @@
             }
         }
     }
-
 }
 
 .pagebuilder-entity {
-    .pagebuilder-options {
-        text-align: right;
-        transform: translateY(0);
-        width: auto;
-        left: auto;
-        right: 0;
-    }
 
     &.pagebuilder-live-edit {
         .pagebuilder-options {
