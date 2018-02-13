@@ -43,7 +43,7 @@
                     init: function () {
                         // Add the current formKey into the request
                         this.on('sending', function (file, xhr, formData) {
-                            formData.append('form_key', window.FORM_KEY);
+                            formData.append('form_key', FORM_KEY);
                         });
                     },
                     success: function (file, response) {
