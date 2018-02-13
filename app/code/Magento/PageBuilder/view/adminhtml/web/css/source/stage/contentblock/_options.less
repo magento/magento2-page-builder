@@ -20,11 +20,13 @@
         background: white;
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
-        display: none;
-        -webkit-transition: all 1200ms ease 1200ms;
-        -moz-transition: all 1200ms ease 1200ms;
-        -o-transition: all 1200ms ease 1200ms;
-        transition: all 1200ms ease 1200ms;
+        display: flex;
+        opacity: 0;
+        -webkit-transition: all 200ms ease 200ms;
+        -moz-transition: all 200ms ease 200ms;
+        -o-transition: all 200ms ease 200ms;
+        transition: all 200ms ease 200ms;
+        visibility: hidden;
 
         i {
             font-family: 'Admin Icons', sans-serif;
@@ -54,14 +56,13 @@
         }
 
         ul.pagebuilder-options-links {
-            display: inline-block;
+            display: flex;
             list-style: none;
             margin: 0;
             padding: 0 8px;
             vertical-align: middle;
 
             li.pagebuilder-options-link {
-                display: inline-block;
                 vertical-align: top;
 
                 .remove-structural {
@@ -101,7 +102,6 @@
 }
 
 .pagebuilder-entity {
-
     &.pagebuilder-live-edit {
         .pagebuilder-options {
             top: 0;
@@ -113,7 +113,8 @@
     &:hover {
         > .pagebuilder-options {
             .pagebuilder-options-wrapper {
-                display: flex;
+                opacity: 1;
+                visibility: visible;
             }
         }
     }
