@@ -51,7 +51,6 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
-            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
@@ -248,7 +247,7 @@ define([
                 isFullScreeMode = isFullScreenMode || false,
                 bindStage = function (stage) {
                     self.stage = stage;
-                    stage.on('stageReady', function() {
+                    stage.on('stageReady', function () {
                         self.stageActive(true);
                         self.visible(false);
                     });
