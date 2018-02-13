@@ -7,7 +7,7 @@ import createBlock from "../block/factory";
 import Config from "../config";
 import Block from "./block";
 
-export default class AdvancedSlider extends Block {
+export default class Slider extends Block {
 
     /**
      * Add a slide into the slider

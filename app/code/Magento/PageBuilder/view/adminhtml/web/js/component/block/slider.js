@@ -2,16 +2,16 @@
 define(["../block/factory", "../config", "./block"], function (_factory, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var AdvancedSlider =
+  var Slider =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(AdvancedSlider, _Block);
+    _inheritsLoose(Slider, _Block);
 
-    function AdvancedSlider() {
+    function Slider() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = AdvancedSlider.prototype;
+    var _proto = Slider.prototype;
 
     /**
      * Add a slide into the slider
@@ -26,9 +26,9 @@ define(["../block/factory", "../config", "./block"], function (_factory, _config
       });
     };
 
-    return AdvancedSlider;
+    return Slider;
   }(_block);
 
-  return AdvancedSlider;
+  return Slider;
 });
-//# sourceMappingURL=advanced-slider.js.map
+//# sourceMappingURL=slider.js.map

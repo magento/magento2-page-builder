@@ -7,8 +7,7 @@
  * _slider contains {less} for Sliders and slider items
  */
 
-.pagebuilder-advanced-slider {
-
+.pagebuilder-slider {
     .add-slide-button {
         margin: 0 0 20px 15px;
     }
@@ -23,24 +22,38 @@
 @import './slick';
 @import './slick-theme';
 
-.pagebuilder-slider {
-    width: 100%;
-    float: left;
-    background-repeat: no-repeat;
+.pagebuilder-slider-content {
+    background: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    display: inline-block;
+    margin: @margin*2;
+    padding: @margin;
+    width: 40%;
+
+    h3, p, li {
+        color: white;
+        margin-bottom: @margin;
+    }
+}
+
+.pagebuilder-slide {
     background-position: center center;
+    background-repeat: no-repeat;
     background-size: cover;
+    float: left;
     padding: 80px 0;
+    width: 100%;
 
     .pagebuilder-content {
+        color: white;
         display: inline-block;
         padding: 24px 20px;
         width: 30%;
-        color: white;
 
         h3 {
-            margin-top: 6px;
-            margin-bottom: 6px;
             color: white;
+            margin-bottom: 6px;
+            margin-top: 6px;
         }
 
         .slider-content {
@@ -57,23 +70,8 @@
     }
 }
 
-/* Advanced Slider */
-
-.pagebuilder-advanced-slider-item {
-    background-size: cover;
+.pagebuilder-slider-item {
     background-position: center center;
     background-repeat: no-repeat;
-}
-
-.pagebuilder-advanced-slider-content {
-    margin: @margin*2;
-    width: 40%;
-    padding: @margin;
-    box-sizing: border-box;
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.5);
-    h3, p, li {
-        margin-bottom: @margin;
-        color: white;
-    }
+    background-size: cover;
 }

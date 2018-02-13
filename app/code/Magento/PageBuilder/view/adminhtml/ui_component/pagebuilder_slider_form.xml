@@ -38,23 +38,168 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="general">
+    <fieldset name="settings">
         <settings>
-            <label/>
+            <label translate="true">Settings</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-        <field name="heading_type" formElement="input" sortOrder="20">
+        <field name="autoplay" sortOrder="1" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">page</item>
+                    <item name="default" xsi:type="number">0</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Slider Form</label>
-                <dataScope>heading_type</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <label translate="true">Autoplay</label>
+                <notice translate="true">Do you want the slider to rotate on its own</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="autoplay_speed" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">5000</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Autoplay Speed</label>
+                <dataScope>autoplay_speed</dataScope>
+                <notice translate="true">Speed in milliseconds (5000 = 5 seconds)</notice>
+            </settings>
+        </field>
+        <field name="fade" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Fade</label>
+                <notice translate="true">The fade only works if you are showing one slide at a time</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="is_infinite" sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Is Infinite</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="show_arrows" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show arrows</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="show_dots" sortOrder="50" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show dots</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="advanced_settings" sortOrder="60" formElement="textarea">
+            <settings>
+                <label translate="true">Slider Advanced Settings</label>
+                <dataType>text</dataType>
+                <dataScope>slider_advanced_settings</dataScope>
+                <notice translate="true">see http://kenwheeler.github.io/slick/ for more information on passing data to the slider</notice>
             </settings>
         </field>
     </fieldset>

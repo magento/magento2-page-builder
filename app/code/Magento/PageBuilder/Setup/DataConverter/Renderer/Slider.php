@@ -46,7 +46,7 @@ class Slider implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'advanced-slider',
+            'data-role' => 'slider',
             'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',
             'data-autoplay-speed' => isset($eavData['autoplay_speed']) ? $eavData['autoplay_speed'] : '',
             'data-fade' => isset($eavData['fade']) ? $eavData['fade'] : '',

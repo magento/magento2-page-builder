@@ -2,10 +2,10 @@
 define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "./block"], function (_jquery, _slick, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var AdvancedSlider =
+  var Slider =
   /*#__PURE__*/
   function (_PreviewBlock) {
-    _inheritsLoose(AdvancedSlider, _PreviewBlock);
+    _inheritsLoose(Slider, _PreviewBlock);
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -17,7 +17,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
      * @param {Block} parent
      * @param {object} config
      */
-    function AdvancedSlider(parent, config) {
+    function Slider(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
@@ -48,7 +48,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
      */
 
 
-    var _proto = AdvancedSlider.prototype;
+    var _proto = Slider.prototype;
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       this.element = element;
@@ -72,9 +72,9 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       };
     };
 
-    return AdvancedSlider;
+    return Slider;
   }(_block);
 
-  return AdvancedSlider;
+  return Slider;
 });
-//# sourceMappingURL=advanced-slider.js.map
+//# sourceMappingURL=slider.js.map
