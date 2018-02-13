@@ -12,12 +12,11 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      * @param {Stage} stage
      * @param {ConfigContentBlock} config
      * @param formData
-     * @param {Appearance} appearance
      */
-    function ColumnGroup(parent, stage, config, formData, appearance) {
+    function ColumnGroup(parent, stage, config, formData) {
       var _this;
 
-      _this = _Block.call(this, parent, stage, config, formData, appearance) || this;
+      _this = _Block.call(this, parent, stage, config, formData) || this;
 
       _eventBus.on("block:removed", function (event, params) {
         if (params.parent.id === _this.id) {
