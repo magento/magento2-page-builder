@@ -370,11 +370,6 @@
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
         <dontSee selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
     </actionGroup>
-    <actionGroup name="navigateToStagingSlideout">
-        <click selector="{{AdminStagingSlideOutSection.scheduleNewUpdateBtn}}" stepKey="clickOnStagingBtn" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
-        <waitForElementVisible selector="{{AdminStagingSlideOutSection.title}}" stepKey="waitForSlideOutOpen"/>
-    </actionGroup>
     <actionGroup name="navigateToCreatedCMSPage">
         <arguments>
             <argument name="CMSPage" defaultValue=""/>
