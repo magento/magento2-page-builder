@@ -255,6 +255,8 @@ define([
 
             this.loading(true);
 
+            this.isFullScreen(isFullScreeMode);
+
             if (typeof event !== 'undefined') {
                 event.stopPropagation();
             }
@@ -271,9 +273,9 @@ define([
             this.stage.on('stageReady', function () {
                 self.stageActive(true); // Display the stage UI
                 self.visible(false); // Hide the original WYSIWYG editor
-                self.isComponentInitialized = true;
-                self.isFullScreen(isFullScreeMode);
             });
+
+            this.isComponentInitialized = true;
         },
 
         /**
