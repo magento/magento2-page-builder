@@ -39,36 +39,46 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
+        <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
+        <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
 
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
+        <!--Upload another image from local machine using image placeholder button-->
         <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderImagePropertyJpg"/>
         </actionGroup>
 
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImgeNameOnPreview1"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <!--<seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource1"/>-->
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
-        <!--Remove uploaded image-->
-        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage"/>
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
 
 
-        <!--Upload another image from local machine using image placeholder button-->
-        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.name)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.name)}}" stepKey="seeImgeNameOnPreview12"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
+            <argument name="property" value="PageBuilderImagePropertyJpgCopy"/>
+        </actionGroup>
+
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad1" />
-
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
         <!--See Uploaded Image On Storage-->
         <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
 
@@ -76,18 +86,51 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
-            <argument name="Image" value="ImageUpload1"/>
+            <argument name="Image" value="PageBuilderImagePropertyJpg"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.file)}}" stepKey="seeImgeNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,ImageUpload1.file)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpg.value)}}" stepKey="seeMainImageSource2"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
 
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
 
+
+
+
+
+        <!--<click selector="{{UploadImageSection.SelectFromGalleryBtn('Mobile Image')}}" stepKey="clickMobileSelectFromGalleryBtn"/>-->
+        <!--<waitForPageLoad stepKey="waitForPageLoad3" />-->
+        <!--<waitForLoadingMaskToDisappear stepKey="waitForLoading4" />-->
+        <!--&lt;!&ndash;See Uploaded Image On Storage&ndash;&gt;-->
+        <!--&lt;!&ndash;<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>&ndash;&gt;-->
+
+        <!--<actionGroup ref="CreateImageFolder" stepKey="createImageFolder2">-->
+            <!--<argument name="ImageFolder" value="ImageFolder"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage2">-->
+            <!--<argument name="Image" value="PageBuilderImagePropertyJpg"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="saveImage" stepKey="saveImage2"/>-->
+        <!--<seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview4"/>-->
+        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpg.value)}}" stepKey="seeMainImageSource4"/>-->
+        <!--<seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn2"/>-->
+
+
+
+
+
+
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLinkProperty">
+            <argument name="property" value="PageBuilderImageLinkProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderImageTargetProperty.fieldName)}}" stepKey="clickImageTargetProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
+            <argument name="property" value="PageBuilderImageCaptionProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">
             <argument name="property" value="PageBuilderImageAltTextProperty"/>
@@ -95,26 +138,30 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
             <argument name="property" value="PageBuilderImageTitleTagProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">
-            <argument name="property" value="PageBuilderImageLightboxProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">
-            <argument name="property" value="PageBuilderImageShowCaptionProperty"/>
-        </actionGroup>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesProperty.fieldName}}']" stepKey="cssPropertiesValue"/>
+        <assertEmpty actual="cssPropertiesValue" actualType="variable" message="pass" stepKey="assertCssPropertiesIsEmpty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="seeImageLightboxLink"/>
+        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpg.value)}}" stepKey="seeMainImageSource2"/>-->
+        <assertElementContainsAttribute selector="{{ImageOnFrontend.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
-        <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
-        <click selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="clickMainImage"/>
-        <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
-        <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
+        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>
+        <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
+        <dontSeeElement selector="{{ImageOnFrontend.imageElement('1')}}" stepKey="dontSeeMainImageOnMobile"/>
+        <seeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="seeMobileImageElementOnMobile"/>
+        <assertElementContainsAttribute selector="{{ImageOnFrontend.imageElement('2')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertMobileImageHasFullWidthStyle"/>
+        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
     <test name="CanRemoveImage">
         <annotations>

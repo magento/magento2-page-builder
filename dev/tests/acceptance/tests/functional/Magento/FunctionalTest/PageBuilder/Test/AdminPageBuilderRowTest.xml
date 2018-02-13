@@ -482,7 +482,7 @@
             <description value="A user should be able to add an image into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84259"/>
-            <group value="kieu"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -550,42 +550,42 @@
             <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.file)}}" stepKey="seeImgeNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,ImageUpload1.file)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.value)}}" stepKey="seeImgeNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
 
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
 
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">
-            <argument name="property" value="PageBuilderImageAltTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
-            <argument name="property" value="PageBuilderImageTitleTagProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">
-            <argument name="property" value="PageBuilderImageLightboxProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">
-            <argument name="property" value="PageBuilderImageShowCaptionProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!--<actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">-->
+            <!--<argument name="property" value="PageBuilderMobileImagePropertyGif"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">-->
+            <!--<argument name="property" value="PageBuilderImageAltTextProperty"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">-->
+            <!--<argument name="property" value="PageBuilderImageTitleTagProperty"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">-->
+            <!--<argument name="property" value="PageBuilderImageLightboxProperty"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">-->
+            <!--<argument name="property" value="PageBuilderImageShowCaptionProperty"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>-->
 
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="seeImageLightboxLink"/>
+
+        <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
         <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
-        <click selector="{{ImageOnFrontend.imageHasLightbox}}" stepKey="clickMainImage"/>
-        <waitForElementVisible time="1" selector="{{ImageOnFrontend.fancyboxOpen}}" stepKey="waitForLightbox" />
-        <seeElement selector="{{ImageOnFrontend.lightboxPopupDisplay(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeLightBoxDisplayed"/>
+
+
     </test>
 </tests>

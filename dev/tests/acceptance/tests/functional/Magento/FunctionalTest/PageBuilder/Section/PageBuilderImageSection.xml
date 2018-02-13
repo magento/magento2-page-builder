@@ -26,4 +26,11 @@
         <element name="PlaceholderContent" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
         <element name="SelectFromGalleryBtn" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//label[text()='Select from Gallery']" parameterized="true"/>
     </section>
+    <section name="ImageOnPreview">
+        <element name="imageName" type="text" selector="//div[contains(text(),'{{var1}}')]" parameterized="true"/>
+        <element name="imagePreview" type="text" selector="//img[@class='preview-image']"/>
+        <element name="imageLocalSource" type="text" selector="//img[@src='/pub/media/wysiwyg/{{var1}}']" parameterized="true"/>
+        <element name="imageSource" type="text" selector="//img[@src='/pub/media/wysiwyg/{{var1}}/{{var2}}']" parameterized="true"/>
+        <element name="trashBinIcon" type="button" selector=".action-remove"/>
+    </section>
 </sections>
