@@ -253,8 +253,6 @@ define([
                     });
                 };
 
-            this.isFullScreen(isFullScreeMode);
-
             this.loading(true);
 
             if (typeof event !== 'undefined') {
@@ -273,9 +271,9 @@ define([
             this.stage.on('stageReady', function () {
                 self.stageActive(true); // Display the stage UI
                 self.visible(false); // Hide the original WYSIWYG editor
+                self.isComponentInitialized = true;
+                self.isFullScreen(isFullScreeMode);
             });
-
-            this.isComponentInitialized = true;
         },
 
         /**
