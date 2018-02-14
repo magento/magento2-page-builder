@@ -481,65 +481,63 @@
             <title value="Add an image content block into stage"/>
             <description value="A user should be able to add an image into a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84259"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilder1" stepKey="enablePageBuilder"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCatalog" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <!--<actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">-->
-            <!--<argument name="contentBlockType" value="PageBuilderRowContentBlock"/>-->
-        <!--</actionGroup>-->
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-
-        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-        </actionGroup>
-
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderImagePropertyJpg"/>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
         </actionGroup>
 
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImgeNameOnPreview1"/>
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <!--<seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource1"/>-->
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
-        <!--Remove uploaded image-->
-        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
 
-        <!--Upload another image from local machine using image placeholder button-->
-        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.name)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.name)}}" stepKey="seeImgeNameOnPreview12"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
+
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad1" />
-
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
         <!--See Uploaded Image On Storage-->
         <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
 
@@ -547,45 +545,22 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
-            <argument name="Image" value="ImageUpload1"/>
+            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.value)}}" stepKey="seeImgeNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeMainImageSource2"/>-->
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
 
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
-
-        <!--<actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">-->
-            <!--<argument name="property" value="PageBuilderMobileImagePropertyGif"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltTextProperty">-->
-            <!--<argument name="property" value="PageBuilderImageAltTextProperty"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">-->
-            <!--<argument name="property" value="PageBuilderImageTitleTagProperty"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHasLightbox">-->
-            <!--<argument name="property" value="PageBuilderImageLightboxProperty"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowCaption">-->
-            <!--<argument name="property" value="PageBuilderImageShowCaptionProperty"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>-->
-
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-
-        <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
-        <see userInput="{{PageBuilderImageTitleTagProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeTitleTagDisplayedAsCaption"/>
-
-
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Row" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
     </test>
 </tests>
