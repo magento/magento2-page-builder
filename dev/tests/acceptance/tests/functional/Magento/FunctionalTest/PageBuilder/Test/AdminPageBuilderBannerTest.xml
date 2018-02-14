@@ -3067,4 +3067,91 @@
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
+    <test name="CanAddImageToBanner">
+        <annotations>
+            <title value="Add an image content block into stage"/>
+            <description value="A user should be able to add an image into a banner."/>
+            <severity value="CRITICAL"/>
+            <group value="kieu"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <!--<seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource1"/>-->
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile2">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
+        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad1" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <!--See Uploaded Image On Storage-->
+        <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
+
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
+            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeMainImageSource2"/>-->
+        <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+
+        <!--Upload background mobile image-->
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
+
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
+    </test>
 </tests>
