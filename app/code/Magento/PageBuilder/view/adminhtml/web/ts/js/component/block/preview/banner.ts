@@ -26,7 +26,6 @@ export default class Banner extends PreviewBlock {
             backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }
         return {
-            backgroundColor: "",
             backgroundImage,
             backgroundSize: this.data.background_size(),
             minHeight: this.data.min_height() + "px",
@@ -119,15 +118,17 @@ export default class Banner extends PreviewBlock {
      * @returns {any}
      */
     public getButtonStyles() {
-        let buttonStyle = {
+        const buttonStyle = {
+            display: "inline-block",
             opacity : "0",
             visibility : "hidden",
         };
         if (this.data.show_button() === "always" || this.showButtonHover()) {
-            buttonStyle = {
-                opacity : "1",
-                visibility : "visible",
-            };
+            buttonStyle.opacity = "1";
+            buttonStyle.visibility = "visible";
+        }
+        if (this.data.show_button() === "never_show") {
+            buttonStyle.display = "none";
         }
         return buttonStyle;
     }

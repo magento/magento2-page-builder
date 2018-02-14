@@ -19,6 +19,9 @@ export function fromHex(hexValue: string, alphaValue: string) {
     const red = parseInt(colors[1], 16);
     const green = parseInt(colors[2], 16);
     const blue = parseInt(colors[3], 16);
+    if (alphaValue === "NaN") {
+        alphaValue = "0";
+    }
     if (alphaValue) {
         return "rgba(" + red + "," + green + "," + blue + "," + alphaValue + ")";
     } else {

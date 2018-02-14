@@ -22,6 +22,10 @@ define([], function () {
     var green = parseInt(colors[2], 16);
     var blue = parseInt(colors[3], 16);
 
+    if (alphaValue === "NaN") {
+      alphaValue = "0";
+    }
+
     if (alphaValue) {
       return "rgba(" + red + "," + green + "," + blue + "," + alphaValue + ")";
     } else {

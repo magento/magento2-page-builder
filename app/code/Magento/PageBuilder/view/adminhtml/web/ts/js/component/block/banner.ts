@@ -19,6 +19,8 @@ export default class Banner extends Block {
      */
     public getBannerStyles(type: string): {} {
         const data = this.getData();
+        const style = _.clone(this.getStyle());
+
         let backgroundImage: any = "";
         if (type === "image") {
             backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
@@ -35,10 +37,26 @@ export default class Banner extends Block {
                 }
             }
         }
-        return {
-            backgroundImage,
-            backgroundSize: data.background_size,
-        };
+
+        return Object.assign(
+            style,
+            {
+                backgroundImage,
+                backgroundSize: data.background_size,
+                border: "",
+                borderColor: "",
+                borderRadius: "",
+                borderWidth: "",
+                marginBottom: "",
+                marginLeft: "",
+                marginRight: "",
+                marginTop: "",
+                paddingBottom: "",
+                paddingLeft: "",
+                paddingRight: "",
+                paddingTop: "",
+            },
+        );
     }
 
     /**
@@ -171,8 +189,9 @@ export default class Banner extends Block {
      * @returns {object}
      */
     public getBannerContainerStyle(): {} {
+        const style = _.clone(this.getStyle());
         return Object.assign(
-            this.getStyle(),
+            style,
             {
                 backgroundImage: "",
                 minHeight: "",
