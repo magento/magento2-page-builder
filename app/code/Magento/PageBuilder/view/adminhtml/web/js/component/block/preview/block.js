@@ -19,11 +19,13 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
       this.parent = void 0;
       this.config = void 0;
       this.data = {};
+      this.displayLabel = void 0;
       this.previewStyle = void 0;
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
       this.config = config || {};
+      this.displayLabel = _knockout.observable(this.config.label);
       this.setupDataFields(); // Calculate the preview style utilising the style attribute mapper & appearance system
 
       this.previewStyle = _knockout.computed(function () {
