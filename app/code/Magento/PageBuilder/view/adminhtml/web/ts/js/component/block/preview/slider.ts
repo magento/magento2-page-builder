@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
@@ -28,19 +29,41 @@ export default class Slider extends PreviewBlock {
                     // This may error
                 }
                 $(this.element).slick(this.buildSlickConfig());
+                $(this.element).on("afterChange", function(slick: {}, current: any){
+                    this.setActiveSlide(current.currentSlide);
+                }.bind(this));
             }
         }, 100);
     }, 20);
 
     /**
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
-        parent.children.subscribe(this.buildSlick);
+        this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
+    }
+
+    /**
+     * Set an active slide for navigation dot
+     *
+     * @param slideIndex
+     */
+    public setActiveSlide(slideIndex: number): void {
+        this.data.activeSlide(slideIndex);
+    }
+
+    /**
+     * Navigate to a slide
+     *
+     * @param slideIndex
+     */
+    public navigateToSlide(slideIndex: number): void {
+        $(this.element).slick("slickGoTo", slideIndex);
+        this.setActiveSlide(slideIndex);
     }
 
     /**
@@ -48,8 +71,16 @@ export default class Slider extends PreviewBlock {
      *
      * @param {Element} element
      */
-    public afterChildrenRender(element: Element) {
+    public afterChildrenRender(element: Element): void {
         this.element = element;
+    }
+
+    /**
+     * Setup fields observables within the data class property
+     */
+    protected setupDataFields() {
+        super.setupDataFields();
+        this.updateDataValue("activeSlide", 0);
     }
 
     /**
@@ -63,7 +94,7 @@ export default class Slider extends PreviewBlock {
             arrows: this.data.show_arrows() === "1",
             autoplay: this.data.autoplay() === "1",
             autoplaySpeed: this.data.autoplay_speed(),
-            dots: this.data.show_dots() === "1",
+            dots: false, // We have our own dots implemented
             fade: this.data.fade() === "1",
             infinite: this.data.is_infinite() === "1",
         };

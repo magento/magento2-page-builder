@@ -15,7 +15,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
     /**
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
     function Slider(parent, config) {
       var _this;
@@ -32,15 +32,42 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
             }
 
             (0, _jquery)(_this.element).slick(_this.buildSlickConfig());
+            (0, _jquery)(_this.element).on("afterChange", function (slick, current) {
+              this.setActiveSlide(current.currentSlide);
+            }.bind(_this));
           }
         }, 100);
       }, 20);
-      parent.children.subscribe(_this.buildSlick);
+
+      _this.parent.children.subscribe(_this.buildSlick);
 
       _this.parent.stage.store.subscribe(_this.buildSlick);
 
       return _this;
     }
+    /**
+     * Set an active slide for navigation dot
+     *
+     * @param slideIndex
+     */
+
+
+    var _proto = Slider.prototype;
+
+    _proto.setActiveSlide = function setActiveSlide(slideIndex) {
+      this.data.activeSlide(slideIndex);
+    };
+    /**
+     * Navigate to a slide
+     *
+     * @param slideIndex
+     */
+
+
+    _proto.navigateToSlide = function navigateToSlide(slideIndex) {
+      (0, _jquery)(this.element).slick("slickGoTo", slideIndex);
+      this.setActiveSlide(slideIndex);
+    };
     /**
      * After child render record element
      *
@@ -48,10 +75,18 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
      */
 
 
-    var _proto = Slider.prototype;
-
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       this.element = element;
+    };
+    /**
+     * Setup fields observables within the data class property
+     */
+
+
+    _proto.setupDataFields = function setupDataFields() {
+      _PreviewBlock.prototype.setupDataFields.call(this);
+
+      this.updateDataValue("activeSlide", 0);
     };
     /**
      * Build the slack config object
@@ -66,7 +101,8 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
         arrows: this.data.show_arrows() === "1",
         autoplay: this.data.autoplay() === "1",
         autoplaySpeed: this.data.autoplay_speed(),
-        dots: this.data.show_dots() === "1",
+        dots: false,
+        // We have our own dots implemented
         fade: this.data.fade() === "1",
         infinite: this.data.is_infinite() === "1"
       };

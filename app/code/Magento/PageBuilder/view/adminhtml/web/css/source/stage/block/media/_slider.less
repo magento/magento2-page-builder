@@ -3,13 +3,51 @@
  * See COPYING.txt for license details.
  */
 
-/**
- * _slider contains {less} for Sliders and slider items
- */
+.pagebuilder-content-type .pagebuilder-slider {
+    border: none;
 
-.pagebuilder-slider {
-    .add-slide-button {
-        margin: 0 0 20px 15px;
+    .slider-controls {
+        padding: 14px 0;
+        text-align: center;
+
+        .slider-navigation {
+            display: inline-block;
+            text-align: center;
+            line-height: 33px;
+            padding: 0 8px;
+            vertical-align: middle;
+
+            .navigation-dot {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                border: 1px solid #CCCCCC;
+                border-radius: 10px;
+                margin: 0 11px;
+                cursor: pointer;
+                background: transparent;
+                transition: 0.3s;
+                vertical-align: middle;
+
+                &.active {
+                    border: none;
+                    background: #373330;
+                }
+                &:hover {
+                    border: 1px solid #b3b3b3;
+
+                    &.active {
+                        border: none;
+                        background: #1c1918;
+                    }
+                }
+            }
+        }
+
+        .add-slide {
+            display: inline-block;
+            vertical-align: middle;
+        }
     }
 
     .slick-slider {
@@ -17,61 +55,13 @@
             min-height: 50px;
         }
     }
+
+    &.children-min-height {
+        .element-children {
+            padding: 0;
+        }
+    }
 }
 
 @import './slick';
 @import './slick-theme';
-
-.pagebuilder-slider-content {
-    background: rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-    display: inline-block;
-    margin: @margin*2;
-    padding: @margin;
-    width: 40%;
-
-    h3, p, li {
-        color: white;
-        margin-bottom: @margin;
-    }
-}
-
-.pagebuilder-slide {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    float: left;
-    padding: 80px 0;
-    width: 100%;
-
-    .pagebuilder-content {
-        color: white;
-        display: inline-block;
-        padding: 24px 20px;
-        width: 30%;
-
-        h3 {
-            color: white;
-            margin-bottom: 6px;
-            margin-top: 6px;
-        }
-
-        .slider-content {
-            line-height: 24px;
-        }
-
-        button {
-            margin-top: 14px;
-        }
-
-        &.overlay-background {
-            background: rgba(0, 0, 0, 0.3);
-        }
-    }
-}
-
-.pagebuilder-slider-item {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
