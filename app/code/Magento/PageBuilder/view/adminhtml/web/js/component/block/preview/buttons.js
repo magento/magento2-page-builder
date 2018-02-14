@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../block/factory", "../../config", "./block"], function (_factory, _config, _block) {
+define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -14,20 +14,14 @@ define(["../../block/factory", "../../config", "./block"], function (_factory, _
     var _proto = Buttons.prototype;
 
     /**
-     * Adds button-item to parent buttons
+     * Add initial button-item if children is empty
+     *
+     * @param element
      */
-    _proto.addButton = function addButton() {
-      var _this = this;
-
-      var createBlockParams = [_config.getInitConfig("content_types")["button-item"], this.parent, this.stage, {}];
-
-      _factory.apply(void 0, createBlockParams).then(function (button) {
-        _this.addChild(button);
-
-        button.edit.open();
-      }).catch(function (error) {
-        console.error(error);
-      });
+    _proto.afterChildrenRender = function afterChildrenRender(element) {
+      if (this.parent.children().length === 0) {
+        this.parent.addButton();
+      }
     };
 
     return Buttons;
