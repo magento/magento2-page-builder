@@ -51,12 +51,14 @@ define([
             stage: {},
             stageId: utils.uniqueid(),
             stageContent: [],
-            panel: new Panel(),
             showBorders: false,
             loading: false,
             userSelect: true,
             isFullScreen: false,
             originalScrollTop: false,
+            isComponentInitialized: false,
+            isButtonEnable: ko.observable(false),
+            wysiwygConfigData: {},
             links: {
                 stageActive: false,
                 stage: {},
@@ -65,7 +67,8 @@ define([
                 showBorders: false,
                 loading: false,
                 userSelect: true,
-                isFullScreen: false
+                isFullScreen: false,
+                wysiwygConfigData: {}
             },
             config: {
                 name: 'stage'
@@ -80,7 +83,8 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect isFullScreen');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect '
+                    + 'isFullScreen wysiwygConfigData');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -95,9 +99,11 @@ define([
                 if (!fullScreen) {
                     _.defer(function () {
                         jQuery(window).scrollTop(self.originalScrollTop);
+                        //hide page builder area in case if we open full screen mode from button
+                        self.hidePageBuilderArea();
                     });
                 }
-            });
+            }, this);
 
             return this;
         },
@@ -105,27 +111,64 @@ define([
         /**
          *
          * @param {HTMLElement} node
+         * @return {void}
          */
         setElementNode: function (node) {
+
             this.domNode = node;
             this.bindPageBuilderButton(node);
 
-            // Detect if we can build the contents of the stage within Page Builder
-            if (validateFormat(this.initialValue)) {
-                this.loading(true);
-                return this.buildPageBuilder();
-            }
+            if (!this.isComponentInitialized) {
 
+                if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    //process case when page builder is initialized using button
+                    this.bindPageBuilderButton(node);
+                    this.handleUseDefaultButton(node);
+                } else {
+                    this.buildPageBuilder();
+                }
+
+                return;
+            }
             $(node).bindings({
                 value: this.value
             });
         },
 
         /**
+         * Returns panel object
+         *
+         * @return {Panel}
+         */
+        getPanel: function () {
+            if (!this.panel) {
+
+                this.panel = new Panel();
+            }
+
+            return this.panel;
+        },
+
+        /**
+         * Hide page builder area
+         *
+         * @return void
+         */
+        hidePageBuilderArea: function () {
+
+            if (this.wysiwygConfigData()['enable_pagebuilder']) {
+                this.isComponentInitialized = false;
+                this.stageActive(false);
+                this.visible(true);
+                $(this.domNode).hide();
+            }
+        },
+
+        /**
          * Any events fired on the WYSIWYG component should be ran on the stage
          *
-         * @param eventName
-         * @param params
+         * @param {String} eventName
+         * @param {String} params
          */
         emit: function (eventName, params) {
             return this.stage.emit(eventName, params);
@@ -134,27 +177,85 @@ define([
         /**
          * Bind a click event to the PageBuilder init button
          *
-         * @param node
+         * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder').on('click', this.buildPageBuilder.bind(this));
+            //hide wysiwyg text area and toogle buttons
+            $('#' + node.id).hide();
+
+            if (this.wysiwygConfigData()['hide_toogle_buttons']) {
+                $('#toggle' + node.id).hide();
+            }
+            $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
+                .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
+        },
+
+        /**
+         * Handles the 'Use Default Value' checkbox
+         *
+         * @param {HTMLElement} node
+         */
+        handleUseDefaultButton: function (node) {
+            var defaultButton = $('div.admin__field-service input[id="' + this.uid + '_default"]'),
+                editPageBuilderButton = $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')[0];
+
+            if (defaultButton.is(':checked')) {
+                editPageBuilderButton.disable();
+                editPageBuilderButton.style.pointerEvents = 'none';
+            }
+            $(document).on('click', 'div.admin__field-service input[id="' + this.uid + '_default"]', function () {
+                if (this.checked) {
+                    editPageBuilderButton.disable();
+                    editPageBuilderButton.style.pointerEvents = 'none';
+                } else {
+                    editPageBuilderButton.enable();
+                    editPageBuilderButton.style.pointerEvents = 'auto';
+                }
+            });
+        },
+
+        /**
+         * Displays page builder based on configuration
+         * @param  {Event} event
+         * @return void
+         */
+        displayPageBuilderInFullScreenMode: function (event) {
+            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+
+            this.isComponentInitialized = true;
+
+            if (!$.isEmptyObject(this.stage)) {
+
+                this.isFullScreen(isFullScreen);
+                //handle case, when pagebuilder was previously opened
+                this.stageActive(true);
+            } else {
+                //initialize page builder on first click
+                this.buildPageBuilder(event, isFullScreen);
+            }
         },
 
         /**
          * Handle a click event requesting that we build PageBuilder
          *
-         * @param event
-         * @param buildInstance
+         * @param {Event} event
+         * @param {Boolean} isFullScreenMode
+         * @return void
          */
-        buildPageBuilder: function (event) {
-            var self = this;
-            var bindStage = function (stage) {
-                self.stage = stage;
-                stage.on('stageReady', function() {
-                    self.stageActive(true);
-                    self.visible(false);
-                });
-            };
+        buildPageBuilder: function (event, isFullScreenMode) {
+            var self = this,
+                isFullScreeMode = isFullScreenMode || false,
+                bindStage = function (stage) {
+                    self.stage = stage;
+                    stage.on('stageReady', function () {
+                        self.stageActive(true);
+                        self.visible(false);
+                    });
+                };
+
+            this.loading(true);
+
+            this.isFullScreen(isFullScreeMode);
 
             if (typeof event !== 'undefined') {
                 event.stopPropagation();
@@ -162,17 +263,25 @@ define([
 
             buildStage(
                 this,
-                this.panel,
+                this.getPanel(),
                 this.stageContent,
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
+
+            // On stage ready show the interface
+            this.stage.on('stageReady', function () {
+                self.stageActive(true); // Display the stage UI
+                self.visible(false); // Hide the original WYSIWYG editor
+            });
+
+            this.isComponentInitialized = true;
         },
 
         /**
          * Return the PageBuilder stage templage
          *
-         * @returns {string}
+         * @returns {String}
          */
         getStageTemplate: function () {
             return 'Magento_PageBuilder/component/stage.html';
@@ -181,8 +290,8 @@ define([
         /**
          * Throw a confirmation dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         confirmationDialog: function (options) {
             if (options.actions &&
@@ -199,12 +308,13 @@ define([
         /**
          * Throw an alert dialog in the exterior system.
          *
-         * @param {object} options
-         * @returns {null}
+         * @param {Object} options
+         * @return void
          */
         alertDialog: function (options) {
             if (options.content) {
                 options.content = $t(options.content);
+
                 if (options.title) {
                     options.title = $t(options.title);
                 }
