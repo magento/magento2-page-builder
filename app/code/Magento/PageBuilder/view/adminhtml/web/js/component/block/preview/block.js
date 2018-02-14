@@ -77,6 +77,28 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
       }
     };
     /**
+     * Set state based on overlay mouseover event for the preview
+     */
+
+
+    _proto.onMouseOver = function onMouseOver(data, event) {
+      var $currentTarget = event.currentTarget;
+      var $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
+      $optionsMenu.addClass("pagebuilder-options-visible");
+      jQuery($currentTarget).addClass("pagebuilder-content-type-active");
+    };
+    /**
+     * Set state based on overlay mouseout event for the preview
+     */
+
+
+    _proto.onMouseOut = function onMouseOut(data, event) {
+      var $currentTarget = event.currentTarget;
+      var $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
+      $optionsMenu.removeClass("pagebuilder-options-visible");
+      jQuery($currentTarget).removeClass("pagebuilder-content-type-active");
+    };
+    /**
      * Setup fields observables within the data class property
      */
 
