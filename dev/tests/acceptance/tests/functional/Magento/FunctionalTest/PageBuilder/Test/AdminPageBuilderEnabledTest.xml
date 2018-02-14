@@ -50,4 +50,166 @@
         <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO4"/>
         <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
     </test>
+    <test name="VerifyPageBuilderVisibleOnCatalog">
+        <annotations>
+            <title value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Verify PageBuilder visible on creation form of Catalog Page-->
+        <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToNewCatalog"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
+        <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
+        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+
+        <waitForElementVisible selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <click selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="clickOnPageBuilderBtn" />
+        <!--See PageBuilder fullsize-->
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+        <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent" />
+    </test>
+    <test name="VerifyPageBuilderVisibleOnPages">
+        <annotations>
+            <title value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatePreReqBlock"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Verify PageBuilder visible on CMS Page creation form-->
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
+
+        <!--Verify PageBuilder visible on CMS Block creation form-->
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockPage"/>
+
+        <!--Verify PageBuilder visible on Newsletter creation form-->
+        <amOnPage url="{{NewsletterTemplateForm.url}}" stepKey="amOnNewsletterTemplatePage"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <actionGroup ref="verifyPageBuilderNotVisibleOnPage" stepKey="dontSeePageBuilderOnPage"/>
+        <seeElement selector="{{NewsletterWYSIWYGSection.TextArea}}" stepKey="seeTextArea"/>
+    </test>
+    <test name="VerifyPageBuilderEnableOnCMSPageWhenPageBuilderEnabledAndWYSIWYGEnabled">
+        <annotations>
+            <title value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
+            <description value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Create CMS Page using PageBuilder-->
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waitForPageBuilderDisplay" />
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent" />
+        <!--Enable WYSIWYG-->
+        <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
+    </test>
+    <test name="VerifyPageBuilderEnableOnBlockPageWhenPageBuilderEnabledAndWYSIWYGDisabled">
+        <annotations>
+            <title value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
+            <description value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Enable PageBuilder from Configuration-->
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <!--Create CMS Block using PageBuilder-->
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
+        <see userInput="You saved the block." stepKey="seeSuccessMessage"/>
+        <!--Disable WYSIWYG from Configuration-->
+        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedCMSBlockPage2">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="seePageBuilderOnPage"/>
+    </test>
 </tests>
