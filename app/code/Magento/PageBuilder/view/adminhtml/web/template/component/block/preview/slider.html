@@ -7,7 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-slider children-min-height">
     <!-- ko template: optionsInstance.template --><!-- /ko -->
-    <div data-bind="style: {textAlign: preview.data.text_align}">
+    <div class="slider-container" data-bind="style: preview.previewStyle">
         <!-- ko template: previewChildTemplate --><!-- /ko -->
     </div>
     <div class="pagebuilder-empty pagebuilder-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('Click \'Add Slide\'')">
@@ -15,7 +15,10 @@
     <div class="slider-controls">
         <!-- ko if: children().length > 0 -->
         <div class="slider-navigation" data-bind="foreach: getChildren()">
-            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}, click: function () { $parent.preview.navigateToSlide($index()); }"></div>
+            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}, click: function () { $parent.preview.navigateToSlide($index()); }">
+                <a href="#"></a>
+                <span class="tooltip-content" role="tooltip" data-bind="text: preview.data.title"></span>
+            </div>
         </div>
         <!-- /ko -->
         <button class="add-slide" data-bind="click: addSlide">Add Slide</button>

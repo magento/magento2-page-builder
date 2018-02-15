@@ -5,7 +5,6 @@
 import ko from "knockout";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
-import ko from "knockout";
 import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {

@@ -6,6 +6,10 @@
 .pagebuilder-content-type .pagebuilder-slider {
     border: none;
 
+    .slider-container {
+        overflow: hidden;
+    }
+
     .slider-controls {
         padding: 14px 0;
         text-align: center;
@@ -16,29 +20,82 @@
             line-height: 33px;
             padding: 0 8px;
             vertical-align: middle;
+            max-width: 50%;
 
             .navigation-dot {
                 display: inline-block;
                 width: 14px;
                 height: 14px;
-                border: 1px solid #CCCCCC;
-                border-radius: 10px;
                 margin: 0 11px;
-                cursor: pointer;
-                background: transparent;
-                transition: 0.3s;
                 vertical-align: middle;
+                font-size: 12px;
+                .lib-tooltip(
+                    @_tooltip-position: top,
+                    @_tooltip-color: "#CCCCCC"
+                );
+
+                .tooltip-content {
+                    transform: translateX(-50%);
+                    text-align: center;
+
+                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+                    background: #fffbbb;
+                    border: 1px solid #afadac;
+                    border-radius: 1px;
+                    padding: .9rem 1.8rem;
+                    position: absolute;
+                    white-space: nowrap;
+                    min-width: auto;
+                    left: 50%;
+                    font-size: 14px;
+                    bottom: 160%;
+
+                    &:before, &:after {
+                        border: .8rem solid transparent;
+                        height: 0;
+                        width: 0;
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -.8rem;
+                    }
+                    &:before {
+                        border-top-color: #afadac;
+                        z-index: 3;
+                        margin-top: 1px;
+                    }
+                    &:after {
+                        border-top-color: #fffbbb;
+                        z-index: 4;
+                    }
+                }
+
+                a {
+                    display: block;
+                    width: 14px;
+                    height: 14px;
+                    border: 1px solid #CCCCCC;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    background: transparent;
+                    transition: 0.3s;
+
+                    &:hover {
+                        border: 1px solid #b3b3b3;
+
+                        &.active {
+                            border: none;
+                            background: #1c1918;
+                        }
+                    }
+                }
 
                 &.active {
-                    border: none;
-                    background: #373330;
-                }
-                &:hover {
-                    border: 1px solid #b3b3b3;
-
-                    &.active {
+                    a {
                         border: none;
-                        background: #1c1918;
+                        background: #373330;
                     }
                 }
             }

@@ -4,16 +4,17 @@
  */
 
 import $ from "jquery";
-import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
 import PreviewBlock from "./block";
+import EventBus from "../../event-bus";
 
 export default class Slider extends PreviewBlock {
     private ready: boolean = false;
     private element: Element;
+    private childSubscribe: KnockoutSubscription;
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -26,12 +27,55 @@ export default class Slider extends PreviewBlock {
                 try {
                     $(this.element).slick("unslick");
                 } catch (e) {
-                    // This may error
+                    // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
                 }
-                $(this.element).slick(this.buildSlickConfig());
-                $(this.element).on("afterChange", function(slick: {}, current: any){
+
+                // Dispose current subscription in order to prevent infinite loop
+                this.childSubscribe.dispose();
+
+                // Force an update on all children, ko tries to intelligently re-render but fails
+                const data = this.parent.children().slice(0);
+                this.parent.children([]);
+                $(this.element).empty();
+                this.parent.children(data);
+
+                // Re-subscribe original event
+                this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+
+                // Build slick
+                $(this.element).slick(
+                    Object.assign(
+                        {
+                            initialSlide: this.data.activeSlide() || 0,
+                        },
+                        this.buildSlickConfig(),
+                    ),
+                );
+
+                // Update our KO pointer to the active slide on change
+                $(this.element).on("afterChange", (slick: {}, current: any) => {
                     this.setActiveSlide(current.currentSlide);
-                }.bind(this));
+                });
+
+                /**
+                 * Update the heights of individual slides in the slider
+                 */
+                function updateHeights() {
+                    _.defer(() => {
+                        const equalHeight = $(this).parents(".slider-container").height();
+                        $(this).find(".pagebuilder-slide").each((index, element) => {
+                            if ($(element).outerHeight() < equalHeight && !($(element)[0].style.minHeight)) {
+                                $(element).height(equalHeight + "px");
+                            } else if ($(element).outerHeight() !== equalHeight) {
+                                $(element).height("");
+                            }
+                        });
+                    });
+                }
+
+                // If a slide within the slider has no min height & is smaller than the min width, update it's height
+                $(this.element).on("init", updateHeights);
+                $(this.element).on("setPosition", updateHeights);
             }
         }, 100);
     }, 20);
@@ -43,7 +87,7 @@ export default class Slider extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
-        this.parent.children.subscribe(this.buildSlick);
+        this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
     }
 
@@ -59,10 +103,11 @@ export default class Slider extends PreviewBlock {
     /**
      * Navigate to a slide
      *
-     * @param slideIndex
+     * @param {number} slideIndex
+     * @param {boolean} dontAnimate
      */
-    public navigateToSlide(slideIndex: number): void {
-        $(this.element).slick("slickGoTo", slideIndex);
+    public navigateToSlide(slideIndex: number, dontAnimate: boolean = false): void {
+        $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
         this.setActiveSlide(slideIndex);
     }
 
