@@ -12,7 +12,7 @@ import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
-import {createColumn, resizeColumn, updateColumnWidth} from "./column-group/utils";
+import {resizeColumn, updateColumnWidth} from "./column-group/resizing";
 import {default as ColumnGroupPreview} from "./preview/column-group";
 import {DropPosition} from "./preview/column-group/dragdrop";
 import {getDragColumn} from "./preview/column-group/registry";
@@ -20,6 +20,7 @@ import {
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "./preview/column-group/resizing";
+import {createColumn} from "./column-group/factory";
 
 export default class ColumnGroup extends Block {
 
@@ -88,7 +89,6 @@ export default class ColumnGroup extends Block {
             }
             updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
             updateColumnWidth(duplicate, getAcceptedColumnWidth(duplicateWidth.toString()));
-            return duplicate;
         } else {
             // Conduct an outward search on the children to locate a suitable shrinkable column
             const shrinkableColumn = findShrinkableColumn(child);
@@ -111,6 +111,7 @@ export default class ColumnGroup extends Block {
                 title: $t("Unable to duplicate column"),
             });
         }
+        return duplicate;
     }
 
     /**
@@ -120,7 +121,7 @@ export default class ColumnGroup extends Block {
      * @param {JQueryUI.DroppableEventUIParam} ui
      * @param {DropPosition} dropPosition
      */
-    public handleNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
+    public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -144,7 +145,7 @@ export default class ColumnGroup extends Block {
      * @param {Event} event
      * @param {DropPosition} movePosition
      */
-    public handleExistingColumnDrop(event: Event, movePosition: DropPosition) {
+    public onExistingColumnDrop(event: Event, movePosition: DropPosition) {
         const column: Column = getDragColumn();
         let modifyOldNeighbour;
         event.preventDefault();
@@ -193,7 +194,7 @@ export default class ColumnGroup extends Block {
      * @param {Column} column
      * @param {number} newIndex
      */
-    public handleColumnSort(column: Column, newIndex: number) {
+    public onColumnSort(column: Column, newIndex: number) {
         const currentIndex = getColumnIndexInGroup(column);
         if (currentIndex !== newIndex) {
             if (currentIndex < newIndex) {
@@ -211,7 +212,7 @@ export default class ColumnGroup extends Block {
      * @param {number} width
      * @param {Column} adjustedColumn
      */
-    public handleColumnResize(column: Column, width: number, adjustedColumn: Column) {
+    public onColumnResize(column: Column, width: number, adjustedColumn: Column) {
         resizeColumn(column, width, adjustedColumn);
     }
 

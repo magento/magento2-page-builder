@@ -45,4 +45,4 @@ define(["../preview/column-group/resizing"], function (_resizing) {
     updateColumnWidth: updateColumnWidth
   };
 });
-//# sourceMappingURL=utils.js.map
+//# sourceMappingURL=resizing.js.map
