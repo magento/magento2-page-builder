@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../component/config", "../../utils/directives", "../../utils/image", "../../utils/url"], function (_underscore, _config, _directives, _image, _urlUtils) {
+define(["underscore", "../../component/config", "../../utils/directives", "../../utils/image", "../../utils/url"], function (_underscore, _config, _directives, _image, _url) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -55,9 +55,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         if (key === "background_image" && Array.isArray(value) && value[0] !== undefined || key === "mobile_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
           var imageUrl = value[0].url;
-
-          var mediaUrl = _urlUtils.convertUrlToPathIfOtherUrlIsOnlyAPath(_config.getInitConfig("media_url"), imageUrl);
-
+          var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
           var mediaPath = imageUrl.split(mediaUrl);
           var directive = "{{media url=" + mediaPath[1] + "}}";
           value = "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";
