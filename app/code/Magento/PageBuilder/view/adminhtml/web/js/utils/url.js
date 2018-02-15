@@ -29,9 +29,21 @@ define([], function () {
         return a.pathname;
     }
 
+    /**
+     * Convert url to path if other url is only a path
+     *
+     * @param {String} url
+     * @param {String} otherUrl
+     * @returns {String}
+     */
+    function convertUrlToPathIfOtherUrlIsOnlyAPath (url, otherUrl) {
+        return isPathOnly(otherUrl) ? getPathFromUrl(url) : url;
+    }
+
     return {
         getPathFromUrl: getPathFromUrl,
-        isPathOnly: isPathOnly
+        isPathOnly: isPathOnly,
+        convertUrlToPathIfOtherUrlIsOnlyAPath: convertUrlToPathIfOtherUrlIsOnlyAPath
     };
 });
-//# sourceMappingURL=array.js.map
+//# sourceMappingURL=url.js.map
