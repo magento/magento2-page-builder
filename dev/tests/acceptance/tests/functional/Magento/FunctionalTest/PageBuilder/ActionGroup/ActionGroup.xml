@@ -407,14 +407,25 @@
         <click selector="{{BlockPageActionsSection.edit(CMSBlockPage.identifier)}}" stepKey="navigateToCreatedCMSBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
-    <actionGroup name="navigateToCreatedCategory">
+    <actionGroup name="fillDynamicBlockName">
         <arguments>
-            <argument name="Category"/>
+            <argument name="Banner" defaultValue=""/>
         </arguments>
-        <amOnPage url="{{AdminCategoryPage.page}}" stepKey="amOnCategoryPage"/>
+        <fillField selector="{{AdminBannerBasicActionSection.Name}}" userInput="{{Banner.Name}}" stepKey="fillBannerName" />
+        <conditionalClick selector="{{AdminBannerBasicActionSection.ContentTab}}" dependentSelector="{{BannerContentSection.checkIfContentTabOpen}}" stepKey="clickIfContentTabCloses" visible="true"/>
+    </actionGroup>
+    <actionGroup name="navigateToCreatedDynamicBlock">
+        <arguments>
+            <argument name="Banner"/>
+        </arguments>
+        <amOnPage url="{{AdminBannerGridPage.url}}" stepKey="navigateToDynamicBlocksGrid"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="clickToAttemptSortByIdDescending" visible="true"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForFirstIdSortDescendingToFinish" />
+        <!-- Conditional Click again in case it goes from default state to ascending on first click -->
+        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="secondClickToAttemptSortByIdDescending" visible="true"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
+        <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <click selector="{{AdminCategorySidebarTreeSection.categoryInTree(Category.Name)}}" stepKey="navigateToCreatedCategory" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner" />
     </actionGroup>
 </actionGroups>

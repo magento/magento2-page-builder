@@ -253,9 +253,9 @@ define([
                     });
                 };
 
-            this.isFullScreen(isFullScreeMode);
-
             this.loading(true);
+
+            this.isFullScreen(isFullScreeMode);
 
             if (typeof event !== 'undefined') {
                 event.stopPropagation();
