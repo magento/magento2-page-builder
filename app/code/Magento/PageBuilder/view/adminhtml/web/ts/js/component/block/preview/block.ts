@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import $ from "jquery";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
@@ -102,20 +103,20 @@ export default class PreviewBlock {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOver(data, event) {
-        const $currentTarget = event.currentTarget;
-        const $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
-        $optionsMenu.addClass("pagebuilder-options-visible");
-        jQuery($currentTarget).addClass("pagebuilder-content-type-active");
+        const currentTarget = event.currentTarget;
+        const optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        optionsMenu.addClass("pagebuilder-options-visible");
+        $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOut(data, event) {
-        const $currentTarget = event.currentTarget;
-        const $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
-        $optionsMenu.removeClass("pagebuilder-options-visible");
-        jQuery($currentTarget).removeClass("pagebuilder-content-type-active");
+        const currentTarget = event.currentTarget;
+        const optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        optionsMenu.removeClass("pagebuilder-options-visible");
+        $(currentTarget).removeClass("pagebuilder-content-type-active");
     }
 
     /**

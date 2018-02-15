@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper"], function (_knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper) {
+define(["knockout", "underscore", "jquery", "../../format/style-attribute-filter", "../../format/style-attribute-mapper"], function (_knockout, _underscore, _jquery, _styleAttributeFilter, _styleAttributeMapper) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -82,10 +82,10 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
 
 
     _proto.onMouseOver = function onMouseOver(data, event) {
-      var $currentTarget = event.currentTarget;
-      var $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
-      $optionsMenu.addClass("pagebuilder-options-visible");
-      jQuery($currentTarget).addClass("pagebuilder-content-type-active");
+      var currentTarget = event.currentTarget;
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+      optionsMenu.addClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
      * Set state based on overlay mouseout event for the preview
@@ -93,10 +93,10 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
 
 
     _proto.onMouseOut = function onMouseOut(data, event) {
-      var $currentTarget = event.currentTarget;
-      var $optionsMenu = jQuery($currentTarget).find(".pagebuilder-options-wrapper").first();
-      $optionsMenu.removeClass("pagebuilder-options-visible");
-      jQuery($currentTarget).removeClass("pagebuilder-content-type-active");
+      var currentTarget = event.currentTarget;
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+      optionsMenu.removeClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
     };
     /**
      * Setup fields observables within the data class property
