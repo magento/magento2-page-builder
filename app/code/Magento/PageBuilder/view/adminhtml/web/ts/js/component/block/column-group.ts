@@ -5,7 +5,6 @@
 import $t from "mage/translate";
 import _ from "underscore";
 import {moveArrayItem} from "../../utils/array";
-import Appearance from "../appearance/appearance";
 import {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
 import Stage from "../stage";
@@ -29,10 +28,9 @@ export default class ColumnGroup extends Block {
      * @param {Stage} stage
      * @param {ConfigContentBlock} config
      * @param formData
-     * @param {Appearance} appearance
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, appearance: Appearance) {
-        super(parent, stage, config, formData, appearance);
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
+        super(parent, stage, config, formData);
 
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {

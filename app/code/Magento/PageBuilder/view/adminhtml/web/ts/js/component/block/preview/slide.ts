@@ -4,6 +4,7 @@
  */
 import Appearance from "../../appearance/appearance";
 import Block from "../block";
+import ko from "knockout";
 import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
