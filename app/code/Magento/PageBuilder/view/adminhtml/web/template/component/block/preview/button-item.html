@@ -6,6 +6,8 @@
 -->
 
 <div class="pagebuilder-structure pagebuilder-entity pagebuilder-entity-preview pagebuilder-live-edit pagebuilder-button-item">
-    <a data-bind="text: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), attr:{class: preview.data.button_type()}, style: preview.previewStyle()"></a>
+    <a data-bind="attr:{ class: preview.data.button_type() }, style: preview.previewStyle()">
+        <span data-bind="text: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+    </a>
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>
