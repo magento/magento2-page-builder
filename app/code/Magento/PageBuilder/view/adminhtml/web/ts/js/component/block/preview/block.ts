@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
-import $ from "jquery";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
