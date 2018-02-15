@@ -7,8 +7,8 @@ import _ from "underscore";
 import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
-import {isPathOnly, getPathFromUrl} from "../../utils/url";
 import {decodeUrl} from "../../utils/image";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
 interface FromDomResult {
     [key: string]: any;
@@ -53,12 +53,7 @@ export default class StyleAttributeMapper {
                     || (key === "mobile_image" && Array.isArray(value) && value[0] !== undefined)) {
                     // convert to media directive
                     const imageUrl = value[0].url;
-                    let mediaUrl = Config.getInitConfig("media_url");
-
-                    // if imageUrl begins with forward slash, remove host
-                    if (isPathOnly(imageUrl)) {
-                        mediaUrl = getPathFromUrl(mediaUrl);
-                    }
+                    const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
 
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";

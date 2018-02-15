@@ -6,7 +6,7 @@
 import _ from "underscore";
 import Config from "../config";
 import Block from "./block";
-import {isPathOnly, getPathFromUrl} from "../../utils/url";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
 export default class Image extends Block {
 
@@ -62,12 +62,7 @@ export default class Image extends Block {
      */
     private getImageUrl(image: any[]) {
         const imageUrl = image[0].url;
-        let mediaUrl = Config.getInitConfig("media_url");
-
-        // if imageUrl begins with forward slash, remove host
-        if (isPathOnly(imageUrl)) {
-            mediaUrl = getPathFromUrl(mediaUrl);
-        }
+        const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
 
         const mediaPath = imageUrl.split(mediaUrl);
         const directive = "{{media url=" + mediaPath[1] + "}}";

@@ -20,7 +20,7 @@ define([
          * @returns {Object} Chainable
          */
         setOptions: function (data) {
-            this._super();
+            this._super(data);
 
             if (this.options().length > 1) {
                 this.setVisible(true);

@@ -6,8 +6,8 @@
 /**
  * Check for whether url string contains only a path
  *
- * @param {string} url
- * @returns {boolean}
+ * @param {String} url
+ * @returns {Boolean}
  */
 export function isPathOnly(url: string): boolean {
     return url.indexOf("/") === 0;
@@ -16,8 +16,8 @@ export function isPathOnly(url: string): boolean {
 /**
  * Get the path from a URL
  *
- * @param {string} url
- * @returns {string}
+ * @param {String} url
+ * @returns {String}
  */
 export function getPathFromUrl(url: string): string {
     const a = document.createElement("a");
@@ -25,4 +25,15 @@ export function getPathFromUrl(url: string): string {
     a.href = url;
 
     return a.pathname;
+}
+
+/**
+ * Convert url to path if other url is only a path
+ *
+ * @param {string} url
+ * @param {string} otherUrl
+ * @returns {string}
+ */
+export function convertUrlToPathIfOtherUrlIsOnlyAPath(url: string, otherUrl: string): string {
+    return isPathOnly(otherUrl) ? getPathFromUrl(url) : url;
 }

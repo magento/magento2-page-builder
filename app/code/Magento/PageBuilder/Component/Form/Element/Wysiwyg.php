@@ -10,7 +10,7 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\PageBuilder\Model\State as PageBuilderState;
 
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
@@ -21,7 +21,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param FormFactory $formFactory
      * @param ConfigInterface $wysiwygConfig
      * @param CategoryAttributeRepositoryInterface $attrRepository
-     * @param ScopeConfigInterface $scopeConfig
+     * @param PageBuilderState $pageBuilderState
      * @param array $components
      * @param array $data
      * @param array $config
@@ -31,15 +31,12 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         FormFactory $formFactory,
         ConfigInterface $wysiwygConfig,
         CategoryAttributeRepositoryInterface $attrRepository,
-        ScopeConfigInterface $scopeConfig,
+        PageBuilderState $pageBuilderState,
         array $components = [],
         array $data = [],
         array $config = []
     ) {
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
-        $isEditorNameBlueFoot = (int)$scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Wysiwyg\Config::IS_PAGEBUILDER_ENABLED
-        );
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
@@ -50,10 +47,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 // This model is used by non product attributes
             }
         }
-        $isRenderWysiwyg = isset($wysiwygConfigData['enable_pagebuilder'])
+        $isEnablePageBuilder = isset($wysiwygConfigData['enable_pagebuilder'])
             && !$wysiwygConfigData['enable_pagebuilder']
-            || !$isEditorNameBlueFoot;
-        if (!$isRenderWysiwyg) {
+            || false;
+        if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder)) {
             // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
             $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
