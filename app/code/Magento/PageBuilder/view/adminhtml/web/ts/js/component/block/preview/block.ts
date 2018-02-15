@@ -100,21 +100,29 @@ export default class PreviewBlock {
     }
 
     /**
-     * Set state based on overlay mouseover event for the preview
+     * Set state based on mouseover event for the preview
      */
     public onMouseOver(data, event) {
         const currentTarget = event.currentTarget;
-        const optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+
+        if ($(currentTarget).hasClass("type-nested")) {
+            optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+        }
         optionsMenu.addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**
-     * Set state based on overlay mouseout event for the preview
+     * Set state based on mouseout event for the preview
      */
     public onMouseOut(data, event) {
         const currentTarget = event.currentTarget;
-        const optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+
+        if ($(currentTarget).hasClass("type-nested")) {
+            optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+        }
         optionsMenu.removeClass("pagebuilder-options-visible");
         $(currentTarget).removeClass("pagebuilder-content-type-active");
     }

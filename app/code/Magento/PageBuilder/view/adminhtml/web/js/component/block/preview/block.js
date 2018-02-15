@@ -77,24 +77,34 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
       }
     };
     /**
-     * Set state based on overlay mouseover event for the preview
+     * Set state based on mouseover event for the preview
      */
 
 
     _proto.onMouseOver = function onMouseOver(data, event) {
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+
+      if ((0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+      }
+
       optionsMenu.addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
-     * Set state based on overlay mouseout event for the preview
+     * Set state based on mouseout event for the preview
      */
 
 
     _proto.onMouseOut = function onMouseOut(data, event) {
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+
+      if ((0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+      }
+
       optionsMenu.removeClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
     };
