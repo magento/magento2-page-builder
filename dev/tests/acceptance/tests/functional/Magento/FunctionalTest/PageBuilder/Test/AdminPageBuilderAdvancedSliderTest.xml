@@ -230,7 +230,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <!--<seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource1"/>-->
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Remove uploaded image by TrashBin icon-->
@@ -244,15 +244,13 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage2" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource2"/>
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-
-        <!--See Uploaded Image On Storage-->
-        <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -261,8 +259,7 @@
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-
-        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeMainImageSource2"/>-->
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
@@ -272,6 +269,6 @@
         <waitForPageLoad stepKey="waitForPageLoad3" />
 
         <!--Verify image on Storefront-->
-        <see userInput="#image" stepKey="seeImageContentOnStorefront" />
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>

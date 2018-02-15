@@ -638,24 +638,29 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
             <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <!--Assign block to cms page-->
+        <actionGroup ref="AssignBlockToCMSPage" stepKey="assignBlockToCMSPage">
+            <argument name="Block" value="$$createPreReqBlock$$"/>
+            <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
         <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-
-
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
@@ -663,11 +668,10 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
         </actionGroup>
-
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <!--<seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource1"/>-->
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Remove uploaded image by TrashBin icon-->
@@ -678,19 +682,16 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
             <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
         </actionGroup>
-
         <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForPageLoad stepKey="waitForPageLoad1" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <!--See Uploaded Image On Storage-->
-        <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
-
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -699,10 +700,9 @@
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <!--<seeElement selector="{{ImageOnPreview.imageSource(ImageFolder.name,PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeMainImageSource2"/>-->
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
@@ -711,9 +711,9 @@
         </actionGroup>
         <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-
         <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
-
-
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
+        <waitForPageLoad stepKey="waitForContentLoaded"/>
+        <seeElement selector="{{ImageOnFrontend.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>
