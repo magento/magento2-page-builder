@@ -10,22 +10,12 @@
         __('This will change your Admin and storefront by:') ?></p>
     <ul>
         <li>
-            <?=
-            /* @escapeNotVerified */
-            __(
-                '<strong>Removing PageBuilder\'s advanced content tools</strong> '
-                . 'from their assigned text fields and adding a basic text editor as replacement.'
-            )
-            ?>
+            <strong><?= $block->escapeHtml(__('Removing PageBuilder\'s advanced content tools')) ?></strong>
+                    <?= $block->escapeHtml(__('from their assigned text fields and adding a basic text editor as replacement.')) ?>
         </li>
         <li>
-            <?=
-            /* @escapeNotVerified */
-            __(
-                '<strong>Potentially creating display errors on your storefront</strong>, due to content reformatting. '
-                . 'Also, some content may no longer be editable from within the Admin.'
-            )
-            ?>
+            <strong><?= $block->escapeHtml(__('Potentially creating display errors on your storefront')) ?></strong>
+            <?= $block->escapeHtml(__(', due to content reformatting. Also, some content may no longer be editable from within the Admin.')) ?>
         </li>
     </ul>
 </div>
