@@ -80,13 +80,7 @@ define(["underscore", "../config", "./block", "../../utils/url"], function (_und
 
     _proto.getImageUrl = function getImageUrl(image) {
       var imageUrl = image[0].url;
-
-      var mediaUrl = _config.getInitConfig("media_url");
-
-      // if imageUrl begins with forward slash, remove host
-      if (_urlUtils.isPathOnly(imageUrl)) {
-          mediaUrl = _urlUtils.getPathFromUrl(mediaUrl);
-      }
+      var mediaUrl = _urlUtils.convertUrlToPathIfOtherUrlIsOnlyAPath(_config.getInitConfig("media_url"), imageUrl);
 
       var mediaPath = imageUrl.split(mediaUrl);
       var directive = "{{media url=" + mediaPath[1] + "}}";

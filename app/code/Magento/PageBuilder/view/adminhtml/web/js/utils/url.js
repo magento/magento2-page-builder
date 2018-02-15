@@ -8,8 +8,8 @@ define([], function () {
     /**
      * Check for whether url string contains only a path
      *
-     * @param {string} url
-     * @returns {boolean}
+     * @param {String} url
+     * @returns {Boolean}
      */
     function isPathOnly (url) {
         return url.indexOf("/") === 0;
@@ -18,8 +18,8 @@ define([], function () {
     /**
      * Get the path from a URL
      *
-     * @param {string} url
-     * @returns {string}
+     * @param {String} url
+     * @returns {String}
      */
     function getPathFromUrl (url) {
         const a = document.createElement("a");
