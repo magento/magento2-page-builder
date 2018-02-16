@@ -68,7 +68,7 @@ export default class ColumnGroup extends Block {
      * @param {boolean} autoAppend
      * @returns {Structural|Undefined}
      */
-    public duplicateChild(child: Column, autoAppend: boolean = true): Structural {
+    public duplicateChild(child: Column, autoAppend: boolean = true): Structural | void {
         let duplicate;
         // Attempt to split the current column into parts
         let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
@@ -110,8 +110,9 @@ export default class ColumnGroup extends Block {
                 content: $t("There is no free space within the column group to perform this action."),
                 title: $t("Unable to duplicate column"),
             });
+        } else {
+            return duplicate;
         }
-        return duplicate;
     }
 
     /**

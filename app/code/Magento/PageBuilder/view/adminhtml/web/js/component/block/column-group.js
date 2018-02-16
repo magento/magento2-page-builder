@@ -48,7 +48,7 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural}
+     * @returns {Structural|Undefined}
      */
 
 
@@ -99,9 +99,9 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
           content: (0, _translate)("There is no free space within the column group to perform this action."),
           title: (0, _translate)("Unable to duplicate column")
         });
+      } else {
+        return duplicate;
       }
-
-      return duplicate;
     };
     /**
      * Handle a new column being dropped into the group

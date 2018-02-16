@@ -11,7 +11,7 @@ define(["../../config", "../factory"], function (_config, _factory) {
    * @param {ColumnGroup} parent
    * @param {number} width
    * @param {number} index
-   * @returns {Promise<void>}
+   * @returns {Promise<Column>}
    */
   function createColumn(parent, width, index) {
     return (0, _factory)(_config.getContentType("column"), parent, parent.stage, {

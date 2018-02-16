@@ -5,6 +5,7 @@
 import Config from "../../config";
 import ColumnGroup from "../column-group";
 import createBlock from "../factory";
+import Column from "../column";
 
 /**
  * Create a column and add it to it's parent
@@ -14,7 +15,7 @@ import createBlock from "../factory";
  * @param {number} index
  * @returns {Promise<Column>}
  */
-export function createColumn(parent: ColumnGroup, width: number, index?: number) {
+export function createColumn(parent: ColumnGroup, width: number, index?: number): Promise<Column> {
     return createBlock(
         Config.getContentType("column"),
         parent,
