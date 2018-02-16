@@ -154,7 +154,44 @@
                 </select>
             </formElements>
         </field>
-        <field name="show_button" sortOrder="20" formElement="select">
+        <field name="button_type" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">pagebuilder-button-primary</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">never_show</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Button Type</label>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = show_button:value</link>
+                </imports>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-primary</item>
+                                <item name="label" xsi:type="string" translate="true">Primary</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-secondary</item>
+                                <item name="label" xsi:type="string" translate="true">Secondary</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">pagebuilder-button-link</item>
+                                <item name="label" xsi:type="string" translate="true">Link</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="show_button" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">never_show</item>
@@ -186,7 +223,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="show_overlay" sortOrder="30" formElement="select">
+        <field name="show_overlay" sortOrder="40" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">always</item>
@@ -218,7 +255,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="overlay_color" sortOrder="40" formElement="input">
+        <field name="overlay_color" sortOrder="50" formElement="input">
             <settings>
                 <label translate="true">Content Overlay Color</label>
                 <additionalClasses>
@@ -230,7 +267,7 @@
                 <dataScope>overlay_color</dataScope>
             </settings>
         </field>
-        <field name="overlay_transparency" sortOrder="50" formElement="input">
+        <field name="overlay_transparency" sortOrder="60" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">0</item>
@@ -249,7 +286,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="min_height" sortOrder="60" formElement="input">
+        <field name="min_height" sortOrder="70" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">250</item>
@@ -272,7 +309,7 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="message" sortOrder="0" formElement="wysiwyg" template="ui/form/field">
+        <field name="message" sortOrder="10" formElement="wysiwyg" template="ui/form/field">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
