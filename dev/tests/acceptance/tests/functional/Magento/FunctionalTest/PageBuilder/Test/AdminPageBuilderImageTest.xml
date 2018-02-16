@@ -72,7 +72,7 @@
         <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageTitleTagText"/>
         <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
         <dontSeeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>
@@ -139,9 +139,6 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
