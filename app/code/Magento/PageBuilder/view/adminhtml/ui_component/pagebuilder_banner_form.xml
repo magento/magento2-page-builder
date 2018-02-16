@@ -82,7 +82,7 @@
         <field name="min_height" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">250</item>
+                    <item name="default" xsi:type="number">300</item>
                 </item>
             </argument>
             <settings>
@@ -93,6 +93,9 @@
                 <addAfter>px</addAfter>
                 <dataType>text</dataType>
                 <dataScope>min_height</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>
@@ -108,7 +111,6 @@
                 <additionalClasses>
                     <class name="admin__field-small">true</class>
                 </additionalClasses>
-                <addBefore>#</addBefore>
                 <addAfter>hex color</addAfter>
                 <dataType>text</dataType>
                 <dataScope>background_color</dataScope>
@@ -186,7 +188,7 @@
         <field name="background_size" sortOrder="50" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
+                    <item name="default" xsi:type="string">auto</item>
                 </item>
             </argument>
             <settings>
@@ -198,8 +200,8 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
+                                <item name="value" xsi:type="string">auto</item>
+                                <item name="label" xsi:type="string" translate="true">Auto</item>
                             </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">cover</item>
@@ -240,7 +242,7 @@
         <field name="background_attachment" sortOrder="70" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">fixed</item>
+                    <item name="default" xsi:type="string">scroll</item>
                 </item>
             </argument>
             <settings>
@@ -335,7 +337,7 @@
         <field name="show_button" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">always</item>
+                    <item name="default" xsi:type="string">never_show</item>
                 </item>
             </argument>
             <settings>
@@ -367,7 +369,7 @@
         <field name="show_overlay" sortOrder="70" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">always</item>
+                    <item name="default" xsi:type="string">never_show</item>
                 </item>
             </argument>
             <settings>
@@ -402,7 +404,6 @@
                 <additionalClasses>
                     <class name="admin__field-small">true</class>
                 </additionalClasses>
-                <addBefore>#</addBefore>
                 <addAfter>hex color</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_color</dataScope>
@@ -422,6 +423,11 @@
                 <addAfter>%</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_transparency</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">100</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>

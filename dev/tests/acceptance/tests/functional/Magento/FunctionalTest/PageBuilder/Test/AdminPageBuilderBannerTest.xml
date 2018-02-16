@@ -8,12 +8,47 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="BannerCanAddBanner">
+        <annotations>
+            <title value="User can add and edit banner"/>
+            <description value="A user should be able to add and edit banner"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent" />
+        <waitForElementVisible selector="{{BannerOnBackend.emptyBanner}}" stepKey="waitForBannerVisible"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBanner"/>
+    </test>
     <test name="BannerCanPreviewAdmin">
         <annotations>
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -48,14 +83,36 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowOverlayAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundStyles}}" stepKey="verifyPosterBackgroundStylesInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -66,7 +123,7 @@
             <title value="Banner is rendered correctly in frontend"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -101,9 +158,30 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -111,6 +189,13 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundStyles}}" stepKey="verifyFrontendPosterBackgroundStyles"/>
+        <!-- Validate settings on frontend mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
@@ -120,7 +205,7 @@
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -152,6 +237,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
         <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
         <wait time="1" stepKey="waitForClick{{PageBuilderBannerNewTabProperty.fieldName}}"/>
@@ -168,7 +259,7 @@
             <description value="A user should be able to remove banner block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84895"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -196,7 +287,7 @@
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86838"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -231,6 +322,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <dontSeeElement selector="{{BannerOnBackend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="dontSeeLinkUrl"/>
     </test>
@@ -239,7 +336,7 @@
             <title value="Banner has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -265,9 +362,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -275,12 +369,12 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
     </test>
-    <test name="BannerHasRequired">
+    <test name="BannerHasNoRequired">
         <annotations>
-            <title value="Banner requires all required fields in edit form"/>
-            <description value="A user needs to fill all required fields in banner edit form"/>
+            <title value="Banner has  no required fields in edit form"/>
+            <description value="Check there is no required fields in banner edit form"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -304,64 +398,178 @@
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <dontSeeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkNoRequiredField"/>
+    </test>
+    <test name="BannerCheckInvlidInputs">
+        <annotations>
+            <title value="Banner errors if invalid input is saved in the edit form"/>
+            <description value="Banner errors if invalid input is saved in the edit form"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMin">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
         <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
-        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
+        <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyMin"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask3"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMax">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask4"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton2" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave2"/>
+        <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyMax"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask5"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidType">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask6"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton3" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave3"/>
+        <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyType"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask7"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyValid">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask8"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton4" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave4"/>
+        <dontSeeElement selector="{{BannerOnBackend.errorField}}" stepKey="dontSeeErrorInTransparency"/>
+    </test>
+    <test name="BannerHasExpectedFieldsAndDefaults">
+        <annotations>
+            <title value="Banner has the correct fields and default values in edit form"/>
+            <description value="A user should see the correct fields and default values when edit button is clicked for banner"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!--Check fields-->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceProperty">
+            <argument name="property" value="PageBuilderBannerAppearanceDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMinimumHeightProperty">
+            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
-        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMobileImageProperty">
+            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMessageProperty">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
-        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonLinkProperty">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-    </test>
-    <test name="BannerHasDefaults">
-        <annotations>
-            <title value="Banner has the correct default values in edit form"/>
-            <description value="A user should see the correct default values when edit button is clicked for banner"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOpenInNewTabProperty">
+            <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeShowButtonProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBannerShowButtonPositionProperty">
-            <argument name="property" value="PageBuilderBannerShowButtonProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBannerShowContentOverlayProperty">
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeShowOverlayProperty">
             <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBannerMinimumHeightProperty">
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayColorProperty">
+            <argument name="property" value="PageBuilderBannerWhiteOverlayColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayTransparencyProperty">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
+        </actionGroup>
+        <!--Check defaults-->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultOpenInNewTabProperty">
+            <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowButtonPositionProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowContentOverlayProperty">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutIsZeroProperty" stepKey="seeDefaultOverlayTransparencyProperty">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
         </actionGroup>
     </test>
     <test name="BannerHasButtonStyled">
@@ -369,7 +577,7 @@
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -404,6 +612,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{BannerOnBackend.editButton}}" stepKey="buttonStyled"/>
     </test>
@@ -413,7 +627,7 @@
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -475,11 +689,32 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
@@ -495,10 +730,11 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings appear on form -->
@@ -516,6 +752,21 @@
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorFFFFFFOnForm">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionCenteredOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeCoverOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
@@ -573,10 +824,17 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <!-- Validate settings on frontend mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -586,7 +844,7 @@
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -648,11 +906,32 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
@@ -668,10 +947,11 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
@@ -689,6 +969,21 @@
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorFFFFFFOnForm">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionCenteredOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeCoverOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
@@ -750,6 +1045,13 @@
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <!-- Validate settings on frontend mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -759,7 +1061,7 @@
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -821,11 +1123,32 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
@@ -845,6 +1168,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
@@ -862,6 +1186,21 @@
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeNewTabOnForm">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorFFFFFFOnForm">
+            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionCenteredOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeCoverOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
+            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearanceCollageRightOnForm">
@@ -922,10 +1261,17 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <!-- Validate settings on frontend mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
@@ -935,7 +1281,7 @@
             <description value="Check value of a collage left mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -984,6 +1330,12 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
@@ -1000,7 +1352,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1010,7 +1362,7 @@
             <description value="Check value of a collage centered mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1060,6 +1412,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
@@ -1075,7 +1433,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="dontSeeCollageCenteredInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1085,7 +1443,7 @@
             <description value="Check value of a collage right mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1135,6 +1493,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
@@ -1150,7 +1514,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1160,7 +1524,7 @@
             <description value="Check value of a collage left mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1213,6 +1577,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
@@ -1228,7 +1598,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1238,7 +1608,7 @@
             <description value="Check value of a collage centered mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1290,6 +1660,12 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
@@ -1306,7 +1682,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="dontSeeCollageCenteredInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1316,7 +1692,7 @@
             <description value="Check value of a collage right mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1369,6 +1745,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
@@ -1384,7 +1766,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1393,7 +1775,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1434,6 +1816,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
@@ -1457,12 +1845,12 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1478,7 +1866,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1519,6 +1907,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
@@ -1542,12 +1936,12 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1604,6 +1998,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
@@ -1627,12 +2027,12 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1687,8 +2087,11 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerButtonShowOnHover">
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayColor">
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
@@ -1729,7 +2132,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1777,6 +2180,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
@@ -1819,7 +2225,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1867,6 +2273,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
@@ -1898,7 +2307,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1998,7 +2407,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2052,8 +2461,11 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerButtonShowOnHover">
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate settings on backend -->
@@ -2088,7 +2500,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2142,6 +2554,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
@@ -2178,7 +2593,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2226,6 +2641,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
@@ -2257,7 +2675,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2357,7 +2775,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2411,8 +2829,11 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerButtonShowOnHover">
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate settings on backend -->
@@ -2447,7 +2868,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2501,6 +2922,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
@@ -2537,7 +2961,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2585,6 +3009,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
@@ -2616,7 +3043,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2716,7 +3143,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2770,6 +3197,9 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate settings on backend -->
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin" />
@@ -2803,7 +3233,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2848,6 +3278,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
@@ -2890,7 +3323,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.posterOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2935,6 +3368,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
@@ -2966,7 +3402,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -3060,10 +3496,10 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.posterOverlay}}" stepKey="waitForOnHoverOverlayFrontendMobile" />
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
-        <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>

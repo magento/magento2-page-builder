@@ -44,18 +44,18 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       return Object.assign(style, {
         backgroundImage: backgroundImage,
         backgroundSize: data.background_size,
-        paddingBottom: "",
-        paddingLeft: "",
-        paddingRight: "",
-        paddingTop: "",
+        border: "",
+        borderColor: "",
+        borderRadius: "",
+        borderWidth: "",
         marginBottom: "",
         marginLeft: "",
         marginRight: "",
         marginTop: "",
-        border: "",
-        borderRadius: "",
-        borderColor: "",
-        borderWidth: ""
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
       });
     };
     /**

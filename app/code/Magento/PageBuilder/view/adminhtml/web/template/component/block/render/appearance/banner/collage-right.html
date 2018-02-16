@@ -16,7 +16,9 @@
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                        <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
@@ -29,7 +31,9 @@
             <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
                 <div class="pagebuilder-collage-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                        <button class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       return {
         backgroundImage: backgroundImage,
         backgroundSize: this.data.background_size(),
-        minHeight: this.data.min_height() + "px",
+        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
@@ -57,7 +57,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       var paddingLeft = this.data.margins_and_padding().padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        minHeight: this.data.min_height() + "px",
+        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
         paddingBottom: paddingBottom + "px",
         paddingLeft: paddingLeft + "px",
         paddingRight: paddingRight + "px",
@@ -136,17 +136,12 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
     _proto.getButtonStyles = function getButtonStyles() {
       var buttonStyle = {
         opacity: "0",
-        visibility: "hidden",
-        display: "inline-block"
+        visibility: "hidden"
       };
 
       if (this.data.show_button() === "always" || this.showButtonHover()) {
         buttonStyle.opacity = "1";
         buttonStyle.visibility = "visible";
-      }
-
-      if (this.data.show_button() === "never_show") {
-        buttonStyle.display = "none";
       }
 
       return buttonStyle;
