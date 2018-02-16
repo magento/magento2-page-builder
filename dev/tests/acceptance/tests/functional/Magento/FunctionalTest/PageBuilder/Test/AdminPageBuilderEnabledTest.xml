@@ -95,43 +95,6 @@
         <waitForPageLoad stepKey="waitForPageLoad3" />
         <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent" />
     </test>
-    <test name="VerifyPageBuilderVisibleOnPages">
-        <annotations>
-            <title value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
-            <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatePreReqBlock"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Verify PageBuilder visible on CMS Page creation form-->
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
-
-        <!--Verify PageBuilder visible on CMS Block creation form-->
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockPage"/>
-
-        <!--Verify PageBuilder visible on Newsletter creation form-->
-        <amOnPage url="{{NewsletterTemplateForm.url}}" stepKey="amOnNewsletterTemplatePage"/>
-        <waitForPageLoad stepKey="waitForPageLoad6"/>
-        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
-        <actionGroup ref="verifyPageBuilderNotVisibleOnPage" stepKey="dontSeePageBuilderOnPage"/>
-        <seeElement selector="{{NewsletterWYSIWYGSection.TextArea}}" stepKey="seeTextArea"/>
-    </test>
     <test name="VerifyPageBuilderEnableOnCMSPageWhenPageBuilderEnabledAndWYSIWYGEnabled">
         <annotations>
             <title value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
