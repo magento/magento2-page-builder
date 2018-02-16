@@ -3117,7 +3117,7 @@
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage2" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview2"/>
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
@@ -3147,6 +3147,6 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
-        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource5"/>
     </test>
 </tests>
