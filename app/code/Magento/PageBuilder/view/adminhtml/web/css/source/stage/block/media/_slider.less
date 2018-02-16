@@ -40,8 +40,7 @@
                     border: 1px solid #afadac;
                     border-radius: 1px;
                     bottom: 160%;
-
-                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
                     font-size: 14px;
                     left: 50%;
                     min-width: auto;
@@ -51,7 +50,8 @@
                     transform: translateX(-50%);
                     white-space: nowrap;
 
-                    &:before, &:after {
+                    &:before,
+                    &:after {
                         border: .8rem solid transparent;
                         content: '';
                         display: block;
@@ -75,12 +75,12 @@
 
                 a {
                     background: transparent;
-                    border: 1px solid #CCCCCC;
+                    border: 1px solid #ccc;
                     border-radius: 10px;
                     cursor: pointer;
                     display: block;
                     height: 14px;
-                    transition: 0.3s;
+                    transition: .3s;
                     width: 14px;
 
                     &:hover {
@@ -106,8 +106,8 @@
             display: inline-block;
             opacity: 0;
             transition: all .3s;
-            visibility: hidden;
             vertical-align: middle;
+            visibility: hidden;
 
             &:before {
                 content: @icon-plus__content;
@@ -126,8 +126,8 @@
         .slider-controls {
             .add-slide {
                 opacity: 1;
-                visibility: visible;
                 transition: all .3s;
+                visibility: visible;
             }
         }
     }

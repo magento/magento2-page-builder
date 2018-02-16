@@ -12,7 +12,7 @@ export default class Slide extends PreviewBlock {
 
     /**
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
