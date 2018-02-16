@@ -242,7 +242,7 @@
         <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage2" />
         <seeElement selector="{{ImageOnPreview.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview2"/>
 
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource2"/>
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
@@ -261,9 +261,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="goToCategoryFrontPage"/>
         <waitForPageLoad stepKey="waitForPageLoad3" />
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="goToCategoryFrontPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad4" />
 
         <!--Verify image on Storefront-->
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource4"/>
