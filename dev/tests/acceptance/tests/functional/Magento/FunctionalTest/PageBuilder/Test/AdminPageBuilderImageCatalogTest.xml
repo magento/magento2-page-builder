@@ -14,6 +14,7 @@
             <description value="User upload image to category"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-stuff"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -37,8 +38,8 @@
         <!--Upload image from local machine using image placeholder button-->
         <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading6" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.title)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.title)}}" stepKey="seeImageNameOnPreview1"/>
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.file)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.file)}}" stepKey="seeImageNameOnPreview1"/>
         <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.file)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
@@ -47,11 +48,11 @@
         <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder2"/>
 
         <!--Upload another image from local machine using image placeholder button-->
-        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage2"/>
+        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload_1.file}}" stepKey="uploadImage2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading7" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.title)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.title)}}" stepKey="seeImageNameOnPreview12"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.file)}}" stepKey="seeMainImageSource2"/>
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload_1.file)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload_1.file)}}" stepKey="seeImageNameOnPreview12"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload_1.file)}}" stepKey="seeMainImageSource2"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
@@ -64,17 +65,17 @@
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.title)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.file)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="amOnCategoryPageStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.value)}}" stepKey="seeMainImageSource4"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.file)}}" stepKey="seeMainImageSource4"/>
     </test>
 
 </tests>

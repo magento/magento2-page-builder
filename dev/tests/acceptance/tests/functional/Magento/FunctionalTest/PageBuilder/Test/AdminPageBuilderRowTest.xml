@@ -270,9 +270,9 @@
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage3"/>
         <amOnPage url="Row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForParallaxLibraryLoad"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
@@ -358,9 +358,9 @@
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings4"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage4"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
@@ -548,7 +548,7 @@
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>

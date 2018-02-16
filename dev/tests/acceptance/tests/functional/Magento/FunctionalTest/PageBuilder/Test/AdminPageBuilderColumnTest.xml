@@ -338,7 +338,7 @@
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
@@ -449,6 +449,7 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
+        <wait time="3" stepKey="wait4"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
     </test>
     <test name="ValidateBackgroundImageUrl">
@@ -581,7 +582,7 @@
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible2" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
@@ -625,41 +626,6 @@
         <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" stepKey="seeColumn3WidthApplied2"/>
         <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
         <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
-    </test>
-    <test name="ColumnHasAdvancedFormSection">
-        <annotations>
-            <title value="Column has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for a column"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragFirstColumn"/>
-        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragSecondColumn"/>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
     </test>
     <test name="CanAddImageToColumn">
         <annotations>
@@ -727,7 +693,7 @@
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorare">
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
