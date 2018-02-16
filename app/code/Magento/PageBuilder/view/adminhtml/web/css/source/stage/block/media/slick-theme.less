@@ -1,7 +1,7 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+// * Copyright © Magento, Inc. All rights reserved.
+// * See COPYING.txt for license details.
+// */
 
 .slick-loading .slick-list {
     background: #fff url('../images/ajax-loader.gif') center center no-repeat;
@@ -9,8 +9,8 @@
 
 .slick-prev:before, .slick-next:before {
     .abs-icon;
-    font-size: 38px;
     color: #5b5b5b;
+    font-size: 38px;
     opacity: 1;
 }
 
@@ -32,23 +32,28 @@
 
 .slick-prev,
 .slick-next {
-    position: absolute;
-    display: block;
-    height: 60px;
-    width: 60px;
-    line-height: 0px;
-    font-size: 0px;
-    cursor: pointer;
     background: rgba(252, 252, 252, .4);
+    border: none;
     color: transparent;
+    cursor: pointer;
+    display: block;
+    font-size: 0px;
+    height: 60px;
+    line-height: 0px;
+    outline: none;
+    padding: 0;
+    position: absolute;
     top: 50%;
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
-    padding: 0;
-    border: none;
-    outline: none;
+    width: 60px;
     z-index: 101;
+
+    &.slick-disabled {
+        opacity: .2;
+    }
+
     &:hover, &:focus {
         background: rgba(252, 252, 252, .8);
         &:before {
@@ -58,19 +63,16 @@
             background: rgba(252, 252, 252, .4);
         }
     }
-    &.slick-disabled {
-        opacity: .2;
-    }
 }
 
 .slick-track {
     display: flex;
 
     .slick-slide {
-        display: flex;
-        height: auto;
         align-items: center;
-        justify-content: center;
+        display: flex;
         flex-direction: column;
+        height: auto;
+        justify-content: center;
     }
 }

@@ -1,7 +1,7 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+// * Copyright © Magento, Inc. All rights reserved.
+// * See COPYING.txt for license details.
+// */
 
 .pagebuilder-content-type .pagebuilder-slider {
     border: none;
@@ -16,55 +16,56 @@
 
         .slider-navigation {
             display: inline-block;
-            text-align: center;
             line-height: 33px;
-            padding: 0 8px;
-            vertical-align: middle;
+            margin-left: 111px;
             max-width: 50%;
+            padding: 0 8px;
+            text-align: center;
+            vertical-align: middle;
 
             .navigation-dot {
                 display: inline-block;
-                width: 14px;
+                font-size: 12px;
                 height: 14px;
                 margin: 0 11px;
                 vertical-align: middle;
-                font-size: 12px;
+                width: 14px;
                 .lib-tooltip(
                     @_tooltip-position: top,
                     @_tooltip-color: "#CCCCCC"
                 );
 
                 .tooltip-content {
-                    transform: translateX(-50%);
-                    text-align: center;
-
-                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
                     background: #fffbbb;
                     border: 1px solid #afadac;
                     border-radius: 1px;
+                    bottom: 160%;
+
+                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+                    font-size: 14px;
+                    left: 50%;
+                    min-width: auto;
                     padding: .9rem 1.8rem;
                     position: absolute;
+                    text-align: center;
+                    transform: translateX(-50%);
                     white-space: nowrap;
-                    min-width: auto;
-                    left: 50%;
-                    font-size: 14px;
-                    bottom: 160%;
 
                     &:before, &:after {
                         border: .8rem solid transparent;
-                        height: 0;
-                        width: 0;
                         content: '';
                         display: block;
-                        position: absolute;
-                        top: 100%;
+                        height: 0;
                         left: 50%;
                         margin-left: -.8rem;
+                        position: absolute;
+                        top: 100%;
+                        width: 0;
                     }
                     &:before {
                         border-top-color: #afadac;
-                        z-index: 3;
                         margin-top: 1px;
+                        z-index: 3;
                     }
                     &:after {
                         border-top-color: #fffbbb;
@@ -73,29 +74,29 @@
                 }
 
                 a {
-                    display: block;
-                    width: 14px;
-                    height: 14px;
+                    background: transparent;
                     border: 1px solid #CCCCCC;
                     border-radius: 10px;
                     cursor: pointer;
-                    background: transparent;
+                    display: block;
+                    height: 14px;
                     transition: 0.3s;
+                    width: 14px;
 
                     &:hover {
                         border: 1px solid #b3b3b3;
 
                         &.active {
-                            border: none;
                             background: #1c1918;
+                            border: none;
                         }
                     }
                 }
 
                 &.active {
                     a {
-                        border: none;
                         background: #373330;
+                        border: none;
                     }
                 }
             }
@@ -103,7 +104,31 @@
 
         .add-slide {
             display: inline-block;
+            opacity: 0;
+            transition: all .3s;
+            visibility: hidden;
             vertical-align: middle;
+
+            &:before {
+                content: @icon-plus__content;
+                font-family: @icons-admin__font-name;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                padding-right: 5px;
+                speak: none;
+            }
+        }
+    }
+
+
+    &:hover {
+        .slider-controls {
+            .add-slide {
+                opacity: 1;
+                visibility: visible;
+                transition: all .3s;
+            }
         }
     }
 
