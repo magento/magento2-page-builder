@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config", "../factory", "../preview/column-group/resizing"], function (_config, _factory, _resizing) {
+define(["../preview/column-group/resizing"], function (_resizing) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -39,29 +39,10 @@ define(["../../config", "../factory", "../preview/column-group/resizing"], funct
   function updateColumnWidth(column, width) {
     column.stage.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
   }
-  /**
-   * Create a column and add it to it's parent
-   *
-   * @param {ColumnGroup} parent
-   * @param {number} width
-   * @param {number} index
-   * @returns {Promise<void>}
-   */
-
-
-  function createColumn(parent, width, index) {
-    return (0, _factory)(_config.getContentType("column"), parent, parent.stage, {
-      width: parseFloat(width.toString()) + "%"
-    }).then(function (column) {
-      parent.addChild(column, index);
-      return column;
-    });
-  }
 
   return {
     resizeColumn: resizeColumn,
-    updateColumnWidth: updateColumnWidth,
-    createColumn: createColumn
+    updateColumnWidth: updateColumnWidth
   };
 });
-//# sourceMappingURL=utils.js.map
+//# sourceMappingURL=resizing.js.map
