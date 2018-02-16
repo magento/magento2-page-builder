@@ -5,7 +5,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import Config from "../../config";
+import Config, {ConfigContentBlock} from "../../config";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
 import Column from "../column";
 import {default as ColumnGroupBlock} from "../column-group";
@@ -47,9 +47,8 @@ export default class ColumnGroup extends PreviewBlock {
     /**
      * @param {ColumnGroup} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
-    constructor(parent: ColumnGroupBlock, config: object) {
+    constructor(parent: ColumnGroupBlock, config: ConfigContentBlock) {
         super(parent, config);
         this.parent = parent;
     }
@@ -158,7 +157,7 @@ export default class ColumnGroup extends PreviewBlock {
                     // Check if we're moving within the same group, even though this function will
                     // only ever run on the group that bound the draggable event
                     if (draggedColumn.parent === this.parent) {
-                        this.parent.handleColumnSort(draggedColumn, this.movePosition.insertIndex);
+                        this.parent.onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
                     }
                 }
@@ -217,9 +216,9 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private initMouseMove(group: JQuery<HTMLElement>) {
         group.mousemove((event: JQuery.Event) => {
-            this.handleResizingMouseMove(event, group);
-            this.handleDraggingMouseMove(event, group);
-            this.handleDroppingMouseMove(event, group);
+            this.onResizingMouseMove(event, group);
+            this.onDraggingMouseMove(event, group);
+            this.onDroppingMouseMove(event, group);
         }).mouseleave(() => {
             this.movePlaceholder.css("left", "").removeClass("active");
         });
@@ -259,7 +258,7 @@ export default class ColumnGroup extends PreviewBlock {
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
      */
-    private handleResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
         let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
@@ -332,7 +331,7 @@ export default class ColumnGroup extends PreviewBlock {
 
                         this.resizeLastColumnInPair = modifyColumnInPair;
 
-                        this.parent.handleColumnResize(mainColumn, newColumnWidth.width, adjustedColumn);
+                        this.parent.onColumnResize(mainColumn, newColumnWidth.width, adjustedColumn);
 
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
@@ -355,7 +354,7 @@ export default class ColumnGroup extends PreviewBlock {
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
      */
-    private handleDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
         const dragColumn: Column = getDragColumn();
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
@@ -422,7 +421,7 @@ export default class ColumnGroup extends PreviewBlock {
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
      */
-    private handleDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
         if (this.dropOverElement) {
             const currentX = event.pageX - $(group).offset().left;
             this.dropPosition = this.dropPositions.find((position) => {
@@ -457,13 +456,13 @@ export default class ColumnGroup extends PreviewBlock {
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 if (this.dropOverElement && this.dropPosition) {
-                    this.parent.handleNewColumnDrop(event, ui, this.dropPosition);
+                    this.parent.onNewColumnDrop(event, ui, this.dropPosition);
                     this.dropOverElement = null;
                 }
 
                 const column: Column = getDragColumn();
                 if (this.movePosition && column && column.parent !== this.parent) {
-                    this.parent.handleExistingColumnDrop(event, this.movePosition);
+                    this.parent.onExistingColumnDrop(event, this.movePosition);
                 }
 
                 this.dropPositions = [];
