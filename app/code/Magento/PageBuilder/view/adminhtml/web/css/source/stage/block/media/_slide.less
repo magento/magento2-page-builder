@@ -4,21 +4,28 @@
 // */
 
 .pagebuilder-content-type .pagebuilder-slide {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    display: table;
     float: left;
+    height: inherit;
     min-height: 300px;
     width: 100%;
 
     .pagebuilder-slide-container {
-        height: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: table-cell;
+        width: 100%;
 
         .pagebuilder-content {
             color: white;
             display: inline-block;
-            padding: 24px 20px;
-            width: 30%;
+            left: 10rem;
+            padding: 16px 28px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 250px;
 
             h3 {
                 color: white;
@@ -27,6 +34,7 @@
             }
 
             .slider-content {
+                font-size: 14px;
                 line-height: 24px;
             }
 
@@ -35,7 +43,7 @@
             }
 
             &.overlay-background {
-                background: rgba(0, 0, 0, 0.3);
+                background: rgba(0, 0, 0, .3);
             }
         }
     }
