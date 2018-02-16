@@ -339,7 +339,7 @@
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="enablePageBuilderSetting">
-        <amOnPage url="admin/admin/system_config/edit/section/cms/" stepKey="navigateToConfigurationPage" />
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="wait1"/>
         <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
         <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
@@ -349,6 +349,16 @@
         <waitForPageLoad stepKey="wait2"/>
     </actionGroup>
     <actionGroup name="disablePageBuilderSetting">
+        <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="wait1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- NOW disable -->
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
@@ -361,7 +371,7 @@
         <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose2"/>
         <wait time="3" stepKey="wait" />
         <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
