@@ -8,7 +8,11 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdminSwitchWYSIWYGOptionsCest">
-        <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" before="navigateToWYSIWYGConfigPage1"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="switchToTinyMCE4"/>
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="enableWYSIWYG"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
     </test>
 </tests>

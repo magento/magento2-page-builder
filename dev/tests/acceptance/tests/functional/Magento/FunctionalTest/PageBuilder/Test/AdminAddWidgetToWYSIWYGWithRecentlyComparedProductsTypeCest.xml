@@ -12,7 +12,11 @@
             <group value="skip"/>
             <!--https://jira.corp.magento.com/browse/MAGETWO-87944-->
         </annotations>
-        <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" before="navigateToPage"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="seeProductName"/>
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
     </test>
 </tests>

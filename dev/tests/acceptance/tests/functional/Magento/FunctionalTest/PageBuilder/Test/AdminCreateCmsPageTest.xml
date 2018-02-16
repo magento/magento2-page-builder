@@ -9,7 +9,11 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdminCreateCmsPageTest">
-        <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" before="amOnPagePagesGrid"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="seeContent"/>
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" />
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" before="amOnLogoutPage"/>
+        </after>
     </test>
 </tests>
