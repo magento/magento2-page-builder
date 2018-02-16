@@ -66,7 +66,7 @@ export default class ColumnGroup extends Block {
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural}
+     * @returns {Structural|Undefined}
      */
     public duplicateChild(child: Column, autoAppend: boolean = true): Structural {
         let duplicate;

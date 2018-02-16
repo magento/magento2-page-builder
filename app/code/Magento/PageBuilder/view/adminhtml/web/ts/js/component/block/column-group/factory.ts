@@ -12,7 +12,7 @@ import createBlock from "../factory";
  * @param {ColumnGroup} parent
  * @param {number} width
  * @param {number} index
- * @returns {Promise<void>}
+ * @returns {Promise<Column>}
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number) {
     return createBlock(
