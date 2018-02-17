@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block"], function (_block) {
+define(["underscore", "./block"], function (_underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -19,9 +19,13 @@ define(["./block"], function (_block) {
      * @param element
      */
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      if (this.parent.children().length === 0) {
-        this.parent.addButton();
-      }
+      var _this = this;
+
+      _underscore.delay(function () {
+        if (_this.parent.children().length === 0) {
+          _this.parent.addButton();
+        }
+      }, 100);
     };
 
     return Buttons;

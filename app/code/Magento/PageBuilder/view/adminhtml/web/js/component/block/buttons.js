@@ -2,16 +2,16 @@
 define(["../../utils/delayed-promise", "../block/factory", "../config", "./block"], function (_delayedPromise, _factory, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var ButtonItem =
+  var Buttons =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(ButtonItem, _Block);
+    _inheritsLoose(Buttons, _Block);
 
-    function ButtonItem() {
+    function Buttons() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = ButtonItem.prototype;
+    var _proto = Buttons.prototype;
 
     /**
      * Add button-item to buttons children array
@@ -31,9 +31,9 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "./block
       });
     };
 
-    return ButtonItem;
+    return Buttons;
   }(_block);
 
-  return ButtonItem;
+  return Buttons;
 });
 //# sourceMappingURL=buttons.js.map

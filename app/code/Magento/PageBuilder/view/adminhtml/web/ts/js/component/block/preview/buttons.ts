@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import PreviewBlock from "./block";
 
 export default class Buttons extends PreviewBlock {
@@ -13,8 +14,10 @@ export default class Buttons extends PreviewBlock {
      * @param element
      */
     public afterChildrenRender(element) {
-        if (this.parent.children().length === 0) {
-            this.parent.addButton();
-        }
+        _.delay(() => {
+            if (this.parent.children().length === 0) {
+                this.parent.addButton();
+            }
+        }, 100);
     }
 }
