@@ -60,7 +60,6 @@ class Driver implements RendererInterface
 
         $margin = ' margin: 0px;';
         $padding = ' padding: 40px;';
-        $textAlign = '';
         $rootElementAttributes['style'] = 'background-size: auto; background-repeat: no-repeat; '
             . 'background-attachment: scroll; border: 1px none; border-radius: 0px;';
         if (isset($itemData['formData'])) {
@@ -76,10 +75,6 @@ class Driver implements RendererInterface
                     unset($metric['padding']);
                 }
                 $formData['metric'] = $this->serializer->serialize($metric);
-            }
-            if (isset($formData['align']) && $formData['align'] !== '') {
-                $textAlign = ' text-align: ' . $formData['align'] . ';';
-                unset($formData['align']);
             }
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
@@ -101,8 +96,7 @@ class Driver implements RendererInterface
                 . $eavData['image']
                 . '}}); '
                 . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll;'
-                . $textAlign,
+                . 'background-attachment: scroll; text-align: left;',
             'class' => 'pagebuilder-banner-wrapper pagebuilder-banner-image pagebuilder-mobile-hidden'
         ];
 
@@ -112,8 +106,7 @@ class Driver implements RendererInterface
                 . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
                 . '}}); '
                 . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll;'
-                . $textAlign
+                . 'background-attachment: scroll; text-align: left;',
         ];
 
         $mobileImageElementHtml = '<div'
