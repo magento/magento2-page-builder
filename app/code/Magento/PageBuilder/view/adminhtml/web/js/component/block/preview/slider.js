@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "./block"], function (_jquery, _slick, _underscore, _block) {
+define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../event-bus", "./block"], function (_jquery, _slick, _underscore, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -56,7 +56,16 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       }, 10);
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.stage.store.subscribe(_this.buildSlick);
+      _this.parent.stage.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
+
+
+      _eventBus.on("previewSortable:sortupdate", function (event, params) {
+        if (params.instance.id === _this.parent.id) {
+          (0, _jquery)(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+
+          _this.setActiveSlide(params.newPosition);
+        }
+      });
 
       return _this;
     }

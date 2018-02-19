@@ -14,10 +14,11 @@
     </div>
     <div class="slider-controls">
         <!-- ko if: children().length > 0 -->
-        <div class="slider-navigation" data-bind="foreach: getChildren()">
-            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}, click: function () { $parent.preview.navigateToSlide($index()); }">
-                <a href="#"></a>
+        <div class="slider-navigation" data-bind="previewSortable: {handle: '.navigation-handle'}, foreach: getChildren()">
+            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}">
+                <a href="#" data-bind="click: function () { $parent.preview.navigateToSlide($index()); }"></a>
                 <span class="tooltip-content" role="tooltip" data-bind="text: preview.data.title"></span>
+                <span class="navigation-handle"></span>
             </div>
         </div>
         <!-- /ko -->
