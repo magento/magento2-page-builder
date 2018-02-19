@@ -24,38 +24,36 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
-        _underscore.delay(function () {
-          if (_this.element && _this.element.children.length > 0) {
-            try {
-              (0, _jquery)(_this.element).slick("unslick");
-            } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-            // Dispose current subscription in order to prevent infinite loop
+        if (_this.element && _this.element.children.length > 0) {
+          try {
+            (0, _jquery)(_this.element).slick("unslick");
+          } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+          // Dispose current subscription in order to prevent infinite loop
 
 
-            _this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
+          _this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
 
 
-            var data = _this.parent.children().slice(0);
+          var data = _this.parent.children().slice(0);
 
-            _this.parent.children([]);
+          _this.parent.children([]);
 
-            (0, _jquery)(_this.element).empty();
+          (0, _jquery)(_this.element).empty();
 
-            _this.parent.children(data); // Re-subscribe original event
+          _this.parent.children(data); // Re-subscribe original event
 
 
-            _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick); // Build slick
+          _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick); // Build slick
 
-            (0, _jquery)(_this.element).slick(Object.assign({
-              initialSlide: _this.data.activeSlide() || 0
-            }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
+          (0, _jquery)(_this.element).slick(Object.assign({
+            initialSlide: _this.data.activeSlide() || 0
+          }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
-            (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
-              _this.setActiveSlide(nextSlide);
-            });
-          }
-        }, 100);
-      }, 20);
+          (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+            _this.setActiveSlide(nextSlide);
+          });
+        }
+      }, 10);
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
       _this.parent.stage.store.subscribe(_this.buildSlick);
@@ -63,13 +61,21 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       return _this;
     }
     /**
+     * Capture an after render event
+     */
+
+
+    var _proto = Slider.prototype;
+
+    _proto.onAfterRender = function onAfterRender() {
+      this.buildSlick();
+    };
+    /**
      * Set an active slide for navigation dot
      *
      * @param slideIndex
      */
 
-
-    var _proto = Slider.prototype;
 
     _proto.setActiveSlide = function setActiveSlide(slideIndex) {
       this.data.activeSlide(slideIndex);

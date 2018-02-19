@@ -20,48 +20,46 @@ export default class Slider extends PreviewBlock {
      * @type {(() => any) & _.Cancelable}
      */
     private buildSlick = _.debounce(() => {
-        _.delay(() => {
-            if (this.element && this.element.children.length > 0) {
-                try {
-                    $(this.element).slick("unslick");
-                } catch (e) {
-                    // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-                }
-
-                // Dispose current subscription in order to prevent infinite loop
-                this.childSubscribe.dispose();
-
-                // Force an update on all children, ko tries to intelligently re-render but fails
-                const data = this.parent.children().slice(0);
-                this.parent.children([]);
-                $(this.element).empty();
-                this.parent.children(data);
-
-                // Re-subscribe original event
-                this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-
-                // Build slick
-                $(this.element).slick(
-                    Object.assign(
-                        {
-                            initialSlide: this.data.activeSlide() || 0,
-                        },
-                        this.buildSlickConfig(),
-                    ),
-                );
-
-                // Update our KO pointer to the active slide on change
-                $(this.element).on("beforeChange", (
-                    event: Event,
-                    slick: {},
-                    currentSlide: any,
-                    nextSlide: any,
-                ) => {
-                    this.setActiveSlide(nextSlide);
-                });
+        if (this.element && this.element.children.length > 0) {
+            try {
+                $(this.element).slick("unslick");
+            } catch (e) {
+                // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
             }
-        }, 100);
-    }, 20);
+
+            // Dispose current subscription in order to prevent infinite loop
+            this.childSubscribe.dispose();
+
+            // Force an update on all children, ko tries to intelligently re-render but fails
+            const data = this.parent.children().slice(0);
+            this.parent.children([]);
+            $(this.element).empty();
+            this.parent.children(data);
+
+            // Re-subscribe original event
+            this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+
+            // Build slick
+            $(this.element).slick(
+                Object.assign(
+                    {
+                        initialSlide: this.data.activeSlide() || 0,
+                    },
+                    this.buildSlickConfig(),
+                ),
+            );
+
+            // Update our KO pointer to the active slide on change
+            $(this.element).on("beforeChange", (
+                event: Event,
+                slick: {},
+                currentSlide: any,
+                nextSlide: any,
+            ) => {
+                this.setActiveSlide(nextSlide);
+            });
+        }
+    }, 10);
 
     /**
      * @param {Block} parent
@@ -72,6 +70,13 @@ export default class Slider extends PreviewBlock {
 
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
+    }
+
+    /**
+     * Capture an after render event
+     */
+    public onAfterRender(): void {
+        this.buildSlick();
     }
 
     /**
