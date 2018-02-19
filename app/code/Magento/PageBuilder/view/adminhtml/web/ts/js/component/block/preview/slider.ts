@@ -9,10 +9,8 @@ import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
 import PreviewBlock from "./block";
-import EventBus from "../../event-bus";
 
 export default class Slider extends PreviewBlock {
-    private ready: boolean = false;
     private element: Element;
     private childSubscribe: KnockoutSubscription;
 
@@ -53,29 +51,14 @@ export default class Slider extends PreviewBlock {
                 );
 
                 // Update our KO pointer to the active slide on change
-                $(this.element).on("afterChange", (slick: {}, current: any) => {
-                    this.setActiveSlide(current.currentSlide);
+                $(this.element).on("beforeChange", (
+                    event: Event,
+                    slick: {},
+                    currentSlide: any,
+                    nextSlide: any,
+                ) => {
+                    this.setActiveSlide(nextSlide);
                 });
-
-                /**
-                 * Update the heights of individual slides in the slider
-                 */
-                function updateHeights() {
-                    _.defer(() => {
-                        const equalHeight = $(this).parents(".slider-container").height();
-                        $(this).find(".pagebuilder-slide").each((index, element) => {
-                            if ($(element).outerHeight() < equalHeight && !($(element)[0].style.minHeight)) {
-                                $(element).height(equalHeight + "px");
-                            } else if ($(element).outerHeight() !== equalHeight) {
-                                $(element).height("");
-                            }
-                        });
-                    });
-                }
-
-                // If a slide within the slider has no min height & is smaller than the min width, update it's height
-                $(this.element).on("init", updateHeights);
-                $(this.element).on("setPosition", updateHeights);
             }
         }, 100);
     }, 20);

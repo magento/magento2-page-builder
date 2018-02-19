@@ -21,31 +21,11 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
-      _this.ready = false;
       _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         _underscore.delay(function () {
           if (_this.element && _this.element.children.length > 0) {
-            /**
-             * Update the heights of individual slides in the slider
-             */
-            var updateHeights = function updateHeights() {
-              var _this2 = this;
-
-              _underscore.defer(function () {
-                var equalHeight = (0, _jquery)(_this2).parents(".slider-container").height();
-                (0, _jquery)(_this2).find(".pagebuilder-slide").each(function (index, element) {
-                  if ((0, _jquery)(element).outerHeight() < equalHeight && !(0, _jquery)(element)[0].style.minHeight) {
-                    (0, _jquery)(element).height(equalHeight + "px");
-                  } else if ((0, _jquery)(element).outerHeight() !== equalHeight) {
-                    (0, _jquery)(element).height("");
-                  }
-                });
-              });
-            }; // If a slide within the slider has no min height & is smaller than the min width, update it's height
-
-
             try {
               (0, _jquery)(_this.element).slick("unslick");
             } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
@@ -70,11 +50,9 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
               initialSlide: _this.data.activeSlide() || 0
             }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
-            (0, _jquery)(_this.element).on("afterChange", function (slick, current) {
-              _this.setActiveSlide(current.currentSlide);
+            (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+              _this.setActiveSlide(nextSlide);
             });
-            (0, _jquery)(_this.element).on("init", updateHeights);
-            (0, _jquery)(_this.element).on("setPosition", updateHeights);
           }
         }, 100);
       }, 20);
