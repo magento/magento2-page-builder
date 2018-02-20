@@ -108,7 +108,11 @@
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{BannerOnBackend.posterBackgroundStyles}}" stepKey="verifyPosterBackgroundStylesInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundColor}}" stepKey="verifyPosterBackgroundColorInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundPosition}}" stepKey="verifyPosterBackgroundPositionInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundSize}}" stepKey="verifyPosterBackgroundSizeInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundRepeat}}" stepKey="verifyPosterBackgroundRepeatInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.posterBackgroundAttachment}}" stepKey="verifyPosterBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
@@ -189,12 +193,20 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnFrontend.posterBackgroundStyles}}" stepKey="verifyFrontendPosterBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundColor}}" stepKey="verifyFrontendPosterBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundPosition}}" stepKey="verifyFrontendPosterBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundSize}}" stepKey="verifyFrontendPosterBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundRepeat}}" stepKey="verifyFrontendPosterBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.posterBackgroundAttachment}}" stepKey="verifyFrontendPosterBackgroundAttachment"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="waitForPosterInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="verifyPosterInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundColor}}" stepKey="verifyFrontendCollageMobileBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.posterMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
@@ -734,7 +746,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
-        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundColor}}" stepKey="verifyCollageBackgroundColorInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundPosition}}" stepKey="verifyCollageBackgroundPositionInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundSize}}" stepKey="verifyCollageBackgroundSizeInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings appear on form -->
@@ -828,12 +844,20 @@
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
-        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundColor}}" stepKey="verifyFrontendCollageBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundPosition}}" stepKey="verifyFrontendCollageBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundSize}}" stepKey="verifyFrontendCollageBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundRepeat}}" stepKey="verifyFrontendCollageBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundAttachment}}" stepKey="verifyFrontendCollageBackgroundAttachment"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundColor}}" stepKey="verifyFrontendCollageMobileBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
@@ -951,7 +975,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageCentered}}" stepKey="verifyCollageCenteredInAdmin"/>
-        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundColor}}" stepKey="verifyCollageBackgroundColorInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundPosition}}" stepKey="verifyCollageBackgroundPositionInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundSize}}" stepKey="verifyCollageBackgroundSizeInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
@@ -1045,12 +1073,20 @@
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
-        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundColor}}" stepKey="verifyFrontendCollageBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundPosition}}" stepKey="verifyFrontendCollageBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundSize}}" stepKey="verifyFrontendCollageBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundRepeat}}" stepKey="verifyFrontendCollageBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundAttachment}}" stepKey="verifyFrontendCollageBackgroundAttachment"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundColor}}" stepKey="verifyFrontendCollageMobileBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>
@@ -1168,7 +1204,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{BannerOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <seeElement selector="{{BannerOnBackend.collageBackgroundStyles}}" stepKey="verifyCollageBackgroundStylesInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundColor}}" stepKey="verifyCollageBackgroundColorInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundPosition}}" stepKey="verifyCollageBackgroundPositionInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundSize}}" stepKey="verifyCollageBackgroundSizeInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
+        <seeElement selector="{{BannerOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
@@ -1265,12 +1305,20 @@
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
-        <seeElement selector="{{BannerOnFrontend.collageBackgroundStyles}}" stepKey="verifyFrontendCollageBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundColor}}" stepKey="verifyFrontendCollageBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundPosition}}" stepKey="verifyFrontendCollageBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundSize}}" stepKey="verifyFrontendCollageBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundRepeat}}" stepKey="verifyFrontendCollageBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageBackgroundAttachment}}" stepKey="verifyFrontendCollageBackgroundAttachment"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundStyles}}" stepKey="verifyFrontendCollageMobileBackgroundStyles"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundColor}}" stepKey="verifyFrontendCollageMobileBackgroundColor"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
+        <seeElement selector="{{BannerOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="amOnLinkPage"/>

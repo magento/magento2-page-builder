@@ -113,9 +113,6 @@
         <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundAttachmentPropertyIsRequired">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeBackgroundAttachmentPropertyIsRequired">
-            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
-        </actionGroup>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -334,7 +331,7 @@
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
@@ -572,7 +569,7 @@
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
@@ -583,10 +580,10 @@
         <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader2" />
+        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner2" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent2"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow2" />
         <actionGroup ref="openPageBuilderEditColumnPanel2" stepKey="openEditPanel2AfterSave"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundWidthProperty">
             <argument name="property" value="PageBuilderBackgroundWidthProperty_Third"/>
@@ -602,20 +599,20 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" stepKey="seeColumn1WidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" stepKey="seeColumn2WidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" stepKey="seeColumn3WidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
+        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <seeElement selector="{{RowsOnFrontend.row1Display}}" stepKey="seeRow1DisplayApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidthThird}}" stepKey="seeColumn1WidthApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidthThird}}" stepKey="seeColumn2WidthApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundWidthThird}}" stepKey="seeColumn3WidthApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
+        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
     </test>
     <test name="ColumnHasAdvancedFormSection">
         <annotations>
@@ -641,9 +638,6 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
