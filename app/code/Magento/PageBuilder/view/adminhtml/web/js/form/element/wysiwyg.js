@@ -249,14 +249,14 @@ define([
             var self = this,
                 isFullScreeMode = isFullScreenMode || false,
                 bindStage = function (stage) {
-                self.stage = stage;
-                EventBus.on("stage:ready", function (stageReadyEvent, params) {
-                    if (params.stage.id === self.stage.id) {
-                        self.stageActive(true); // Display the stage UI
-                        self.visible(false); // Hide the original WYSIWYG editor
-                    }
-                });
-            };
+                    self.stage = stage;
+                    EventBus.on("stage:ready", function (stageReadyEvent, params) {
+                        if (params.stage.id === self.stage.id) {
+                            self.stageActive(true); // Display the stage UI
+                            self.visible(false); // Hide the original WYSIWYG editor
+                        }
+                    });
+                };
 
             this.loading(true);
 
@@ -273,12 +273,6 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
-
-            // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
-            });
 
             this.isComponentInitialized = true;
         },
