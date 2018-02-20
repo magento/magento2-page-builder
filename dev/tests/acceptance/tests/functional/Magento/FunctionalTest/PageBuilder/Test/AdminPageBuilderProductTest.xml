@@ -18,6 +18,7 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
@@ -61,6 +62,7 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
@@ -90,6 +92,7 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
@@ -109,9 +112,6 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
