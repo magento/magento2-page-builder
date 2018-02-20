@@ -443,4 +443,11 @@
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="enableFullSizePagebuilder">
+        <click selector="{{PageBuilderProductForm.pagebuilderBtn}}" stepKey="clickOnPageBuilderBtn"/>
+        <!--See PageBuilder fullsize-->
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+        <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
+    </actionGroup>
 </actionGroups>
