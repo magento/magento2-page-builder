@@ -180,7 +180,7 @@ define([
          * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-            //hide wysiwyg text area and toogle buttons
+            // Hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
 
             if (this.wysiwygConfigData()['hide_toogle_buttons']) {
@@ -253,9 +253,9 @@ define([
                     });
                 };
 
-            this.isFullScreen(isFullScreeMode);
-
             this.loading(true);
+
+            this.isFullScreen(isFullScreeMode);
 
             if (typeof event !== 'undefined') {
                 event.stopPropagation();

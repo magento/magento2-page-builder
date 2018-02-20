@@ -346,27 +346,22 @@
         <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
         <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="wait2"/>
     </actionGroup>
-    <actionGroup name="enablePageBuilder1">
-        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="selectYES"/>
-        <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
-    </actionGroup>
-    <actionGroup name="disablePageBuilder">
+    <actionGroup name="disablePageBuilderSetting">
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
         <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
         <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNo"/>
         <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
         <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <wait time="3" stepKey="waitForModal"/>
         <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose2"/>
         <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
         <wait time="3" stepKey="waitForPageBuiderVisible"/>
@@ -376,71 +371,5 @@
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
         <dontSee selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
-    </actionGroup>
-    <actionGroup name="navigateToStagingSlideout">
-        <click selector="{{AdminStagingSlideOutSection.scheduleNewUpdateBtn}}" stepKey="clickOnStagingBtn" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
-        <waitForElementVisible selector="{{AdminStagingSlideOutSection.title}}" stepKey="waitForSlideOutOpen"/>
-    </actionGroup>
-    <actionGroup name="enablePageBuilderSetting">
-        <amOnPage url="admin/admin/system_config/edit/section/cms/" stepKey="navigateToConfigurationPage" />
-        <waitForPageLoad stepKey="wait1"/>
-        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
-        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
-        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
-        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
-    </actionGroup>
-    <actionGroup name="navigateToCreatedCMSPage">
-        <arguments>
-            <argument name="CMSPage" defaultValue=""/>
-        </arguments>
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToCMSPagesGrid"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="clickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForFirstIdSortDescendingToFinish" />
-        <!-- Conditional Click again in case it goes from default state to ascending on first click -->
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="secondClickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
-        <click selector="{{CmsPagesPageActionsSection.select(CMSPage.identifier)}}" stepKey="clickSelectCreatedCMSPage" />
-        <click selector="{{CmsPagesPageActionsSection.edit(CMSPage.identifier)}}" stepKey="navigateToCreatedCMSPage" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentTab1"/>
-    </actionGroup>
-    <actionGroup name="navigateToCreatedCMSBlockPage">
-        <arguments>
-            <argument name="CMSBlockPage" defaultValue=""/>
-        </arguments>
-        <amOnPage url="{{CmsBlocksPage.url}}" stepKey="navigateToCMSBlocksGrid"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="clickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForFirstIdSortDescendingToFinish" />
-        <!-- Conditional Click again in case it goes from default state to ascending on first click -->
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="secondClickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
-        <click selector="{{BlockPageActionsSection.select(CMSBlockPage.identifier)}}" stepKey="clickSelectCreatedCMSBlock" />
-        <click selector="{{BlockPageActionsSection.edit(CMSBlockPage.identifier)}}" stepKey="navigateToCreatedCMSBlock" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>
-    <actionGroup name="fillDynamicBlockName">
-        <arguments>
-            <argument name="Banner" defaultValue=""/>
-        </arguments>
-        <fillField selector="{{AdminBannerBasicActionSection.Name}}" userInput="{{Banner.Name}}" stepKey="fillBannerName" />
-        <conditionalClick selector="{{AdminBannerBasicActionSection.ContentTab}}" dependentSelector="{{BannerContentSection.checkIfContentTabOpen}}" stepKey="clickIfContentTabCloses" visible="true"/>
-    </actionGroup>
-    <actionGroup name="navigateToCreatedDynamicBlock">
-        <arguments>
-            <argument name="Banner"/>
-        </arguments>
-        <amOnPage url="{{AdminBannerGridPage.url}}" stepKey="navigateToDynamicBlocksGrid"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="clickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForFirstIdSortDescendingToFinish" />
-        <!-- Conditional Click again in case it goes from default state to ascending on first click -->
-        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" stepKey="secondClickToAttemptSortByIdDescending" visible="true"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
-        <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
 </actionGroups>
