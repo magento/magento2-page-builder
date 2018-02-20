@@ -34,20 +34,23 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickOnAddButtonsElement"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
-            <argument name="property" value="PageBuilderButtonItemTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1LinkField">
-            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <waitForPageLoad stepKey="waitForCmsPageToSave1"/>
+        <see userInput="You saved the page." stepKey="assertPageSaved1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab1" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="onMouseOverRowContentBlockStage"/>
+        <dontSeeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="dontSeeAddButton"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
+        <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton1"/>
+        <seeElement selector="{{ButtonsBackendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButton"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage1"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront1"/>
-        <!-- Edit advanced section of button -->
+        <seeElementInDOM selector="{{ButtonsFrontendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButtonOnStorefront"/>
+        <!-- Edit button -->
         <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
@@ -62,13 +65,19 @@
         <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForPageLoad stepKey="waitForEditCmsPage" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab1" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
+            <argument name="property" value="PageBuilderButtonItemTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -91,27 +100,44 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
+        <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton2"/>
+        <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickAddButton"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForModalToLoad"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
+            <argument name="property" value="PageBuilderButtonItemTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2LinkField">
+            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButton2TypeSecondaryProperty">
+            <argument name="property" value="PageBuilderButtonItemTypeSecondaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <waitForPageLoad stepKey="waitForCmsPageToSave"/>
-        <see userInput="You saved the page." stepKey="assertPageSaved"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
-        <waitForElementVisible selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="waitForButtonToShow"/>
+        <waitForPageLoad stepKey="waitForCmsPageToSave2"/>
+        <see userInput="You saved the page." stepKey="assertPageSaved2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab3" />
+        <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow"/>
+        <click selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="clickButton"/>
         <seeElement selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButton"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.marginStyle(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMarginSet"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.paddingStyle(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seePaddingSet"/>
+        <seeElement selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypeSecondaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButton2"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonOnStorefront2"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seePrimaryButtonOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.marginStyle(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMarginSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.paddingStyle(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seePaddingSetOnStorefront"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.class(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seePaddingSetOnStorefront"/>
-        <!-- Edit advanced section back to default -->
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypeSecondaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeSecondaryButtonOnStorefront"/>
+        <!-- Check fields and edit advanced section back to default -->
         <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid2"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad2"/>
         <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn2" />
@@ -123,13 +149,19 @@
         <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton2" />
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
         <waitForPageLoad stepKey="waitForEditCmsPage2" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab3" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm2"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection2"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
+            <argument name="property" value="PageBuilderButtonItemTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemLinkProperty">
+            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -157,13 +189,13 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderPropertyDefault">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
-        <waitForPageLoad stepKey="waitForCmsPageToSave2"/>
-        <see userInput="You saved the page." stepKey="assertPageSaved2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
-        <waitForElementVisible selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="waitForButtonToShow2"/>
+        <waitForPageLoad stepKey="waitForCmsPageToSave3"/>
+        <see userInput="You saved the page." stepKey="assertPageSaved3"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
+        <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow2"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
         <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -201,6 +233,13 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormToShow"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeButtonFromStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -227,9 +266,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
@@ -268,12 +305,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonsEditPanelSettings"/>
-        <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickOnAddButtonsElement"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
