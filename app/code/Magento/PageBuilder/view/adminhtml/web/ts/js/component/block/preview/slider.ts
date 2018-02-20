@@ -7,8 +7,10 @@ import $ from "jquery";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
+import EventBus from "../../event-bus";
 import Block from "../block";
 import PreviewBlock from "./block";
+import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewBlock {
     private element: Element;
@@ -70,6 +72,14 @@ export default class Slider extends PreviewBlock {
 
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
+
+        // Set the active slide to the new position of the sorted slide
+        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
+            if (params.instance.id === this.parent.id) {
+                $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+                this.setActiveSlide(params.newPosition);
+            }
+        });
     }
 
     /**

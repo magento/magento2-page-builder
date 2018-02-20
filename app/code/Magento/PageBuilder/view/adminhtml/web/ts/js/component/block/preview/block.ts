@@ -4,6 +4,7 @@
  */
 
 import ko from "knockout";
+import "./sortable/binding";
 import _, {Dictionary} from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";

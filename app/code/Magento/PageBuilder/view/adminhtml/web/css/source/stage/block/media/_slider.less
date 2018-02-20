@@ -26,16 +26,19 @@
             margin-left: 111px;
             max-width: 50%;
             padding: 0 8px;
+            position: relative;
             text-align: center;
             vertical-align: middle;
 
             .navigation-dot {
                 display: inline-block;
                 font-size: 12px;
-                height: 14px;
-                margin: 0 11px;
-                vertical-align: middle;
-                width: 14px;
+                line-height: 33px;
+                margin: 0 3px;
+                text-align: center;
+                vertical-align: top;
+                width: 28px;
+
                 .lib-tooltip(
                     @_tooltip-position: top,
                     @_tooltip-color: "#CCCCCC"
@@ -80,22 +83,32 @@
                 }
 
                 a {
-                    background: transparent;
+                    background: white;
                     border: 1px solid #ccc;
                     border-radius: 10px;
                     cursor: pointer;
-                    display: block;
+                    display: inline-block;
                     height: 14px;
                     transition: .3s;
                     width: 14px;
+                }
 
-                    &:hover {
-                        border: 1px solid #b3b3b3;
+                .navigation-handle {
+                    display: block;
+                    margin-top: -2px;
+                    opacity: 0;
+                    transition: visibility .3s, opacity .3s;
+                    visibility: hidden;
 
-                        &.active {
-                            background: #1c1918;
-                            border: none;
-                        }
+                    &:before {
+                        .abs-icon;
+                        color: @color-gray65;
+                        content: @icon-gripper__content;
+                        cursor: ew-resize;
+                        display: block;
+                        font-size: 2rem;
+                        -webkit-font-smoothing: initial;
+                        transform: rotate(90deg);
                     }
                 }
 
@@ -103,6 +116,23 @@
                     a {
                         background: #373330;
                         border: none;
+                    }
+                }
+
+                &:hover {
+                    a {
+                        border: 1px solid #b3b3b3;
+                    }
+
+                    &.active a {
+                        background: #1c1918;
+                        border: none;
+                    }
+
+                    .navigation-handle {
+                        opacity: 1;
+                        transition: visibility 0s, opacity .3s;
+                        visibility: visible;
                     }
                 }
             }
@@ -113,6 +143,7 @@
             opacity: 0;
             transition: all .3s;
             vertical-align: middle;
+            vertical-align: top;
             visibility: hidden;
 
             &:before {
