@@ -27,7 +27,6 @@ define(["knockout", "./block"], function (_knockout, _block) {
      * @returns styles
      */
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
       // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
         styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
