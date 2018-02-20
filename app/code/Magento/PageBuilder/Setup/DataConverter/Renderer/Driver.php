@@ -8,7 +8,6 @@ namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
-use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Render driver to PageBuilder format
@@ -25,19 +24,12 @@ class Driver implements RendererInterface
      */
     private $eavAttributeLoader;
 
-    /**
-     * @var Json
-     */
-    private $serializer;
-
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader,
-        Json $serializer
+        EavAttributeLoaderInterface $eavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -52,38 +44,20 @@ class Driver implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'banner',
-            'data-appearance' => 'poster',
-            'data-show-button' => 'never_show',
+            'data-show-button' => 'always',
             'data-show-overlay' => 'never_show',
             'class' => $eavData['css_classes'] ?? ''
         ];
 
-        $margin = ' margin: 0px;';
-        $padding = ' padding: 40px;';
-        $rootElementAttributes['style'] = 'background-size: auto; background-repeat: no-repeat; '
-            . 'background-attachment: scroll; border: 1px none; border-radius: 0px;';
         if (isset($itemData['formData'])) {
-            $formData = $itemData['formData'];
-            if (isset($formData['metric']) && $itemData['formData']['metric'] !== '') {
-                $metric = $this->serializer->unserialize($formData['metric']);
-                if (isset($metric['margin'])) {
-                    $margin = ' margin: ' . str_replace('-', '0px', $metric['margin']) . ';';
-                    unset($metric['margin']);
-                }
-                if (isset($metric['padding'])) {
-                    $padding = ' padding: ' . str_replace('-', '0px', $metric['padding']) . ';';
-                    unset($metric['padding']);
-                }
-                $formData['metric'] = $this->serializer->serialize($metric);
-            }
-            $style = $this->styleExtractor->extractStyle($formData);
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] .= ' ' . $style;
+                $rootElementAttributes['style'] = $style;
             }
         }
-        $rootElementAttributes['style'] .= $margin;
 
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
+        $rootElementHtml = '<div'
+            . $this->printAttributes($rootElementAttributes);
 
         $linkAttributes = [
             'href' => $eavData['link_url'] ?? '',
@@ -91,42 +65,67 @@ class Driver implements RendererInterface
         ];
 
         $imageAttributes = [
-            'style' => 'background-image: url('
-                . '{{media url=gene-cms'
-                . $eavData['image']
-                . '}}); '
-                . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll; text-align: left;',
-            'class' => 'pagebuilder-banner-wrapper pagebuilder-banner-image pagebuilder-mobile-hidden'
+            'style' => 'background-image: url(' . '{{media url=gene-cms' . $eavData['image'] . '}}); ' .
+                'min-height: 250px; background-size: default;',
+            'class' => 'pagebuilder-banner-wrapper pagebuilder-banner-image'
         ];
 
+        $mobileImageHtml = '';
         $mobileImageAttributes = [
-            'style' => 'background-image: url('
-                . '{{media url=gene-cms'
-                . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
-                . '}}); '
-                . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll; text-align: left;',
+            'style' => 'background-image: none; min-height: 250px; background-size: default;',
         ];
-
-        $mobileImageElementHtml = '<div'
+        if (isset($eavData['mobile_image'])) {
+            $mobileImageAttributes = [
+                'style' => 'background-image: url(' . '{{media url=gene-cms' . $eavData['mobile_image'] . '}}); ' .
+                    'min-height: 250px; background-size: default;',
+            ];
+            $imageAttributes['class'] = 'pagebuilder-banner-wrapper pagebuilder-banner-image pagebuilder-mobile-hidden';
+        }
+        $mobileImageHtml = '<div'
             . $this->printAttributes($mobileImageAttributes)
             . ' class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only">';
 
-        $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
+        $imageHtml = '<div'
+            . $this->printAttributes($imageAttributes)
+            . '>';
 
-        $overlayElementHtml = '<div class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
-            'style="background-color: transparent; min-height: 300px;' . $padding . '">';
+        $descriptionHtml = '';
+        if (isset($eavData['link_text'])) {
+            $descriptionHtml = '<div>'
+                . $eavData['link_text']
+                . '</div>';
+        }
+
+        $overlayHtml = '<div class="pagebuilder-poster-overlay" data-background-color="transparent" ' .
+            'style="min-height: 250px; background-color: transparent;">';
+
+        if ($itemData['formData']['metric'] != '') {
+            $marginsAndPaddings = $this->styleExtractor->extractStyle(['metric' => $itemData['formData']['metric']]);
+            $paddings = explode("; ", $marginsAndPaddings)[1];
+            $posterHtml = '<div class="pagebuilder-poster-content" style="' . $paddings . '">';
+        } else {
+            $posterHtml = '<div class="pagebuilder-poster-content" style="padding-top: 40px; padding-right: 40px; ' .
+                'padding-bottom: 40px; padding-left: 40px;">';
+        }
+
+        $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" ' .
+            'style="visibility: visible; opacity: 1;"></button>';
 
         $rootElementHtml .= '><a'
             . $this->printAttributes($linkAttributes)
             . '>'
-            . $imageElementHtml
-            . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div>'
-            . $mobileImageElementHtml
-            . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div></a></div>';
+            . $mobileImageHtml
+            . $overlayHtml
+            . $posterHtml
+            . '<div></div>'
+            . $buttonHtml
+            . '</div></div></div>'
+            . $imageHtml
+            . $overlayHtml
+            . $posterHtml
+            . '<div></div>'
+            . $buttonHtml
+            . '</div></div></div></a></div>';
 
         return $rootElementHtml;
     }
