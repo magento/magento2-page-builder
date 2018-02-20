@@ -10,6 +10,7 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="PageBuilderActionsSection">
         <element name="openPageBuilder" type="button" selector=".init-magento-pagebuilder" timeout="30"/>
+        <element name="openPageBuilderCatalog" type="button" selector="#magento-pagebuildercategory_form_description"/>
         <element name="openFullScreen" type="button" selector='//*[@id="container"]/div/div[2]/div[2]/div[2]/fieldset/div[3]/div[1]/i' timeout="30"/>
         <element name="stageWrapper" type="button" selector='//*[@id="container"]/div/div[2]/div[2]/div[2]/fieldset/div[3]' timeout="30"/>
         <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
@@ -54,6 +55,7 @@
         <element name="panelFieldControl" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
+        <element name="identifyPageBuilder" type="text" selector="//div[@class='pagebuilder-panel-groups-child']//span[text()='Row']"/>
     </section>
     <section name="CmsPageSection">
         <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
