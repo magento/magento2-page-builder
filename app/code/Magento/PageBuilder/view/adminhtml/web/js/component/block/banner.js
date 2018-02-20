@@ -209,8 +209,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
-        paddingTop: "",
-        textAlign: ""
+        paddingTop: ""
       });
     };
 
