@@ -68,7 +68,7 @@
             <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.title)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.file)}}" stepKey="seeImageNameOnPreview3"/>
         <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.file)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
@@ -76,5 +76,4 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.file)}}" stepKey="seeMainImageSource4"/>
     </test>
-
 </tests>
