@@ -15,13 +15,24 @@
                 <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\Cms\Model\WysiwygDefaultConfig</item>
             </argument>
             <argument name="wysiwygConfigPostProcessor" xsi:type="array">
-                <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\PageBuilder\Model\Wysiwyg\Config</item>
+                <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\Cms\Model\WysiwygDefaultConfig</item>
             </argument>
             <argument name="galleryConfigProvider" xsi:type="array">
                 <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\Cms\Model\WysiwygDefaultConfig</item>
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype">
+        <plugin name="add_page_builder_input_type" type="Magento\PageBuilder\Model\Plugin\Eav\System\Config\Source\InputtypePlugin" />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation">
+        <plugin name="process_page_builder" type="Magento\PageBuilder\Model\Plugin\Eav\System\Config\Source\InputtypePlugin" />
+    </type>
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\CompositeConfigProcessor">
+        <arguments>
+            <argument name="eavWysiwygDataProcessors" xsi:type="array">
+                <item name="pageBuilder" xsi:type="object">Magento\PageBuilder\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessor</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
-
-

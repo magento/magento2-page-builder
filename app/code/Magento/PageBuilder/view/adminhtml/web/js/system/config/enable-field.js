@@ -7,7 +7,6 @@ define([
     'jquery',
     'mage/translate',
     'Magento_Ui/js/modal/confirm',
-    'jquery/ui',
     'domReady!'
 ], function ($, $t, confirm) {
     'use strict';
@@ -15,8 +14,7 @@ define([
     return function (config, enableSelectEl) {
 
         var $enableSelectEl = $(enableSelectEl),
-            isEnabledInDatabase = !!parseInt($enableSelectEl.val(), 10)
-        ;
+            isEnabledInDatabase = !!parseInt($enableSelectEl.val(), 10);
 
         $enableSelectEl.on('change', function () {
             var userIsDisabling = !parseInt($enableSelectEl.val(), 10);
@@ -30,7 +28,7 @@ define([
                 content: $t(config.modalContentBody),
                 buttons: [{
                     text: $t('Cancel'),
-                    class: 'action-secondary action-dismiss action-pagebuilder-disable-cancel',
+                    class: 'action-secondary action-dismiss action-pagebuilder-cancel',
 
                     /**
                      * Close modal and trigger 'cancel' action on click
