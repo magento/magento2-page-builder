@@ -6,7 +6,6 @@
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
@@ -86,25 +85,25 @@ class TreeConverter
      *
      * @param array $itemData
      * @param int $childIndex
-     * @param array $overrideChildren
+     * @param array $children
      *
      * @return string
      */
-    private function convertTreeItem($itemData, $childIndex, $overrideChildren = [])
+    private function convertTreeItem($itemData, $childIndex, $children = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
-        $renderer = $this->rendererPool->getRender($contentType);
-        if (empty($overrideChildren)) {
+        $renderer = $this->rendererPool->getRenderer($contentType);
+        if (empty($children)) {
             $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
-            $children = $childrenExtractor->extract($itemData);
+            $itemChildren = $childrenExtractor->extract($itemData);
         } else {
-            $children = $overrideChildren;
+            $itemChildren = $children;
         }
-        if (!empty($children)) {
+        if (!empty($itemChildren)) {
             try {
                 $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
                 $childrenHtml = $childRenderer->render(
-                    $children,
+                    $itemChildren,
                     function ($childItem, $childIndex, $children = []) {
                         return $this->convertTreeItem($childItem, $childIndex, $children);
                     }
@@ -115,10 +114,10 @@ class TreeConverter
                     ['children' => $childrenHtml]
                 );
             } catch (UnableMigrateWithOutParentException $exception) {
-                $defaultRenderer = $this->rendererPool->getRender('default');
+                $defaultRenderer = $this->rendererPool->getRenderer('default');
                 // If the children have been explicitly provided to the function we need to set them into the item
-                if (!empty($overrideChildren)) {
-                    $itemData['children'] = $overrideChildren;
+                if (!empty($children)) {
+                    $itemData['children'] = $children;
                 }
                 return $this->processItemRendering(
                     $defaultRenderer,
@@ -144,7 +143,7 @@ class TreeConverter
      */
     private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = [])
     {
-        $defaultRenderer = $this->rendererPool->getRender('default');
+        $defaultRenderer = $this->rendererPool->getRenderer('default');
 
         try {
             // Do not migrate content type if entity is missing required attributes
