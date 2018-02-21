@@ -21,7 +21,7 @@ class Row implements ChildrenRendererInterface
         $childHtml = '';
         $columns = [];
         foreach ($children as $childIndex => $childItem) {
-            if (isset($childItem["type"]) && $childItem["type"] === "column") {
+            if (isset($childItem['type']) && $childItem['type'] === 'column') {
                 $columns[] = $childItem;
             } else {
                 // If there's mixed content in the row we need to render the columns before the next item
@@ -98,7 +98,11 @@ class Row implements ChildrenRendererInterface
      */
     private function getColumnWidth($column)
     {
-        $width = $column["formData"]["width"];
+        if (!isset($column['formData']['width'])) {
+            return 0;
+        }
+
+        $width = $column['formData']['width'];
         if (isset(Column::COLUMN_WIDTH_MAPPING[$width])) {
             $width = Column::COLUMN_WIDTH_MAPPING[$width];
         }

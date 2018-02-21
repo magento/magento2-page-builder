@@ -17,8 +17,7 @@ interface StyleExtractorInterface
      * master format and output as an injectable string.
      *
      * @param array $formData
-     * @param array $additional
      * @return string
      */
-    public function extractStyle(array $formData, $additional = []);
+    public function extractStyle(array $formData);
 }

@@ -34,21 +34,25 @@ class Column implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = [])
     {
+        if (!isset($itemData['formData']['width'])) {
+            throw new \InvalidArgumentException('Width is required to migrate column.');
+        }
+
         $rootElementAttributes = [
             'data-role' => 'column',
             'class' => $itemData['formData']['css_classes'] ?? '',
+            'style' => '',
         ];
 
         if (isset($itemData['formData'])) {
-            $style = $this->styleExtractor->extractStyle(
-                $itemData['formData'],
-                [
-                    'width' => $this->calculateColumnWidth($itemData['formData']['width'])
-                ]
-            );
+            $width = $itemData['formData']['width'];
+            unset($itemData['formData']['width']);
+            $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
                 $rootElementAttributes['style'] = $style;
             }
+            $rootElementAttributes['style'] .= ' width: ' . $this->calculateColumnWidth($width) . ';';
+            $rootElementAttributes['style'] = trim($rootElementAttributes['style']);
         }
 
         $rootElementHtml = '<div';

@@ -86,24 +86,29 @@ class TreeConverter
      *
      * @param $itemData
      * @param $childIndex
-     * @param $children
+     * @param $overrideChildren
      *
      * @return string
      */
-    private function convertTreeItem($itemData, $childIndex, $children = [])
+    private function convertTreeItem($itemData, $childIndex, $overrideChildren = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
-        if (empty($children)) {
+        if (empty($overrideChildren)) {
             $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
             $children = $childrenExtractor->extract($itemData);
+        } else {
+            $children = $overrideChildren;
         }
         if (!empty($children)) {
             try {
                 $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
-                $childrenHtml = $childRenderer->render($children, function ($childItem, $childIndex, $children = []) {
-                    return $this->convertTreeItem($childItem, $childIndex, $children);
-                });
+                $childrenHtml = $childRenderer->render(
+                    $children,
+                    function ($childItem, $childIndex, $children = []) {
+                        return $this->convertTreeItem($childItem, $childIndex, $children);
+                    }
+                );
                 return $this->processItemRendering(
                     $renderer,
                     $itemData,
@@ -111,6 +116,10 @@ class TreeConverter
                 );
             } catch (UnableMigrateWithOutParentException $exception) {
                 $defaultRenderer = $this->rendererPool->getRender('default');
+                // If the children have been explicitly provided to the function we need to set them into the item
+                if (!empty($overrideChildren)) {
+                    $itemData['children'] = $overrideChildren;
+                }
                 return $this->processItemRendering(
                     $defaultRenderer,
                     $itemData

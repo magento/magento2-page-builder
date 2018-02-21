@@ -202,6 +202,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'three_uneven_columns.json',
                 'three_uneven_columns.html'
             ],
+            'invalid column' => [
+                [],
+                'invalid_column.json',
+                'invalid_column.html'
+            ],
             'mixed columns (not 100%) and header' => [
                 [
                     'heading' => [
