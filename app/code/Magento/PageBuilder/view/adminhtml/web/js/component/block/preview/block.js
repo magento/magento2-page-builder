@@ -83,10 +83,10 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
 
     _proto.onMouseOver = function onMouseOver(data, event) {
       var currentTarget = event.currentTarget;
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
-      if ((0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
       }
 
       optionsMenu.addClass("pagebuilder-options-visible");
@@ -99,10 +99,10 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
 
     _proto.onMouseOut = function onMouseOut(data, event) {
       var currentTarget = event.currentTarget;
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper").first();
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
-      if ((0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
       }
 
       optionsMenu.removeClass("pagebuilder-options-visible");

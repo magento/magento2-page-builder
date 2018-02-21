@@ -104,10 +104,10 @@ export default class PreviewBlock {
      */
     public onMouseOver(data, event) {
         const currentTarget = event.currentTarget;
-        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
-        if ($(currentTarget).hasClass("type-nested")) {
-            optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+        if (!$(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
         }
         optionsMenu.addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
@@ -118,10 +118,10 @@ export default class PreviewBlock {
      */
     public onMouseOut(data, event) {
         const currentTarget = event.currentTarget;
-        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper").first();
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
-        if ($(currentTarget).hasClass("type-nested")) {
-            optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+        if (!$(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
         }
         optionsMenu.removeClass("pagebuilder-options-visible");
         $(currentTarget).removeClass("pagebuilder-content-type-active");
