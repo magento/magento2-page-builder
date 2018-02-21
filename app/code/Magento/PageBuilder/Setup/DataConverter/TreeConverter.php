@@ -84,9 +84,9 @@ class TreeConverter
     /**
      * Convert content type item
      *
-     * @param $itemData
-     * @param $childIndex
-     * @param $overrideChildren
+     * @param array $itemData
+     * @param int $childIndex
+     * @param array $overrideChildren
      *
      * @return string
      */
