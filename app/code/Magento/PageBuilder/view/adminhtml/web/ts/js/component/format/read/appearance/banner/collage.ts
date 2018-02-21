@@ -35,7 +35,8 @@ export default class Collage implements ReadInterface {
         const response: any = {
             background_image: decodeUrl(backgroundImage),
             background_size: element.style.backgroundSize,
-            button_text: element.dataset.buttonText,
+            button_text: element.querySelector("button") ? element.querySelector("button").innerText : "",
+            button_type: element.querySelector("button") ? element.querySelector("button").classList[1] : "pagebuilder-button-primary",
             link_url: element.querySelector("a").getAttribute("href"),
             margins_and_padding: {
                 margin: {
