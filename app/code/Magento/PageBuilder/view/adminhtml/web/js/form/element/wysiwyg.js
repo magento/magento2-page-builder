@@ -156,7 +156,7 @@ define([
          */
         hidePageBuilderArea: function () {
 
-            if (this.wysiwygConfigData()['enable_pagebuilder']) {
+            if (this.wysiwygConfigData()['pagebuilder_button']) {
                 this.isComponentInitialized = false;
                 this.stageActive(false);
                 this.visible(true);
@@ -183,7 +183,7 @@ define([
             // Hide wysiwyg text area and toogle buttons
             $('#' + node.id).hide();
 
-            if (this.wysiwygConfigData()['hide_toogle_buttons']) {
+            if (this.wysiwygConfigData()['pagebuilder_button']) {
                 $('#toggle' + node.id).hide();
             }
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
@@ -220,7 +220,7 @@ define([
          * @return void
          */
         displayPageBuilderInFullScreenMode: function (event) {
-            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+            var isFullScreen = true;
 
             this.isComponentInitialized = true;
 

@@ -28,4 +28,11 @@
     <type name="Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation">
         <plugin name="process_page_builder" type="Magento\PageBuilder\Model\Plugin\Eav\System\Config\Source\InputtypePlugin" />
     </type>
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\CompositeConfigProcessor">
+        <arguments>
+            <argument name="eavWysiwygDataProcessors" xsi:type="array">
+                <item name="pageBuilder" xsi:type="object">Magento\PageBuilder\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessor</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

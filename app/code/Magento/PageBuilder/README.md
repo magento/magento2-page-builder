@@ -22,7 +22,7 @@ You can disable the PageBuilder module for a specific field by adding the follow
 
 ```
 <item name="wysiwygConfigData" xsi:type="array">
-    <item name="enable_pagebuilder" xsi:type="boolean">false</item>
+    <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
 </item>
 ```
 
@@ -38,7 +38,7 @@ The following example disables the PageBuilder editor for the content field.
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
                     <item name="wysiwygConfigData" xsi:type="array">
-                        <item name="enable_pagebuilder" xsi:type="boolean">false</item>
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
                     </item>
                 </item>
             </argument>
