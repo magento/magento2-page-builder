@@ -35,7 +35,7 @@
             <title value="Can create product using pagebuilder product attribute"/>
             <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
             <severity value="CRITICAL"/>
-            <group value="kieu"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributePageBuilder"/>
@@ -84,32 +84,32 @@
         <dontSee selector="{{PageBuilderProductForm.pagebuilderBtn}}" stepKey="dontSeePagebuilderBtn"/>
         <see userInput="Hello Product Page From PageBuilder" stepKey="seePageBuilderContentRemain" />
     </test>
-    <!--<test name="CanCreateEditPageBuilderProductAttributeInsideProductForm">-->
-        <!--<annotations>-->
-            <!--<title value="Can create product using pagebuilder product attribute"/>-->
-            <!--<description value="Can create product using pagebuilder product attribute and see it on Storefront"/>-->
-            <!--<severity value="CRITICAL"/>-->
-            <!--<group value="pagebuilder"/>-->
-        <!--</annotations>-->
-        <!--<before>-->
-            <!--<createData stepKey="myProductAttributeCreation" entity="productAttributePageBuilder"/>-->
-            <!--<createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">-->
-                <!--<requiredEntity createDataKey="myProductAttributeCreation"/>-->
-            <!--</createData>-->
-            <!--<actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>-->
-            <!--<actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>-->
-        <!--</before>-->
-        <!--<after>-->
-            <!--<actionGroup ref="logout" stepKey="logout"/>-->
-        <!--</after>-->
-        <!--<amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>-->
-        <!--<click selector="{{AdminProductFormSection.addAttributeBtn}}" stepKey="clickAddAttributeBtn" />-->
-        <!--<click selector="{{AdminProductFormSection.createNewAttributeBtn}}" stepKey="clickCreateNewAttributeBtn" />-->
-        <!--<click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>-->
-        <!--<see userInput="Magento Page Builder" stepKey="seePageBuilderInputType" />-->
-        <!--<selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Magento Page Builder" stepKey="selectOption1"/>-->
-        <!--<fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="Attribute Test" stepKey="fillDefaultLabel" />-->
-        <!--<click selector="{{AdminProductFormSection.saveAttribute}}" stepKey="saveAttribute" />-->
+    <test name="CanCreateEditPageBuilderProductAttributeInsideProductForm">
+        <annotations>
+            <title value="Can create product using pagebuilder product attribute"/>
+            <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributePageBuilder"/>
+            <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="myProductAttributeCreation"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <click selector="{{AdminProductFormSection.addAttributeBtn}}" stepKey="clickAddAttributeBtn" />
+        <click selector="{{AdminProductFormSection.createNewAttributeBtn}}" stepKey="clickCreateNewAttributeBtn" />
+        <click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>
+        <see userInput="Magento Page Builder" stepKey="seePageBuilderInputType" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Magento Page Builder" stepKey="selectOption1"/>
+        <fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="Attribute Test" stepKey="fillDefaultLabel" />
+        <click selector="{{AdminProductFormSection.saveAttribute}}" stepKey="saveAttribute" />
 
-    <!--</test>-->
+    </test>
 </tests>
