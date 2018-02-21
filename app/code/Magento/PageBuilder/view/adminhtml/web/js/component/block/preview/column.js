@@ -11,7 +11,7 @@ define(["./block", "./column-group/resizing"], function (_block, _resizing) {
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {ConfigContentBlock} config
      */
     function Column(parent, config) {
       var _this;

@@ -13,7 +13,7 @@ export default class Column extends PreviewBlock {
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {ConfigContentBlock} config
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);

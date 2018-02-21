@@ -4,12 +4,12 @@
  */
 
 .pagebuilder-options {
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    z-index: 20;
     height: 40px;
+    left: 50%;
+    position: absolute;
+    text-align: center;
     transform: translate(-50%, -50%);
+    z-index: 20;
 
     .pagebuilder-options-wrapper {
         background: white;
@@ -18,9 +18,9 @@
         display: none;
 
         i {
+            font-family: 'Admin Icons';
             font-size: 18px;
             -webkit-font-smoothing: antialiased;
-            font-family: 'Admin Icons';
             font-style: normal;
             font-weight: normal;
             line-height: 1;
@@ -38,18 +38,18 @@
 
         .pagebuilder-name {
             display: inline-block;
+            font-size: 14px;
             height: 38px;
             padding: 10px 0 10px 10px;
-            font-size: 14px;
             vertical-align: bottom;
             white-space: nowrap;
         }
 
         ul.pagebuilder-options-links {
-            list-style: none;
             display: inline-block;
-            padding: 0 8px;
+            list-style: none;
             margin: 0;
+            padding: 0 8px;
             vertical-align: middle;
 
             li.pagebuilder-options-link {
@@ -58,8 +58,8 @@
 
                 .remove-structural {
                     &.disabled {
-                        cursor: not-allowed;
                         color: #808080;
+                        cursor: not-allowed;
                         &:hover {
                             color: #808080
                         }
@@ -67,16 +67,16 @@
                 }
 
                 > a, > div.block-title {
-                    display: block;
-                    padding: 10px 8px;
-                    height: 38px;
-                    text-decoration: none;
                     color: @color-very-dark-grayish-orange;
+                    display: block;
+                    height: 38px;
+                    padding: 10px 8px;
+                    text-decoration: none;
 
                     &.block-title {
+                        cursor: default;
                         font-size: 14px;
                         line-height: 18px;
-                        cursor: default;
                         text-decoration: none;
                     }
 
@@ -87,16 +87,15 @@
             }
         }
     }
-
 }
 
 .pagebuilder-entity {
     .pagebuilder-options {
+        left: auto;
+        right: 0;
         text-align: right;
         transform: translateY(0);
         width: auto;
-        left: auto;
-        right: 0;
     }
 
     &.pagebuilder-live-edit {
