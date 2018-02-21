@@ -200,6 +200,7 @@ export default class Banner extends Block {
                 paddingLeft: "",
                 paddingRight: "",
                 paddingTop: "",
+                textAlign: "",
             },
         );
     }
