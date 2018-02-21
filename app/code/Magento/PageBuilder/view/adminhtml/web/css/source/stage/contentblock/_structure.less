@@ -1,7 +1,7 @@
 // /**
-//  * Copyright © Magento, Inc. All rights reserved.
-//  * See COPYING.txt for license details.
-//  */
+// * Copyright © Magento, Inc. All rights reserved.
+// * See COPYING.txt for license details.
+// */
 
 .no-user-select {
     -webkit-touch-callout: none;
@@ -40,7 +40,6 @@
             padding: 0 18px;
             text-decoration: none;
             width: 100%;
-
             i {
                 margin-right: 6px;
             }
@@ -48,13 +47,12 @@
     }
 }
 
-.pagebuilder-entity-helper,
-.pagebuilder-structure-helper {
+.pagebuilder-entity-helper, .pagebuilder-structure-helper {
     background: @color-very-dark-grayish-orange;
     color: @color-ivory;
     cursor: pointer;
     display: block;
-    padding: 12px;
+    padding: 12px 12px;
     text-decoration: none;
     white-space: nowrap;
     width: 130px;
@@ -84,9 +82,7 @@
             padding: 0;
             position: relative;
             width: 100%;
-
-            &:before,
-            &:after {
+            &:before, &:after {
                 background: @color-phoenix-dark;
                 border-radius: 10px;
                 content: '';
@@ -110,29 +106,15 @@
 }
 
 .pagebuilder-content-type {
+    border: 1px solid #cccccc;
     box-sizing: border-box;
     position: relative;
-    -webkit-transition: outline 200ms ease 200ms;
-    -moz-transition: outline 200ms ease 200ms;
-    -o-transition: outline 200ms ease 200ms;
-    transition: outline 200ms ease 200ms;
     z-index: 10;
-
-    &-active:hover {
-        outline: 1px solid rgb(153, 153, 153);
-        &.type-container {
-            outline: 1px solid rgb(153, 153, 153);
-        }
-    }
-
-    &.type-container {
-        outline: 1px solid rgba(153, 153, 153, .3);
-    }
 
     .pagebuilder-empty {
         background: url('@{baseDir}Magento_PageBuilder/css/images/empty-row-prompt.svg') no-repeat center center;
         background-size: 505px 97px;
-        color: #aaa6a0;
+        color: #AAA6A0;
         font-size: 14px;
         height: 170px;
         left: 0;
@@ -141,9 +123,9 @@
         position: absolute;
         text-align: center;
         top: 0;
-        -webkit-transition: .3s;
-        -moz-transition: .3s;
-        transition: .3s;
+        -webkit-transition: 0.3s;
+        -moz-transition: 0.3s;
+        transition: 0.3s;
         width: 100%;
         z-index: 1;
 
@@ -216,8 +198,8 @@
         }
 
         .pagebuilder-loading {
-            left: 50%;
             position: absolute;
+            left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
         }
@@ -231,9 +213,8 @@
                 background: #f8f8f8;
                 cursor: pointer;
                 font-size: 12px;
-                padding: 30px 0 16px;
+                padding: 30px 0 16px 0;
                 text-align: center;
-
                 i {
                     font-size: 34px;
                     margin-bottom: 8px;
@@ -245,20 +226,17 @@
             }
 
             &.loading {
-
                 img {
-                    opacity: .5;
+                    opacity: 0.5;
                 }
             }
 
-            .dz-message,
-            .dz-preview {
+            .dz-message, .dz-preview {
                 display: none;
             }
 
             &.dz-drag-hover {
-                img,
-                .pagebuilder-image-placeholder {
+                img, .pagebuilder-image-placeholder {
                     -webkit-filter: blur(5px);
                     -moz-filter: blur(5px);
                     filter: blur(5px);
@@ -266,6 +244,10 @@
                 }
             }
         }
+    }
+
+    &.pagebuilder-live-edit {
+        border: none;
     }
 
     &:hover {
@@ -315,8 +297,7 @@
     position: relative;
     width: calc(~'100% + 10px');
 
-    &:before,
-    &:after {
+    &:before, &:after {
         background: @color-phoenix-dark;
         border-radius: 10px;
         content: '';
@@ -349,5 +330,5 @@
     }
 }
 
-@import '_column';
-@import '_columngroup';
+@import '_column.less';
+@import '_columngroup.less';
