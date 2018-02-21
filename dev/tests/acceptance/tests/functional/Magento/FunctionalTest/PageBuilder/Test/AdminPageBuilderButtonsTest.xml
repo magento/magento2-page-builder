@@ -26,7 +26,7 @@
         <after>
             <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
             <waitForPageLoad stepKey="waitForPageLoad"/>
-            <conditionalClick selector="{{BlockPageActionsSection.clearAll}}" dependentSelector="{{BlockPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
             <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>

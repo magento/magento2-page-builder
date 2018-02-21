@@ -296,6 +296,10 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -507,6 +511,10 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -629,7 +637,7 @@
     </test>
     <test name="CanAddImageToColumn">
         <annotations>
-            <title value="Add an image content block into stage"/>
+            <title value="Add an image content block into column"/>
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
