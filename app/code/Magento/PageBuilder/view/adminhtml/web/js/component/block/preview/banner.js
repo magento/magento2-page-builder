@@ -34,10 +34,9 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       }
 
       return {
-        backgroundColor: "",
         backgroundImage: backgroundImage,
         backgroundSize: this.data.background_size(),
-        minHeight: this.data.min_height() + "px",
+        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
@@ -58,7 +57,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       var paddingLeft = this.data.margins_and_padding().padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        minHeight: this.data.min_height() + "px",
+        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
         paddingBottom: paddingBottom + "px",
         paddingLeft: paddingLeft + "px",
         paddingRight: paddingRight + "px",
@@ -141,10 +140,8 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       };
 
       if (this.data.show_button() === "always" || this.showButtonHover()) {
-        buttonStyle = {
-          opacity: "1",
-          visibility: "visible"
-        };
+        buttonStyle.opacity = "1";
+        buttonStyle.visibility = "visible";
       }
 
       return buttonStyle;

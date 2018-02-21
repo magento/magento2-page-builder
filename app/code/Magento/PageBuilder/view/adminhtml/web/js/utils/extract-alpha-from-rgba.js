@@ -11,7 +11,7 @@ define([], function () {
    * @returns int
    */
   function extractAlphaFromRgba(value) {
-    var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
+    var a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 0;
     return Math.floor(a * 100);
   }
 

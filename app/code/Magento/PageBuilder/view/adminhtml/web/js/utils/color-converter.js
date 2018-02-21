@@ -13,14 +13,18 @@ define([], function () {
    * @returns {string}
    */
   function fromHex(hexValue, alphaValue) {
-    var shorthandHexRegEx = /^([a-f\d])([a-f\d])([a-f\d])$/i;
+    var shorthandHexRegEx = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
     hexValue = hexValue.replace(shorthandHexRegEx, function (m, r, g, b) {
       return r + r + g + g + b + b;
     });
-    var colors = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
+    var colors = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
     var red = parseInt(colors[1], 16);
     var green = parseInt(colors[2], 16);
     var blue = parseInt(colors[3], 16);
+
+    if (alphaValue === "NaN") {
+      alphaValue = "0";
+    }
 
     if (alphaValue) {
       return "rgba(" + red + "," + green + "," + blue + "," + alphaValue + ")";
@@ -51,11 +55,11 @@ define([], function () {
 
 
   function toHex(value) {
-    var values = value.match(/\d+/g);
+    var values = value.replace("#", "").match(/\d+/g);
     var r = parseInt(values[0], 10).toString(16);
     var g = parseInt(values[1], 10).toString(16);
     var b = parseInt(values[2], 10).toString(16);
-    return padZero(r) + padZero(g) + padZero(b);
+    return "#" + padZero(r) + padZero(g) + padZero(b);
   }
 
   return {

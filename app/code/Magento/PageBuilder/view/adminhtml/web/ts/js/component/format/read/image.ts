@@ -21,11 +21,11 @@ export default class Image implements ReadInterface {
         const response: DataObject = {
             alt: "",
             image: "",
-            mobile_image: "",
-            title_tag: "",
             image_caption: captionElement ? captionElement.textContent : "",
             link_target: imageLinkElement ? imageLinkElement.target : "",
             link_url: imageLinkElement ? imageLinkElement.getAttribute("href") : "",
+            mobile_image: "",
+            title_tag: "",
         };
         if (element.querySelector("img:nth-child(1)")) {
             if (element.querySelector("img:nth-child(1)").getAttribute("src")) {

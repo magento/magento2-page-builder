@@ -55,7 +55,8 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
         show_button: element.getAttribute("data-show-button"),
-        show_overlay: element.getAttribute("data-show-overlay")
+        show_overlay: element.getAttribute("data-show-overlay"),
+        text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign
       };
       return Promise.resolve(response);
     };

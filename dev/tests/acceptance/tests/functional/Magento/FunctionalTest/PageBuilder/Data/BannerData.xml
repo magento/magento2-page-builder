@@ -10,7 +10,7 @@
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
     <entity name="PageBuilderBannerBackgroundImageProperty" type="pagebuilder_background_image_property">
         <data key="name">Background Image</data>
-        <data key="section">appearance</data>
+        <data key="section">background</data>
         <data key="fieldName">background_image</data>
         <data key="value">magento.jpg</data>
         <data key="fileType">jpg</data>
@@ -18,8 +18,8 @@
         <data key="url">/(\b(https?|ftp|file):\/\/)[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]/g</data>
     </entity>
     <entity name="PageBuilderBannerMobileImageProperty" type="pagebuilder_background_image_property">
-        <data key="name">Mobile Image</data>
-        <data key="section">appearance</data>
+        <data key="name">Background Mobile Image</data>
+        <data key="section">background</data>
         <data key="fieldName">mobile_image</data>
         <data key="value">m-logo.gif</data>
         <data key="fileType">gif</data>
@@ -28,63 +28,93 @@
     </entity>
     <entity name="PageBuilderBannerBackgroundSizeProperty" type="pagebuilder_banner_backgroundSize_property">
         <data key="name">Background Size</data>
-        <data key="section">appearance</data>
+        <data key="section">background</data>
         <data key="fieldName">background_size</data>
         <data key="value">cover</data>
     </entity>
-    <entity name="PageBuilderBannerShowButtonProperty" type="pagebuilder_banner_showButton_property">
+    <entity name="PageBuilderBannerBackgroundSizeDefaultProperty" type="pagebuilder_banner_backgroundSize_property">
+        <data key="name">Background Size</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_size</data>
+        <data key="value">auto</data>
+    </entity>
+    <entity name="PageBuilderBannerShowButtonAlwaysProperty" type="pagebuilder_banner_showButton_property">
         <data key="name">Show Button</data>
-        <data key="section">appearance</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_button</data>
         <data key="value">always</data>
     </entity>
+    <entity name="PageBuilderBannerShowButtonDefaultProperty" type="pagebuilder_banner_showButton_property">
+        <data key="name">Show Button</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">never_show</data>
+    </entity>
     <entity name="PageBuilderBannerShowButtonOnHoverProperty" type="pagebuilder_banner_showButton_property">
         <data key="name">Show Button</data>
-        <data key="section">appearance</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_button</data>
         <data key="value">on_hover</data>
     </entity>
-    <entity name="PageBuilderBannerShowContentOverlayProperty" type="pagebuilder_banner_showContentOverlay_property">
-        <data key="name">Show Content Overlay</data>
-        <data key="section">appearance</data>
+    <entity name="PageBuilderBannerShowContentOverlayAlwaysProperty" type="pagebuilder_banner_showContentOverlay_property">
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_overlay</data>
         <data key="value">always</data>
     </entity>
     <entity name="PageBuilderBannerShowContentOverlayOnHoverProperty" type="pagebuilder_banner_showContentOverlay_property">
-        <data key="name">Show Content Overlay</data>
-        <data key="section">appearance</data>
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_overlay</data>
         <data key="value">on_hover</data>
     </entity>
     <entity name="PageBuilderBannerShowContentOverlayNeverShowProperty" type="pagebuilder_banner_showContentOverlay_property">
-        <data key="name">Show Content Overlay</data>
-        <data key="section">appearance</data>
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_overlay</data>
         <data key="value">never_show</data>
     </entity>
     <entity name="PageBuilderBannerShowContentOverlayDefaultProperty" type="pagebuilder_banner_showContentOverlayDefault_property">
-        <data key="name">Show Content Overlay</data>
-        <data key="section">appearance</data>
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
         <data key="fieldName">show_overlay</data>
-        <data key="value">always</data>
+        <data key="value">never_show</data>
     </entity>
     <entity name="PageBuilderBannerContentOverlayColorProperty" type="pagebuilder_banner_contentOverlayColor_property">
-        <data key="name">Content Overlay Color</data>
-        <data key="section">appearance</data>
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
         <data key="fieldName">overlay_color</data>
-        <data key="value">ffffff</data>
+        <data key="value">#ffffff</data>
     </entity>
     <entity name="PageBuilderBannerOverlayTransparencyProperty" type="pagebuilder_banner_overlayTransparency_property">
         <data key="name">Overlay Transparency</data>
-        <data key="section">appearance</data>
+        <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">70</data>
     </entity>
     <entity name="PageBuilderBannerOverlayTransparencyDefaultProperty" type="pagebuilder_banner_overlayTransparencyDefault_property">
         <data key="name">Overlay Transparency</data>
-        <data key="section">appearance</data>
+        <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayTransparencyInvalidMinProperty" type="pagebuilder_banner_overlayTransparency_property">
+        <data key="name">Overlay Transparency</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_transparency</data>
+        <data key="value">-1</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayTransparencyInvalidMaxProperty" type="pagebuilder_banner_overlayTransparency_property">
+        <data key="name">Overlay Transparency</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_transparency</data>
+        <data key="value">101</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayTransparencyInvalidTypeProperty" type="pagebuilder_banner_overlayTransparency_property">
+        <data key="name">Overlay Transparency</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_transparency</data>
+        <data key="value">abc</data>
     </entity>
     <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
         <data key="name">Minimum Height</data>
@@ -96,11 +126,11 @@
         <data key="name">Minimum Height</data>
         <data key="section">appearance</data>
         <data key="fieldName">min_height</data>
-        <data key="value">250</data>
+        <data key="value">300</data>
     </entity>
     <entity name="PageBuilderBannerMessageProperty" type="pagebuilder_banner_message_property">
-        <data key="name">Message</data>
-        <data key="section">content</data>
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
         <data key="role">textarea</data>
         <data key="fieldName">message</data>
         <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
@@ -108,22 +138,27 @@
     </entity>
     <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_buttonText_property">
         <data key="name">Button Text</data>
-        <data key="section">content</data>
+        <data key="section">contents</data>
         <data key="fieldName">button_text</data>
         <data key="value">Good Morning!</data>
     </entity>
     <entity name="PageBuilderBannerLinkUrlProperty" type="pagebuilder_banner_linkUrl_property">
-        <data key="name">Link URL</data>
-        <data key="section">content</data>
+        <data key="name">Link</data>
+        <data key="section">contents</data>
         <data key="fieldName">link_url</data>
         <data key="value">http://www.magento.com/</data>
     </entity>
+    <entity name="PageBuilderBannerNewTabDefaultProperty" type="pagebuilder_newTab_property">
+        <data key="name">Open in new tab</data>
+        <data key="section">contents</data>
+        <data key="fieldName">open_in_new_tab</data>
+        <data key="value">0</data>
+    </entity>
     <entity name="PageBuilderBannerNewTabProperty" type="pagebuilder_newTab_property">
         <data key="name">Open in new tab</data>
-        <data key="section">content</data>
+        <data key="section">contents</data>
         <data key="fieldName">open_in_new_tab</data>
         <data key="value">1</data>
-        <data key="section">content</data>
     </entity>
     <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_appearance_property">
         <data key="name">Appearance</data>
@@ -209,5 +244,53 @@
         <data key="paddingRight">40</data>
         <data key="paddingBottom">40</data>
         <data key="paddingLeft">40</data>
+    </entity>
+    <entity name="PageBuilderBannerWhiteBackgroundColorProperty" type="pagebuilder_banner_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#ffffff</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundPositionDefaultProperty" type="pagebuilder_banner_background_position_property">
+        <data key="name">Background Position</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_position</data>
+        <data key="value">Top Aligned</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundPositionCenteredProperty" type="pagebuilder_banner_background_position_property">
+        <data key="name">Background Position</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_position</data>
+        <data key="value">Centered</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundRepeatDefaultProperty" type="pagebuilder_banner_background_repeat_property">
+        <data key="name">Background Repeat</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_repeat</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundAttachmentDefaultProperty" type="pagebuilder_banner_background_attach_property">
+        <data key="name">Background Attachment</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_attachment</data>
+        <data key="value">Scroll</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundAttachmentScrollProperty" type="pagebuilder_banner_background_attach_property">
+        <data key="name">Background Attachment</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_attachment</data>
+        <data key="value">Scroll</data>
+    </entity>
+    <entity name="PageBuilderBannerBackgroundAttachmentFixedProperty" type="pagebuilder_banner_background_attach_property">
+        <data key="name">Background Attachment</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_attachment</data>
+        <data key="value">Fixed</data>
+    </entity>
+    <entity name="PageBuilderBannerWhiteOverlayColorProperty" type="pagebuilder_banner_overlay_color_property">
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_color</data>
+        <data key="value">#ffffff</data>
     </entity>
 </entities>

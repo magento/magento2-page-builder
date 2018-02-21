@@ -20,6 +20,9 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
      */
     _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
+
+      var style = _underscore.clone(this.getStyle());
+
       var backgroundImage = "";
 
       if (type === "image") {
@@ -38,10 +41,22 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         }
       }
 
-      return {
+      return Object.assign(style, {
         backgroundImage: backgroundImage,
-        backgroundSize: data.background_size
-      };
+        backgroundSize: data.background_size,
+        border: "",
+        borderColor: "",
+        borderRadius: "",
+        borderWidth: "",
+        marginBottom: "",
+        marginLeft: "",
+        marginRight: "",
+        marginTop: "",
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
     };
     /**
      * Get the banner overlay attributes for the storefront
@@ -202,14 +217,17 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
 
     _proto.getBannerContainerStyle = function getBannerContainerStyle() {
-      return Object.assign(this.getStyle(), {
+      var style = _underscore.clone(this.getStyle());
+
+      return Object.assign(style, {
         backgroundImage: "",
         minHeight: "",
         padding: "",
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
-        paddingTop: ""
+        paddingTop: "",
+        textAlign: ""
       });
     };
 

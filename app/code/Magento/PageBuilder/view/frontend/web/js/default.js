@@ -40,6 +40,7 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
 
         $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
             var buttonEl = $(element).find('.pagebuilder-banner-button');
+
             $(element).hover(
                 function() {
                     buttonEl.css({
@@ -58,6 +59,7 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
         $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
             var overlayEl = $(element).find('.pagebuilder-overlay'),
                 overlayColor = overlayEl.attr('data-overlay-color');
+
             $(element).hover(
                 function() {
                     overlayEl.css('background-color', overlayColor);

@@ -28,6 +28,7 @@ export default class StyleAttributeMapper {
                 if (value === "") {
                     return;
                 }
+
                 if (key === "color" && value === "default") {
                     value = "";
                 }

@@ -60,6 +60,7 @@ export default class Collage implements ReadInterface {
             overlay_transparency: this.getOverlayTransparency(overlayColor),
             show_button: element.getAttribute("data-show-button"),
             show_overlay: element.getAttribute("data-show-overlay"),
+            text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign,
         };
         return Promise.resolve(response);
     }
