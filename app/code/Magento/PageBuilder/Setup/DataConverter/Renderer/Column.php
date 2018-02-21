@@ -13,6 +13,12 @@ use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
  */
 class Column implements RendererInterface
 {
+    // Defined column mapping to supported widths
+    const COLUMN_MAPPING = [
+        '0.250' => '0.167',
+        '0.750' => '0.833'
+    ];
+
     /**
      * @var StyleExtractorInterface
      */
@@ -34,19 +40,9 @@ class Column implements RendererInterface
         ];
 
         if (isset($itemData['formData'])) {
-            // Map column sizes to suitable sizes for columns we don't yet support
-            $columnWidthMapping = [
-                '0.250' => '0.167',
-                '0.750' => '0.825'
-            ];
-
-            if (isset($itemData['formData']['width'])
-                && isset($columnWidthMapping[$itemData['formData']['width']])
-            ) {
-                $itemData['formData']['width'] = $columnWidthMapping[$itemData['formData']['width']];
-            }
-
-            $style = $this->styleExtractor->extractStyle($itemData['formData']);
+            $style = $this->styleExtractor->extractStyle($itemData['formData'], [
+                'width' => $this->calculateColumnWidth($itemData['formData']['width'])
+            ]);
             if ($style) {
                 $rootElementAttributes['style'] = $style;
             }
@@ -59,5 +55,24 @@ class Column implements RendererInterface
         $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
 
         return $rootElementHtml;
+    }
+
+    /**
+     * Calculate the column width to 4 decimal places
+     *
+     * @param $oldWidth
+     *
+     * @return string
+     */
+    private function calculateColumnWidth($oldWidth)
+    {
+        // Map column sizes to suitable sizes for columns we don't yet support
+        if (isset(self::COLUMN_MAPPING[$oldWidth])) {
+            $oldWidth = self::COLUMN_MAPPING[$oldWidth];
+        }
+
+        // Resolve issues with old system storing non exact percentages (e.g. 0.167 != 16.6667%)
+        $percentage = 100 / round(100 / ($oldWidth * 100), 1);
+        return floatval(number_format($percentage, 4, '.', '')) . '%';
     }
 }

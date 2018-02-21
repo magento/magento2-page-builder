@@ -36,6 +36,7 @@
                 <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Unmigrated</item>
                 <item name="row" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Row</item>
                 <item name="column" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Column</item>
+                <item name="column_group" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ColumnGroup</item>
                 <item name="heading" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Heading</item>
                 <item name="anchor" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Anchor</item>
                 <item name="hr" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Divider</item>
@@ -105,6 +106,14 @@
                 <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
                 <item name="accordion" xsi:type="object">AccordionChildrenExtractor</item>
                 <item name="tabs" xsi:type="object">TabsChildrenExtractor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageBuilder\Setup\DataConverter\ChildrenRendererPool">
+        <arguments>
+            <argument name="renderers" xsi:type="array">
+                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenRenderer\Concatenation</item>
+                <item name="row" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenRenderer\Row</item>
             </argument>
         </arguments>
     </type>

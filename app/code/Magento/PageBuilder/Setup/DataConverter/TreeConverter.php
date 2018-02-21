@@ -24,6 +24,11 @@ class TreeConverter
     private $childrenExtractorPool;
 
     /**
+     * @var ChildrenRendererPool
+     */
+    private $childrenRendererPool;
+
+    /**
      * @var Json
      */
     private $serializer;
@@ -34,21 +39,24 @@ class TreeConverter
     private $unseparatableContentTypes;
 
     /**
-     * Constructor
+     * TreeConverter constructor.
      *
      * @param RendererPool $rendererPool
      * @param ChildrenExtractorPool $childrenExtractorPool
+     * @param ChildrenRendererPool $childrenRendererPool
      * @param Json $serializer
      * @param array $unseparatableContentTypes
      */
     public function __construct(
         RendererPool $rendererPool,
         ChildrenExtractorPool $childrenExtractorPool,
+        ChildrenRendererPool $childrenRendererPool,
         Json $serializer,
         array $unseparatableContentTypes = []
     ) {
         $this->rendererPool = $rendererPool;
         $this->childrenExtractorPool = $childrenExtractorPool;
+        $this->childrenRendererPool = $childrenRendererPool;
         $this->serializer = $serializer;
         $this->unseparatableContentTypes = $unseparatableContentTypes;
     }
@@ -57,7 +65,9 @@ class TreeConverter
      * Render JSON format to new master format
      *
      * @param $string
+     *
      * @return string
+     * @throws \Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException
      */
     public function convert($string)
     {
@@ -75,24 +85,27 @@ class TreeConverter
     /**
      * Convert content type item
      *
-     * @param array $itemData
-     * @param int $childIndex
+     * @param $itemData
+     * @param $childIndex
+     * @param $children
+     *
      * @return string
+     * @throws \Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException
      */
-    private function convertTreeItem($itemData, $childIndex)
+    private function convertTreeItem($itemData, $childIndex, $children = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
-        $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
-        $children = $childrenExtractor->extract($itemData);
+        if (empty($children)) {
+            $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
+            $children = $childrenExtractor->extract($itemData);
+        }
         if (!empty($children)) {
-            $childrenHtml = '';
-            $childIndex = 0;
             try {
-                foreach ($children as $childItem) {
-                    $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
-                    $childIndex++;
-                }
+                $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
+                $childrenHtml = $childRenderer->render($children, function ($childItem, $childIndex, $children = []) {
+                    return $this->convertTreeItem($childItem, $childIndex, $children);
+                });
                 return $this->processItemRendering(
                     $renderer,
                     $itemData,
@@ -129,7 +142,14 @@ class TreeConverter
         try {
             // Do not migrate content type if entity is missing required attributes
             set_error_handler(
-                function () use ($itemData) {
+                function ($errno, $errstring, $errfile, $errline) use ($itemData) {
+                    echo $errno;
+                    echo PHP_EOL;
+                    echo $errstring;
+                    echo PHP_EOL;
+                    echo $errfile;
+                    echo PHP_EOL;
+                    echo $errline;
                     restore_error_handler();
                     throw new \UnexpectedValueException(
                         'Entity data is invalid: "'

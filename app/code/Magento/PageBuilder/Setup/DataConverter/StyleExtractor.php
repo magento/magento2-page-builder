@@ -36,7 +36,7 @@ class StyleExtractor implements StyleExtractorInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function extractStyle(array $formData)
+    public function extractStyle(array $formData, $additional = [])
     {
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
@@ -61,7 +61,7 @@ class StyleExtractor implements StyleExtractorInterface
         }
 
         $styleString = '';
-        foreach ($styleAttributes as $attributeName => $attributeValue) {
+        foreach (array_merge($styleAttributes, $additional) as $attributeName => $attributeValue) {
             if ($attributeValue) {
                 $styleString .= "$attributeName: $attributeValue; ";
             }
