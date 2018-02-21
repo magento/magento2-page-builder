@@ -119,20 +119,6 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
      */
 
 
-    _proto.getButtonText = function getButtonText() {
-      if (this.data.button_text() === "" || this.data.button_text() === undefined) {
-        return (0, _translate)("Edit Button Text");
-      } else {
-        return this.data.button_text();
-      }
-    };
-    /**
-     * Get the button text for the preview
-     *
-     * @returns {any}
-     */
-
-
     _proto.getButtonStyles = function getButtonStyles() {
       var buttonStyle = {
         opacity: "0",
@@ -145,6 +131,22 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       }
 
       return buttonStyle;
+    };
+    /**
+     * Get the button class for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getButtonClasses = function getButtonClasses() {
+      var buttonClass = this.data.button_type();
+
+      if (!this.data.button_text()) {
+        buttonClass += " placeholder-text";
+      }
+
+      return buttonClass;
     };
     /**
      * Set state based on overlay mouseover event for the preview

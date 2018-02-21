@@ -104,19 +104,6 @@ export default class Banner extends PreviewBlock {
      *
      * @returns {any}
      */
-    public getButtonText() {
-        if (this.data.button_text() === "" || this.data.button_text() === undefined) {
-            return $t("Edit Button Text");
-        } else {
-            return this.data.button_text();
-        }
-    }
-
-    /**
-     * Get the button text for the preview
-     *
-     * @returns {any}
-     */
     public getButtonStyles() {
         const buttonStyle = {
             opacity : "0",
@@ -127,6 +114,19 @@ export default class Banner extends PreviewBlock {
             buttonStyle.visibility = "visible";
         }
         return buttonStyle;
+    }
+
+    /**
+     * Get the button class for the preview
+     *
+     * @returns {any}
+     */
+    public getButtonClasses() {
+        let buttonClass = this.data.button_type();
+        if (!this.data.button_text()) {
+            buttonClass += " placeholder-text";
+        }
+        return buttonClass;
     }
 
     /**

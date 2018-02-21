@@ -7,14 +7,41 @@
 //  _buttons contains {less} for generic buttons
 //  _____________________________________________
 
+@pagebuilder-button__margin: 0 10px 10px 0;
+@pagebuilder-button__font-size: 18px;
+@pagebuilder-button__line-height: @pagebuilder-button__font-size + 4;
+
 .pagebuilder-button-primary {
-    .lib-button-primary();
+    .lib-link-as-button();
+    .lib-button-primary(@_button-margin: @pagebuilder-button__margin);
+    .lib-button-l(
+        @_button-l-font-size: @pagebuilder-button__font-size,
+        @_button-l-height: @pagebuilder-button__line-height
+    );
+    .lib-css(border-radius, @button__border-radius);
+    .lib-css(font-weight, @font-weight__semibold);
 }
 
 .pagebuilder-button-secondary {
-    .lib-button();
-    line-height: 1.6rem;
+    .lib-link-as-button();
+    .lib-button(@_button-margin: @pagebuilder-button__margin);
+    .lib-button-l(
+        @_button-l-font-size: @pagebuilder-button__font-size,
+        @_button-l-height: @pagebuilder-button__line-height
+    );
+    .lib-css(border-radius, @button__border-radius);
+    .lib-css(font-weight, @font-weight__semibold);
 }
+
 .pagebuilder-button-link {
-    .lib-button-as-link();
+    .lib-button-l(@_button-l-font-size: @pagebuilder-button__font-size);
+    .lib-button-as-link(
+        @_margin: @pagebuilder-button__margin,
+        @_padding: @button__padding__l,
+        @_line-height: @pagebuilder-button__line-height
+    );
+}
+
+.placeholder-text {
+    opacity: 0.5;
 }
