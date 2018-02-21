@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable vars-on-top, strict */
-
 define([
     'Magento_Ui/js/form/element/abstract',
     'underscore'

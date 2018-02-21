@@ -10,7 +10,6 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     /**
      * @param {ColumnGroup} parent
      * @param {object} config
-     * @param {Appearance} appearance
      */
     function ColumnGroup(parent, config) {
       var _this;
@@ -156,7 +155,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
             // Check if we're moving within the same group, even though this function will
             // only ever run on the group that bound the draggable event
             if (draggedColumn.parent === _this3.parent) {
-              _this3.parent.handleColumnSort(draggedColumn, _this3.movePosition.insertIndex);
+              _this3.parent.onColumnSort(draggedColumn, _this3.movePosition.insertIndex);
 
               _this3.movePosition = null;
             }
@@ -224,11 +223,11 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
       var _this4 = this;
 
       group.mousemove(function (event) {
-        _this4.handleResizingMouseMove(event, group);
+        _this4.onResizingMouseMove(event, group);
 
-        _this4.handleDraggingMouseMove(event, group);
+        _this4.onDraggingMouseMove(event, group);
 
-        _this4.handleDroppingMouseMove(event, group);
+        _this4.onDroppingMouseMove(event, group);
       }).mouseleave(function () {
         _this4.movePlaceholder.css("left", "").removeClass("active");
       }); // As the mouse might be released outside of the group, attach to the body
@@ -265,7 +264,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
      */
 
 
-    _proto.handleResizingMouseMove = function handleResizingMouseMove(event, group) {
+    _proto.onResizingMouseMove = function onResizingMouseMove(event, group) {
       var _this5 = this;
 
       var newColumnWidth;
@@ -323,7 +322,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
               this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
               this.resizeLastColumnInPair = _modifyColumnInPair;
-              this.parent.handleColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+              this.parent.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
@@ -343,7 +342,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
      */
 
 
-    _proto.handleDraggingMouseMove = function handleDraggingMouseMove(event, group) {
+    _proto.onDraggingMouseMove = function onDraggingMouseMove(event, group) {
       var dragColumn = (0, _registry.getDragColumn)();
 
       if (dragColumn) {
@@ -405,7 +404,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
      */
 
 
-    _proto.handleDroppingMouseMove = function handleDroppingMouseMove(event, group) {
+    _proto.onDroppingMouseMove = function onDroppingMouseMove(event, group) {
       if (this.dropOverElement) {
         var currentX = event.pageX - (0, _jquery)(group).offset().left;
         this.dropPosition = this.dropPositions.find(function (position) {
@@ -443,7 +442,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         },
         drop: function drop(event, ui) {
           if (_this6.dropOverElement && _this6.dropPosition) {
-            _this6.parent.handleNewColumnDrop(event, ui, _this6.dropPosition);
+            _this6.parent.onNewColumnDrop(event, ui, _this6.dropPosition);
 
             _this6.dropOverElement = null;
           }
@@ -451,7 +450,7 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
           var column = (0, _registry.getDragColumn)();
 
           if (_this6.movePosition && column && column.parent !== _this6.parent) {
-            _this6.parent.handleExistingColumnDrop(event, _this6.movePosition);
+            _this6.parent.onExistingColumnDrop(event, _this6.movePosition);
           }
 
           _this6.dropPositions = [];

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/utils", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _underscore, _array, _eventBus, _block, _utils, _registry, _resizing) {
+define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/resizing", "./preview/column-group/registry", "./preview/column-group/resizing", "./column-group/factory"], function (_translate, _underscore, _array, _eventBus, _block, _resizing, _registry, _resizing2, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -48,7 +48,7 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural}
+     * @returns {Structural|Undefined}
      */
 
 
@@ -61,7 +61,7 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
 
       var duplicate; // Attempt to split the current column into parts
 
-      var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
+      var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
         duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
@@ -70,27 +70,26 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
 
         for (var i = 0; i <= splitTimes; i++) {
           if (splitTimes > 0) {
-            originalWidth += (0, _resizing.getSmallestColumnWidth)();
+            originalWidth += (0, _resizing2.getSmallestColumnWidth)();
             --splitTimes;
           }
 
           if (splitTimes > 0) {
-            duplicateWidth += (0, _resizing.getSmallestColumnWidth)();
+            duplicateWidth += (0, _resizing2.getSmallestColumnWidth)();
             --splitTimes;
           }
         }
 
-        (0, _utils.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
-        (0, _utils.updateColumnWidth)(duplicate, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
-        return duplicate;
+        (0, _resizing.updateColumnWidth)(child, (0, _resizing2.getAcceptedColumnWidth)(originalWidth.toString()));
+        (0, _resizing.updateColumnWidth)(duplicate, (0, _resizing2.getAcceptedColumnWidth)(duplicateWidth.toString()));
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
+        var shrinkableColumn = (0, _resizing2.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
           duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
-          (0, _utils.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
-          (0, _utils.updateColumnWidth)(duplicate, (0, _resizing.getSmallestColumnWidth)());
+          (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(shrinkableColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()));
+          (0, _resizing.updateColumnWidth)(duplicate, (0, _resizing2.getSmallestColumnWidth)());
         }
       } // If we aren't able to duplicate inform the user why
 
@@ -100,6 +99,8 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
           content: (0, _translate)("There is no free space within the column group to perform this action."),
           title: (0, _translate)("Unable to duplicate column")
         });
+      } else {
+        return duplicate;
       }
     };
     /**
@@ -111,14 +112,14 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      */
 
 
-    _proto.handleNewColumnDrop = function handleNewColumnDrop(event, ui, dropPosition) {
+    _proto.onNewColumnDrop = function onNewColumnDrop(event, ui, dropPosition) {
       event.preventDefault();
       event.stopImmediatePropagation(); // Create our new column
 
-      (0, _utils.createColumn)(this, (0, _resizing.getSmallestColumnWidth)(), dropPosition.insertIndex).then(function () {
-        var newWidth = (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(dropPosition.affectedColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
+      (0, _factory.createColumn)(this, (0, _resizing2.getSmallestColumnWidth)(), dropPosition.insertIndex).then(function () {
+        var newWidth = (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(dropPosition.affectedColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
 
-        (0, _utils.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
+        (0, _resizing.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
       });
     };
     /**
@@ -129,22 +130,22 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      */
 
 
-    _proto.handleExistingColumnDrop = function handleExistingColumnDrop(event, movePosition) {
+    _proto.onExistingColumnDrop = function onExistingColumnDrop(event, movePosition) {
       var column = (0, _registry.getDragColumn)();
       var modifyOldNeighbour;
       event.preventDefault();
       event.stopImmediatePropagation(); // Determine which old neighbour we should modify
 
-      var oldWidth = (0, _resizing.getColumnWidth)(column); // Retrieve the adjacent column either +1 or -1
+      var oldWidth = (0, _resizing2.getColumnWidth)(column); // Retrieve the adjacent column either +1 or -1
 
-      if ((0, _resizing.getAdjacentColumn)(column, "+1")) {
-        modifyOldNeighbour = (0, _resizing.getAdjacentColumn)(column, "+1");
-      } else if ((0, _resizing.getAdjacentColumn)(column, "-1")) {
-        modifyOldNeighbour = (0, _resizing.getAdjacentColumn)(column, "-1");
+      if ((0, _resizing2.getAdjacentColumn)(column, "+1")) {
+        modifyOldNeighbour = (0, _resizing2.getAdjacentColumn)(column, "+1");
+      } else if ((0, _resizing2.getAdjacentColumn)(column, "-1")) {
+        modifyOldNeighbour = (0, _resizing2.getAdjacentColumn)(column, "-1");
       } // Set the column to it's smallest column width
 
 
-      (0, _utils.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)());
+      (0, _resizing.updateColumnWidth)(column, (0, _resizing2.getSmallestColumnWidth)());
       column.parent.removeChild(column);
 
       _eventBus.trigger("block:instanceDropped", {
@@ -155,14 +156,14 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
 
 
       if (modifyOldNeighbour) {
-        var oldNeighbourWidth = (0, _resizing.getAcceptedColumnWidth)((oldWidth + (0, _resizing.getColumnWidth)(modifyOldNeighbour)).toString());
-        (0, _utils.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
+        var oldNeighbourWidth = (0, _resizing2.getAcceptedColumnWidth)((oldWidth + (0, _resizing2.getColumnWidth)(modifyOldNeighbour)).toString());
+        (0, _resizing.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
       } // Modify the columns new neighbour
 
 
-      var newNeighbourWidth = (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(movePosition.affectedColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
+      var newNeighbourWidth = (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(movePosition.affectedColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
 
-      (0, _utils.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
+      (0, _resizing.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
     };
     /**
      * Handle a column being sorted into a new position in the group
@@ -172,8 +173,8 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      */
 
 
-    _proto.handleColumnSort = function handleColumnSort(column, newIndex) {
-      var currentIndex = (0, _resizing.getColumnIndexInGroup)(column);
+    _proto.onColumnSort = function onColumnSort(column, newIndex) {
+      var currentIndex = (0, _resizing2.getColumnIndexInGroup)(column);
 
       if (currentIndex !== newIndex) {
         if (currentIndex < newIndex) {
@@ -193,8 +194,8 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
      */
 
 
-    _proto.handleColumnResize = function handleColumnResize(column, width, adjustedColumn) {
-      (0, _utils.resizeColumn)(column, width, adjustedColumn);
+    _proto.onColumnResize = function onColumnResize(column, width, adjustedColumn) {
+      (0, _resizing.resizeColumn)(column, width, adjustedColumn);
     };
     /**
      * Spread any empty space across the other columns
@@ -209,15 +210,15 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
         return;
       }
 
-      var availableWidth = 100 - (0, _resizing.getColumnsWidth)(this);
-      var formattedAvailableWidth = (0, _resizing.getRoundedColumnWidth)(availableWidth);
+      var availableWidth = 100 - (0, _resizing2.getColumnsWidth)(this);
+      var formattedAvailableWidth = (0, _resizing2.getRoundedColumnWidth)(availableWidth);
       var totalChildColumns = this.children().length;
       var allowedColumnWidths = [];
       var spreadAcross = 1;
       var spreadAmount;
 
-      for (var i = (0, _resizing.getMaxColumns)(); i > 0; i--) {
-        allowedColumnWidths.push((0, _resizing.getRoundedColumnWidth)(100 / 6 * i));
+      for (var i = (0, _resizing2.getMaxColumns)(); i > 0; i--) {
+        allowedColumnWidths.push((0, _resizing2.getRoundedColumnWidth)(100 / 6 * i));
       } // Determine how we can spread the empty space across the columns
 
 
@@ -252,7 +253,7 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
         }
 
         if (columnToModify) {
-          (0, _utils.updateColumnWidth)(columnToModify, (0, _resizing.getColumnWidth)(columnToModify) + spreadAmount);
+          (0, _resizing.updateColumnWidth)(columnToModify, (0, _resizing2.getColumnWidth)(columnToModify) + spreadAmount);
         }
       }
     };

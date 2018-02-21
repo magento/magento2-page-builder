@@ -55,36 +55,8 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElementVisible" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.openPageBuilder}}" stepKey="waitForPageBuilderButton" />
-        <click selector="{{PageBuilderActionsSection.openPageBuilder}}" stepKey="clickEnableAdvancedCMS"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
-    </actionGroup>
-    <actionGroup name="openPageBuilderEditColumnPanel">
-        <arguments>
-            <argument name="column" defaultValue="" />
-        </arguments>
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" stepKey="onMouseOverColumn"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnOptionsMenu}}" stepKey="seeColumnOptionsMenu"/>
-        <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
-        <waitForElementNotVisible time="5" selector="{{PageBuilderColumnSection.editFormSpinner}}" stepKey="waitForSpinner"/>
-    </actionGroup>
-    <actionGroup name="openPageBuilderEditColumnPanel2">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage2}}" stepKey="onMouseOverColumn2"/>
-        <click selector="{{PageBuilderColumnSection.editColumn2}}" stepKey="clickEditColumn2"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
-    </actionGroup>
-    <actionGroup name="openPageBuilderEditColumnPanel3">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage3}}" stepKey="onMouseOverColumn2"/>
-        <click selector="{{PageBuilderColumnSection.editColumn3}}" stepKey="clickEditColumn2"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
     </actionGroup>
     <actionGroup name="addPageBuilderPageTitle">
         <arguments>
@@ -109,12 +81,6 @@
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerBlockType.role, containerTarget.index)}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
-    </actionGroup>
-    <actionGroup name="dragColumnContentBlockToStage">
-        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
-        <seeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="seeElementColumnGroup" />
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
@@ -153,17 +119,6 @@
         <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <wait time="1" stepKey="wait2"/>
-    </actionGroup>
-    <actionGroup name="removePageBuilderColumn">
-        <moveMouseOver selector="{{PageBuilderColumnSection.column}}" stepKey="onMouseOverRow"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnOptionsMenu}}" stepKey="seeColumnOptionsMenu"/>
-        <click selector="{{PageBuilderColumnSection.removeColumn}}" stepKey="clickRemoveColumn"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
-        <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
-        <wait time="1" stepKey="waitForModalEventBinding" />
-        <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
-        <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
     </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
@@ -340,13 +295,6 @@
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForElementVisible time="10" selector="{{PageBuilderColumnSection.panelFieldUploadSummary(property.value)}}" stepKey="waitForImageUploadSummary" />
     </actionGroup>
-    <actionGroup name="saveColumnSettings">
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
-    </actionGroup>
     <actionGroup name="saveEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
@@ -371,5 +319,39 @@
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
         <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
+    </actionGroup>
+    <actionGroup name="enablePageBuilderSetting">
+        <amOnPage url="admin/admin/system_config/edit/section/cms/" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="wait1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="wait2"/>
+    </actionGroup>
+    <actionGroup name="disablePageBuilderSetting">
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
+        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNo"/>
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
+        <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <wait time="3" stepKey="waitForModal"/>
+        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose2"/>
+        <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderVisibleOnPage">
+        <wait time="3" stepKey="waitForPageBuiderVisible"/>
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderNotVisibleOnPage">
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <dontSee selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
     </actionGroup>
 </actionGroups>
