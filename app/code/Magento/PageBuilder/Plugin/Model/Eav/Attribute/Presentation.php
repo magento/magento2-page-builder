@@ -6,10 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Plugin\Eav\Attribute;
+namespace Magento\PageBuilder\Plugin\Model\Eav\Attribute;
 
-
-class PresentationPlugin
+class Presentation
 {
     /**
      * Convert presentation to storable input type.
@@ -22,10 +21,9 @@ class PresentationPlugin
     public function afterConvertPresentationDataToInputType(
         \Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation $subject,
         array $result
-    ){
+    ) {
         if ($result['frontend_input'] === 'pagebuilder') {
             $result['is_wysiwyg_enabled'] = 1;
-            $result['frontend_input'] = 'textarea';
             $result['is_pagebuilder_enabled'] = 1;
         }
         return $result;
