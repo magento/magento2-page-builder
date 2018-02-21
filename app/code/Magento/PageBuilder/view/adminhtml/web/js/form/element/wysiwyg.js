@@ -77,6 +77,17 @@ define([
 
         /**
          *
+         * @returns {} Chainable.
+         */
+        initialize: function () {
+            this._super();
+            this.getPanel();
+
+            return this;
+        },
+
+        /**
+         *
          * @returns {exports}
          */
         initObservable: function () {
@@ -116,9 +127,11 @@ define([
         setElementNode: function (node) {
 
             this.domNode = node;
-            this.bindPageBuilderButton(node);
 
             if (!this.isComponentInitialized) {
+                // Hide the original WYSIWYG editor
+                $('#toggle' + node.id).hide();
+                $('#' + node.id).hide();
 
                 if (this.wysiwygConfigData()['pagebuilder_button']) {
                     //process case when page builder is initialized using button
@@ -180,12 +193,7 @@ define([
          * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-            // Hide wysiwyg text area and toogle buttons
-            $('#' + node.id).hide();
 
-            if (this.wysiwygConfigData()['pagebuilder_button']) {
-                $('#toggle' + node.id).hide();
-            }
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
@@ -249,13 +257,11 @@ define([
                     self.stage = stage;
                     stage.on('stageReady', function () {
                         self.stageActive(true);
-                        self.visible(false);
+                        self.isFullScreen(isFullScreeMode);
                     });
                 };
 
             this.loading(true);
-
-            this.isFullScreen(isFullScreeMode);
 
             if (typeof event !== 'undefined') {
                 event.stopPropagation();
@@ -268,12 +274,6 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
-
-            // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
-            });
 
             this.isComponentInitialized = true;
         },
