@@ -52,13 +52,9 @@ export default class Column extends Block {
      */
     get options(): Option[] {
         const options = super.options;
-        const newOptions = options.filter((option) => {
-                return (option.code !== "move");
-            });
-        newOptions.unshift(
-            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-column"], 10),
-        );
-        return newOptions;
+        return options.filter((option) => {
+            return (option.code !== "move");
+        });
     }
 
     /**

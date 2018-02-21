@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "../stage/structural/options/option", "./block", "./column-group", "./factory"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup, _factory) {
+define(["jquery", "knockout", "../config", "../event-bus", "./block", "./column-group", "./factory"], function (_jquery, _knockout, _config, _eventBus, _block, _columnGroup, _factory) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -136,11 +136,9 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
       key: "options",
       get: function get() {
         var options = _Block.prototype.options;
-        var newOptions = options.filter(function (option) {
+        return options.filter(function (option) {
           return option.code !== "move";
         });
-        newOptions.unshift(new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-column"], 10));
-        return newOptions;
       }
     }]);
 

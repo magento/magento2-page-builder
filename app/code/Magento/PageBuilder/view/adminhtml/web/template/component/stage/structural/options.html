@@ -7,6 +7,12 @@
 
 <div class="pagebuilder-options">
     <div class="pagebuilder-options-wrapper">
+        <!-- ko if: $data.constructor.name === "Column" -->
+        <a href="#" class="move-column" data-bind="attr: {title: $t('Move')}, click: function () { action.call($parent, $data); }"><i></i></a>
+        <!-- /ko -->
+        <!-- ko ifnot: $data.constructor.name === "Column" -->
+        <a href="#" class="move-structural" data-bind="attr: {title: $t('Move')}, click: function () { action.call($parent, $data); }"><i></i></a>
+        <!-- /ko -->
         <div class="pagebuilder-name" data-bind="text: config.label"></div>
         <ul class="pagebuilder-options-links" data-bind="foreach: options">
             <li class="pagebuilder-options-link">

@@ -20,7 +20,7 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
     var Sortable = {
         defaults: {
             tolerance: 'pointer',
-            cursor: 'move',
+            cursor: '-webkit-grabbing',
             connectWith: '.pagebuilder-sortable',
             helper: function (event, element) {
                 var ele;

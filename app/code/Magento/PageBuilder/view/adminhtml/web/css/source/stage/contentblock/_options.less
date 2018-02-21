@@ -41,8 +41,9 @@
             text-decoration: none;
         }
 
-        .move-structural {
-            cursor: move;
+        .move-structural,
+        .move-column {
+            cursor: -webkit-grab;
             display: inline-block;
             height: 38px;
             padding: 10px 8px;
@@ -53,15 +54,23 @@
             display: inline-block;
             font-size: 14px;
             height: 38px;
-            padding: 10px 0 10px 10px;
+            padding: 10px 0;
             vertical-align: bottom;
+        }
+
+        a {
+            color: @color-very-dark-grayish-orange;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #eee;
+            }
         }
 
         ul.pagebuilder-options-links {
             display: flex;
             list-style: none;
             margin: 0;
-            padding: 0 8px;
             vertical-align: middle;
 
             li.pagebuilder-options-link {
@@ -70,11 +79,11 @@
                 .remove-structural {
 
                     &.disabled {
-                        color: #808080;
+                        color: @color-dark-gray;
                         cursor: not-allowed;
 
                         &:hover {
-                            color: #808080;
+                            color: @color-dark-gray;
                         }
                     }
                 }

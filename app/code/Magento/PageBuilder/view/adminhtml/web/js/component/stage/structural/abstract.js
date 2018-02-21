@@ -163,7 +163,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     _createClass(Structural, [{
       key: "options",
       get: function get() {
-        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
+        return [new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
       }
       /**
        * Retrieve the template for the structural
