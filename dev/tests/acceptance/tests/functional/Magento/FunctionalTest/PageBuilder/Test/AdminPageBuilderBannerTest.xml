@@ -55,7 +55,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -265,6 +265,9 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -307,18 +310,18 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton2" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave2"/>
-        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask3"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton3" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave3"/>
-        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField3"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl3">
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+        <seeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkRequiredField"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -570,7 +573,7 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
@@ -919,7 +922,7 @@
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <SeeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{BannerOnFrontend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{BannerOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
@@ -997,7 +1000,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1072,7 +1075,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="dontSeeCollageCenteredInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1147,7 +1150,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithoutMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithoutMobileImage2"/>
     </test>
@@ -1225,7 +1228,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1303,7 +1306,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageCenteredInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="dontSeeCollageCenteredInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1381,7 +1384,7 @@
         <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1459,7 +1462,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1544,7 +1547,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1629,7 +1632,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1726,7 +1729,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1816,7 +1819,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1895,7 +1898,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -1995,7 +1998,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2085,7 +2088,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2175,7 +2178,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2254,7 +2257,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2354,7 +2357,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2444,7 +2447,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2534,7 +2537,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2613,7 +2616,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2713,7 +2716,7 @@
         <seeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageCenteredInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2800,7 +2803,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2887,7 +2890,7 @@
         <waitForElement time="2" selector="{{BannerOnFrontend.posterOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile"/>
         <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -2963,7 +2966,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
@@ -3057,10 +3060,10 @@
         <moveMouseOver selector="{{BannerOnFrontend.banner}}" stepKey="moveMouseOverFrontendBannerMobile"/>
         <waitForElement time="2" selector="{{BannerOnFrontend.posterOverlay}}" stepKey="waitForOnHoverOverlayFrontendMobile" />
         <waitForElement time="2" selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
-        <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend2"/>
+        <seeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
