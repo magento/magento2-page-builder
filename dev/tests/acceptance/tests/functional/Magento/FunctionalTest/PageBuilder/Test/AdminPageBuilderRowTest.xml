@@ -327,9 +327,6 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedTextColorProperty">
-            <argument name="property" value="PageBuilderAdvancedTextColorProperty"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
         </actionGroup>
@@ -350,9 +347,6 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedTextColorProperty">
-            <argument name="property" value="PageBuilderAdvancedTextColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
@@ -390,7 +384,6 @@
         <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderSizeProperty10.value}}" selector="{{AdvancedForm.advancedBorderSize}}" stepKey="assertBorderSizeSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedTextColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedTextColor}}" stepKey="assertTextColorSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedCssClassesProperty.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInRow"/>
