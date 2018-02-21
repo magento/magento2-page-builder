@@ -88,8 +88,6 @@ class Driver implements RendererInterface
         }
         $rootElementAttributes['style'] .= $margin;
 
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-
         $linkAttributes = [
             'href' => $eavData['link_url'] ?? '',
             'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
@@ -125,17 +123,30 @@ class Driver implements RendererInterface
         $overlayElementHtml = '<div class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
             'style="background-color: transparent; min-height: 300px;' . $padding . '">';
 
-        $rootElementHtml .= '><a'
+        $buttonHtml = '';
+        if (isset($eavData['link_text']) && $eavData['link_text'] !== '') {
+            $rootElementAttributes['data-show-button'] = 'always';
+            $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" '
+                . 'style="visibility: visible; opacity: 1;">'
+                . $eavData['link_text']
+                . '</button>';
+        }
+
+        return '<div'
+            . $this->printAttributes($rootElementAttributes)
+            . '><a'
             . $this->printAttributes($linkAttributes)
             . '>'
             . $imageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div>'
+            . '<div class="pagebuilder-poster-content"><div></div>'
+            . $buttonHtml
+            . '</div></div></div>'
             . $mobileImageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div></a></div>';
-
-        return $rootElementHtml;
+            . '<div class="pagebuilder-poster-content"><div></div>'
+            . $buttonHtml
+            . '</div></div></div></a></div>';
     }
 
     /**
