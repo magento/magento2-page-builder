@@ -23,10 +23,10 @@
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
         display: flex;
         opacity: 0;
-        -webkit-transition: all 200ms ease 0ms;
-        -moz-transition: all 200ms ease 0ms;
-        -o-transition: all 200ms ease 0ms;
-        transition: all 200ms ease 0ms;
+        -webkit-transition: opacity 200ms, visibility 200ms;
+        -moz-transition: opacity 200ms, visibility 200ms;
+        -o-transition: opacity 200ms, visibility 200ms;
+        transition: opacity 200ms, visibility 200ms;
         visibility: hidden;
 
         &.pagebuilder-options-visible {
@@ -74,7 +74,7 @@
                         cursor: not-allowed;
 
                         &:hover {
-                            color: #808080
+                            color: #808080;
                         }
                     }
                 }
@@ -95,6 +95,7 @@
                     }
 
                     &:hover {
+                        background-color: #eee;
                         color: @color-very-dark-gray-black;
                     }
                 }
