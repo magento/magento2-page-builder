@@ -24,6 +24,11 @@ class TreeConverter
     private $childrenExtractorPool;
 
     /**
+     * @var ChildrenRendererPool
+     */
+    private $childrenRendererPool;
+
+    /**
      * @var Json
      */
     private $serializer;
@@ -34,21 +39,24 @@ class TreeConverter
     private $unseparatableContentTypes;
 
     /**
-     * Constructor
+     * TreeConverter constructor.
      *
      * @param RendererPool $rendererPool
      * @param ChildrenExtractorPool $childrenExtractorPool
+     * @param ChildrenRendererPool $childrenRendererPool
      * @param Json $serializer
      * @param array $unseparatableContentTypes
      */
     public function __construct(
         RendererPool $rendererPool,
         ChildrenExtractorPool $childrenExtractorPool,
+        ChildrenRendererPool $childrenRendererPool,
         Json $serializer,
         array $unseparatableContentTypes = []
     ) {
         $this->rendererPool = $rendererPool;
         $this->childrenExtractorPool = $childrenExtractorPool;
+        $this->childrenRendererPool = $childrenRendererPool;
         $this->serializer = $serializer;
         $this->unseparatableContentTypes = $unseparatableContentTypes;
     }
@@ -57,6 +65,7 @@ class TreeConverter
      * Render JSON format to new master format
      *
      * @param $string
+     *
      * @return string
      */
     public function convert($string)
@@ -75,24 +84,31 @@ class TreeConverter
     /**
      * Convert content type item
      *
-     * @param array $itemData
-     * @param int $childIndex
+     * @param $itemData
+     * @param $childIndex
+     * @param $overrideChildren
+     *
      * @return string
      */
-    private function convertTreeItem($itemData, $childIndex)
+    private function convertTreeItem($itemData, $childIndex, $overrideChildren = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRender($contentType);
-        $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
-        $children = $childrenExtractor->extract($itemData);
+        if (empty($overrideChildren)) {
+            $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
+            $children = $childrenExtractor->extract($itemData);
+        } else {
+            $children = $overrideChildren;
+        }
         if (!empty($children)) {
-            $childrenHtml = '';
-            $childIndex = 0;
             try {
-                foreach ($children as $childItem) {
-                    $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
-                    $childIndex++;
-                }
+                $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
+                $childrenHtml = $childRenderer->render(
+                    $children,
+                    function ($childItem, $childIndex, $children = []) {
+                        return $this->convertTreeItem($childItem, $childIndex, $children);
+                    }
+                );
                 return $this->processItemRendering(
                     $renderer,
                     $itemData,
@@ -100,6 +116,10 @@ class TreeConverter
                 );
             } catch (UnableMigrateWithOutParentException $exception) {
                 $defaultRenderer = $this->rendererPool->getRender('default');
+                // If the children have been explicitly provided to the function we need to set them into the item
+                if (!empty($overrideChildren)) {
+                    $itemData['children'] = $overrideChildren;
+                }
                 return $this->processItemRendering(
                     $defaultRenderer,
                     $itemData
