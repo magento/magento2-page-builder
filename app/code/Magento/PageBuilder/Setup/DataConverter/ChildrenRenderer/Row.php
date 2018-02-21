@@ -16,7 +16,7 @@ class Row implements ChildrenRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $children, $renderChildFn)
+    public function render(array $children, $renderChildCallback)
     {
         $childHtml = '';
         $columns = [];
@@ -26,16 +26,16 @@ class Row implements ChildrenRendererInterface
             } else {
                 // If there's mixed content in the row we need to render the columns before the next item
                 if (count($columns) > 0) {
-                    $childHtml .= $this->renderColumnGroup($columns, $childIndex, $renderChildFn);
+                    $childHtml .= $this->renderColumnGroup($columns, $childIndex, $renderChildCallback);
                     $columns = [];
                 }
-                $childHtml .= $renderChildFn($childItem, $childIndex);
+                $childHtml .= $renderChildCallback($childItem, $childIndex);
             }
         }
 
         // If we have additional columns to process append them
         if (count($columns) > 0) {
-            $childHtml .= $this->renderColumnGroup($columns, 0, $renderChildFn);
+            $childHtml .= $this->renderColumnGroup($columns, 0, $renderChildCallback);
         }
 
         return $childHtml;
@@ -94,7 +94,7 @@ class Row implements ChildrenRendererInterface
      *
      * @param $column
      *
-     * @return number
+     * @return float
      */
     private function getColumnWidth($column)
     {

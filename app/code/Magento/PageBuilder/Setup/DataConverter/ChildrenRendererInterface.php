@@ -16,7 +16,7 @@ interface ChildrenRendererInterface
      * @param array $children
      * @param $renderChildCallback
      *
-     * @return mixed
+     * @return string
      */
     public function render(array $children, $renderChildCallback);
 }
