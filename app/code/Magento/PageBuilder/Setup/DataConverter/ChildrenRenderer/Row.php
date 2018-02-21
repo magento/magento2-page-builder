@@ -46,11 +46,11 @@ class Row implements ChildrenRendererInterface
      *
      * @param $columns
      * @param $childIndex
-     * @param $renderChildFn
+     * @param $renderChildCallback
      *
-     * @return mixed
+     * @return string
      */
-    private function renderColumnGroup($columns, $childIndex, $renderChildFn)
+    private function renderColumnGroup($columns, $childIndex, $renderChildCallback)
     {
         $childHtml = '';
 
@@ -65,22 +65,22 @@ class Row implements ChildrenRendererInterface
              * column to ensure the total width of this group is 100%. Also check if we're the last column in the
              * current set and the total width is below 1, then we need to add an empty column.
              */
-            if ($currentTotalWidth < 1 &&
-                (isset($columns[$index + 1]) && $currentTotalWidth + $this->getColumnWidth($columns[$index + 1]) > 1) ||
-                (count($columns) - 1 === $index && $currentTotalWidth < 1)
+            if ($currentTotalWidth < 1
+                && (isset($columns[$index + 1]) && $currentTotalWidth + $this->getColumnWidth($columns[$index + 1]) > 1)
+                || (count($columns) - 1 === $index && $currentTotalWidth < 1)
             ) {
                 $remainingWidth = 1 - $currentTotalWidth;
                 $columnsInGroup[] = [
-                    "type" => "column",
-                    "formData" => [
-                        "width" => $remainingWidth
+                    'type' => 'column',
+                    'formData' => [
+                        'width' => $remainingWidth
                     ]
                 ];
                 $currentTotalWidth += $remainingWidth;
             }
 
             if ($currentTotalWidth == 1) {
-                $childHtml .= $renderChildFn(["type" => "column_group"], $childIndex, $columnsInGroup);
+                $childHtml .= $renderChildCallback(['type' => 'column_group'], $childIndex, $columnsInGroup);
                 $currentTotalWidth = 0;
                 $columnsInGroup = [];
             }
@@ -94,13 +94,13 @@ class Row implements ChildrenRendererInterface
      *
      * @param $column
      *
-     * @return mixed
+     * @return number
      */
     private function getColumnWidth($column)
     {
         $width = $column["formData"]["width"];
-        if (isset(Column::COLUMN_MAPPING[$width])) {
-            $width = Column::COLUMN_MAPPING[$width];
+        if (isset(Column::COLUMN_WIDTH_MAPPING[$width])) {
+            $width = Column::COLUMN_WIDTH_MAPPING[$width];
         }
 
         return $width;

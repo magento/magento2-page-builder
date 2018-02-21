@@ -14,9 +14,9 @@ interface ChildrenRendererInterface
      * Render children for element
      *
      * @param array $children
-     * @param $renderChildFn
+     * @param $renderChildCallback
      *
      * @return mixed
      */
-    public function render(array $children, $renderChildFn);
+    public function render(array $children, $renderChildCallback);
 }

@@ -14,7 +14,7 @@ use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 class Column implements RendererInterface
 {
     // Defined column mapping to supported widths
-    const COLUMN_MAPPING = [
+    const COLUMN_WIDTH_MAPPING = [
         '0.250' => '0.167',
         '0.750' => '0.833'
     ];
@@ -40,9 +40,12 @@ class Column implements RendererInterface
         ];
 
         if (isset($itemData['formData'])) {
-            $style = $this->styleExtractor->extractStyle($itemData['formData'], [
-                'width' => $this->calculateColumnWidth($itemData['formData']['width'])
-            ]);
+            $style = $this->styleExtractor->extractStyle(
+                $itemData['formData'],
+                [
+                    'width' => $this->calculateColumnWidth($itemData['formData']['width'])
+                ]
+            );
             if ($style) {
                 $rootElementAttributes['style'] = $style;
             }
@@ -67,8 +70,8 @@ class Column implements RendererInterface
     private function calculateColumnWidth($oldWidth)
     {
         // Map column sizes to suitable sizes for columns we don't yet support
-        if (isset(self::COLUMN_MAPPING[$oldWidth])) {
-            $oldWidth = self::COLUMN_MAPPING[$oldWidth];
+        if (isset(self::COLUMN_WIDTH_MAPPING[$oldWidth])) {
+            $oldWidth = self::COLUMN_WIDTH_MAPPING[$oldWidth];
         }
 
         // Resolve issues with old system storing non exact percentages (e.g. 0.167 != 16.6667%)

@@ -67,7 +67,6 @@ class TreeConverter
      * @param $string
      *
      * @return string
-     * @throws \Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException
      */
     public function convert($string)
     {
@@ -90,7 +89,6 @@ class TreeConverter
      * @param $children
      *
      * @return string
-     * @throws \Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException
      */
     private function convertTreeItem($itemData, $childIndex, $children = [])
     {
@@ -142,14 +140,7 @@ class TreeConverter
         try {
             // Do not migrate content type if entity is missing required attributes
             set_error_handler(
-                function ($errno, $errstring, $errfile, $errline) use ($itemData) {
-                    echo $errno;
-                    echo PHP_EOL;
-                    echo $errstring;
-                    echo PHP_EOL;
-                    echo $errfile;
-                    echo PHP_EOL;
-                    echo $errline;
+                function () use ($itemData) {
                     restore_error_handler();
                     throw new \UnexpectedValueException(
                         'Entity data is invalid: "'
