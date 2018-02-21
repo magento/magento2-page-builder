@@ -133,22 +133,6 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       return buttonStyle;
     };
     /**
-     * Get the button class for the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getButtonClasses = function getButtonClasses() {
-      var buttonClass = this.data.button_type();
-
-      if (!this.data.button_text()) {
-        buttonClass += " placeholder-text";
-      }
-
-      return buttonClass;
-    };
-    /**
      * Set state based on overlay mouseover event for the preview
      */
 

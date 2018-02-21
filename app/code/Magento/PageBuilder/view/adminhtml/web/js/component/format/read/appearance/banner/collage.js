@@ -31,11 +31,14 @@ define(["../../../../../utils/color-converter", "../../../../../utils/extract-al
       var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
       var paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
       var marginSrc = element.style;
+      var button = element.querySelector("button");
+      var buttonText = button ? button.textContent : "";
+      var buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
       var response = {
         background_image: (0, _image.decodeUrl)(backgroundImage),
         background_size: element.style.backgroundSize,
-        button_text: element.querySelector("button") ? element.querySelector("button").innerText : "",
-        button_type: element.querySelector("button") ? element.querySelector("button").classList[1] : "pagebuilder-button-primary",
+        button_text: buttonText,
+        button_type: buttonType,
         link_url: element.querySelector("a").getAttribute("href"),
         margins_and_padding: {
           margin: {

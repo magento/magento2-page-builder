@@ -27,11 +27,14 @@ export default class Banner implements ReadInterface {
         if (bgImage === bgMobileImage) {
             bgMobileImage = false;
         }
+        const button = element.querySelector("button");
+        const buttonText = button ? button.textContent : "";
+        const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
         const response: any = {
             background_image: decodeUrl(bgImage),
             background_size: element.style.backgroundSize,
-            button_text: element.querySelector("button") ? element.querySelector("button").innerText : "",
-            button_type: element.querySelector("button") ? element.querySelector("button").classList[1] : "pagebuilder-button-primary",
+            button_text: buttonText,
+            button_type: buttonType,
             link_url: element.querySelector("a").getAttribute("href"),
             margins_and_padding: {
                 margin: {

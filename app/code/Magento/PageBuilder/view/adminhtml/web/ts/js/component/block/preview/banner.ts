@@ -117,19 +117,6 @@ export default class Banner extends PreviewBlock {
     }
 
     /**
-     * Get the button class for the preview
-     *
-     * @returns {any}
-     */
-    public getButtonClasses() {
-        let buttonClass = this.data.button_type();
-        if (!this.data.button_text()) {
-            buttonClass += " placeholder-text";
-        }
-        return buttonClass;
-    }
-
-    /**
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOver() {

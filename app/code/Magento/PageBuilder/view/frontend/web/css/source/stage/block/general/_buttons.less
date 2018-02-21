@@ -6,9 +6,10 @@
 //
 //  _buttons contains {less} for generic buttons
 //  _____________________________________________
-
-button {
+a,
+button{
     &.pagebuilder-button-primary {
+        .lib-link-as-button();
         .lib-button-primary(@_button-margin: 0 10px 10px 0);
         .lib-button-l();
         .lib-css(border-radius, @button__border-radius);
@@ -16,6 +17,7 @@ button {
     }
 
     &.pagebuilder-button-secondary {
+        .lib-link-as-button();
         .lib-button(@_button-margin: 0 10px 10px 0);
         .lib-button-l();
         .lib-css(border-radius, @button__border-radius);
