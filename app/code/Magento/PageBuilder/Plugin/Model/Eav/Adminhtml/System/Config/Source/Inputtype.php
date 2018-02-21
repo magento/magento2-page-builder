@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Plugin\Eav\System\Config\Source;
+namespace Magento\PageBuilder\Plugin\Model\Eav\Adminhtml\System\Config\Source;
 
 /**
  * Plugin for \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
  */
-class InputtypePlugin
+class Inputtype
 {
     /**
      * Append result with additional compatible input types.
@@ -21,14 +21,11 @@ class InputtypePlugin
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterToOptionArray(
+    public function afterGetVolatileInputTypes(
         \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype $subject,
         array $result
-    ){
-        $pageBuilderInputType = ['value' => 'pagebuilder', 'label' => __('Magento Page Builder')];
-        $result = array_merge($result, [
-            $pageBuilderInputType
-        ]);
+    ) {
+        $result[0][] = 'pagebuilder';
         return $result;
     }
 }
