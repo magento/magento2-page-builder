@@ -4,14 +4,11 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
+import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
+import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
-
-interface ConfigObject {
-    component?: string;
-    [key: string]: any;
-}
 
 /**
  * Retrieve the block instance from the config object
@@ -19,7 +16,7 @@ interface ConfigObject {
  * @param config
  * @returns {any|string}
  */
-function getBlockComponentPath(config: ConfigObject): string {
+function getBlockComponentPath(config: ConfigContentBlock): string {
     return config.component || "Magento_PageBuilder/js/component/block/block";
 }
 
@@ -33,7 +30,7 @@ function getBlockComponentPath(config: ConfigObject): string {
  * @returns {Promise<BlockInterface>}
  */
 export default function createBlock(
-    config: ConfigObject,
+    config: ConfigContentBlock,
     parent: EditableArea,
     stage: Stage,
     formData?: object,

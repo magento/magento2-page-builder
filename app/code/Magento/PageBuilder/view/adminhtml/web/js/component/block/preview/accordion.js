@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockout, _require, _block) {
+define(["jquery", "knockout", "underscore", "./block"], function (_jquery, _knockout, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =
@@ -7,6 +7,10 @@ define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockou
   function (_PreviewBlock) {
     _inheritsLoose(Accordion, _PreviewBlock);
 
+    /**
+     * @param {Accordion} parent
+     * @param {object} config
+     */
     function Accordion(parent, config) {
       var _this;
 
@@ -46,13 +50,14 @@ define(["jquery", "knockout", "require", "./block"], function (_jquery, _knockou
       ++this.renderCounter;
 
       if (this.data.items().length === this.renderCounter) {
-        (0, _require)(["accordion"], function () {
-          _.delay(function () {
+        require(["accordion"], function () {
+          _underscore.delay(function () {
             return (0, _jquery)(_this2.element).accordion({
               active: _this2.parent.getActive()
             });
           }, 50);
         });
+
         this.renderCounter = 0;
       }
     };

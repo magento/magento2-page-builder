@@ -10,11 +10,10 @@ import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class ContentBlock extends PreviewBlock {
+
     /**
-     * PreviewBlock constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     constructor(parent: Block, config: object) {
         super(parent, config);

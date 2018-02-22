@@ -1,20 +1,17 @@
 /*eslint-disable */
-define(["./event-emitter"], function (_eventEmitter) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+define(["jquery"], function (_jquery) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var DataStore =
   /*#__PURE__*/
-  function (_EventEmitter) {
-    _inheritsLoose(DataStore, _EventEmitter);
-
+  function () {
     function DataStore() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _EventEmitter.call.apply(_EventEmitter, [this].concat(args)) || this, _this.state = new Map(), _this.snapshotStorage = new Map(), _this.snapshotLog = [], _temp) || _this;
+      this.state = new Map();
+      this.snapshotStorage = new Map();
+      this.snapshotLog = [];
+      this.events = (0, _jquery)({});
     }
 
     var _proto = DataStore.prototype;
@@ -105,14 +102,14 @@ define(["./event-emitter"], function (_eventEmitter) {
     /**
      * Subscribe to data changes on an editable area
      *
-     * @param handler
-     * @param id
+     * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string} id
      */
 
 
     _proto.subscribe = function subscribe(handler, id) {
       var eventName = id ? "state_" + id : "state";
-      this.on(eventName, function (event, data) {
+      this.events.on(eventName, function (event, data) {
         handler(data.state, event);
       });
     };
@@ -125,19 +122,19 @@ define(["./event-emitter"], function (_eventEmitter) {
 
 
     _proto.emitState = function emitState(id, data) {
-      this.emit("state", {
+      this.events.trigger("state", {
         state: this.state
       });
 
       if (id) {
-        this.emit("state_" + id, {
+        this.events.trigger("state_" + id, {
           state: data
         });
       }
     };
 
     return DataStore;
-  }(_eventEmitter);
+  }();
 
   return DataStore;
 });

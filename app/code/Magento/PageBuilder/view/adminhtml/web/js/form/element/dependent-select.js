@@ -16,11 +16,10 @@ define([
         /**
          * Dependently display dropdown component if it contains more than one option
          *
-         * @param {Array} data
          * @returns {Object} Chainable
          */
-        setOptions: function (data) {
-            this._super(data);
+        setOptions: function () {
+            this._super();
 
             if (this.options().length > 1) {
                 this.setVisible(true);

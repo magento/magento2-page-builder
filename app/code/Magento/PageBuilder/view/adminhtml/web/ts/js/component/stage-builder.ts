@@ -3,12 +3,12 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import $t from "mage/translate";
 import * as _ from "underscore";
 import Block from "./block/block";
 import createBlock from "./block/factory";
-import Config from "./config";
+import Config, {ConfigContentBlock} from "./config";
+import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
@@ -49,7 +49,7 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
 
         if (children.length > 0) {
             _.forEach(children, (childElement: HTMLElement) => {
-                childPromises.push(createElementBlock(childElement, stage, stage));
+                childPromises.push(createElementBlock(childElement, stage, parent));
                 childElements.push(childElement);
             });
         }
@@ -75,10 +75,11 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
 function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
+    const config = Config.getInitConfig("content_types")[role];
 
-    return getElementData(element).then(
+    return getElementData(element, config).then(
         (data: object) => createBlock(
-            Config.getInitConfig("content_types")[role],
+            config,
             parent,
             stage,
             data,
@@ -89,11 +90,15 @@ function createElementBlock(element: HTMLElement, stage: Stage, parent?: Editabl
 /**
  * Retrieve the elements data
  *
- * @param element
- * @returns {{}}
+ * @param {HTMLElement} element
+ * @param {ConfigContentBlock} config
+ * @returns {Promise<any>}
  */
-function getElementData(element: HTMLElement) {
-    const result = {};
+function getElementData(element: HTMLElement, config: ConfigContentBlock) {
+    // Create an object with all fields for the content type with an empty value
+    const result = _.mapObject(config.fields, () => {
+        return "";
+    });
     const attributeReaderComposite = new AttributeReaderComposite();
     const readPromise = attributeReaderComposite.read(element);
     return readPromise.then((data) => {
@@ -197,7 +202,7 @@ export default function build(
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
-            .catch((e) => {
+            .catch(() => {
                 stageContent([]);
                 currentBuild = buildEmpty(stage, content);
             });
@@ -212,7 +217,7 @@ export default function build(
                 content: $t("An error has occurred while initiating the content area."),
                 title: $t("Advanced CMS Error"),
             });
-            stage.emit("stageError", error);
+            EventBus.trigger("stage:error", error);
             console.error( error );
         });
     return stage;

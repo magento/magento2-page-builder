@@ -8,12 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddAnchor">
+    <test name="AddAnchorContentBlockToCMSPage">
         <annotations>
-            <title value="Add an anchor into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Anchor MAGETWO-83932"/>
+            <title value="Add Anchor in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add an anchor into a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84900"/>
+            <testCaseId value="MAGETWO-84923"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -48,12 +50,14 @@
         <amOnPage url="anchor{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElementInDOM selector="//span[@id='{{PageBuilderAnchorIdentifierProperty.value}}']" stepKey="seeAnchorIdentifierSet"/>
     </test>
-    <test name="CanRemoveAnchor">
+    <test name="RemoveAnchorFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Anchor MAGETWO-83932"/>
             <title value="Remove anchor content block from stage"/>
             <description value="A user should be able to remove anchor block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -80,9 +84,12 @@
     </test>
     <test name="AnchorHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Anchor MAGETWO-83932"/>
             <title value="Anchor has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for anchor"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

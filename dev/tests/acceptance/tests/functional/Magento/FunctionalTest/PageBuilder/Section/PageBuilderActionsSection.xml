@@ -34,13 +34,14 @@
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="div.pagebuilder-stage div.row-container"/>
-        <element name="contentBlockInStage" type="button" selector='//div[contains(@class, "pagebuilder-{{arg1}}")][1]' parameterized="true"/>
-        <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
-        <element name="contentBlockOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-{{arg1}}")][1]/div[@class="pagebuilder-options"]' parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}} a.edit-block[title="Edit"]' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}} a.remove-structural[title="Remove"]' parameterized="true"/>
-        <element name="editColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
-        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-structure.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
+        <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
+        <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
+        <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
+        <element name="contentBlockOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
+        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
@@ -79,35 +80,40 @@
         <element name="savePageSuccessMessage" type="text" selector=".message-success"/>
     </section>
     <section name="PageBuilderRowSection">
-        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]'/>
-        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[2]'/>
-        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[3]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")]'/>
-        <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
-        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-structure") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
+        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
+        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")]'/>
+        <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
+        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
     <section name="PageBuilderColumnSection">
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
-        <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]"/>
-        <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')]"/>
+        <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]"/>
+        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
+        <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][1]"/>
+        <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][2]"/>
+        <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
+        <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="addRow" type="button" selector='//*[@class="pagebuilder-stage"]/div[3]/button'/>
         <element name="draggableColumnInPanel" type="button" selector='//*[text()="Column"]/ancestor::*[contains(@class, "ui-draggable")]'/>
         <element name="dropAreaInDefaultStage" type="button" selector="//div[contains(@class, 'stage-container')]/div[contains(@class, 'pagebuilder-row-wrapper')][1]/div[contains(@class, 'pagebuilder-row')]/div[contains(@class, 'row-container')]"/>
-        <element name="columnInStage" type="button" selector='//div[contains(@class, "pagebuilder-column")][1]'/>
-        <element name="columnInStage2" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]"/>
-        <element name="columnInStage2Children" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[contains(@class, 'column-container')]/div"/>
-        <element name="columnInStage2DropArea" type="text" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[contains(@class, 'column-container')]"/>
-        <element name="columnInStage3" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[3]"/>
-        <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]'/>
-        <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]'/>
-        <element name="editColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
-        <element name="editColumn2" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[2]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
-        <element name="editColumn3" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[3]/div[@class='pagebuilder-options']/descendant::*[@class='edit-block']"/>
-        <element name="dragColumn" type="button" selector="(//div[contains(@class, 'pagebuilder-structure') and contains(@class, 'pagebuilder-column')])[1]/div[@class='pagebuilder-options']/descendant::*[@class='move-structural']"/>
-        <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="columnInStage" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]'/>
+        <element name="columnInStage2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]'/>
+        <element name="columnInStage2Children" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class, "column-container")]/div'/>
+        <element name="columnInStage2DropArea" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class, "column-container")]'/>
+        <element name="columnInStage3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]'/>
+        <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]'/>
+        <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]'/>
+        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
+        <element name="dragColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]'/>
+        <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="removeColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
         <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
@@ -117,6 +123,9 @@
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
+        <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled="true"]' parameterized="true"/>
+        <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled="true")]' parameterized="true"/>
+        <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
     </section>
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
@@ -139,31 +148,42 @@
         <element name="rowClass" type="button" selector="[data-role='row'].first-class.second-class.third-class"/>
     </section>
     <section name="ColumnsOnFrontend">
-        <element name="column1Height" type="button" selector="//*[@data-role='column'][1][contains(@style, 'min-height: 500px;')]"/>
-        <element name="column1BackgroundColor" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
-        <element name="column1BackgroundColorPeacock" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-color: rgb(8, 126, 139);')]"/>
-        <element name="column1BackgroundSize" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-size: contain;')]"/>
-        <element name="column1BackgroundRepeatApplied" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-repeat: repeat;')]"/>
-        <element name="column1BackgroundAttachment" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-attachment: fixed;')]"/>
-        <element name="column1BackgroundWidth" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 50%;')]"/>
-        <element name="column1BackgroundWidthThird" type="button" selector="//*[@data-role='column'][1][contains(@style, 'width: 33%;')]"/>
-        <element name="column1Appearance" type="button" selector="//*[@data-role='column'][1][contains(@style, 'align-self: flex-end;')]"/>
-        <element name="column1BackgroundImage" type="button" selector="//*[@data-role='column'][1][contains(@style, 'background-image: url(')]"/>
-        <element name="column2Height" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 500px;')]"/>
-        <element name="column2Height300" type="button" selector="//*[@data-role='column'][2][contains(@style, 'min-height: 300px;')]"/>
-        <element name="column2BackgroundSize" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-size: auto;')]"/>
-        <element name="column2BackgroundRepeatNotApplied" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-repeat: no-repeat;')]"/>
-        <element name="column2BackgroundAttachment" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-attachment: scroll;')]"/>
-        <element name="column2BackgroundWidth" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 16.7%;')]"/>
-        <element name="column2BackgroundWidthThird" type="button" selector="//*[@data-role='column'][2][contains(@style, 'width: 33%;')]"/>
-        <element name="column2BackgroundColorSalmon" type="button" selector="//*[@data-role='column'][2][contains(@style, 'background-color: rgb(255, 90, 95);')]"/>
-        <element name="column2Appearance" type="button" selector="//*[@data-role='column'][2][contains(@style, 'align-self: center;')]"/>
-        <element name="column3Appearance" type="button" selector="//*[@data-role='column'][3][contains(@style, 'align-self: flex-start;')]"/>
-        <element name="column3Height200" type="button" selector="//*[@data-role='column'][3][contains(@style, 'min-height: 200px;')]"/>
-        <element name="column3BackgroundSize" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-size: cover;')]"/>
-        <element name="column3BackgroundWidthThird" type="button" selector="//*[@data-role='column'][3][contains(@style, 'width: 33%;')]"/>
-        <element name="column3BackgroundColorGrey" type="button" selector="//*[@data-role='column'][3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
+        <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
+        <element name="column1Height" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'min-height: 500px;')]"/>
+        <element name="column1HeightFull" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: stretch;')]"/>
+        <element name="column1BackgroundColor" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-color: rgb(204, 204, 204);')]"/>
+        <element name="column1BackgroundColorPeacock" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-color: rgb(8, 126, 139);')]"/>
+        <element name="column1BackgroundSize" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-size: contain;')]"/>
+        <element name="column1BackgroundRepeatApplied" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-repeat: repeat;')]"/>
+        <element name="column1BackgroundAttachment" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-attachment: fixed;')]"/>
+        <element name="column1BackgroundWidth" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'width: 50%;')]"/>
+        <element name="column1BackgroundWidthThird" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'width: 33%;')]"/>
+        <element name="column1Appearance" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: flex-end;')]"/>
+        <element name="column1BackgroundImage" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'background-image: url(')]"/>
+        <element name="column2Height" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 500px;')]"/>
+        <element name="column2Height300" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 300px;')]"/>
+        <element name="column2HeightFull" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'align-self: stretch;')]"/>
+        <element name="column2BackgroundSize" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-size: auto;')]"/>
+        <element name="column2BackgroundRepeatNotApplied" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-repeat: no-repeat;')]"/>
+        <element name="column2BackgroundAttachment" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-attachment: scroll;')]"/>
+        <element name="column2BackgroundWidth" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'width: 50%;')]"/>
+        <element name="column2BackgroundWidthThird" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'width: 33%;')]"/>
+        <element name="column2BackgroundColorSalmon" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-color: rgb(255, 90, 95);')]"/>
+        <element name="column2Appearance" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'align-self: center;')]"/>
+        <element name="column3Appearance" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'align-self: stretch;')]"/>
+        <element name="column3Height200" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'min-height: 200px;')]"/>
+        <element name="column3BackgroundSize" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'background-size: cover;')]"/>
+        <element name="column3BackgroundWidthThird" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'width: 33%;')]"/>
+        <element name="column3BackgroundColorGrey" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='.{{arg2}}']" parameterized="true"/>
+
+        <element name="columnDisplay" type="button" selector="[data-role='column']:first-child"/>
+        <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: center;']"/>
+        <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border: 10px dotted rgb(255, 255, 255);']"/>
+        <element name="columnBorderRadius" type="button" selector="[data-role='column']:first-child[style*='border-radius: 12px;']"/>
+        <element name="columnMargin" type="button" selector="[data-role='column']:first-child[style*='margin: 5px;']"/>
+        <element name="columnPadding" type="button" selector="[data-role='column']:first-child[style*='padding: 5px;']"/>
+        <element name="columnClass" type="button" selector="[data-role='column']:first-child.first-class.second-class.third-class"/>
     </section>
     <section name="AdvancedForm">
         <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
@@ -180,6 +200,7 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedBorder" type="select" selector="//select[@name='border']"/>
         <element name="advancedBorderColor" type="input" selector="//input[@name='border_color']"/>
+        <element name="advancedBorderWidth" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
         <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>

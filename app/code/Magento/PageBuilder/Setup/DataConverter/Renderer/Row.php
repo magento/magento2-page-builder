@@ -35,19 +35,6 @@ class Row implements RendererInterface
 
         $formData = $itemData['formData'] ?? [];
 
-        if (!empty($itemData['children'])) {
-            $columnChildrenCount = array_reduce($itemData['children'], function ($result, $child) {
-                if (isset($child['type']) && $child['type'] === 'column') {
-                    $result++;
-                }
-                return $result;
-            }, 0);
-
-            if ($columnChildrenCount === count($itemData['children'])) {
-                $formData['display'] = 'flex';
-            }
-        }
-
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
             $rootElementAttributes['style'] = $style;

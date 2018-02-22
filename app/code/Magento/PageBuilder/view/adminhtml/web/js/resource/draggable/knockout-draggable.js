@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict*/
 
-define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
+define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
 
     /**
      * Retrieve the view model for an element
@@ -23,9 +23,15 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
             revert: true,
             revertDuration: 0,
             zIndex: 500,
+            containment: 'body',
             connectToSortable: '.pagebuilder-sortable',
             appendTo: document.body,
-            helper: 'clone'
+            helper: function(event) {
+                var clone = jQuery(event.currentTarget).clone();
+
+                clone.css('pointerEvents', 'none');
+                return clone;
+            }
         },
 
         /**
@@ -41,19 +47,10 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
                 .on('dragstart', function (event, ui) {
                     // Ensure the dimensions are retained on the element
                     ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
-                    require('uiRegistry').set('dragElementViewModel', getViewModelFromEvent(event));
-                    // Attach the view model to the element for knockout sortable
-                    getViewModelFromEvent(event).emit('dragStart', {
-                        event: event,
-                        ui: ui
-                    });
+                    require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
                 })
-                .on('dragstop', function (event, ui) {
-                    require('uiRegistry').remove('dragElementViewModel');
-                    getViewModelFromEvent(event).emit('dragStop', {
-                        event: event,
-                        ui: ui
-                    });
+                .on('dragstop', function () {
+                    require("uiRegistry").remove('dragElementViewModel');
                 });
         },
 

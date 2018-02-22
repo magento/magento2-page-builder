@@ -10,25 +10,39 @@ import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
-interface FromDomResult {
-    [key: string]: any;
-}
-
 export default class StyleAttributeMapper {
+
     /**
      * Map style attribute keys to DOM key names and normalize values
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
-    public toDom(data: DataObject): DataObject {
-        const result: DataObject = {};
+    public toDom(data: DataObject): StyleAttributeMapperResult {
+        const result: StyleAttributeMapperResult = {};
+        data = _.extend({}, data);
+
+        // Handle the border being set to none and default
+        if (typeof data.border !== "undefined") {
+            if (data.border === "none") {
+                data.border_color = "";
+                data.border_width = "";
+                data.border_radius = "";
+            }
+        }
+
         Object.keys(data).map(
             (key: string) => {
                 let value: any = data[key];
-                if (value === "") {
+
+                /**
+                 * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+                 * empty value but can't as the field has a default value
+                 */
+                if (value === "" || value === "_default") {
                     return;
                 }
+
                 if (key === "color" && value === "default") {
                     value = "";
                 }
@@ -60,19 +74,19 @@ export default class StyleAttributeMapper {
                     value = "url(\'" + toDataUrl(directive) + "\')";
                 }
                 if (key === "margins_and_padding") {
-                    const toPxStr = (val: string) => !isNaN(parseInt(val, 10)) ? `${val}px` : "";
-                    const { padding, margin } = value;
-                    const paddingAndMargins = {
-                        marginBottom: toPxStr(margin.bottom),
-                        marginLeft: toPxStr(margin.left),
-                        marginRight: toPxStr(margin.right),
-                        marginTop: toPxStr(margin.top),
-                        paddingBottom: toPxStr(padding.bottom),
-                        paddingLeft: toPxStr(padding.left),
-                        paddingRight: toPxStr(padding.right),
-                        paddingTop: toPxStr(padding.top),
-                    };
-                    Object.assign(result, paddingAndMargins);
+                    // The default value is set as a string
+                    if (_.isString(value)) {
+                        value = JSON.parse(value);
+                    }
+                    result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+                    result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+                    result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+                    result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+
+                    result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+                    result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+                    result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+                    result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
                     return;
                 }
                 result[this.fromSnakeToCamelCase(key)] = value;
@@ -85,17 +99,37 @@ export default class StyleAttributeMapper {
      * Map DOM key names and values to internal format
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
-    public fromDom(data: DataObject): DataObject {
-        const result: FromDomResult = {};
+    public fromDom(data: DataObject): StyleAttributeMapperResult {
+        const result: StyleAttributeMapperResult = {};
+        data = _.extend({}, data);
+
+        // Set the initial state of margins & paddings and allow the reader below to populate it as desired
+        result.margins_and_padding = {
+            margin: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+            padding: {
+                bottom: "",
+                left: "",
+                right: "",
+                top: "",
+            },
+        };
+
         Object.keys(data).map(
             (key: any) => {
                 let value: any = data[key];
                 if (value === "") {
                     return;
                 }
-                if (key === "border-top-width") {
+
+                // The border values will be translated through as their top, left etc. so map them to the border-width
+                if (key === "border-top-width" && value !== "initial") {
                     key = "border-width";
                 }
                 if (key === "border-top-style") {
@@ -104,6 +138,7 @@ export default class StyleAttributeMapper {
                 if (key === "border-top-left-radius") {
                     key = "border-radius";
                 }
+
                 if (key === "min-height" || key === "border-width" || key === "border-radius") {
                     value = value.replace("px", "");
                 }
@@ -125,7 +160,7 @@ export default class StyleAttributeMapper {
                     key = "border-color";
                 }
                 if (key === "background-color" || key === "border-color") {
-                    if (value === "default" || value === "") {
+                    if (value === "default" || value === "initial" || value === "") {
                         value = "";
                     } else {
                         value = this.convertRgbToHex(value);
@@ -148,11 +183,9 @@ export default class StyleAttributeMapper {
                     value = decodeUrl(value);
                 }
                 if (key.startsWith("margin") || key.startsWith("padding")) {
-                    const spacingObj = {margin: {}, padding: {}};
                     const [attributeType, attributeDirection] = key.split("-");
-                    result.margins_and_padding = result.margins_and_padding || spacingObj;
-                    result.margins_and_padding[attributeType] = _.extend(
-                        result.margins_and_padding[attributeType],
+                    result.margins_and_padding[(attributeType as "margin" | "padding")] = _.extend(
+                        result.margins_and_padding[(attributeType as "margin" | "padding")],
                         {[attributeDirection]: value.replace("px", "")},
                     );
                     return;
@@ -195,7 +228,7 @@ export default class StyleAttributeMapper {
      * @param {string} value
      * @returns {string}
      */
-    private convertRgbToHex(value: string) {
+    private convertRgbToHex(value: string): string {
         if (value) {
             const regexp = /(\d{0,3}),\s(\d{0,3}),\s(\d{0,3})/;
             const matches = regexp.exec(value);
@@ -208,4 +241,24 @@ export default class StyleAttributeMapper {
         }
         return value;
     }
+}
+
+export interface StyleAttributeMapperResult {
+    [key: string]: string | number | StyleAttributeMarginsAndPadding;
+    margins_and_padding?: StyleAttributeMarginsAndPadding;
+}
+
+export interface StyleAttributeMarginsAndPadding {
+    margin: {
+        bottom: string,
+        left: string,
+        right: string,
+        top: string,
+    };
+    padding: {
+        bottom: string,
+        left: string,
+        right: string,
+        top: string,
+    };
 }

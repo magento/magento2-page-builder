@@ -8,11 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddNewsletter">
+    <test name="AddNewsletterContentBlockToCMSPage">
         <annotations>
-            <title value="Can add newsletter"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Newsletter MAGETWO-83937"/>
+            <title value="Add Newsletter in PageBuilder for new CMS page and view on Storefront"/>
             <description value="The user should be able to add newsletter content types and they should be visible on frontend"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84269"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -78,12 +81,14 @@
         <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" stepKey="seeNewsletterLabel"/>
         <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" stepKey="seeNewsletterButtonText"/>
     </test>
-    <test name="CanRemoveNewsletter">
+    <test name="RemoveNewsletterFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Newsletter MAGETWO-83937"/>
             <title value="Remove newsletter content block from stage"/>
             <description value="A user should be able to remove newsletter block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -110,9 +115,12 @@
     </test>
     <test name="NewsletterHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Newsletter MAGETWO-83937"/>
             <title value="Newsletter has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for newsletter"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
