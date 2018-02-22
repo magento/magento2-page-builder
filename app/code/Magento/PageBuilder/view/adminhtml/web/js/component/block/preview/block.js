@@ -20,6 +20,7 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
       this.config = void 0;
       this.data = {};
       this.previewStyle = void 0;
+      this.mouseover = false;
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
@@ -78,10 +79,14 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
     };
     /**
      * Set state based on mouseover event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
      */
 
 
-    _proto.onMouseOver = function onMouseOver(data, event) {
+    _proto.onMouseOver = function onMouseOver(context, event) {
+      this.mouseover = true;
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -94,19 +99,31 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
     };
     /**
      * Set state based on mouseout event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
      */
 
 
-    _proto.onMouseOut = function onMouseOut(data, event) {
-      var currentTarget = event.currentTarget;
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+    _proto.onMouseOut = function onMouseOut(context, event) {
+      var _this2 = this;
 
-      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = optionsMenu.first();
-      }
+      this.mouseover = false;
 
-      optionsMenu.removeClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
+      _underscore.delay(function () {
+        if (!_this2.mouseover) {
+          var currentTarget = event.currentTarget;
+          var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+
+          if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
+          }
+
+          optionsMenu.removeClass("pagebuilder-options-visible");
+          (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
+        }
+      }, 100); // 100 ms delay to allow for users hovering over other elements
+
     };
     /**
      * Setup fields observables within the data class property
@@ -114,19 +131,19 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
 
 
     _proto.setupDataFields = function setupDataFields() {
-      var _this2 = this;
+      var _this3 = this;
 
       // Create an empty observable for all fields
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
-          _this2.updateDataValue(key, "");
+          _this3.updateDataValue(key, "");
         });
       } // Subscribe to this blocks data in the store
 
 
       this.parent.stage.store.subscribe(function (data) {
         _underscore.forEach(data, function (value, key) {
-          _this2.updateDataValue(key, value);
+          _this3.updateDataValue(key, value);
         });
       }, this.parent.id);
     };

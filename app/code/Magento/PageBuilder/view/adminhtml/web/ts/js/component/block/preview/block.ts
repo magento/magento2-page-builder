@@ -21,6 +21,7 @@ export default class PreviewBlock {
     public config: any;
     public data: PreviewData = {};
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    private mouseover: boolean = false;
 
     /**
      * PreviewBlock constructor
@@ -101,30 +102,44 @@ export default class PreviewBlock {
 
     /**
      * Set state based on mouseover event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
      */
-    public onMouseOver(data, event) {
+    public onMouseOver(context: PreviewBlock, event: Event) {
+        this.mouseover = true;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
         }
+
         optionsMenu.addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**
      * Set state based on mouseout event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
      */
-    public onMouseOut(data, event) {
-        const currentTarget = event.currentTarget;
-        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+    public onMouseOut(context: PreviewBlock, event: Event) {
+        this.mouseover = false;
+        _.delay(() => {
+            if (!this.mouseover) {
+                const currentTarget = event.currentTarget;
+                let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
-        if (!$(currentTarget).hasClass("type-nested")) {
-            optionsMenu = optionsMenu.first();
-        }
-        optionsMenu.removeClass("pagebuilder-options-visible");
-        $(currentTarget).removeClass("pagebuilder-content-type-active");
+                if (!$(currentTarget).hasClass("type-nested")) {
+                    optionsMenu = optionsMenu.first();
+                }
+
+                optionsMenu.removeClass("pagebuilder-options-visible");
+                $(currentTarget).removeClass("pagebuilder-content-type-active");
+            }
+        }, 100); // 100 ms delay to allow for users hovering over other elements
     }
 
     /**
