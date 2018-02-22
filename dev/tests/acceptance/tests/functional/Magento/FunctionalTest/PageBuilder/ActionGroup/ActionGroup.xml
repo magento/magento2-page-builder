@@ -100,7 +100,7 @@
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
@@ -328,6 +328,7 @@
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
+        <waitForElementVisible selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="waitForSaveAndContinueVisibility"/>
         <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton" />
