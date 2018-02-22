@@ -65,22 +65,12 @@ class Driver implements RendererInterface
             . 'background-attachment: scroll; border: 1px none; border-radius: 0px;';
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            if (isset($formData['metric']) && $itemData['formData']['metric'] !== '') {
-                $metric = $this->serializer->unserialize($formData['metric']);
-                if (isset($metric['margin'])) {
-                    $margin = ' margin: ' . str_replace('-', '0px', $metric['margin']) . ';';
-                    unset($metric['margin']);
-                }
-                if (isset($metric['padding'])) {
-                    $padding = ' padding: ' . str_replace('-', '0px', $metric['padding']) . ';';
-                    unset($metric['padding']);
-                }
-                $formData['metric'] = $this->serializer->serialize($metric);
-            }
-            if (isset($formData['align']) && $formData['align'] !== '') {
-                $textAlign = ' text-align: ' . $formData['align'] . ';';
-                unset($formData['align']);
-            }
+            list($formData, $margin, $padding, $textAlign) = $this->extractStyle(
+                $formData,
+                $margin,
+                $padding,
+                $textAlign
+            );
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
                 $rootElementAttributes['style'] .= ' ' . $style;
@@ -162,5 +152,35 @@ class Driver implements RendererInterface
             $elementAttributesHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
         return $elementAttributesHtml;
+    }
+
+    /**
+     * Extract margin, padding and align properties
+     *
+     * @param array $formData
+     * @param string $margin
+     * @param string $padding
+     * @param string $textAlign
+     * @return array
+     */
+    private function extractStyle(array $formData, $margin, $padding, $textAlign): array
+    {
+        if (isset($formData['metric']) && $formData['metric'] !== '') {
+            $metric = $this->serializer->unserialize($formData['metric']);
+            if (isset($metric['margin'])) {
+                $margin = ' margin: ' . str_replace('-', '0px', $metric['margin']) . ';';
+                unset($metric['margin']);
+            }
+            if (isset($metric['padding'])) {
+                $padding = ' padding: ' . str_replace('-', '0px', $metric['padding']) . ';';
+                unset($metric['padding']);
+            }
+            $formData['metric'] = $this->serializer->serialize($metric);
+        }
+        if (isset($formData['align']) && $formData['align'] !== '') {
+            $textAlign = ' text-align: ' . $formData['align'] . ';';
+            unset($formData['align']);
+        }
+        return array($formData, $margin, $padding, $textAlign);
     }
 }
