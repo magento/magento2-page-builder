@@ -20,7 +20,7 @@ export function fromHex(hexValue: string, alphaValue: string) {
     const green = parseInt(colors[2], 16);
     const blue = parseInt(colors[3], 16);
     if (alphaValue === "NaN") {
-        alphaValue = "0";
+        alphaValue = "1";
     }
     if (alphaValue) {
         return "rgba(" + red + "," + green + "," + blue + "," + alphaValue + ")";
