@@ -20,6 +20,7 @@ export default class PreviewBlock {
     public parent: Block;
     public config: any;
     public data: PreviewData = {};
+    public displayLabel: KnockoutObservable<string>;
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
     private mouseover: boolean = false;
 
@@ -35,6 +36,7 @@ export default class PreviewBlock {
 
         this.parent = parent;
         this.config = config || {};
+        this.displayLabel = ko.observable(this.config.label);
 
         this.setupDataFields();
 

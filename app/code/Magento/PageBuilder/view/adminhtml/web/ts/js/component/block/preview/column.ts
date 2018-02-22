@@ -4,9 +4,29 @@
  */
 
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
+import Block from "../block";
 import PreviewBlock from "./block";
+import {getMaxColumns} from "./column-group/resizing";
+import {ConfigContentBlock} from "../../config";
 
 export default class Column extends PreviewBlock {
+
+    /**
+     * @param {Block} parent
+     * @param {ConfigContentBlock} config
+     */
+    constructor(parent: Block, config: ConfigContentBlock) {
+        super(parent, config);
+
+        this.data.width.subscribe((newWidth) => {
+            const maxColumns = getMaxColumns();
+            newWidth = parseFloat(newWidth);
+            newWidth = Math.round(newWidth / (100 / maxColumns));
+            const newLabel = `${newWidth}/${maxColumns}`;
+            this.displayLabel(`Column ${newLabel}`);
+        });
+
+    }
 
     /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL

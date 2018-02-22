@@ -8,10 +8,9 @@
 <div class="pagebuilder-content-type type-container pagebuilder-column children-min-height" data-bind="style: preview.previewStyle, afterRender: initColumn, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < parent.children().length - 1"></div>
     <div class="pagebuilder-resizing" data-bind="css: {active: resizing}"></div>
-
     <!-- ko template: getOptions().template --><!-- /ko -->
+    <div class="pagebuilder-display-label" data-bind="text: function () { return preview.displayLabel().toUpperCase(); }()"></div>
     <!-- ko template: previewChildTemplate --><!-- /ko -->
-
-    <div class="pagebuilder-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')">
+    <div class="pagebuilder-empty pagebuilder-empty-column" data-bind="css: {visible: children().length == 0}, text: $t('Empty Column')">
     </div>
 </div>
