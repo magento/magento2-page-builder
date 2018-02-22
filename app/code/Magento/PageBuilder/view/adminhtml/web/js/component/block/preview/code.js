@@ -8,10 +8,8 @@ define(["knockout", "pagebuilder/highlight", "./block"], function (_knockout, _h
     _inheritsLoose(Code, _PreviewBlock);
 
     /**
-     * Constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     function Code(parent, config) {
       var _this;

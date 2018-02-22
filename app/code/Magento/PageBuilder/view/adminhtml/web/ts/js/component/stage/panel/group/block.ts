@@ -4,11 +4,11 @@
  */
 
 import ko from "knockout";
-import EventEmitter from "../../../event-emitter";
+import {ConfigContentBlock} from "../../../config";
 
-export class Block extends EventEmitter {
+export class Block {
     public droppable: boolean = true;
-    private config: ContentBlockConfig;
+    private config: ConfigContentBlock;
     private icon: KnockoutObservable<string> = ko.observable("");
     private identifier: KnockoutObservable<string> = ko.observable("");
     private label: KnockoutObservable<string> = ko.observable("");
@@ -17,14 +17,22 @@ export class Block extends EventEmitter {
      * Block Constructor
      *
      * @param {string} identifier
-     * @param {ContentBlockConfig} config
+     * @param {ConfigContentBlock} config
      */
-    constructor(identifier: string, config: ContentBlockConfig) {
-        super();
+    constructor(identifier: string, config: ConfigContentBlock) {
         this.config = config;
         this.identifier(identifier);
         this.label(config.label);
         this.icon(config.icon);
+    }
+
+    /**
+     * Retrieve the config object
+     *
+     * @returns {ConfigContentBlock}
+     */
+    public getConfig() {
+        return this.config;
     }
 
     /**

@@ -161,7 +161,7 @@ export default class Banner extends PreviewBlock {
      *
      * @returns styles
      */
-    private afterStyleMapped(styles: {}) {
+    protected afterStyleMapped(styles: {}) {
         // Extract data values our of observable functions
         // The style attribute mapper converts images to directives, override it to include the correct URL
         if (this.data.background_image && typeof this.data.background_image()[0] === "object") {

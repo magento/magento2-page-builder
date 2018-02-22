@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "./block"], function (_jquery, _knockout, _tabs, _underscore, _block) {
+define(["jquery", "tabs", "underscore", "./block"], function (_jquery, _tabs, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -7,31 +7,23 @@ define(["jquery", "knockout", "tabs", "underscore", "./block"], function (_jquer
   function (_Block) {
     _inheritsLoose(Tabs, _Block);
 
-    function Tabs(parent, config) {
-      var _this;
+    function Tabs() {
+      var _temp, _this;
 
-      _this = _Block.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-      _this.element = void 0;
-      _this.renderCounter = 0;
-      _this.data.tabs = _knockout.observableArray([]);
-
-      _this.data.tabs.subscribe(function (data) {
-        _this.renderCounter = 0;
-        (0, _jquery)(_this.element).tabs("destroy");
-      });
-
-      return _this;
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
     }
+
+    var _proto = Tabs.prototype;
+
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
-
-    var _proto = Tabs.prototype;
-
     _proto.onContainerRender = function onContainerRender(element) {
       this.element = element;
     };
@@ -52,6 +44,22 @@ define(["jquery", "knockout", "tabs", "underscore", "./block"], function (_jquer
 
         this.renderCounter = 0;
       }
+    };
+    /**
+     * Setup fields observables within the data class property
+     */
+
+
+    _proto.setupDataFields = function setupDataFields() {
+      var _this3 = this;
+
+      _Block.prototype.setupDataFields.call(this);
+
+      this.updateDataValue("tabs", []);
+      this.data.tabs.subscribe(function (data) {
+        _this3.renderCounter = 0;
+        (0, _jquery)(_this3.element).tabs("destroy");
+      });
     };
 
     return Tabs;

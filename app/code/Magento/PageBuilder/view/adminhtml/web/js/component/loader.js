@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["require"], function (_require) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
   function load(dependencies, factory, onError) {
-    (0, _require)(dependencies, factory, onError);
+    require(dependencies, factory, onError);
   }
 
   return load;

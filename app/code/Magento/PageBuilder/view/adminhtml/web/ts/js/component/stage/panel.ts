@@ -8,7 +8,8 @@ import "ko-draggable";
 import "ko-sortable";
 import uiComponent from "uiComponent";
 import _ from "underscore";
-import Config from "../config";
+import Config, {ConfigContentBlock} from "../config";
+import EventBus from "../event-bus";
 import { StageInterface } from "../stage.d";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
@@ -50,9 +51,11 @@ export default class Panel extends uiComponent implements PanelInterface {
      */
     public bindStage(stage: StageInterface): void {
         this.stage = stage;
-        stage.on("stageReady", () => {
-            this.populateContentBlocks();
-            this.isVisible(true);
+        EventBus.on("stage:ready", (event, params) => {
+            if (this.stage.id === params.stage.id) {
+                this.populateContentBlocks();
+                this.isVisible(true);
+            }
         });
     }
 
@@ -92,7 +95,7 @@ export default class Panel extends uiComponent implements PanelInterface {
             this.searchResults(_.map(
                 _.filter(
                     Config.getInitConfig("content_types"),
-                    (contentBlock: ContentBlockConfig) => {
+                    (contentBlock: ConfigContentBlock) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
                         return matches &&
@@ -127,8 +130,9 @@ export default class Panel extends uiComponent implements PanelInterface {
                             group: id,
                             is_visible: true,
                         }), /* Retrieve content blocks with group id */
-                        (contentBlock: ContentBlockConfig, identifier: string) => {
-                            return new GroupBlock(identifier, contentBlock);
+                        (contentBlock: ConfigContentBlock, identifier: string) => {
+                            const groupBlock = new GroupBlock(identifier, contentBlock);
+                            return groupBlock;
                         },
                     ),
                 ));

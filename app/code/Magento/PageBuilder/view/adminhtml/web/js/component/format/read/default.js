@@ -43,9 +43,12 @@ define(["underscore", "../attribute-mapper", "../style-attribute-mapper"], funct
         if (element.dataset[key] !== "") {
           data[key.split(/(?=[A-Z])/).join("_").toLowerCase()] = element.dataset[key];
         }
-      }); // Copy the css classes into the data store
+      }); // Copy the css classes into the data store, excluding the pagebuilder-ROLE class
 
       data.css_classes = element.className || "";
+      data.css_classes = data.css_classes.toString().split(" ").filter(function (className) {
+        return className !== "pagebuilder-" + attributes["data-role"];
+      }).join(" ");
       return new Promise(function (resolve) {
         resolve(data);
       });

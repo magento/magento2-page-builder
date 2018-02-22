@@ -15,16 +15,30 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
      * Map style attribute keys to DOM key names and normalize values
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
     _proto.toDom = function toDom(data) {
       var _this = this;
 
       var result = {};
+      data = _underscore.extend({}, data); // Handle the border being set to none and default
+
+      if (typeof data.border !== "undefined") {
+        if (data.border === "none") {
+          data.border_color = "";
+          data.border_width = "";
+          data.border_radius = "";
+        }
+      }
+
       Object.keys(data).map(function (key) {
         var value = data[key];
+        /**
+         * If a field is set to _default then don't append it to the stylesheet. This is used when you need an
+         * empty value but can't as the field has a default value
+         */
 
-        if (value === "") {
+        if (value === "" || value === "_default") {
           return;
         }
 
@@ -64,24 +78,19 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "margins_and_padding") {
-          var toPxStr = function toPxStr(val) {
-            return !isNaN(parseInt(val, 10)) ? val + "px" : "";
-          };
+          // The default value is set as a string
+          if (_underscore.isString(value)) {
+            value = JSON.parse(value);
+          }
 
-          var _value = value,
-              padding = _value.padding,
-              margin = _value.margin;
-          var paddingAndMargins = {
-            marginBottom: toPxStr(margin.bottom),
-            marginLeft: toPxStr(margin.left),
-            marginRight: toPxStr(margin.right),
-            marginTop: toPxStr(margin.top),
-            paddingBottom: toPxStr(padding.bottom),
-            paddingLeft: toPxStr(padding.left),
-            paddingRight: toPxStr(padding.right),
-            paddingTop: toPxStr(padding.top)
-          };
-          Object.assign(result, paddingAndMargins);
+          result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+          result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+          result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+          result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+          result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+          result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+          result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+          result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
           return;
         }
 
@@ -93,7 +102,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
      * Map DOM key names and values to internal format
      *
      * @param {DataObject} data
-     * @returns {DataObject}
+     * @returns {StyleAttributeMapperResult}
      */
 
 
@@ -101,14 +110,31 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
       var _this2 = this;
 
       var result = {};
+      data = _underscore.extend({}, data); // Set the initial state of margins & paddings and allow the reader below to populate it as desired
+
+      result.margins_and_padding = {
+        margin: {
+          bottom: "",
+          left: "",
+          right: "",
+          top: ""
+        },
+        padding: {
+          bottom: "",
+          left: "",
+          right: "",
+          top: ""
+        }
+      };
       Object.keys(data).map(function (key) {
         var value = data[key];
 
         if (value === "") {
           return;
-        }
+        } // The border values will be translated through as their top, left etc. so map them to the border-width
 
-        if (key === "border-top-width") {
+
+        if (key === "border-top-width" && value !== "initial") {
           key = "border-width";
         }
 
@@ -146,7 +172,7 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         }
 
         if (key === "background-color" || key === "border-color") {
-          if (value === "default" || value === "") {
+          if (value === "default" || value === "initial" || value === "") {
             value = "";
           } else {
             value = _this2.convertRgbToHex(value);
@@ -174,16 +200,10 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
         if (key.startsWith("margin") || key.startsWith("padding")) {
           var _$extend;
 
-          var spacingObj = {
-            margin: {},
-            padding: {}
-          };
-
           var _key$split = key.split("-"),
               attributeType = _key$split[0],
               attributeDirection = _key$split[1];
 
-          result.margins_and_padding = result.margins_and_padding || spacingObj;
           result.margins_and_padding[attributeType] = _underscore.extend(result.margins_and_padding[attributeType], (_$extend = {}, _$extend[attributeDirection] = value.replace("px", ""), _$extend));
           return;
         }

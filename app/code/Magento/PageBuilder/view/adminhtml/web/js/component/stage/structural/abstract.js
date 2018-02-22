@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option) {
+define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -29,11 +29,11 @@ define(["knockout", "mage/translate", "underscore", "../../format/attribute-filt
       _this.config = void 0;
       _this.children = _knockout.observableArray([]);
       _this.edit = void 0;
-      _this.parent = void 0;
       _this.title = void 0;
       _this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
+      _this.element = void 0;
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
       _this.optionsInstance = new _options.Options(_this, _this.options);
@@ -83,8 +83,10 @@ define(["knockout", "mage/translate", "underscore", "../../format/attribute-filt
         actions: {
           confirm: function confirm() {
             // Call the parent to remove the child element
-            _this2.parent.emit("blockRemoved", {
-              block: _this2
+            _eventBus.trigger("block:removed", {
+              block: _this2,
+              index: _this2.parent.children().indexOf(_this2),
+              parent: _this2.parent
             });
           }
         },
@@ -104,7 +106,7 @@ define(["knockout", "mage/translate", "underscore", "../../format/attribute-filt
       var cssClasses = {};
 
       if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-        this.getData().css_classes.split(" ").map(function (value, index) {
+        this.getData().css_classes.toString().split(" ").map(function (value, index) {
           return cssClasses[value] = true;
         });
       }
@@ -161,7 +163,7 @@ define(["knockout", "mage/translate", "underscore", "../../format/attribute-filt
     _createClass(Structural, [{
       key: "options",
       get: function get() {
-        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), false, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
+        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
       }
       /**
        * Retrieve the template for the structural

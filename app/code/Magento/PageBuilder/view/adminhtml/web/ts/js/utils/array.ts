@@ -56,3 +56,60 @@ export function removeArrayItem(
 
     return array;
 }
+
+/**
+ * Search outwards from an array item until a callback matches
+ *
+ * @author https://github.com/thejameskyle/outward-search
+ *
+ * @param {any[]} items
+ * @param {number} start
+ * @param {(item: any, index: number) => boolean} callback
+ * @returns {any}
+ */
+export function outwardSearch(
+    items: any[],
+    start: number,
+    callback: (item: any, index: number) => boolean,
+) {
+    if (!items.length) {
+        return null;
+    }
+
+    if (start < 0 || start > items.length - 1) {
+        throw new TypeError("starting index must be within bounds of array");
+    }
+
+    const max = items.length - 1;
+    let low = start;
+    let high = start + 1;
+
+    while (true) {
+        const hitMin = low < 0;
+        const hitMax = high > max;
+
+        if (hitMin && hitMax) {
+            break;
+        }
+
+        if (!hitMin) {
+            const item = items[low];
+            const result = callback(item, low);
+            if (!!result) {
+                return item;
+            }
+            low--;
+        }
+
+        if (!hitMax) {
+            const item = items[high];
+            const result = callback(item, high);
+            if (!!result) {
+                return item;
+            }
+            high++;
+        }
+    }
+
+    return null;
+}

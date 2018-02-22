@@ -17,6 +17,7 @@ define([
     'uiRegistry',
     'jquery',
     'mageUtils',
+    'Magento_PageBuilder/js/component/event-bus',
     'Magento_PageBuilder/js/component/format/format-validator',
     'Magento_PageBuilder/js/component/stage-builder',
     'Magento_PageBuilder/js/component/stage/panel',
@@ -33,6 +34,7 @@ define([
     registry,
     jQuery,
     utils,
+    EventBus,
     validateFormat,
     buildStage,
     Panel,
@@ -59,6 +61,7 @@ define([
             isComponentInitialized: false,
             isButtonEnable: ko.observable(false),
             wysiwygConfigData: {},
+            dragging: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -84,7 +87,7 @@ define([
 
             this._super()
                 .observe('value stageId stageActive stageContent showBorders loading userSelect '
-                    + 'isFullScreen wysiwygConfigData');
+                    + 'isFullScreen wysiwygConfigData dragging');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -94,7 +97,7 @@ define([
                         jQuery(window).scrollTop(0);
                     });
                 }
-            }, this, 'beforeChange');
+            }, this, "beforeChange");
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
                     _.defer(function () {
@@ -247,9 +250,11 @@ define([
                 isFullScreeMode = isFullScreenMode || false,
                 bindStage = function (stage) {
                     self.stage = stage;
-                    stage.on('stageReady', function () {
-                        self.stageActive(true);
-                        self.visible(false);
+                    EventBus.on("stage:ready", function (stageReadyEvent, params) {
+                        if (params.stage.id === self.stage.id) {
+                            self.stageActive(true); // Display the stage UI
+                            self.visible(false); // Hide the original WYSIWYG editor
+                        }
                     });
                 };
 
@@ -268,12 +273,6 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
-
-            // On stage ready show the interface
-            this.stage.on('stageReady', function () {
-                self.stageActive(true); // Display the stage UI
-                self.visible(false); // Hide the original WYSIWYG editor
-            });
 
             this.isComponentInitialized = true;
         },

@@ -7,20 +7,22 @@ define(["knockout", "../../config", "./block"], function (_knockout, _config, _b
   function (_PreviewBlock) {
     _inheritsLoose(Search, _PreviewBlock);
 
+    function Search() {
+      return _PreviewBlock.apply(this, arguments) || this;
+    }
+
+    var _proto = Search.prototype;
+
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * Setup fields observables within the data class property
      */
-    function Search(parent, config) {
-      var _this;
+    _proto.setupDataFields = function setupDataFields() {
+      var _this = this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _PreviewBlock.prototype.setupDataFields.call(this);
 
-      _this.updateDataValue("html", _knockout.observable(""));
-
-      _this.parent.stage.store.subscribe(function (data) {
+      this.updateDataValue("html", _knockout.observable(""));
+      this.parent.stage.store.subscribe(function (data) {
         if (_this.data.placeholder() === "") {
           return;
         }
@@ -34,10 +36,8 @@ define(["knockout", "../../config", "./block"], function (_knockout, _config, _b
         jQuery.post(url, requestData, function (response) {
           _this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
         });
-      }, _this.parent.id);
-
-      return _this;
-    }
+      }, this.parent.id);
+    };
 
     return Search;
   }(_block);

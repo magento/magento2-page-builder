@@ -8,9 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddFullWidthImage">
+    <test name="AddImageContentBlockToCMSPage">
         <annotations>
-            <title value="Add an image content block into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Image MAGETWO-83926"/>
+            <title value="Add Image in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add an image into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84259"/>
@@ -84,12 +86,14 @@
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
-    <test name="CanRemoveImage">
+    <test name="RemoveImageFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Image MAGETWO-83926"/>
             <title value="Remove image content block from stage"/>
             <description value="A user should be able to remove image block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -115,9 +119,12 @@
     </test>
     <test name="ImageHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Image MAGETWO-83926"/>
             <title value="Image has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for Image"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

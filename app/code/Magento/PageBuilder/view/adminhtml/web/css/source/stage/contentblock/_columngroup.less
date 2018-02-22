@@ -1,0 +1,188 @@
+// /**
+// * Copyright © Magento, Inc. All rights reserved.
+// * See COPYING.txt for license details.
+// */
+
+.pagebuilder-content-type {
+    .pagebuilder-column-group {
+        border: none;
+        box-sizing: border-box;
+        position: relative;
+        width: 100%;
+
+        .drop-placeholder {
+            background: rgba(142, 0, 6, 0.3);
+            bottom: 1px;
+            opacity: 0;
+            position: absolute;
+            top: 1px;
+            visibility: hidden;
+            z-index: 10001;
+
+            .no-user-select;
+            .no-pointer-events;
+
+            &.left {
+                border-left: 10px solid rgba(142, 0, 6, 0.1);
+                opacity: 1;
+                transform: translateX(1px);
+                visibility: visible;
+            }
+            &.right {
+                border-right: 10px solid rgba(142, 0, 6, 0.1);
+                opacity: 1;
+                transform: translateX(1px);
+                visibility: visible;
+            }
+        }
+
+        .move-placeholder {
+            background: rgba(142, 0, 6, 0.3);
+            bottom: 1px;
+            opacity: 0;
+            position: absolute;
+            top: 1px;
+            transform: translateX(-3px);
+            transition: 0.5s opacity;
+            visibility: hidden;
+            width: 6px;
+            z-index: 10001;
+
+            .no-user-select;
+            .no-pointer-events;
+
+            &.active {
+                opacity: 1;
+                transition: 0.5s opacity;
+                visibility: visible;
+            }
+        }
+
+        .resize-grid {
+            display: flex;
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            transition: 0.5s opacity;
+            visibility: hidden;
+            width: 100%;
+            z-index: 9;
+
+            .no-user-select;
+            .no-pointer-events;
+
+            .grid-line {
+                border-right: 15px solid rgba(238, 238, 238, 0.5);
+                box-sizing: border-box;
+                height: 100%;
+                width: 16.66666667%;
+            }
+        }
+
+        .resize-ghost {
+            border-right: 15px solid #BFE2F0;
+            box-sizing: border-box;
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            transition: 0.5s opacity;
+            visibility: hidden;
+            z-index: 10;
+
+            .no-user-select;
+            .no-pointer-events;
+
+            &.active {
+                opacity: 1;
+                transition: 0.5s opacity;
+                visibility: visible;
+            }
+        }
+
+        &.resizing {
+            .resize-grid {
+                opacity: 1;
+                transition: 0.5s opacity;
+                visibility: visible;
+            }
+
+            .no-user-select;
+
+            .pagebuilder-options {
+                display: none;
+            }
+
+            .pagebuilder-content-type {
+                .pagebuilder-empty {
+                    opacity: 0;
+                }
+            }
+        }
+
+        > .element-children {
+            display: flex;
+            padding: 0;
+            position: relative;
+            width: 100%;
+        }
+    }
+
+    .pagebuilder-column {
+        .pagebuilder-column-resize-handle {
+            background: #BFE2F0;
+            bottom: 0;
+            cursor: col-resize;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            top: 0;
+            transition: 0.5s opacity;
+            width: 15px;
+            z-index: 12;
+
+            &:hover {
+                opacity: 0.3;
+            }
+        }
+        .pagebuilder-resizing {
+            background: #BFE2F0;
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+
+            -webkit-touch-callout: none;
+            transition: 0.5s opacity;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            visibility: hidden;
+            width: 100%;
+            z-index: 8;
+
+            * {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            &.active {
+                opacity: 0.5;
+                transition: 0.5s opacity;
+                visibility: visible;
+            }
+        }
+    }
+}

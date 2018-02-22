@@ -11,6 +11,8 @@ import PreviewBlock from "./block";
 
 export default class AdvancedSlider extends PreviewBlock {
     private ready: boolean = false;
+    private element: Element;
+
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -28,11 +30,10 @@ export default class AdvancedSlider extends PreviewBlock {
             }
         }, 100);
     }, 20);
-    private element: Element;
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     constructor(parent: Block, config: object) {
         super(parent, config);
