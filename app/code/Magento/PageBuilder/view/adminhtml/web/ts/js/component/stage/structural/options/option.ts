@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import { Structural } from "../abstract.d";
+import Structural from "../abstract";
 import { OptionInterface } from "./option.d";
 
 export class Option implements OptionInterface {
@@ -13,8 +13,8 @@ export class Option implements OptionInterface {
     public parent: Structural;
     public sort: number;
     public title: string;
-    private action: () => void;
-    private optionTemplate: string;
+    public action: () => void;
+    public optionTemplate: string;
 
     /**
      * Option constructor

@@ -5,7 +5,8 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import { Option } from "../stage/structural/options/option";
+import {Option} from "../stage/structural/options/option";
+import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
 
 export default class Row extends Block {
@@ -15,28 +16,27 @@ export default class Row extends Block {
      *
      * @returns {Array<Option>}
      */
-    get options(): Option[] {
-        let removeOption;
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        const newOptions = options.filter((option) => {
+            return (option.code !== "remove");
+        });
+        const removeClasses = ["remove-structural"];
+        let removeFn = this.onOptionRemove;
         if (this.stage.children().length < 2) {
-            removeOption = new Option(this, "remove", "<i></i>",
-                $t("Remove"), () => { return; }, ["remove-structural disabled"], 100);
-        } else {
-            removeOption = new Option(this, "remove", "<i></i>",
-                $t("Remove"), this.onOptionRemove, ["remove-structural"], 100);
+            removeFn = () => { return; };
+            removeClasses.push("disabled");
         }
-        return [
-            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
-            new Option(
-                this,
-                "duplicate",
-                "<i class='icon-pagebuilder-copy'></i>",
-                $t("Duplicate"),
-                this.onOptionDuplicate,
-                ["duplicate-structural"],
-                60,
-            ),
-            removeOption,
-        ];
+        newOptions.push(new Option(
+            this,
+            "remove",
+            "<i></i>",
+            $t("Remove"),
+            removeFn,
+            removeClasses,
+            100,
+        ));
+        return newOptions;
     }
 
     /**

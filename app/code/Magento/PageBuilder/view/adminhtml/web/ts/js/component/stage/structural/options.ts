@@ -9,7 +9,6 @@ import { Structural } from "./abstract.d";
 import { OptionInterface } from "./options/option.d";
 
 export class Options {
-    private template: string = "Magento_PageBuilder/component/stage/structural/options.html";
     private parent: Structural;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
@@ -23,6 +22,10 @@ export class Options {
         this.parent = parent;
         this.options(options);
         this.sort();
+    }
+
+    get template(): string {
+         return "Magento_PageBuilder/component/stage/structural/options.html";
     }
 
     /**
@@ -41,9 +44,9 @@ export class Options {
      * @param code
      */
     public removeOption(code: string) {
-        this.options(_.without(this.options(), _.findWhere(this.options(), {
-            code,
-        })));
+        this.options(this.options().filter((option: OptionInterface) => {
+            return (option.code !== "remove");
+        }));
         this.sort();
     }
 
