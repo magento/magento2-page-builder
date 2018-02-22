@@ -10,10 +10,12 @@
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="BannerCanPreviewAdmin">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -63,10 +65,13 @@
     </test>
     <test name="BannerCanRenderFrontend">
         <annotations>
-            <title value="Banner is rendered correctly in frontend"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Banner MAGETWO-83928"/>
+            <title value="Add Banner in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <testCaseId value="MAGETWO-84673"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -117,10 +122,12 @@
     </test>
     <test name="BannerCanOpenInNewTab">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -162,13 +169,15 @@
         <seeElementInDOM selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
         <seeElementInDOM selector="{{BannerOnFrontend.openInNewTab}}" stepKey="verifyLinkOpensNewWindow"/>
     </test>
-    <test name="CanRemoveBanner">
+    <test name="RemoveBannerFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Banner MAGETWO-83928"/>
             <title value="Remove banner content block from stage"/>
             <description value="A user should be able to remove banner block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
-            <group value="pagebuilder2"/>
+            <testCaseId value="MAGETWO-84919"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -192,11 +201,13 @@
     </test>
     <test name="BannerDoesNotNavigate">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner does not navigate on click"/>
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86838"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -236,10 +247,12 @@
     </test>
     <test name="BannerHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Banner MAGETWO-83928"/>
             <title value="Banner has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -274,10 +287,12 @@
     </test>
     <test name="BannerHasRequired">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner requires all required fields in edit form"/>
             <description value="A user needs to fill all required fields in banner edit form"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -325,10 +340,12 @@
     </test>
     <test name="BannerHasDefaults">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner has the correct default values in edit form"/>
             <description value="A user should see the correct default values when edit button is clicked for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -363,10 +380,12 @@
     </test>
     <test name="BannerHasButtonStyled">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -406,11 +425,13 @@
     </test>
     <test name="BannerCollageLeftValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage left banner"/>
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -579,11 +600,13 @@
     </test>
     <test name="BannerCollageCenteredValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage centered banner"/>
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -752,11 +775,13 @@
     </test>
     <test name="BannerCollageRightValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage right banner"/>
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -928,11 +953,13 @@
     </test>
     <test name="BannerCollageLeftMobileWithoutMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage left mobile banner without mobile image"/>
             <description value="Check value of a collage left mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1003,11 +1030,13 @@
     </test>
     <test name="BannerCollageCenteredMobileWithoutMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage centered mobile banner without mobile image"/>
             <description value="Check value of a collage centered mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1078,11 +1107,13 @@
     </test>
     <test name="BannerCollageRightMobileWithoutMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage right mobile banner without mobile image"/>
             <description value="Check value of a collage right mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1153,11 +1184,13 @@
     </test>
     <test name="BannerCollageLeftMobileWithMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage left mobile banner with mobile image"/>
             <description value="Check value of a collage left mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1231,11 +1264,13 @@
     </test>
     <test name="BannerCollageCenteredMobileWithMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage centered mobile banner with mobile image"/>
             <description value="Check value of a collage centered mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1309,11 +1344,13 @@
     </test>
     <test name="BannerCollageRightMobileWithMobileImageValues">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check value of a collage right mobile banner with mobile image"/>
             <description value="Check value of a collage right mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1387,10 +1424,12 @@
     </test>
     <test name="BannerCollageRightContentCanPreviewAdmin">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1472,10 +1511,12 @@
     </test>
     <test name="BannerCollageCenteredContentCanPreviewAdmin">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Basic Configuration MAGETWO-81599"/>
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder2"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1557,6 +1598,8 @@
     </test>
     <test name="BannerCollageLeftContentCanPreviewAdmin">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
@@ -1642,6 +1685,8 @@
     </test>
     <test name="BannerCollageLeftButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage left button on hover state works"/>
             <description value="Check collage left button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -1732,6 +1777,8 @@
     </test>
     <test name="BannerCollageLeftOverlayOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage left overlay on hover state works"/>
             <description value="Check collage left overlay on hover state works"/>
             <severity value="CRITICAL"/>
@@ -1822,6 +1869,8 @@
     </test>
     <test name="BannerCollageLeftOverlayNeverShow">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage left overlay never show state works"/>
             <description value="Check collage left overlay never show state works"/>
             <severity value="CRITICAL"/>
@@ -1901,6 +1950,8 @@
     </test>
     <test name="BannerCollageLeftOverlayAndButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage left button on hover state works"/>
             <description value="Check collage left button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2001,6 +2052,8 @@
     </test>
     <test name="BannerCollageRightButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2091,6 +2144,8 @@
     </test>
     <test name="BannerCollageRightOverlayOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage right overlay on hover state works"/>
             <description value="Check collage right overlay on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2181,6 +2236,8 @@
     </test>
     <test name="BannerCollageRightOverlayNeverShow">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage right overlay never show state works"/>
             <description value="Check collage right overlay never show state works"/>
             <severity value="CRITICAL"/>
@@ -2260,6 +2317,8 @@
     </test>
     <test name="BannerCollageRightOverlayAndButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2360,6 +2419,8 @@
     </test>
     <test name="BannerCollageCenteredButtonOnHover">
         <annotations>
+            <features value="PageBuilderBanner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage centered button on hover state works"/>
             <description value="Check collage centered button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2450,6 +2511,8 @@
     </test>
     <test name="BannerCollageCenteredOverlayOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage centered overlay on hover state works"/>
             <description value="Check collage centered overlay on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2540,6 +2603,8 @@
     </test>
     <test name="BannerCollageCenteredOverlayNeverShow">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage centered overlay never show state works"/>
             <description value="Check collage centered overlay never show state works"/>
             <severity value="CRITICAL"/>
@@ -2619,6 +2684,8 @@
     </test>
     <test name="BannerCollageCenteredOverlayAndButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check collage centered button on hover state works"/>
             <description value="Check collage centered button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2719,6 +2786,8 @@
     </test>
     <test name="BannerPosterButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2806,6 +2875,8 @@
     </test>
     <test name="BannerPosterOverlayOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check poster overlay on hover state works"/>
             <description value="Check poster overlay on hover state works"/>
             <severity value="CRITICAL"/>
@@ -2893,6 +2964,8 @@
     </test>
     <test name="BannerPosterOverlayNeverShow">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check poster overlay never show state works"/>
             <description value="Check poster overlay never show state works"/>
             <severity value="CRITICAL"/>
@@ -2969,6 +3042,8 @@
     </test>
     <test name="BannerPosterOverlayAndButtonOnHover">
         <annotations>
+            <features value="PageBuilder Banner MAGETWO-83836"/>
+            <stories value="Banner Appearances MAGETWO-83553"/>
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
