@@ -940,6 +940,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'css_classes' => 'one two',
                             'image' => '/m/a/magento.png',
                             'link_url' => 'http://domain.com/',
+                            'link_text' => 'Link Text',
                             'target_blank' => '0'
                         ]
                     ]

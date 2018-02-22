@@ -65,30 +65,18 @@ class Driver implements RendererInterface
             . 'background-attachment: scroll; border: 1px none; border-radius: 0px;';
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            if (isset($formData['metric']) && $itemData['formData']['metric'] !== '') {
-                $metric = $this->serializer->unserialize($formData['metric']);
-                if (isset($metric['margin'])) {
-                    $margin = ' margin: ' . str_replace('-', '0px', $metric['margin']) . ';';
-                    unset($metric['margin']);
-                }
-                if (isset($metric['padding'])) {
-                    $padding = ' padding: ' . str_replace('-', '0px', $metric['padding']) . ';';
-                    unset($metric['padding']);
-                }
-                $formData['metric'] = $this->serializer->serialize($metric);
-            }
-            if (isset($formData['align']) && $formData['align'] !== '') {
-                $textAlign = ' text-align: ' . $formData['align'] . ';';
-                unset($formData['align']);
-            }
+            list($formData, $margin, $padding, $textAlign) = $this->extractStyle(
+                $formData,
+                $margin,
+                $padding,
+                $textAlign
+            );
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
                 $rootElementAttributes['style'] .= ' ' . $style;
             }
         }
         $rootElementAttributes['style'] .= $margin;
-
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
 
         $linkAttributes = [
             'href' => $eavData['link_url'] ?? '',
@@ -125,17 +113,30 @@ class Driver implements RendererInterface
         $overlayElementHtml = '<div class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
             'style="background-color: transparent; min-height: 300px;' . $padding . '">';
 
-        $rootElementHtml .= '><a'
+        $buttonHtml = '';
+        if (isset($eavData['link_text']) && $eavData['link_text'] !== '') {
+            $rootElementAttributes['data-show-button'] = 'always';
+            $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" '
+                . 'style="visibility: visible; opacity: 1;">'
+                . $eavData['link_text']
+                . '</button>';
+        }
+
+        return '<div'
+            . $this->printAttributes($rootElementAttributes)
+            . '><a'
             . $this->printAttributes($linkAttributes)
             . '>'
             . $imageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div>'
+            . '<div class="pagebuilder-poster-content"><div></div>'
+            . $buttonHtml
+            . '</div></div></div>'
             . $mobileImageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div></div></div></div></a></div>';
-
-        return $rootElementHtml;
+            . '<div class="pagebuilder-poster-content"><div></div>'
+            . $buttonHtml
+            . '</div></div></div></a></div>';
     }
 
     /**
@@ -151,5 +152,35 @@ class Driver implements RendererInterface
             $elementAttributesHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
         return $elementAttributesHtml;
+    }
+
+    /**
+     * Extract margin, padding and align properties
+     *
+     * @param array $formData
+     * @param string $margin
+     * @param string $padding
+     * @param string $textAlign
+     * @return array
+     */
+    private function extractStyle(array $formData, $margin, $padding, $textAlign): array
+    {
+        if (isset($formData['metric']) && $formData['metric'] !== '') {
+            $metric = $this->serializer->unserialize($formData['metric']);
+            if (isset($metric['margin'])) {
+                $margin = ' margin: ' . str_replace('-', '0px', $metric['margin']) . ';';
+                unset($metric['margin']);
+            }
+            if (isset($metric['padding'])) {
+                $padding = ' padding: ' . str_replace('-', '0px', $metric['padding']) . ';';
+                unset($metric['padding']);
+            }
+            $formData['metric'] = $this->serializer->serialize($metric);
+        }
+        if (isset($formData['align']) && $formData['align'] !== '') {
+            $textAlign = ' text-align: ' . $formData['align'] . ';';
+            unset($formData['align']);
+        }
+        return array($formData, $margin, $padding, $textAlign);
     }
 }
