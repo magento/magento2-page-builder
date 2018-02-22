@@ -9,36 +9,20 @@ use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render row to PageBuilder format
+ * Render column group to PageBuilder format
  */
-class Row implements RendererInterface
+class ColumnGroup implements RendererInterface
 {
-    /**
-     * @var StyleExtractorInterface
-     */
-    private $styleExtractor;
-
-    public function __construct(StyleExtractorInterface $styleExtractor)
-    {
-        $this->styleExtractor = $styleExtractor;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function render(array $itemData, array $additionalData = [])
     {
         $rootElementAttributes = [
-            'data-role' => 'row',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => 'pagebuilder-column-group',
+            'style' => 'display: flex;',
+            'data-role' => 'column-group',
         ];
-
-        $formData = $itemData['formData'] ?? [];
-
-        $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
-        }
 
         $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {

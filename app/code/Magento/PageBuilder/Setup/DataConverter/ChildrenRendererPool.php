@@ -6,9 +6,9 @@
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
- * Pool of renderers for content types
+ * Pool of children renderers for content types
  */
-class RendererPool
+class ChildrenRendererPool
 {
     /**
      * @var array
@@ -27,12 +27,12 @@ class RendererPool
     }
 
     /**
-     * Get renderer for content type
+     * Get children renderer for content type
      *
      * @param string $contentType
-     * @return RendererInterface
+     * @return ChildrenRendererInterface
      */
-    public function getRenderer($contentType)
+    public function getChildrenRenderer($contentType)
     {
         if (isset($this->renderers[$contentType])) {
             return $this->renderers[$contentType];
