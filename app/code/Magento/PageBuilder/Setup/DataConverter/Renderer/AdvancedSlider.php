@@ -53,8 +53,6 @@ class AdvancedSlider implements RendererInterface
             'data-is-infinite' => isset($eavData['is_infinite']) ? $eavData['is_infinite'] : '',
             'data-show-arrows' => isset($eavData['show_arrows']) ? $eavData['show_arrows'] : '',
             'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
-            'data-advanced-settings' => isset($eavData['slider_advanced_settings'])
-                ? $eavData['slider_advanced_settings'] : '',
             'class' => $itemData['formData']['css_classes'] ?? '',
         ];
 
