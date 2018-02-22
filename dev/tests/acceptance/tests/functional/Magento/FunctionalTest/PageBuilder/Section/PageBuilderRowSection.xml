@@ -16,6 +16,22 @@
         <element name="attachmentInput" type="button" selector="[name='background_attachment']"/>
         <element name="repeatInput" type="button" selector="[name='background-repeat']"/>
     </section>
+    <section name="RowAdminPreview">
+        <element name="backgroundColor" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-color: rgb(204, 204, 204)')])[1]"/>
+        <element name="backgroundImage" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-image: url(')])[1]"/>
+        <element name="backgroundPosition" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-position: center center')])[1]"/>
+        <element name="backgroundSize" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-size: cover')])[1]"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-repeat: repeat')])[1]"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-attachment: fixed')])[1]"/>
+
+        <!-- Advanced Section -->
+        <element name="textAlign" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'text-align: center')])[1]"/>
+        <element name="border" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border: 10px dotted rgb(255, 255, 255)')])[1]"/>
+        <element name="borderRadius" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-radius: 12px')])[1]"/>
+        <element name="margin" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'margin: 5px')])[1]"/>
+        <element name="padding" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'padding: 5px')])[1]"/>
+        <element name="class" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@class, 'first-class second-class third-class')])[1]"/>
+    </section>
     <section name="RowOnFrontend">
         <element name="backgroundColor" type="button" selector="[data-role='row'][style*='background-color: rgb(204, 204, 204)']"/>
         <element name="backgroundImage" type="button" selector="//*[@data-role='row'][1][contains(@style, 'background-image: url(')]"/>
@@ -25,5 +41,13 @@
         <element name="backgroundAttachment" type="button" selector="[data-role='row'][style*='background-attachment: scroll']"/>
         <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax']"/>
         <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-speed='{{arg1}}']" parameterized="true"/>
+
+        <!-- Advanced Section -->
+        <element name="textAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>
+        <element name="border" type="button" selector="[data-role='row'][style*='border: 10px dotted rgb(255, 255, 255);']"/>
+        <element name="borderRadius" type="button" selector="[data-role='row'][style*='border-radius: 12px;']"/>
+        <element name="margin" type="button" selector="[data-role='row'][style*='margin: 5px;']"/>
+        <element name="padding" type="button" selector="[data-role='row'][style*='padding: 5px;']"/>
+        <element name="class" type="button" selector="[data-role='row'].first-class.second-class.third-class"/>
     </section>
 </sections>
