@@ -23,7 +23,7 @@ define([], function () {
     var blue = parseInt(colors[3], 16);
 
     if (alphaValue === "NaN") {
-      alphaValue = "0";
+      alphaValue = "1";
     }
 
     if (alphaValue) {
