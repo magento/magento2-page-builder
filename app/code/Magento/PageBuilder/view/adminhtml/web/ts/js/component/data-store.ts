@@ -3,14 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import EventEmitter from "./event-emitter";
+import $ from "jquery";
 
 interface DataStoreEvent {
-    state: State;
-}
-
-interface State {
-    state: object | null;
+    state: DataObject;
 }
 
 export interface DataObject {
@@ -18,10 +14,11 @@ export interface DataObject {
     [key: string]: undefined | null | string | number | boolean | any[];
 }
 
-export default class DataStore extends EventEmitter {
+export default class DataStore {
     private state: Map<string, DataObject> = new Map();
     private snapshotStorage: Map<string, DataObject[]> = new Map();
     private snapshotLog: string[] = [];
+    private events: JQuery.PlainObject = $({});
 
     /**
      * Retrieve data from the state for an editable area
@@ -105,12 +102,12 @@ export default class DataStore extends EventEmitter {
     /**
      * Subscribe to data changes on an editable area
      *
-     * @param handler
-     * @param id
+     * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string} id
      */
-    public subscribe(handler: (state: State, event: Event) => void, id?: string): void {
+    public subscribe(handler: (state: DataObject, event: Event) => void, id?: string): void {
         const eventName = (id ? "state_" + id : "state");
-        this.on(eventName, (event: Event, data: DataStoreEvent) => {
+        this.events.on(eventName, (event: Event, data: DataStoreEvent) => {
             handler(data.state, event);
         });
     }
@@ -122,9 +119,9 @@ export default class DataStore extends EventEmitter {
      * @param data
      */
     private emitState(id?: string, data?: any) {
-        this.emit("state", { state: this.state });
+        this.events.trigger("state", { state: this.state });
         if (id) {
-            this.emit("state_" + id, { state: data });
+            this.events.trigger("state_" + id, { state: data });
         }
     }
 }

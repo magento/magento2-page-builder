@@ -5,10 +5,13 @@
  */
 -->
 
-<div class="pagebuilder-structure pagebuilder-column children-min-height">
-    <div class="pagebuilder-column-resize-handle"></div>
+<div class="pagebuilder-content-type pagebuilder-column children-min-height" data-bind="style: preview.previewStyle, afterRender: initColumn">
+    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < parent.children().length - 1"></div>
+    <div class="pagebuilder-resizing" data-bind="css: {active: resizing}"></div>
+
     <!-- ko template: optionsInstance.template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
+
     <div class="pagebuilder-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here')">
     </div>
 </div>

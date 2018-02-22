@@ -2,9 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
-import ko from "knockout";
+import Appearance from "../../appearance/appearance";
 import Block from "../block";
+import ko from "knockout";
 import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
@@ -12,7 +12,7 @@ export default class Slide extends PreviewBlock {
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     constructor(parent: Block, config: object) {
         super(parent, config);

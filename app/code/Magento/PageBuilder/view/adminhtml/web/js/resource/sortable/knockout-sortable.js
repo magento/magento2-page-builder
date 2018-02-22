@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
+define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, registry, _, EventBus) {
 
     /**
      * Retrieve the view model for an element
@@ -98,23 +98,23 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
          * @param ui
          */
         onSortStart: function (event, ui) {
-            var block = getViewModelFromUi(ui),
-                eventData = {
+            var block = getViewModelFromUi(ui);
+
+            // Store the original parent for use in the update call
+            block.originalParent = block.parent || false;
+
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && jQuery(ui.helper).data('sorting')) {
+                var eventData = {
+                    block: block,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item
                 };
 
-            // Store the original parent for use in the update call
-            block.originalParent = block.parent || false;
-
-            // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
-                block.emit('sortStart', eventData);
-                eventData['block'] = block;
-                block.stage.emit('sortingStart', eventData);
+                EventBus.trigger("block:sortStart", eventData);
             }
         },
 
@@ -128,20 +128,20 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
             // Always remove the sorting original class from an element
             ui.item.removeClass('pagebuilder-sorting-original');
 
-            var block = getViewModelFromUi(ui),
-                eventData = {
+            var block = getViewModelFromUi(ui);
+
+            // ui.helper.data('sorting') is appended to the helper of sorted items
+            if (block && jQuery(ui.helper).data('sorting')) {
+                var eventData = {
+                    block: block,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item
                 };
 
-            // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && typeof block.emit === 'function' && jQuery(ui.helper).data('sorting')) {
                 // ui.position to ensure we're only reacting to sorting events
-                block.emit('sortStop', eventData);
-                eventData['block'] = block;
-                block.stage.emit('sortingStop', eventData);
+                EventBus.trigger("block:sortStop", eventData);
             }
 
             ui.item.css('opacity', 1);
@@ -158,16 +158,23 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
                 newParentEl = blockEl.parent()[0],
                 newIndex = blockEl.index();
 
-            if (blockEl && newParentEl === this) {
+            if (blockEl && newParentEl && newParentEl === this) {
                 var block = ko.dataFor(blockEl[0]),
                     newParent = ko.dataFor(newParentEl);
+
+                // @todo to be refactored under MAGETWO-86953
+                if ((block.config.name === 'column-group' || block.config.name === 'column') &&
+                    jQuery(event.currentTarget).hasClass('column-container')
+                ) {
+                    return;
+                }
 
                 var parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
                     allowedParents = getViewModelFromUi(ui).config.allowed_parents;
 
                 if (parentContainerName && Array.isArray(allowedParents)) {
                     if (allowedParents.indexOf(parentContainerName) === -1) {
-                        jQuery(this).sortable('cancel');
+                        jQuery(this).sortable("cancel");
                         jQuery(ui.item).remove();
 
                         // Force refresh of the parent
@@ -188,15 +195,15 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
                 if (block !== newParent) {
                     ui.item.remove();
                     if (block.originalParent === newParent) {
-                        newParent.emit('blockSorted', {
+                        EventBus.trigger("block:sorted", {
+                            parent: newParent,
                             block: block,
                             index: newIndex
                         });
                     } else {
-                        block.originalParent.emit('blockRemoved', {
-                            block: block
-                        });
-                        newParent.emit('blockInstanceDropped', {
+                        block.originalParent.removeChild(block);
+                        EventBus.trigger("block:instanceDropped", {
+                            parent: newParent,
                             blockInstance: block,
                             index: newIndex
                         });
@@ -220,8 +227,8 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
                 currentInstance = getViewModelFromUi(ui);
 
             // If the registry contains a reference to the drag element view model use that instead
-            if (require('uiRegistry').get('dragElementViewModel')) {
-                currentInstance = require('uiRegistry').get('dragElementViewModel');
+            if (registry.get('dragElementViewModel')) {
+                currentInstance = registry.get('dragElementViewModel');
             }
 
             var allowedParents = currentInstance.config.allowed_parents;
@@ -257,15 +264,30 @@ define(['knockout', 'jquery', 'jquery/ui'], function(ko, jQuery) {
                 var block = getViewModelFromUi(ui),
                     target = ko.dataFor(jQuery(event.target)[0]);
 
+                // Don't run sortable when dropping on a placeholder
+                // @todo to be refactored under MAGETWO-86953
+                if (block.config.name === "column" &&
+                    jQuery(event.srcElement).parents('.ui-droppable').length > 0
+                ) {
+                    return;
+                }
+
                 if (block.droppable) {
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
-                    target.emit('blockDropped', {
+                    // Detect if the target is the parent UI component, if so swap the target to the stage
+                    target = typeof target.uid !== "undefined" ? target.stage : target;
+                    EventBus.trigger("block:dropped", {
+                        parent: target,
                         block: block,
                         index: this.draggedItem.index()
                     });
                     this.draggedItem.remove();
                 }
+            } else if (!ui.helper && ui.item) {
+                _.defer(function () {
+                    jQuery(ui.item).remove();
+                });
             }
         }
     };
