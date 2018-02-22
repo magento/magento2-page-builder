@@ -48,8 +48,11 @@ export default class Default implements ReadInterface {
             }
         });
 
-        // Copy the css classes into the data store
+        // Copy the css classes into the data store, excluding the pagebuilder-ROLE class
         data.css_classes = element.className || "";
+        data.css_classes = data.css_classes.toString().split(" ").filter((className) => {
+            return className !== "pagebuilder-" + attributes["data-role"];
+        }).join(" ");
 
         return new Promise((resolve: (data: object) => void) => {
             resolve(data);
