@@ -5,20 +5,31 @@
  */
 namespace Magento\PageBuilder\Model;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
+
 class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\Config\ConfigInterface
 {
+    const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
+
     /**
-     * Constructor
-     *
-     * @param \Magento\PageBuilder\Model\Config\Reader $reader
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * Config constructor.
+     * @param Config\Reader $reader
      * @param \Magento\Framework\Config\CacheInterface $cache
+     * @param ScopeConfigInterface $scopeConfig
      * @param string $cacheId
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\Reader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
+        ScopeConfigInterface $scopeConfig,
         $cacheId = 'gene_bluefoot_content_types'
     ) {
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($reader, $cache, $cacheId);
     }
 
@@ -58,5 +69,17 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     public function getContentType($name)
     {
         return $this->get('types/' . $name);
+    }
+
+    /**
+     * Returns config setting if page builder enabled
+     *
+     * @return int
+     */
+    public function isEnabled()
+    {
+        return (int)$this->scopeConfig->getValue(
+            \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
+        );
     }
 }

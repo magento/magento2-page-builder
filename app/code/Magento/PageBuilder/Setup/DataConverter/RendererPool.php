@@ -32,7 +32,7 @@ class RendererPool
      * @param string $contentType
      * @return RendererInterface
      */
-    public function getRender($contentType)
+    public function getRenderer($contentType)
     {
         if (isset($this->renderers[$contentType])) {
             return $this->renderers[$contentType];

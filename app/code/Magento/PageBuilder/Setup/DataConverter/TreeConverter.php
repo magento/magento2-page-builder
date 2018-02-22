@@ -6,7 +6,6 @@
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\PageBuilder\Setup\DataConverter\UnableMigrateWithOutParentException;
 
 /**
  * Convert old BlueFoot format to PageBuilder format
@@ -24,6 +23,11 @@ class TreeConverter
     private $childrenExtractorPool;
 
     /**
+     * @var ChildrenRendererPool
+     */
+    private $childrenRendererPool;
+
+    /**
      * @var Json
      */
     private $serializer;
@@ -34,21 +38,24 @@ class TreeConverter
     private $unseparatableContentTypes;
 
     /**
-     * Constructor
+     * TreeConverter constructor.
      *
      * @param RendererPool $rendererPool
      * @param ChildrenExtractorPool $childrenExtractorPool
+     * @param ChildrenRendererPool $childrenRendererPool
      * @param Json $serializer
      * @param array $unseparatableContentTypes
      */
     public function __construct(
         RendererPool $rendererPool,
         ChildrenExtractorPool $childrenExtractorPool,
+        ChildrenRendererPool $childrenRendererPool,
         Json $serializer,
         array $unseparatableContentTypes = []
     ) {
         $this->rendererPool = $rendererPool;
         $this->childrenExtractorPool = $childrenExtractorPool;
+        $this->childrenRendererPool = $childrenRendererPool;
         $this->serializer = $serializer;
         $this->unseparatableContentTypes = $unseparatableContentTypes;
     }
@@ -57,6 +64,7 @@ class TreeConverter
      * Render JSON format to new master format
      *
      * @param $string
+     *
      * @return string
      */
     public function convert($string)
@@ -77,29 +85,40 @@ class TreeConverter
      *
      * @param array $itemData
      * @param int $childIndex
+     * @param array $children
+     *
      * @return string
      */
-    private function convertTreeItem($itemData, $childIndex)
+    private function convertTreeItem($itemData, $childIndex, $children = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
-        $renderer = $this->rendererPool->getRender($contentType);
-        $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
-        $children = $childrenExtractor->extract($itemData);
-        if (!empty($children)) {
-            $childrenHtml = '';
-            $childIndex = 0;
+        $renderer = $this->rendererPool->getRenderer($contentType);
+        if (empty($children)) {
+            $childrenExtractor = $this->childrenExtractorPool->getExtractor($contentType);
+            $itemChildren = $childrenExtractor->extract($itemData);
+        } else {
+            $itemChildren = $children;
+        }
+        if (!empty($itemChildren)) {
             try {
-                foreach ($children as $childItem) {
-                    $childrenHtml .= $this->convertTreeItem($childItem, $childIndex);
-                    $childIndex++;
-                }
+                $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
+                $childrenHtml = $childRenderer->render(
+                    $itemChildren,
+                    function ($childItem, $childIndex, $children = []) {
+                        return $this->convertTreeItem($childItem, $childIndex, $children);
+                    }
+                );
                 return $this->processItemRendering(
                     $renderer,
                     $itemData,
                     ['children' => $childrenHtml]
                 );
             } catch (UnableMigrateWithOutParentException $exception) {
-                $defaultRenderer = $this->rendererPool->getRender('default');
+                $defaultRenderer = $this->rendererPool->getRenderer('default');
+                // If the children have been explicitly provided to the function we need to set them into the item
+                if (!empty($children)) {
+                    $itemData['children'] = $children;
+                }
                 return $this->processItemRendering(
                     $defaultRenderer,
                     $itemData
@@ -124,7 +143,7 @@ class TreeConverter
      */
     private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = [])
     {
-        $defaultRenderer = $this->rendererPool->getRender('default');
+        $defaultRenderer = $this->rendererPool->getRenderer('default');
 
         try {
             // Do not migrate content type if entity is missing required attributes
