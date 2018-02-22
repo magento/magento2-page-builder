@@ -84,7 +84,7 @@ class Driver implements RendererInterface
         ];
 
         $imageAttributes = [
-            'style' => "background-image: url("
+            'style' => 'background-image: url('
                 . "'{{media url=gene-cms"
                 . $eavData['image']
                 . "}}'); "
