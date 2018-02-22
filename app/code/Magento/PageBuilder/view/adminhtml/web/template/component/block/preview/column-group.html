@@ -1,0 +1,22 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-column-group" data-bind="css: {'resizing': preview.resizing}">
+    <div class="resize-grid">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+    </div>
+    <div class="resize-ghost" data-bind="afterRender: (element) => { preview.bindGhost.call(preview, element); }"></div>
+    <div class="drop-placeholder" data-bind="afterRender: (element) => { preview.bindDropPlaceholder.call(preview, element); }"></div>
+    <div class="move-placeholder" data-bind="afterRender: (element) => { preview.bindMovePlaceholder.call(preview, element); }"></div>
+    <div class="element-children" data-bind="foreach: getChildren(), afterRender: (element) => { preview.bindInteractions.call(preview, element); }">
+        <!-- ko template: previewTemplate --><!-- /ko -->
+    </div>
+</div>

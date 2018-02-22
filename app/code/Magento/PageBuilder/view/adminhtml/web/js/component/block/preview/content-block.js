@@ -8,10 +8,8 @@ define(["knockout", "../../config", "./block"], function (_knockout, _config, _b
     _inheritsLoose(ContentBlock, _PreviewBlock);
 
     /**
-     * PreviewBlock constructor
-     *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     function ContentBlock(parent, config) {
       var _this;

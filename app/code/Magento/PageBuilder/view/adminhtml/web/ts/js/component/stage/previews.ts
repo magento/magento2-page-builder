@@ -6,7 +6,8 @@
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import Block from "../block/block";
 import PreviewBlock from "../block/preview/block";
-import Config from "../config";
+import Config, {ConfigContentBlocks} from "../config";
+import Appearance from "../appearance/appearance";
 
 const previews: any[] = [];
 

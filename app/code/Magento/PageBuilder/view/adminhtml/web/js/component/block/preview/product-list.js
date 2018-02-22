@@ -7,20 +7,22 @@ define(["../../config", "./block"], function (_config, _block) {
   function (_PreviewBlock) {
     _inheritsLoose(ProductList, _PreviewBlock);
 
+    function ProductList() {
+      return _PreviewBlock.apply(this, arguments) || this;
+    }
+
+    var _proto = ProductList.prototype;
+
     /**
-     * Product constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * Setup fields observables within the data class property
      */
-    function ProductList(parent, config) {
-      var _this;
+    _proto.setupDataFields = function setupDataFields() {
+      var _this = this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _PreviewBlock.prototype.setupDataFields.call(this);
 
-      _this.updateDataValue("html", "");
-
-      _this.parent.stage.store.subscribe(function (data) {
+      this.updateDataValue("html", "");
+      this.parent.stage.store.subscribe(function (data) {
         if (_this.data.category_id() === "") {
           return;
         }
@@ -37,10 +39,8 @@ define(["../../config", "./block"], function (_config, _block) {
         jQuery.post(url, requestData, function (response) {
           _this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");
         });
-      }, _this.parent.id);
-
-      return _this;
-    }
+      }, this.parent.id);
+    };
 
     return ProductList;
   }(_block);

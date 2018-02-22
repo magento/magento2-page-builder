@@ -38,6 +38,7 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
             $(element).addClass('pagebuilder-parallax');
         });
 
+        /*eslint-disable max-nested-callbacks */
         $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
             var buttonEl = $(element).find('.pagebuilder-banner-button');
 
@@ -68,6 +69,7 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
                 }
             );
         });
+        /*eslint-enable max-nested-callbacks */
     });
 
     $(window).load(function (){

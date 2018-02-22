@@ -3,15 +3,16 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../component/data-store";
+import {DataObject} from "../data-store";
 
 export default class AttributeMapper {
     // Attribute name mapping
-    private attributeNameMapping: DataObject = {
+    private attributeNameMapping: AttributeNameMapping = {
         advanced_settings: "data-advanced-settings",
         appearance: "data-appearance",
         autoplay: "data-autoplay",
         autoplay_speed: "data-autoplay-speed",
+        border: "data-border",
         button_text: "data-button-text",
         button_type: "data-button-type",
         category_id: "data-category-id",
@@ -52,7 +53,7 @@ export default class AttributeMapper {
                     key = this.attributeNameMapping[key];
                 }
                 if (key === "position") {
-                    const [lat, lng, zoom] = value.split(",");
+                    const [lat, lng, zoom] = value.toString().split(",");
                     key = "src";
                     value = "https://www.google.com/maps/embed/v1/place?q="
                         + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
@@ -69,12 +70,15 @@ export default class AttributeMapper {
 
     /**
      * Convert attributes from the DOM into the data store
+     *
      * @param {} data
      * @returns {}
      */
     public fromDom(data: DataObject): DataObject {
         // Flip the object key / values
-        const attributeMapping = Object.keys(this.attributeNameMapping).reduce((obj: DataObject, key) => {
+        const attributeMapping: AttributeNameMapping = Object.keys(
+            this.attributeNameMapping,
+        ).reduce((obj: DataObject, key) => {
             obj[this.attributeNameMapping[key]] = key;
             return obj;
         }, {});
@@ -89,4 +93,8 @@ export default class AttributeMapper {
         );
         return result;
     }
+}
+
+export interface AttributeNameMapping {
+    [key: string]: string;
 }

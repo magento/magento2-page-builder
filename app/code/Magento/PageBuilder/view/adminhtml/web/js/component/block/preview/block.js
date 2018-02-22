@@ -11,7 +11,7 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
      * PreviewBlock constructor
      *
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     function PreviewBlock(parent, config) {
       var _this = this;
@@ -23,30 +23,24 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
-      this.config = config || {}; // Create an empty observable for all fields
+      this.config = config || {};
+      this.setupDataFields(); // Calculate the preview style utilising the style attribute mapper & appearance system
 
-      if (this.config.fields) {
-        _underscore.keys(this.config.fields).forEach(function (key) {
-          _this.updateDataValue(key, "");
-        });
-      } // Subscribe to this blocks data in the store
-
-
-      this.parent.stage.store.subscribe(function (data) {
-        _underscore.forEach(data, function (value, key) {
-          _this.updateDataValue(key, value);
-        });
-      }, this.parent.id);
       this.previewStyle = _knockout.computed(function () {
-        // Extract data values our of observable functions
-        var styles = styleAttributeMapper.toDom(styleAttributeFilter.filter(_underscore.mapObject(_this.data, function (value) {
+        var data = _underscore.mapObject(_this.data, function (value) {
           if (_knockout.isObservable(value)) {
             return value();
           }
 
           return value;
-        })));
-        return _this.afterStyleMapped(styles);
+        });
+
+        if (typeof data.appearance !== "undefined" && typeof config.appearances !== "undefined" && typeof config.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, config.appearances[data.appearance]);
+        } // Extract data values our of observable functions
+
+
+        return _this.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
       });
       Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
         if (_knockout.isObservable(_this.data[key])) {
@@ -83,10 +77,32 @@ define(["knockout", "underscore", "../../format/style-attribute-filter", "../../
       }
     };
     /**
+     * Setup fields observables within the data class property
+     */
+
+
+    _proto.setupDataFields = function setupDataFields() {
+      var _this2 = this;
+
+      // Create an empty observable for all fields
+      if (this.config.fields) {
+        _underscore.keys(this.config.fields).forEach(function (key) {
+          _this2.updateDataValue(key, "");
+        });
+      } // Subscribe to this blocks data in the store
+
+
+      this.parent.stage.store.subscribe(function (data) {
+        _underscore.forEach(data, function (value, key) {
+          _this2.updateDataValue(key, value);
+        });
+      }, this.parent.id);
+    };
+    /**
      * Callback function to update the styles are mapped
      *
-     * @param {string} styles
-     * @return styles
+     * @param {StyleAttributeMapperResult} styles
+     * @returns {StyleAttributeMapperResult}
      */
 
 
