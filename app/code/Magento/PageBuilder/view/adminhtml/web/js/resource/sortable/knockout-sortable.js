@@ -23,15 +23,7 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
             cursor: '-webkit-grabbing',
             connectWith: '.pagebuilder-sortable',
             helper: function (event, element) {
-                var ele;
-
-                if (element.children().first().hasClass('pagebuilder-entity')) {
-                    ele = jQuery('<div />');
-                    ele.addClass('pagebuilder-entity-helper').data('sorting', true);
-                } else {
-                    ele = element.css('opacity', 0.5);
-                }
-                return ele;
+                return element.css('opacity', 0.5);
             },
             appendTo: document.body,
             placeholder: {
