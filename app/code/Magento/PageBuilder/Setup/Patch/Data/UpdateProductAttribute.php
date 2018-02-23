@@ -4,9 +4,10 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\Patch\Data;
 
-use Magento\Setup\Model\Patch\PatchVersionInterface;
 use Magento\Setup\Model\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 

@@ -15,9 +15,7 @@ export interface StageInterface extends EditableAreaInterface {
     originalScrollTop: number;
     store: DataStore;
 
-    ready(): void
-    goFullScreen(): void
-    onSortingStart(): void
-    onSortingStop(): void
-    isFullScreen(): boolean
+    ready(): void;
+    goFullScreen(): void;
+    isFullScreen(): boolean;
 }

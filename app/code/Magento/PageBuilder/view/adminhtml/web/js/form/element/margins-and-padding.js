@@ -100,6 +100,9 @@ define([
          * @private
          */
         _updateObservables: function(value) {
+            if (value && _.isString(value)) {
+                value = JSON.parse(value);
+            }
             if (value && _.isObject(value)) {
                 _.each(value, function(attributeData, attributeType) {
                     _.each(attributeData, function(attributeValue, attributeDirection) {

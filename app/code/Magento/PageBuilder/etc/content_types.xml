@@ -28,6 +28,7 @@
             <label>Row</label>
             <icon>icon-pagebuilder-row</icon>
             <component>Magento_PageBuilder/js/component/block/row</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/row</preview_component>
             <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
             <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>
             <form>pagebuilder_row_form</form>
@@ -37,18 +38,38 @@
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
         </type>
-        <type name="column" translate="label" sortOrder="10">
-            <label>Column</label>
+        <type name="column-group" translate="label" sortOrder="10">
+            <label>Column Group</label>
             <icon>icon-pagebuilder-column</icon>
-            <preview_template>Magento_PageBuilder/component/block/preview/column.html</preview_template>
-            <render_template>Magento_PageBuilder/component/block/render/column.html</render_template>
-            <form>pagebuilder_column_form</form>
+            <form />
             <group>general</group>
+            <component>Magento_PageBuilder/js/component/block/column-group</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/column-group</preview_component>
+            <preview_template>Magento_PageBuilder/component/block/preview/column-group.html</preview_template>
+            <render_template>Magento_PageBuilder/component/block/render/column-group.html</render_template>
             <allowed_parents>row</allowed_parents>
             <readers>
                 <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
             </readers>
+            <is_visible>false</is_visible>
+        </type>
+        <type name="column" translate="label" sortOrder="15">
+            <label>Column</label>
+            <icon>icon-pagebuilder-column</icon>
+            <component>Magento_PageBuilder/js/component/block/column</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/column</preview_component>
+            <preview_template>Magento_PageBuilder/component/block/preview/column.html</preview_template>
+            <render_template>Magento_PageBuilder/component/block/render/column.html</render_template>
+            <form>pagebuilder_column_form</form>
+            <group>general</group>
+            <allowed_parents>row,column-group</allowed_parents>
+            <readers>
+                <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+            </readers>
             <appearances>
+                <appearance name="full-height">
+                    <data name="align_self">stretch</data>
+                </appearance>
                 <appearance name="align-top">
                     <data name="align_self">flex-start</data>
                 </appearance>

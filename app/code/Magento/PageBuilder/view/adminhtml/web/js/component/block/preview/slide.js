@@ -11,7 +11,7 @@ define(["knockout", "./block"], function (_knockout, _block) {
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     function Slide(parent, config) {
       var _this;

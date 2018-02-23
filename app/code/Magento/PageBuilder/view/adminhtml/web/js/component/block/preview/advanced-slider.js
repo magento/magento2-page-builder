@@ -15,13 +15,14 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
     /**
      * @param {Block} parent
-     * @param {Object} config
+     * @param {object} config
      */
     function AdvancedSlider(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.ready = false;
+      _this.element = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         _underscore.delay(function () {
           if (_this.element && _this.element.children.length > 0) {
@@ -34,7 +35,6 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
           }
         }, 100);
       }, 20);
-      _this.element = void 0;
       parent.children.subscribe(_this.buildSlick);
 
       _this.parent.stage.store.subscribe(_this.buildSlick);

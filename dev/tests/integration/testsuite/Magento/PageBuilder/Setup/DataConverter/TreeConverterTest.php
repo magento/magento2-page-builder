@@ -192,6 +192,37 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'mapped_columns.json',
                 'mapped_columns.html'
             ],
+            'four half columns' => [
+                [],
+                'four_half_columns.json',
+                'four_half_columns.html'
+            ],
+            'three uneven columns' => [
+                [],
+                'three_uneven_columns.json',
+                'three_uneven_columns.html'
+            ],
+            'invalid column' => [
+                [],
+                'invalid_column.json',
+                'invalid_column.html'
+            ],
+            'mixed columns (not 100%) and header' => [
+                [
+                    'heading' => [
+                        [
+                            'entity_id' => 1,
+                            'title' => 'Heading title',
+                            'css_classes' => 'one two',
+                            'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
+                            'align' => 'center',
+                            'heading_type' => 'h4',
+                        ]
+                    ]
+                ],
+                'mixed_columns_and_header.json',
+                'mixed_columns_and_header.html',
+            ],
             'heading' => [
                 [
                     'heading' => [

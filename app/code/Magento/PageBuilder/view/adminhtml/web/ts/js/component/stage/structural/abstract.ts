@@ -7,6 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
 import {DataObject} from "../../data-store";
+import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
@@ -22,9 +23,9 @@ export default class Structural extends EditableArea implements StructuralInterf
     public config: any;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
-    public parent: EditableArea;
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
+    public element: JQuery<HTMLElement>;
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
     private optionsInstance: Options = new Options(this, this.options);
@@ -59,7 +60,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     get options(): Option[] {
         return [
-            new Option(this, "move", "<i></i>", $t("Move"), false, ["move-structural"], 10),
+            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
             new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
             new Option(
                 this,
@@ -123,8 +124,10 @@ export default class Structural extends EditableArea implements StructuralInterf
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element
-                    this.parent.emit("blockRemoved", {
+                    EventBus.trigger("block:removed", {
                         block: this,
+                        index: this.parent.children().indexOf(this),
+                        parent: this.parent,
                     });
                 },
             },
@@ -143,7 +146,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public getCss() {
         const cssClasses: any = {};
         if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-            this.getData().css_classes.split(" ").map(
+            this.getData().css_classes.toString().split(" ").map(
                 (value: any, index: number) => cssClasses[value] = true,
             );
         }

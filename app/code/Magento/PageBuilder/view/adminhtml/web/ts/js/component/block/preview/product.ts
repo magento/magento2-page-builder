@@ -5,19 +5,16 @@
 
 import {Dictionary} from "underscore";
 import Config from "../../config";
-import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class Product extends PreviewBlock {
 
     /**
-     * Product constructor
-     *
-     * @param {Block} parent
-     * @param {Object} config
+     * Setup fields observables within the data class property
      */
-    constructor(parent: Block, config: object) {
-        super(parent, config);
+    protected setupDataFields() {
+        super.setupDataFields();
+
         this.updateDataValue("html", "");
         this.parent.stage.store.subscribe(
             (data: Dictionary<{}>) => {
@@ -30,7 +27,7 @@ export default class Product extends PreviewBlock {
                     role: this.config.name,
                     sku: this.data.sku,
                     view_mode: this.data.view_mode,
-                    };
+                };
 
                 jQuery.post(url, requestData, (response) => {
                     this.updateDataValue("html", response.content !== undefined ? response.content.trim() : "");

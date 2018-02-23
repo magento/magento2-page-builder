@@ -8,11 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddProductList">
+    <test name="AddProductListContentBlockToCMSPage">
         <annotations>
-            <title value="Add a product list content block into stage"/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Product List MAGETWO-83938"/>
+            <title value="Add Product List in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add a product list content block into a row."/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84924"/>
             <group value="pagebuilder"/>
             <group value="skip"/>
         </annotations>
@@ -56,12 +59,14 @@
         <seeElement selector="{{ProductOnFrontend.productDisplay}}" stepKey="productApplied"/>
         <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" stepKey="assertProductListShowsFrontend"/>
     </test>
-    <test name="CanRemoveProductList">
+    <test name="RemoveProductListFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Product List MAGETWO-83938"/>
             <title value="Remove product list content block from stage"/>
             <description value="A user should be able to remove product list block from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -89,9 +94,12 @@
     </test>
     <test name="ProductListHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Product List MAGETWO-83938"/>
             <title value="Product List has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for product list"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

@@ -8,12 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ButtonsCanAddAndEditButtonItem">
+    <test name="AddButtonsContentBlockToCMSPage">
         <annotations>
-            <title value="Can add and edit button item"/>
-            <description value="A user should be able to add and edit a button item."/>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Buttons MAGETWO-83922"/>
+            <title value="Add Buttons in PageBuilder for new CMS page and view on Storefront"/>
+            <description value="A user should be able to add a button into a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-87572"/>
+            <testCaseId value="MAGETWO-84273"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -24,6 +26,10 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -180,12 +186,14 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
     </test>
-    <test name="ButtonsCanRemoveButtonItem">
+    <test name="RemoveButtonFromStage">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Buttons MAGETWO-83922"/>
             <title value="Remove button content block from stage"/>
             <description value="A user should be able to remove a button from a row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84895"/>
+            <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -210,9 +218,12 @@
     </test>
     <test name="ButtonsHasAdvancedFormSection">
         <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Buttons MAGETWO-83922"/>
             <title value="Buttons has Advanced form section"/>
             <description value="A user should be able to configure advanced settings for buttons"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "./block/factory", "./config", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _formatValidator, _composite, _stage) {
+define(["mage/translate", "underscore", "./block/factory", "./config", "./event-bus", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _eventBus, _formatValidator, _composite, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementBlock(childElement, stage, stage));
+          childPromises.push(createElementBlock(childElement, stage, parent));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -63,20 +63,28 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
   function createElementBlock(element, stage, parent) {
     parent = parent || stage;
     var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
-    return getElementData(element).then(function (data) {
-      return (0, _factory)(_config.getInitConfig("content_types")[role], parent, stage, data);
+
+    var config = _config.getInitConfig("content_types")[role];
+
+    return getElementData(element, config).then(function (data) {
+      return (0, _factory)(config, parent, stage, data);
     });
   }
   /**
    * Retrieve the elements data
    *
-   * @param element
-   * @returns {{}}
+   * @param {HTMLElement} element
+   * @param {ConfigContentBlock} config
+   * @returns {Promise<any>}
    */
 
 
-  function getElementData(element) {
-    var result = {};
+  function getElementData(element, config) {
+    // Create an object with all fields for the content type with an empty value
+    var result = _.mapObject(config.fields, function () {
+      return "";
+    });
+
     var attributeReaderComposite = new _composite();
     var readPromise = attributeReaderComposite.read(element);
     return readPromise.then(function (data) {
@@ -168,7 +176,7 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
     panel.bindStage(stage); // Determine if we're building from existing page builder content
 
     if ((0, _formatValidator)(content)) {
-      currentBuild = buildFromContent(stage, content).catch(function (e) {
+      currentBuild = buildFromContent(stage, content).catch(function () {
         stageContent([]);
         currentBuild = buildEmpty(stage, content);
       });
@@ -182,7 +190,9 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./format
         content: (0, _translate)("An error has occurred while initiating the content area."),
         title: (0, _translate)("Advanced CMS Error")
       });
-      stage.emit("stageError", error);
+
+      _eventBus.trigger("stage:error", error);
+
       console.error(error);
     });
     return stage;
