@@ -51,17 +51,16 @@
 .pagebuilder-display-label {
     background: rgba(255, 255, 255, .9);
     color: rgba(153, 153, 153, .8);
+    display: inline;
     font-size: 9px;
-    left: 0;
+    left: 50%;
     letter-spacing: .1em;
-    margin: auto;
+    padding: 0 4px;
     position: absolute;
-    right: 0;
     text-align: center;
     text-transform: capitalize;
     top: 0;
-    transform: translateY(-50%);
-    width: 70px;
+    transform: translate(-50%, -50%);
 }
 
 .pagebuilder-placeholder {
@@ -126,41 +125,6 @@
 
     &.type-container {
         outline: 1px solid rgba(153, 153, 153, .3);
-    }
-
-    .pagebuilder-empty {
-        background: url('@{baseDir}Magento_PageBuilder/css/images/empty-row-prompt.svg') no-repeat center center;
-        background-size: 505px 97px;
-        color: #aaa6a0;
-        font-size: 14px;
-        height: 170px;
-        left: 0;
-        opacity: 0;
-        padding-top: 130px;
-        position: absolute;
-        text-align: center;
-        top: 0;
-        -webkit-transition: .3s;
-        -moz-transition: .3s;
-        transition: .3s;
-        width: 100%;
-        z-index: 1;
-
-        .pagebuilder-placeholder {
-            &.pagebuilder-draggable-block {
-                a {
-                    margin: 0
-                }
-            }
-        }
-
-        &.pagebuilder-empty-slider {
-            background: none;
-        }
-
-        &.visible {
-            opacity: 1;
-        }
     }
 
     .pagebuilder-empty-container {
