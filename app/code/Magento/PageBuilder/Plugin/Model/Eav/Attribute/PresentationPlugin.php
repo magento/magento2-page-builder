@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Model\Eav\Attribute;
 
-class Presentation
+class PresentationPlugin
 {
     /**
      * PageBuilder config
