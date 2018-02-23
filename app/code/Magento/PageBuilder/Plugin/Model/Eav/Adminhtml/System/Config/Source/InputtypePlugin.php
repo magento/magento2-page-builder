@@ -65,7 +65,7 @@ class InputtypePlugin
         array $result
     ) {
         if ($this->config->isEnabled()) {
-            $result[0][] = 'pagebuilder';
+            $result = array_merge($result, [['pagebuilder', 'textarea', 'texteditor']]);
         }
         return $result;
     }
