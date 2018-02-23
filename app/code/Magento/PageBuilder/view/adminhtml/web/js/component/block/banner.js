@@ -190,15 +190,17 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
     _proto.getLinkAttribute = function getLinkAttribute() {
       var data = this.getData();
+      var attribute = {};
 
       if (data.link_url !== "") {
-        return {
-          href: data.link_url,
-          target: data.open_in_new_tab === "1" ? "_blank" : false
-        };
+        attribute.href = data.link_url;
       }
 
-      return {};
+      if (data.open_in_new_tab === "1") {
+        attribute.target = "_blank";
+      }
+
+      return attribute;
     };
     /**
      * Get the button style for the render

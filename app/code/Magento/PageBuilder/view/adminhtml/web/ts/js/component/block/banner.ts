@@ -164,13 +164,14 @@ export default class Banner extends Block {
      */
     public getLinkAttribute(): {} {
         const data = this.getData();
+        const attribute: any = {};
         if (data.link_url !== "") {
-            return {
-                href: data.link_url,
-                target: data.open_in_new_tab === "1" ? "_blank" : false ,
-            };
+            attribute.href = data.link_url;
         }
-        return {};
+        if (data.open_in_new_tab === "1") {
+            attribute.target = "_blank";
+        }
+        return attribute;
     }
 
     /**
