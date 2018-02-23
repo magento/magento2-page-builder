@@ -26,7 +26,6 @@ export default class StyleAttributeMapper {
             if (data.border === "none") {
                 data.border_color = "";
                 data.border_width = "";
-                data.border_radius = "";
             }
         }
 
