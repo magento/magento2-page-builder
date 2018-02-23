@@ -181,6 +181,6 @@ class Driver implements RendererInterface
             $textAlign = ' text-align: ' . $formData['align'] . ';';
             unset($formData['align']);
         }
-        return array($formData, $margin, $padding, $textAlign);
+        return [$formData, $margin, $padding, $textAlign];
     }
 }
