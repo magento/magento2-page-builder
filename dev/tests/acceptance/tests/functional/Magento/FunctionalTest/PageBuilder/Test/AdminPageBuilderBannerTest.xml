@@ -43,6 +43,33 @@
         <waitForElementVisible selector="{{BannerOnBackend.emptyBanner}}" stepKey="waitForBannerVisible"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBanner"/>
     </test>
+    <test name="BannerEmptyBannerPreviewValidation">
+        <annotations>
+            <title value="Validate empty banner on preview"/>
+            <description value="Validate contents and layout of empty banner on preview page."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <dontSeeElement selector="{{BannerOnBackend.emptyBanner}} button" stepKey="dontSeeButtonInBanner"/>
+    </test>
     <test name="BannerCanPreviewAdmin">
         <annotations>
             <title value="Banner is previewable in admin"/>
@@ -76,6 +103,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -155,6 +185,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -243,6 +276,9 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -327,6 +363,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -414,7 +453,7 @@
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <dontSeeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkNoRequiredField"/>
     </test>
-    <test name="BannerCheckInvlidInputs">
+    <test name="BannerCheckInvalidInputs">
         <annotations>
             <title value="Banner errors if invalid input is saved in the edit form"/>
             <description value="Banner errors if invalid input is saved in the edit form"/>
@@ -618,6 +657,9 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -639,7 +681,7 @@
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="error"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -715,6 +757,9 @@
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
             <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -868,7 +913,7 @@
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="error"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -944,6 +989,9 @@
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
             <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -1097,7 +1145,7 @@
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-83553"/>
-            <group value="pagebuilder"/>
+            <group value="error"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1173,6 +1221,9 @@
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
             <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -1373,6 +1424,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -1454,6 +1508,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -1534,6 +1591,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -1619,6 +1679,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -1702,6 +1765,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -1787,6 +1853,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -1858,6 +1927,9 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -1914,7 +1986,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
+            <group value="error"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1948,6 +2020,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -2040,6 +2115,9 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2128,6 +2206,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -2222,6 +2303,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2315,6 +2399,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2396,6 +2483,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -2503,6 +2593,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparency">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2596,6 +2689,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparency">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2683,6 +2779,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2764,6 +2863,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -2871,6 +2973,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparency">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -2964,6 +3069,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparency">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -3051,6 +3159,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -3132,6 +3243,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -3230,6 +3344,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -3319,6 +3436,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
@@ -3410,6 +3530,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
@@ -3488,6 +3611,9 @@
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableButtonFields">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
