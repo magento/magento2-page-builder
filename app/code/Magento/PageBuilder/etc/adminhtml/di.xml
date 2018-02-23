@@ -23,7 +23,15 @@
         </arguments>
     </type>
     <type name="Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype">
-        <plugin name="add_page_builder_volatile_input_type" type="Magento\PageBuilder\Plugin\Model\Eav\Adminhtml\System\Config\Source\InputtypePlugin" />
+        <arguments>
+            <argument name="optionsArray" xsi:type="array">
+                <item name="350" xsi:type="array">
+                    <item name="value" xsi:type="string">pagebuilder</item>
+                    <item name="label" xsi:type="string" translate="true">Page Builder</item>
+                </item>
+            </argument>
+        </arguments>
+        <plugin name="process_page_builder_input_type" type="Magento\PageBuilder\Plugin\Model\Eav\Adminhtml\System\Config\Source\InputtypePlugin" />
     </type>
     <type name="Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation">
         <plugin name="process_page_builder" type="Magento\PageBuilder\Plugin\Model\Eav\Attribute\PresentationPlugin" />
