@@ -152,6 +152,34 @@
         </actionGroup>
         <dontSee selector="{{RowAdminPreview.empty}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
+    <test name="RowHeightAdjustsToContent">
+        <annotations>
+            <features value="PageBuilder Row MAGETWO-83767"/>
+            <stories value="Empty Row Preview on Stage MAGETWO-75136"/>
+            <title value="Row height adjusts to content"/>
+            <description value="A user should see the row height adjust when content is added to the row"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88297"/>
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Assert row height is 300px when empty - Depends on MQE-818 -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <!-- Assert row height has changed when content added - Depends on MQE-818 -->
+    </test>
     <test name="RowHasAdvancedFormSection">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>
