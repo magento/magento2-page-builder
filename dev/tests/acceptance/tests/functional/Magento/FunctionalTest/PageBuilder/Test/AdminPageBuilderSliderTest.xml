@@ -41,16 +41,63 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
-            <argument name="property" value="PageBuilderAdvanceSliderFadeProperty"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterAutoplayYes">
+            <argument name="property" value="PageBuilderSliderAutoplayOnProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterIsInfiniteYes">
-            <argument name="property" value="PageBuilderAdvanceSliderIsInfiniteProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed5000">
+            <argument name="property" value="PageBuilderSliderAutoplaySpeed5000Property"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterShowArrowYes">
-            <argument name="property" value="PageBuilderAdvanceSliderShowArrowsProperty"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
+            <argument name="property" value="PageBuilderSliderFadeYesProperty"/>
         </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterIsInfiniteYes">
+            <argument name="property" value="PageBuilderSliderIsInfiniteProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterShowArrowYes">
+            <argument name="property" value="PageBuilderSliderShowArrowsYesProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterShowDotsNo">
+            <argument name="property" value="PageBuilderSliderShowDotsNoProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeSliderMinHeightDefault300">
+            <argument name="property" value="PageBuilderSliderMinHeightDefault300Property"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSliderMinHeight500">
+            <argument name="property" value="PageBuilderSliderMinHeight500Property"/>
+        </actionGroup>
+        <!--Edit Advanced Settings-->
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentPropertyLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderPropertyNone">
+            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!--Add first slide-->
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider1"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
@@ -70,7 +117,9 @@
             <argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
-        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement"/>
+        <!--Add second slide-->
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
             <argument name="property" value="PageBuilderSlideItemTitle2"/>
         </actionGroup>
@@ -88,14 +137,38 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <!--View slider and slides on stage-->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1"/>
+        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle1"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSlideNavigationDot2"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2"/>
+        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle2"/>
+
+        <!--<seeElement selector="{{SliderInAdmin.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="verifyAutoplayOnAdmin"/>-->
+        <!--<seeElement selector="{{SliderInAdmin.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="verifyAutoplaySpeedAdmin"/>-->
+        <!--<seeElement selector="{{SliderInAdmin.Fade(PageBuilderSliderFadeYesProperty.value)}}" stepKey="verifyFadeYesOnAdmin"/>-->
+        <!--<seeElement selector="{{SliderInAdmin.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteOnAdmin"/>-->
+        <!--<seeElement selector="{{SliderInAdmin.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="verifyArrowsYesOnAdmin"/>-->
+        <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnAdmin"/>
+
+        <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="verifyAlignmentOnAdmin"/>
+        <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
+        <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
+
+        <!--View slider and slides on storefront-->
         <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{SliderOnFrontend.advancedSliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
-        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderAdvanceSliderAutoplaySpeedProperty.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
-        <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderAdvanceSliderFadeProperty.value)}}" stepKey="seeSliderFadeSetting"/>
-        <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderAdvanceSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
-        <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
-        <seeElement selector="{{SliderOnFrontend.ShowDots}}" stepKey="seeSliderShowDotsSetting"/>
-        <seeElement selector="{{SliderOnFrontend.Autoplay}}" stepKey="seeSliderAutoplaySetting"/>
+        <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
+        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
+        <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderSliderFadeYesProperty.value)}}" stepKey="seeSliderFadeSetting"/>
+        <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
+        <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
+        <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsNoProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
+        <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
+
         <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
