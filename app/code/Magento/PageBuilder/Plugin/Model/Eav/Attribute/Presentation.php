@@ -11,6 +11,21 @@ namespace Magento\PageBuilder\Plugin\Model\Eav\Attribute;
 class Presentation
 {
     /**
+     * PageBuilder config
+     *
+     * @var \Magento\PageBuilder\Model\Config
+     */
+    private $config;
+
+    /**
+     * @param \Magento\PageBuilder\Model\Config $config
+     */
+    public function __construct(\Magento\PageBuilder\Model\Config $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * Get input type for presentation layer from stored input type.
      *
      * @param \Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation $subject
@@ -22,8 +37,12 @@ class Presentation
         $attribute
     ) {
         $inputType = $attribute->getFrontendInput();
-        if ($inputType === 'textarea' && $attribute->getIsWysiwygEnabled() && $attribute->getIsPagebuilderEnabled()) {
-            $attribute->setFrontendInput('pagebuilder');
+        if ($inputType === 'textarea' && $attribute->getIsWysiwygEnabled()) {
+            if ($attribute->getIsPagebuilderEnabled() && $this->config->isEnabled()) {
+                $attribute->setFrontendInput('pagebuilder');
+            } else {
+                $attribute->setFrontendInput('texteditor');
+            }
         }
     }
 

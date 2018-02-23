@@ -14,6 +14,21 @@ namespace Magento\PageBuilder\Plugin\Model\Eav\Adminhtml\System\Config\Source;
 class Inputtype
 {
     /**
+     * PageBuilder config
+     *
+     * @var \Magento\PageBuilder\Model\Config
+     */
+    private $config;
+
+    /**
+     * @param \Magento\PageBuilder\Model\Config $config
+     */
+    public function __construct(\Magento\PageBuilder\Model\Config $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * Append result with additional compatible input types.
      *
      * @param \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype $subject
@@ -25,7 +40,9 @@ class Inputtype
         \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype $subject,
         array $result
     ) {
-        $result[0][] = 'pagebuilder';
+        if ($this->config->isEnabled()) {
+            $result[0][] = 'pagebuilder';
+        }
         return $result;
     }
 }
