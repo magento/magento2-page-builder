@@ -19,6 +19,7 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
      */
     _proto.read = function read(element) {
       var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
+      var linkUrl = element.querySelector("a").getAttribute("href");
       var target = element.querySelector("a").getAttribute("target");
       var bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
       var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -37,7 +38,7 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
         background_size: element.style.backgroundSize,
         button_text: buttonText,
         button_type: buttonType,
-        link_url: element.querySelector("a").getAttribute("href"),
+        link_url: linkUrl ? linkUrl : "",
         margins_and_padding: {
           margin: {
             bottom: marginSrc.marginBottom.replace("px", ""),

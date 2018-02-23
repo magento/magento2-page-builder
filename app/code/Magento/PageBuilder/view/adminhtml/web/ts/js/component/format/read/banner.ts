@@ -19,6 +19,7 @@ export default class Banner implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
+        const linkUrl = element.querySelector("a").getAttribute("href");
         const target = element.querySelector("a").getAttribute("target");
         const bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -35,7 +36,7 @@ export default class Banner implements ReadInterface {
             background_size: element.style.backgroundSize,
             button_text: buttonText,
             button_type: buttonType,
-            link_url: element.querySelector("a").getAttribute("href"),
+            link_url: linkUrl ? linkUrl : "",
             margins_and_padding: {
                 margin: {
                     bottom: marginSrc.marginBottom.replace("px", ""),

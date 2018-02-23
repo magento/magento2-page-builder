@@ -297,7 +297,79 @@
                 </wysiwyg>
             </formElements>
         </field>
-        <field name="button_text" sortOrder="20" formElement="input">
+        <field name="link_url" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">never_show</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Link</label>
+                <dataType>text</dataType>
+                <dataScope>link_url</dataScope>
+            </settings>
+        </field>
+        <field name="open_in_new_tab" sortOrder="30" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">never_show</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Open in new tab</label>
+                <dataScope>open_in_new_tab</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="show_button" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">never_show</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show Button</label>
+                <dataScope>show_button</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">always</item>
+                                <item name="label" xsi:type="string" translate="true">Always</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">on_hover</item>
+                                <item name="label" xsi:type="string" translate="true">On Hover</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">never_show</item>
+                                <item name="label" xsi:type="string" translate="true">Never Show</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="button_text" sortOrder="50" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="disabledValues" xsi:type="array">
@@ -314,53 +386,7 @@
                 </imports>
             </settings>
         </field>
-        <field name="link_url" sortOrder="30" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="disabledValues" xsi:type="array">
-                        <item name="none" xsi:type="string">never_show</item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <label translate="true">Link</label>
-                <dataType>text</dataType>
-                <dataScope>link_url</dataScope>
-                <imports>
-                    <link name="setDisabled">ns = ${ $.ns }, index = show_button:value</link>
-                </imports>
-            </settings>
-        </field>
-        <field name="open_in_new_tab" sortOrder="40" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">false</item>
-                    <item name="disabledValues" xsi:type="array">
-                        <item name="none" xsi:type="string">never_show</item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>boolean</dataType>
-                <label translate="true">Open in new tab</label>
-                <dataScope>open_in_new_tab</dataScope>
-                <imports>
-                    <link name="setDisabled">ns = ${ $.ns }, index = show_button:value</link>
-                </imports>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
-        <field name="button_type" sortOrder="50" formElement="select">
+        <field name="button_type" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">pagebuilder-button-primary</item>
@@ -391,38 +417,6 @@
                             <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">pagebuilder-button-link</item>
                                 <item name="label" xsi:type="string" translate="true">Link</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="show_button" sortOrder="60" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">never_show</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Show Button</label>
-                <dataScope>show_button</dataScope>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">always</item>
-                                <item name="label" xsi:type="string" translate="true">Always</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">on_hover</item>
-                                <item name="label" xsi:type="string" translate="true">On Hover</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">never_show</item>
-                                <item name="label" xsi:type="string" translate="true">Never Show</item>
                             </option>
                         </options>
                     </settings>
