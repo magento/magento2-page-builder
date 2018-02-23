@@ -34,13 +34,6 @@ export default class EditableArea implements EditableAreaInterface {
     }
 
     /**
-     * Bind events for the current instance
-     */
-    protected bindEvents() {
-        EventBus.on("block:sortStart", this.onSortStart.bind(this));
-    }
-
-    /**
      * Retrieve the child template
      *
      * @returns {string}
@@ -155,5 +148,12 @@ export default class EditableArea implements EditableAreaInterface {
 
         // Attach a subscription to the children of every editable area to fire the stageUpdated event
         children.subscribe(() => EventBus.trigger("stage:updated", {stage: this.stage}));
+    }
+
+    /**
+     * Bind events for the current instance
+     */
+    protected bindEvents() {
+        EventBus.on("block:sortStart", this.onSortStart.bind(this));
     }
 }

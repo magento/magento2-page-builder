@@ -4,9 +4,9 @@
  */
 
 import _ from "underscore";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import Config from "../config";
 import Block from "./block";
-import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
 export default class Driver extends Block {
 
