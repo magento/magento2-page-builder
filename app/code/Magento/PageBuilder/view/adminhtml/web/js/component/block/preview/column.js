@@ -49,7 +49,11 @@ define(["./block", "./column-group/resizing"], function (_block, _resizing) {
       if (this.data.margins_and_padding && this.data.margins_and_padding().margin) {
         var margins = this.data.margins_and_padding().margin;
         var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
-        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
+        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)"; // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
+
+        if (margins.right === "0") {
+          styles.marginRight = "1px";
+        }
       } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
 
 
