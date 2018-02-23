@@ -82,7 +82,7 @@ class Upload extends \Magento\Backend\App\Action
         $fileUploader = $this->uploaderFactory->create(['fileId' => $fieldName]);
 
         // Set our parameters
-        $fileUploader->setFilesDispersion(true);
+        $fileUploader->setFilesDispersion(false);
         $fileUploader->setAllowRenameFiles(true);
         $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
         $fileUploader->setAllowCreateFolders(true);
