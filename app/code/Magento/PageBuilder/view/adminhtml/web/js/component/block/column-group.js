@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/resizing", "./preview/column-group/registry", "./preview/column-group/resizing", "./column-group/factory"], function (_translate, _underscore, _array, _eventBus, _block, _resizing, _registry, _resizing2, _factory) {
+define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/factory", "./column-group/resizing", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =

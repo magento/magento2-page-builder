@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 import Config from "../../config";
+import Column from "../column";
 import ColumnGroup from "../column-group";
 import createBlock from "../factory";
-import Column from "../column";
 
 /**
  * Create a column and add it to it's parent
