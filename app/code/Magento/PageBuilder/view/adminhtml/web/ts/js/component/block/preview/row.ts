@@ -22,6 +22,11 @@ export default class Row extends PreviewBlock {
             styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }
 
+        // If the bottom margin is 0, we set it to 1px to overlap the rows to create a single border
+        if (styles.marginBottom === "0px") {
+            styles.marginBottom = "1px";
+        }
+
         // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
         if (this.data.border && this.data.border() === "_default") {
             styles.border = "none";

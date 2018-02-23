@@ -30,6 +30,11 @@ define(["knockout", "./block"], function (_knockout, _block) {
       // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
         styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+      } // If the bottom margin is 0, we set it to 1px to overlap the rows to create a single border
+
+
+      if (styles.marginBottom === "0px") {
+        styles.marginBottom = "1px";
       } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
 
 
