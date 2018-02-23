@@ -133,7 +133,7 @@ export default class Banner extends Block {
     public getImage(): {} {
         const data = this.getData();
         if (data.background_image === "" || data.background_image === undefined) {
-            return {};
+            return false;
         }
         if (_.isEmpty(data.background_image[0])) {
             return;
@@ -149,7 +149,7 @@ export default class Banner extends Block {
     public getMobileImage(): {} {
         const data = this.getData();
         if (data.mobile_image === "" || data.mobile_image === undefined) {
-            return {};
+            return false;
         }
         if (_.isEmpty(data.mobile_image[0])) {
             return;

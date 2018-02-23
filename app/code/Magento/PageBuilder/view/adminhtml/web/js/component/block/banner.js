@@ -152,7 +152,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       var data = this.getData();
 
       if (data.background_image === "" || data.background_image === undefined) {
-        return {};
+        return false;
       }
 
       if (_underscore.isEmpty(data.background_image[0])) {
@@ -172,7 +172,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       var data = this.getData();
 
       if (data.mobile_image === "" || data.mobile_image === undefined) {
-        return {};
+        return false;
       }
 
       if (_underscore.isEmpty(data.mobile_image[0])) {
