@@ -8,30 +8,31 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">pagebuilder_image_form.pagebuilder_image_form_data_source</item>
+            <item name="provider" xsi:type="string">driver_form.driver_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Image</item>
+        <item name="label" xsi:type="string" translate="true">Driver</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <deps>
-            <dep>pagebuilder_image_form.pagebuilder_image_form_data_source</dep>
+            <dep>driver_form.driver_form_data_source</dep>
         </deps>
         <dataScope>data</dataScope>
-        <namespace>pagebuilder_image_form</namespace>
+        <namespace>driver_form</namespace>
+
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
             <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
         </buttons>
     </settings>
-    <dataSource name="pagebuilder_image_form_data_source">
+    <dataSource name="driver_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_image_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="driver_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -40,33 +41,10 @@
     </dataSource>
     <fieldset name="general">
         <settings>
-            <label/>
+            <label translate="true">Images</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="appearance" formElement="select" component="Magento_PageBuilder/js/form/element/dependent-select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">full-width</item>
-                </item>
-            </argument>
-            <settings>
-                <label translate="true">Appearance</label>
-                <dataType>text</dataType>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="10" xsi:type="array">
-                                <item name="value" xsi:type="string">full-width</item>
-                                <item name="label" xsi:type="string" translate="true">Full Width Image</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
         <field name="image" formElement="imageUploader">
             <settings>
                 <label translate="true">Image</label>
@@ -107,45 +85,49 @@
                 </imageUploader>
             </formElements>
         </field>
+    </fieldset>
+    <fieldset name="link">
+        <settings>
+            <label translate="true">Link</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="link_text" sortOrder="1" formElement="input">
+            <settings>
+                <label translate="true">Link Text</label>
+                <dataType>text</dataType>
+                <dataScope>link_text</dataScope>
+            </settings>
+        </field>
         <field name="link_url" sortOrder="10" formElement="input">
             <settings>
-                <label translate="true">Link</label>
+                <label translate="true">Link URL</label>
                 <dataType>text</dataType>
                 <dataScope>link_url</dataScope>
             </settings>
         </field>
-        <field name="link_target" sortOrder="20" formElement="checkbox">
+        <field name="open_in_new_window" sortOrder="20" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">_self</item>
+                    <item name="default" xsi:type="number">0</item>
                 </item>
             </argument>
             <settings>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                </validation>
-                <dataType>string</dataType>
-                <label translate="true">Open in New Tab?</label>
+                <dataType>boolean</dataType>
+                <label translate="true">Open in New Window?</label>
+                <dataScope>open_in_new_window</dataScope>
             </settings>
             <formElements>
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="string">_self</map>
-                            <map name="true" xsi:type="string">_blank</map>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
             </formElements>
-        </field>
-        <field name="image_caption" sortOrder="30" formElement="input">
-            <settings>
-                <label translate="true">Image Caption</label>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
         </field>
     </fieldset>
     <fieldset name="seo">
@@ -159,6 +141,7 @@
                 <label translate="true">Alternative Text</label>
                 <validation>
                     <rule name="validate-string" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
         </field>
@@ -175,6 +158,13 @@
         <settings>
             <label translate="true">Advanced</label>
             <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+    </fieldset>
+    <fieldset name="advanced">
+        <settings>
+            <label translate="true">Advanced</label>
+            <collapsible>true</collapsible>
         </settings>
         <field name="css_classes" sortOrder="1" formElement="input">
             <settings>
@@ -185,6 +175,11 @@
             </settings>
         </field>
         <field name="text_align" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">left</item>
+                </item>
+            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Alignment</label>
@@ -194,18 +189,14 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string" />
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                            <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
                                 <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
-                            <option name="2" xsi:type="array">
+                            <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
                                 <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
-                            <option name="3" xsi:type="array">
+                            <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
                                 <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
@@ -214,7 +205,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
+        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins_and_padding">
             <settings>
                 <label translate="true">Margins and Padding</label>
             </settings>

@@ -8,7 +8,17 @@ import Config from "../config";
 import Block from "./block";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
-export default class Image extends Block {
+export default class Driver extends Block {
+
+    /**
+     * Does the driver have a mobile image?
+     *
+     * @returns {boolean}
+     */
+    public hasMobileImage() {
+        const data = this.getData();
+        return !(data.mobile_image === "" || data.mobile_image === undefined || _.isEmpty(data.mobile_image[0]));
+    }
 
     /**
      * Get the desktop (main) image attributes for the render
@@ -19,7 +29,8 @@ export default class Image extends Block {
         const data = this.getData();
         if (data.image === "" || data.image === undefined) {
             return {};
-        } else if (_.isEmpty(data.image[0])) {
+        }
+        if (_.isEmpty(data.image[0])) {
             return;
         }
         return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
@@ -34,30 +45,17 @@ export default class Image extends Block {
         const data = this.getData();
         if (data.mobile_image === "" || data.mobile_image === undefined) {
             return {};
-        } else if (_.isEmpty(data.mobile_image[0])) {
+        }
+        if (_.isEmpty(data.mobile_image[0])) {
             return;
         }
         return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
     }
 
     /**
-     * Retrieve the image attributes
-     *
-     * @returns {any}
-     */
-    public getImageLinkAttributes() {
-        const data = this.getData();
-        return {
-            href: data.link_url || "",
-            target: data.link_target || "_self",
-            title: data.title_tag,
-        };
-    }
-
-    /**
      * Retrieve the image URL with directive
      *
-     * @param {{}} image
+     * @param {Array} image
      * @returns {string}
      */
     private getImageUrl(image: any[]) {
@@ -68,5 +66,4 @@ export default class Image extends Block {
         const directive = "{{media url=" + mediaPath[1] + "}}";
         return directive;
     }
-
 }
