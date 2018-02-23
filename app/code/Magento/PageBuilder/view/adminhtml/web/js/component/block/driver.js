@@ -2,28 +2,41 @@
 define(["underscore", "../config", "./block", "../../utils/url"], function (_underscore, _config, _block, _url) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Image =
+  var Driver =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(Image, _Block);
+    _inheritsLoose(Driver, _Block);
 
-    function Image() {
+    function Driver() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = Image.prototype;
+    var _proto = Driver.prototype;
 
+    /**
+     * Does the driver have a mobile image?
+     *
+     * @returns {boolean}
+     */
+    _proto.hasMobileImage = function hasMobileImage() {
+      var data = this.getData();
+      return !(data.mobile_image === "" || data.mobile_image === undefined || _underscore.isEmpty(data.mobile_image[0]));
+    };
     /**
      * Get the desktop (main) image attributes for the render
      *
      * @returns {any}
      */
+
+
     _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
 
       if (data.image === "" || data.image === undefined) {
         return {};
-      } else if (_underscore.isEmpty(data.image[0])) {
+      }
+
+      if (_underscore.isEmpty(data.image[0])) {
         return;
       }
 
@@ -45,7 +58,9 @@ define(["underscore", "../config", "./block", "../../utils/url"], function (_und
 
       if (data.mobile_image === "" || data.mobile_image === undefined) {
         return {};
-      } else if (_underscore.isEmpty(data.mobile_image[0])) {
+      }
+
+      if (_underscore.isEmpty(data.mobile_image[0])) {
         return;
       }
 
@@ -56,24 +71,9 @@ define(["underscore", "../config", "./block", "../../utils/url"], function (_und
       };
     };
     /**
-     * Retrieve the image attributes
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getImageLinkAttributes = function getImageLinkAttributes() {
-      var data = this.getData();
-      return {
-        href: data.link_url || "",
-        target: data.link_target || "_self",
-        title: data.title_tag
-      };
-    };
-    /**
      * Retrieve the image URL with directive
      *
-     * @param {{}} image
+     * @param {Array} image
      * @returns {string}
      */
 
@@ -86,9 +86,9 @@ define(["underscore", "../config", "./block", "../../utils/url"], function (_und
       return directive;
     };
 
-    return Image;
+    return Driver;
   }(_block);
 
-  return Image;
+  return Driver;
 });
-//# sourceMappingURL=image.js.map
+//# sourceMappingURL=driver.js.map

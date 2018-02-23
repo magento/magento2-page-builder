@@ -23,7 +23,6 @@
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
@@ -33,6 +32,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
         <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -40,12 +41,54 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
         <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
         <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderLocalImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderLocalImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+
+        <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderImagePropertyJpg"/>
         </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
+
+        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImagePropertyJpg"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
             <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
         </actionGroup>
@@ -70,13 +113,13 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{ImageOnFrontend.imageSource(PageBuilderImagePropertyJpg.path,PageBuilderImagePropertyJpg.fileType)}}" stepKey="seeMainImageSource"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource4"/>
         <assertElementContainsAttribute selector="{{ImageOnFrontend.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageTitleTagText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.mobileImageSource(PageBuilderMobileImagePropertyGif.path,PageBuilderMobileImagePropertyGif.fileType)}}" stepKey="seeMobileImageInDom"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText2"/>
+        <seeElementInDOM selector="{{ImageOnPreview.imageSource(PageBuilderMobileImagePropertyGif.fileName)}}" stepKey="seeMainImageSource5"/>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
         <dontSeeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>
         <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
