@@ -302,6 +302,13 @@
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
+    <actionGroup name="seeInFieldSlideOutIsZeroProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="0" stepKey="seeInFieldProperty"/>
+    </actionGroup>
     <actionGroup name="seeOptionIsSelectedSlideOutProperty">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -315,6 +322,13 @@
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeCheckboxIsChecked selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="seeOptionIsCheckedProperty"/>
+    </actionGroup>
+    <actionGroup name="seeOptionIsNotCheckedSlideOutProperty">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <dontSeeCheckboxIsChecked selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeOptionIsCheckedProperty"/>
     </actionGroup>
     <actionGroup name="seeInMarginsAndPaddingFieldSlideOutPanel">
         <arguments>

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../config", "./block", "../../utils/url"], function (_underscore, _config, _block, _url) {
+define(["underscore", "../../utils/url", "../config", "./block"], function (_underscore, _url, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Driver =
