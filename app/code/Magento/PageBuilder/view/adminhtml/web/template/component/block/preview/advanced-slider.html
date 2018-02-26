@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-row pagebuilder-advanced-slider children-min-height">
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+<div class="pagebuilder-content-type type-nested pagebuilder-row pagebuilder-advanced-slider children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+    <!-- ko template: getOptions().template --><!-- /ko -->
     <div data-bind="style: {textAlign: preview.data.text_align}">
         <!-- ko template: previewChildTemplate --><!-- /ko -->
     </div>

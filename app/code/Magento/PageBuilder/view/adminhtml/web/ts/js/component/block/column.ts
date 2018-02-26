@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {Option} from "../stage/structural/options/option";
+import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
 import ColumnGroup from "./column-group";
 import createBlock from "./factory";
@@ -48,13 +49,13 @@ export default class Column extends Block {
     /**
      * Return an array of options
      *
-     * @returns {Array<Option>}
+     * @returns {Array<OptionInterface>}
      */
-    get options(): Option[] {
-        const options = super.options;
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
         const newOptions = options.filter((option) => {
-                return (option.code !== "move");
-            });
+            return (option.code !== "move");
+        });
         newOptions.unshift(
             new Option(this, "move", "<i></i>", $t("Move"), null, ["move-column"], 10),
         );
