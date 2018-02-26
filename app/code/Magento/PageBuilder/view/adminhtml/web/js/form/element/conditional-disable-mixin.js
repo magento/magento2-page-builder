@@ -4,17 +4,13 @@
  */
 
 define([
-    'Magento_Ui/js/form/element/abstract',
     'underscore'
-], function (Abstract, _) {
+], function (_) {
     'use strict';
 
-    /**
-     * Disable self based on another fields value
-     */
-    return Abstract.extend({
+    var setDisabledSetting = {
         defaults: {
-            disabledValues: [],
+            disabledValues: []
         },
 
         /**
@@ -29,5 +25,9 @@ define([
                 this.enable();
             }
         }
-    });
+    };
+
+    return function (target) {
+        return target.extend(setDisabledSetting);
+    };
 });

@@ -64,7 +64,7 @@ class ButtonItem implements RendererInterface
         }
 
         $rootElementHtml .= '><a href="'
-            . ($eavData['link_url'] ?? '')
+            . ($eavData['link_url'] ?? '') . '"'
             . $buttonStyleAttribute
             . ' class="pagebuilder-button-primary"><span>'
             . ($eavData['link_text'] ?? '')

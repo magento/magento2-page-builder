@@ -31,10 +31,14 @@ define(["../../../../../utils/color-converter", "../../../../../utils/extract-al
       var overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
       var paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
       var marginSrc = element.style;
+      var button = element.querySelector("button");
+      var buttonText = button ? button.textContent : "";
+      var buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
       var response = {
         background_image: (0, _image.decodeUrl)(backgroundImage),
         background_size: element.style.backgroundSize,
-        button_text: element.dataset.buttonText,
+        button_text: buttonText,
+        button_type: buttonType,
         link_url: element.querySelector("a").getAttribute("href"),
         margins_and_padding: {
           margin: {
@@ -57,7 +61,8 @@ define(["../../../../../utils/color-converter", "../../../../../utils/extract-al
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
         show_button: element.getAttribute("data-show-button"),
-        show_overlay: element.getAttribute("data-show-overlay")
+        show_overlay: element.getAttribute("data-show-overlay"),
+        text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign
       };
       return Promise.resolve(response);
     };

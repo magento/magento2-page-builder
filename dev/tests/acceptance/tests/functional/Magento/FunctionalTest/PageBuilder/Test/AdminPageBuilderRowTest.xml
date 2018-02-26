@@ -169,6 +169,8 @@
             <description value="See that the background tab in row form works"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <!-- Skipped; see MAGETWO-88218 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -285,9 +287,9 @@
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage3"/>
         <amOnPage url="Row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForParallaxLibraryLoad"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
@@ -375,9 +377,9 @@
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings4"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage4"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
@@ -493,5 +495,99 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="21" stepKey="seeElementRow"/>
+    </test>
+    <test name="CanAddImageToRow">
+        <annotations>
+            <title value="Add an image content block into row"/>
+            <description value="A user should be able to add an image into slideout of row."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Assign block to cms page-->
+        <actionGroup ref="AssignBlockToCMSPage" stepKey="assignBlockToCMSPage">
+            <argument name="Block" value="$$createPreReqBlock$$"/>
+            <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
+
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
+
+        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Row" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
+        <waitForPageLoad stepKey="waitForContentLoaded"/>
+        <seeElement selector="{{ImageOnFrontend.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>

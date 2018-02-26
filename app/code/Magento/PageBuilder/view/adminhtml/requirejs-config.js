@@ -39,5 +39,12 @@ var config = {
         'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min': {
             deps: ['jquery/ui']
         }
+    },
+    config: {
+        mixins: {
+            'Magento_Ui/js/form/element/abstract': {
+                'Magento_PageBuilder/js/form/element/conditional-disable-mixin': true
+            }
+        }
     }
 };
