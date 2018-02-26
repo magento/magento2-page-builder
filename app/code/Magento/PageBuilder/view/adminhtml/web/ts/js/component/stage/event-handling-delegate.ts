@@ -152,6 +152,7 @@ export interface BlockInstanceDroppedParams {
 
 export interface BlockRemovedParams {
     parent: Block;
+    index: number;
     block: Block;
 }
 

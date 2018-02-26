@@ -7,13 +7,13 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddAdvancedSliderContentBlockToCMSPage">
+       xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AddSliderContentBlockToCMSPage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
             <stories value="Slider MAGETWO-83933"/>
-            <title value="Add Advanced Slider in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="The user should be able to add the slides media content type to advanced slider media content type and it should be visible on the frontend"/>
+            <title value="Add Slider in PageBuilder for new CMS page and view on Storefront"/>
+            <description value="The user should be able to add the slides media content type to slider media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84920"/>
             <group value="pagebuilder"/>
@@ -33,15 +33,15 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Advanced Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
             <argument name="property" value="PageBuilderAdvanceSliderFadeProperty"/>
@@ -53,7 +53,7 @@
             <argument name="property" value="PageBuilderAdvanceSliderShowArrowsProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement1"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
         </actionGroup>
@@ -72,7 +72,7 @@
             <argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
-        <click selector="{{AdvancedSliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
             <argument name="property" value="PageBuilderSlideItemTitle2"/>
         </actionGroup>
@@ -90,36 +90,36 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="advanced-slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.advancedSliderDisplay}}" stepKey="seeAdvancedSliderOnPageBuilderPage"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.AutoplaySpeed(PageBuilderAdvanceSliderAutoplaySpeedProperty.value)}}" stepKey="seeAdvancedSliderAutoplaySpeedSetting"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.Fade(PageBuilderAdvanceSliderFadeProperty.value)}}" stepKey="seeAdvancedSliderFadeSetting"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.IsInfinite(PageBuilderAdvanceSliderIsInfiniteProperty.value)}}" stepKey="seeAdvancedSliderIsInfiniteSetting"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" stepKey="seeAdvancedSliderShowArrowsSetting"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.ShowDots}}" stepKey="seeAdvancedSliderShowDotsSetting"/>
-        <seeElement selector="{{AdvancedSliderOnFrontend.Autoplay}}" stepKey="seeAdvancedSliderAutoplaySetting"/>
-        <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InAdvancedSlider"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{SliderOnFrontend.advancedSliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderAdvanceSliderAutoplaySpeedProperty.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
+        <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderAdvanceSliderFadeProperty.value)}}" stepKey="seeSliderFadeSetting"/>
+        <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderAdvanceSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
+        <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderAdvanceSliderShowArrowsProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
+        <seeElement selector="{{SliderOnFrontend.ShowDots}}" stepKey="seeSliderShowDotsSetting"/>
+        <seeElement selector="{{SliderOnFrontend.Autoplay}}" stepKey="seeSliderAutoplaySetting"/>
+        <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" stepKey="seeSlide1HasOverlay"/>
         <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" stepKey="seeSlide1LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
-        <click selector="{{AdvancedSliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnAdvancedSlider"/>
+        <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
-        <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InAdvancedSlider"/>
+        <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" stepKey="seeSlide2TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" stepKey="seeSlide2ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemLinkText2.value}}" selector="{{SlideOnFrontend.slideLinkText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
     </test>
-    <test name="RemoveAdvancedSliderFromStage">
+    <test name="RemoveSliderFromStage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
             <stories value="Slider MAGETWO-83933"/>
-            <title value="Remove advanced slider content block from stage"/>
-            <description value="A user should be able to remove advanced slider block from a row."/>
+            <title value="Remove slider content block from stage"/>
+            <description value="A user should be able to remove slider block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -137,21 +137,21 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Advanced Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderAdvancedSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="AdvancedSliderHasAdvancedFormSection">
+    <test name="SliderHasAdvancedFormSection">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
             <stories value="Slider MAGETWO-83933"/>
-            <title value="Advanced Slider has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for advanced slider"/>
+            <title value="Slider has Advanced form section"/>
+            <description value="A user should be able to configure advanced settings for slider"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
@@ -169,12 +169,12 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Advanced Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragAdvancedSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderAdvancedSliderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>

@@ -1,0 +1,29 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-content-type pagebuilder-slider children-min-height" data-bind="afterRender: function () { preview.onAfterRender.call(preview); }">
+    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <div class="slider-container" data-bind="style: preview.previewStyle">
+        <!-- ko template: previewChildTemplate --><!-- /ko -->
+    </div>
+    <div class="pagebuilder-empty pagebuilder-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('Click \'Add Slide\'')">
+    </div>
+    <div class="slider-controls">
+        <!-- ko if: children().length > 0 -->
+        <div class="slider-navigation" data-bind="previewSortable: {handle: '.navigation-handle', containment: 'parent'}, foreach: getChildren()">
+            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}">
+                <a href="#" data-bind="click: function () { $parent.preview.navigateToSlide($index()); }"></a>
+                <!-- ko if: preview.data.title -->
+                <span class="tooltip-content" role="tooltip" data-bind="text: preview.data.title"></span>
+                <!-- /ko -->
+                <span class="navigation-handle"></span>
+            </div>
+        </div>
+        <!-- /ko -->
+        <button class="add-slide" data-bind="click: addSlide">Add Slide</button>
+    </div>
+</div>
