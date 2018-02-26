@@ -109,6 +109,10 @@ export default class PreviewBlock {
      * @param {Event} event
      */
     public onMouseOver(context: PreviewBlock, event: Event) {
+        if (this.mouseover) {
+            return;
+        }
+
         this.mouseover = true;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");

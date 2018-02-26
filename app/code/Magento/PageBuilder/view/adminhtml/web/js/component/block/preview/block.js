@@ -88,6 +88,10 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
 
 
     _proto.onMouseOver = function onMouseOver(context, event) {
+      if (this.mouseover) {
+        return;
+      }
+
       this.mouseover = true;
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
