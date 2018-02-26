@@ -119,7 +119,7 @@ export default class Banner extends PreviewBlock {
     /**
      * Set state based on overlay mouseover event for the preview
      */
-    public onMouseOver() {
+    public onMouseOverWrapper() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(true);
         }
@@ -131,7 +131,7 @@ export default class Banner extends PreviewBlock {
     /**
      * Set state based on overlay mouseout event for the preview
      */
-    public onMouseOut() {
+    public onMouseOutWrapper() {
         if (this.preview.data.show_overlay() === "on_hover") {
             this.preview.showOverlayHover(false);
         }

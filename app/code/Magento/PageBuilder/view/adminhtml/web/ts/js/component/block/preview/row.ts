@@ -4,54 +4,34 @@
  */
 
 import ko from "knockout";
-import _ from "underscore";
-import StyleAttributeFilter from "../../format/style-attribute-filter";
-import StyleAttributeMapper from "../../format/style-attribute-mapper";
-import Block from "../block";
+import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import PreviewBlock from "./block";
 
 export default class Row extends PreviewBlock {
-    public rowStyles: KnockoutComputed<{}>;
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
-     * @param {Block} parent
-     * @param {object} config
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
      */
-    constructor(parent: Block, config: object) {
-        super(parent, config);
-        const styleAttributeMapper = new StyleAttributeMapper();
-        const styleAttributeFilter = new StyleAttributeFilter();
+    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
+        // The style attribute mapper converts images to directives, override it to include the correct URL
+        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
+            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+        }
 
-        this.rowStyles = ko.computed(() => {
-            // Extract data values our of observable functions
-            const styles = styleAttributeMapper.toDom(
-                styleAttributeFilter.filter(
-                    _.mapObject(this.data, (value) => {
-                        if (ko.isObservable(value)) {
-                            return value();
-                        }
-                        return value;
-                    }),
-                ),
-            );
+        // If the bottom margin is 0, we set it to 1px to overlap the rows to create a single border
+        if (styles.marginBottom === "0px") {
+            styles.marginBottom = "1px";
+        }
 
-            // The style attribute mapper converts images to directives, override it to include the correct URL
-            if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-                styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-            }
+        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
+        if (this.data.border && this.data.border() === "_default") {
+            styles.border = "none";
+        }
 
-            return styles;
-        });
-
-        // Force the rowStyles to update on changes to stored style attribute data
-        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
-            if (ko.isObservable(this.data[key])) {
-                this.data[key].subscribe(() => {
-                    this.rowStyles.notifySubscribers();
-                });
-            }
-        });
+        return styles;
     }
 }
