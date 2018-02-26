@@ -25,89 +25,180 @@
         <amOnPage url="{{ProductAttributePage}}" stepKey="amOnProductAttributeCreationForm"/>
         <fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel" />
         <click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>
-        <see userInput="Magento Page Builder" stepKey="seePageBuilderInputType" />
-        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Magento Page Builder" stepKey="selectOption1"/>
+        <see userInput="Page Builder" stepKey="seePageBuilderInputType" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectOption1"/>
         <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAndEdit" />
-        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Magento Page Builder" stepKey="seePageBuilderIsSaved" />
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderIsSaved" />
     </test>
-    <!--<test name="CanCreateEditPageBuilderProductAttribute">-->
-        <!--<annotations>-->
-            <!--<title value="Can create product using pagebuilder product attribute"/>-->
-            <!--<description value="Can create product using pagebuilder product attribute and see it on Storefront"/>-->
-            <!--<severity value="CRITICAL"/>-->
-            <!--<group value="kieu"/>-->
-        <!--</annotations>-->
-        <!--<before>-->
-            <!--<createData stepKey="myProductAttributeCreation" entity="productAttributePageBuilder"/>-->
-            <!--<createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">-->
-                <!--<requiredEntity createDataKey="myProductAttributeCreation"/>-->
-            <!--</createData>-->
-            <!--<actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>-->
-            <!--<actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>-->
-        <!--</before>-->
-        <!--<after>-->
-            <!--<actionGroup ref="logout" stepKey="logout"/>-->
-        <!--</after>-->
-        <!--<amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>-->
-        <!--<seeElement selector="{{PageBuilderProductForm.pagebuilderBtn}}" stepKey="seePagebuilderBtn"/>-->
-        <!--&lt;!&ndash;<actionGroup ref="enableFullSizePagebuilder" stepKey="enableFullSizePageBuilder"/>&ndash;&gt;-->
-        <!--<actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">-->
-            <!--<argument name="contentBlockType" value="PageBuilderTextContentBlock"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">-->
-            <!--<argument name="contentBlockType" value="PageBuilderTextContentBlock"/>-->
-        <!--</actionGroup>-->
-        <!--<fillField selector="{{TextOnBackend.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>-->
-        <!--<actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>-->
-        <!--<click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />-->
-        <!--<fillField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" stepKey="fillName"/>-->
-        <!--<fillField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" stepKey="fillPrice"/>-->
-        <!--<fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" stepKey="fillSKU"/>-->
-        <!--<fillField userInput="{{_defaultProduct.quantity}}" selector="{{AdminProductFormSection.productQuantity}}" stepKey="fillQuantity"/>-->
-        <!--<click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>-->
-        <!--<amOnPage url="{{_defaultProduct.name}}.html" stepKey="navigateToProductPageOnStorefront"/>-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad5"/>-->
-        <!--<see userInput="Hello Product Page From PageBuilder" stepKey="pagebuilderContent"/>-->
-        <!--<amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid"/>-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad6"/>-->
-        <!--<click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage2" />-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad7" />-->
-        <!--<seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextAreaSelected" />-->
-        <!--<see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="seeTextEditor" />-->
-        <!--<selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor"  stepKey="selectEditor" />-->
-        <!--<click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute8" />-->
-        <!--<amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad9"/>-->
-        <!--<actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortByIdDescending" />-->
-        <!--<click selector="{{AdminProductGridActionSection.productName(_defaultProduct.name)}}"  stepKey="navigateToEditProduct" />-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad10" />-->
-        <!--<dontSee selector="{{PageBuilderProductForm.pagebuilderBtn}}" stepKey="dontSeePagebuilderBtn"/>-->
-        <!--<see userInput="Hello Product Page From PageBuilder" stepKey="seePageBuilderContentRemain" />-->
-    <!--</test>-->
-    <test name="CanCreateEditPageBuilderProductAttributeInsideProductForm">
+    <test name="CanCreateEditPageBuilderProductAttribute">
         <annotations>
             <title value="Can create product using pagebuilder product attribute"/>
             <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
             <severity value="CRITICAL"/>
-            <group value="kieu"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="myProductAttributeCreation"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage1" />
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder" />
+        <click selector="{{StorefrontPropertiesSection.StoreFrontPropertiesTab}}" stepKey="clickStorefrontPropertiesTab1"/>
+        <dontSeeElement selector="{{StorefrontPropertiesSection.EnableWYSIWYG}}" stepKey="dontSeeWYSIWYGEnableField1" />
+        <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute1" />
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="seePagebuilderBtn"/>
+        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="enablePageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+        <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettingsOnCatalog" stepKey="saveEditPanelSettings"/>
+        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
+        <fillField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" stepKey="fillName"/>
+        <fillField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" stepKey="fillPrice"/>
+        <fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" stepKey="fillSKU"/>
+        <fillField userInput="{{_defaultProduct.quantity}}" selector="{{AdminProductFormSection.productQuantity}}" stepKey="fillQuantity"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <amOnPage url="{{_defaultProduct.name}}.html" stepKey="navigateToProductPageOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <see userInput="Hello Product Page From PageBuilder" stepKey="pagebuilderContent"/>
+    </test>
+    <test name="CanDownGradePageBuilderProductAttributeToTextArea">
+        <annotations>
+            <title value="Can downgrade pagebuilder product attribute to text area product attribute"/>
+            <description value="Can downgrade pagebuilder product attribute to text area product attribute"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="myProductAttributeCreation"/>
+            </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
         </before>
         <after>
+            <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <click selector="{{AdminProductFormSection.addAttributeBtn}}" stepKey="clickAddAttributeBtn" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <click selector="{{AdminProductAttributeGridSection.createNewAttributeBtn}}" stepKey="clickCreateNewAttributeBtn" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel" />
-        <click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>
-        <see userInput="Magento Page Builder" stepKey="seePageBuilderInputType" />
-        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Magento Page Builder" stepKey="selectOption"/>
-        <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute" />
+        <click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage1" />
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder" />
+        <click selector="{{StorefrontPropertiesSection.StoreFrontPropertiesTab}}" stepKey="clickStorefrontPropertiesTab1"/>
+        <dontSeeElement selector="{{StorefrontPropertiesSection.EnableWYSIWYG}}" stepKey="dontSeeWYSIWYGEnableField1" />
+        <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute1" />
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
+        <fillField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" stepKey="fillName"/>
+        <fillField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" stepKey="fillPrice"/>
+        <fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" stepKey="fillSKU"/>
+        <fillField userInput="{{_defaultProduct.quantity}}" selector="{{AdminProductFormSection.productQuantity}}" stepKey="fillQuantity"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid2"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage2" />
+        <waitForPageLoad stepKey="waitForPageLoad6" />
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderSelected" />
+        <see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="seeTextEditor" />
+        <see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextArea" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area"  stepKey="selectTextArea" />
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsg" />
+        <seeElement selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="seeWarningMsg" />
+        <click selector="{{PageBuilderProductAttribute.AcceptBtn}}" stepKey="clickAcceptBtn" />
+        <waitForElementNotVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsgNotVisible" />
+        <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAttribute8" />
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextAreaSelected" />
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
+        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
+        <actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortByIdDescending" />
+        <click selector="{{AdminProductGridActionSection.productName(_defaultProduct.name)}}"  stepKey="navigateToEditProduct" />
+        <waitForPageLoad stepKey="waitForPageLoad9" />
+        <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4" />
+        <seeElement selector="{{ProductAttributeWYSIWYGSection.TextArea($$myProductAttributeCreation.attribute_code$$)}}" stepKey="fillContentTextarea" />
+    </test>
+    <test name="CanDownGradePageBuilderProductAttributeToTextEditor">
+        <annotations>
+            <title value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
+            <description value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="myProductAttributeCreation"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+        </before>
+        <after>
+            <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage1" />
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder" />
+        <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute1" />
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
+        <fillField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" stepKey="fillName"/>
+        <fillField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" stepKey="fillPrice"/>
+        <fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" stepKey="fillSKU"/>
+        <fillField userInput="{{_defaultProduct.quantity}}" selector="{{AdminProductFormSection.productQuantity}}" stepKey="fillQuantity"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid2"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <click selector="{{AdminProductAttributeGridSection.AttributeCode($$myProductAttributeCreation.attribute_code$$)}}" stepKey="navigateToAttributeEditPage2" />
+        <waitForPageLoad stepKey="waitForPageLoad6" />
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderSelected" />
+        <see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="seeTextEditor" />
+        <see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextArea" />
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor"  stepKey="selectTextEditor" />
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsg" />
+        <seeElement selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="seeWarningMsg" />
+        <click selector="{{PageBuilderProductAttribute.AcceptBtn}}" stepKey="clickAcceptBtn" />
+        <waitForElementNotVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsgNotVisible" />
+        <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAttribute2" />
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="seeEditorSelected" />
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
+        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
+        <actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortByIdDescending" />
+        <click selector="{{AdminProductGridActionSection.productName(_defaultProduct.name)}}"  stepKey="navigateToEditProduct" />
+        <waitForPageLoad stepKey="waitForPageLoad9" />
+        <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4" />
+        <seeElement selector="{{ProductAttributeWYSIWYGSection.TinyMCE4($$myProductAttributeCreation.attribute_code$$)}}" stepKey="waitForPageLoad11"/>
     </test>
 </tests>

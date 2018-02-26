@@ -429,4 +429,10 @@
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="saveEditPanelSettingsOnCatalog">
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
+    </actionGroup>
 </actionGroups>
