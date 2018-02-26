@@ -34,7 +34,7 @@ export default function createBlock(
     parent: EditableArea,
     stage: Stage,
     formData?: object,
-): Promise<Block> {
+): Promise<BlockInterface> {
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise((resolve: (blockComponent: any) => void) => {

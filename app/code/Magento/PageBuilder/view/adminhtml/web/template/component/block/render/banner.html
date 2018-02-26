@@ -11,7 +11,9 @@
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button type="button" class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
@@ -19,7 +21,9 @@
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getContentHtml()"></div>
-                    <button type="button" class="pagebuilder-banner-button pagebuilder-button-primary" data-bind="text: getData().button_text, style: getButtonStyle()"></button>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
