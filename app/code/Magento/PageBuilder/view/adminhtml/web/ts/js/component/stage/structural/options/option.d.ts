@@ -3,14 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import { Structural } from "../abstract.d";
+import Structural from "../abstract";
 
-interface OptionInterface {
-    parent: Structural;
-    code: string;
-    icon: string;
-    title: string;
-    classes: string;
+export interface OptionInterface {
+    code?: string;
+    icon?: string;
+    title?: string;
+    classes?: string;
     sort: number;
-    template?: string;
+    optionTemplate?: string;
 }

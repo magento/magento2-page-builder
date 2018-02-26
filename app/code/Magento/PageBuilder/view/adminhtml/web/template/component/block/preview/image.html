@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="style: preview.previewStyle()">
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="style: preview.previewStyle(), event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+    <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko ifnot: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
         <div class="pagebuilder-image-empty-preview">
             <span data-bind="text: $t('Empty Image');"></span>
