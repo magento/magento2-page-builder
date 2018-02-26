@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
-use Magento\Framework\Data\Form\Element\AbstractElement;
-
 class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**
