@@ -17,8 +17,6 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84920"/>
             <group value="pagebuilder"/>
-            <!-- Skipped; see MAGETWO-88218 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -153,8 +151,8 @@
         <!--<seeElement selector="{{SliderInAdmin.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="verifyAutoplaySpeedAdmin"/>-->
         <!--<seeElement selector="{{SliderInAdmin.Fade(PageBuilderSliderFadeYesProperty.value)}}" stepKey="verifyFadeYesOnAdmin"/>-->
         <!--<seeElement selector="{{SliderInAdmin.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteOnAdmin"/>-->
-        <!--<seeElement selector="{{SliderInAdmin.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="verifyArrowsYesOnAdmin"/>-->
-        <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnAdmin"/>
+        <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
+        <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
 
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="verifyAlignmentOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
