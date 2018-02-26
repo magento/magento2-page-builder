@@ -58,6 +58,7 @@ class PresentationPlugin
         \Magento\Catalog\Model\Product\Attribute\Frontend\Inputtype\Presentation $subject,
         array $result
     ) {
+        $result['is_pagebuilder_enabled'] = 0;
         if ($result['frontend_input'] === 'pagebuilder') {
             $result['is_wysiwyg_enabled'] = 1;
             $result['is_pagebuilder_enabled'] = 1;
