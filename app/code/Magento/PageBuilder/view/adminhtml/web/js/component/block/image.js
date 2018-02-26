@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../config", "./block"], function (_underscore, _config, _block) {
+define(["underscore", "../../utils/url", "../config", "./block"], function (_underscore, _url, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -80,9 +80,7 @@ define(["underscore", "../config", "./block"], function (_underscore, _config, _
 
     _proto.getImageUrl = function getImageUrl(image) {
       var imageUrl = image[0].url;
-
-      var mediaUrl = _config.getInitConfig("media_url");
-
+      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
       var mediaPath = imageUrl.split(mediaUrl);
       var directive = "{{media url=" + mediaPath[1] + "}}";
       return directive;

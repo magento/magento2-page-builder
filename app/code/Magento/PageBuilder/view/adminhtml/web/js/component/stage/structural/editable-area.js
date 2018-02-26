@@ -26,21 +26,13 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
       this.bindEvents();
     }
     /**
-     * Bind events for the current instance
-     */
-
-
-    var _proto = EditableArea.prototype;
-
-    _proto.bindEvents = function bindEvents() {
-      _eventBus.on("block:sortStart", this.onSortStart.bind(this));
-    };
-    /**
      * Retrieve the child template
      *
      * @returns {string}
      */
 
+
+    var _proto = EditableArea.prototype;
 
     /**
      * Return the children of the current element
@@ -159,6 +151,14 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
           stage: _this.stage
         });
       });
+    };
+    /**
+     * Bind events for the current instance
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      _eventBus.on("block:sortStart", this.onSortStart.bind(this));
     };
 
     _createClass(EditableArea, [{

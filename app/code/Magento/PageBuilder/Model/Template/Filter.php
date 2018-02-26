@@ -67,9 +67,11 @@ class Filter
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $wrapperElementId = uniqid();
         try {
+            libxml_use_internal_errors(true);
             $domDocument->loadHTML(
                 '<html><body id="' . $wrapperElementId . '">' . $string . '</body></html>'
             );
+            libxml_clear_errors();
         } catch (\Exception $e) {
             restore_error_handler();
             $this->logger->critical($e);

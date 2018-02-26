@@ -19,6 +19,7 @@ export default class Banner implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
+        const linkUrl = element.querySelector("a").getAttribute("href");
         const target = element.querySelector("a").getAttribute("target");
         const bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -27,11 +28,15 @@ export default class Banner implements ReadInterface {
         if (bgImage === bgMobileImage) {
             bgMobileImage = false;
         }
+        const button = element.querySelector("button");
+        const buttonText = button ? button.textContent : "";
+        const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
         const response: any = {
             background_image: decodeUrl(bgImage),
             background_size: element.style.backgroundSize,
-            button_text: element.dataset.buttonText,
-            link_url: element.querySelector("a").getAttribute("href"),
+            button_text: buttonText,
+            button_type: buttonType,
+            link_url: linkUrl ? linkUrl : "",
             margins_and_padding: {
                 margin: {
                     bottom: marginSrc.marginBottom.replace("px", ""),
@@ -54,6 +59,7 @@ export default class Banner implements ReadInterface {
             overlay_transparency: this.getOverlayTransparency(overlayColor),
             show_button: element.getAttribute("data-show-button"),
             show_overlay: element.getAttribute("data-show-overlay"),
+            text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign,
         };
         return Promise.resolve(response);
     }

@@ -399,6 +399,8 @@
             <severity value="CRITICAL"/>
             <testCaseId value=""/>
             <group value="pagebuilder"/>
+            <!-- Skipped; see MAGETWO-88218 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -408,6 +410,10 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -451,7 +457,7 @@
         <click selector="{{CmsPageGrid.searchButton}}" stepKey="clickSearchButton"/>
         <waitForElement time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
         <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
+        <waitForElementVisible time="10" selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
         <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible4" />
         <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForPageLoad stepKey="waitForSpinner2" />
@@ -515,6 +521,7 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
+        <wait time="3" stepKey="wait4"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
     </test>
     <test name="ValidateBackgroundImageUrl">
@@ -577,6 +584,10 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -916,5 +927,92 @@
         <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage1"/>
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
+    </test>
+    <test name="CanAddImageToColumn">
+        <annotations>
+            <title value="Add an image content block into column"/>
+            <description value="A user should be able to add an image into a column."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Assign block to cms page-->
+        <actionGroup ref="AssignBlockToCMSPage" stepKey="assignBlockToCMSPage">
+            <argument name="Block" value="$$createPreReqBlock$$"/>
+            <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
+        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+
+        <!--Remove uploaded image by TrashBin icon-->
+        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed2"/>
+
+        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad1" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
+        <waitForPageLoad stepKey="waitForContentLoaded"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>
