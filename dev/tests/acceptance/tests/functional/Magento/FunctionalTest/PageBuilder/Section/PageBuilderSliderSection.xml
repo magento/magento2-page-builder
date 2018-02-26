@@ -22,6 +22,7 @@
         <element name="sliderBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
         <element name="sliderBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="sliderClass" type="button" selector="div[data-role='slider'][class='{{arg1}}']" parameterized="true"/>
+        <element name="sliderMarginPaddings" type="button" selector="div.pagebuilder-slider[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
     </section>
     <section name="SliderInAdmin">
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
@@ -31,16 +32,14 @@
         <element name="slideNavigationHandle" type="button" selector="(//span[contains(@class, 'navigation-handle')])"/>
         <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
 
-        <element name="Autoplay" type="button" selector="div[data-role='slider'][data-autoplay='{{arg1}}']" parameterized="true"/>
-        <element name="AutoplaySpeed" type="button" selector=".pagebuilder-slider[data-autoplay-speed='{{arg1}}']" parameterized="true"/>
-        <element name="Fade" type="button" selector="div[data-role='slider'][data-fade='{{arg1}}']" parameterized="true"/>
-        <element name="IsInfinite" type="button" selector="div[data-role='slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
+        <element name="Fade" type="button" selector=".slick-slide[data-slick-index='1'][style*='transition: opacity 500ms ease']" />
         <element name="ShowArrows" type="button" selector="button.slick-arrow.slick-prev"/>
         <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
-        <element name="sliderMinHeight" type="button" selector="div[style*='min-height: {{arg1}}']" parameterized="true"/>
-        <element name="sliderAlignment" type="button" selector="div[style*='text-align: {{arg1}}']" parameterized="true"/>
-        <element name="sliderBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
-        <element name="sliderBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="sliderMinHeight" type="button" selector="div.slider-container[style*='min-height: {{arg1}}']" parameterized="true"/>
+        <element name="sliderAlignment" type="button" selector="div.slider-container[style*='text-align: {{arg1}}']" parameterized="true"/>
+        <element name="sliderBorderStyle" type="button" selector="div.slider-container[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="sliderBorderRadiusStyle" type="button" selector="div.slider-container[style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="sliderMarginPaddings" type="button" selector="div.slider-container[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
     </section>
     <section name="SlideOnFrontend">
         <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
