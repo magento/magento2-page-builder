@@ -4,6 +4,7 @@
  */
 
 import _ from "underscore";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import Config from "../config";
 import Block from "./block";
 
@@ -61,7 +62,8 @@ export default class Image extends Block {
      */
     private getImageUrl(image: any[]) {
         const imageUrl = image[0].url;
-        const mediaUrl = Config.getInitConfig("media_url");
+        const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
+
         const mediaPath = imageUrl.split(mediaUrl);
         const directive = "{{media url=" + mediaPath[1] + "}}";
         return directive;

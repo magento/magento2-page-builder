@@ -9,6 +9,6 @@
  * @returns int
  */
 export default function  extractAlphaFromRgba(value: string) {
-    const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 1;
+    const a = parseFloat(value.match(/\d+/g)[3] + "." + value.match(/\d+/g)[4]) || 0;
     return Math.floor(a * 100);
 }

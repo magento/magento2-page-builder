@@ -8,6 +8,7 @@ import Config from "../../component/config";
 import {DataObject} from "../../component/data-store";
 import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 
 export default class StyleAttributeMapper {
 
@@ -65,7 +66,8 @@ export default class StyleAttributeMapper {
                     || (key === "mobile_image" && Array.isArray(value) && value[0] !== undefined)) {
                     // convert to media directive
                     const imageUrl = value[0].url;
-                    const mediaUrl = Config.getInitConfig("media_url");
+                    const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
+
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";
                     value = "url(\'" + toDataUrl(directive) + "\')";

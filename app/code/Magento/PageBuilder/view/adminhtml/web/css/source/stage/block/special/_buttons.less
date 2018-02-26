@@ -22,5 +22,23 @@
 
     .add-button {
         vertical-align: middle;
+        display: none;
+        margin-bottom: 10px;
+
+        &:before {
+            content: @icon-plus__content;
+            font-family: @icons-admin__font-name;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            speak: none;
+            padding-right: 5px;
+        }
+    }
+
+    &:hover {
+        .add-button {
+            display: inline-block;
+        }
     }
 }
