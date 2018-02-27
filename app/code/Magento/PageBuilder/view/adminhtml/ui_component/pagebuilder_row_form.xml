@@ -195,9 +195,6 @@
                 <dataType>boolean</dataType>
                 <label translate="true">Enable Parallax Background</label>
                 <dataScope>enable_parallax</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <checkbox>
@@ -222,9 +219,13 @@
                 <dataScope>parallax_speed</dataScope>
                 <notice translate="true">Store View</notice>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">2.0</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">-1.0</rule>
                 </validation>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = enable_parallax:value</link>
+                </imports>
             </settings>
         </field>
     </fieldset>
