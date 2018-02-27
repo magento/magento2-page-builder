@@ -20,6 +20,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
     // Listen for the dragged component from the event bus
     var draggedComponent;
+
     EventBus.on("drag:start", function (event, params) {
         draggedComponent = params.component;
     });
