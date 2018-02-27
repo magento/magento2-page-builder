@@ -142,21 +142,23 @@ export default class ColumnGroup extends PreviewBlock {
             helper() {
                 const helper = $(this).clone();
                 helper.css({
+                    height: $(this).outerHeight() + "px",
+                    minHeight: 0,
                     opacity: 0.5,
                     pointerEvents: "none",
-                    width: $(this).width() + "px",
+                    width: $(this).outerWidth() + "px",
                     zIndex: 100,
                 });
                 return helper;
             },
             start: (event: Event) => {
-                const column = ko.dataFor($(event.target)[0]) as Column;
+                const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn(column);
+                setDragColumn(columnInstance);
                 this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
                 EventBus.trigger("column:drag:start", {
-                    column,
+                    column: columnInstance,
                     stage: this.parent.stage,
                 });
                 EventBus.trigger("interaction:start", {stage: this.parent.stage});
@@ -227,8 +229,6 @@ export default class ColumnGroup extends PreviewBlock {
         this.dropPlaceholder.removeClass("left right");
         this.movePlaceholder.removeClass("active");
         this.resizeGhost.removeClass("active");
-
-        EventBus.trigger("interaction:stop", {stage: this.parent.stage});
     }
 
     /**

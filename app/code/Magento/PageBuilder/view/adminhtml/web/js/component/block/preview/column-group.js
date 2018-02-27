@@ -139,22 +139,24 @@ define(["jquery", "knockout", "underscore", "../../config", "../../event-bus", "
         helper: function helper() {
           var helper = (0, _jquery)(this).clone();
           helper.css({
+            height: (0, _jquery)(this).outerHeight() + "px",
+            minHeight: 0,
             opacity: 0.5,
             pointerEvents: "none",
-            width: (0, _jquery)(this).width() + "px",
+            width: (0, _jquery)(this).outerWidth() + "px",
             zIndex: 100
           });
           return helper;
         },
         start: function start(event) {
-          var column = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
+          var columnInstance = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
 
 
-          (0, _registry.setDragColumn)(column);
+          (0, _registry.setDragColumn)(columnInstance);
           _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
 
           _eventBus.trigger("column:drag:start", {
-            column: column,
+            column: columnInstance,
             stage: _this3.parent.stage
           });
 
@@ -240,10 +242,6 @@ define(["jquery", "knockout", "underscore", "../../config", "../../event-bus", "
       this.dropPlaceholder.removeClass("left right");
       this.movePlaceholder.removeClass("active");
       this.resizeGhost.removeClass("active");
-
-      _eventBus.trigger("interaction:stop", {
-        stage: this.parent.stage
-      });
     };
     /**
      * Init the resizing events on the group
