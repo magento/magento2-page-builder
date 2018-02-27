@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict*/
 
-define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
+define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, EventBus) {
 
     /**
      * Retrieve the view model for an element
@@ -47,10 +47,12 @@ define(["knockout", "jquery", "jquery/ui"], function(ko, jQuery) {
                 .on('dragstart', function (event, ui) {
                     // Ensure the dimensions are retained on the element
                     ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
-                    require("uiRegistry").set('dragElementViewModel', getViewModelFromEvent(event));
+                    EventBus.trigger("drag:start", {event: event, ui: ui, component: getViewModelFromEvent(event)});
+                    EventBus.trigger("interaction:start", {stage: getViewModelFromEvent(event).stage});
                 })
-                .on('dragstop', function () {
-                    require("uiRegistry").remove('dragElementViewModel');
+                .on('dragstop', function (event, ui) {
+                    EventBus.trigger("drag:stop", {event: event, ui: ui, component: getViewModelFromEvent(event)});
+                    EventBus.trigger("interaction:stop", {stage: getViewModelFromEvent(event).stage});
                 });
         },
 

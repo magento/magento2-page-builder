@@ -346,6 +346,19 @@
     }
 }
 
+// Don't display the hover state when the stage is being interacted with
+.pagebuilder-stage.interacting {
+    .pagebuilder-content-type {
+        &-active:hover {
+            outline: 1px solid rgba(153, 153, 153, 0);
+
+            &.type-container {
+                outline: 1px solid rgba(153, 153, 153, .3);
+            }
+        }
+    }
+}
+
 @import '_row.less';
 @import '_column.less';
 @import '_columngroup.less';

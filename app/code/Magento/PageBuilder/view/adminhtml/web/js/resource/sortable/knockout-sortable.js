@@ -5,7 +5,7 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, registry, _, EventBus) {
+define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, _, EventBus) {
 
     /**
      * Retrieve the view model for an element
@@ -16,6 +16,15 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
     function getViewModelFromUi(ui) {
         return ko.dataFor(ui.item[0]) || {};
     }
+
+    // Listen for the dragged component from the event bus
+    var draggedComponent;
+    EventBus.on("drag:start", function (event, params) {
+        draggedComponent = params.component;
+    });
+    EventBus.on("drag:stop", function () {
+        draggedComponent = false;
+    });
 
     var Sortable = {
         defaults: {
@@ -219,8 +228,8 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                 currentInstance = getViewModelFromUi(ui);
 
             // If the registry contains a reference to the drag element view model use that instead
-            if (registry.get('dragElementViewModel')) {
-                currentInstance = registry.get('dragElementViewModel');
+            if (draggedComponent) {
+                currentInstance = draggedComponent;
             }
 
             var allowedParents = currentInstance.config.allowed_parents;
