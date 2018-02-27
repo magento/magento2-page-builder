@@ -21,7 +21,7 @@ define([], function () {
       return new Promise(function (resolve) {
         resolve({
           heading_type: element.nodeName.toLowerCase(),
-          title: element.innerText
+          heading_text: element.innerText
         });
       });
     };

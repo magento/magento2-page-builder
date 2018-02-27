@@ -22,7 +22,7 @@ define(["./block"], function (_block) {
       var data = this.data;
       var styles = "pagebuilder-heading-" + data.heading_type();
 
-      if (data.title() === "") {
+      if (data.heading_text() === "") {
         styles += " placeholder-text";
       }
 

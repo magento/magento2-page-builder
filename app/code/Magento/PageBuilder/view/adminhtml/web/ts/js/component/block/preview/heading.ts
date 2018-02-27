@@ -15,7 +15,7 @@ export default class Heading extends PreviewBlock {
     public getHeadingStyles(): string {
         const data = this.data;
         let styles = "pagebuilder-heading-" + data.heading_type();
-        if(data.title() === ""){
+        if(data.heading_text() === ""){
             styles += " placeholder-text"
         }
         return styles;
