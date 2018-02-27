@@ -54,7 +54,16 @@ define([
                     click: function (event) {
                         this.closeModal(event, true);
                     }
-                }]
+                }],
+                actions: {
+
+                    /**
+                     * Revert back to 'pagebuilder' setting
+                     */
+                    cancel: function () {
+                        $attributeDropDownEl.val('pagebuilder');
+                    }
+                }
             });
         });
     };
