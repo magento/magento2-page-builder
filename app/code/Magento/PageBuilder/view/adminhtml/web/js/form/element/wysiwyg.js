@@ -260,7 +260,6 @@ define([
                     self.stage = stage;
                     EventBus.on("stage:ready", function (stageReadyEvent, params) {
                         if (params.stage.id === self.stage.id) {
-                            self.stageActive(true); // Display the stage UI
                             self.isFullScreen(isFullScreeMode);
                         }
                     });
@@ -279,6 +278,7 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
+            this.stageActive(true);
 
             this.isComponentInitialized = true;
         },
@@ -289,7 +289,7 @@ define([
          * @returns {String}
          */
         getStageTemplate: function () {
-            return 'Magento_PageBuilder/component/stage.html';
+                return 'Magento_PageBuilder/component/stage.html';
         },
 
         /**

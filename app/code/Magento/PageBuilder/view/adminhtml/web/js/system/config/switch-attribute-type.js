@@ -23,11 +23,11 @@ define([
 
         $attributeDropDownEl.on('change', function () {
 
-            if (attributeDropDownEl.options.length > 3) {
-                return;
-            }
-
-            if (previousOption != 'pagebuilder') {
+            if (
+                attributeDropDownEl.options.length > 3
+                || this.value === 'pagebuilder'
+                || previousOption !== 'pagebuilder'
+            ) {
                 return;
             }
 
@@ -62,6 +62,7 @@ define([
                      */
                     cancel: function () {
                         $attributeDropDownEl.val('pagebuilder');
+                        $attributeDropDownEl.change();
                     }
                 }
             });
