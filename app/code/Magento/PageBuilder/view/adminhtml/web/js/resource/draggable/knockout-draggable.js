@@ -5,7 +5,8 @@
 
 /*eslint-disable vars-on-top, strict*/
 
-define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, EventBus) {
+define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
+    function(ko, jQuery, EventBus) {
 
     /**
      * Retrieve the view model for an element
