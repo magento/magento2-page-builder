@@ -6,6 +6,6 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit">
-    <div data-bind="css: 'pagebuilder-heading-' + preview.data.heading_type(), html: preview.data.title"></div>
+    <div data-bind="css: preview.getHeadingStyles(), html: preview.data.title() !== '' ? preview.data.title() :  $t('Edit Heading Text')"></div>
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>
