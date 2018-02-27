@@ -8,9 +8,9 @@ import PreviewBlock from "./block";
 export default class Heading extends PreviewBlock {
 
     /**
-     * Get the banner wrapper attributes for the preview
+     * Get the heading styles for the preview
      *
-     * @returns {any}
+     * @returns string
      */
     public getHeadingStyles(): string {
         const data = this.data;

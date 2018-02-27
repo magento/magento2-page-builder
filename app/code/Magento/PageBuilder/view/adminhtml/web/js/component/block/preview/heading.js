@@ -14,9 +14,9 @@ define(["./block"], function (_block) {
     var _proto = Heading.prototype;
 
     /**
-     * Get the banner wrapper attributes for the preview
+     * Get the heading styles for the preview
      *
-     * @returns {any}
+     * @returns string
      */
     _proto.getHeadingStyles = function getHeadingStyles() {
       var data = this.data;
