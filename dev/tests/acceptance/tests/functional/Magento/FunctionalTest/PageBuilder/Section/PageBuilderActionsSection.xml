@@ -35,6 +35,7 @@
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="div.pagebuilder-stage div.row-container"/>
         <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
+        <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
         <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
@@ -93,7 +94,7 @@
     <section name="PageBuilderColumnSection">
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]"/>
-        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
+        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][2]"/>
         <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
