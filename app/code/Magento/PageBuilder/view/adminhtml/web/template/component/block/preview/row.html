@@ -5,9 +5,10 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-row children-min-height">
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false, style: preview.previewStyle, css: {'empty-row': children().length == 0}">
+    <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
-    <div class="pagebuilder-empty" data-bind="css: {visible: children().length == 0}, text: $t('drag content blocks here, or add columns')">
-    </div>
+
+    <div class="pagebuilder-display-label" data-bind="text: function () { return preview.displayLabel().toUpperCase(); }()"></div>
+    <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: children().length == 0}, text: $t('Drag content blocks or columns here')"></div>
 </div>

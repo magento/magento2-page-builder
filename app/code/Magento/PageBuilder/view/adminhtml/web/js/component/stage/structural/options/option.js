@@ -36,7 +36,15 @@ define([], function () {
       this.code = code;
       this.icon = icon;
       this.title = title;
-      this.action = action;
+
+      if (action) {
+        this.action = action;
+      } else {
+        this.action = function () {
+          return;
+        };
+      }
+
       this.classes = classes.join(" ");
       this.sort = sort;
       this.optionTemplate = optionTemplate;

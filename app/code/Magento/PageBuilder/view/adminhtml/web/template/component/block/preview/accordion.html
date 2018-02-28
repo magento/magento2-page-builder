@@ -5,7 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit dashboard-store-stats pagebuilder-accordion">
+<div class="pagebuilder-content-type type-nested pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit dashboard-store-stats pagebuilder-accordion" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+    <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko if: preview.data.items().length == 0 -->
     <i class="icon-pagebuilder-accordian"></i> <span data-bind="text: $t('Accordion');"></span>
     <!-- /ko -->
@@ -19,5 +20,4 @@
         <div data-role="content" data-bind="html: content, afterRender: function () { $parent.preview.onItemRender(); }" class="accordion-content"></div>
     </div>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

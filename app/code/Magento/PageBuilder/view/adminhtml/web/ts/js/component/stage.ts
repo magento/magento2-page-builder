@@ -70,6 +70,9 @@ export default class Stage extends EditableArea implements StageInterface {
                 this.saveRenderTree.call(this);
             }
         });
+
+        EventBus.on("interaction:start", () => this.interacting(true));
+        EventBus.on("interaction:stop", () => this.interacting(false));
     }
 
     /**
@@ -86,8 +89,8 @@ export default class Stage extends EditableArea implements StageInterface {
      *
      * @param {boolean} flag
      */
-    public dragging(flag: boolean) {
-        this.parent.dragging(flag);
+    public interacting(flag: boolean) {
+        this.parent.interacting(flag);
     }
 
     /**
