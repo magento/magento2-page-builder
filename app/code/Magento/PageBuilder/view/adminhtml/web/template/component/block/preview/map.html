@@ -6,11 +6,6 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-map pagebuilder-no-blur pagebuilder-live-edit">
-    <!-- ko ifnot: preview.data.position -->
-        <i class="icon-pagebuilder-map"></i> <span data-bind="text: $t('Map');"></span>
-    <!-- /ko -->
-    <!-- ko if: preview.data.position -->
-        <iframe data-bind="attr: { src: preview.getMapUrl(), width: preview.data.width(), height: preview.data.height() }" frameborder="0" />
-    <!-- /ko -->
+    <iframe data-bind="attr: { src: preview.getMapUrl() }, style: preview.previewStyle()" frameborder="0" />
     <!-- ko template: optionsInstance.template --><!-- /ko -->
 </div>

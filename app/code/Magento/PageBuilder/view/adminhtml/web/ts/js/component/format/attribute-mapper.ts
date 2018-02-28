@@ -54,14 +54,16 @@ export default class AttributeMapper {
                 }
                 if (key === "position") {
                     const [lat, lng, zoom] = value.toString().split(",");
-                    key = "src";
-                    value = "https://www.google.com/maps/embed/v1/place?q="
-                        + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
+
+                    if (value.toString() !== "") {
+                        value = "https://www.google.com/maps/embed/v1/place?q="
+                            + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
+                    }
                 }
                 result[key.replace("_", "-")] = value;
             },
         );
-        if (result.position && result.src) {
+        if (result.position) {
             result.src = result.position;
             delete result.position;
         }
