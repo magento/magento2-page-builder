@@ -208,16 +208,18 @@
                 </checkbox>
             </formElements>
         </field>
-        <field name="parallax_speed" sortOrder="20" formElement="input">
+        <field name="parallax_speed" sortOrder="20" formElement="input" template="Magento_PageBuilder/form/field.html">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">0</item>
+                    <item name="default" xsi:type="string">0.5</item>
                 </item>
             </argument>
             <settings>
                 <label translate="true">Parallax Speed</label>
                 <dataScope>parallax_speed</dataScope>
-                <notice translate="true">Store View</notice>
+                <notice xsi:type="string" translate="true">
+                    <![CDATA[<p>Enter fractional number from -1.0 to 2.0.</p><p>Read the user guide about <a href="#" target="_blank">parallax speed values</a>.</p>]]>
+                </notice>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="less-than-equals-to" xsi:type="number">2.0</rule>
