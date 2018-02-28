@@ -53,9 +53,10 @@ export default class AttributeMapper {
                     key = this.attributeNameMapping[key];
                 }
                 if (key === "position") {
-                    const [lat, lng, zoom] = value.toString().split(",");
+                    value = value.toString();
+                    const [lat, lng, zoom] = value.split(",");
 
-                    if (value.toString() !== "") {
+                    if (value !== "") {
                         value = "https://www.google.com/maps/embed/v1/place?q="
                             + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
                     }
