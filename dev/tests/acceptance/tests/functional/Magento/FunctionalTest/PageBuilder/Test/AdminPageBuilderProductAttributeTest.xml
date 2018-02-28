@@ -30,7 +30,9 @@
         <click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>
         <see userInput="Page Builder" stepKey="seePageBuilderInputType" />
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectOption1"/>
+        <waitForElementVisible time="10" selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="waitForSaveAndContinueButton"/>
         <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAndEdit" />
+        <waitForPageLoad time="10" stepKey="waitForPageToLoad"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderIsSaved" />
     </test>
     <test name="CanCreateProductWithPageBuilderProductAttribute">
@@ -133,7 +135,9 @@
         <seeElement selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="seeWarningMsg" />
         <click selector="{{PageBuilderProductAttribute.AcceptBtn}}" stepKey="clickAcceptBtn" />
         <waitForElementNotVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsgNotVisible" />
+        <waitForElementVisible time="10" selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="waitForSaveAndContinueButtonVisible"/>
         <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAttribute8" />
+        <waitForPageLoad time="10" stepKey="waitForPageToLoad71"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextAreaSelected" />
         <waitForPageLoad stepKey="waitForPageLoad7"/>
         <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />
@@ -193,7 +197,9 @@
         <seeElement selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="seeWarningMsg" />
         <click selector="{{PageBuilderProductAttribute.AcceptBtn}}" stepKey="clickAcceptBtn" />
         <waitForElementNotVisible selector="{{PageBuilderProductAttribute.WarningMsg}}" stepKey="waitForWarningMsgNotVisible" />
+        <waitForElementVisible selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="waitForSaveAndContinueButtonVisible"/>
         <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAttribute2" />
+        <waitForPageLoad stepKey="waitForPageToLoad71"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="seeEditorSelected" />
         <waitForPageLoad stepKey="waitForPageLoad7"/>
         <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />
@@ -248,7 +254,9 @@
         <see selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilder" />
         <see selector="{{AttributePropertiesSection.InputType}}" userInput="Text Area" stepKey="seeTextArea" />
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder" />
+        <waitForElementVisible selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="waitForSaveAndContinueButtonVisible"/>
         <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAttribute2" />
+        <waitForPageLoad stepKey="waitForPageToLoad71"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderSelected" />
         <waitForPageLoad stepKey="waitForPageLoad7"/>
         <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="amOnProductGrid" />
