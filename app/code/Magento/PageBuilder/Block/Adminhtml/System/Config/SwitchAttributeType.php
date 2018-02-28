@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
+
 class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**

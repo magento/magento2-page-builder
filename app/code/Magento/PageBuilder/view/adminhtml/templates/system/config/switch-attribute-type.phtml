@@ -11,11 +11,15 @@
 ?>
 <script type="text/x-magento-init">
 {
-    "<?= $block->getModalSelector() ?>": {
+    "<?= /* @noEscape */
+    $block->getModalSelector() ?>": {
         "Magento_PageBuilder/js/system/config/switch-attribute-type": {
-            "modalTitleText": <?= /* @noEscape */ json_encode($block->getModalTitleText()) ?>,
-            "modalContentBody": <?= /* @noEscape */ json_encode($block->getModalContentBody()) ?>
+            "modalTitleText": <?= /* @noEscape */
+    json_encode($block->getModalTitleText()) ?>,
+            "modalContentBody": <?= /* @noEscape */
+    json_encode($block->getModalContentBody()) ?>
  	 	}
  	}
 }
+
 </script>
