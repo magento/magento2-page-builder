@@ -41,7 +41,6 @@ class InputtypePlugin
         array $result
     ) {
         if (!$this->config->isEnabled()) {
-
             foreach ($result as $key => $value) {
                 if ($value['value'] == 'pagebuilder') {
                     unset($result[$key]);

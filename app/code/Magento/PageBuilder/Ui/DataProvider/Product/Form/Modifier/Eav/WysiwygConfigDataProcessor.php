@@ -8,7 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Ui\DataProvider\Product\Form\Modifier\Eav;
 
-class WysiwygConfigDataProcessor implements \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessorInterface
+class WysiwygConfigDataProcessor
+    implements \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessorInterface
 {
     /**
      * {@inheritdoc}

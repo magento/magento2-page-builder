@@ -12,8 +12,8 @@ use Magento\Setup\Model\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 /**
-* Patch is mechanism, that allows to do atomic upgrade data changes
-*/
+ * Patch is mechanism, that allows to do atomic upgrade data changes
+ */
 class UpdateProductAttribute implements
     DataPatchInterface
 {
