@@ -61,7 +61,7 @@ export default class EditableArea implements EditableAreaInterface {
     public duplicateChild(child: Structural, autoAppend: boolean = true): Structural {
         const store = this.stage.store;
         const instance = child.constructor as typeof Block;
-        const duplicate = new instance(child.parent, child.stage, child.config, child.getData(), child.appearance);
+        const duplicate = new instance(child.parent, child.stage, child.config, child.getData());
         const index = child.parent.children.indexOf(child) + 1 || null;
         // Copy the data from the data store
         store.update(
