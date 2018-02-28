@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "underscore", "../../config", "../../event-bus", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _eventBus, _block, _block2, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -8,14 +8,13 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
     _inheritsLoose(ColumnGroup, _PreviewBlock);
 
     /**
-     * @param {ColumnGroup} parent
+     * @param {Block} parent
      * @param {object} config
      */
     function ColumnGroup(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
-      _this.parent = void 0;
       _this.resizing = _knockout.observable(false);
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
@@ -118,6 +117,10 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         };
         _this2.resizeLastPosition = null;
         _this2.resizeMouseDown = true;
+
+        _eventBus.trigger("interaction:start", {
+          stage: _this2.parent.stage
+        });
       });
     };
     /**
@@ -136,17 +139,30 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
         helper: function helper() {
           var helper = (0, _jquery)(this).clone();
           helper.css({
+            height: (0, _jquery)(this).outerHeight() + "px",
+            minHeight: 0,
             opacity: 0.5,
             pointerEvents: "none",
-            width: (0, _jquery)(this).width() + "px",
+            width: (0, _jquery)(this).outerWidth() + "px",
             zIndex: 100
           });
           return helper;
         },
         start: function start(event) {
-          // Use the global state as columns can be dragged between groups
-          (0, _registry.setDragColumn)(_knockout.dataFor((0, _jquery)(event.target)[0]));
+          var columnInstance = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
+
+
+          (0, _registry.setDragColumn)(columnInstance);
           _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
+
+          _eventBus.trigger("column:drag:start", {
+            column: columnInstance,
+            stage: _this3.parent.stage
+          });
+
+          _eventBus.trigger("interaction:start", {
+            stage: _this3.parent.stage
+          });
         },
         stop: function stop() {
           var draggedColumn = (0, _registry.getDragColumn)();
@@ -166,6 +182,15 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
           _this3.dropPlaceholder.removeClass("left right");
 
           _this3.movePlaceholder.removeClass("active");
+
+          _eventBus.trigger("column:drag:stop", {
+            column: draggedColumn,
+            stage: _this3.parent.stage
+          });
+
+          _eventBus.trigger("interaction:stop", {
+            stage: _this3.parent.stage
+          });
         }
       });
     };
@@ -201,6 +226,12 @@ define(["jquery", "knockout", "underscore", "../../config", "../../stage/panel/g
 
 
     _proto.endAllInteractions = function endAllInteractions() {
+      if (this.resizing() === true) {
+        _eventBus.trigger("interaction:stop", {
+          stage: this.parent.stage
+        });
+      }
+
       this.resizing(false);
       this.resizeMouseDown = null;
       this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;

@@ -6,7 +6,9 @@ import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../../config";
+import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
+import Block from "../block";
 import Column from "../column";
 import {default as ColumnGroupBlock} from "../column-group";
 import PreviewBlock from "./block";
@@ -18,7 +20,6 @@ import {
 } from "./column-group/resizing";
 
 export default class ColumnGroup extends PreviewBlock {
-    public parent: ColumnGroupBlock;
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     private dropPlaceholder: JQuery<HTMLElement>;
@@ -45,10 +46,10 @@ export default class ColumnGroup extends PreviewBlock {
     private movePosition: DropPosition;
 
     /**
-     * @param {ColumnGroup} parent
+     * @param {Block} parent
      * @param {object} config
      */
-    constructor(parent: ColumnGroupBlock, config: ConfigContentBlock) {
+    constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
         this.parent = parent;
     }
@@ -124,6 +125,8 @@ export default class ColumnGroup extends PreviewBlock {
 
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
+
+            EventBus.trigger("interaction:start", {stage: this.parent.stage});
         });
     }
 
@@ -139,17 +142,26 @@ export default class ColumnGroup extends PreviewBlock {
             helper() {
                 const helper = $(this).clone();
                 helper.css({
+                    height: $(this).outerHeight() + "px",
+                    minHeight: 0,
                     opacity: 0.5,
                     pointerEvents: "none",
-                    width: $(this).width() + "px",
+                    width: $(this).outerWidth() + "px",
                     zIndex: 100,
                 });
                 return helper;
             },
             start: (event: Event) => {
+                const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn(ko.dataFor($(event.target)[0]) as Column);
-                this.dropPositions = calculateDropPositions(this.parent);
+                setDragColumn(columnInstance);
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+
+                EventBus.trigger("column:drag:start", {
+                    column: columnInstance,
+                    stage: this.parent.stage,
+                });
+                EventBus.trigger("interaction:start", {stage: this.parent.stage});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -157,7 +169,7 @@ export default class ColumnGroup extends PreviewBlock {
                     // Check if we're moving within the same group, even though this function will
                     // only ever run on the group that bound the draggable event
                     if (draggedColumn.parent === this.parent) {
-                        this.parent.onColumnSort(draggedColumn, this.movePosition.insertIndex);
+                        (this.parent as ColumnGroupBlock).onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
                     }
                 }
@@ -166,6 +178,12 @@ export default class ColumnGroup extends PreviewBlock {
 
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
+
+                EventBus.trigger("column:drag:stop", {
+                    column: draggedColumn,
+                    stage: this.parent.stage,
+                });
+                EventBus.trigger("interaction:stop", {stage: this.parent.stage});
             },
         });
     }
@@ -185,7 +203,7 @@ export default class ColumnGroup extends PreviewBlock {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        this.parent.children().forEach((column: Column) => {
+        (this.parent as ColumnGroupBlock).children().forEach((column: Column) => {
             column.resizing(false);
         });
     }
@@ -194,6 +212,10 @@ export default class ColumnGroup extends PreviewBlock {
      * End all current interactions
      */
     private endAllInteractions() {
+        if (this.resizing() === true) {
+            EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+        }
+
         this.resizing(false);
         this.resizeMouseDown = null;
         this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
@@ -331,7 +353,11 @@ export default class ColumnGroup extends PreviewBlock {
 
                         this.resizeLastColumnInPair = modifyColumnInPair;
 
-                        this.parent.onColumnResize(mainColumn, newColumnWidth.width, adjustedColumn);
+                        (this.parent as ColumnGroupBlock).onColumnResize(
+                            mainColumn,
+                            newColumnWidth.width,
+                            adjustedColumn,
+                        );
 
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
@@ -359,7 +385,7 @@ export default class ColumnGroup extends PreviewBlock {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions(this.parent);
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - $(group).offset().left;
@@ -456,13 +482,13 @@ export default class ColumnGroup extends PreviewBlock {
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 if (this.dropOverElement && this.dropPosition) {
-                    this.parent.onNewColumnDrop(event, ui, this.dropPosition);
+                    (this.parent as ColumnGroupBlock).onNewColumnDrop(event, ui, this.dropPosition);
                     this.dropOverElement = null;
                 }
 
                 const column: Column = getDragColumn();
                 if (this.movePosition && column && column.parent !== this.parent) {
-                    this.parent.onExistingColumnDrop(event, this.movePosition);
+                    (this.parent as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
                 }
 
                 this.dropPositions = [];
@@ -475,7 +501,7 @@ export default class ColumnGroup extends PreviewBlock {
             },
             over: () => {
                 // Always calculate drop positions when an element is dragged over
-                this.dropPositions = calculateDropPositions(this.parent);
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
                 // Is the element currently being dragged a column?
                 if (currentDraggedBlock instanceof GroupBlock &&

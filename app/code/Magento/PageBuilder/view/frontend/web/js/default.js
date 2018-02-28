@@ -14,7 +14,7 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
             );
         });
 
-        $('div[data-role="advanced-slider"]').each(function (index, element) {
+        $('div[data-role="slider"]').each(function (index, element) {
             if ($(element) && $(element).length > 0) {
                 /**
                  * Prevent each slick slider from being initialized more than once which could throw an error.

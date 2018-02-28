@@ -9,30 +9,34 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderEditColumnPanel">
-        <arguments>
-            <argument name="column" defaultValue="" />
-        </arguments>
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" stepKey="onMouseOverColumn"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnOptionsMenu}}" stepKey="seeColumnOptionsMenu"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" x="10" y="0" stepKey="onMouseOverColumn"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
-        <waitForElementNotVisible time="5" selector="{{PageBuilderColumnSection.editFormSpinner}}" stepKey="waitForSpinner"/>
+        <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditColumnPanel2">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage2}}" stepKey="onMouseOverColumn2"/>
-        <click selector="{{PageBuilderColumnSection.editColumn2}}" stepKey="clickEditColumn2"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage2}}" x="10" y="0" stepKey="onMouseOverColumn"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditColumnPanel3">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage3}}" stepKey="onMouseOverColumn2"/>
-        <click selector="{{PageBuilderColumnSection.editColumn3}}" stepKey="clickEditColumn2"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage3}}" x="10" y="0" stepKey="onMouseOverColumn"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="saveColumnSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>

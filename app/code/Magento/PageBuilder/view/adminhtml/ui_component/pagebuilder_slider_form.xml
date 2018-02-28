@@ -38,22 +38,150 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="general">
+    <fieldset name="settings">
         <settings>
-            <label/>
+            <label translate="true">Settings</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-        <field name="heading_type" formElement="input" sortOrder="20">
+        <field name="autoplay" sortOrder="1" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">page</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Autoplay</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="autoplay_speed" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">4000</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Slider Form</label>
-                <dataScope>heading_type</dataScope>
+                <label translate="true">Autoplay Speed</label>
+                <addAfter>ms</addAfter>
+                <dataScope>autoplay_speed</dataScope>
+                <notice translate="true">Delay in milliseconds between each slide</notice>
+                <imports>
+                    <link name="disabled">!ns = ${ $.ns }, index = autoplay:checked</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="fade" sortOrder="20" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Fade</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="is_infinite" sortOrder="30" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Infinite Loop</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="show_arrows" sortOrder="40" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show Arrows</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="show_dots" sortOrder="50" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show Dots</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="min_height" sortOrder="60" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">300</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <addAfter>px</addAfter>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
         </field>
@@ -63,14 +191,6 @@
             <label translate="true">Advanced</label>
             <collapsible>true</collapsible>
         </settings>
-        <field name="css_classes" sortOrder="1" formElement="input">
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">CSS Classes</label>
-                <dataScope>css_classes</dataScope>
-                <notice translate="true">Space separated list of classes.</notice>
-            </settings>
-        </field>
         <field name="text_align" sortOrder="10" formElement="select">
             <settings>
                 <dataType>text</dataType>
@@ -101,9 +221,135 @@
                 </select>
             </formElements>
         </field>
-        <field name="margins_and_padding" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
+        <field name="border" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">none</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">_default</item>
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">none</item>
+                                <item name="label" xsi:type="string" translate="true">None</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">dotted</item>
+                                <item name="label" xsi:type="string" translate="true">Dotted</item>
+                            </option>
+                            <option name="3" xsi:type="array">
+                                <item name="value" xsi:type="string">dashed</item>
+                                <item name="label" xsi:type="string" translate="true">Dashed</item>
+                            </option>
+                            <option name="4" xsi:type="array">
+                                <item name="value" xsi:type="string">solid</item>
+                                <item name="label" xsi:type="string" translate="true">Solid</item>
+                            </option>
+                            <option name="5" xsi:type="array">
+                                <item name="value" xsi:type="string">double</item>
+                                <item name="label" xsi:type="string" translate="true">Double</item>
+                            </option>
+                            <option name="6" xsi:type="array">
+                                <item name="value" xsi:type="string">groove</item>
+                                <item name="label" xsi:type="string" translate="true">Groove</item>
+                            </option>
+                            <option name="7" xsi:type="array">
+                                <item name="value" xsi:type="string">ridge</item>
+                                <item name="label" xsi:type="string" translate="true">Ridge</item>
+                            </option>
+                            <option name="8" xsi:type="array">
+                                <item name="value" xsi:type="string">inset</item>
+                                <item name="label" xsi:type="string" translate="true">Inset</item>
+                            </option>
+                            <option name="9" xsi:type="array">
+                                <item name="value" xsi:type="string">outset</item>
+                                <item name="label" xsi:type="string" translate="true">Outset</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="border_color" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">none</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Color</label>
+                <addAfter>hex color</addAfter>
+                <dataScope>border_color</dataScope>
+                <placeholder>Default</placeholder>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="border_width" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">1</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">none</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Width</label>
+                <addAfter>px</addAfter>
+                <dataScope>border_width</dataScope>
+                <placeholder>Default</placeholder>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="border_radius" sortOrder="50" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Border Radius</label>
+                <addAfter>px</addAfter>
+                <dataScope>border_radius</dataScope>
+                <placeholder>Default</placeholder>
+            </settings>
+        </field>
+        <field name="css_classes" sortOrder="60" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">CSS Classes</label>
+                <dataScope>css_classes</dataScope>
+                <notice translate="true">Space separated list of classes.</notice>
+            </settings>
+        </field>
+        <field name="margins_and_padding" sortOrder="70" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">{"margin":{"top":"0","right":"0","bottom":"0","left":"0"},"padding":{"top":"0","right":"0","bottom":"0","left":"0"}}</item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Margins and Padding</label>
+                <placeholder>Default</placeholder>
             </settings>
         </field>
     </fieldset>
