@@ -32,10 +32,14 @@ export default class Collage implements ReadInterface {
         const overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
         const paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
         const marginSrc = element.style;
+        const button = element.querySelector("button");
+        const buttonText = button ? button.textContent : "";
+        const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
         const response: any = {
             background_image: decodeUrl(backgroundImage),
             background_size: element.style.backgroundSize,
-            button_text: element.dataset.buttonText,
+            button_text: buttonText,
+            button_type: buttonType,
             link_url: element.querySelector("a").getAttribute("href"),
             margins_and_padding: {
                 margin: {
@@ -60,6 +64,7 @@ export default class Collage implements ReadInterface {
             overlay_transparency: this.getOverlayTransparency(overlayColor),
             show_button: element.getAttribute("data-show-button"),
             show_overlay: element.getAttribute("data-show-overlay"),
+            text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign,
         };
         return Promise.resolve(response);
     }

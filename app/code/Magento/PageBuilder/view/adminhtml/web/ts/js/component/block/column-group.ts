@@ -12,6 +12,7 @@ import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
 import Column from "./column";
+import {createColumn} from "./column-group/factory";
 import {resizeColumn, updateColumnWidth} from "./column-group/resizing";
 import {default as ColumnGroupPreview} from "./preview/column-group";
 import {DropPosition} from "./preview/column-group/dragdrop";
@@ -20,7 +21,6 @@ import {
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "./preview/column-group/resizing";
-import {createColumn} from "./column-group/factory";
 
 export default class ColumnGroup extends Block {
 
