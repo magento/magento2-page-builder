@@ -5,7 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-live-edit pagebuilder-button-item">
-    <a data-bind="text: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), attr:{class: preview.data.button_type()}, style: preview.previewStyle()"></a>
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+    <!-- ko template: getOptions().template --><!-- /ko -->
+    <a data-bind="attr: { class: preview.data.button_type() }, style: preview.previewStyle()">
+        <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+    </a>
 </div>

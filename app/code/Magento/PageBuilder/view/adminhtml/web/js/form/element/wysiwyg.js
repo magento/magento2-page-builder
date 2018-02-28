@@ -61,7 +61,7 @@ define([
             isComponentInitialized: false,
             isButtonEnable: ko.observable(false),
             wysiwygConfigData: {},
-            dragging: false,
+            interacting: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -80,6 +80,17 @@ define([
 
         /**
          *
+         * @returns {} Chainable.
+         */
+        initialize: function () {
+            this._super();
+            this.getPanel();
+
+            return this;
+        },
+
+        /**
+         *
          * @returns {exports}
          */
         initObservable: function () {
@@ -87,7 +98,7 @@ define([
 
             this._super()
                 .observe('value stageId stageActive stageContent showBorders loading userSelect '
-                    + 'isFullScreen wysiwygConfigData dragging');
+                    + 'isFullScreen wysiwygConfigData interacting');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -119,9 +130,11 @@ define([
         setElementNode: function (node) {
 
             this.domNode = node;
-            this.bindPageBuilderButton(node);
 
             if (!this.isComponentInitialized) {
+                // Hide the original WYSIWYG editor
+                $('#toggle' + node.id).hide();
+                $('#' + node.id).hide();
 
                 if (this.wysiwygConfigData()['pagebuilder_button']) {
                     //process case when page builder is initialized using button
@@ -159,7 +172,7 @@ define([
          */
         hidePageBuilderArea: function () {
 
-            if (this.wysiwygConfigData()['enable_pagebuilder']) {
+            if (this.wysiwygConfigData()['pagebuilder_button']) {
                 this.isComponentInitialized = false;
                 this.stageActive(false);
                 this.visible(true);
@@ -183,12 +196,7 @@ define([
          * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-            // Hide wysiwyg text area and toogle buttons
-            $('#' + node.id).hide();
 
-            if (this.wysiwygConfigData()['hide_toogle_buttons']) {
-                $('#toggle' + node.id).hide();
-            }
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
@@ -223,7 +231,7 @@ define([
          * @return void
          */
         displayPageBuilderInFullScreenMode: function (event) {
-            var isFullScreen = this.wysiwygConfigData().openInFullScreen || false;
+            var isFullScreen = true;
 
             this.isComponentInitialized = true;
 
@@ -252,15 +260,12 @@ define([
                     self.stage = stage;
                     EventBus.on("stage:ready", function (stageReadyEvent, params) {
                         if (params.stage.id === self.stage.id) {
-                            self.stageActive(true); // Display the stage UI
-                            self.visible(false); // Hide the original WYSIWYG editor
+                            self.isFullScreen(isFullScreeMode);
                         }
                     });
                 };
 
             this.loading(true);
-
-            this.isFullScreen(isFullScreeMode);
 
             if (typeof event !== 'undefined') {
                 event.stopPropagation();
@@ -273,6 +278,7 @@ define([
                 directives.removeQuotesInMediaDirectives(this.initialValue),
                 bindStage
             );
+            this.stageActive(true);
 
             this.isComponentInitialized = true;
         },
@@ -283,7 +289,7 @@ define([
          * @returns {String}
          */
         getStageTemplate: function () {
-            return 'Magento_PageBuilder/component/stage.html';
+                return 'Magento_PageBuilder/component/stage.html';
         },
 
         /**

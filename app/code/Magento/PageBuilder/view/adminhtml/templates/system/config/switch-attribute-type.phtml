@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\PageBuilder\Block\Adminhtml\System\Config\SwitchAttributeType $block
+ */
+
+?>
+<script type="text/x-magento-init">
+{
+    "<?= /* @noEscape */
+    $block->getModalSelector() ?>": {
+        "Magento_PageBuilder/js/system/config/switch-attribute-type": {
+            "modalTitleText": <?= /* @noEscape */
+                json_encode($block->getModalTitleText()) ?>,
+            "modalContentBody": <?= /* @noEscape */
+                json_encode($block->getModalContentBody()) ?>
+        }
+    }
+}
+
+</script>

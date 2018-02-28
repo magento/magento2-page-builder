@@ -19,6 +19,7 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
      */
     _proto.read = function read(element) {
       var bgMobileImage = element.querySelector(".pagebuilder-banner-mobile").style.backgroundImage;
+      var linkUrl = element.querySelector("a").getAttribute("href");
       var target = element.querySelector("a").getAttribute("target");
       var bgImage = element.querySelector(".pagebuilder-banner-image").style.backgroundImage;
       var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -29,11 +30,15 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
         bgMobileImage = false;
       }
 
+      var button = element.querySelector("button");
+      var buttonText = button ? button.textContent : "";
+      var buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
       var response = {
         background_image: (0, _image.decodeUrl)(bgImage),
         background_size: element.style.backgroundSize,
-        button_text: element.dataset.buttonText,
-        link_url: element.querySelector("a").getAttribute("href"),
+        button_text: buttonText,
+        button_type: buttonType,
+        link_url: linkUrl ? linkUrl : "",
         margins_and_padding: {
           margin: {
             bottom: marginSrc.marginBottom.replace("px", ""),
@@ -55,7 +60,8 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
         show_button: element.getAttribute("data-show-button"),
-        show_overlay: element.getAttribute("data-show-overlay")
+        show_overlay: element.getAttribute("data-show-overlay"),
+        text_align: element.querySelector(".pagebuilder-banner-wrapper").style.textAlign
       };
       return Promise.resolve(response);
     };

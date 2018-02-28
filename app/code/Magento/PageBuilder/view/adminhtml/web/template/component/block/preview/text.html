@@ -5,12 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-textarea pagebuilder-no-blur pagebuilder-live-edit">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-textarea pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko ifnot: preview.data.content -->
     <div class="pagebuilder-html" data-bind="text: $t('Text')"></div>
     <!-- /ko -->
     <!-- ko if: preview.data.content -->
     <div class="pagebuilder-html" data-bind="html: preview.data.content"></div>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

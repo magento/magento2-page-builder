@@ -2,9 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import Appearance from "../../appearance/appearance";
-import Block from "../block";
 import ko from "knockout";
+import {ConfigContentBlock} from "../../config";
+import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
@@ -12,9 +12,9 @@ export default class Slide extends PreviewBlock {
 
     /**
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
-    constructor(parent: Block, config: object) {
+    constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
         this.backgroundImageStyle = ko.computed(() => {

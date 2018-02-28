@@ -5,18 +5,19 @@
  */
 -->
 
+<!-- ko with: getOptions() -->
 <div class="pagebuilder-options">
     <div class="pagebuilder-options-wrapper">
-        <div class="pagebuilder-name" data-bind="text: config.label"></div>
         <ul class="pagebuilder-options-links" data-bind="foreach: options">
             <li class="pagebuilder-options-link">
                 <!-- ko if: template -->
                     <!-- ko template: template --><!-- /ko -->
                 <!-- /ko -->
                 <!-- ko ifnot: template -->
-                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action.call($parent, $data); }, css: classes"></a>
+                    <a href="#" data-bind="attr: {title: title}, html: icon, click: function () { action.call($parents[1], $data); }, css: classes"></a>
                 <!-- /ko -->
             </li>
         </ul>
     </div>
 </div>
+<!-- /ko -->

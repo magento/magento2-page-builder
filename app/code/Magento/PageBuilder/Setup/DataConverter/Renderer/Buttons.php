@@ -49,9 +49,10 @@ class Buttons implements RendererInterface
 
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
-            if ($style) {
-                $rootElementAttributes['style'] = $style;
+            if (strpos($style, 'padding') === false) {
+                $style .= ($style ? ' ' : '') . 'padding: 10px 10px 0px;';
             }
+            $rootElementAttributes['style'] = $style;
         }
 
         $rootElementHtml = '<div';

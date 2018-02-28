@@ -20,6 +20,9 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
      */
     _proto.getBannerStyles = function getBannerStyles(type) {
       var data = this.getData();
+
+      var style = _underscore.clone(this.getStyle());
+
       var backgroundImage = "";
 
       if (type === "image") {
@@ -38,10 +41,22 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         }
       }
 
-      return {
+      return Object.assign(style, {
         backgroundImage: backgroundImage,
-        backgroundSize: data.background_size
-      };
+        backgroundSize: data.background_size,
+        border: "",
+        borderColor: "",
+        borderRadius: "",
+        borderWidth: "",
+        marginBottom: "",
+        marginLeft: "",
+        marginRight: "",
+        marginTop: "",
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
     };
     /**
      * Get the banner overlay attributes for the storefront
@@ -137,7 +152,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       var data = this.getData();
 
       if (data.background_image === "" || data.background_image === undefined) {
-        return {};
+        return false;
       }
 
       if (_underscore.isEmpty(data.background_image[0])) {
@@ -157,7 +172,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       var data = this.getData();
 
       if (data.mobile_image === "" || data.mobile_image === undefined) {
-        return {};
+        return false;
       }
 
       if (_underscore.isEmpty(data.mobile_image[0])) {
@@ -175,10 +190,17 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
     _proto.getLinkAttribute = function getLinkAttribute() {
       var data = this.getData();
-      return {
-        href: data.link_url,
-        target: data.open_in_new_tab === "1" ? "_blank" : false
-      };
+      var attribute = {};
+
+      if (data.link_url !== "") {
+        attribute.href = data.link_url;
+      }
+
+      if (data.open_in_new_tab === "1") {
+        attribute.target = "_blank";
+      }
+
+      return attribute;
     };
     /**
      * Get the button style for the render
@@ -202,14 +224,17 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
 
     _proto.getBannerContainerStyle = function getBannerContainerStyle() {
-      return Object.assign(this.getStyle(), {
+      var style = _underscore.clone(this.getStyle());
+
+      return Object.assign(style, {
         backgroundImage: "",
         minHeight: "",
         padding: "",
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
-        paddingTop: ""
+        paddingTop: "",
+        textAlign: ""
       });
     };
 
