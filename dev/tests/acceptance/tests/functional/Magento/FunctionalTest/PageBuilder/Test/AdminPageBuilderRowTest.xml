@@ -369,9 +369,6 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -384,20 +381,12 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxEnabledPropertyIsRequired">
-            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxSpeedPropertyIsRequired">
-            <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
-        </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
             <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
