@@ -15,10 +15,10 @@ define(["knockout", "mage/backend/tabs", "./block"], function (_knockout, _tabs,
       }
 
       return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.getMapUrl = _knockout.computed(function () {
-        var url = "https://www.google.com/maps/embed/v1/",
-            lat = 30.2672,
-            lng = -97.7431,
-            zoom = 8;
+        var url = "https://www.google.com/maps/embed/v1/";
+        var lat = 30.2672;
+        var lng = -97.7431;
+        var zoom = 8;
 
         var position = _this.data.position();
 

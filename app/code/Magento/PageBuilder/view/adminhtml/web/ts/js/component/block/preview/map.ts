@@ -9,10 +9,10 @@ import PreviewBlock from "./block";
 
 export default class Map extends PreviewBlock {
     public getMapUrl: KnockoutComputed<string> = ko.computed(() => {
-        let url = "https://www.google.com/maps/embed/v1/",
-            lat = 30.2672,
-            lng = -97.7431,
-            zoom = 8;
+        let url = "https://www.google.com/maps/embed/v1/";
+        let lat = 30.2672;
+        let lng = -97.7431;
+        let zoom = 8;
         const position = this.data.position();
 
         if (!position) {
