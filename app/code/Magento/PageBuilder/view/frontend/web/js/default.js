@@ -5,7 +5,7 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'highlight', 'slick', 'bg-parallax', 'jarallax'], function ($, hljs) {
+requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     'use strict';
     $(document).ready(function() {
         $('pre code:not(.hljs)').each(function (i, block) {
@@ -37,6 +37,13 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax', 'jarallax'], function 
         $('div[data-role="row"][data-enable-parallax="1"]').each(function (index, element) {
             $(element).addClass('jarallax');
             $(element).attr('data-jarallax','');
+
+            jarallax(document.querySelectorAll('.jarallax'), {
+                imgPosition: element.style.backgroundPosition || '50% 50%',
+                imgRepeat: element.style.backgroundRepeat || 'no-repeat',
+                imgSize: element.style.backgroundSize || 'cover',
+                speed: parseInt($(element).data('speed'), 10) || 0.5
+            });
         });
 
         /*eslint-disable max-nested-callbacks */
@@ -72,8 +79,4 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax', 'jarallax'], function 
         });
         /*eslint-enable max-nested-callbacks */
     });
-
-    // $(window).load(function (){
-    //     window.bgParallax('.pagebuilder-parallax');
-    // });
 });
