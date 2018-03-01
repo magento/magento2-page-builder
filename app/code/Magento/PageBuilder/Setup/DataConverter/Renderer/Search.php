@@ -42,11 +42,15 @@ class Search implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
+        // Search content it migrated as HTML content block
         $rootElementAttributes = [
-            'data-role' => 'search',
-            'class' => $eavData['css_classes'] ?? '',
-            'data-placeholder' => $eavData['placeholder'] ?? 'Browse the catalog...',
+            'data-role' => 'html',
+            'class' => $eavData['css_classes'] ?? ''
         ];
+
+        if (isset($eavData['placeholder'])) {
+            $rootElementAttributes['data-placeholder'] = $eavData['placeholder'];
+        }
 
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
