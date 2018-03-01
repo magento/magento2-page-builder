@@ -377,6 +377,22 @@
         <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
         <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
+    <actionGroup name="searchAndViewCmsPage">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
+        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
+        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
+        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="{{contentBlockType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
+        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
+        <waitForPageLoad stepKey="waitForSearchResults" />
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForPageLoad stepKey="waitForEditCmsPage" />
+    </actionGroup>
     <actionGroup name="enablePageBuilderSetting">
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="wait1"/>

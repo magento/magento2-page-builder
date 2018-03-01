@@ -69,7 +69,108 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <dontSeeElement selector="{{BannerOnBackend.emptyBanner}} button" stepKey="dontSeeButtonInBanner"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentToSeePoster"/>
+        <!-- Check empty poster on backend-->
+        <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyPoster}}" stepKey="waitForPoster" />
+        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent"/>
+        <dontSeeElement selector="{{BannerOnBackend.emptyPoster}} button" stepKey="dontSeePosterButton"/>
+        <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="dontSeePosterOverlay"/>
+        <moveMouseOver selector="{{BannerOnBackend.emptyPoster}}" stepKey="moveMouseOverPoster"/>
+        <dontSeeElement selector="{{BannerOnBackend.emptyPoster}} button" stepKey="dontSeePosterButtonOnHover"/>
+        <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="dontSeePosterOverlayOnHover"/>
+        <!-- Check empty poster on Frontend -->
+        <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
+        <waitForElementVisible time="2" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend" />
+        <dontSeeElement selector="{{BannerOnFrontend.messageText('Write banner text here...')}}" stepKey="dontSeePosterMessageInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.poster}} button" stepKey="dontSeePosterButtonInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="dontSeePosterOverlayInInFrontend"/>
+        <moveMouseOver selector="{{BannerOnFrontend.poster}}" stepKey="moveMouseOverPosterFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.poster}} button" stepKey="dontSeePosterButtonOnHoverInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="dontSeePosterOverlayOnHoverInInFrontend"/>
+        <!-- Go back to cms page and change configuration to collage left-->
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPageWithPoster">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentWithPoster"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditPoster">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageLeftProperty">
+            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageLeftBanner"/>
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentToSeeCollageLeft"/>
+        <!-- Check empty collage left on backend-->
+        <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageLeft}}" stepKey="waitForCollageLeft" />
+        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent2"/>
+        <dontSeeElement selector="{{BannerOnBackend.emptyCollageLeft}} button" stepKey="dontSeeCollageLeftButton"/>
+        <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageLeftOverlay"/>
+        <!-- Check empty collage left on Frontend -->
+        <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend2"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.messageText('Write banner text here...')}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.emptyCollageLeft}} button" stepKey="dontSeeCollageLeftButtonInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageLeftOverlayInInFrontend"/>
+        <!-- Go back to cms page and change configuration to collage centered-->
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPageWithCollageLeft">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentWithCollageLeft"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageLeft">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageCenteredProperty">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageCentered"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageCenteredBanner"/>
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage2"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentToSeeCollageCentered"/>
+        <!-- Check empty collage centered on backend-->
+        <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageCentered}}" stepKey="waitForCollageCentered" />
+        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent3"/>
+        <dontSeeElement selector="{{BannerOnBackend.emptyCollageCentered}} button" stepKey="dontSeeCollageCenteredButton"/>
+        <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageCenteredOverlay"/>
+        <!-- Check empty collage centered on Frontend -->
+        <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage3"/>
+        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend3"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.messageText('Write banner text here...')}}" stepKey="dontSeeCollageCenteredMessageInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.emptyCollageCentered}} button" stepKey="dontSeeCollageCenteredButtonInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageCenteredOverlayInInFrontend"/>
+        <!-- Go back to cms page and change configuration to collage right-->
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPageWithCollageCentered">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentWithCollageCentered"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageCentered">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageRightProperty">
+            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageRight"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageRightBanner"/>
+        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage3"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentToSeeCollageRight"/>
+        <!-- Check empty collage right on backend-->
+        <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageRight}}" stepKey="waitForCollageRight" />
+        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent4"/>
+        <dontSeeElement selector="{{BannerOnBackend.emptyCollageRight}} button" stepKey="dontSeeCollageRightButton"/>
+        <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageRightOverlay"/>
+        <!-- Check empty collage right on Frontend -->
+        <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage4"/>
+        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend4"/>
+        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.messageText('Write banner text here...')}}" stepKey="dontSeeRightCenteredMessageInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.emptyCollageRight}} button" stepKey="dontSeeCollageRightButtonInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageRightOverlayInInFrontend"/>
     </test>
     <test name="BannerCanPreviewAdmin">
         <annotations>
@@ -399,14 +500,44 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
+        <!-- see fields -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <!-- check defaults -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultAdvancedBorderPropert">
+            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultAdvancedBorderSizeProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty1"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeDefaultAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <!-- check disabled -->
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderColorPropertIsDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderSizePropertyIsDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty1"/>
         </actionGroup>
     </test>
     <test name="BannerHasNoRequired">
@@ -686,17 +817,9 @@
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.editButton(PageBuilderBannerButtonTypePrimaryProperty.value)}}" stepKey="buttonPrimaryStyledOnFrontend"/>
         <!-- Change button type value to secondary -->
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
-        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
-        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
-        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="banner{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
-        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
-        <waitForPageLoad stepKey="waitForSearchResults" />
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
-        <waitForPageLoad stepKey="waitForEditCmsPage" />
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin2" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -720,17 +843,9 @@
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.editButton(PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="buttonSecondaryStyledOnFrontend"/>
         <!-- Change button type value to link -->
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid2"/>
-        <waitForPageLoad stepKey="waitForCmsPagesGridLoad2"/>
-        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn2" />
-        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="banner{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey2" />
-        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn2" />
-        <waitForPageLoad stepKey="waitForSearchResults2" />
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
-        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem2"/>
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton2" />
-        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
-        <waitForPageLoad stepKey="waitForEditCmsPage2" />
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin4" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -745,9 +860,9 @@
         <see userInput="You saved the page." stepKey="assertPageSaved3"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
         <waitForElementVisible time="2" selector="{{BannerOnBackend.poster}}" stepKey="waitForPosterInAdmin5" />
-        <!-- Verify secondary button on backend -->
+        <!-- Verify link button on backend -->
         <seeElement selector="{{BannerOnBackend.editButton(PageBuilderBannerButtonTypeLinkProperty.value)}}" stepKey="buttonLinkStyled"/>
-        <!-- Validate secondary button on frontend -->
+        <!-- Validate link button on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage3"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend3"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend3"/>
