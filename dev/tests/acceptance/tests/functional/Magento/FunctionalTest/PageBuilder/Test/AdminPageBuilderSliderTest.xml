@@ -117,9 +117,9 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideHasBackgroundOverlay1">
-            <argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>
-        </actionGroup>
+        <!--<actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideHasBackgroundOverlay1">-->
+            <!--<argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>-->
+        <!--</actionGroup>-->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!--Add second slide-->
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
@@ -173,7 +173,7 @@
         <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" stepKey="seeSlide1HasOverlay"/>
+        <!--<seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" stepKey="seeSlide1HasOverlay"/>-->
         <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" stepKey="seeSlide1LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
@@ -263,6 +263,8 @@
     </test>
     <test name="CanAddImageToSlide">
         <annotations>
+            <features value="PageBuilder Row MAGETWO-83767"/>
+            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
             <title value="Add an image content block into slide"/>
             <description value="A user should be able to add an image into a slide."/>
             <severity value="CRITICAL"/>
