@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="SliderOnFrontend">
+        <element name="SliderDisplay" type="button" selector="div[data-role='slider']"/>
+        <element name="Autoplay" type="button" selector="div[data-role='slider'][data-autoplay='{{arg1}}']" parameterized="true"/>
+        <element name="AutoplaySpeed" type="button" selector=".pagebuilder-slider[data-autoplay-speed='{{arg1}}']" parameterized="true"/>
+        <element name="Fade" type="button" selector="div[data-role='slider'][data-fade='{{arg1}}']" parameterized="true"/>
+        <element name="IsInfinite" type="button" selector="div[data-role='slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
+        <element name="ShowArrows" type="button" selector="div[data-role='slider'][data-show-arrows='{{arg1}}']" parameterized="true"/>
+        <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
+        <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
+        <element name="sliderMinHeight" type="button" selector="div[style*='min-height: {{arg1}}']" parameterized="true"/>
+        <element name="sliderAlignment" type="button" selector="div[style*='text-align: {{arg1}}']" parameterized="true"/>
+        <element name="sliderBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="sliderBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="sliderClass" type="button" selector="div[data-role='slider'][class='{{arg1}}']" parameterized="true"/>
+        <element name="sliderMarginPaddings" type="button" selector="div.pagebuilder-slider[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
+    </section>
+    <section name="SliderInAdmin">
+        <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
+        <element name="addNewSlide" type="button" selector="button.add-slide"/>
+        <element name="slideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[{{arg1}}]" parameterized="true"/>
+        <element name="slideNavigationDotTitleTooltip" type="button" selector="(//span[contains(@class, 'tooltip-content')])"/>
+        <element name="slideNavigationHandle" type="button" selector="(//span[contains(@class, 'navigation-handle')])"/>
+        <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
+
+        <element name="Fade" type="button" selector=".slick-slide[data-slick-index='1'][style*='transition: opacity 500ms ease']" />
+        <element name="ShowArrows" type="button" selector="button.slick-arrow.slick-prev"/>
+        <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
+        <element name="sliderMinHeight" type="button" selector="div.slider-container[style*='min-height: {{arg1}}']" parameterized="true"/>
+        <element name="sliderAlignment" type="button" selector="div.slider-container[style*='text-align: {{arg1}}']" parameterized="true"/>
+        <element name="sliderBorderStyle" type="button" selector="div.slider-container[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="sliderBorderRadiusStyle" type="button" selector="div.slider-container[style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="sliderMarginPaddings" type="button" selector="div.slider-container[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
+    </section>
+    <section name="SlideOnFrontend">
+        <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
+        <element name="slideTitle1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content h3"/>
+        <element name="slideContent1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a span span"/>
+        <element name="slideLinkURL1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
+        <element name="slide2" type="button" selector="[data-slick-index='1'][data-role='slide']"/>
+        <element name="slideTitle2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content h3"/>
+        <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content div.slider-content"/>
+        <element name="slideLinkText2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a span span"/>
+        <element name="slideLinkURL2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'][data-role='slide'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
+    </section>
+</sections>

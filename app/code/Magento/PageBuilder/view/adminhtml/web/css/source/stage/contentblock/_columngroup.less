@@ -1,7 +1,7 @@
 // /**
-// * Copyright © Magento, Inc. All rights reserved.
-// * See COPYING.txt for license details.
-// */
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
 .pagebuilder-content-type {
     .pagebuilder-column-group {
@@ -11,49 +11,47 @@
         width: 100%;
 
         .drop-placeholder {
-            background: rgba(142, 0, 6, 0.3);
-            bottom: 1px;
+            background: rgba(142, 0, 6, .3);
+            bottom: 0;
             opacity: 0;
             position: absolute;
-            top: 1px;
+            top: 0;
             visibility: hidden;
-            z-index: 10001;
+            z-index: 10;
 
             .no-user-select;
             .no-pointer-events;
 
             &.left {
-                border-left: 10px solid rgba(142, 0, 6, 0.1);
+                border-left: 10px solid rgba(142, 0, 6, .1);
                 opacity: 1;
-                transform: translateX(1px);
                 visibility: visible;
             }
             &.right {
-                border-right: 10px solid rgba(142, 0, 6, 0.1);
+                border-right: 10px solid rgba(142, 0, 6, .1);
                 opacity: 1;
-                transform: translateX(1px);
                 visibility: visible;
             }
         }
 
         .move-placeholder {
-            background: rgba(142, 0, 6, 0.3);
-            bottom: 1px;
+            background: rgba(142, 0, 6, .3);
+            bottom: -1px;
             opacity: 0;
             position: absolute;
-            top: 1px;
+            top: -1px;
             transform: translateX(-3px);
-            transition: 0.5s opacity;
+            transition: .5s opacity;
             visibility: hidden;
             width: 6px;
-            z-index: 10001;
+            z-index: 10;
 
             .no-user-select;
             .no-pointer-events;
 
             &.active {
                 opacity: 1;
-                transition: 0.5s opacity;
+                transition: .5s opacity;
                 visibility: visible;
             }
         }
@@ -66,7 +64,7 @@
             pointer-events: none;
             position: absolute;
             top: 0;
-            transition: 0.5s opacity;
+            transition: .5s opacity;
             visibility: hidden;
             width: 100%;
             z-index: 9;
@@ -75,7 +73,7 @@
             .no-pointer-events;
 
             .grid-line {
-                border-right: 15px solid rgba(238, 238, 238, 0.5);
+                border-right: 15px solid rgba(238, 238, 238, .5);
                 box-sizing: border-box;
                 height: 100%;
                 width: 16.66666667%;
@@ -83,7 +81,7 @@
         }
 
         .resize-ghost {
-            border-right: 15px solid #BFE2F0;
+            border-right: 15px solid #bfe2f0;
             box-sizing: border-box;
             height: 100%;
             left: 0;
@@ -91,7 +89,7 @@
             pointer-events: none;
             position: absolute;
             top: 0;
-            transition: 0.5s opacity;
+            transition: .5s opacity;
             visibility: hidden;
             z-index: 10;
 
@@ -100,7 +98,7 @@
 
             &.active {
                 opacity: 1;
-                transition: 0.5s opacity;
+                transition: .5s opacity;
                 visibility: visible;
             }
         }
@@ -108,7 +106,7 @@
         &.resizing {
             .resize-grid {
                 opacity: 1;
-                transition: 0.5s opacity;
+                transition: .5s opacity;
                 visibility: visible;
             }
 
@@ -135,31 +133,31 @@
 
     .pagebuilder-column {
         .pagebuilder-column-resize-handle {
-            background: #BFE2F0;
+            background: #bfe2f0;
             bottom: 0;
             cursor: col-resize;
             opacity: 0;
             position: absolute;
             right: 0px;
             top: 0;
-            transition: 0.5s opacity;
+            transition: .5s opacity;
             width: 15px;
             z-index: 12;
 
             &:hover {
-                opacity: 0.3;
+                opacity: .3;
             }
         }
+
         .pagebuilder-resizing {
-            background: #BFE2F0;
+            background: #bfe2f0;
             height: 100%;
             left: 0;
             opacity: 0;
             position: absolute;
             top: 0;
-
             -webkit-touch-callout: none;
-            transition: 0.5s opacity;
+            transition: .5s opacity;
             -webkit-user-select: none;
             -khtml-user-select: none;
             -moz-user-select: none;
@@ -178,11 +176,16 @@
                 user-select: none;
             }
 
-            &.active {
-                opacity: 0.5;
-                transition: 0.5s opacity;
-                visibility: visible;
+
+            &:hover {
+                border: 1px solid @textColor;
             }
+        }
+
+        &.active {
+            opacity: .5;
+            transition: .5s opacity;
+            visibility: visible;
         }
     }
 }

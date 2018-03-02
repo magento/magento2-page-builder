@@ -16,7 +16,6 @@ export interface Structural extends EditableAreaInterface {
     stage: Stage;
     title: string;
     wrapperStyle: KnockoutObservable<object>;
-    options: Array<OptionInterface>;
     children: KnockoutObservableArray<Structural>;
     template: string;
     childTemplate: string;

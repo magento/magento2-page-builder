@@ -6,6 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
+import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
@@ -17,10 +18,12 @@ import Edit from "../edit";
 import { Structural as StructuralInterface } from "./abstract.d";
 import EditableArea from "./editable-area";
 import { Options } from "./options";
-import { Option } from "./options/option";
+import {Option} from "./options/option";
+import {OptionInterface} from "./options/option.d";
+import {TitleOption} from "./options/title";
 
 export default class Structural extends EditableArea implements StructuralInterface {
-    public config: any;
+    public config: ConfigContentBlock;
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
     public title: string;
@@ -28,7 +31,6 @@ export default class Structural extends EditableArea implements StructuralInterf
     public element: JQuery<HTMLElement>;
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
-    private optionsInstance: Options = new Options(this, this.options);
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
@@ -42,26 +44,27 @@ export default class Structural extends EditableArea implements StructuralInterf
     constructor(
         parent: EditableArea,
         stage: Stage,
-        config: any = {},
+        config: ConfigContentBlock,
     ) {
         super(stage);
         this.setChildren(this.children);
+        this.parent = parent;
+        this.config = config;
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
-        this.parent = parent;
-        this.config = config;
     }
 
     /**
      * Return an array of options
      *
-     * @returns {Array<Option>}
+     * @returns {Array<OptionInterface>}
      */
-    get options(): Option[] {
+    public retrieveOptions(): OptionInterface[] {
         return [
             new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
-            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 50),
+            new TitleOption(this, this.config.label, 20),
+            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 30),
             new Option(
                 this,
                 "duplicate",
@@ -69,9 +72,9 @@ export default class Structural extends EditableArea implements StructuralInterf
                 $t("Duplicate"),
                 this.onOptionDuplicate,
                 ["duplicate-structural"],
-                60,
+                40,
             ),
-            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 100),
+            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 50),
         ];
     }
 
@@ -191,5 +194,14 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public getData() {
         return this.stage.store.get(this.id);
+    }
+
+    /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    private getOptions(): Options {
+        return new Options(this, this.retrieveOptions());
     }
 }

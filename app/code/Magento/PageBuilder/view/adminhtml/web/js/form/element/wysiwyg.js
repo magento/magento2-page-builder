@@ -61,7 +61,7 @@ define([
             isComponentInitialized: false,
             isButtonEnable: ko.observable(false),
             wysiwygConfigData: {},
-            dragging: false,
+            interacting: false,
             links: {
                 stageActive: false,
                 stage: {},
@@ -87,7 +87,7 @@ define([
 
             this._super()
                 .observe('value stageId stageActive stageContent showBorders loading userSelect '
-                    + 'isFullScreen wysiwygConfigData dragging');
+                    + 'isFullScreen wysiwygConfigData interacting');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
