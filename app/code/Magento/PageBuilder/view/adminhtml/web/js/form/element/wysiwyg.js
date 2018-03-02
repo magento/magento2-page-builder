@@ -9,7 +9,7 @@ define([
     'underscore',
     'Magento_Ui/js/form/element/wysiwyg',
     'Magento_Ui/js/lib/view/utils/async',
-    'Magento_Ui/js/modal/confirm',
+    'Magento_PageBuilder/js/modal/dismissible-confirm',
     'Magento_Ui/js/modal/alert',
     'mage/translate',
     'mage/apply/main',
