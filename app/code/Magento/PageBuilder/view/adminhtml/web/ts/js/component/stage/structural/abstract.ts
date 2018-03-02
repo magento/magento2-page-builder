@@ -6,7 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
-import {ConfigContentBlock} from "../../config";
+import {ConfigContentBlock, ConfigFieldConfig} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
@@ -123,23 +123,29 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle block removal
      */
     public onOptionRemove(): void {
-        this.stage.parent.confirmationDialog({
-            actions: {
-                confirm: () => {
-                    // Call the parent to remove the child element
-                    EventBus.trigger("block:removed", {
-                        block: this,
-                        index: this.parent.children().indexOf(this),
-                        parent: this.parent,
-                    });
-                },
-            },
-            content: $t("Are you sure you want to remove this item? " +
-                "The data within this item is not recoverable once removed."),
-            dismissKey: "pagebuilder_remove",
-            dismissible: true,
-            title: $t("Confirm Item Removal"),
+        const removeBlock = () => EventBus.trigger("block:removed", {
+            block: this,
+            index: this.parent.children().indexOf(this),
+            parent: this.parent,
         });
+
+        if (this.isConfigured()) {
+            this.stage.parent.confirmationDialog({
+                actions: {
+                    confirm: () => {
+                        // Call the parent to remove the child element
+                        removeBlock();
+                    },
+                },
+                content: $t("Are you sure you want to remove this item? " +
+                    "The data within this item is not recoverable once removed."),
+                dismissKey: "pagebuilder_remove",
+                dismissible: true,
+                title: $t("Confirm Item Removal"),
+            });
+        } else {
+            removeBlock();
+        }
     }
 
     /**
@@ -196,6 +202,32 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public getData() {
         return this.stage.store.get(this.id);
+    }
+
+    /**
+     * Does the current instance have any children or values different from the default for it's type?
+     *
+     * @returns {boolean}
+     */
+    private isConfigured() {
+        if (this.children().length > 0) {
+            return true;
+        }
+
+        const data = this.getData();
+        let hasDataChanges = false;
+        _.each(this.config.fields, (field, key: string) => {
+            let fieldValue = data[key];
+            // Default values can only ever be strings
+            if (_.isObject(fieldValue)) {
+                fieldValue = JSON.stringify(fieldValue);
+            }
+            if (field.default !== fieldValue) {
+                hasDataChanges = true;
+                return;
+            }
+        });
+        return hasDataChanges;
     }
 
     /**
