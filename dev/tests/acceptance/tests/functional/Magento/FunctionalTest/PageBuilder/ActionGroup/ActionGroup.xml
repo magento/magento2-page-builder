@@ -89,6 +89,10 @@
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
     </actionGroup>
+    <actionGroup name="expandAdvancedConfigurationSection">
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+    </actionGroup>
     <actionGroup name="addPageBuilderPageTitle">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -125,6 +129,31 @@
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderEditPanel2">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockNumber" defaultValue="1"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="onMouseOverContentBlockStage"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu2(contentBlockType.role, '2')}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockEdit2(contentBlockType.role, '2')}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
+    <actionGroup name="duplicateContentBlock">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockNumber" defaultValue="1"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '1')}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '1')}}" stepKey="onMouseOverContentBlockStage"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu2(contentBlockType.role, '1')}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, '1')}}" stepKey="clickDuplicateContentBlock"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="waitForDuplicateContentBlock" />
     </actionGroup>
     <actionGroup name="removeContentBlockFromStage">
         <arguments>
@@ -190,6 +219,19 @@
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeElement selector='{{PageBuilderColumnSection.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsRequired"/>
+    </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldIsNotRequired">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <dontSeeElement selector='{{PageBuilderColumnSection.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsNotRequired"/>
+    </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldPlaceholderText">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldPlaceholderText(property.section, property.fieldName, property.placeholderText)}}" stepKey="waitForElementVisible" />
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneral">
         <arguments>
@@ -303,6 +345,7 @@
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutIsZeroProperty">
+        <!--must have this instead of using seeInFieldSlideOutProperty w/ argument of 0 because of MFTF bug-->
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -343,6 +386,20 @@
         <seeInField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+    </actionGroup>
+    <actionGroup name="validateMarginsAndPaddingPlaceholderTextSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingTop', property.placeholderPaddingTop)}}" stepKey="seePaddingTopPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingRight', property.placeholderPaddingRight)}}" stepKey="seePaddingRightPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingBottom', property.placeholderPaddingBottom)}}" stepKey="seePaddingBottomPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingLeft', property.placeholderPaddingLeft)}}" stepKey="seePaddingLeftPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginTop', property.placeholderMarginTop)}}" stepKey="seeMarginTopPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginRight', property.placeholderMarginRight)}}" stepKey="seeMarginRightPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginBottom', property.placeholderMarginBottom)}}" stepKey="seeMarginBottomPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginLeft', property.placeholderMarginLeft)}}" stepKey="seeMarginLeftPlaceholder"/>
     </actionGroup>
     <actionGroup name="attachFileSlideOutProperty">
         <arguments>
@@ -442,5 +499,29 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="verifyHeadingInStage">
+        <arguments>
+            <argument name="headingNumber" defaultValue="1"/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
+            <argument name="headingBorder" defaultValue="PageBuilderAdvancedBorderDefaultProperty"/>
+        </arguments>
+        <!--replace the hardcoded '1's with headingNumber argument after https://jira.corp.magento.com/browse/MQE-498-->
+        <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, '1')}}" stepKey="waitForHeadingStyle"/>
+        <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, '1')}}" stepKey="seeStageHeadingText"/>
+        <seeElement selector="{{HeadingOnStage.headingBorder(headingType.value, headingBorder.value, '1')}}" stepKey="seeStageHeadingBorder"/>
+    </actionGroup>
+    <actionGroup name="verifyHeadingInStorefront">
+        <arguments>
+            <argument name="headingNumber" defaultValue="1"/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
+            <argument name="headingBorder" defaultValue="PageBuilderAdvancedBorderDefaultProperty"/>
+        </arguments>
+        <!--replace the hardcoded '1's with headingNumber argument after https://jira.corp.magento.com/browse/MQE-498-->
+        <waitForElementVisible selector="{{HeadingOnFrontend.headingType(headingType.value, '1')}}" stepKey="waitForStorefrontHeadingStyle"/>
+        <seeElement selector="{{HeadingOnFrontend.headingText(headingType.value, headingText.value, '1')}}" stepKey="seeStorefrontHeadingText"/>
+        <seeElement selector="{{HeadingOnFrontend.headingBorder(headingType.value, headingBorder.value, '1')}}" stepKey="seeStorefrontHeadingBorder"/>
     </actionGroup>
 </actionGroups>
