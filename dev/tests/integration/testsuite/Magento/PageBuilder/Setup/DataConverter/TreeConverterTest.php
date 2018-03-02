@@ -207,7 +207,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'invalid_column.json',
                 'invalid_column.html'
             ],
-            'mixed columns (not 100%) and header' => [
+            'mixed columns (not 100%) and heading' => [
                 [
                     'heading' => [
                         [
@@ -220,8 +220,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         ]
                     ]
                 ],
-                'mixed_columns_and_header.json',
-                'mixed_columns_and_header.html',
+                'mixed_columns_and_heading.json',
+                'mixed_columns_and_heading.html',
             ],
             'heading' => [
                 [

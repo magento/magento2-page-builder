@@ -8,12 +8,12 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddHeaderContentBlockToCMSPage">
+    <test name="AddHeadingContentBlockToCMSPage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Header MAGETWO-83923"/>
-            <title value="Add Header in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add a header into a row."/>
+            <stories value="Heading MAGETWO-83923"/>
+            <title value="Add Heading in PageBuilder for new CMS page and view on Storefront"/>
+            <description value="A user should be able to add a heading into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84258"/>
             <group value="pagebuilder"/>
@@ -31,33 +31,33 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
-            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="header{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="seeH5HeaderStyleApplied"/>
-        <see userInput="{{PageBuilderHeadingTitleProperty.value}}" selector="{{HeaderOnFrontend.header1Display('h5')}}" stepKey="assertHeadingTitleShowsFrontend"/>
+        <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{HeadingOnFrontend.heading1Display('h5')}}" stepKey="seeH5HeadingStyleApplied"/>
+        <see userInput="{{PageBuilderHeadingTextProperty.value}}" selector="{{HeadingOnFrontend.heading1Display('h5')}}" stepKey="assertHeadingTextShowsFrontend"/>
     </test>
-    <test name="RemoveHeaderFromStage">
+    <test name="RemoveHeadingFromStage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Header MAGETWO-83923"/>
-            <title value="Remove a header content block from stage"/>
-            <description value="A user should be able to remove a header block from a row."/>
+            <stories value="Heading MAGETWO-83923"/>
+            <title value="Remove a heading content block from stage"/>
+            <description value="A user should be able to remove a heading block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -75,19 +75,19 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="HeaderHasAdvancedFormSection">
+    <test name="HeadingHasAdvancedFormSection">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Header MAGETWO-83923"/>
-            <title value="Header has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for header"/>
+            <stories value="Heading MAGETWO-83923"/>
+            <title value="Heading has Advanced form section"/>
+            <description value="A user should be able to configure advanced settings for heading"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
@@ -104,11 +104,11 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>

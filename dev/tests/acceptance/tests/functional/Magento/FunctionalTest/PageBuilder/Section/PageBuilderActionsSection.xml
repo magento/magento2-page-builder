@@ -84,9 +84,9 @@
         <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
         <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
         <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="rowHeading" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row2Heading" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
+        <element name="row3Heading" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
         <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")]'/>
         <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
         <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
@@ -136,8 +136,8 @@
     <section name="CodeOnFrontend">
         <element name="codeDisplay" type="button" selector="[data-role='code'] {{arg1}}" parameterized="true"/>
     </section>
-    <section name="HeaderOnFrontend">
-        <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
+    <section name="HeadingOnFrontend">
+        <element name="heading1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>

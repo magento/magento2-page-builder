@@ -456,6 +456,13 @@
             </formElements>
         </field>
         <field name="overlay_color" sortOrder="80" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">never_show</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Overlay Color</label>
                 <additionalClasses>
@@ -464,12 +471,18 @@
                 <addAfter>hex color</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_color</dataScope>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = show_overlay:value</link>
+                </imports>
             </settings>
         </field>
         <field name="overlay_transparency" sortOrder="90" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">0</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">never_show</item>
+                    </item>
                 </item>
             </argument>
             <settings>
@@ -480,6 +493,9 @@
                 <addAfter>%</addAfter>
                 <dataType>text</dataType>
                 <dataScope>overlay_transparency</dataScope>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = show_overlay:value</link>
+                </imports>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="less-than-equals-to" xsi:type="number">100</rule>
@@ -494,11 +510,6 @@
             <collapsible>true</collapsible>
         </settings>
         <field name="text_align" sortOrder="10" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">left</item>
-                </item>
-            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Text Alignment</label>
@@ -508,14 +519,18 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string" />
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">left</item>
                                 <item name="label" xsi:type="string" translate="true">Left</item>
                             </option>
-                            <option name="1" xsi:type="array">
+                            <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">center</item>
                                 <item name="label" xsi:type="string" translate="true">Center</item>
                             </option>
-                            <option name="2" xsi:type="array">
+                            <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">right</item>
                                 <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
@@ -543,34 +558,38 @@
                                 <item name="label" xsi:type="string" translate="true">None</item>
                             </option>
                             <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string" />
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="2" xsi:type="array">
                                 <item name="value" xsi:type="string">dotted</item>
                                 <item name="label" xsi:type="string" translate="true">Dotted</item>
                             </option>
-                            <option name="2" xsi:type="array">
+                            <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">dashed</item>
                                 <item name="label" xsi:type="string" translate="true">Dashed</item>
                             </option>
-                            <option name="3" xsi:type="array">
+                            <option name="4" xsi:type="array">
                                 <item name="value" xsi:type="string">solid</item>
                                 <item name="label" xsi:type="string" translate="true">Solid</item>
                             </option>
-                            <option name="4" xsi:type="array">
+                            <option name="5" xsi:type="array">
                                 <item name="value" xsi:type="string">double</item>
                                 <item name="label" xsi:type="string" translate="true">Double</item>
                             </option>
-                            <option name="5" xsi:type="array">
+                            <option name="6" xsi:type="array">
                                 <item name="value" xsi:type="string">groove</item>
                                 <item name="label" xsi:type="string" translate="true">Groove</item>
                             </option>
-                            <option name="6" xsi:type="array">
+                            <option name="7" xsi:type="array">
                                 <item name="value" xsi:type="string">ridge</item>
                                 <item name="label" xsi:type="string" translate="true">Ridge</item>
                             </option>
-                            <option name="7" xsi:type="array">
+                            <option name="8" xsi:type="array">
                                 <item name="value" xsi:type="string">inset</item>
                                 <item name="label" xsi:type="string" translate="true">Inset</item>
                             </option>
-                            <option name="8" xsi:type="array">
+                            <option name="9" xsi:type="array">
                                 <item name="value" xsi:type="string">outset</item>
                                 <item name="label" xsi:type="string" translate="true">Outset</item>
                             </option>
@@ -580,6 +599,13 @@
             </formElements>
         </field>
         <field name="border_color" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">none</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Color</label>
@@ -588,22 +614,33 @@
                 </additionalClasses>
                 <addAfter>hex color</addAfter>
                 <dataScope>border_color</dataScope>
+                <placeholder translate="true">Default</placeholder>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
+                </imports>
             </settings>
         </field>
         <field name="border_width" sortOrder="40" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">1</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">none</item>
+                    </item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Size</label>
                 <additionalClasses>
-                    <class name="admin__field-x-small">true</class>
+                    <class name="admin__field-small">true</class>
                 </additionalClasses>
                 <addAfter>px</addAfter>
                 <dataScope>border_width</dataScope>
+                <placeholder translate="true">Default</placeholder>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
+                </imports>
             </settings>
         </field>
         <field name="border_radius" sortOrder="50" formElement="input">
@@ -616,10 +653,11 @@
                 <dataType>text</dataType>
                 <label translate="true">Border Radius</label>
                 <additionalClasses>
-                    <class name="admin__field-x-small">true</class>
+                    <class name="admin__field-small">true</class>
                 </additionalClasses>
                 <addAfter>px</addAfter>
                 <dataScope>border_radius</dataScope>
+                <placeholder translate="true">Default</placeholder>
             </settings>
         </field>
         <field name="css_classes" sortOrder="60" formElement="input">
@@ -651,6 +689,7 @@
             </argument>
             <settings>
                 <label translate="true">Margins and Padding</label>
+                <placeholder translate="true">Default</placeholder>
             </settings>
         </field>
     </fieldset>
