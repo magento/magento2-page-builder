@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Setup\Patch\Data;
 
-use Magento\Setup\Model\Patch\DataPatchInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 /**
