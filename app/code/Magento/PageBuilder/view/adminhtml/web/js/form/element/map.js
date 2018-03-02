@@ -13,6 +13,8 @@ define([
 ], function (AbstractField) {
     'use strict';
 
+    var google = window.google || {};
+
     return AbstractField.extend({
         defaults: {
             elementTmpl: 'Magento_PageBuilder/form/element/map',
@@ -26,21 +28,12 @@ define([
          * @param element
          */
         renderMap: function (element) {
-            var startValue,
-                google = window.google || {};
+            // Get the start value and convert the value into an array
+            var startValue = this.value() ? this.value().split(',') : [30.2672, -97.7431, 8];
 
-            // Get the start value
-            if (!this.value()) {
-                this.value('50.821392,-0.139439,8');
-            }
-
-            // Convert the value into an array
-            startValue = this.value().split(',');
-
-            var centerLatlng = new google.maps.LatLng(startValue[0], startValue[1]);
             var mapOptions = {
                 zoom: parseInt(startValue[2], 10),
-                center: centerLatlng,
+                center: new google.maps.LatLng(startValue[0], startValue[1]),
                 scrollwheel: false,
                 disableDoubleClickZoom: true,
                 // mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -54,21 +47,30 @@ define([
                 }
             };
 
-            // Create the map and marker
+            // Create the map
             this.map = new google.maps.Map(element, mapOptions);
+
+            //Add marker if there is a start value
+            if (this.value()) {
+                this.addMarker(startValue[0], startValue[1]);
+            }
+
+            // After double click, add and update both Lat and Lng.
+            google.maps.event.addListener(this.map, 'dblclick', this.onDoubleClick.bind(this));
+            this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
+            google.maps.event.trigger(this.marker, 'click');
+        },
+
+        /**
+         * Adds a map marker
+         */
+        addMarker: function (lat, lng) {
             this.marker = new google.maps.Marker({
                 draggable: true,
                 map: this.map,
-                position: centerLatlng
+                position: new google.maps.LatLng(lat, lng)
             });
-
-            // After dragging, updates both Lat and Lng.
             google.maps.event.addListener(this.marker, 'dragend', this.onDragEnd.bind(this));
-            google.maps.event.addListener(this.map, 'dblclick', this.onDoubleClick.bind(this));
-
-            this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
-
-            google.maps.event.trigger(this.marker, 'click');
         },
 
         /**
@@ -84,6 +86,9 @@ define([
          * @param event
          */
         onDoubleClick: function (event) {
+            if(!this.marker) {
+                this.addMarker(event.latLng.lat(), event.latLng.lng());
+            }
             this.value(this.exportValue(event.latLng));
         },
 
@@ -94,8 +99,6 @@ define([
             this.value(this.exportValue());
         },
         onUpdate: function () {
-            var google = window.google || {};
-
             this._super();
 
             if (!this.map || this.value() === ''|| this.value() === this.exportValue()) {

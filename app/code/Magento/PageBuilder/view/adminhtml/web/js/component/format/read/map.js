@@ -4,32 +4,35 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Tabs =
+  var Map =
   /*#__PURE__*/
   function () {
-    function Tabs() {}
+    function Map() {}
 
-    var _proto = Tabs.prototype;
+    var _proto = Map.prototype;
 
     /**
      * Read map position and zoom from the element
-     *
+     * Also removes display none back to inline-block for preview styles
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
       var pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
+      var result = {
+        display: "inline-block"
+      };
 
       if (element.getAttribute("src") && pattern.test(element.getAttribute("src"))) {
-        return Promise.resolve({
-          position: pattern.exec(element.getAttribute("src")).slice(1).join(",")
-        });
+        result.position = pattern.exec(element.getAttribute("src")).slice(1).join(",");
       }
+
+      return Promise.resolve(result);
     };
 
-    return Tabs;
+    return Map;
   }();
 
-  return Tabs;
+  return Map;
 });
 //# sourceMappingURL=map.js.map
