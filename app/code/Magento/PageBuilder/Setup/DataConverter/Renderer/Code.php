@@ -43,7 +43,7 @@ class Code implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'code',
+            'data-role' => 'html',
             'class' => $eavData['css_classes'] ?? '',
         ];
 
@@ -54,11 +54,11 @@ class Code implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<pre';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><code>' . ($eavData['html'] ?? '') . '</code></pre>';
+        $rootElementHtml .= '><pre><code>' . ($eavData['html'] ?? '') . '</code></pre></div>';
 
         return $rootElementHtml;
     }
