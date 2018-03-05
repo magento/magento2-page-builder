@@ -17,14 +17,21 @@ class InstallData implements InstallDataInterface
     private $convertBlueFootToPageBuilderFactory;
 
     /**
+     * @var \Magento\Framework\App\State
+     */
+    private $appState;
+
+    /**
      * Constructor
      *
      * @param ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      */
     public function __construct(
-        ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
+        ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
+        \Magento\Framework\App\State $appState
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
+        $this->appState = $appState;
     }
 
     /**
@@ -37,8 +44,16 @@ class InstallData implements InstallDataInterface
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if ($setup->tableExists('gene_bluefoot_entity')) {
-            $this->updateEavConfiguration($setup);
-            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup])->convert();
+            $this->appState->emulateAreaCode(
+                \Magento\Backend\App\Area\FrontNameResolver::AREA_CODE,
+                [$this, 'updateEavConfiguration'],
+                [$setup]
+            );
+            $builder = $this->convertBlueFootToPageBuilderFactory->create(['setup' => $setup]);
+            $this->appState->emulateAreaCode(
+                \Magento\Backend\App\Area\FrontNameResolver::AREA_CODE,
+                [$builder, 'convert']
+            );
         }
     }
 
@@ -47,7 +62,7 @@ class InstallData implements InstallDataInterface
      *
      * @param ModuleDataSetupInterface
      */
-    private function updateEavConfiguration($setup)
+    public function updateEavConfiguration($setup)
     {
         $connection = $setup->getConnection();
         $connection->update(
