@@ -99,4 +99,385 @@
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('outline')" stepKey="getDefaultRowOutlineStyle"/>
         <assertEquals expected="rgba(153, 153, 153, 0.3) solid 1px" expectedType="string" actual="getDefaultRowOutlineStyle" actualType="variable" message="pass" stepKey="assertDefaultRowOutlineStyle"/>
     </test>
+    <test name="NoConfirmationOnDefaultStateBlockRemoval">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="No confirmation when removing an empty block"/>
+            <description value="A user should not be prompt when removing a block in its default state with no children"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <!-- Add an additional row to attempt removal of a row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+
+        <!-- Attempt to remove both content types validating the confirmation window is never displayed -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalRow"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkRow" />
+    </test>
+    <test name="ConfirmationOnContainerWithChildrenRemoval">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="Removal confirmation on container block with children"/>
+            <description value="The user should be prompted when removing a block which has children"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <!-- Add an additional row so we're able to delete the first one -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+
+        <!-- As the row now contains a header it should prompt on removal -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+
+        <!-- Confirm removal of the row -->
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Validate the item is removed -->
+        <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeElementRow"/>
+    </test>
+    <test name="ConfirmationOnConfiguredContentBlockRemoval">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="Removal confirmation on normal block"/>
+            <description value="The user should be prompted when removing a block which has had data modified within"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- As the header has configuration data it should not prompt for removal -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+
+        <!-- Confirm removal of the header -->
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Validate the item is removed -->
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="DismissRemovalConfirmationModal">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="Dismissing the removal confirmation modal"/>
+            <description value="The user should not be prompted after selecting to 'Do not show this again'"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading -->
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeadingOnce">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, expect a prompt -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+        <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="DismissedConfirmationPersistsSession">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="Dismissed confirmation persists session"/>
+            <description value="The user should not be prompted within the current session for removal"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading, we shall attempt to remove this after save -->
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeadingOnce">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, check to not receive this warning again -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Save the page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="LoginCycleResetsRemoveConfirmationDismissal">
+        <annotations>
+            <features value="Pagebuilder Options Menu MAGETWO-83848"/>
+            <stories value="Deleting Content block/ container from the stage MAGETWO-86799"/>
+            <title value="Dismissed confirmation is removed on logout"/>
+            <description value="The users choice to not show the confirmation again should be reset on logout"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder-dnsa"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading, we shall attempt to remove this after save -->
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeadingOnce">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, check to not receive this warning again -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
+
+        <!-- Logout, then login -->
+        <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+        <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragThirdHeaderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH52">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty2">
+            <argument name="property" value="PageBuilderHeadingTitleProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+
+        <!-- Remove the heading, we should receive the warning again -->
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeThirdHeader">
+            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible2"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal2"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk2" />
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval2"/>
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeaderContentBlock.role)}}" stepKey="dontSeeHeaderInStage2"/>
+    </test>
 </tests>
