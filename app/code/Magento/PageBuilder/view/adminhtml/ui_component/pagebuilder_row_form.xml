@@ -208,21 +208,53 @@
                 </checkbox>
             </formElements>
         </field>
-        <field name="parallax_speed" sortOrder="20" formElement="input" template="Magento_PageBuilder/form/parallax-speed-field.html">
+        <field name="parallax_speed" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">0.5</item>
+                    <item name="tooltipTpl" xsi:type="string">Magento_PageBuilder/form/element/helper/html-tooltip.html</item>
                     <item name="disabledValues" xsi:type="array">
                         <item name="none" xsi:type="string">0</item>
                     </item>
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-parallax-speed">true</class>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <label translate="true">Parallax Speed</label>
                 <dataScope>parallax_speed</dataScope>
-                <notice xsi:type="string" translate="true">
-                    <![CDATA[<p>Enter fractional number from -1.0 to 2.0.</p><p>Read the user guide about <a href="http://docs.magento.com/m2/ce/user_guide/cms/page-builder.html" target="_blank">parallax speed values</a>.</p>]]>
-                </notice>
+                <tooltip>
+                    <link>http://docs.magento.com/m2/ce/user_guide/cms/page-builder.html</link>
+                    <description translate="true">
+                        <![CDATA[
+                        You can enter a number ranging from -1.0 to 2.0.<br />
+                        <table class="admin__field-tooltip-table" width="100%">
+                            <tr>
+                                <th>Value</th>
+                                <th>Parallax Effect</th>
+                            </tr>
+                            <tr>
+                                <td class="nowrap">-1.0 - 0.0</td>
+                                <td>Will make the background scroll in the opposite direction.</td>
+                            </tr>
+                            <tr>
+                                <td class="nowrap">0.5</td>
+                                <td>Default value.</td>
+                            </tr>
+                            <tr>
+                                <td class="nowrap">1.0</td>
+                                <td>Fixed image, no parallax.</td>
+                            </tr>
+                            <tr>
+                                <td class="nowrap">2.0</td>
+                                <td>Fastest parallax.</td>
+                            </tr>
+                        </table>
+                        ]]>
+                    </description>
+                </tooltip>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="less-than-equals-to" xsi:type="number">2.0</rule>

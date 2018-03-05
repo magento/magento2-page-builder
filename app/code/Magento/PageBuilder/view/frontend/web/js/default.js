@@ -5,7 +5,7 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
+requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) { ``
     'use strict';
     $(document).ready(function() {
         $('pre code:not(.hljs)').each(function (i, block) {
@@ -38,7 +38,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
             $(element).addClass('jarallax');
             $(element).attr('data-jarallax','');
 
-            jarallax(document.querySelectorAll('.jarallax'), {
+            jarallax(element, {
                 imgPosition: element.style.backgroundPosition || '50% 50%',
                 imgRepeat: element.style.backgroundRepeat || 'no-repeat',
                 imgSize: element.style.backgroundSize || 'cover',

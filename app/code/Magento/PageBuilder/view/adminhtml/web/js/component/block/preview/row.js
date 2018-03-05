@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax", "underscore", "./block"], function (_knockout, _jarallax, _underscore, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "./block"], function (_jquery, _knockout, _jarallax, _underscore, _block) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -25,19 +25,25 @@ define(["knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax", "unders
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
+      _this.element = void 0;
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
-        jarallax(document.querySelectorAll(".pagebuilder-content-type.pagebuilder-row"), "destroy");
+        try {
+          jarallax(_this.element, "destroy");
+        } catch (e) {// Failure of destroying is acceptable
+        }
 
-        _underscore.defer(function () {
-          // Build Parallax on elements with the correct class
-          jarallax(document.querySelectorAll(".jarallax"), {
-            imgPosition: _this.data.background_position() || "50% 50%",
-            imgRepeat: _this.data.background_repeat() || "no-repeat",
-            imgSize: _this.data.background_size() || "cover",
-            speed: _this.data.parallax_speed() || 0.5
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax")) {
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.element, {
+              imgPosition: _this.data.background_position() || "50% 50%",
+              imgRepeat: _this.data.background_repeat() === "0" ? "no-repeat" : "repeat",
+              imgSize: _this.data.background_size() || "cover",
+              speed: _this.data.parallax_speed() || 0.5
+            });
           });
-        });
+        }
       }, 10);
 
       _this.parent.stage.store.subscribe(_this.buildJarallax);
@@ -45,13 +51,24 @@ define(["knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax", "unders
       return _this;
     }
     /**
+     * Init the parallax element
+     *
+     * @param {Element} element
+     */
+
+
+    var _proto = Row.prototype;
+
+    _proto.initParallax = function initParallax(element) {
+      this.element = element;
+      this.buildJarallax();
+    };
+    /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
      * @returns styles
      */
 
-
-    var _proto = Row.prototype;
 
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // The style attribute mapper converts images to directives, override it to include the correct URL

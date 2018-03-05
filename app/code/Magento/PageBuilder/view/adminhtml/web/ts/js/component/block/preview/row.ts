@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import "Magento_PageBuilder/js/resource/jarallax/jarallax";
+import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
@@ -15,6 +15,7 @@ import PreviewBlock from "./block";
 export default class Row extends PreviewBlock {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
+    private element: Element;
 
     /**
      * Debouce and defer the init of Jarallax
@@ -23,19 +24,25 @@ export default class Row extends PreviewBlock {
      */
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
-        jarallax(document.querySelectorAll(".pagebuilder-content-type.pagebuilder-row"), "destroy");
-        _.defer(() => {
-            // Build Parallax on elements with the correct class
-            jarallax(
-                document.querySelectorAll(".jarallax"),
-                {
-                    imgPosition: this.data.background_position() || "50% 50%",
-                    imgRepeat: this.data.background_repeat() || "no-repeat",
-                    imgSize: this.data.background_size() || "cover",
-                    speed: this.data.parallax_speed() || 0.5,
-                },
-            );
-        });
+        try {
+            jarallax(this.element, "destroy");
+        } catch (e) {
+            // Failure of destroying is acceptable
+        }
+        if (this.element && $(this.element).hasClass("jarallax")) {
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.element,
+                    {
+                        imgPosition: this.data.background_position() || "50% 50%",
+                        imgRepeat: this.data.background_repeat() === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.background_size() || "cover",
+                        speed: this.data.parallax_speed() || 0.5,
+                    },
+                );
+            });
+        }
     }, 10);
 
     /**
@@ -46,6 +53,16 @@ export default class Row extends PreviewBlock {
         super(parent, config);
 
         this.parent.stage.store.subscribe(this.buildJarallax);
+    }
+
+    /**
+     * Init the parallax element
+     *
+     * @param {Element} element
+     */
+    public initParallax(element: Element) {
+        this.element = element;
+        this.buildJarallax();
     }
 
     /**
