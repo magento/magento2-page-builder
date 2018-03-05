@@ -15,21 +15,27 @@ import PreviewBlock from "./block";
 export default class Row extends PreviewBlock {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
-    // private childSubscribe: KnockoutSubscription;
-    private element: Element;
 
     /**
-     * Assign a debounce and delay to the init of Jarallax to ensure the DOM has updated
+     * Debouce and defer the init of Jarallax
      *
-     * @type {(() => any) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
     private buildJarallax = _.debounce(() => {
-
-        if (this.element && this.element.hasClass("jarallax")) {
-
-            // Build Parallax
-            $(this.element).jarallax(this.buildJarallaxConfig());
-        }
+        // Destroy all instances of the plugin prior
+        jarallax(document.querySelectorAll(".pagebuilder-content-type.pagebuilder-row"), "destroy");
+        _.defer(() => {
+            // Build Parallax on elements with the correct class
+            jarallax(
+                document.querySelectorAll(".jarallax"),
+                {
+                    imgPosition: this.data.background_position() || "50% 50%",
+                    imgRepeat: this.data.background_repeat() || "no-repeat",
+                    imgSize: this.data.background_size() || "cover",
+                    speed: this.data.parallax_speed() || 0.5,
+                },
+            );
+        });
     }, 10);
 
     /**
@@ -39,16 +45,7 @@ export default class Row extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
-        // this.childSubscribe = this.parent.children.subscribe(this.buildJarallax);
-        // this.parent.stage.store.subscribe(this.buildJarallax);
-    }
-
-    /**
-     * Capture an after render event
-     */
-    public onAfterRender(row: Element): void {
-        this.element = $(row).closest(".pagebuilder-row");
-        this.buildJarallax();
+        this.parent.stage.store.subscribe(this.buildJarallax);
     }
 
     /**
@@ -73,20 +70,5 @@ export default class Row extends PreviewBlock {
         }
 
         return styles;
-    }
-
-    /**
-     * Build the Jarallax config object
-     *
-     * @returns {{imgPosition: string; imgRepeat: string;
-     * imgSize: string; speed: (any | number);}}
-     */
-    private buildJarallaxConfig() {
-        return {
-            imgPosition: this.data.background_position() || "50% 50%",
-            imgRepeat: this.data.background_repeat() || "no-repeat",
-            imgSize: this.data.background_size() || "cover",
-            speed: this.data.parallax_speed() || 0.5,
-        };
     }
 }

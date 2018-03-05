@@ -42,7 +42,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
                 imgPosition: element.style.backgroundPosition || '50% 50%',
                 imgRepeat: element.style.backgroundRepeat || 'no-repeat',
                 imgSize: element.style.backgroundSize || 'cover',
-                speed: parseInt($(element).data('speed'), 10) || 0.5
+                speed: $(element).data('speed') || 0.5
             });
         });
 
