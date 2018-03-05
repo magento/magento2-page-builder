@@ -120,15 +120,15 @@
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditPanel2">
+    <actionGroup name="openPageBuilderEditPanelByIndex2">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockNumber" defaultValue="1"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="onMouseOverContentBlockStage"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu2(contentBlockType.role, '2')}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockEdit2(contentBlockType.role, '2')}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, '2')}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, '2')}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
@@ -139,11 +139,11 @@
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockNumber" defaultValue="1"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '1')}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '1')}}" stepKey="onMouseOverContentBlockStage"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu2(contentBlockType.role, '1')}}" stepKey="seeContentBlockOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '1')}}" stepKey="waitForContentBlockInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '1')}}" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, '1')}}" stepKey="waitForOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, '1')}}" stepKey="clickDuplicateContentBlock"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStage2(contentBlockType.role, '2')}}" stepKey="waitForDuplicateContentBlock" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="waitForDuplicateContentBlock"/>
     </actionGroup>
     <actionGroup name="removeContentBlockFromStage">
         <arguments>

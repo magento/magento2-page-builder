@@ -151,7 +151,7 @@
         <see selector="{{RowAdminPreview.empty}}" userInput="Drag content blocks or columns here" stepKey="seeRowPlaceholder"/>
         <see selector="{{RowAdminPreview.displayLabel}}" userInput="Row" stepKey="seeRowDisplayLabel"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{RowAdminPreview.empty}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
@@ -179,7 +179,7 @@
         </after>
         <!-- Assert row height is 300px when empty - Depends on MQE-818 -->
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Assert row height has changed when content added - Depends on MQE-818 -->
     </test>

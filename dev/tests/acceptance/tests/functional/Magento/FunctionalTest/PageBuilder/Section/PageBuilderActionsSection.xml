@@ -35,19 +35,16 @@
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="div.pagebuilder-stage div.row-container"/>
         <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
-        <!--<element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>-->
-        <!--<element name="contentBlockInStage2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>-->
+        <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
         <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
-        <!--<element name="contentBlockOptionsMenu2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]' parameterized="true"/>-->
+        <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
         <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]' parameterized="true"/>
         <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .edit-block' parameterized="true"/>
-        <!--<element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>-->
-        <!--<element name="contentBlockEdit2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>-->
+        <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
         <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="duplicate-structural"]' parameterized="true"/>
-        <!--<element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>-->
-        <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .remove-structural' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
@@ -144,26 +141,17 @@
     <section name="HeadingOnFrontend">
         <element name="headingAll" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}' and @class='{{arg3}}' and contains(@style,'text-align: {{arg4}};') and contains(@style,'border: {{arg5}}px {{arg6}} {{arg7}};') and contains(@style,'border-radius: {{arg8}}px;') and contains(@style,'margin: {{arg9}}px;') and contains(@style,'padding: {{arg10}}px;')])[{{arg11}}]" parameterized="true"/>
         <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-role='heading' and .=''])[{{arg2}}]" parameterized="true"/>
-        <element name="headingBorder" type="button" selector="(//{{arg1}}[@data-role='heading' and @style='border: {{arg2}};'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingBorder" type="button" selector="(//{{arg1}}[@data-role='heading' and contains(@style,'border: {{arg2}};')])[{{arg3}}]" parameterized="true"/>
+        <element name="headingBorderRadius" type="button" selector="(//{{arg1}}[@data-role='heading' and contains(@style,'border-radius: {{arg2}}px;')])[{{arg3}}]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingType" type="button" selector="(//{{arg1}}[@data-role='heading'])[{{arg2}}]" parameterized="true"/>
     </section>
     <section name="HeadingOnStage">
         <element name="headingAll" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and .='{{arg2}}' and contains(@style,'text-align: {{arg3}};') and contains(@style,'border: {{arg4}}px {{arg5}} {{arg6}};') and contains(@style,'border-radius: {{arg7}}px;') and contains(@style,'margin: {{arg8}}px;') and contains(@style,'padding: {{arg9}}px;')])[{{arg10}}]" parameterized="true"/>
-        <element name="headingBorder" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and @style='border: {{arg2}};'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingBorder" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and contains(@style,'border: {{arg2}};')])[{{arg3}}]" parameterized="true"/>
+        <element name="headingBorderRadius" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and contains(@style,'border-radius: {{arg2}}px;')])[{{arg3}}]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingType" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}')])[{{arg2}}]" parameterized="true"/>
-    </section>
-    <section name="RowsOnFrontend">
-        <element name="row1Display" type="button" selector="[data-role='row'][style*='display: flex;']"/>
-        <element name="rowDisplay" type="button" selector="[data-role='row']"/>
-        <element name="rowColor" type="button" selector="[data-role='row'][style*='color: rgb(255, 255, 255);']"/>
-        <element name="rowTextAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>
-        <element name="rowBorder" type="button" selector="[data-role='row'][style*='border: 10px dotted rgb(255, 255, 255);']"/>
-        <element name="rowBorderRadius" type="button" selector="[data-role='row'][style*='border-radius: 12px;']"/>
-        <element name="rowMargin" type="button" selector="[data-role='row'][style*='margin: 5px;']"/>
-        <element name="rowPadding" type="button" selector="[data-role='row'][style*='padding: 5px;']"/>
-        <element name="rowClass" type="button" selector="[data-role='row'].first-class.second-class.third-class"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
