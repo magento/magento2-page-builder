@@ -9,7 +9,7 @@ define([
     'Magento_Ui/js/form/element/abstract',
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',
     'underscore',
-    'mage/translate',
+    'mage/translate'
 ], function (AbstractField) {
     'use strict';
 
@@ -23,11 +23,13 @@ define([
         /**
          * Render the map into the field
          *
-         * @param element
+         * @param {HTMLElement} element
          */
         renderMap: function (element) {
             var startValue,
-                google = window.google || {};
+                google = window.google || {},
+                centerLatlng,
+                mapOptions;
 
             // Get the start value
             if (!this.value()) {
@@ -36,9 +38,8 @@ define([
 
             // Convert the value into an array
             startValue = this.value().split(',');
-
-            var centerLatlng = new google.maps.LatLng(startValue[0], startValue[1]);
-            var mapOptions = {
+            centerLatlng = new google.maps.LatLng(startValue[0], startValue[1]);
+            mapOptions = {
                 zoom: parseInt(startValue[2], 10),
                 center: centerLatlng,
                 scrollwheel: false,
@@ -81,7 +82,7 @@ define([
         /**
          * Event for double click to update marker
          *
-         * @param event
+         * @param {Event} event
          */
         onDoubleClick: function (event) {
             this.value(this.exportValue(event.latLng));
@@ -93,23 +94,34 @@ define([
         onZoomChange: function () {
             this.value(this.exportValue());
         },
+
+        /**
+         * Event fired when field value is updated
+         */
         onUpdate: function () {
-            var google = window.google || {};
+            var google = window.google || {},
+                value,
+                latLng;
 
             this._super();
 
-            if (!this.map || this.value() === ''|| this.value() === this.exportValue()) {
+            if (!this.map || this.value() === '' || this.value() === this.exportValue()) {
                 return;
             }
 
             // Convert the value into an arrav
-            var value  = this.value().split(','),
-                latLng = new google.maps.LatLng(value[0], value[1]);
+            value  = this.value().split(',');
+            latLng = new google.maps.LatLng(value[0], value[1]);
 
             this.marker.setPosition(latLng);
             this.map.setZoom(parseInt(value[2], 10));
             this.map.setCenter(latLng);
         },
+
+        /**
+         * @param {LatLng} latLng
+         * @returns {String}
+         */
         exportValue: function (latLng) {
             var curLatLng = latLng ? latLng : this.marker.getPosition();
 
