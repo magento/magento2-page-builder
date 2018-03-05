@@ -38,27 +38,77 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragMapIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-        </actionGroup>
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <!-- fill fields -->
         <actionGroup ref="fillMapPositionFields" stepKey="enterMapPositionProperties">
             <argument name="property" value="PageBuilderMapPositionProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapWidthProperty">
-            <argument name="property" value="PageBuilderMapWidthProperty"/>
+            <argument name="property" value="PageBuilderMapWidthProperty50"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeightProperty">
-            <argument name="property" value="PageBuilderMapHeightProperty"/>
+            <argument name="property" value="PageBuilderMapHeightProperty500"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab" />
+        <waitForElementVisible time="2" selector="{{MapInAdmin.map}}" stepKey="waitMap" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle2"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm2"/>
+        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection2"/>
+        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <!-- check field values -->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidthProperty">
+            <argument name="property" value="PageBuilderMapWidthProperty50"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapHeightProperty">
+            <argument name="property" value="PageBuilderMapHeightProperty500"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeEditForm"/>
+        <!-- check on admin -->
+        <waitForElementVisible time="2" selector="{{MapInAdmin.map}}" stepKey="waitMap2" />
+        <seeElement selector="{{MapInAdmin.mapWithPin}}" stepKey="seeMapWithPin"/>
+        <seeElement selector="{{MapInAdmin.mapHeight(PageBuilderMapHeightProperty500.value)}}" stepKey="seeMapHeight"/>
+        <seeElement selector="{{MapInAdmin.mapWidth(PageBuilderMapWidthProperty50.value)}}" stepKey="seeMapWidth"/>
+        <seeElement selector="{{MapInAdmin.mapAlignment(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeMapAlignment"/>
+        <seeElement selector="{{MapInAdmin.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMargin"/>
+        <seeElement selector="{{MapInAdmin.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPadding"/>
+        <!-- check on storefront -->
         <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElementInDOM selector="{{MapOnFrontend.map1Lat}}" stepKey="seeMapLatPositionSet"/>
-        <seeElementInDOM selector="{{MapOnFrontend.map1Lng}}" stepKey="seeMapLngPositionSet"/>
-        <seeElementInDOM selector="{{MapOnFrontend.map1Zoom}}" stepKey="seeMapZoomPositionSet"/>
-        <seeElementInDOM selector="{{MapOnFrontend.map1Width}}" stepKey="seeMapWidthStyleApplied"/>
-        <seeElementInDOM selector="{{MapOnFrontend.map1Height}}" stepKey="seeMapHeightStyleApplied"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapWithPin}}" stepKey="seeMapPinOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapZoom}}" stepKey="seeMapZoomOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty50.value)}}" stepKey="seeMapWidthOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapHeight(PageBuilderMapHeightProperty500.value)}}" stepKey="seeMapHeightOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapAlignment(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeMapAlignmentOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapCssClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seeMapCssClassOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMarginOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPaddingOnFrontend"/>
     </test>
     <test name="RemoveMapFromStage">
         <annotations>
@@ -87,6 +137,11 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormToShow"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForModalToClose"/>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -118,12 +173,12 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragMapIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-        </actionGroup>
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <!-- see fields -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
@@ -133,5 +188,106 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
+        <!-- check defaults -->
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeDefaultAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+        </actionGroup>
+    </test>
+    <test name="EmptyMapPreview">
+        <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Map MAGETWO-87083"/>
+            <title value="See empty map preview"/>
+            <description value="A user can save an empty map with no pin"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88749"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragMapIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <!-- see fields -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMapWidthProperty">
+            <argument name="property" value="PageBuilderMapWidthProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMapHeightProperty">
+            <argument name="property" value="PageBuilderMapHeightProperty"/>
+        </actionGroup>
+        <!-- see defaults -->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMapWidthProperty">
+            <argument name="property" value="PageBuilderMapWidthProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMapHeightPropert">
+            <argument name="property" value="PageBuilderMapHeightProperty"/>
+        </actionGroup>
+        <!-- save configuration -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab" />
+        <waitForElementVisible time="2" selector="{{MapInAdmin.map}}" stepKey="waitMap" />
+        <!-- check on backend -->
+        <seeElement selector="{{MapInAdmin.emptyMap}}" stepKey="seeEmptyMap"/>
+        <seeElement selector="{{MapInAdmin.mapHeight(PageBuilderMapHeightProperty.value)}}" stepKey="seeEmptyMapHeight"/>
+        <seeElement selector="{{MapInAdmin.mapWidth(PageBuilderMapWidthProperty.value)}}" stepKey="seeEmptyMapWidth"/>
+        <seeElement selector="{{MapInAdmin.mapMargin(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="seeMapMargin"/>
+        <seeElement selector="{{MapInAdmin.mapPadding(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="seeMapPadding"/>
+        <!-- check on frontend -->
+        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElementInDOM selector="{{MapOnFrontend.emptyMap}}" stepKey="seeEmptyMapOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapHeight(PageBuilderMapHeightProperty.value)}}" stepKey="seeEmptyMapHeightOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty.value)}}" stepKey="seeEmptyMapWidthOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapMargin(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="seeMapMarginOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapPadding(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="seeMapPaddingOnFrontend"/>
+        <!-- go back to backend page -->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
+        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
+        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
+        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="{{PageBuilderMapContentBlock.role}}{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
+        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
+        <waitForPageLoad stepKey="waitForSearchResults" />
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForPageLoad stepKey="waitForEditCmsPage" />
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
+        <waitForElementVisible time="2" selector="{{MapInAdmin.map}}" stepKey="waitMap2" />
+        <!-- add location to map page -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillMapPositionFields" stepKey="enterMapPositionProperties">
+            <argument name="property" value="PageBuilderMapPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab3" />
+        <waitForElementVisible time="2" selector="{{MapInAdmin.map}}" stepKey="waitMap3" />
+        <!-- check on backend -->
+        <seeElement selector="{{MapInAdmin.mapWithPin}}" stepKey="seeMapWithPin"/>
+        <!-- check on frontend -->
+        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapWithPin}}" stepKey="seeMapLatPositionSetOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnFrontend.mapZoom}}" stepKey="seeMapZoomPositionSetOnFrontend"/>
     </test>
 </tests>
