@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option) {
+define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -21,10 +21,6 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     function Structural(parent, stage, config) {
       var _this;
 
-      if (config === void 0) {
-        config = {};
-      }
-
       _this = _EditableArea.call(this, stage) || this;
       _this.config = void 0;
       _this.children = _knockout.observableArray([]);
@@ -36,26 +32,35 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       _this.element = void 0;
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
-      _this.optionsInstance = new _options.Options(_this, _this.options);
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
 
-      _this.setChildren(_this.children); // Create a new instance of edit for our editing needs
+      _this.setChildren(_this.children);
 
+      _this.parent = parent;
+      _this.config = config; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
-      _this.parent = parent;
-      _this.config = config;
       return _this;
     }
     /**
      * Return an array of options
      *
-     * @returns {Array<Option>}
+     * @returns {Array<OptionInterface>}
      */
 
 
     var _proto = Structural.prototype;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title.TitleOption(this, this.config.label, 20), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
+    };
+    /**
+     * Retrieve the template for the structural
+     *
+     * @returns {string}
+     */
+
 
     /**
      * Handle user editing an instance
@@ -159,19 +164,18 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     _proto.getData = function getData() {
       return this.stage.store.get(this.id);
     };
+    /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+
+
+    _proto.getOptions = function getOptions() {
+      return new _options.Options(this, this.retrieveOptions());
+    };
 
     _createClass(Structural, [{
-      key: "options",
-      get: function get() {
-        return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 50), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 60), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 100)];
-      }
-      /**
-       * Retrieve the template for the structural
-       *
-       * @returns {string}
-       */
-
-    }, {
       key: "template",
       get: function get() {
         return "Magento_PageBuilder/component/stage/structural/abstract.html";

@@ -137,7 +137,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
      */
 
 
-    _proto.onMouseOver = function onMouseOver() {
+    _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(true);
       }
@@ -151,7 +151,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
      */
 
 
-    _proto.onMouseOut = function onMouseOut() {
+    _proto.onMouseOutWrapper = function onMouseOutWrapper() {
       if (this.preview.data.show_overlay() === "on_hover") {
         this.preview.showOverlayHover(false);
       }

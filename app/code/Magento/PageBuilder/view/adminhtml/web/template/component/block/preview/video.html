@@ -5,12 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-video">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-video" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko ifnot: preview.data.src -->
     <i class="icon-pagebuilder-video"></i> <span data-bind="text: $t('Video');"></span>
     <!-- /ko -->
     <!-- ko if: preview.data.src -->
     <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr:{ width: preview.data.width() || '100%', height: preview.data.height() || '400', src: preview.parent.getVideoUrl(preview.data.src()) }"></iframe>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

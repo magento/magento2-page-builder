@@ -65,6 +65,14 @@ define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus",
         }
       });
 
+      _eventBus.on("interaction:start", function () {
+        return _this.interacting(true);
+      });
+
+      _eventBus.on("interaction:stop", function () {
+        return _this.interacting(false);
+      });
+
       return _this;
     }
     /**
@@ -89,8 +97,8 @@ define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus",
      */
 
 
-    _proto.dragging = function dragging(flag) {
-      this.parent.dragging(flag);
+    _proto.interacting = function interacting(flag) {
+      this.parent.interacting(flag);
     };
     /**
      * Tells the stage wrapper to expand to fullscreen

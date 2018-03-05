@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-anchor pagebuilder-no-blur pagebuilder-live-edit">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-anchor pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <i class="icon-pagebuilder-anchor"></i>
     <!-- ko if: preview.data.id -->
     <span data-bind="text: '#' + preview.data.id()"></span>
@@ -13,5 +13,5 @@
     <!-- ko ifnot: preview.data.id -->
     <span data-bind="text: $t('Anchor');"></span>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

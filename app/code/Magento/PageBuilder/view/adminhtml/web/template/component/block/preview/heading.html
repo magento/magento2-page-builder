@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <div data-bind="css: preview.getHeadingStyles(), html: preview.data.heading_text() !== '' ? preview.data.heading_text() :  $t('Edit Heading Text'), style: preview.previewStyle()"></div>
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

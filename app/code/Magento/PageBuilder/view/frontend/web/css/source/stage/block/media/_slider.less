@@ -1,0 +1,156 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@import 'slick.less';
+
+.slick-prev {
+    left: 2rem;
+    &:before {
+        content: @icon-pagebuilder-caret-prev__content;
+        padding-right: 5px;
+    }
+}
+
+.slick-next {
+    right: 2rem;
+    &:before {
+        content: @icon-pagebuilder-caret-next__content;
+        padding-left: 5px;
+    }
+}
+
+.slick-prev,
+.slick-next {
+    background: rgba(252, 252, 252, .6);
+    border: none;
+    border-radius: 0;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    font-size: 0px;
+    height: 60px;
+    line-height: 0px;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    width: 60px;
+    z-index: 101;
+
+    &.slick-disabled {
+        opacity: .2;
+    }
+
+    &:before,
+    &:after {
+        &:extend(.pagebuilder-icon all);
+        color: @color-gray-darken3;
+        font-size: 38px;
+        opacity: 1;
+    }
+
+    &:hover {
+        background: rgba(252, 252, 252, 1);
+        border: none;
+        &.slick-disabled {
+            opacity: .2;
+        }
+        &:before {
+            color: @color-gray-darken4;
+        }
+    }
+
+    // Reset luma styles applied to all buttons
+    &:active,
+    &:focus,
+    &:not(.primary) {
+        background: rgba(252, 252, 252, .7);
+        border: none;
+        box-shadow: none;
+
+        &:active {
+            box-shadow: none;
+        }
+    }
+}
+
+.slick-dots {
+    bottom: -30px;
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    li {
+        cursor: pointer;
+        display: inline-block;
+        height: 14px;
+        margin: 0 5px;
+        padding: 0;
+        position: relative;
+        width: 14px;
+        vertical-align: middle;
+        button {
+            background: transparent;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: none;
+            cursor: pointer;
+            display: block;
+            height: 14px;
+            padding: 0;
+            text-indent: -99999px;
+            transition: .3s;
+            width: 14px;
+
+            &:hover {
+                border: 1px solid #b3b3b3;
+            }
+
+            &:active,
+            &:focus,
+            &:not(.primary) {
+                background: transparent;
+                box-shadow: none;
+            }
+        }
+
+        &.slick-active {
+            button {
+                background: #1c1918;
+                border: none;
+            }
+        }
+    }
+}
+
+div[data-role='slider'] {
+    display: none;
+
+    &.slick-initialized {
+        display: block;
+        margin-bottom: 35px!important; // required due to inline styles added by Slick
+    }
+
+    .slick-list,
+    .slick-track,
+    .slick-slide {
+        min-height: inherit;
+    }
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    color: initial;
+    padding: 10px;
+    text-decoration: none;
+}
