@@ -7,9 +7,14 @@
 
 <div data-bind="attr: getAttributes(), style: getSlideContainerStyle(), css: getCss()">
     <a data-bind="attr: getLinkAttribute()">
-        <div class="pagebuilder-slide-wrapper pagebuilder-slide-mobile pagebuilder-mobile-only" data-bind="style: getSlideStyles('mobileImage')">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
-                <div class="pagebuilder-poster-content">
+        <div data-bind="style: Object.assign(getSlideStyles('image'), {
+            paddingTop: getData().margins_and_padding.padding.top + 'px',
+            paddingBottom: getData().margins_and_padding.padding.bottom + 'px',
+            paddingLeft: getData().margins_and_padding.padding.left + 'px',
+            paddingRight: 'calc(50% + ' + getData().margins_and_padding.padding.right + 'px)'})"
+             class="pagebuilder-mobile-hidden pagebuilder-slide-wrapper">
+            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+                <div class="pagebuilder-collage-content">
                     <!-- ko if: getData().title -->
                     <h3 data-bind="text: getData().title"></h3>
                     <!-- /ko -->
@@ -20,9 +25,14 @@
                 </div>
             </div>
         </div>
-        <div class="pagebuilder-slide-wrapper pagebuilder-slide-image" data-bind="style: getSlideStyles('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
-                <div class="pagebuilder-poster-content">
+        <div data-bind="style: Object.assign(getSlideStyles('mobileImage'), {
+            paddingTop: getStyle().paddingTop,
+            paddingBottom: getStyle().paddingBottom,
+            paddingLeft: getStyle().paddingLeft,
+            paddingRight: getStyle().paddingRight})"
+             class="pagebuilder-mobile-only pagebuilder-slide-wrapper">
+            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+                <div class="pagebuilder-collage-content">
                     <!-- ko if: getData().title -->
                     <h3 data-bind="text: getData().title"></h3>
                     <!-- /ko -->

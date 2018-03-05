@@ -3,39 +3,44 @@
  * See COPYING.txt for license details.
  */
 
-import {toHex} from "../../../utils/color-converter";
-import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
-import {decodeUrl} from "../../../utils/image";
-import ReadInterface from "../read-interface";
+import {toHex} from "../../../../../utils/color-converter";
+import extractAlphaFromRgba from "../../../../../utils/extract-alpha-from-rgba";
+import {decodeUrl} from "../../../../../utils/image";
+import {DataObject} from "../../../../data-store";
+import {ReadInterface} from "../../../read-interface";
 
-export default class Slide implements ReadInterface {
+export default class Collage implements ReadInterface {
 
     /**
-     * Read heading type and title from the element
+     * Read background from the element
+     * Reuse default reader logic to point at mobile version
      *
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<object> {
-        let bgMobileImage = element.querySelector(".pagebuilder-slide-mobile").style.backgroundImage;
-        const linkUrl = element.querySelector("a").getAttribute("href");
+        let mobileImage = "";
         const target = element.querySelector("a").getAttribute("target");
-        const bgImage = element.querySelector(".pagebuilder-slide-image").style.backgroundImage;
-        const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
-        const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
-        const marginSrc = element.style;
-        if (bgImage === bgMobileImage) {
-            bgMobileImage = false;
+        const backgroundImage = element.querySelector(".pagebuilder-mobile-hidden").style.backgroundImage;
+        const backgroundMobileImageElement = element.querySelector(".pagebuilder-mobile-only");
+        if (backgroundMobileImageElement !== undefined
+            && backgroundMobileImageElement.style.backgroundImage !== ""
+            && backgroundImage !== backgroundMobileImageElement.style.backgroundImage
+        ) {
+            mobileImage = decodeUrl(backgroundMobileImageElement.style.backgroundImage);
         }
+        const overlayColor = element.querySelector(".pagebuilder-overlay").getAttribute("data-overlay-color");
+        const paddingSrc = element.querySelector(".pagebuilder-mobile-only").style;
+        const marginSrc = element.style;
         const button = element.querySelector("button");
         const buttonText = button ? button.textContent : "";
         const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
         const response: any = {
-            background_image: decodeUrl(bgImage),
+            background_image: decodeUrl(backgroundImage),
             background_size: element.style.backgroundSize,
             button_text: buttonText,
             button_type: buttonType,
-            link_url: linkUrl ? linkUrl : "",
+            link_url: element.querySelector("a").getAttribute("href"),
             margins_and_padding: {
                 margin: {
                     bottom: marginSrc.marginBottom.replace("px", ""),
@@ -50,9 +55,10 @@ export default class Slide implements ReadInterface {
                     top: paddingSrc.paddingTop.replace("px", ""),
                 },
             },
-            message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
-            min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
-            mobile_image: bgMobileImage ? decodeUrl(bgMobileImage) : "",
+            message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
+            min_height: element.querySelector(".pagebuilder-slide-wrapper").style.minHeight ?
+                parseInt(element.querySelector(".pagebuilder-slide-wrapper").style.minHeight, 10) : 0,
+            mobile_image: mobileImage,
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: this.getOverlayColor(overlayColor),
             overlay_transparency: this.getOverlayTransparency(overlayColor),
