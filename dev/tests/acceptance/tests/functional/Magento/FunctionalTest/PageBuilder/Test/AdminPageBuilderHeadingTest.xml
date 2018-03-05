@@ -10,15 +10,17 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HeadingDefaultAppearance">
         <annotations>
-            <features value="Heading"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-83923"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Heading - Default Heading Appearance"/>
             <description value="Tests default appearance of a Heading content block in the stage and storefront"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-87072"/>-->
+            <testCaseId value="MAGETWO-87104"/>
             <group value="pagebuilder"/>
             <group value="storefront"/>
-c            <group value="stage"/>
+            <group value="stage"/>
             <group value="heading"/>
             <group value="default"/>
         </annotations>
@@ -62,12 +64,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditPanelGeneralSectionAppearance">
         <annotations>
-            <features value="Heading"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Heading - General Section Appearance"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-87072"/>-->
+            <testCaseId value="MAGETWO-88780"/>
             <group value="pagebuilder"/>
             <group value="stage"/>
             <group value="editPanel"/>
@@ -120,7 +123,7 @@ c            <group value="stage"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateHeadingTextAttributeNotDisabled">
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
         </actionGroup>
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute"/>
         <!--Save page and verify fields (because some of them change)-->
@@ -140,12 +143,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditPanelAdvancedSectionAppearance">
         <annotations>
-            <features value="Heading"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Heading - Advanced Section Appearance"/>
             <description value="Tests the following for each attribute under Advanced Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-87072"/>-->
+            <testCaseId value="MAGETWO-88781"/>
             <group value="pagebuilder"/>
             <group value="stage"/>
             <group value="editPanel"/>
@@ -202,7 +206,7 @@ c            <group value="stage"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
             <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderDefaultProperty.section, PageBuilderAdvancedBorderDefaultProperty.fieldName)}}" userInput="value" stepKey="grabBorderOptions"/>
         <assertCount actual="grabBorderOptions" actualType="variable" expected="10" expectedType="int" stepKey="assertBorderOptions"/>
         <!--Border Color-->
@@ -215,7 +219,7 @@ c            <group value="stage"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateBorderColorAttributeDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
         <assertEmpty actual="getTextFromBorderColorAttribute" actualType="variable" message="Text field has text: $getTextFromBorderColorAttribute" stepKey="assertGetTextFromBorderColorAttribute"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderColorAttributePlaceholderText">
@@ -257,7 +261,7 @@ c            <group value="stage"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
         <assertEmpty actual="getTextFromCSSClassesAttribute" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute" stepKey="assertGetTextFromCSSClassesAttribute"/>
         <!--Margins and Padding-->
@@ -267,7 +271,7 @@ c            <group value="stage"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateMarginsAndPaddingAttributeNotRequired">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </actionGroup>
-        <!--All Below will be refactored in MAGETWO-12345-->
+        <!--All Refactor in MAGETWO-88795-->
         <!--Assert against values-->
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop"/>
         <assertEmpty actual="getTextMarginTop" actualType="variable" message="Text field has text: $getTextMarginTop" stepKey="assertEmptyTextMarginTop"/>
@@ -304,14 +308,14 @@ c            <group value="stage"/>
             <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
         <!--Border Color-->
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute2"/>
         <assertEmpty actual="getTextFromBorderColorAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderColorAttribute2" stepKey="assertGetTextFromBorderColorAttribute2"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderColorAttributePlaceholderText2">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
         <!--Border Size-->
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderSizeDefaultProperty.section, PageBuilderAdvancedBorderSizeDefaultProperty.fieldName)}}" stepKey="getTextFromBorderSizeAttribute2"/>
         <assertEmpty actual="getTextFromBorderSizeAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderSizeAttribute2" stepKey="assertGetTextFromBorderSizeAttribute2"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderSizeAttributePlaceholderText2">
@@ -322,11 +326,11 @@ c            <group value="stage"/>
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <!--CSS Classes-->
-        <!--Below will be refactored in MAGETWO-12345-->
+        <!--Refactor in MAGETWO-88795-->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute2"/>
         <assertEmpty actual="getTextFromCSSClassesAttribute2" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute2" stepKey="assertGetTextFromCSSClassesAttribute2"/>
         <!--Margins and Padding-->
-        <!--All Below will be refactored in MAGETWO-12345-->
+        <!--All Refactor in MAGETWO-88795-->
         <!--Assert against values-->
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop2"/>
         <assertEmpty actual="getTextMarginTop2" actualType="variable" message="Text field has text: $getTextMarginTop2" stepKey="assertEmptyTextMarginTop2"/>
@@ -349,12 +353,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingVerifyOnHoverOptionMenu">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Verify Heading On Hover Option Menu"/>
             <description value="Test verifies that on hover option menu for Heading content block contains all buttons"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88782"/>
             <group value="pagebuilder"/>
             <group value="stage"/>
             <group value="heading"/>
@@ -389,12 +394,14 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditText">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-83923"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Text"/>
             <description value="Edit Heading Text field in PageBuilder and view the rendered content block in stage and storefront"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88783"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -436,12 +443,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditTypeH2">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Type H2"/>
             <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88784"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -490,12 +498,14 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditTypeH3">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-83923"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Type H3"/>
             <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88785"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -544,12 +554,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditTypeH4">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Type H4"/>
             <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88786"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -598,12 +609,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditTypeH5">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Type H5"/>
             <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88787"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -652,12 +664,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingEditTypeH6">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Edit Heading Type H6"/>
             <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84258"/>-->
+            <testCaseId value="MAGETWO-88788"/>
             <group value="pagebuilder"/>
             <group value="edit"/>
             <group value="heading"/>
@@ -706,12 +719,13 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingDuplicate">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Duplicate a heading content block in stage"/>
             <description value="A user should be able to duplicate a heading block in a row."/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84919"/>-->
+            <testCaseId value="MAGETWO-88789"/>
             <group value="pagebuilder"/>
             <group value="duplicate"/>
             <group value="heading"/>
@@ -815,12 +829,14 @@ c            <group value="stage"/>
     </test>
     <test name="HeadingDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Heading MAGETWO-83923"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-83923"/>
+            <stories value="MAGETWO-87072"/>
             <title value="Delete Heading Content Block"/>
             <description value="A user should be able to delete a heading block from a row. Verify on Stage amd Storefront"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-84919"/>-->
+            <testCaseId value="MAGETWO-88790"/>
             <group value="pagebuilder"/>
             <group value="delete"/>
             <group value="heading"/>
