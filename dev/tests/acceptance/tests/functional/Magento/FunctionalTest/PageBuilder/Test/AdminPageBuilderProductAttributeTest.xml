@@ -46,7 +46,7 @@
             <group value="pagebuilder"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -101,7 +101,7 @@
             <group value="skip"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -163,7 +163,7 @@
             <group value="skip"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -224,7 +224,7 @@
             <group value="pagebuilder"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -233,7 +233,6 @@
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
         </before>
         <after>
-            <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
