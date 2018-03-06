@@ -93,7 +93,7 @@ export default class Banner extends PreviewBlock {
      */
     public getContentHtml() {
         if (this.isContentEmpty()) {
-            return $t("Write banner text here...");
+            return $t("Edit banner text");
         } else {
             return $t(this.data.message());
         }
