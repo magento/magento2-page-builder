@@ -74,6 +74,7 @@
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection2"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <!-- check field values -->
+        <seeElement selector="{{MapInAdmin.mapConfigurationWithPin}}" stepKey="seePinOnConfigurationMap"/>
         <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
         <grabValueFrom selector="{{MapInAdmin.mapPosition}}" stepKey="mapPosition"/>
         <assertStringStartsWith stepKey="assertStringStartsWith" expected="30.401808299999995,-97.72355449999998,6" expectedType="string" actual="mapPosition" actualType="variable"/>
@@ -234,6 +235,7 @@
             <argument name="property" value="PageBuilderMapHeightProperty"/>
         </actionGroup>
         <!-- see defaults -->
+        <dontSeeElement selector="{{MapInAdmin.mapConfigurationWithPin}}" stepKey="dontSeePinOnConfigurationMap"/>
         <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
         <grabValueFrom selector="{{MapInAdmin.mapPosition}}" stepKey="mapPosition"/>
         <assertEmpty actual="mapPosition" actualType="variable" stepKey="assertMapPositionIsEmpty"/>
