@@ -8,8 +8,11 @@ import ko from "knockout";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
+import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
+import {BlockMountEventParams} from "../../stage/structural/editable-area";
 import Block from "../block";
+import {BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
 
 export default class Row extends PreviewBlock {
@@ -43,7 +46,7 @@ export default class Row extends PreviewBlock {
                 );
             });
         }
-    }, 10);
+    }, 50);
 
     /**
      * @param {Block} parent
@@ -53,6 +56,16 @@ export default class Row extends PreviewBlock {
         super(parent, config);
 
         this.parent.stage.store.subscribe(this.buildJarallax);
+        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParams) => {
+            if (params.id === this.parent.id) {
+                this.buildJarallax();
+            }
+        });
+        EventBus.on("block:mount", (event: Event, params: BlockMountEventParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.buildJarallax();
+            }
+        });
     }
 
     /**

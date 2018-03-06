@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "./block"], function (_jquery, _knockout, _jarallax, _underscore, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "../../event-bus", "./block"], function (_jquery, _knockout, _jarallax, _underscore, _eventBus, _block) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -44,9 +44,21 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
             });
           });
         }
-      }, 10);
+      }, 50);
 
       _this.parent.stage.store.subscribe(_this.buildJarallax);
+
+      _eventBus.on("row:block:ready", function (event, params) {
+        if (params.id === _this.parent.id) {
+          _this.buildJarallax();
+        }
+      });
+
+      _eventBus.on("block:mount", function (event, params) {
+        if (params.block.parent.id === _this.parent.id) {
+          _this.buildJarallax();
+        }
+      });
 
       return _this;
     }

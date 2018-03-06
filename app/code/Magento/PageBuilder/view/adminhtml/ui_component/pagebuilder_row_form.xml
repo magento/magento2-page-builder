@@ -70,7 +70,7 @@
         <field name="background_position" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">top_aligned</item>
+                    <item name="default" xsi:type="string">center center</item>
                 </item>
             </argument>
             <settings>
@@ -101,7 +101,7 @@
         <field name="background_size" sortOrder="40" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">auto</item>
+                    <item name="default" xsi:type="string">cover</item>
                 </item>
             </argument>
             <settings>
@@ -229,32 +229,15 @@
                     <link>http://docs.magento.com/m2/ce/user_guide/cms/page-builder.html</link>
                     <description translate="true">
                         <![CDATA[
-                        You can enter a number ranging from -1.0 to 2.0.<br />
-                        <table class="admin__field-tooltip-table" width="100%">
-                            <tr>
-                                <th>Value</th>
-                                <th>Parallax Effect</th>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">-1.0 - 0.0</td>
-                                <td>Will make the background scroll in the opposite direction.</td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">0.5</td>
-                                <td>Default value.</td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">1.0</td>
-                                <td>Fixed image, no parallax.</td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">2.0</td>
-                                <td>Fastest parallax.</td>
-                            </tr>
-                        </table>
+                        <p>Parallax Speed controls how the background will behave when page is scrolled.</p>
+                        <p>Negative values will make the background scroll in the reverse direction.</p>
+                        <p>Values from 0 to 1 will cause the scroll to be slower than the scroll speed of the window, values from 1 to 2 will be faster.</p>
+                        <p>0 - Fixes the background to the window (e.g. no scrolling).</p>
+                        <p>1 - Background will scroll at the same speed as the window.</p>
                         ]]>
                     </description>
                 </tooltip>
+                <notice translate="true">Enter fractional number from -1.0 to 2.0.</notice>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="less-than-equals-to" xsi:type="number">2.0</rule>
