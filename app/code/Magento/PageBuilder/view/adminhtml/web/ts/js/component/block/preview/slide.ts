@@ -22,10 +22,10 @@ export default class Slide extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
         const slider = this.parent.parent;
-        this.displayLabel(`Slide ${slider.children().indexOf(this.parent) + 1}`);
+        this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         slider.children.subscribe((children) => {
             const index = children.indexOf(this.parent);
-            this.displayLabel(`Slide ${index + 1}`);
+            this.displayLabel($t(`Slide ${index + 1}`));
         });
     }
     /**
