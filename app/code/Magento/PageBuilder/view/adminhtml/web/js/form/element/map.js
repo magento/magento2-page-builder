@@ -8,8 +8,6 @@
 define([
     'Magento_Ui/js/form/element/abstract',
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',
-    'underscore',
-    'mage/translate',
 ], function (AbstractField) {
     'use strict';
 
@@ -50,7 +48,7 @@ define([
             // Create the map
             this.map = new google.maps.Map(element, mapOptions);
 
-            //Add marker if there is a start value
+            // Add marker if there is a start value
             if (this.value()) {
                 this.addMarker(startValue[0], startValue[1]);
             }
@@ -63,6 +61,9 @@ define([
 
         /**
          * Adds a map marker
+         *
+         * @param lat
+         * @param lng
          */
         addMarker: function (lat, lng) {
             this.marker = new google.maps.Marker({
@@ -98,6 +99,10 @@ define([
         onZoomChange: function () {
             this.value(this.exportValue());
         },
+
+        /**
+         * Callback after an update to map
+         */
         onUpdate: function () {
             this._super();
 
@@ -113,6 +118,13 @@ define([
             this.map.setZoom(parseInt(value[2], 10));
             this.map.setCenter(latLng);
         },
+
+        /**
+         * Returns current latitude, longitude, and zoom level as a single string
+         *
+         * @param latLng
+         * @return {string}
+         */
         exportValue: function (latLng) {
             var curLatLng = latLng ? latLng : this.marker.getPosition();
 
