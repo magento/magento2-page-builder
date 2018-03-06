@@ -36,15 +36,17 @@ function fireBlockReadyEvent(block: Block, childrenLength: number) {
         fire();
     } else {
         let mountCounter = 0;
-        EventBus.on("block:mount", (event: Event, params: BlockMountEventParams) => {
+        const eventCallback = (event: Event, params: BlockMountEventParams) => {
             if (params.block.parent.id === block.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
+                    EventBus.off("block:mount", eventCallback);
                 }
             }
-        });
+        };
+        EventBus.on("block:mount", eventCallback);
     }
 }
 

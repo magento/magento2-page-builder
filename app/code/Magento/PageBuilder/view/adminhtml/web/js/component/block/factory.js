@@ -40,15 +40,19 @@ define(["Magento_PageBuilder/js/component/loader", "../event-bus"], function (_l
     } else {
       var mountCounter = 0;
 
-      _eventBus.on("block:mount", function (event, params) {
+      var eventCallback = function eventCallback(event, params) {
         if (params.block.parent.id === block.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
+
+            _eventBus.off("block:mount", eventCallback);
           }
         }
-      });
+      };
+
+      _eventBus.on("block:mount", eventCallback);
     }
   }
   /**
