@@ -8,14 +8,14 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="HeadingDefaultAppearance">
+    <test name="HeadingDefaultState">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <stories value="MAGETWO-83923"/>
             <stories value="MAGETWO-87072"/>
-            <title value="Heading - Default Heading Appearance"/>
-            <description value="Tests default appearance of a Heading content block in the stage and storefront"/>
+            <title value="Heading - Default Heading State"/>
+            <description value="Tests default state of a Heading content block in the stage and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87104"/>
             <group value="pagebuilder"/>
@@ -42,32 +42,32 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!--Verify Default Header in Stage-->
+        <!-- Verify Default Header in Stage -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
         <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!--Verify Default Header in Stage After Page Save-->
+        <!-- Verify Default Header in Stage After Page Save -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
         <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder2"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius2"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Default Header in Storefront-->
+        <!-- Verify Default Header in Storefront -->
         <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value,'1')}}" stepKey="seeStorefrontBorderInDOM"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value,'1')}}" stepKey="seeStorefrontBorderRadiusInDOM"/>
         <dontSeeElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeStorefrontHeading"/>
     </test>
-    <test name="HeadingEditPanelGeneralSectionAppearance">
+    <test name="HeadingEditPanelGeneralSectionVisual">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <stories value="MAGETWO-87072"/>
-            <title value="Heading - General Section Appearance"/>
+            <title value="Heading - Edit Panel General Section Visual"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88780"/>
@@ -98,7 +98,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!--Heading Type-->
+        <!-- Heading Type -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTypeAttribute">
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
@@ -113,7 +113,7 @@
         </actionGroup>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
         <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="5" expectedType="int" stepKey="assertHeadingTypeOptions"/>
-        <!--Heading Text-->
+        <!-- Heading Text -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTextAttribute">
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
         </actionGroup>
@@ -123,30 +123,30 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateHeadingTextAttributeNotDisabled">
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
         </actionGroup>
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute"/>
-        <!--Save page and verify fields (because some of them change)-->
+        <!-- Save page and verify fields (because some of them change) -->
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!--Heading Type-->
+        <!-- Heading Type -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingTypeAttributeValue2">
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
-        <!--Heading Text-->
+        <!-- Heading Text -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute2" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2"/>
     </test>
-    <test name="HeadingEditPanelAdvancedSectionAppearance">
+    <test name="HeadingEditPanelAdvancedSectionVisual">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <stories value="MAGETWO-87072"/>
-            <title value="Heading - Advanced Section Appearance"/>
+            <title value="Heading - Edit Panel Advanced Section Visual"/>
             <description value="Tests the following for each attribute under Advanced Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88781"/>
@@ -155,6 +155,7 @@
             <group value="editPanel"/>
             <group value="heading"/>
             <group value="advancedSection"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -177,8 +178,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandAdvancedConfigurationSection" stepKey="expandAdvancedConfigurationSection"/>
-        <!--Text Alignment-->
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Text Alignment -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeTextAlignmentAttribute">
             <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
         </actionGroup>
@@ -193,7 +194,7 @@
         </actionGroup>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentDefaultProperty.section, PageBuilderAdvancedAlignmentDefaultProperty.fieldName)}}" userInput="value" stepKey="grabTextAlignmentOptions"/>
         <assertCount actual="grabTextAlignmentOptions" actualType="variable" expected="4" expectedType="int" stepKey="assertTextAlignmentOptions"/>
-        <!--Border-->
+        <!-- Border -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">
             <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
@@ -206,10 +207,10 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
             <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderDefaultProperty.section, PageBuilderAdvancedBorderDefaultProperty.fieldName)}}" userInput="value" stepKey="grabBorderOptions"/>
         <assertCount actual="grabBorderOptions" actualType="variable" expected="10" expectedType="int" stepKey="assertBorderOptions"/>
-        <!--Border Color-->
+        <!-- Border Color -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderColorAttribute">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
@@ -219,13 +220,13 @@
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateBorderColorAttributeDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
         <assertEmpty actual="getTextFromBorderColorAttribute" actualType="variable" message="Text field has text: $getTextFromBorderColorAttribute" stepKey="assertGetTextFromBorderColorAttribute"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderColorAttributePlaceholderText">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <!--Border Size-->
+        <!-- Border Size -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderSizeAttribute">
             <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
         </actionGroup>
@@ -238,7 +239,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderSizeAttributePlaceholderText">
             <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
         </actionGroup>
-        <!--Border Radius-->
+        <!-- Border Radius -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderRadiusAttribute">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
@@ -251,7 +252,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadiusAttributePlaceholderText">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <!--CSS Classes-->
+        <!-- CSS Classes -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeCSSClassesAttribute">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
@@ -261,18 +262,18 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
         <assertEmpty actual="getTextFromCSSClassesAttribute" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute" stepKey="assertGetTextFromCSSClassesAttribute"/>
-        <!--Margins and Padding-->
+        <!-- Margins and Padding -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMarginsAndPaddingAttribute">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateMarginsAndPaddingAttributeNotRequired">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </actionGroup>
-        <!--All Refactor in MAGETWO-88795-->
-        <!--Assert against values-->
+        <!-- All Refactor in MAGETWO-88795 -->
+        <!-- Assert against values -->
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop"/>
         <assertEmpty actual="getTextMarginTop" actualType="variable" message="Text field has text: $getTextMarginTop" stepKey="assertEmptyTextMarginTop"/>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getTextMarginRight"/>
@@ -289,49 +290,49 @@
         <assertEmpty actual="getTextPaddingLeft" actualType="variable" message="Text field has text: $getTextPaddingLeft" stepKey="assertEmptyTextPaddingLeft"/>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getTextPaddingBottom"/>
         <assertEmpty actual="getTextPaddingBottom" actualType="variable" message="Text field has text: $getTextPaddingBottom" stepKey="assertEmptyTextPaddingBottom"/>
-        <!--Assert against placeholder text-->
+        <!-- Assert against placeholder text -->
         <actionGroup ref="validateMarginsAndPaddingPlaceholderTextSlideOutPanel" stepKey="validateMarginsAndPaddingPlaceholderText"/>
-        <!--Save page and verify fields (because some of them change)-->
+        <!-- Save page and verify fields (because some of them change) -->
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandAdvancedConfigurationSection" stepKey="expandAdvancedConfigurationSection2"/>
-        <!--Text Alignment-->
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <!-- Text Alignment -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTextAlignmentAttributeValue2">
             <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
         </actionGroup>
-        <!--Border-->
+        <!-- Border -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue2">
             <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
-        <!--Border Color-->
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Border Color -->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute2"/>
         <assertEmpty actual="getTextFromBorderColorAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderColorAttribute2" stepKey="assertGetTextFromBorderColorAttribute2"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderColorAttributePlaceholderText2">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <!--Border Size-->
-        <!--Refactor in MAGETWO-88795-->
+        <!-- Border Size -->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderSizeDefaultProperty.section, PageBuilderAdvancedBorderSizeDefaultProperty.fieldName)}}" stepKey="getTextFromBorderSizeAttribute2"/>
         <assertEmpty actual="getTextFromBorderSizeAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderSizeAttribute2" stepKey="assertGetTextFromBorderSizeAttribute2"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderSizeAttributePlaceholderText2">
             <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
         </actionGroup>
-        <!--Border Radius-->
+        <!-- Border Radius -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadiusAttributePlaceholderText2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <!--CSS Classes-->
-        <!--Refactor in MAGETWO-88795-->
+        <!-- CSS Classes -->
+        <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute2"/>
         <assertEmpty actual="getTextFromCSSClassesAttribute2" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute2" stepKey="assertGetTextFromCSSClassesAttribute2"/>
-        <!--Margins and Padding-->
-        <!--All Refactor in MAGETWO-88795-->
-        <!--Assert against values-->
+        <!-- Margins and Padding -->
+        <!-- All Refactor in MAGETWO-88795 -->
+        <!-- Assert against values -->
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop2"/>
         <assertEmpty actual="getTextMarginTop2" actualType="variable" message="Text field has text: $getTextMarginTop2" stepKey="assertEmptyTextMarginTop2"/>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getTextMarginRight2"/>
@@ -348,7 +349,7 @@
         <assertEmpty actual="getTextPaddingLeft2" actualType="variable" message="Text field has text: $getTextPaddingLeft2" stepKey="assertEmptyTextPaddingLeft2"/>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getTextPaddingBottom2"/>
         <assertEmpty actual="getTextPaddingBottom2" actualType="variable" message="Text field has text: $getTextPaddingBottom2" stepKey="assertEmptyTextPaddingBottom2"/>
-        <!--Assert against placeholder text-->
+        <!-- Assert against placeholder text -->
         <actionGroup ref="validateMarginsAndPaddingPlaceholderTextSlideOutPanel" stepKey="validateMarginsAndPaddingPlaceholderText2"/>
     </test>
     <test name="HeadingVerifyOnHoverOptionMenu">
@@ -434,11 +435,11 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
     </test>
     <test name="HeadingEditTypeH2">
@@ -485,13 +486,13 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
@@ -541,13 +542,13 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
@@ -596,13 +597,13 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
@@ -651,13 +652,13 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
@@ -706,13 +707,13 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Verify Header in Stage-->
+        <!-- Verify Header in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Header in Storefront-->
+        <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
@@ -753,15 +754,15 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!--Fill All General Fields-->
+        <!-- Fill All General Fields -->
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingText">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypeH3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <!--Fill All Advanced Fields-->
-        <actionGroup ref="expandAdvancedConfigurationSection" stepKey="expandAdvancedConfigurationSection"/>
+        <!-- Fill All Advanced Fields -->
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterTextAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -784,14 +785,15 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!--Duplicate and Verify Stage-->
+        <!-- Duplicate and Verify Stage -->
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeading">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <seeElement selector="{{HeadingOnStage.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedAlignmentProperty.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderProperty.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateHeadingStage"/>
-        <!--Verify Edit Panel Values-->
-        <actionGroup ref="openPageBuilderEditPanelByIndex2" stepKey="openEditMenuOnStage2">
+        <!-- Verify Edit Panel Values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderHeadingIndex2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingText">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -799,7 +801,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeHeadingTypeH3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <actionGroup ref="expandAdvancedConfigurationSection" stepKey="expandAdvancedConfigurationSection2"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="seeTextAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
         </actionGroup>
@@ -824,7 +826,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Storefront-->
+        <!-- Verify Storefront -->
         <waitForElementVisible selector="{{HeadingOnFrontend.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedCssClassesProperty.value, PageBuilderAdvancedAlignmentProperty.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderProperty.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateHeadingStorefront"/>
     </test>
     <test name="HeadingDelete">
@@ -863,10 +865,10 @@
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!--Verify Not In Stage-->
+        <!-- Verify Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderHeadingContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <!--Verify Not In Storefront-->
+        <!-- Verify Not In Storefront -->
         <dontSeeElementInDOM selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentBlockInStorefront"/>
     </test>
 </tests>
