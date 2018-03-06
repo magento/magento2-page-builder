@@ -8,7 +8,6 @@ import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
 import PreviewBlock from "./block";
-import {getMaxColumns} from "./column-group/resizing";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
 
