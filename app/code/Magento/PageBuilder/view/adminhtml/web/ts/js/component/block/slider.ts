@@ -8,6 +8,7 @@ import Config from "../config";
 import Block from "./block";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import EventBus from "../event-bus";
+import delayedPromise from "../../utils/delayed-promise";
 
 export default class Slider extends Block {
 
@@ -20,9 +21,9 @@ export default class Slider extends Block {
 
         createBlock(
             Config.getInitConfig("content_types").slide,
-            this.parent,
+            this,
             this.stage,
-        ).then((slide) => {
+        ).then(delayedPromise(300)).then((slide) => {
             this.addChild(slide, this.children().length);
             slide.edit.open();
         });
@@ -33,7 +34,12 @@ export default class Slider extends Block {
      */
     protected bindEvents() {
         super.bindEvents();
-
+        // Block being mounted onto container
+        EventBus.on("slider:block:mount", (event: Event, params: {[key: string]: any}) => {
+            if (params.id === this.id) {
+                this.addSlide();
+            }
+        })
         // Block being removed from container
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../block/factory", "../config", "./block", "../event-bus"], function (_factory, _config, _block, _eventBus) {
+define(["../block/factory", "../config", "./block", "../event-bus", "../../utils/delayed-promise"], function (_factory, _config, _block, _eventBus, _delayedPromise) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -21,7 +21,7 @@ define(["../block/factory", "../config", "./block", "../event-bus"], function (_
 
       // Set the active slide to the index of the new slide we're creating
       this.preview.data.activeSlide(this.children().length);
-      (0, _factory)(_config.getInitConfig("content_types").slide, this.parent, this.stage).then(function (slide) {
+      (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then((0, _delayedPromise)(300)).then(function (slide) {
         _this.addChild(slide, _this.children().length);
 
         slide.edit.open();
@@ -35,7 +35,14 @@ define(["../block/factory", "../config", "./block", "../event-bus"], function (_
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _Block.prototype.bindEvents.call(this); // Block being removed from container
+      _Block.prototype.bindEvents.call(this); // Block being mounted onto container
+
+
+      _eventBus.on("slider:block:mount", function (event, params) {
+        if (params.id === _this2.id) {
+          _this2.addSlide();
+        }
+      }); // Block being removed from container
 
 
       _eventBus.on("block:removed", function (event, params) {

@@ -9,23 +9,36 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
   function (_PreviewBlock) {
     _inheritsLoose(Slide, _PreviewBlock);
 
-    function Slide() {
-      var _temp, _this;
+    /**
+     * @param {Block} parent
+     * @param {ConfigContentBlock} config
+     */
+    function Slide(parent, config) {
+      var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.showOverlayHover = _knockout.observable(false);
+      _this.showButtonHover = _knockout.observable(false);
+      var slider = _this.parent.parent;
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.showOverlayHover = _knockout.observable(false), _this.showButtonHover = _knockout.observable(false), _temp) || _this;
+      _this.displayLabel("Slide " + (slider.children().indexOf(_this.parent) + 1));
+
+      slider.children.subscribe(function (children) {
+        var index = children.indexOf(_this.parent);
+
+        _this.displayLabel("Slide " + (index + 1));
+      });
+      return _this;
     }
-
-    var _proto = Slide.prototype;
-
     /**
      * Get the slide wrapper attributes for the preview
      *
      * @returns {any}
      */
+
+
+    var _proto = Slide.prototype;
+
     _proto.getBackgroundStyles = function getBackgroundStyles() {
       var backgroundImage = "none";
 

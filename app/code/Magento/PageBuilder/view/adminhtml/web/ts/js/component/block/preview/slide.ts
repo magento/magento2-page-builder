@@ -8,11 +8,27 @@ import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
 import PreviewBlock from "./block";
+import {getMaxColumns} from "./column-group/resizing";
+import {ConfigContentBlock} from "../../config";
+import Block from "../block";
 
 export default class Slide extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
 
+    /**
+     * @param {Block} parent
+     * @param {ConfigContentBlock} config
+     */
+    constructor(parent: Block, config: ConfigContentBlock) {
+        super(parent, config);
+        const slider = this.parent.parent;
+        this.displayLabel(`Slide ${slider.children().indexOf(this.parent) + 1}`);
+        slider.children.subscribe((children) => {
+            const index = children.indexOf(this.parent);
+            this.displayLabel(`Slide ${index + 1}`);
+        });
+    }
     /**
      * Get the slide wrapper attributes for the preview
      *
