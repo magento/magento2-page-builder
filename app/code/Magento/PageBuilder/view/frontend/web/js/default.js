@@ -5,7 +5,7 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) { ``
+requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     'use strict';
     $(document).ready(function() {
         $('pre code:not(.hljs)').each(function (i, block) {
@@ -42,7 +42,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) { ``
                 imgPosition: element.style.backgroundPosition || '50% 50%',
                 imgRepeat: element.style.backgroundRepeat || 'no-repeat',
                 imgSize: element.style.backgroundSize || 'cover',
-                speed: $(element).data('speed') || 0.5
+                speed: parseFloat($(element).data('speed')) || 0.5
             });
         });
 
