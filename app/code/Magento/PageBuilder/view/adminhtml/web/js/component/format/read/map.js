@@ -14,6 +14,7 @@ define([], function () {
     /**
      * Read map position and zoom from the element
      * Also removes display none back to inline-block for preview styles
+     *
      * @param element HTMLElement
      * @returns {Promise<any>}
      */

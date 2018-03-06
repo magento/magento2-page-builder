@@ -41,34 +41,18 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
       return data.position !== "";
     };
     /**
-     * Return style for hidden if there is no marker
-     *
-     * @returns {object}
-     */
-
-
-    _proto.hiddenIfNoMarker = function hiddenIfNoMarker() {
-      var result = {};
-
-      if (!this.hasMarker()) {
-        result = {
-          display: "none"
-        };
-      }
-
-      return result;
-    };
-    /**
      * Gets the map styles
      *
      * @returns {object}
      */
 
 
-    _proto.getMapStyles = function getMapStyles() {
-      var style = _underscore.clone(this.getStyle());
+    _proto.getStyle = function getStyle() {
+      var style = _underscore.clone(_Block.prototype.getStyle.call(this));
 
-      return Object.assign(style, this.hiddenIfNoMarker());
+      return this.hasMarker() ? style : Object.assign(style, {
+        display: "none"
+      });
     };
 
     return Map;

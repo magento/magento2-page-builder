@@ -29,25 +29,9 @@ export default class Map extends Block {
      *
      * @returns {boolean}
      */
-    public hasMarker() {
+    private hasMarker() {
         const data = this.getData();
         return data.position !== "";
-    }
-
-    /**
-     * Return style for hidden if there is no marker
-     *
-     * @returns {object}
-     */
-    public hiddenIfNoMarker() {
-        let result = {};
-
-        if (!this.hasMarker()) {
-            result = {
-                display: "none",
-            };
-        }
-        return result;
     }
 
     /**
@@ -55,8 +39,9 @@ export default class Map extends Block {
      *
      * @returns {object}
      */
-    public getMapStyles() {
-        const style = _.clone(this.getStyle());
-        return Object.assign(style, this.hiddenIfNoMarker());
+    public getStyle() {
+        const style: {} = _.clone(super.getStyle());
+
+        return this.hasMarker() ? style : Object.assign(style, {display: "none"});
     }
 }
