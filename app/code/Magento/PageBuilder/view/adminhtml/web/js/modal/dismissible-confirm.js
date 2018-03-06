@@ -40,6 +40,7 @@ define([
         _observeCheckbox: function () {
             var that = this;
             var checkbox = this.modal.find(this.options.dismissCheckbox);
+
             checkbox.change(function () {
                 that.dismissed = $(this).is(":checked");
             });
