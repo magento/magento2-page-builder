@@ -10,7 +10,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
     _inheritsLoose(Row, _PreviewBlock);
 
     /**
-     * Debouce and defer the init of Jarallax
+     * Debounce and defer the init of Jarallax
      *
      * @type {(() => void) & _.Cancelable}
      */
