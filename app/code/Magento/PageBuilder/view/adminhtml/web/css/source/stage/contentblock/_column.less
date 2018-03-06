@@ -3,10 +3,19 @@
 //  * See COPYING.txt for license details.
 //  */
 
-.pagebuilder-content-type {
-    .pagebuilder-column {
-        .element-children {
-            padding: 0;
-        }
+.pagebuilder-content-type.children-min-height.pagebuilder-column {
+    margin-right: 1px;
+    > .element-children {
+        min-height: inherit;
+        padding: 0;
+    }
+}
+
+.pagebuilder-content-type.pagebuilder-column {
+    margin-bottom: 10px;
+    min-height: inherit;
+
+    &.empty-column {
+        min-height: 190px;
     }
 }

@@ -3,7 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
+import "./sortable/binding";
 import _, {Dictionary} from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
@@ -19,7 +21,9 @@ export default class PreviewBlock {
     public parent: Block;
     public config: any;
     public data: PreviewData = {};
+    public displayLabel: KnockoutObservable<string>;
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    private mouseover: boolean = false;
 
     /**
      * PreviewBlock constructor
@@ -33,6 +37,7 @@ export default class PreviewBlock {
 
         this.parent = parent;
         this.config = config || {};
+        this.displayLabel = ko.observable(this.config.label);
 
         this.setupDataFields();
 
@@ -96,6 +101,52 @@ export default class PreviewBlock {
                 this.data[key] = ko.observable(value);
             }
         }
+    }
+
+    /**
+     * Set state based on mouseover event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
+     */
+    public onMouseOver(context: PreviewBlock, event: Event) {
+        if (this.mouseover) {
+            return;
+        }
+
+        this.mouseover = true;
+        const currentTarget = event.currentTarget;
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+
+        if (!$(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
+        }
+
+        optionsMenu.addClass("pagebuilder-options-visible");
+        $(currentTarget).addClass("pagebuilder-content-type-active");
+    }
+
+    /**
+     * Set state based on mouseout event for the preview
+     *
+     * @param {PreviewBlock} context
+     * @param {Event} event
+     */
+    public onMouseOut(context: PreviewBlock, event: Event) {
+        this.mouseover = false;
+        _.delay(() => {
+            if (!this.mouseover) {
+                const currentTarget = event.currentTarget;
+                let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+
+                if (!$(currentTarget).hasClass("type-nested")) {
+                    optionsMenu = optionsMenu.first();
+                }
+
+                optionsMenu.removeClass("pagebuilder-options-visible");
+                $(currentTarget).removeClass("pagebuilder-content-type-active");
+            }
+        }, 100); // 100 ms delay to allow for users hovering over other elements
     }
 
     /**

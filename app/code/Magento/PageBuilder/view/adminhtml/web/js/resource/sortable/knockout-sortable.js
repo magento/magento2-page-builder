@@ -5,7 +5,8 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"], function(ko, jQuery, registry, _, EventBus) {
+define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
+    function(ko, jQuery, _, EventBus) {
 
     /**
      * Retrieve the view model for an element
@@ -17,21 +18,23 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
         return ko.dataFor(ui.item[0]) || {};
     }
 
+    // Listen for the dragged component from the event bus
+    var draggedComponent;
+
+    EventBus.on("drag:start", function (event, params) {
+        draggedComponent = params.component;
+    });
+    EventBus.on("drag:stop", function () {
+        draggedComponent = false;
+    });
+
     var Sortable = {
         defaults: {
             tolerance: 'pointer',
-            cursor: 'move',
+            cursor: '-webkit-grabbing',
             connectWith: '.pagebuilder-sortable',
             helper: function (event, element) {
-                var ele;
-
-                if (element.children().first().hasClass('pagebuilder-entity')) {
-                    ele = jQuery('<div />');
-                    ele.addClass('pagebuilder-entity-helper').data('sorting', true);
-                } else {
-                    ele = element.css('opacity', 0.5);
-                }
-                return ele;
+                return element.css('opacity', 0.5);
             },
             appendTo: document.body,
             placeholder: {
@@ -227,8 +230,8 @@ define(["knockout", "jquery", "uiRegistry", "underscore", "Magento_PageBuilder/j
                 currentInstance = getViewModelFromUi(ui);
 
             // If the registry contains a reference to the drag element view model use that instead
-            if (registry.get('dragElementViewModel')) {
-                currentInstance = registry.get('dragElementViewModel');
+            if (draggedComponent) {
+                currentInstance = draggedComponent;
             }
 
             var allowedParents = currentInstance.config.allowed_parents;

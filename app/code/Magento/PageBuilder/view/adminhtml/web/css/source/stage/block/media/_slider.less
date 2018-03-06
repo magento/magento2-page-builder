@@ -1,79 +1,251 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
-/**
- * _slider contains {less} for Sliders and slider items
- */
+.pagebuilder-content-type.pagebuilder-slider {
+    border: none;
 
-.pagebuilder-advanced-slider {
+    .slider-container {
+        overflow: hidden;
 
-    .add-slide-button {
-        margin: 0 0 20px 15px;
+        .slick-list,
+        .slick-track,
+        .slick-slide {
+            min-height: inherit;
+        }
     }
 
-    .slick-slider {
-        .slick-slide {
-            min-height: 50px;
+    .slider-controls {
+        padding: 14px 0;
+        text-align: center;
+
+        .slider-navigation {
+            display: inline-block;
+            line-height: 33px;
+            margin-left: 111px;
+            max-width: 50%;
+            padding: 0 8px;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+
+            .navigation-dot {
+                display: inline-block;
+                font-size: 12px;
+                line-height: 33px;
+                margin: 0 3px;
+                text-align: center;
+                vertical-align: top;
+                width: 28px;
+
+                .lib-tooltip(
+                    @_tooltip-position: top,
+                    @_tooltip-color: "#CCCCCC"
+                );
+
+                .tooltip-content {
+                    background: #fffbbb;
+                    border: 1px solid #afadac;
+                    border-radius: 1px;
+                    bottom: 110%;
+                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+                    font-size: 14px;
+                    left: 50%;
+                    min-width: auto;
+                    padding: .9rem 1.8rem;
+                    position: absolute;
+                    text-align: center;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+
+                    &:before,
+                    &:after {
+                        border: .8rem solid transparent;
+                        content: '';
+                        display: block;
+                        height: 0;
+                        left: 50%;
+                        margin-left: -.8rem;
+                        position: absolute;
+                        top: 100%;
+                        width: 0;
+                    }
+                    &:before {
+                        border-top-color: #afadac;
+                        margin-top: 1px;
+                        z-index: 3;
+                    }
+                    &:after {
+                        border-top-color: #fffbbb;
+                        z-index: 4;
+                    }
+                }
+
+                a {
+                    background: white;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    display: inline-block;
+                    height: 14px;
+                    transition: .3s;
+                    width: 14px;
+                }
+
+                .navigation-handle {
+                    display: block;
+                    margin-top: -2px;
+                    opacity: 0;
+                    transition: visibility .3s, opacity .3s;
+                    visibility: hidden;
+
+                    &:before {
+                        .abs-icon;
+                        color: @color-gray65;
+                        content: @icon-gripper__content;
+                        cursor: ew-resize;
+                        display: block;
+                        font-size: 2rem;
+                        -webkit-font-smoothing: initial;
+                        transform: rotate(90deg);
+                    }
+                }
+
+                &.active {
+                    a {
+                        background: #373330;
+                        border: none;
+                    }
+                }
+
+                &:hover {
+                    a {
+                        border: 1px solid #b3b3b3;
+                    }
+
+                    &.active a {
+                        background: #1c1918;
+                        border: none;
+                    }
+
+                    .navigation-handle {
+                        opacity: 1;
+                        transition: visibility 0s, opacity .3s;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+
+        .add-slide {
+            display: inline-block;
+            opacity: 0;
+            transition: all .3s;
+            vertical-align: top;
+            visibility: hidden;
+
+            &:before {
+                content: @icon-plus__content;
+                font-family: @icons-admin__font-name;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                padding-right: 5px;
+                speak: none;
+            }
+        }
+    }
+
+
+    &:hover {
+        .slider-controls {
+            .add-slide {
+                opacity: 1;
+                transition: all .3s;
+                visibility: visible;
+            }
+        }
+    }
+
+    &.children-min-height {
+        .element-children {
+            min-height: inherit;
+            padding: 0;
         }
     }
 }
 
 @import './slick.less';
-@import './slick-theme.less';
 
-.pagebuilder-slider {
-    width: 100%;
-    float: left;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    padding: 80px 0;
+.slick-prev:before,
+.slick-next:before {
+    .abs-icon;
+    color: #5b5b5b;
+    font-size: 38px;
+    opacity: 1;
+}
 
-    .pagebuilder-content {
-        display: inline-block;
-        padding: 24px 20px;
-        width: 30%;
-        color: white;
+.slick-prev {
+    left: 1px;
+    &:before {
+        content: @icon-caret-left__content;
+        padding-right: 5px;
+    }
+}
 
-        h3 {
-            margin-top: 6px;
-            margin-bottom: 6px;
-            color: white;
+.slick-next {
+    right: 1px;
+    &:before {
+        content: @icon-caret-right__content;
+        padding-left: 5px;
+    }
+}
+
+.slick-prev,
+.slick-next {
+    background: rgba(252, 252, 252, .4);
+    border: none;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    font-size: 0px;
+    height: 60px;
+    line-height: 0px;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    width: 60px;
+    z-index: 101;
+
+    &.slick-disabled {
+        opacity: .2;
+    }
+
+    &:hover,
+    &:focus {
+        background: rgba(252, 252, 252, .8);
+        &:before {
+            color: #3d3d3d;
         }
-
-        .slider-content {
-            line-height: 24px;
-        }
-
-        button {
-            margin-top: 14px;
-        }
-
-        &.overlay-background {
-            background: rgba(0, 0, 0, 0.3);
+        &.slick-disabled {
+            background: rgba(252, 252, 252, .4);
         }
     }
 }
 
-/* Advanced Slider */
+.slick-track {
+    display: flex;
 
-.pagebuilder-advanced-slider-item {
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-.pagebuilder-advanced-slider-content {
-    margin: @margin*2;
-    width: 40%;
-    padding: @margin;
-    box-sizing: border-box;
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.5);
-    h3, p, li {
-        margin-bottom: @margin;
-        color: white;
+    .slick-slide {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: center;
     }
 }

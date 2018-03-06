@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-product-list">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-product-list" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko ifnot: preview.data.html() -->
     <i class="icon-pagebuilder-products"></i>
     <span data-bind="text: $t('Product List')"></span>
@@ -13,5 +13,5 @@
     <!-- ko if: preview.data.html() -->
     <div data-bind="html: preview.data.html"></div>
     <!-- /ko -->
-    <!-- ko template: optionsInstance.template --><!-- /ko -->
+    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

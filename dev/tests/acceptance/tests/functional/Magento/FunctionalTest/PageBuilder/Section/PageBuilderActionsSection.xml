@@ -35,11 +35,12 @@
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="div.pagebuilder-stage div.row-container"/>
         <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
+        <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
-        <element name="contentBlockOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]' parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
+        <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .edit-block' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .remove-structural' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
         <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
@@ -93,7 +94,7 @@
     <section name="PageBuilderColumnSection">
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]"/>
-        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type pagebuilder-column')]"/>
+        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][2]"/>
         <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
@@ -126,6 +127,8 @@
         <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled]' parameterized="true"/>
         <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled)]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
+        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-display-label")])[0][contains(text(), "{{arg1}}")]' parameterized="true"/>
+        <element name="empty" type="button" selector="//div[contains(@class, 'empty-column')]"/>
     </section>
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
@@ -135,17 +138,6 @@
     </section>
     <section name="HeaderOnFrontend">
         <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
-    </section>
-    <section name="RowsOnFrontend">
-        <element name="row1Display" type="button" selector="[data-role='row'][style*='display: flex;']"/>
-        <element name="rowDisplay" type="button" selector="[data-role='row']"/>
-        <element name="rowColor" type="button" selector="[data-role='row'][style*='color: rgb(255, 255, 255);']"/>
-        <element name="rowTextAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>
-        <element name="rowBorder" type="button" selector="[data-role='row'][style*='border: 10px dotted rgb(255, 255, 255);']"/>
-        <element name="rowBorderRadius" type="button" selector="[data-role='row'][style*='border-radius: 12px;']"/>
-        <element name="rowMargin" type="button" selector="[data-role='row'][style*='margin: 5px;']"/>
-        <element name="rowPadding" type="button" selector="[data-role='row'][style*='padding: 5px;']"/>
-        <element name="rowClass" type="button" selector="[data-role='row'].first-class.second-class.third-class"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
@@ -221,33 +213,6 @@
         <element name="dividerColor" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-color: rgb(255, 87, 51)')]"/>
         <element name="dividerThickness" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-width: 10px')]"/>
         <element name="dividerWidth" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'width: 50%')]"/>
-    </section>
-    <section name="AdvancedSliderOnFrontend">
-        <element name="advancedSliderDisplay" type="button" selector="div[data-role='advanced-slider']"/>
-        <element name="Autoplay" type="button" selector="div[data-role='advanced-slider'][data-autoplay='0']"/>
-        <element name="AutoplaySpeed" type="button" selector="div[data-role='advanced-slider'][data-autoplay-speed='{{arg1}}']" parameterized="true"/>
-        <element name="Fade" type="button" selector="div[data-role='advanced-slider'][data-fade='{{arg1}}']" parameterized="true"/>
-        <element name="IsInfinite" type="button" selector="div[data-role='advanced-slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
-        <element name="ShowArrows" type="button" selector="div[data-role='advanced-slider'][data-show-arrows='{{arg1}}']" parameterized="true"/>
-        <element name="ShowDots" type="button" selector="div[data-role='advanced-slider'][data-show-dots='0']"/>
-        <element name="nextSlide" type="button" selector="[data-role='advanced-slider'] .slick-next"/>
-    </section>
-    <section name="AdvancedSliderInAdmin">
-        <element name="addNewSlide" type="button" selector="//div[contains(@class, 'pagebuilder-advanced-slider')][1]/button"/>
-    </section>
-    <section name="SlideOnFrontend">
-        <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
-        <element name="slideTitle1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content h3"/>
-        <element name="slideContent1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content div.slider-content"/>
-        <element name="slideLinkText1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a span span"/>
-        <element name="slideLinkURL1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
-        <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
-        <element name="slide2" type="button" selector="[data-slick-index='1'][data-role='slide']"/>
-        <element name="slideTitle2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content h3"/>
-        <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content div.slider-content"/>
-        <element name="slideLinkText2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a span span"/>
-        <element name="slideLinkURL2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
-        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'][data-role='slide'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
     </section>
     <section name="SearchOnStage">
         <element name="searchInput" type="input" selector="//*[@type='search']" />

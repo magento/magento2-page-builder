@@ -5,12 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-search">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-search" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
   <!-- ko if: preview.data.html() -->
     <div data-bind="html: preview.data.html"></div>
   <!-- /ko -->
   <!-- ko ifnot: preview.data.html() -->
     <span data-bind="html: $t('Search')"></span>
   <!-- /ko -->
-  <!-- ko template: optionsInstance.template --><!-- /ko -->
+  <!-- ko template: getOptions().template --><!-- /ko -->
 </div>
