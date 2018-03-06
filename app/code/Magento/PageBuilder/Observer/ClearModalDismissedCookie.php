@@ -52,6 +52,7 @@ class ClearModalDismissedCookie implements ObserverInterface
      *
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Stdlib\Cookie\FailureToSendException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
