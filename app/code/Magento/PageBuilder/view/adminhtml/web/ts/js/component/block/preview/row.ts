@@ -21,7 +21,7 @@ export default class Row extends PreviewBlock {
     private element: Element;
 
     /**
-     * Debouce and defer the init of Jarallax
+     * Debounce and defer the init of Jarallax
      *
      * @type {(() => void) & _.Cancelable}
      */

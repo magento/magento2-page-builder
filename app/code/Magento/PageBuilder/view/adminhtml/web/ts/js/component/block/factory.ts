@@ -21,7 +21,7 @@ function getBlockComponentPath(config: ConfigContentBlock): string {
 }
 
 /**
- * A block is ready once all of it's children have mounted
+ * A block is ready once all of its children have mounted
  *
  * @param {Block} block
  * @param {number} childrenLength

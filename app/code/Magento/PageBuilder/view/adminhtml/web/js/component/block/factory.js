@@ -15,7 +15,7 @@ define(["Magento_PageBuilder/js/component/loader", "../event-bus"], function (_l
     return config.component || "Magento_PageBuilder/js/component/block/block";
   }
   /**
-   * A block is ready once all of it's children have mounted
+   * A block is ready once all of its children have mounted
    *
    * @param {Block} block
    * @param {number} childrenLength
