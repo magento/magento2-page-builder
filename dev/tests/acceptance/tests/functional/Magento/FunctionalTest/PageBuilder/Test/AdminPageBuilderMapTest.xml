@@ -70,11 +70,13 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <see userInput="Edit {{PageBuilderMapContentBlock.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle2"/>
         <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm2"/>
         <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection2"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection2"/>
         <!-- check field values -->
+        <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
+        <grabValueFrom selector="{{MapInAdmin.mapPosition}}" stepKey="mapPosition"/>
+        <assertStringStartsWith stepKey="assertStringStartsWith" expected="30.401808299999995,-97.72355449999998,6" expectedType="string" actual="mapPosition" actualType="variable"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidthProperty">
             <argument name="property" value="PageBuilderMapWidthProperty50"/>
         </actionGroup>
@@ -232,6 +234,9 @@
             <argument name="property" value="PageBuilderMapHeightProperty"/>
         </actionGroup>
         <!-- see defaults -->
+        <executeJS function="document.querySelector('.admin__field-map input[type=\'text\']').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
+        <grabValueFrom selector="{{MapInAdmin.mapPosition}}" stepKey="mapPosition"/>
+        <assertEmpty actual="mapPosition" actualType="variable" stepKey="assertMapPositionIsEmpty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMapWidthProperty">
             <argument name="property" value="PageBuilderMapWidthProperty"/>
         </actionGroup>
