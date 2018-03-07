@@ -59,6 +59,11 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
         autoAppend = true;
       }
 
+      // Are we duplicating from a parent?
+      if (this.children().length === 0 || this.children().length > 0 && (0, _resizing2.getColumnsWidth)(this) < 100) {
+        return _Block.prototype.duplicateChild.call(this, child, autoAppend);
+      }
+
       var duplicate; // Attempt to split the current column into parts
 
       var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());

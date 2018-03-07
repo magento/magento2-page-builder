@@ -47,8 +47,8 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 // This model is used by non product attributes
             }
         }
-        $isEnablePageBuilder = isset($wysiwygConfigData['enable_pagebuilder'])
-            && !$wysiwygConfigData['enable_pagebuilder']
+        $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
+            && !$wysiwygConfigData['is_pagebuilder_enabled']
             || false;
         if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder)) {
             // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647

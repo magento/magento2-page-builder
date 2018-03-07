@@ -61,11 +61,12 @@
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn1">
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeColumn1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="1" stepKey="seeOneColumnInGroup" />
+        <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn2">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
