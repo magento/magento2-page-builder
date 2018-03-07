@@ -112,7 +112,7 @@
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
-        <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="5" expectedType="int" stepKey="assertHeadingTypeOptions"/>
+        <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="6" expectedType="int" stepKey="assertHeadingTypeOptions"/>
         <!-- Heading Text -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTextAttribute">
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
@@ -155,7 +155,6 @@
             <group value="editPanel"/>
             <group value="heading"/>
             <group value="advancedSection"/>
-            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -441,6 +440,61 @@
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
+    </test>
+    <test name="HeadingEditTypeH1">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
+            <title value="Edit Heading Type H1"/>
+            <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88859"/>
+            <group value="pagebuilder"/>
+            <group value="edit"/>
+            <group value="heading"/>
+            <group value="generalSection"/>
+            <group value="stage"/>
+            <group value="storefront"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH1">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Header in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <!-- Verify Header in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
     </test>
     <test name="HeadingEditTypeH2">
         <annotations>
@@ -857,6 +911,9 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
@@ -865,9 +922,12 @@
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Verify Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderHeadingContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Not In Storefront -->
         <dontSeeElementInDOM selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentBlockInStorefront"/>
     </test>
