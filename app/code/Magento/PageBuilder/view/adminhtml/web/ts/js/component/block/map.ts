@@ -25,16 +25,6 @@ export default class Map extends Block {
     }
 
     /**
-     * Check if current map has a marker
-     *
-     * @returns {boolean}
-     */
-    private hasMarker() {
-        const data = this.getData();
-        return data.position !== "";
-    }
-
-    /**
      * Gets the map styles
      *
      * @returns {object}
@@ -43,5 +33,15 @@ export default class Map extends Block {
         const style: {} = _.clone(super.getStyle());
 
         return this.hasMarker() ? style : Object.assign(style, {display: "none"});
+    }
+
+    /**
+     * Check if current map has a marker
+     *
+     * @returns {boolean}
+     */
+    private hasMarker() {
+        const data = this.getData();
+        return data.position !== "";
     }
 }

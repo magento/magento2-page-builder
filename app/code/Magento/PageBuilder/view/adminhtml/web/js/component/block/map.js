@@ -30,17 +30,6 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
       });
     };
     /**
-     * Check if current map has a marker
-     *
-     * @returns {boolean}
-     */
-
-
-    _proto.hasMarker = function hasMarker() {
-      var data = this.getData();
-      return data.position !== "";
-    };
-    /**
      * Gets the map styles
      *
      * @returns {object}
@@ -53,6 +42,17 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
       return this.hasMarker() ? style : Object.assign(style, {
         display: "none"
       });
+    };
+    /**
+     * Check if current map has a marker
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.hasMarker = function hasMarker() {
+      var data = this.getData();
+      return data.position !== "";
     };
 
     return Map;

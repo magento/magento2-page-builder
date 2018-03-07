@@ -23,7 +23,7 @@ define([
         /**
          * Render the map into the field
          *
-         * @param element
+         * @param {HTMLElement} element
          */
         renderMap: function (element) {
             // Get the start value and convert the value into an array
@@ -62,8 +62,8 @@ define([
         /**
          * Adds a map marker
          *
-         * @param lat
-         * @param lng
+         * @param {String} lat
+         * @param {String} lng
          */
         addMarker: function (lat, lng) {
             this.marker = new google.maps.Marker({
@@ -84,7 +84,7 @@ define([
         /**
          * Event for double click to update marker
          *
-         * @param event
+         * @param {Event} event
          */
         onDoubleClick: function (event) {
             if(!this.marker) {
@@ -122,7 +122,7 @@ define([
         /**
          * Returns current latitude, longitude, and zoom level as a single string
          *
-         * @param latLng
+         * @param {LatLng} latLng
          * @return {string}
          */
         exportValue: function (latLng) {

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 export default class Map implements ReadInterface {
 
@@ -11,7 +11,7 @@ export default class Map implements ReadInterface {
      * Read map position and zoom from the element
      * Also removes display none back to inline-block for preview styles
      *
-     * @param element HTMLElement
+     * @param {HTMLElement} element
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
