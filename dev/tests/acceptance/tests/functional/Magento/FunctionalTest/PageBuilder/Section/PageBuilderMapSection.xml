@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+    <section name="MapOnStage">
+        <element name="mapAll" type="input" selector="(//div[contains(@class, 'pagebuilder-map')]//iframe[contains(@src,'center={{arg1}},{{arg2}}') and contains(@src,'zoom={{arg3}}') and contains(@style,'width: {{arg4}};') and contains(@style,'height: {{arg5}};') and contains(@style,'text-align: {{arg6}};') and contains(@style,'margin: {{arg7}}px;') and contains(@style,'padding: {{arg8}}px;')])[{{arg9}}]" parameterized="true"/>
+        <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>
+        <element name="mapConfigurationWithPin" type="input" selector="//div[@data-index='position']//div[@class='gmnoprint']/img[@usemap]"/>
+        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//button[@title='Zoom in']"/>
+        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//button[@title='Zoom out']"/>
+        <element name="map" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]"/>
+        <element name="emptyMap" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'center=30.2672,-97.7431')]"/>
+        <element name="mapMargin" type="button" selector="//*[contains(@style, 'margin: {{arg1}}px;')]" parameterized="true"/>
+        <element name="mapPadding" type="button" selector="//*[contains(@style, 'padding: {{arg1}}px;')]" parameterized="true"/>
+        <element name="mapHeight" type="button" selector="//*[contains(@style, 'height: {{arg1}};')]" parameterized="true"/>
+        <element name="mapWidth" type="button" selector="//*[contains(@style, 'width: {{arg1}};')]" parameterized="true"/>
+        <element name="mapAlignment" type="button" selector="//*[contains(@style, 'text-align: {{arg1}};')]" parameterized="true"/>
+        <element name="mapWithPin" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'q=30.401808299999995,-97.72355449999998')]"/>
+    </section>
+    <section name="MapOnFrontend">
+        <element name="emptyMap" type="button" selector="//*[@data-role='map'][1][not(@src) and contains(@style, 'display: none;')]"/>
+        <element name="map" type="button" selector="//*[@data-role='map'][1]"/>
+        <element name="mapMargin" type="button" selector="//*[@data-role='map'][1][contains(@style, 'margin: {{arg1}}px;')]" parameterized="true"/>
+        <element name="mapPadding" type="button" selector="//*[@data-role='map'][1][contains(@style, 'padding: {{arg1}}px;')]" parameterized="true"/>
+        <element name="mapWidth" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: {{arg1}};')]" parameterized="true"/>
+        <element name="mapHeight" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: {{arg1}};')]" parameterized="true"/>
+        <element name="mapAlignment" type="button" selector="//*[@data-role='map'][1][contains(@style, 'text-align: {{arg1}};')]" parameterized="true"/>
+        <element name="mapCssClass" type="button" selector="//*[@data-role='map'][1][contains(@class, '{{arg1}}')]" parameterized="true"/>
+        <element name="mapWithPin" type="button" selector="//*[@data-role='map'][1][contains(@src, 'q=30.401808299999995,-97.72355449999998')]"/>
+        <element name="mapZoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom=6')]"/>
+    </section>
+    <section name="MapOnConfigurationPanel">
+        <element name="map" type="button" selector="//div[@data-index='position']//div[@class='map-field']//iframe"/>
+        <element name="mapFullScreen" type="button" selector="//div[@data-index='position']//button[@title='Toggle fullscreen view']"/>
+        <element name="mapPegman" type="button" selector="//div[@data-index='position']//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]"/>
+        <element name="mapSatelliteView" type="button" selector="//div[@data-index='position']//div[@title='Show satellite imagery']"/>
+        <element name="mapStreetView" type="button" selector="//div[@data-index='position']//div[@title='Show street map']"/>
+        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//button[@title='Zoom in']"/>
+        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//button[@title='Zoom out']"/>
+    </section>
+</sections>

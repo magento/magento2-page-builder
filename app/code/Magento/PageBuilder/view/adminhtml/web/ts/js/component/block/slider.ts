@@ -5,9 +5,9 @@
 
 import createBlock from "../block/factory";
 import Config from "../config";
-import Block from "./block";
-import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import EventBus from "../event-bus";
+import {BlockRemovedParams} from "../stage/event-handling-delegate";
+import Block from "./block";
 
 export default class Slider extends Block {
 

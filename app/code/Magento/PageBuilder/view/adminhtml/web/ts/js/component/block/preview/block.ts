@@ -5,13 +5,13 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import "./sortable/binding";
 import _, {Dictionary} from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
+import "./sortable/binding";
 
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;

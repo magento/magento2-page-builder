@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../block/factory", "../config", "./block", "../event-bus"], function (_factory, _config, _block, _eventBus) {
+define(["../block/factory", "../config", "../event-bus", "./block"], function (_factory, _config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
