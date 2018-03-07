@@ -15,6 +15,12 @@
         <element name="sizeInput" type="button" selector="[name='background_size']"/>
         <element name="attachmentInput" type="button" selector="[name='background_attachment']"/>
         <element name="repeatInput" type="button" selector="[name='background-repeat']"/>
+        <element name="enableParallaxSwitch" type="input" selector="//*[@name='enable_parallax']/parent::*/label"/>
+        <element name="enableParallaxSwitchValue" type="input" selector="//*[@name='enable_parallax'][contains(@value, '{{arg1}}')]" parameterized="true"/>
+        <element name="parallaxSpeed" type="input" selector="//*[@name='parallax_speed']"/>
+        <element name="parallaxSpeedToolTip" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class, 'admin__field-tooltip')]//a"/>
+        <element name="parallaxSpeedToolTipContent" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class, 'admin__field-tooltip-content')]"/>
+        <element name="parallaxSpeedNotice" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class, 'admin__field-note')]//span"/>
     </section>
     <section name="RowAdminPreview">
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type')]//div[contains(@class, 'pagebuilder-empty-container')])"/>
@@ -42,8 +48,8 @@
         <element name="backgroundSize" type="button" selector="[data-role='row'][style*='background-size: cover']"/>
         <element name="backgroundRepeat" type="button" selector="[data-role='row'][style*='background-repeat: repeat']"/>
         <element name="backgroundAttachment" type="button" selector="[data-role='row'][style*='background-attachment: fixed']"/>
-        <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax']"/>
-        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-speed='{{arg1}}']" parameterized="true"/>
+        <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='jarallax']"/>
+        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='jarallax'][@data-speed='{{arg1}}']" parameterized="true"/>
 
         <!-- Advanced Section -->
         <element name="textAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>

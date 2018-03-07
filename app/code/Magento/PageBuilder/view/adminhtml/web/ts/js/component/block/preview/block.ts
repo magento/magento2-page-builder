@@ -12,6 +12,7 @@ import {DataObject} from "../../data-store";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
+import EventBus from "../../event-bus";
 
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
@@ -150,6 +151,23 @@ export default class PreviewBlock {
     }
 
     /**
+     * After children render fire an event
+     *
+     * @param {Element} element
+     */
+    public afterChildrenRender(element: Element): void {
+        EventBus.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
+        EventBus.trigger(
+            this.parent.config.name + ":block:childrenRendered",
+            {
+                block: this.parent,
+                element,
+                id: this.parent.id,
+            },
+        );
+    }
+
+    /**
      * Setup fields observables within the data class property
      */
     protected setupDataFields() {
@@ -180,4 +198,10 @@ export default class PreviewBlock {
     protected afterStyleMapped(styles: StyleAttributeMapperResult) {
         return styles;
     }
+}
+
+export interface BlockChildrenRenderedEventParams {
+    block: Block;
+    element: Element;
+    id: string;
 }

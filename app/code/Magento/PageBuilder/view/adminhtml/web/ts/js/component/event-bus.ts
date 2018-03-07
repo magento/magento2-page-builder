@@ -23,7 +23,7 @@ class EventBus {
      * Add a listener for an event
      *
      * @param {string} eventName
-     * @param {() => void} handler
+     * @param {(event: Event, params: {[p: string]: any}) => void} handler
      * @returns {any}
      */
     public on(eventName: string, handler: (event: Event, params: {[key: string]: any}) => void) {
@@ -31,13 +31,13 @@ class EventBus {
     }
 
     /**
-     * Disable an event
+     * Stop listening to an event
      *
      * @param {string} eventName
-     * @param {() => void} handler
+     * @param {(event: Event, params: {[p: string]: any}) => void} handler
      * @returns {any}
      */
-    public off(eventName: string, handler: () => void) {
+    public off(eventName: string, handler: (event: Event, params: {[key: string]: any}) => void) {
         return this.events.off(eventName, handler);
     }
 

@@ -11,6 +11,16 @@
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
     <preference for="Magento\PageBuilder\Model\Config\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
     <preference for="Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface" type="Magento\PageBuilder\Setup\DataConverter\StyleExtractor" />
+
+    <!-- Ensure the page builder remove cookie is removed on successful login -->
+    <type name="Magento\PageBuilder\Observer\ClearModalDismissedCookie">
+        <arguments>
+            <argument name="cookieNames" xsi:type="array">
+                <item name="pagebuilder_remove" xsi:type="string">pagebuilder_remove</item>
+            </argument>
+        </arguments>
+    </type>
+
     <type name="Magento\Cms\Block\Page">
         <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Page" />
     </type>
@@ -470,5 +480,8 @@
                 <item name="column" xsi:type="string">column</item>
             </argument>
         </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product\Attribute\Repository">
+        <plugin name="process_extension_attributes" type="Magento\PageBuilder\Plugin\Catalog\Model\Product\Attribute\RepositoryPlugin"/>
     </type>
 </config>

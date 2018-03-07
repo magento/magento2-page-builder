@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"], function (_translate, _mageUtils, _array, _eventBus) {
+define(["mage/translate", "mageUtils", "underscore", "../../../utils/array", "../../event-bus"], function (_translate, _mageUtils, _underscore, _array, _eventBus) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -47,7 +47,7 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
      *
      * @param {Structural} child
      * @param {boolean} autoAppend
-     * @returns {Structural}
+     * @returns {Structural | void}
      */
 
 
@@ -65,7 +65,11 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
 
       if (child.children().length > 0) {
         child.children().forEach(function (subChild, childIndex) {
-          duplicate.addChild(duplicate.duplicateChild(subChild, false), childIndex);
+          var createDuplicate = duplicate.duplicateChild(subChild, false);
+
+          if (createDuplicate) {
+            duplicate.addChild(createDuplicate, childIndex);
+          }
         });
       }
 
@@ -102,7 +106,20 @@ define(["mage/translate", "mageUtils", "../../../utils/array", "../../event-bus"
         (0, _array.moveArrayItemIntoArray)(child, this.children, index);
       } else {
         this.children.push(child);
-      }
+      } // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
+
+
+      _underscore.defer(function () {
+        _eventBus.trigger("block:mount", {
+          id: child.id,
+          block: child
+        });
+
+        _eventBus.trigger(child.config.name + ":block:mount", {
+          id: child.id,
+          block: child
+        });
+      });
     };
     /**
      * Remove a child from the observable array

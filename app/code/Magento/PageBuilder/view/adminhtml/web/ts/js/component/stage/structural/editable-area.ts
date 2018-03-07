@@ -5,6 +5,7 @@
 
 import $t from "mage/translate";
 import mageUtils from "mageUtils";
+import _ from "underscore";
 import { moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
 import Block from "../../block/block";
 import EventBus from "../../event-bus";
@@ -56,9 +57,9 @@ export default class EditableArea implements EditableAreaInterface {
      *
      * @param {Structural} child
      * @param {boolean} autoAppend
-     * @returns {Structural}
+     * @returns {Structural | void}
      */
-    public duplicateChild(child: Structural, autoAppend: boolean = true): Structural {
+    public duplicateChild(child: Structural, autoAppend: boolean = true): Structural | void {
         const store = this.stage.store;
         const instance = child.constructor as typeof Block;
         const duplicate = new instance(child.parent, child.stage, child.config, child.getData());
@@ -71,10 +72,13 @@ export default class EditableArea implements EditableAreaInterface {
         // Duplicate the instances children into the new duplicate
         if (child.children().length > 0) {
             child.children().forEach((subChild: Structural, childIndex: number) => {
-                duplicate.addChild(
-                    duplicate.duplicateChild(subChild, false),
-                    childIndex,
-                );
+                const createDuplicate = duplicate.duplicateChild(subChild, false);
+                if (createDuplicate) {
+                    duplicate.addChild(
+                        createDuplicate,
+                        childIndex,
+                    );
+                }
             });
         }
 
@@ -108,6 +112,12 @@ export default class EditableArea implements EditableAreaInterface {
         } else {
             this.children.push(child);
         }
+
+        // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
+        _.defer(() => {
+            EventBus.trigger("block:mount", {id: child.id, block: child});
+            EventBus.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
+        });
     }
 
     /**
@@ -156,4 +166,9 @@ export default class EditableArea implements EditableAreaInterface {
     protected bindEvents() {
         EventBus.on("block:sortStart", this.onSortStart.bind(this));
     }
+}
+
+export interface BlockMountEventParams {
+    id: string;
+    block: Block;
 }

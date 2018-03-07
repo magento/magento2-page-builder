@@ -115,6 +115,7 @@ export default class Slider extends PreviewBlock {
      * @param {Element} element
      */
     public afterChildrenRender(element: Element): void {
+        super.afterChildrenRender(element);
         this.element = element;
     }
 
