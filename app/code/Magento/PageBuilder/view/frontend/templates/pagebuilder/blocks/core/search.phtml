@@ -11,8 +11,8 @@ $catalogSearchHelper = $this->helper(\Magento\Search\Helper\Data::class);
 ?>
 
 <form id="search_mini_form_<?= /* @noEscape */ $uniqueIdentifier; ?>"
-      class="pagebuilder-search-form pagebuilder-full-width <?= $block->getData('classes') ?>"
-      style="<?= $block->getData('styles') ?>"
+      class="pagebuilder-search-form pagebuilder-full-width <?= /* @noEscape */ $block->getData('classes') ?>"
+      style="<?= /* @noEscape */ $block->getData('styles') ?>"
       action="<?= /* @noEscape */ $catalogSearchHelper->getResultUrl() ?>"
       method="get">
     <div class="form-search">
