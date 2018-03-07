@@ -8,6 +8,11 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="PageBuilderAdvancedCssClassesDefaultProperty" type="pagebuilder_advanced_css_classes_default_property">
+        <data key="name">CSS Classes</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">css_classes</data>
+    </entity>
     <entity name="PageBuilderAdvancedCssClassesProperty" type="pagebuilder_advanced_css_classes_property">
         <data key="name">CSS Classes</data>
         <data key="section">advanced</data>
@@ -20,17 +25,31 @@
         <data key="fieldName">text_align</data>
         <data key="value">center</data>
     </entity>
-    <entity name="PageBuilderAdvancedAlignmentPropertyDefault" type="pagebuilder_advanced_alignment_property">
+    <entity name="PageBuilderAdvancedAlignmentDefaultProperty" type="pagebuilder_advanced_alignment_default_property">
         <data key="name">Alignment</data>
         <data key="section">advanced</data>
         <data key="fieldName">text_align</data>
         <data key="value">Default</data>
+        <data key="optionsList">Default, Left, Center, Right</data>
     </entity>
     <entity name="PageBuilderAdvancedAlignmentLeftProperty" type="pagebuilder_advanced_alignment_property">
         <data key="name">Alignment</data>
         <data key="section">advanced</data>
         <data key="fieldName">text_align</data>
         <data key="value">left</data>
+    </entity>
+    <entity name="PageBuilderAdvancedMarginsAndPaddingDefaultProperty" type="pagebuilder_advanced_margins_and_padding_default_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="placeholderMarginTop">Default</data>
+        <data key="placeholderMarginRight">Default</data>
+        <data key="placeholderMarginBottom">Default</data>
+        <data key="placeholderMarginLeft">Default</data>
+        <data key="placeholderPaddingTop">Default</data>
+        <data key="placeholderPaddingRight">Default</data>
+        <data key="placeholderPaddingBottom">Default</data>
+        <data key="placeholderPaddingLeft">Default</data>
     </entity>
     <entity name="PageBuilderAdvancedMarginsAndPaddingProperty" type="pagebuilder_advanced_margins_and_padding_property">
         <data key="name">Margins and Padding</data>
@@ -49,13 +68,14 @@
         <data key="name">Border</data>
         <data key="section">advanced</data>
         <data key="fieldName">border</data>
-        <data key="value">none</data>
+        <data key="value">solid</data>
     </entity>
-    <entity name="PageBuilderAdvancedBorderPropertyDefault" type="pagebuilder_advanced_border_property">
+    <entity name="PageBuilderAdvancedBorderDefaultProperty" type="pagebuilder_advanced_border_default_property">
         <data key="name">Border</data>
         <data key="section">advanced</data>
         <data key="fieldName">border</data>
-        <data key="value">default</data>
+        <data key="value">none</data>
+        <data key="optionsList">Default, None, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderPropertyDotted" type="pagebuilder_advanced_border_property">
         <data key="name">Border</data>
@@ -69,6 +89,12 @@
         <data key="fieldName">border_color</data>
         <data key="value">#000000</data>
         <data key="rbg">rgb(0, 0, 0)</data>
+    </entity>
+    <entity name="PageBuilderAdvancedBorderColorDefaultProperty" type="pagebuilder_advanced_border_color_default_property">
+        <data key="name">Border Color</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">border_color</data>
+        <data key="placeholderText">Default</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_ffffff" type="pagebuilder_advanced_border_color_property">
         <data key="name">Border Color</data>
@@ -96,10 +122,16 @@
         <data key="fieldName">border_width</data>
         <data key="value">10</data>
     </entity>
-    <entity name="PageBuilderAdvancedBorderSizeProperty1" type="pagebuilder_advanced_border_width_property">
+        <!-- todo check if it's missing'-->
+    <!--<entity name="PageBuilderAdvancedBorderSizeProperty1" type="pagebuilder_advanced_border_width_property">-->
+        <!--<data key="name">Border Size</data>-->
+        <!--<data key="section">advanced</data>-->
+        <!--<data key="fieldName">border_width</data>-->
+    <entity name="PageBuilderAdvancedBorderSizeDefaultProperty" type="pagebuilder_advanced_border_width_default_property">
         <data key="name">Border Size</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_width</data>
+        <data key="placeholderText">Default</data>
         <data key="value">1</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderSizeProperty" type="pagebuilder_advanced_border_width_property">
@@ -118,6 +150,13 @@
         <data key="name">Border Radius</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_radius</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderAdvancedBorderRadiusDefaultProperty" type="pagebuilder_advanced_border_radius_default_property">
+        <data key="name">Border Radius</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">border_radius</data>
+        <data key="placeholderText">Default</data>
         <data key="value">0</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderRadiusProperty12" type="pagebuilder_advanced_border_radius_property">
