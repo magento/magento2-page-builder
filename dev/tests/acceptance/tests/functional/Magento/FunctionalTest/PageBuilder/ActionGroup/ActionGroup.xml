@@ -214,6 +214,17 @@
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldPlaceholderText(property.section, property.fieldName, property.placeholderText)}}" stepKey="waitForElementVisible" />
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
+        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -222,6 +233,16 @@
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="clearSlideOutPanelFieldGeneral">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <clearField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="clearPropertyField"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMarginsAndPadding">
@@ -239,6 +260,23 @@
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="clearSlideOutPanelFieldMarginsAndPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="clearPaddingTopField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneralWysiwyg">
@@ -284,18 +322,6 @@
         <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
         <wait time="1" stepKey="waitForClick{{property.fieldName}}"/>
         <seeElement selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="verifySectionUpdated"/>
-    </actionGroup>
-    <actionGroup name="fillSlideOutPanelField">
-        <arguments>
-            <argument name="property" defaultValue=""/>
-        </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
-        <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
-        <seeElement selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="selectSlideOutPanelField">
         <arguments>
@@ -480,5 +506,5 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSecondIdSortDescendingToFinish" />
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>=
+    </actionGroup>
 </actionGroups>

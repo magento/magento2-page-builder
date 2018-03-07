@@ -55,6 +55,7 @@
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius2"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Default Header in Storefront -->
         <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
@@ -438,6 +439,7 @@
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
     </test>
@@ -491,6 +493,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
@@ -546,6 +549,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
@@ -602,6 +606,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
@@ -657,6 +662,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
@@ -712,6 +718,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
@@ -767,10 +774,68 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Header in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
+    </test>
+    <test name="HeadingVerifyNoRequiredAttributes">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
+            <stories value="MAGETWO-87072"/>
+            <title value="No Required Attributes For Heading"/>
+            <description value="Verify that no attributes are required by clearing all fields and verifying user can save."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88889"/>
+            <group value="pagebuilder"/>
+            <group value="edit"/>
+            <group value="heading"/>
+            <group value="stage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldMarginsAndPadding" stepKey="clearMarginsAndPaddings">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Header in Stage -->
+        <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForHeading"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <!-- Verify Header in Storefront -->
+        <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
     </test>
     <test name="HeadingDuplicate">
         <annotations>
@@ -880,6 +945,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Storefront -->
         <waitForElementVisible selector="{{HeadingOnFrontend.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedCssClassesProperty.value, PageBuilderAdvancedAlignmentProperty.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderProperty.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateHeadingStorefront"/>
     </test>
