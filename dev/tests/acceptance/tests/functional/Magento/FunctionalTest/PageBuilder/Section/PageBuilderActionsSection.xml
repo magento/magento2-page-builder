@@ -38,11 +38,14 @@
         <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
-        <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .edit-block' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .remove-structural' parameterized="true"/>
+        <element name="contentBlockOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
+        <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
+        <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
+        <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="duplicate-structural"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
@@ -120,6 +123,7 @@
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
+        <element name="panelFieldOptions" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/option' parameterized="true"/>
         <element name="fileUploadButton" type="button" selector='.file-uploader-button'/>
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
@@ -196,6 +200,7 @@
         <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
         <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
+        <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
     </section>
     <section name="AccordionEditSection">
         <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
