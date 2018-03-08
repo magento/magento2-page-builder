@@ -8,20 +8,20 @@ import $t from "mage/translate";
 import _ from "underscore";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
+import {Options} from "../stage/structural/options";
 import {percentToDecimal} from "../../utils/number-converter";
-import {Option} from "../stage/structural/options/option";
 
 export default class Slide extends Block {
 
     /**
-     * Return an array of options, minus the move option
+     * Get the options instance
      *
-     * @returns {Array<Option>}
+     * @returns {Options}
      */
-    get options(): Option[] {
-        return super.options.filter((option) => {
-            return (option.code !== "move");
-        });
+    public getOptions(): Options {
+        const options = super.getOptions();
+        options.removeOption("move");
+        return options;
     }
 
     /**

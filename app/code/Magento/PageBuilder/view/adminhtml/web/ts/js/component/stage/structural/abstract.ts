@@ -201,7 +201,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {Options}
      */
-    private getOptions(): Options {
+    public getOptions(): Options {
         return new Options(this, this.retrieveOptions());
     }
 }
