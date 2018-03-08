@@ -10,6 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="UploadImageToCategory">
         <annotations>
+            <features value="[CMS] Bluefoot Row MAGETWO-83767"/>
+            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
             <title value="User upload image to category"/>
             <description value="User upload image to category"/>
             <severity value="CRITICAL"/>
@@ -57,23 +59,19 @@
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
         <waitForPageLoad stepKey="waitForPageLoad1" />
-
-        <!--See Uploaded Image On Storage-->
-        <!--<see userInput="{{ImageUpload.file}}" stepKey="seeUploadedImageOnStorage"/>-->
-
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="ImageUpload"/>
+            <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.file)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.file)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload1.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="amOnCategoryPageStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.file)}}" stepKey="seeMainImageSource4"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>
