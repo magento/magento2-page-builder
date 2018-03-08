@@ -10,9 +10,9 @@ use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 
 /**
- * Render slider to PageBuilder format
+ * Render advanced slider to PageBuilder format
  */
-class Slider implements RendererInterface
+class AdvancedSlider implements RendererInterface
 {
     /**
      * @var StyleExtractorInterface
@@ -53,8 +53,6 @@ class Slider implements RendererInterface
             'data-is-infinite' => isset($eavData['is_infinite']) ? $eavData['is_infinite'] : '',
             'data-show-arrows' => isset($eavData['show_arrows']) ? $eavData['show_arrows'] : '',
             'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
-            'data-slides-to-scroll' => isset($eavData['slides_to_scroll']) ? $eavData['slides_to_scroll'] : '',
-            'data-slides-to-show' => isset($eavData['slides_to_show']) ? $eavData['slides_to_show'] : '',
             'class' => $eavData['css_classes'] ?? '',
         ];
 
@@ -69,6 +67,7 @@ class Slider implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
+
         $rootElementHtml .= '>';
 
         if (isset($additionalData['children'])) {
@@ -76,7 +75,7 @@ class Slider implements RendererInterface
         }
 
         $rootElementHtml .= '</div>';
-        
+
         return $rootElementHtml;
     }
 }
