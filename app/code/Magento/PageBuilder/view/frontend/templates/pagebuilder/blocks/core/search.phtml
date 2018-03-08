@@ -22,7 +22,9 @@ $catalogSearchHelper = $this->helper(\Magento\Search\Helper\Data::class);
                value="<?= $block->escapeHtml($catalogSearchHelper->getEscapedQueryText()) ?>" class="input-text"
                maxlength="<?= $block->escapeHtml($catalogSearchHelper->getMaxQueryLength()); ?>"
                placeholder="<?= $block->escapeHtml($block->getData('placeholder')); ?>"/>
-        <button type="submit" title="<?= $block->escapeHtmlAttr(__('Search')) ?>" class="button search-button">Search</button>
+        <button type="submit" title="<?= $block->escapeHtmlAttr(__('Search')) ?>" class="button search-button">
+            <?= $block->escapeHtmlAttr(__('Search')) ?>
+        </button>
         <div id="search_autocomplete_<?= /* @noEscape */ $uniqueIdentifier; ?>" class="search-autocomplete"></div>
     </div>
 </form>
