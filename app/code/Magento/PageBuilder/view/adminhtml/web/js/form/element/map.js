@@ -53,8 +53,8 @@ define([
                 this.addMarker(startValue[0], startValue[1]);
             }
 
-            // After double click, add and update both Lat and Lng.
-            google.maps.event.addListener(this.map, 'dblclick', this.onDoubleClick.bind(this));
+            // After click, add and update both Lat and Lng.
+            google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
             this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
             google.maps.event.trigger(this.marker, 'click');
         },
@@ -82,11 +82,11 @@ define([
         },
 
         /**
-         * Event for double click to update marker
+         * Event for click to update marker
          *
          * @param {Event} event
          */
-        onDoubleClick: function (event) {
+        onClick: function (event) {
             if(!this.marker) {
                 this.addMarker(event.latLng.lat(), event.latLng.lng());
             }
