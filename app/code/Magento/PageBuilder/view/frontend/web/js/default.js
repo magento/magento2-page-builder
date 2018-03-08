@@ -38,7 +38,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
             $(element).addClass('jarallax');
             $(element).attr('data-jarallax','');
 
-            jarallax(element, {
+            window.jarallax(element, {
                 imgPosition: element.style.backgroundPosition || '50% 50%',
                 imgRepeat: element.style.backgroundRepeat || 'no-repeat',
                 imgSize: element.style.backgroundSize || 'cover',
