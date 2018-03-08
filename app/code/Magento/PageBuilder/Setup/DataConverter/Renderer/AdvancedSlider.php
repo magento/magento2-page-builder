@@ -45,6 +45,9 @@ class AdvancedSlider implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
+        $cssClasses = $itemData['formData']['css_classes'] ?? '';
+        $cssClasses .= isset($itemData['formData']['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
+
         $rootElementAttributes = [
             'data-role' => 'slider',
             'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',
@@ -53,7 +56,7 @@ class AdvancedSlider implements RendererInterface
             'data-is-infinite' => isset($eavData['is_infinite']) ? $eavData['is_infinite'] : '',
             'data-show-arrows' => isset($eavData['show_arrows']) ? $eavData['show_arrows'] : '',
             'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
-            'class' => $itemData['formData']['css_classes'] ?? '',
+            'class' => $cssClasses,
         ];
 
         if (isset($itemData['formData'])) {

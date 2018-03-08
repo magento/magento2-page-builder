@@ -99,4 +99,32 @@ class StyleExtractor implements StyleExtractorInterface
 
         return implode($convertedValuesArray, ' ');
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extractMargin(array $formData)
+    {
+        $styleString = '';
+        if (isset($formData['metric']) && $formData['metric']) {
+            $metric = $this->serializer->unserialize($formData['metric']);
+            $styleString = isset($metric['margin']) ? 'margin: ' . $this->extractMarginPadding($metric['margin']) : '';
+        }
+        return rtrim($styleString);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extractPadding(array $formData)
+    {
+        $styleString = '';
+        if (isset($formData['metric']) && $formData['metric']) {
+            $metric = $this->serializer->unserialize($formData['metric']);
+            $styleString = isset($metric['padding'])
+                ? 'padding: ' . $this->extractMarginPadding($metric['padding'])
+                : '';
+        }
+        return rtrim($styleString);
+    }
 }

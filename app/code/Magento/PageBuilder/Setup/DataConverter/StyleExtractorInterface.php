@@ -20,4 +20,20 @@ interface StyleExtractorInterface
      * @return string
      */
     public function extractStyle(array $formData);
+
+    /**
+     * Extract margin and transform to string
+     *
+     * @param array $formData
+     * @return string
+     */
+    public function extractMargin(array $formData);
+
+    /**
+     * Extract padding and transform to string
+     *
+     * @param array $formData
+     * @return string
+     */
+    public function extractPadding(array $formData);
 }

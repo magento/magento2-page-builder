@@ -45,58 +45,84 @@ class AdvancedSliderItem implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
-
         $rootElementAttributes = [
             'data-role' => 'slide',
-            'class' => $cssClasses
+            'data-title' => $eavData['title'] ?? '',
+            'class' => $eavData['css_classes'] ?? ''
         ];
 
         $formData = $itemData['formData'] ?? [];
         $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
 
+        $margin = $this->styleExtractor->extractMargin($formData);
+        if ($margin) {
+            $rootElementAttributes['style'] = $margin;
+        }
+
+        $wrapperDivElementAttributes = [
+            'class' => 'pagebuilder-slide-wrapper pagebuilder-slide-mobile pagebuilder-mobile-only'
+        ];
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] = $style;
+            $wrapperDivElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-
-        $innerDivElement1Attributes = [];
-        if (isset($formData['align']) && $formData['align']) {
-            $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
+        $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
+        $style = '';
+        $padding = $this->styleExtractor->extractPadding($formData);
+        if ($padding) {
+            $style .= $padding;
         }
 
-        $rootElementHtml .= '><div'
-            . $this->printAttributes($innerDivElement1Attributes)
-            . '><div';
-
-        $innerDivElement2Attributes = [];
-        if (isset($formData['align']) && $formData['align']) {
-            $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
+        if (isset($eavData['has_overlay']) && $eavData['has_overlay'] == 1) {
+            $overlayDivElementAttributes['data-overlay-color'] = 'rgba(0,0,0,0.5)';   // default overlay style
+            if ($style) {
+                $style .= ' ';
+            }
+            $style .= 'background-color: rgba(0,0,0,0.5);';
         }
-        $innerDivElement2AttributeCssClasses = '';
-        if ($eavData['has_overlay']) {
-            $innerDivElement2AttributeCssClasses = 'has-background-overlay ';
+        if ($style) {
+            $overlayDivElementAttributes['style'] = $style;
         }
-        $innerDivElement2AttributeCssClasses .= 'pagebuilder-content';
-        $innerDivElement2Attributes['class'] = $innerDivElement2AttributeCssClasses;
 
-        $rootElementHtml .= $this->printAttributes($innerDivElement2Attributes)
-            . '><h3>'
-            . ($eavData['title'] ?? '')
-            . '</h3><div class="slider-content">'
-            . ($eavData['textarea'] ?? '')
-            . '</div>';
+        $buttonElementHtml = '';
         if (isset($eavData['link_text'])) {
-            $rootElementHtml .= '<a class="button" href="'
-                . ($eavData['link_url'] ?? '')
-                . '"><span><span>'
-                . $eavData['link_text']
-                . '</span></span></a>';
+            $buttonElementHtml =  '<button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
+            $buttonElementHtml .= 'style="opacity: 1; visibility: visible;">' . $eavData['link_text'];
+            $buttonElementHtml .= '</button>';
         }
-        $rootElementHtml .= '</div></div></div>';
+
+        // mobile wrapper div
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
+        $rootElementHtml .= '><a';
+        $rootElementHtml .= isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '">' : '>';
+        $rootElementHtml .= '<div'
+            . $this->printAttributes($wrapperDivElementAttributes)
+            . '><div'
+            . $this->printAttributes($overlayDivElementAttributes)
+            . '><div class="pagebuilder-poster-content">'
+            . '<h3>'
+            . ($eavData['title'] ?? '')
+            . '</h3>'
+            . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
+            . $buttonElementHtml
+            . '</div></div></div>';
+
+        // non-mobile wrapper div
+        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper pagebuilder-slide-image pagebuilder-mobile-hidden';
+        $rootElementHtml .= '<div'
+            . $this->printAttributes($wrapperDivElementAttributes)
+            . '><div'
+            . $this->printAttributes($overlayDivElementAttributes)
+            . '><div class="pagebuilder-poster-content">'
+            . '<h3>'
+            . ($eavData['title'] ?? '')
+            . '</h3>'
+            . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
+            . $buttonElementHtml
+            . '</div></div></div>';
+
+        $rootElementHtml .= '</a></div>';
 
         return $rootElementHtml;
     }

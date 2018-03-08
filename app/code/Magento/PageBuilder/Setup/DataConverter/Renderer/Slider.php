@@ -45,6 +45,9 @@ class Slider implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
+        $cssClasses = $eavData['css_classes'] ?? '';
+        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
+
         $rootElementAttributes = [
             'data-role' => 'slider',
             'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',
@@ -55,7 +58,7 @@ class Slider implements RendererInterface
             'data-show-dots' => isset($eavData['show_dots']) ? $eavData['show_dots'] : '',
             'data-slides-to-scroll' => isset($eavData['slides_to_scroll']) ? $eavData['slides_to_scroll'] : '',
             'data-slides-to-show' => isset($eavData['slides_to_show']) ? $eavData['slides_to_show'] : '',
-            'class' => $eavData['css_classes'] ?? '',
+            'class' => $cssClasses,
         ];
 
         if (isset($itemData['formData'])) {
