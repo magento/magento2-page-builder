@@ -54,7 +54,6 @@ define([
             }
 
             // After click, add and update both Lat and Lng.
-            this.clickStatus = 1;
             google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
             google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
             this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
@@ -89,14 +88,11 @@ define([
          * @param {Event} event
          */
         onClick: function (event) {
-            this.clickStatus = "single";
             this.clickTimer = setTimeout(function() {
-                if(this.clickStatus === "single") {
-                    if(!this.marker) {
-                        this.addMarker(event.latLng.lat(), event.latLng.lng());
-                    }
-                    this.value(this.exportValue(event.latLng));
+                if(!this.marker) {
+                    this.addMarker(event.latLng.lat(), event.latLng.lng());
                 }
+                this.value(this.exportValue(event.latLng));
             }.bind(this), 300);
         },
 
@@ -104,7 +100,6 @@ define([
          * Event for double click to prevent call from single click
          */
         onDblClick: function () {
-            this.clickStatus = "double";
             clearTimeout(this.clickTimer);
         },
 
