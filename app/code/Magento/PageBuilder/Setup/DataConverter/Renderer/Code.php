@@ -42,23 +42,21 @@ class Code implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $rootElementAttributes = [
-            'data-role' => 'code',
+        $preElementAttributes = [
             'class' => $eavData['css_classes'] ?? '',
         ];
-
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] = $style;
+                $preElementAttributes['style'] = $style;
             }
         }
 
-        $rootElementHtml = '<pre';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+        $rootElementHtml = '<div data-role="html"><pre';
+        foreach ($preElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><code>' . ($eavData['html'] ?? '') . '</code></pre>';
+        $rootElementHtml .= '><code>' . ($eavData['html'] ?? '') . '</code></pre></div>';
 
         return $rootElementHtml;
     }

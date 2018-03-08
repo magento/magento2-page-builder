@@ -21,16 +21,27 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
         return;
     }
 
-    updateColumnWidth(column, width);
-
     // Also shrink the closest shrinkable column
+    let allowedToShrink = true;
     if (difference && shrinkableColumn) {
         const currentShrinkable = getColumnWidth(shrinkableColumn);
         const shrinkableSize = getAcceptedColumnWidth((currentShrinkable + -difference).toString());
-        updateColumnWidth(
-            shrinkableColumn,
-            shrinkableSize,
-        );
+
+        // Ensure the column we're crushing is not becoming the same size, and it's not less than the smallest width
+        if (currentShrinkable === parseFloat(shrinkableSize.toString())
+            || parseFloat(shrinkableSize.toString()) < getSmallestColumnWidth()
+        ) {
+            allowedToShrink = false;
+        } else {
+            updateColumnWidth(
+                shrinkableColumn,
+                shrinkableSize,
+            );
+        }
+    }
+
+    if (allowedToShrink) {
+        updateColumnWidth(column, width);
     }
 }
 

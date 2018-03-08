@@ -31,6 +31,8 @@
         <element name="nothingFound" type="text" selector='//*[@id="pagebuilder-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='//aside[contains(@class, "modal-popup")]'/>
         <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
+        <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
+        <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
         <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector="div.pagebuilder-stage div.row-container"/>
@@ -40,9 +42,9 @@
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
         <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
         <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .edit-block' parameterized="true"/>
+        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .duplicate-structural' parameterized="true"/>
         <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .remove-structural' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-options.duplicate-structural[title="Duplicate"]' parameterized="true"/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
@@ -132,9 +134,6 @@
     </section>
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
-    </section>
-    <section name="CodeOnFrontend">
-        <element name="codeDisplay" type="button" selector="[data-role='code'] {{arg1}}" parameterized="true"/>
     </section>
     <section name="HeaderOnFrontend">
         <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
@@ -226,17 +225,10 @@
         <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
         <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
     </section>
-    <section name="SearchOnStage">
-        <element name="searchInput" type="input" selector="//*[@type='search']" />
-    </section>
-    <section name="SearchOnFrontend">
-        <element name="searchInput" type="input" selector="//*[@placeholder='{{arg1}}']" parameterized="true"/>
-    </section>
     <section name="ProductOnFrontend">
         <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
     </section>
     <section name="ProductOnAdmin">
         <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>
     </section>
-
 </sections>

@@ -34,9 +34,15 @@
         <see userInput="Product" selector="{{PageBuilderActionsSection.magentoGroupBlock}}" stepKey="seeMagentoGroupProduct"/>
         <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
         <see userInput="Anchor" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupAnchor"/>
-        <see userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupCode"/>
+        <dontSee userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupCode"/>
         <see userInput="Html" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupHtml"/>
-        <see userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupSearch"/>
+        <dontSee userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupSearch"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderPanelGroups">
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
     </actionGroup>
     <actionGroup name="enablePageBuilder">
         <amOnPage url="{{CmsPagesPage}}" stepKey="amOnPagePagesGrid"/>
@@ -106,16 +112,38 @@
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockIndex" defaultValue="1"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+
+    <!-- Remove a content type which is in it's default state -->
+    <actionGroup name="removeDefaultStateContentBlockFromStage">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
+    </actionGroup>
+    <actionGroup name="confirmRemovalModal">
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
+        <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <wait time="1" stepKey="waitForModalEventBinding" />
+        <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
+    </actionGroup>
+
+    <!-- Remove a content block which has been configured with data or has children -->
     <actionGroup name="removeContentBlockFromStage">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -132,6 +160,8 @@
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
     </actionGroup>
+
+    <!-- @deprecated, use above -->
     <actionGroup name="removePageBuilderRow">
         <moveMouseOver selector="{{PageBuilderRowSection.row}}" stepKey="onMouseOverRow"/>
         <seeElement selector="{{PageBuilderRowSection.rowOptionsMenu}}" stepKey="seeRowOptionsMenu"/>
@@ -153,6 +183,20 @@
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
     </actionGroup>
+
+    <!-- Duplicate a content type in place -->
+    <actionGroup name="duplicateContentBlock">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
+        <wait time="0.5" stepKey="waitForDuplication" />
+    </actionGroup>
+
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
             <argument name="property" defaultValue=""/>

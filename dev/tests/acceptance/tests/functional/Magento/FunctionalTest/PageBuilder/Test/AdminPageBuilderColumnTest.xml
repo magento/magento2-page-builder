@@ -61,11 +61,12 @@
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn1">
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeColumn1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="1" stepKey="seeOneColumnInGroup" />
+        <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn2">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
@@ -136,8 +137,8 @@
     </test>
     <test name="ColumnPlaceholderInAdminPreview">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-87068"/>
-            <stories value="Empty Row Preview on Stage MAGETWO-87068"/>
+            <features value="PageBuilder Column MAGETWO-83768"/>
+            <stories value="Empty Column Admin Preview MAGETWO-87068"/>
             <title value="Column placeholder in admin preview"/>
             <description value="A user should see the column placeholder that suggests any content blocks can be dragged there"/>
             <severity value="CRITICAL"/>
@@ -1042,6 +1043,8 @@
     </test>
     <test name="CanAddImageToColumn">
         <annotations>
+            <features value="[CMS] Bluefoot Row MAGETWO-83767"/>
+            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
             <title value="Add an image content block into column"/>
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>

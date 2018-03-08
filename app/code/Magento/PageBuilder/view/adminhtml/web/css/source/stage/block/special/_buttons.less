@@ -15,15 +15,17 @@
     }
 
     .pagebuilder-content-type-wrapper {
+        display: inline-block;
         vertical-align: baseline;
         width: initial;
-        display: inline-block;
     }
 
     .add-button {
-        vertical-align: middle;
-        display: none;
         margin-bottom: 10px;
+        opacity: 0;
+        transition: all .3s;
+        vertical-align: middle;
+        visibility: hidden;
 
         &:before {
             content: @icon-plus__content;
@@ -31,14 +33,15 @@
             font-style: normal;
             font-weight: normal;
             line-height: 1;
-            speak: none;
             padding-right: 5px;
+            speak: none;
         }
     }
 
     &:hover {
         .add-button {
-            display: inline-block;
+            opacity: 1;
+            visibility: visible;
         }
     }
 }

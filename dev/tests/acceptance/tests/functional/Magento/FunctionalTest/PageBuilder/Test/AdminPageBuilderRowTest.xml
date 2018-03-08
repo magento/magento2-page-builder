@@ -85,7 +85,7 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
@@ -116,7 +116,7 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
@@ -369,9 +369,6 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -384,20 +381,12 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxEnabledPropertyIsRequired">
-            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxSpeedPropertyIsRequired">
-            <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
-        </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
             <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -405,6 +394,53 @@
         <waitForPageLoad stepKey="waitForParallaxLibraryLoad"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxSpeed(PageBuilderParallaxSpeedProperty.value)}}" stepKey="seeParallaxSpeedSet"/>
+    </test>
+    <test name="RowHasParallaxDefaultSettings">
+        <annotations>
+            <features value="PageBuilder Row MAGETWO-83767"/>
+            <stories value="Row parallax background is broken when background position is set MAGETWO-88247"/>
+            <title value="Row has parallax default settings"/>
+            <description value="A user should see the default settings for parallax row"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88899"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{RowOnBackend.parallaxSectionName}}" stepKey="waitForParallaxForm"/>
+        <seeElement selector="{{RowOnBackend.parallaxSectionName}}" stepKey="seeParallaxFormSection"/>
+        <click selector="{{RowOnBackend.parallaxSectionName}}" stepKey="clickParallaxFormSection"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
+            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{RowOnBackend.enableParallaxSwitchValue(PageBuilderParallaxEnabledDefaultProperty.value)}}" stepKey="seeEnabledParallaxDefault"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeParallaxSpeedIsDisabled">
+            <argument name="property" value="PageBuilderParallaxSpeedDefaultProperty"/>
+        </actionGroup>
+        <seeInField userInput="{{PageBuilderParallaxSpeedDefaultProperty.value}}" selector="{{RowOnBackend.parallaxSpeed}}" stepKey="assertParallaxSpeedDefaultValue"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
+            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{RowOnBackend.enableParallaxSwitchValue(PageBuilderParallaxEnabledProperty.value)}}" stepKey="seeEnabledParallaxIsToggled"/>
+        <moveMouseOver selector="{{RowOnBackend.parallaxSpeedToolTip}}" stepKey="moveMouseOverParallaxSpeedToolTip"/>
+        <seeElement selector="{{RowOnBackend.parallaxSpeedToolTipContent}}" stepKey="seeParallaxSpeedToolTipContent"/>
+        <see selector="{{RowOnBackend.parallaxSpeedNotice}}" userInput="{{PageBuilderParallaxSpeedDefaultProperty.notice}}" stepKey="seeParallaxSpeedNotice"/>
     </test>
     <test name="RowHasAdvancedFormSectionRequiredFields">
         <annotations>
@@ -719,6 +755,8 @@
     </test>
     <test name="CanAddImageToRow">
         <annotations>
+            <features value="[CMS] Bluefoot Row MAGETWO-83767"/>
+            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
             <title value="Add an image content block into row"/>
             <description value="A user should be able to add an image into slideout of row."/>
             <severity value="CRITICAL"/>
