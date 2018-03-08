@@ -34,9 +34,9 @@
         <see userInput="Product" selector="{{PageBuilderActionsSection.magentoGroupBlock}}" stepKey="seeMagentoGroupProduct"/>
         <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
         <see userInput="Anchor" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupAnchor"/>
-        <see userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupCode"/>
+        <dontSee userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupCode"/>
         <see userInput="Html" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupHtml"/>
-        <see userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupSearch"/>
+        <dontSee userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupSearch"/>
     </actionGroup>
     <actionGroup name="enablePageBuilder">
         <amOnPage url="{{CmsPagesPage}}" stepKey="amOnPagePagesGrid"/>
@@ -166,7 +166,7 @@
             <argument name="contentBlockXCoordinate" defaultValue="10"/>
             <argument name="contentBlockYCoordinate" defaultValue="0"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="clickEditContentBlock"/>

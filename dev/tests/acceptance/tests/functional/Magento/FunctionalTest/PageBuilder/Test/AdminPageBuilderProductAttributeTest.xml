@@ -44,9 +44,11 @@
             <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="skip"/>
+            <!--Bug link MAGETWO-87851-->
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -101,7 +103,7 @@
             <group value="skip"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -163,7 +165,7 @@
             <group value="skip"/>
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -222,9 +224,11 @@
             <description value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="skip"/>
+            <!--Bug link MAGETWO-87851-->
         </annotations>
         <before>
-            <createData stepKey="myProductAttributeCreation" entity="productAttributeWithTwoOptions"/>
+            <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
             <createData stepKey="myProductAttributeSetAssign" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
@@ -233,7 +237,6 @@
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
         </before>
         <after>
-            <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
