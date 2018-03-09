@@ -452,7 +452,11 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Move Map Pin -->
+        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionInputVisible"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition"/>
         <actionGroup ref="moveMapPinByClick" stepKey="moveMapPinByClick"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition2"/>
+        <assertNotEquals expected="getMapPosition" expectedType="variable" actual="getMapPosition2" actualType="variable" message="actual=$getMapPosition2 expected=$getMapPosition" stepKey="assertMapPinMoved"/>
         <!-- Edit Panel: Verify Pin Location Moved -->
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel2"/>
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel2"/>
@@ -636,7 +640,12 @@
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
             <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
         </actionGroup>
+        <!-- Move Map Pin -->
+        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionInputVisible"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition"/>
         <actionGroup ref="moveMapPinByClick" stepKey="moveMapPinByClick"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition2"/>
+        <assertNotEquals expected="getMapPosition" expectedType="variable" actual="getMapPosition2" actualType="variable" message="actual=$getMapPosition2 expected=$getMapPosition" stepKey="assertMapPinMoved"/>
         <!-- Edit Panel: Get Map Pin Position -->
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel"/>
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel"/>

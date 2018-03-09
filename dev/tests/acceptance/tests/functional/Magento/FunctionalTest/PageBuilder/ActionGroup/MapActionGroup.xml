@@ -19,10 +19,8 @@
             <argument name="y" defaultValue="50"/>
         </arguments>
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapPinInitialLocation}}" stepKey="waitForInitialPinLocation"/>
         <clickWithLeftButton selector="{{MapOnConfigurationPanel.mapAddPin}}" x="10" y="50" stepKey="clickMapToMovePin"/>
-        <waitForElementNotVisible selector="{{MapOnConfigurationPanel.mapPinInitialLocation}}" stepKey="dontSeeInitialPinLocation"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapPinMovedLocation}}" stepKey="seePinMoved"/>
+        <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="validateEmptyMapConfigurationPanel">
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
