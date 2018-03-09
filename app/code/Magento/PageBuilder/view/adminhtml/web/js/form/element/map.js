@@ -106,7 +106,7 @@ define([
         onUpdate: function () {
             this._super();
 
-            if (!this.map || this.value() === ''|| this.value() === this.exportValue()) {
+            if (!this.map || this.value() === '' || this.value() === this.exportValue()) {
                 return;
             }
 
