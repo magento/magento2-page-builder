@@ -141,10 +141,9 @@
             <argument name="contentBlockYCoordinate" defaultValue="0"/>
         </arguments>
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
-        <scrollTo selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" x="0" y="-100" stepKey="scrollToDuplicate"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForOptions" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, '2')}}" stepKey="waitForEditButton"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForEditButton"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
