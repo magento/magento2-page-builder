@@ -538,7 +538,7 @@
         <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPosition1"/>
         <!-- Fill Remaining Fields -->
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapWidthProperty">
-            <argument name="property" value="PageBuilderMapWidthProperty50"/>
+            <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeightProperty">
             <argument name="property" value="PageBuilderMapHeightProperty500"/>
@@ -565,7 +565,7 @@
         <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPosition2"/>
         <assertStringStartsWith stepKey="assertRegExp" expected="mapPosition1" expectedType="variable" actual="mapPosition2" actualType="variable" message="actual=$mapPosition2 expected=$mapPosition1"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidthProperty">
-            <argument name="property" value="PageBuilderMapWidthProperty50"/>
+            <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapHeightProperty">
             <argument name="property" value="PageBuilderMapHeightProperty500"/>
@@ -585,7 +585,7 @@
         <waitForElementVisible time="2" selector="{{MapOnStage.map}}" stepKey="waitMap2" />
         <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="seeMapWithPin"/>
         <seeElement selector="{{MapOnStage.mapHeight(PageBuilderMapHeightProperty500.value)}}" stepKey="seeMapHeight"/>
-        <seeElement selector="{{MapOnStage.mapWidth(PageBuilderMapWidthProperty50.value)}}" stepKey="seeMapWidth"/>
+        <seeElement selector="{{MapOnStage.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidth"/>
         <seeElement selector="{{MapOnStage.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignment"/>
         <seeElement selector="{{MapOnStage.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMargin"/>
         <seeElement selector="{{MapOnStage.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPadding"/>
@@ -594,7 +594,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="seeMapPinOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapZoom(PageBuilderMapPinDefaultProperty.zoom)}}" stepKey="seeMapZoomOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty50.value)}}" stepKey="seeMapWidthOnFrontend"/>
+        <seeElement selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidthOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapHeight(PageBuilderMapHeightProperty500.value)}}" stepKey="seeMapHeightOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignmentOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapCssClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seeMapCssClassOnFrontend"/>
@@ -642,7 +642,7 @@
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel"/>
         <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterWidth">
-            <argument name="property" value="PageBuilderMapWidthProperty50"/>
+            <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeight">
             <argument name="property" value="PageBuilderMapHeightProperty500"/>
@@ -668,7 +668,7 @@
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty50.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
+        <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
         <actionGroup ref="validateMapToolTipStage2" stepKey="validateMapToolTipStage">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
         </actionGroup>
@@ -693,7 +693,7 @@
         <assertEquals expected="mapPositionEditPanel" expectedType="variable" actual="mapPositionEditPanel2" actualType="variable" message="actual=$mapPositionEditPanel2, expected=$mapPositionEditPanel" stepKey="assertPinLocationEditPanel"/>
         <!-- Verify Edit Panel Values -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidth">
-            <argument name="property" value="PageBuilderMapWidthProperty50"/>
+            <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapHeight">
             <argument name="property" value="PageBuilderMapHeightProperty500"/>
@@ -713,7 +713,7 @@
         <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Storefront -->
-        <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty50.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
         <actionGroup ref="validateMapToolTipStoreFront2" stepKey="validateMapToolTipStoreFront">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
         </actionGroup>
