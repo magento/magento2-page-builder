@@ -16,7 +16,7 @@ define([
         /**
          * Set the field as disabled when it's empty or is equal to a value within disabledValues
          *
-         * @param value
+         * @param {Array} value
          */
         setDisabled: function (value) {
             if (_.indexOf(_.values(this.disabledValues), value) !== -1) {

@@ -1042,6 +1042,8 @@
     </test>
     <test name="CanAddImageToColumn">
         <annotations>
+            <features value="[CMS] Bluefoot Row MAGETWO-83767"/>
+            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
             <title value="Add an image content block into column"/>
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>
@@ -1072,7 +1074,7 @@
         </actionGroup>
         <actionGroup ref="dragPageBuilderColumnIntoStage" stepKey="dragColumnIntoStage"/>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <waitForElementVisible selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->

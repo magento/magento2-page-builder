@@ -42,25 +42,23 @@ class Search implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $rootElementAttributes = [
-            'data-role' => 'search',
-            'class' => $eavData['css_classes'] ?? '',
-            'data-placeholder' => $eavData['placeholder'] ?? 'Browse the catalog...',
-        ];
-
+        $searchStyles = '';
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] = $style;
+                $searchStyles = $style;
             }
         }
 
-        $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
+        $searchClasses = $eavData['css_classes'] ?? '';
+        $searchPlaceHolder = $eavData['placeholder'] ?? '';
 
-        $rootElementHtml .= '></div>';
+        $searchHtml = "{{block class='Magento\Framework\View\Element\Template' " .
+            "template='Magento_PageBuilder::pagebuilder/blocks/core/search.phtml' " .
+            "placeholder=\"$searchPlaceHolder\" classes=\"$searchClasses\" styles=\"$searchStyles\"}}";
+        $rootElementHtml = '<div data-role="html">';
+
+        $rootElementHtml .= $searchHtml . '</div>';
 
         return $rootElementHtml;
     }

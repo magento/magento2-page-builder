@@ -29,7 +29,10 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <actionGroup ref="createNewSimpleProduct" stepKey="createSimpleProduct"/>
+        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+            <argument name="category" value="$$createPreReqCategory$$"/>
+            <argument name="simpleProduct" value="_defaultProduct"/>
+        </actionGroup>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
