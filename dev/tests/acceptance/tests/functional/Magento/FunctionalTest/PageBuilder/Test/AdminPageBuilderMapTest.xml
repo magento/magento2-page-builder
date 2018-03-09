@@ -379,7 +379,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel" />
         <!-- Verify No Pin In Configuration Panel -->
-        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.mapPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinEditPanel"/>
+        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.mapPin}}" stepKey="dontSeeMapPinEditPanel"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
@@ -669,8 +669,9 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
-        <actionGroup ref="validateMapToolTipStage2" stepKey="validateMapToolTipStage">
+        <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
+            <argument name="contentIndex" value="PageBuilderMapIndex2"/>
         </actionGroup>
         <!-- Stage: Verify Map Pin Position On Duplicate -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStage2"/>
@@ -714,8 +715,9 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Storefront -->
         <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty500.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
-        <actionGroup ref="validateMapToolTipStoreFront2" stepKey="validateMapToolTipStoreFront">
+        <actionGroup ref="validateMapToolTipStoreFront" stepKey="validateMapToolTipStoreFront">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
+            <argument name="contentIndex" value="PageBuilderMapIndex2"/>
         </actionGroup>
         <!-- Storefront: Verify Map Pin Position On Duplicate -->
         <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStoreFront2"/>
