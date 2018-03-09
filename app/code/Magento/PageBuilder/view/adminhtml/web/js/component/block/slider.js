@@ -38,8 +38,8 @@ define(["../block/factory", "../config", "./block", "../event-bus", "../../utils
       _Block.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("slider:block:mount", function (event, params) {
-        if (params.id === _this2.id) {
+      _eventBus.on("slider:block:ready", function (event, params) {
+        if (params.id === _this2.id && _this2.children().length === 0) {
           _this2.addSlide();
         }
       }); // Block being removed from container

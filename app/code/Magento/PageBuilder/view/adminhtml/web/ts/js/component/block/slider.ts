@@ -35,8 +35,8 @@ export default class Slider extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:mount", (event: Event, params: {[key: string]: any}) => {
-            if (params.id === this.id) {
+        EventBus.on("slider:block:ready", (event: Event, params: {[key: string]: any}) => {
+            if (params.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
         })
