@@ -77,6 +77,37 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
                 }
             );
         });
+
+        $('div[data-role="slide"][data-show-button="on_hover"] > a').each(function (index, element) {
+            var buttonEl = $(element).find('.pagebuilder-slide-button');
+
+            $(element).hover(
+                function() {
+                    buttonEl.css({
+                        'opacity' : '1',
+                        'visibility' : 'visible'
+                    });
+                }, function() {
+                    buttonEl.css({
+                        'opacity' : '0',
+                        'visibility' : 'hidden'
+                    });
+                }
+            );
+        });
+
+        $('div[data-role="slide"][data-show-overlay="on_hover"] > a').each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
+                overlayColor = overlayEl.attr('data-overlay-color');
+
+            $(element).hover(
+                function() {
+                    overlayEl.css('background-color', overlayColor);
+                }, function() {
+                    overlayEl.css('background-color', 'transparent');
+                }
+            );
+        });
         /*eslint-enable max-nested-callbacks */
     });
 });
