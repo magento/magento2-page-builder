@@ -53,7 +53,7 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
             top: paddingSrc.paddingTop.replace("px", "")
           }
         },
-        message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+        content: element.querySelector(".pagebuilder-poster-content div").innerHTML,
         min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
         mobile_image: bgMobileImage ? (0, _image.decodeUrl)(bgMobileImage) : "",
         open_in_new_tab: target && target === "_blank" ? "1" : "0",
