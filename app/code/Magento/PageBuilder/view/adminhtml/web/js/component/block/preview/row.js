@@ -42,6 +42,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
               imgSize: _this.data.background_size() || "cover",
               speed: _this.data.parallax_speed() || 0.5
             });
+            jarallax(_this.element, "onResize");
           });
         }
       }, 50);
