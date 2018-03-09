@@ -9,7 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
-        <element name="emptyMap" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'center={{arg1}},{{arg2}}')]" parameterized="true"/>
+        <element name="emptyMap" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'center={{arg1}}') and contains(@src,',{{arg2}}')]" parameterized="true"/>
         <element name="map" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]"/>
         <element name="mapByIndex" type="button" selector="(//div[contains(@class, 'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
         <element name="mapAlignment" type="button" selector="//*[contains(@style, 'text-align: {{arg1}};')]" parameterized="true"/>
@@ -30,7 +30,7 @@
         <element name="mapToolTipViewLargerMapButton" type="button" selector="//div[@class='place-card place-card-large']//div[@class='google-maps-link']//a"/>
         <element name="mapViewLargerMapButton" type="button" selector="//a[.='View larger map']"/>
         <element name="mapWidth" type="button" selector="//*[contains(@style, 'width: {{arg1}};')]" parameterized="true"/>
-        <element name="mapWithPin" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'q={{arg1}},{{arg2}}')]" parameterized="true"/>
+        <element name="mapWithPin" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'q={{arg1}}') and contains(@src,',{{arg2}}')]" parameterized="true"/>
         <element name="mapZoomIn" type="button" selector="//button[@title='Zoom in']"/>
         <element name="mapZoomOut" type="button" selector="//button[@title='Zoom out']"/>
     </section>
@@ -55,7 +55,7 @@
         <element name="mapToolTipSaveButton" type="button" selector="//div[@class='place-card place-card-large']//div[@jsaction='placeCard.star']"/>
         <element name="mapToolTipViewLargerMapButton" type="button" selector="//div[@class='place-card place-card-large']//div[@class='google-maps-link']//a"/>
         <element name="mapWidth" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: {{arg1}};')]" parameterized="true"/>
-        <element name="mapWithPin" type="button" selector="//*[@data-role='map'][1][contains(@src, 'q={{arg1}},{{arg2}}')]" parameterized="true"/>
+        <element name="mapWithPin" type="button" selector="//*[@data-role='map'][1][contains(@src, 'q={{arg1}}') and contains(@src,',{{arg2}}')]" parameterized="true"/>
         <element name="mapZoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom={{arg1}}')]" parameterized="true"/>
         <element name="mapZoomIn" type="button" selector="//button[@title='Zoom in']"/>
         <element name="mapZoomOut" type="button" selector="//button[@title='Zoom out']"/>
@@ -70,7 +70,6 @@
         <element name="mapPinInitialLocation" type="button" selector="//div[contains(@style,'transform: matrix(1, 0, 0, 1, -12') and contains(@style,', -10')]"/>
         <element name="mapPinMovedLocation" type="button" selector="//div[contains(@style,'transform: matrix(1, 0, 0, 1, -12') and contains(@style,', -2')]"/>
         <element name="mapPinPosition" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(@style,'left: {{arg1}}px; top: {{arg2}}px; z-index: {{arg3}};')]|//div[@data-index='position']//div[@class='map-field']//div[contains(@style,'left: {{arg4}}px; top: {{arg2}}px; z-index: {{arg3}};')]" parameterized="true"/>
-        <!--<element name="mapPinLocation" type="button" selector="//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, {{arg1}});')]" parameterized="true"/>-->
         <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>
         <element name="mapPositionJS" type="input" selector=".admin__field-map input[type=\'text\']"/>
         <element name="mapSatelliteView" type="button" selector="//div[@data-index='position']//div[@title='Show satellite imagery']"/>

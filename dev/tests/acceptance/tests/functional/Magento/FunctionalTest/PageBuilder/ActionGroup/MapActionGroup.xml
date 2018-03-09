@@ -36,8 +36,8 @@
     </actionGroup>
     <actionGroup name="validateEmptyMapStage">
         <!-- Must scroll to map so that some elements are viewable by Selenium -->
-        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollTokMap"/>
         <waitForElementVisible selector="{{MapOnStage.emptyMap(PageBuilderMapPositionDefaultProperty.lat, PageBuilderMapPositionDefaultProperty.lng)}}" stepKey="seeEmptyMap"/>
+        <scrollTo selector="{{MapOnStage.emptyMap(PageBuilderMapPositionDefaultProperty.lat, PageBuilderMapPositionDefaultProperty.lng)}}" x="0" y="-100" stepKey="scrollToMap"/>
         <seeElement selector="{{MapOnStage.mapHeight(PageBuilderMapHeightDefaultProperty.value)}}" stepKey="seeEmptyMapHeight"/>
         <seeElement selector="{{MapOnStage.mapWidth(PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeEmptyMapWidth"/>
         <seeElement selector="{{MapOnStage.mapMargin(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="seeMapMargin"/>
@@ -58,28 +58,13 @@
     <actionGroup name="validateMapToolTipStage">
         <arguments>
             <argument name="property" defaultValue="PageBuilderMapPinDefaultProperty"/>
+            <argument name="contentIndex" defaultValue="PageBuilderMapIndex1"/>
         </arguments>
         <!-- Must scroll to map so that some elements are viewable by Selenium -->
-        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollTokMap"/>
+        <scrollTo selector="{{MapOnStage.mapByIndex(contentIndex.index)}}" x="0" y="-100" stepKey="scrollToMap"/>
         <!-- Attach an id to map iFrame so we can interact with it -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractable"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTip}}" stepKey="waitForToolTipVisible"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTipCoordinates(property.toolTipCoordinates)}}" stepKey="seeCoordinates"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTipSaveButton}}" stepKey="seeSaveButton"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTipViewLargerMapButton}}" stepKey="seeViewLargerMapButton"/>
-        <switchToIFrame selector="" stepKey="exitIFrame"/>
-    </actionGroup>
-    <actionGroup name="validateMapToolTipStage2">
-        <arguments>
-            <argument name="property" defaultValue="PageBuilderMapPinDefaultProperty"/>
-        </arguments>
-        <!-- Must scroll to map so that some elements are viewable by Selenium -->
-        <scrollTo selector="{{MapOnStage.mapByIndex('2')}}" stepKey="scrollToMap"/>
-        <!-- Attach an id to map iFrame so we can interact with it -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractable"/>
-        <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrame"/>
+        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[{{contentIndex.index}}-1].setAttribute('id', 'mapIFrame{{contentIndex.index}}');" stepKey="makeIFrameInteractable"/>
+        <switchToIFrame selector="mapIFrame{{contentIndex.index}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTip}}" stepKey="waitForToolTipVisible"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTipCoordinates(property.toolTipCoordinates)}}" stepKey="seeCoordinates"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
@@ -105,24 +90,11 @@
     <actionGroup name="validateMapToolTipStoreFront">
         <arguments>
             <argument name="property" defaultValue="PageBuilderMapPinDefaultProperty"/>
+            <argument name="contentIndex" defaultValue="PageBuilderMapIndex1"/>
         </arguments>
         <!-- Attach an id to map iFrame so we can interact with it -->
-        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractable"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTip}}" stepKey="waitForToolTipVisible"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipCoordinates(property.toolTipCoordinates)}}" stepKey="seeCoordinates"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipSaveButton}}" stepKey="seeSaveButton"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipViewLargerMapButton}}" stepKey="seeViewLargerMapButton"/>
-        <switchToIFrame selector="" stepKey="exitIFrame"/>
-    </actionGroup>
-    <actionGroup name="validateMapToolTipStoreFront2">
-        <arguments>
-            <argument name="property" defaultValue="PageBuilderMapPinDefaultProperty"/>
-        </arguments>
-        <!-- Attach an id to map iFrame so we can interact with it -->
-        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractable"/>
-        <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrame"/>
+        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[{{contentIndex.index}}-1].setAttribute('id', 'mapIFrame{{contentIndex.index}}');" stepKey="makeIFrameInteractable"/>
+        <switchToIFrame selector="mapIFrame{{contentIndex.index}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTip}}" stepKey="waitForToolTipVisible"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTipCoordinates(property.toolTipCoordinates)}}" stepKey="seeCoordinates"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
