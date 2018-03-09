@@ -42,21 +42,21 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <!-- Verify Default Header in Stage -->
+        <!-- Verify Default Heading in Stage -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
         <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!-- Verify Default Header in Stage After Page Save -->
+        <!-- Verify Default Heading in Stage After Page Save -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
         <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder2"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius2"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Default Header in Storefront -->
+        <!-- Verify Default Heading in Storefront -->
         <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value,'1')}}" stepKey="seeStorefrontBorderInDOM"/>
@@ -435,12 +435,12 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
     </test>
     <test name="HeadingEditTypeH1">
@@ -487,14 +487,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
@@ -543,14 +543,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
@@ -600,14 +600,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
@@ -656,14 +656,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
@@ -712,14 +712,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
@@ -768,14 +768,14 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
@@ -829,12 +829,12 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Header in Stage -->
+        <!-- Verify Heading in Stage -->
         <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForHeading"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Header in Storefront -->
+        <!-- Verify Heading in Storefront -->
         <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
     </test>
     <test name="HeadingDuplicate">
