@@ -7,7 +7,7 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
 ], function (AbstractField) {
     'use strict';
 
@@ -27,9 +27,8 @@ define([
          */
         renderMap: function (element) {
             // Get the start value and convert the value into an array
-            var startValue = this.value() ? this.value().split(',') : [30.2672, -97.7431, 8];
-
-            var mapOptions = {
+            var startValue = this.value() ? this.value().split(',') : [30.2672, -97.7431, 8],
+                mapOptions = {
                 zoom: parseInt(startValue[2], 10),
                 center: new google.maps.LatLng(startValue[0], startValue[1]),
                 scrollwheel: false,
@@ -87,7 +86,8 @@ define([
          * @param {Event} event
          */
         onDoubleClick: function (event) {
-            if(!this.marker) {
+
+            if (!this.marker) {
                 this.addMarker(event.latLng.lat(), event.latLng.lng());
             }
             this.value(this.exportValue(event.latLng));
@@ -123,7 +123,7 @@ define([
          * Returns current latitude, longitude, and zoom level as a single string
          *
          * @param {LatLng} latLng
-         * @return {string}
+         * @return {String}
          */
         exportValue: function (latLng) {
             var curLatLng = latLng ? latLng : this.marker.getPosition();
