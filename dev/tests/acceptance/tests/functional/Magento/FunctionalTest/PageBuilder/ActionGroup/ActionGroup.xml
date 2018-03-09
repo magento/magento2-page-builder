@@ -34,9 +34,9 @@
         <see userInput="Product" selector="{{PageBuilderActionsSection.magentoGroupBlock}}" stepKey="seeMagentoGroupProduct"/>
         <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
         <see userInput="Anchor" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupAnchor"/>
-        <see userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupCode"/>
+        <dontSee userInput="Code" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupCode"/>
         <see userInput="Html" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupHtml"/>
-        <see userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupSearch"/>
+        <dontSee userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupSearch"/>
     </actionGroup>
     <actionGroup name="enablePageBuilder">
         <amOnPage url="{{CmsPagesPage}}" stepKey="amOnPagePagesGrid"/>
@@ -106,12 +106,12 @@
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockIndex" defaultValue="1"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
