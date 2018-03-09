@@ -20,8 +20,8 @@ define([], function () {
     _proto.read = function read(element) {
       return new Promise(function (resolve) {
         resolve({
-          heading_type: element.nodeName.toLowerCase(),
-          heading_text: element.innerText
+          heading_text: element.innerText,
+          heading_type: element.nodeName.toLowerCase()
         });
       });
     };

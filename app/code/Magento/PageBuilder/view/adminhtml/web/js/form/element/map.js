@@ -87,8 +87,8 @@ define([
          * @param {Event} event
          */
         onClick: function (event) {
-            this.clickTimer = setTimeout(function() {
-                if(!this.marker) {
+            this.clickTimer = setTimeout(function () {
+                if (!this.marker) {
                     this.addMarker(event.latLng.lat(), event.latLng.lng());
                 }
                 this.value(this.exportValue(event.latLng));
@@ -131,13 +131,13 @@ define([
         /**
          * Returns current latitude, longitude, and zoom level as a single string
          *
-         * @param {object} latLng
-         * @return {string}
+         * @param {Object} latLng
+         * @return {String}
          */
         exportValue: function (latLng) {
             var position = this.marker ?
-                this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng());
-            var curLatLng = latLng ? latLng : position;
+                this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
+                curLatLng = latLng ? latLng : position;
 
             return curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom();
         }
