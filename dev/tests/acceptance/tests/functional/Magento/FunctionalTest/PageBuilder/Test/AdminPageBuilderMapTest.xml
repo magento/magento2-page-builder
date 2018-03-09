@@ -40,7 +40,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <!-- Verify Default Map in Preview -->
+        <!-- Verify Default Map in Stage -->
         <actionGroup ref="validateEmptyMapStage" stepKey="validateEmptyMapStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -279,7 +279,7 @@
             <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Add Pin To Map"/>
-            <description value="A user should be able to add a pin to a map and see the pin on Edit Panel, Preview, and Storefront."/>
+            <description value="A user should be able to add a pin to a map and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88929"/>
             <group value="pagebuilder"/>
@@ -312,15 +312,15 @@
         <!-- Edit Panel: Verify Pin Position -->
         <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="verifyMapPinPosition"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Preview: Verify Map Has Pin & Tooltip -->
-        <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="verifyPreviewHasMapWithPin"/>
+        <!-- Stage: Verify Map Has Pin & Tooltip -->
+        <waitForElementVisible selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="waitForStageHasMapWithPin"/>
         <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage">
             <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!-- Preview: Verify Map Has Pin After Save -->
-        <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="verifyPreviewHasMapWithPin2"/>
+        <!-- Stage: Verify Map Has Pin After Save -->
+        <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="verifyStageHasMapWithPin2"/>
         <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage2">
             <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
         </actionGroup>
@@ -342,8 +342,8 @@
             <features value="Pagebuilder"/>
             <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
-            <title value="Map - Cannot Add Pin To Map In Preview Or Store Front"/>
-            <description value="A user should not be able to add a pin to a map from the preview nor the store front."/>
+            <title value="Map - Cannot Add Pin To Map In Stage Or Store Front"/>
+            <description value="A user should not be able to add a pin to a map from the Stage nor the store front."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88895"/>
             <group value="pagebuilder"/>
@@ -369,11 +369,11 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <!-- Try To Add Pin From Preview -->
+        <!-- Try To Add Pin From Stage -->
         <waitForElementVisible selector="{{MapOnStage.map}}" stepKey="waitForMapVisible" />
         <click selector="{{MapOnStage.map}}" stepKey="doubleClickMap"/>
-        <seeElement selector="{{MapOnStage.emptyMap(PageBuilderMapPositionDefaultProperty.lat, PageBuilderMapPositionDefaultProperty.lng)}}" stepKey="seeEmptyMapPreview"/>
-        <dontSeeElementInDOM selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinPreview"/>
+        <seeElement selector="{{MapOnStage.emptyMap(PageBuilderMapPositionDefaultProperty.lat, PageBuilderMapPositionDefaultProperty.lng)}}" stepKey="seeEmptyMapStage"/>
+        <dontSeeElementInDOM selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -388,13 +388,13 @@
         <!-- Verify No Pin In Store Front -->
         <dontSeeElementInDOM selector="{{MapOnFrontend.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinStoreFront"/>
     </test>
-    <test name="MapMoveMapPin">
+    <test name="MapMoveMapPinByClick">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
-            <title value="Map - Add Pin To Map"/>
-            <description value="A user should be able to move a map pin only on the Configuration Panel."/>
+            <title value="Map - Move Map Pin By Clicking On Map"/>
+            <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88930"/>
             <group value="pagebuilder"/>
@@ -680,8 +680,9 @@
         <switchToIFrame selector="" stepKey="exitIFrameStage2"/>
         <assertEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage2" actualType="variable" message="actual=$grabPinLocationStage2, expected=$grabPinLocationStage2" stepKey="assertPinLocationStage"/>
         <!-- Scroll To Duplicate -->
-        <actionGroup ref="openPageBuilderEditPanelByIndex2" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderMapIndex2"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="seeMapPinOnEditPanel"/>
@@ -731,7 +732,7 @@
             <stories value="MAGETWO-83935"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Delete Map"/>
-            <description value="A user should be able to delete a map contennt block. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete a map content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88897"/>
             <group value="pagebuilder"/>

@@ -43,7 +43,7 @@
         <seeElement selector="{{MapOnStage.mapMargin(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="seeMapMargin"/>
         <seeElement selector="{{MapOnStage.mapPadding(PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="seeMapPadding"/>
         <seeElement selector="{{MapOnStage.mapNoAlignment}}" stepKey="seeMapNoAlignment"/>
-        <dontSeeElementInDOM selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeePinOnPreview"/>
+        <dontSeeElementInDOM selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeePinOnStage"/>
         <!-- Attach an id to map iFrame so we can interact with it -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractable"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrame"/>

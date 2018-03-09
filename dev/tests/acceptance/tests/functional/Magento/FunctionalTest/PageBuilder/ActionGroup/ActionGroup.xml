@@ -71,20 +71,6 @@
         <click selector="{{section.sectionName}}" stepKey="clickSection"/>
         <waitForElementVisible time="3" selector="{{section.sectionExpanded}}" stepKey="waitForSectionExpanded"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditPanelByIndex2">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockNumber" defaultValue="1"/>
-        </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="waitForContentBlockInStageVisible" />
-        <scrollTo selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" x="0" y="-100" stepKey="scrollToDuplicate"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, '2')}}" stepKey="waitForEditButton"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, '2')}}" stepKey="clickEditButton"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-    </actionGroup>
     <actionGroup name="addPageBuilderPageTitle">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -155,8 +141,10 @@
             <argument name="contentBlockYCoordinate" defaultValue="0"/>
         </arguments>
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <scrollTo selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" x="0" y="-100" stepKey="scrollToDuplicate"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForOptions" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, '2')}}" stepKey="waitForEditButton"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
