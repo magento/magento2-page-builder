@@ -432,8 +432,8 @@
         <!-- Stage: Get Initial Pin Location -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinInitialLocation}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinInitialLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
         <switchToIFrame selector="" stepKey="exitIFrameStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
@@ -442,8 +442,8 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStoreFront"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStoreFront"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinInitialLocation}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinInitialLocation}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
         <switchToIFrame selector="" stepKey="exitIFrameStoreFront"/>
         <!-- Switch Back To Backend -->
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -466,8 +466,8 @@
         <!-- Stage: Verify Pin Location Moved -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage2"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage2"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinMovedLocation}}" stepKey="waitForPinLocationStage2"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage2"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
         <switchToIFrame selector="" stepKey="exitIFrameStage2"/>
         <assertNotEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage2" actualType="variable" message="actual=$grabPinLocationStage2, expected=$grabPinLocationStage2" stepKey="assertPinLocationChangedStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
@@ -476,8 +476,8 @@
         <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollToMap"/>
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage3"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage3"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinMovedLocation}}" stepKey="waitForPinLocationStage3"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStage3"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage3"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage3"/>
         <switchToIFrame selector="" stepKey="exitIFrameStage3"/>
         <assertNotEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage3" actualType="variable" message="actual=$grabPinLocationStage3, expected=$grabPinLocationStage" stepKey="assertPinLocationChangedStage2"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStage3" actualType="variable" message="actual=$grabPinLocationStage3, expected=$grabPinLocationStage2" stepKey="assertPinLocationChangedStage3"/>
@@ -496,8 +496,8 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad2"/>
         <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStoreFront2"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStoreFront2"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinMovedLocation}}" stepKey="waitForPinLocationStoreFront2"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront2"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
         <switchToIFrame selector="" stepKey="exitIFrameStoreFront2"/>
         <assertNotEquals expected="grabPinLocationStoreFront" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$grabPinLocationStoreFront" stepKey="assertPinLocationChangedStoreFront"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$mapPositionEditPanel2" stepKey="assertPinLocationSameOnStageAndStoreFront"/>
@@ -670,8 +670,8 @@
         <!-- Stage: Get Map Pin Position -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage"/>
         <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinMovedLocation}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
         <switchToIFrame selector="" stepKey="exitIFrameStage"/>
         <!-- Duplicate and Verify Stage -->
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
@@ -685,8 +685,8 @@
         <!-- Stage: Verify Map Pin Position On Duplicate -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStage2"/>
         <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrameStage2"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinMovedLocation}}" stepKey="waitForPinLocationStage2"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage2"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
         <switchToIFrame selector="" stepKey="exitIFrameStage2"/>
         <assertEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage2" actualType="variable" message="actual=$grabPinLocationStage2, expected=$grabPinLocationStage2" stepKey="assertPinLocationStage"/>
         <!-- Scroll To Duplicate -->
@@ -731,8 +731,8 @@
         <!-- Storefront: Verify Map Pin Position On Duplicate -->
         <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStoreFront2"/>
         <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrameStoreFront2"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinMovedLocation}}" stepKey="waitForPinLocationStoreFront2"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinMovedLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront2"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
         <switchToIFrame selector="" stepKey="exitIFrameStoreFront2"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$mapPositionEditPanel2" stepKey="assertPinLocationSameOnStageAndStoreFront"/>
     </test>
