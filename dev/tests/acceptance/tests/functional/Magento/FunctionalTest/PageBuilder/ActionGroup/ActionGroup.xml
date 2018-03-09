@@ -133,6 +133,20 @@
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="openPageBuilderEditPanelSmall">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
+        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
     <actionGroup name="openPageBuilderEditPanelByIndex">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
