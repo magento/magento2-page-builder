@@ -59,12 +59,12 @@
             <argument name="contentIndex" defaultValue="PageBuilderMapIndex1"/>
         </arguments>
         <!-- Must scroll to map so that some elements are viewable by Selenium -->
-        <scrollTo selector="{{MapOnStage.mapByIndex(contentIndex.index)}}" x="0" y="-100" stepKey="scrollToMap"/>
+        <scrollTo selector="{{MapOnStage.mapByIndex(contentIndex.index)}}" x="0" y="-150" stepKey="scrollToMap"/>
         <!-- Attach an id to map iFrame so we can interact with it -->
         <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[{{contentIndex.index}}-1].setAttribute('id', 'mapIFrame{{contentIndex.index}}');" stepKey="makeIFrameInteractable"/>
         <switchToIFrame selector="mapIFrame{{contentIndex.index}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTip}}" stepKey="waitForToolTipVisible"/>
-        <waitForElementVisible selector="{{MapOnStage.mapToolTipCoordinates(property.toolTipNorthCoordinate, property.toolTipWestCoordinate)}}" stepKey="seeCoordinates"/>
+        <waitForElementVisible selector="{{MapOnStage.mapToolTipCoordinates(property.toolTipNorthCoordinate, property.toolTipWestCoordinate, property.toolTipWestAltCoordinate)}}" stepKey="seeCoordinates"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTipSaveButton}}" stepKey="seeSaveButton"/>
         <waitForElementVisible selector="{{MapOnStage.mapToolTipViewLargerMapButton}}" stepKey="seeViewLargerMapButton"/>
@@ -94,7 +94,7 @@
         <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[{{contentIndex.index}}-1].setAttribute('id', 'mapIFrame{{contentIndex.index}}');" stepKey="makeIFrameInteractable"/>
         <switchToIFrame selector="mapIFrame{{contentIndex.index}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTip}}" stepKey="waitForToolTipVisible"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipCoordinates(property.toolTipNorthCoordinate, property.toolTipWestCoordinate)}}" stepKey="seeCoordinates"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapToolTipCoordinates(property.toolTipNorthCoordinate, property.toolTipWestCoordinate, property.toolTipWestAltCoordinate)}}" stepKey="seeCoordinates"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTipDirectionsButton}}" stepKey="seeDirectionsButton"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTipSaveButton}}" stepKey="seeSaveButton"/>
         <waitForElementVisible selector="{{MapOnFrontend.mapToolTipViewLargerMapButton}}" stepKey="seeViewLargerMapButton"/>
