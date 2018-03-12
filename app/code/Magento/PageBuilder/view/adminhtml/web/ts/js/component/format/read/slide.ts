@@ -50,7 +50,7 @@ export default class Slide implements ReadInterface {
                     top: paddingSrc.paddingTop.replace("px", ""),
                 },
             },
-            message: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+            content: element.querySelector(".pagebuilder-poster-content div").innerHTML,
             min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
             mobile_image: bgMobileImage ? decodeUrl(bgMobileImage) : "",
             open_in_new_tab: target && target === "_blank" ? "1" : "0",
