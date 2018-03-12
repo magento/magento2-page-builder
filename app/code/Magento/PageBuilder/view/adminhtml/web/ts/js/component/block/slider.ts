@@ -3,12 +3,12 @@
  * See COPYING.txt for license details.
  */
 
+import delayedPromise from "../../utils/delayed-promise";
 import createBlock from "../block/factory";
 import Config from "../config";
-import Block from "./block";
-import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import EventBus from "../event-bus";
-import delayedPromise from "../../utils/delayed-promise";
+import {BlockRemovedParams} from "../stage/event-handling-delegate";
+import Block from "./block";
 
 export default class Slider extends Block {
 
@@ -39,7 +39,7 @@ export default class Slider extends Block {
             if (params.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
-        })
+        });
         // Block being removed from container
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {

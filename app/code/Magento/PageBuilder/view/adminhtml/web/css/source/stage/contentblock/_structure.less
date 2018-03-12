@@ -117,13 +117,17 @@
     transition: outline 200ms ease 200ms, z-index 200ms step-end;
     z-index: 10;
 
-    &-active:hover:not(.no-system-border) {
-        outline: 1px solid rgb(153, 153, 153);
-        -webkit-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        -moz-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        -o-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        z-index: 25;
+    &-active {
+        &:hover {
+            &:not(.no-system-border) {
+                outline: 1px solid rgb(153, 153, 153);
+                -webkit-transition: outline 200ms ease 200ms, z-index 200ms step-start;
+                -moz-transition: outline 200ms ease 200ms, z-index 200ms step-start;
+                -o-transition: outline 200ms ease 200ms, z-index 200ms step-start;
+                transition: outline 200ms ease 200ms, z-index 200ms step-start;
+                z-index: 25;
+            }
+        }
 
         &.type-container {
             outline: 1px solid rgb(153, 153, 153);

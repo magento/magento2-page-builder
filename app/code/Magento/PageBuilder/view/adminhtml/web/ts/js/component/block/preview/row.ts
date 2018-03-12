@@ -44,6 +44,7 @@ export default class Row extends PreviewBlock {
                         speed: this.data.parallax_speed() || 0.5,
                     },
                 );
+                jarallax(this.element, "onResize");
             });
         }
     }, 50);

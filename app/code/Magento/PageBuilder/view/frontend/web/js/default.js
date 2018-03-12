@@ -7,7 +7,8 @@
 
 requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     'use strict';
-    $(document).ready(function() {
+
+    $(document).ready(function () {
         $('pre code:not(.hljs)').each(function (i, block) {
             $(block).html(
                 hljs.highlight('html', $(block).html()).value
@@ -19,7 +20,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
                 /**
                  * Prevent each slick slider from being initialized more than once which could throw an error.
                  */
-                if($(element).hasClass('slick-initialized')) {
+                if ($(element).hasClass('slick-initialized')) {
                     $(element).slick('unslick');
                 }
 
@@ -51,15 +52,15 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
             var buttonEl = $(element).find('.pagebuilder-banner-button');
 
             $(element).hover(
-                function() {
+                function () {
                     buttonEl.css({
-                        'opacity' : '1',
-                        'visibility' : 'visible'
+                        'opacity': '1',
+                        'visibility': 'visible'
                     });
-                }, function() {
+                }, function () {
                     buttonEl.css({
-                        'opacity' : '0',
-                        'visibility' : 'hidden'
+                        'opacity': '0',
+                        'visibility': 'hidden'
                     });
                 }
             );
@@ -70,9 +71,9 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
                 overlayColor = overlayEl.attr('data-overlay-color');
 
             $(element).hover(
-                function() {
+                function () {
                     overlayEl.css('background-color', overlayColor);
-                }, function() {
+                }, function () {
                     overlayEl.css('background-color', 'transparent');
                 }
             );

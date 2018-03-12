@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block", "mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter"], function (_block, _translate, _underscore, _colorConverter, _directives, _numberConverter) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
