@@ -31,16 +31,19 @@ export default class Map extends Block {
      */
     public getAttributes() {
         const data = this.getData();
+        let result = super.getAttributes();
+
         if(data.position) {
             const position = data.position.split(",");
             const marker = "'" + position[0] + "," + position[1] + "'";
             let markers = "[" + marker + "]";
-            let result = {
+            let markerAttributes = {
                 "data-markers" : markers,
                 "data-zoom" : position[2],
             };
-            return _.extend(super.getAttributes(), result);
+            result = _.extend(super.getAttributes(), markerAttributes);
         }
+        return result;
     }
 
     /**

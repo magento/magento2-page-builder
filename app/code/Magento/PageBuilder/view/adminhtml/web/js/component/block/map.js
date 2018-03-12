@@ -40,16 +40,20 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
     _proto.getAttributes = function getAttributes() {
       var data = this.getData();
 
+      var result = _Block.prototype.getAttributes.call(this);
+
       if (data.position) {
         var position = data.position.split(",");
         var marker = "'" + position[0] + "," + position[1] + "'";
         var markers = "[" + marker + "]";
-        var result = {
+        var markerAttributes = {
           "data-markers": markers,
           "data-zoom": position[2]
         };
-        return _underscore.extend(_Block.prototype.getAttributes.call(this), result);
+        result = _underscore.extend(_Block.prototype.getAttributes.call(this), markerAttributes);
       }
+
+      return result;
     };
     /**
      * Gets the map styles
