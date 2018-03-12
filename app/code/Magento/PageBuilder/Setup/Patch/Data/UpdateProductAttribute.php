@@ -71,6 +71,6 @@ class UpdateProductAttribute implements
      */
     public static function getDependencies()
     {
-        return [];
+        return [MigrateToPageBuilder::class];
     }
 }
