@@ -5,7 +5,13 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
+requirejs([
+    'jquery',
+    'highlight',
+    'slick',
+    'bg-parallax',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw',
+    ], function ($, hljs) {
     'use strict';
 
     $(document).ready(function () {
@@ -76,4 +82,54 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
     $(window).load(function () {
         window.bgParallax('.pagebuilder-parallax');
     });
+
+    /* Google Maps */
+    /*eslint-disable vars-on-top */
+    var google = window.google || {};
+    var googleLatLng = function(latLngString) {
+        var latLng = latLngString.split(",");
+
+        return new google.maps.LatLng(latLng[0], latLng[1]);
+    };
+    /*eslint-enable vars-on-top */
+
+    $('div[data-role="map"]').each(function (index, element) {
+        var markers = [],
+            centerCoord = "",
+            mapOptions = {},
+            map;
+
+        if(element.hasAttribute('data-markers')) {
+            markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, "\""));
+            centerCoord = googleLatLng(markers[0]);
+            mapOptions = {
+                zoom: parseInt(element.getAttribute('data-zoom'), 10),
+                center: centerCoord,
+                scrollwheel: false,
+                disableDoubleClickZoom: false,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DEFAULT
+                },
+                navigationControl: true,
+                navigationControlOptions: {
+                    style: google.maps.NavigationControlStyle.DEFAULT
+                }
+            };
+
+            /* Create the map */
+            map = new google.maps.Map(element, mapOptions);
+
+            // Add markers to the map
+            markers.forEach(function(markerCoord) {
+                new google.maps.Marker({
+                    map: map,
+                    position: googleLatLng(markerCoord),
+                });
+            });
+
+        }
+    });
+
+    /* End Google Maps */
 });
