@@ -19,6 +19,8 @@
             <group value="pagebuilder"/>
         </annotations>
         <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
@@ -39,7 +41,29 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
 
-        <!--Open Slider Settings-->
+        <comment userInput="Edit Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
+            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
+            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+        </actionGroup>
+
+        <scrollTo selector="#pagebuilder_slide_form_content" stepKey="scrollToContent"/>
+        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
+        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
+            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButton1">
+            <argument name="property" value="PageBuilderShowButton1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
+            <argument name="property" value="PageBuilderSlideItemButtonText1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+
+        <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -67,7 +91,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSliderMinHeight500">
             <argument name="property" value="PageBuilderSliderMinHeight500Property"/>
         </actionGroup>
-        <!--Edit Advanced Settings-->
+        <comment userInput="Edit Advanced settings for slider" stepKey="EditSliderAdvanced"/>
         <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
@@ -96,51 +120,41 @@
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
-
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <!--Add first slide-->
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider1"/>
-        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
-        </actionGroup>
-        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkText1">
-            <argument name="property" value="PageBuilderSlideItemLinkText1"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
-            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
-        </actionGroup>
-        <!--<actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideHasBackgroundOverlay1">-->
-            <!--<argument name="property" value="PageBuilderSlideItemHasBackgroundOverlay1"/>-->
-        <!--</actionGroup>-->
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
-        <!--Add second slide-->
+
+        <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot0"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
             <argument name="property" value="PageBuilderSlideItemTitle2"/>
         </actionGroup>
-        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 2 Content')" stepKey="addText2ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkText2">
-            <argument name="property" value="PageBuilderSlideItemLinkText2"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
-            <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
-        </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile2">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
         </actionGroup>
+        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 2 Content')" stepKey="addText2ToWYSIWYG"/>
+        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation2"/>
+
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
+            <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways2">
+            <argument name="property" value="PageBuilderShowButton1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText2">
+            <argument name="property" value="PageBuilderSlideItemButtonText2"/>
+        </actionGroup>
+
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <!--View slider and slides on stage-->
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <comment userInput="View slider and slides on stage" stepKey="viewSliderOnStage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <!--temporary close due to open immediately bug-->
+        <waitForElementVisible stepKey="wait3" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="tempCancel"/>
+
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1"/>
@@ -148,7 +162,6 @@
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSlideNavigationDot2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2"/>
         <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle2"/>
-        <!--<seeElement selector="{{SliderInAdmin.Fade}}" stepKey="verifyFadeYesOnAdmin"/>-->
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="verifyAlignmentLeftOnAdmin"/>
@@ -156,7 +169,8 @@
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
 
-        <!--View slider and slides on storefront-->
+        <comment userInput="View slider and slides on storefront" stepKey="viewSliderOnStorefront"/>
+
         <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
@@ -171,8 +185,7 @@
         <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
-        <!--<seeElement selector="{{SlideOnFrontend.slideHasOverlay1}}" stepKey="seeSlide1HasOverlay"/>-->
-        <see userInput="{{PageBuilderSlideItemLinkText1.value}}" selector="{{SlideOnFrontend.slideLinkText1}}" stepKey="seeSlide1LinkTextDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText1}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
@@ -180,7 +193,7 @@
         <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" stepKey="seeSlide2TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" stepKey="seeSlide2ContentDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemLinkText2.value}}" selector="{{SlideOnFrontend.slideLinkText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
     </test>
