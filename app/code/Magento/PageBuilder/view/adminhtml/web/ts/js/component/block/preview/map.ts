@@ -9,9 +9,20 @@ import PreviewBlock from "./block";
 
 export default class Map extends PreviewBlock {
     public getMapUrl: KnockoutComputed<string> = ko.computed(() => {
-        const [lat, lng, zoom] = this.data.position().split(",");
-        return "https://www.google.com/maps/embed/v1/place?q=" + lat
-            + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
+        let url = "https://www.google.com/maps/embed/v1/";
+        let lat = 30.2672;
+        let lng = -97.7431;
+        let zoom = 8;
+        const position = this.data.position();
+
+        if (!position) {
+            url += "view?center=";
+        } else {
+            [lat, lng, zoom] = position.split(",");
+            url += "place?q=";
+        }
+
+        return url + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
     });
     private element: Element;
 

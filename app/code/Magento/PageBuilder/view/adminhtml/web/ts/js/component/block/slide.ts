@@ -3,13 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
 import $t from "mage/translate";
 import _ from "underscore";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
-import {Options} from "../stage/structural/options";
 import {percentToDecimal} from "../../utils/number-converter";
+import {Options} from "../stage/structural/options";
+import Block from "./block";
 
 export default class Slide extends Block {
 
