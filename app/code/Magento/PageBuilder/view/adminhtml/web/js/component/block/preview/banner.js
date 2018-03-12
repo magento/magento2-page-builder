@@ -107,7 +107,7 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
 
     _proto.getContentHtml = function getContentHtml() {
       if (this.isContentEmpty()) {
-        return (0, _translate)("Write banner text here...");
+        return (0, _translate)("Edit banner text");
       } else {
         return (0, _translate)(this.data.message());
       }

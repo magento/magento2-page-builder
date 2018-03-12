@@ -44,8 +44,8 @@ define([
          */
         initObservable: function () {
             this._super();
-            this.observe('marginTop marginRight marginBottom marginLeft '
-                + 'paddingTop paddingRight paddingBottom paddingLeft');
+            this.observe('marginTop marginRight marginBottom marginLeft ' +
+                'paddingTop paddingRight paddingBottom paddingLeft');
 
             return this;
         },
@@ -78,6 +78,7 @@ define([
         setInitialValue: function () {
             this._super();
             this._updateObservables(this.initialValue);
+
             return this;
         },
 
@@ -90,22 +91,24 @@ define([
         onUpdate: function () {
             this._super();
             this._updateObservables(this.value());
+
             return this;
         },
 
         /**
          * Update the observable properties
          *
-         * @param value
+         * @param {Number} value
          * @private
          */
-        _updateObservables: function(value) {
+        _updateObservables: function (value) {
             if (value && _.isString(value)) {
                 value = JSON.parse(value);
             }
+
             if (value && _.isObject(value)) {
-                _.each(value, function(attributeData, attributeType) {
-                    _.each(attributeData, function(attributeValue, attributeDirection) {
+                _.each(value, function (attributeData, attributeType) {
+                    _.each(attributeData, function (attributeValue, attributeDirection) {
                         if (attributeValue !== defaultValue) {
                             this[attributeType + attributeDirection.capitalize()](attributeValue);
                         }

@@ -41,9 +41,12 @@
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector=".stage-container div.pagebuilder-content-type.pagebuilder-{{arg1}}.pagebuilder-entity-preview" parameterized="true"/>
         <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options div.pagebuilder-options-visible' parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .edit-block' parameterized="true"/>
-        <element name="contentBlockDuplicate" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .duplicate-structural' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector='.pagebuilder-{{arg1}}.pagebuilder-content-type-active .pagebuilder-options div.pagebuilder-options-visible .remove-structural' parameterized="true"/>
+        <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
+        <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="duplicate-structural"]' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
@@ -86,9 +89,6 @@
         <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
         <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
         <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row2header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]/descendant::*[@class="pagebuilder-heading-h2"]'/>
-        <element name="row3header" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]/descendant::*[@class="pagebuilder-heading-h2"]'/>
         <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")]'/>
         <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
         <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
@@ -122,6 +122,8 @@
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
+        <element name="panelFieldOptions" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/option' parameterized="true"/>
+        <element name="panelFieldPlaceholderText" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @placeholder="{{arg3}}"]' parameterized="true"/>
         <element name="fileUploadButton" type="button" selector='.file-uploader-button'/>
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
@@ -135,8 +137,8 @@
     <section name="HtmlOnFrontend">
         <element name="htmlDisplay" type="button" selector="{{arg1}}[data-role='html']" parameterized="true"/>
     </section>
-    <section name="HeaderOnFrontend">
-        <element name="header1Display" type="button" selector="{{arg1}}[data-role='heading']" parameterized="true"/>
+    <section name="CodeOnFrontend">
+        <element name="codeDisplay" type="button" selector="[data-role='code'] {{arg1}}" parameterized="true"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
@@ -167,7 +169,6 @@
         <element name="column3BackgroundWidthThird" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'width: 33%;')]"/>
         <element name="column3BackgroundColorGrey" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='.{{arg2}}']" parameterized="true"/>
-
         <element name="columnDisplay" type="button" selector="[data-role='column']:first-child"/>
         <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: center;']"/>
         <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border: 10px dotted rgb(255, 255, 255);']"/>
@@ -177,24 +178,26 @@
         <element name="columnClass" type="button" selector="[data-role='column']:first-child.first-class.second-class.third-class"/>
     </section>
     <section name="AdvancedForm">
-        <element name="advancedSectionName" type="button" selector="//div[@data-index='advanced']"/>
-        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>
+        <element name="sectionExpanded" type="button" selector="//div[@data-index='advanced' and contains(@class,'_show')]"/>
         <element name="advancedAlignment" type="select" selector="//select[@name='text_align']"/>
-        <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
-        <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
-        <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
-        <element name="advancedMarginLeft" type="input" selector="//input[@name='marginLeft']"/>
-        <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
-        <element name="advancedPaddingTop" type="input" selector="//input[@name='paddingTop']"/>
-        <element name="advancedPaddingRight" type="input" selector="//input[@name='paddingRight']"/>
-        <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
-        <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedBorder" type="select" selector="//select[@name='border']"/>
         <element name="advancedBorderColor" type="input" selector="//input[@name='border_color']"/>
         <element name="advancedBorderWidth" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
         <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
         <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
+        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+        <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
+        <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
+        <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
+        <element name="advancedMarginLeft" type="input" selector="//input[@name='marginLeft']"/>
+        <element name="advancedPaddingTop" type="input" selector="//input[@name='paddingTop']"/>
+        <element name="advancedPaddingRight" type="input" selector="//input[@name='paddingRight']"/>
+        <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
+        <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
+        <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
     </section>
     <section name="AccordionEditSection">
         <element name="addNewItem" type="button" selector="//button/span[contains(text(), 'Add New Accordion Item')]"/>
@@ -213,17 +216,11 @@
         <element name="dividerThickness" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-width: 10px')]"/>
         <element name="dividerWidth" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'width: 50%')]"/>
     </section>
-    <section name="MapInAdmin">
-        <element name="mapPosition" type="input" selector="//div[@data-index='position']//input"/>
-        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//button[@title='Zoom in']"/>
-        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//button[@title='Zoom out']"/>
+    <section name="SearchOnStage">
+        <element name="searchInput" type="input" selector="//*[@type='search']" />
     </section>
-    <section name="MapOnFrontend">
-        <element name="map1Lat" type="button" selector="//*[@data-role='map'][1][contains(@src, '30.401808299999995')]"/>
-        <element name="map1Lng" type="button" selector="//*[@data-role='map'][1][contains(@src, '-97.72355449999998')]"/>
-        <element name="map1Zoom" type="button" selector="//*[@data-role='map'][1][contains(@src, 'zoom=6')]"/>
-        <element name="map1Width" type="button" selector="//*[@data-role='map'][1][contains(@style, 'width: 50%;')]"/>
-        <element name="map1Height" type="button" selector="//*[@data-role='map'][1][contains(@style, 'height: 500px;')]"/>
+    <section name="SearchOnFrontend">
+        <element name="searchInput" type="input" selector="//*[@placeholder='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="ProductOnFrontend">
         <element name="productDisplay" type="button" selector='//strong/a[@class="product-item-link"]'/>

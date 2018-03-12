@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
 import $t from "mage/translate";
 import {Option} from "../stage/structural/options/option";
+import Block from "./block";
 
 export default class Slide extends Block {
 

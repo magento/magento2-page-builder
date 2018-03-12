@@ -105,7 +105,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
             <argument name="property" value="PageBuilderImageTitleTagProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesProperty.fieldName}}']" stepKey="cssPropertiesValue"/>
         <assertEmpty actual="cssPropertiesValue" actualType="variable" message="pass" stepKey="assertCssPropertiesIsEmpty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -189,9 +189,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
