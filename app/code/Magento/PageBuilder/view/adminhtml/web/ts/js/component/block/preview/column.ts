@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import {ConfigContentBlock} from "../../config";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
 import PreviewBlock from "./block";
 import {getMaxColumns} from "./column-group/resizing";
-import {ConfigContentBlock} from "../../config";
 
 export default class Column extends PreviewBlock {
 
