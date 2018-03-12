@@ -15,13 +15,14 @@ export default class Map implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
         const result: any = {
             display: "inline-block",
         };
 
-        if (element.getAttribute("src") && pattern.test(element.getAttribute("src"))) {
-            result.position = pattern.exec(element.getAttribute("src")).slice(1).join(",");
+        if (element.getAttribute('data-markers')) {
+            const markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, "\""));
+            const zoom = element.getAttribute('data-zoom');
+            result.position = markers[0] + "," + zoom;
         }
         return Promise.resolve(
             result,

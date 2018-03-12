@@ -25,9 +25,31 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
         if (params.id === _this.id) {
           setTimeout(function () {
             params.block.edit.open();
-          }, 300);
+          }, 300).toString();
+          ;
         }
       });
+    };
+    /**
+     * Gets the map attributes
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getAttributes = function getAttributes() {
+      var data = this.getData();
+
+      if (data.position) {
+        var position = data.position.split(",");
+        var marker = "'" + position[0] + "," + position[1] + "'";
+        var markers = "[" + marker + "]";
+        var result = {
+          "data-markers": markers,
+          "data-zoom": position[2]
+        };
+        return _underscore.extend(_Block.prototype.getAttributes.call(this), result);
+      }
     };
     /**
      * Gets the map styles

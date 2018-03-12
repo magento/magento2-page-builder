@@ -19,9 +19,28 @@ export default class Map extends Block {
             if (params.id === this.id) {
                 setTimeout(() => {
                     params.block.edit.open();
-                    }, 300);
+                    }, 300).toString();;
             }
         });
+    }
+
+    /**
+     * Gets the map attributes
+     *
+     * @returns {object}
+     */
+    public getAttributes() {
+        const data = this.getData();
+        if(data.position) {
+            const position = data.position.split(",");
+            const marker = "'" + position[0] + "," + position[1] + "'";
+            let markers = "[" + marker + "]";
+            let result = {
+                "data-markers" : markers,
+                "data-zoom" : position[2],
+            };
+            return _.extend(super.getAttributes(), result);
+        }
     }
 
     /**
