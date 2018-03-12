@@ -37,11 +37,11 @@
         <seeElement selector="{{CategoryContentSection.ImagePlaceHolder}}" stepKey="seeImagePlaceHolder"/>
 
         <!--Upload image from local machine using image placeholder button-->
-        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage1"/>
+        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.value}}" stepKey="uploadImage1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading6" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.file)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.file)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.file)}}" stepKey="seeMainImageSource1"/>
+        <waitForElementVisible  selector="{{ImageOnPreview.imageName(ImageUpload.fileName)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnPreview.imageName(ImageUpload.fileName)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(ImageUpload.fileName)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Remove uploaded image-->

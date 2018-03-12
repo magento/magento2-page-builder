@@ -151,7 +151,7 @@
         <see selector="{{RowAdminPreview.empty}}" userInput="Drag content blocks or columns here" stepKey="seeRowPlaceholder"/>
         <see selector="{{RowAdminPreview.displayLabel}}" userInput="Row" stepKey="seeRowDisplayLabel"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{RowAdminPreview.empty}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
@@ -179,7 +179,7 @@
         </after>
         <!-- Assert row height is 300px when empty - Depends on MQE-818 -->
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeaderContentBlock"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Assert row height has changed when content added - Depends on MQE-818 -->
     </test>
@@ -215,10 +215,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForSavedAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeSavedAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickSavedAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
+        <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopDefaultSettingInRow"/>
         <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightDefaultSettingInRow"/>
         <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefDefaultSettingInRow"/>
@@ -260,10 +260,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
@@ -320,8 +320,8 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -387,6 +387,8 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -470,10 +472,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
 
         <!-- Check for alignment -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
@@ -481,7 +483,7 @@
         </actionGroup>
         <!-- Check for border -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
         </actionGroup>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderProperty.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertDefaultBorderValue"/>
         <!-- Check for border colour -->
@@ -554,10 +556,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForSavedAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeSavedAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickSavedAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedFormVisible1"/>
+        <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible1"/>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentProperty.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInRow"/>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInRow"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInRow"/>
@@ -625,9 +627,9 @@
         </actionGroup>
 
         <!-- Open the advanced section -->
-        <click selector="{{AdvancedForm.advancedSectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.advancedSectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.advancedSectionName}}" stepKey="seeAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
 
         <!-- Add advanced data to the row -->
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">

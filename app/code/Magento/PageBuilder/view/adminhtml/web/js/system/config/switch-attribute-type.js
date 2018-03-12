@@ -14,7 +14,7 @@ define([
     return function (config, attributeDropDownEl) {
 
         var $attributeDropDownEl = $(attributeDropDownEl),
-            previousOption = "";
+            previousOption = '';
 
         $attributeDropDownEl.on('focus', function () {
             // Store the current value on focus and on change
@@ -23,10 +23,9 @@ define([
 
         $attributeDropDownEl.on('change', function () {
 
-            if (
-                attributeDropDownEl.options.length > 3
-                || this.value === 'pagebuilder'
-                || previousOption !== 'pagebuilder'
+            if (attributeDropDownEl.options.length > 3 ||
+                this.value === 'pagebuilder' ||
+                previousOption !== 'pagebuilder'
             ) {
                 return;
             }

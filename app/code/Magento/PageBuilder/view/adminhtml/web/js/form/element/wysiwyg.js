@@ -97,8 +97,8 @@ define([
             var self = this;
 
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect '
-                    + 'isFullScreen wysiwygConfigData interacting');
+                .observe('value stageId stageActive stageContent showBorders loading userSelect ' +
+                    'isFullScreen wysiwygConfigData interacting');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
@@ -108,7 +108,7 @@ define([
                         jQuery(window).scrollTop(0);
                     });
                 }
-            }, this, "beforeChange");
+            }, this, 'beforeChange');
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
                     _.defer(function () {
@@ -123,9 +123,8 @@ define([
         },
 
         /**
-         *
          * @param {HTMLElement} node
-         * @return {void}
+         * @return void
          */
         setElementNode: function (node) {
 
@@ -256,9 +255,13 @@ define([
         buildPageBuilder: function (event, isFullScreenMode) {
             var self = this,
                 isFullScreeMode = isFullScreenMode || false,
+
+                /**
+                 * @param {Stage} stage
+                 */
                 bindStage = function (stage) {
                     self.stage = stage;
-                    EventBus.on("stage:ready", function (stageReadyEvent, params) {
+                    EventBus.on('stage:ready', function (stageReadyEvent, params) {
                         if (params.stage.id === self.stage.id) {
                             self.isFullScreen(isFullScreeMode);
                         }
@@ -289,7 +292,7 @@ define([
          * @returns {String}
          */
         getStageTemplate: function () {
-                return 'Magento_PageBuilder/component/stage.html';
+            return 'Magento_PageBuilder/component/stage.html';
         },
 
         /**
