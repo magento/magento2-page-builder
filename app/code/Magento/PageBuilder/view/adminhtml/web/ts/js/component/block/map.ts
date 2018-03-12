@@ -34,12 +34,15 @@ export default class Map extends Block {
         let result = super.getAttributes();
 
         if(data.position) {
-            const position = data.position.split(",");
-            const marker = "'" + position[0] + "," + position[1] + "'";
-            let markers = "[" + marker + "]";
+            const positions = data.position.split(",");
+            const marker = {
+                lat: parseFloat(positions[0]),
+                lng: parseFloat(positions[1]),
+            };
+            let markers = "[" + JSON.stringify(marker) + "]";
             let markerAttributes = {
                 "data-markers" : markers,
-                "data-zoom" : position[2],
+                "data-zoom" : positions[2],
             };
             result = _.extend(super.getAttributes(), markerAttributes);
         }

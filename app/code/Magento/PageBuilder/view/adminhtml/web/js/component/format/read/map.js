@@ -24,9 +24,9 @@ define([], function () {
       };
 
       if (element.getAttribute('data-markers')) {
-        var markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, "\""));
+        var markers = JSON.parse(element.getAttribute('data-markers'))[0];
         var zoom = element.getAttribute('data-zoom');
-        result.position = markers[0] + "," + zoom;
+        result.position = markers.lat + "," + markers.lng + "," + zoom;
       }
 
       return Promise.resolve(result);

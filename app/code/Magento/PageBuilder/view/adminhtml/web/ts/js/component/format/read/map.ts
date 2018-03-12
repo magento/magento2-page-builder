@@ -20,9 +20,9 @@ export default class Map implements ReadInterface {
         };
 
         if (element.getAttribute('data-markers')) {
-            const markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, "\""));
+            const markers = JSON.parse(element.getAttribute('data-markers'))[0];
             const zoom = element.getAttribute('data-zoom');
-            result.position = markers[0] + "," + zoom;
+            result.position = markers.lat + "," + markers.lng + "," + zoom;
         }
         return Promise.resolve(
             result,

@@ -43,12 +43,15 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
       var result = _Block.prototype.getAttributes.call(this);
 
       if (data.position) {
-        var position = data.position.split(",");
-        var marker = "'" + position[0] + "," + position[1] + "'";
-        var markers = "[" + marker + "]";
+        var positions = data.position.split(",");
+        var marker = {
+          lat: parseFloat(positions[0]),
+          lng: parseFloat(positions[1])
+        };
+        var markers = "[" + JSON.stringify(marker) + "]";
         var markerAttributes = {
           "data-markers": markers,
-          "data-zoom": position[2]
+          "data-zoom": positions[2]
         };
         result = _underscore.extend(_Block.prototype.getAttributes.call(this), markerAttributes);
       }
