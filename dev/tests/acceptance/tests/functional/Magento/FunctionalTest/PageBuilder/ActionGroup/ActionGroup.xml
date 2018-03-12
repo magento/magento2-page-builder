@@ -226,19 +226,6 @@
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
     </actionGroup>
 
-    <!-- Duplicate a content type in place -->
-    <actionGroup name="duplicateContentBlock">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
-        <wait time="0.5" stepKey="waitForDuplication" />
-    </actionGroup>
-
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
             <argument name="property" defaultValue=""/>
