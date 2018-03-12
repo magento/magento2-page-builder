@@ -37,7 +37,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
 
         $('div[data-role="row"][data-enable-parallax="1"]').each(function (index, element) {
             $(element).addClass('jarallax');
-            $(element).attr('data-jarallax','');
+            $(element).attr('data-jarallax', '');
 
             window.jarallax(element, {
                 imgPosition: element.style.backgroundPosition || '50% 50%',
@@ -83,15 +83,15 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
             var buttonEl = $(element).find('.pagebuilder-slide-button');
 
             $(element).hover(
-                function() {
+                function () {
                     buttonEl.css({
-                        'opacity' : '1',
-                        'visibility' : 'visible'
+                        'opacity': '1',
+                        'visibility': 'visible'
                     });
-                }, function() {
+                }, function () {
                     buttonEl.css({
-                        'opacity' : '0',
-                        'visibility' : 'hidden'
+                        'opacity': '0',
+                        'visibility': 'hidden'
                     });
                 }
             );
@@ -102,9 +102,9 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
                 overlayColor = overlayEl.attr('data-overlay-color');
 
             $(element).hover(
-                function() {
+                function () {
                     overlayEl.css('background-color', overlayColor);
-                }, function() {
+                }, function () {
                     overlayEl.css('background-color', 'transparent');
                 }
             );

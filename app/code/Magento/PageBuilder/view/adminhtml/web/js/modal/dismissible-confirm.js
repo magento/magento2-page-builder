@@ -10,7 +10,7 @@ define([
     'mage/translate',
     'jquery/ui',
     'Magento_Ui/js/modal/confirm',
-    'mage/cookies',
+    'mage/cookies'
 ], function ($, _, popupTpl, $t) {
     'use strict';
 
@@ -19,9 +19,9 @@ define([
         options: {
             popupTpl: popupTpl,
             dismissible: false, // Can the modal be dismissed?
-            dismissKey: "default", // The key we'll check to see if the modal has already been dismissed
-            dismissMessage: $t("Do not show this again"), // Message to display next to the dismiss checkbox
-            dismissCheckbox: "[name='modal-dnsa']" // Selector to retrieve dismiss checkbox
+            dismissKey: 'default', // The key we'll check to see if the modal has already been dismissed
+            dismissMessage: $t('Do not show this again'), // Message to display next to the dismiss checkbox
+            dismissCheckbox: '[name="modal-dnsa"]' // Selector to retrieve dismiss checkbox
         },
 
         /**
@@ -38,11 +38,11 @@ define([
          * @private
          */
         _observeCheckbox: function () {
-            var that = this;
-            var checkbox = this.modal.find(this.options.dismissCheckbox);
+            var that = this,
+                checkbox = this.modal.find(this.options.dismissCheckbox);
 
             checkbox.change(function () {
-                that.dismissed = $(this).is(":checked");
+                that.dismissed = $(this).is(':checked');
             });
         },
 
@@ -51,8 +51,9 @@ define([
          */
         openModal: function () {
             // If the modal has been dismissed, then run the confirm & always actions
-            if ($.mage.cookies.get("modal_dismissed_" + this.options.dismissKey) === "true") {
+            if ($.mage.cookies.get('modal_dismissed_' + this.options.dismissKey) === 'true') {
                 this.options.actions.confirm();
+
                 return this.options.actions.always(); // Always runs after confirm in confirm.js
             }
 
@@ -67,7 +68,7 @@ define([
             result = result || false;
 
             if (result && this.dismissed) {
-                $.mage.cookies.set("modal_dismissed_" + this.options.dismissKey, "true", {});
+                $.mage.cookies.set('modal_dismissed_' + this.options.dismissKey, 'true', {});
             }
         }
     });
