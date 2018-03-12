@@ -86,10 +86,8 @@ requirejs([
     /* Google Maps */
     /*eslint-disable vars-on-top */
     var google = window.google || {};
-    var googleLatLng = function(latLngString) {
-        var latLng = latLngString.split(",");
-
-        return new google.maps.LatLng(latLng[0], latLng[1]);
+    var googleLatLng = function(latLng) {
+        return new google.maps.LatLng(latLng.lat, latLng.lng);
     };
     /*eslint-enable vars-on-top */
 
@@ -120,14 +118,13 @@ requirejs([
             /* Create the map */
             map = new google.maps.Map(element, mapOptions);
 
-            // Add markers to the map
+            /* Add markers to the map */
             markers.forEach(function(markerCoord) {
                 new google.maps.Marker({
                     map: map,
                     position: googleLatLng(markerCoord),
                 });
             });
-
         }
     });
 
