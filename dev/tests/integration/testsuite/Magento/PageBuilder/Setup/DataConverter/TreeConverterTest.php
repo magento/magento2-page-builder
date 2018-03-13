@@ -674,6 +674,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     'slider' => [
                         [
                             'entity_id' => 1,
+                            'css_classes' => 'one two',
                             'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
                             'align' => 'left',
                             'autoplay' => '0',
@@ -689,6 +690,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                     'slider_item' => [
                         [
                             'entity_id' => 2,
+                            'css_classes' => 'three four',
                             'metric' => '{\"margin\":\"2px 3px 4px 1px\",\"padding\":\"6px 7px 8px 5px\"}',
                             'align' => 'center',
                             'title_tag' => 'Title',
