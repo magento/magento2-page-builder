@@ -151,7 +151,7 @@
             <description value="New slide has default values on Content section"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88737"/>
-            <group value="pagebuilder"/>
+            <group value="skip"/>
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
@@ -218,7 +218,7 @@
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideShowOverlayDefaultProperty.value}}" stepKey="seeShowOverlayDefault"/>
 
         <comment userInput="Show Overlay: available values Always, On hover, Never show" stepKey="AC9"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, 'PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
         <assertEquals stepKey="assertShowOverlayDropdown" message="Show Overlay in dropdown">
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
