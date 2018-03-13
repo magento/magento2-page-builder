@@ -125,6 +125,8 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Position -->
+        <!-- Wait for an internal element to be displayed to signal that the render of the map is complete -->
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="waitForMapVisible"/>
         <seeElement selector="{{MapOnConfigurationPanel.map}}" stepKey="seeMap2"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="seeFullScreenButton2"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapPegman}}" stepKey="seePegmanButton2"/>

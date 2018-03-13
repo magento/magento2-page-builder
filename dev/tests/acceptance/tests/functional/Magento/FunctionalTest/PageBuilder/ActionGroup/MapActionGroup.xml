@@ -24,6 +24,8 @@
     </actionGroup>
     <actionGroup name="validateEmptyMapConfigurationPanel">
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
+        <!-- Wait for an internal element to be displayed to signal that the render of the map is complete -->
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="waitForMapVisible"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="seeFullScreenButton"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapPegman}}" stepKey="seePegmanButton"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapSatelliteView}}" stepKey="seeSatelliteViewButton"/>

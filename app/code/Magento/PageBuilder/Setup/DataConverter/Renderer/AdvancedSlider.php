@@ -45,8 +45,8 @@ class AdvancedSlider implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $cssClasses = $itemData['formData']['css_classes'] ?? '';
-        $cssClasses .= isset($itemData['formData']['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
+        $cssClasses = $eavData['css_classes'] ?? '';
+        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
 
         $rootElementAttributes = [
             'data-role' => 'slider',
