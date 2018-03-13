@@ -30,8 +30,7 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <wait time="1" stepKey="wait"/>
-        <seeElement selector="{{PageBuilderRowSection.row}}" stepKey="seeElementRow"/>
+        <waitForElementVisible selector="{{PageBuilderRowSection.row}}" stepKey="seeElementRow"/>
     </test>
     <test name="CanAddAdditionalRow">
         <annotations>
@@ -121,9 +120,8 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage('row')}}" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockDeleteDisabled}}" stepKey="seeDisabledRemoveBlockButton" />
-        <wait time="1" stepKey="wait2"/>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow1"/>
     </test>
     <test name="RowPlaceholderAndDisplayLabelInAdminPreview">

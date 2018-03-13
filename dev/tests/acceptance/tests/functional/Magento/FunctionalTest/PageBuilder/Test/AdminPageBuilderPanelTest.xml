@@ -29,13 +29,13 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
         </after>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper']" stepKey="stageWrapperFullScreen1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStageWrapper"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="waitForFullScreenButton"/>
         <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreen"/>
-        <wait time="1" stepKey="wait2"/>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper stage-full-screen']" stepKey="stageWrapperFullScreen2"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="waitForStageWrapperFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="waitForFullScreenButton2"/>
         <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreenAgain"/>
-        <wait time="1" stepKey="wait3"/>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper']" stepKey="stageWrapperFullScreen3"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStageWrapper2"/>
     </test>
     <test name="ShowPanelGroups">
         <annotations>
