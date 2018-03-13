@@ -13,6 +13,7 @@ var config = {
         'hyperscript': 'Magento_PageBuilder/js/resource/hyperscript/hyperscript',
         'slick': 'Magento_PageBuilder/js/resource/slick/slick',
         'xyperscript': 'Magento_PageBuilder/js/resource/xyperscript/xyperscript',
+        'GMap': 'Magento_PageBuilder/js/component/map',
 
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Magento_PageBuilder/js/resource/sortable/knockout-sortable',
