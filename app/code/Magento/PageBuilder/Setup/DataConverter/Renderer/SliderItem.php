@@ -89,7 +89,8 @@ class SliderItem implements RendererInterface
             . '</div></div></div>';
 
         // non-mobile wrapper div
-        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper pagebuilder-slide-image pagebuilder-mobile-hidden';
+        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper pagebuilder-slide-image ' .
+            'pagebuilder-mobile-hidden';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
