@@ -8,6 +8,55 @@
 requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     'use strict';
 
+    /**
+     * Show the overlay on hover of specific elements
+     *
+     * @param $elements
+     */
+    function showOverlayOnHover($elements) {
+        $elements.each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
+                overlayColor = overlayEl.attr('data-overlay-color');
+
+            $(element).hover(
+                function () {
+                    overlayEl.css('background-color', overlayColor);
+                },
+                function () {
+                    overlayEl.css('background-color', 'transparent');
+                }
+            );
+        });
+    }
+
+    /**
+     * Show button on hover of specific elements
+     *
+     * @param $elements
+     * @param buttonClass
+     */
+    function showButtonOnHover($elements, buttonClass) {
+        $elements.each(function (index, element) {
+            var buttonEl = $(element).find(buttonClass);
+
+            if (buttonEl) {
+                $(element).hover(
+                    function () {
+                        buttonEl.css({
+                            'opacity': '1',
+                            'visibility': 'visible'
+                        });
+                    }, function () {
+                        buttonEl.css({
+                            'opacity': '0',
+                            'visibility': 'hidden'
+                        });
+                    }
+                );
+            }
+        });
+    }
+
     $(document).ready(function () {
         $('pre code:not(.hljs)').each(function (i, block) {
             $(block).html(
@@ -47,68 +96,10 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
             });
         });
 
-        /*eslint-disable max-nested-callbacks */
-        $('div[data-role="banner"][data-show-button="on_hover"] > a').each(function (index, element) {
-            var buttonEl = $(element).find('.pagebuilder-banner-button');
+        showOverlayOnHover($('div[data-role="banner"][data-show-overlay="on_hover"] > a'));
+        showButtonOnHover($('div[data-role="banner"][data-show-button="on_hover"] > a'), '.pagebuilder-banner-button');
 
-            $(element).hover(
-                function () {
-                    buttonEl.css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }, function () {
-                    buttonEl.css({
-                        'opacity': '0',
-                        'visibility': 'hidden'
-                    });
-                }
-            );
-        });
-
-        $('div[data-role="banner"][data-show-overlay="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-overlay'),
-                overlayColor = overlayEl.attr('data-overlay-color');
-
-            $(element).hover(
-                function () {
-                    overlayEl.css('background-color', overlayColor);
-                }, function () {
-                    overlayEl.css('background-color', 'transparent');
-                }
-            );
-        });
-
-        $('div[data-role="slide"][data-show-button="on_hover"] > a').each(function (index, element) {
-            var buttonEl = $(element).find('.pagebuilder-slide-button');
-
-            $(element).hover(
-                function () {
-                    buttonEl.css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }, function () {
-                    buttonEl.css({
-                        'opacity': '0',
-                        'visibility': 'hidden'
-                    });
-                }
-            );
-        });
-
-        $('div[data-role="slide"][data-show-overlay="on_hover"] > a').each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-overlay'),
-                overlayColor = overlayEl.attr('data-overlay-color');
-
-            $(element).hover(
-                function () {
-                    overlayEl.css('background-color', overlayColor);
-                }, function () {
-                    overlayEl.css('background-color', 'transparent');
-                }
-            );
-        });
-        /*eslint-enable max-nested-callbacks */
+        showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
+        showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
     });
 });
