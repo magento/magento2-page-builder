@@ -31,7 +31,7 @@ export default class Map extends Block {
      */
     public getAttributes() {
         const data = this.getData();
-        let result = super.getAttributes();
+        const result = super.getAttributes();
 
         if (data.position) {
             const positions = data.position.split(",");
@@ -39,12 +39,8 @@ export default class Map extends Block {
                 lat: parseFloat(positions[0]),
                 lng: parseFloat(positions[1]),
             };
-            const markers = "[" + JSON.stringify(marker) + "]";
-            const markerAttributes = {
-                "data-markers" : markers,
-                "data-zoom" : positions[2],
-            };
-            result = _.extend(super.getAttributes(), markerAttributes);
+            result["data-markers"] = "[" + JSON.stringify(marker) + "]";
+            result["data-zoom"] = positions[2];
         }
         return result;
     }
