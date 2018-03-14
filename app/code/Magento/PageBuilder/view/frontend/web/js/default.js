@@ -10,7 +10,7 @@ requirejs([
     'highlight',
     'Magento_PageBuilder/js/component/map',
     'slick',
-    'bg-parallax',
+    'bg-parallax'
     ], function ($, hljs, GMap) {
     'use strict';
 
@@ -86,12 +86,12 @@ requirejs([
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
         var markers = [],
-            centerCoord = "",
+            centerCoord = '',
             mapOptions = {},
             zoom;
 
-        if(element.hasAttribute('data-markers')) {
-            markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, "\""));
+        if (element.hasAttribute('data-markers')) {
+            markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, '"'));
             centerCoord = markers[0];
             zoom = element.getAttribute('data-zoom');
             mapOptions.zoom = parseInt(zoom, 10);
