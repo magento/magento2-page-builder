@@ -17,23 +17,8 @@ interface StyleExtractorInterface
      * master format and output as an injectable string.
      *
      * @param array $formData
+     * @param array $stylesToExtract
      * @return string
      */
-    public function extractStyle(array $formData);
-
-    /**
-     * Extract margin and transform to string
-     *
-     * @param array $formData
-     * @return string
-     */
-    public function extractMargin(array $formData);
-
-    /**
-     * Extract padding and transform to string
-     *
-     * @param array $formData
-     * @return string
-     */
-    public function extractPadding(array $formData);
+    public function extractStyle(array $formData, array $stylesToExtract = []);
 }

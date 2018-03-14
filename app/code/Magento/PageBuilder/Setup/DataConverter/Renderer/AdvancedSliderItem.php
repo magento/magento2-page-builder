@@ -53,7 +53,7 @@ class AdvancedSliderItem implements RendererInterface
         $formData = $itemData['formData'] ?? [];
         $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
 
-        $margin = $this->styleExtractor->extractMargin($formData);
+        $margin = $this->styleExtractor->extractStyle($formData, ['margin']);
         if ($margin) {
             $rootElementAttributes['style'] = $margin;
         }
@@ -68,7 +68,7 @@ class AdvancedSliderItem implements RendererInterface
 
         $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
         $style = '';
-        $padding = $this->styleExtractor->extractPadding($formData);
+        $padding = $this->styleExtractor->extractStyle($formData, ['padding']);
         if ($padding) {
             $style .= $padding;
         }

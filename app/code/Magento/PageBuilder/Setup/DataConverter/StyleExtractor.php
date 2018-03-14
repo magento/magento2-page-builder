@@ -36,7 +36,7 @@ class StyleExtractor implements StyleExtractorInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function extractStyle(array $formData)
+    public function extractStyle(array $formData, array $stylesToExtract = [])
     {
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
@@ -60,6 +60,11 @@ class StyleExtractor implements StyleExtractorInterface
                 $this->extractMarginPadding($metric['padding']) : '';
         }
 
+        // Only return specific styles based on key
+        if (!empty($stylesToExtract)) {
+            $styleAttributes = array_intersect_key($styleAttributes, array_fill_keys($stylesToExtract, null));
+        }
+
         $styleString = '';
         foreach ($styleAttributes as $attributeName => $attributeValue) {
             if ($attributeValue) {
@@ -67,7 +72,7 @@ class StyleExtractor implements StyleExtractorInterface
             }
         }
 
-        return rtrim($styleString);
+        return rtrim($styleString, ' ');
     }
 
     /**
@@ -98,33 +103,5 @@ class StyleExtractor implements StyleExtractorInterface
         }, $valuesArray);
 
         return implode($convertedValuesArray, ' ');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function extractMargin(array $formData)
-    {
-        $styleString = '';
-        if (isset($formData['metric']) && $formData['metric']) {
-            $metric = $this->serializer->unserialize($formData['metric']);
-            $styleString = isset($metric['margin']) ? 'margin: ' . $this->extractMarginPadding($metric['margin']) : '';
-        }
-        return rtrim($styleString);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function extractPadding(array $formData)
-    {
-        $styleString = '';
-        if (isset($formData['metric']) && $formData['metric']) {
-            $metric = $this->serializer->unserialize($formData['metric']);
-            $styleString = isset($metric['padding'])
-                ? 'padding: ' . $this->extractMarginPadding($metric['padding'])
-                : '';
-        }
-        return rtrim($styleString);
     }
 }

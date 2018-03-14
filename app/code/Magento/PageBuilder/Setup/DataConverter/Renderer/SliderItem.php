@@ -53,7 +53,7 @@ class SliderItem implements RendererInterface
         $formData = $itemData['formData'] ?? [];
         $formData['background_image'] = $eavData['image'] ?? '';
 
-        $margin = $this->styleExtractor->extractMargin($formData);
+        $margin = $this->styleExtractor->extractStyle($formData, ['margin']);
         if ($margin) {
             $rootElementAttributes['style'] = $margin;
         }
@@ -67,7 +67,7 @@ class SliderItem implements RendererInterface
         }
 
         $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
-        $padding = $this->styleExtractor->extractPadding($formData);
+        $padding = $this->styleExtractor->extractStyle($formData, ['padding']);
         if ($padding) {
             $overlayDivElementAttributes['style'] = $padding;
         }
