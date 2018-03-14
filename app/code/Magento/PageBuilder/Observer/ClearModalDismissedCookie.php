@@ -14,8 +14,6 @@ use Magento\Framework\Event\ObserverInterface;
 
 class ClearModalDismissedCookie implements ObserverInterface
 {
-    const MODAL_DISMISSED_PREFIX = "modal_dismissed_";
-
     /**
      * @var CookieManagerInterface
      */
@@ -27,25 +25,17 @@ class ClearModalDismissedCookie implements ObserverInterface
     private $cookieMetadata;
 
     /**
-     * @var array
-     */
-    private $cookieNames;
-
-    /**
      * ClearModalDismissedCookie constructor.
      *
      * @param CookieManagerInterface $cookieManager
      * @param CookieMetadataFactory $cookieMetadata
-     * @param array $cookieNames
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
-        CookieMetadataFactory $cookieMetadata,
-        $cookieNames = []
+        CookieMetadataFactory $cookieMetadata
     ) {
         $this->cookieManager = $cookieManager;
         $this->cookieMetadata = $cookieMetadata;
-        $this->cookieNames = $cookieNames;
     }
 
     /**
@@ -59,19 +49,18 @@ class ClearModalDismissedCookie implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        foreach ($this->cookieNames as $cookieName) {
-            if ($this->cookieManager->getCookie(self::MODAL_DISMISSED_PREFIX . $cookieName)) {
-                $this->cookieManager->deleteCookie(
-                    self::MODAL_DISMISSED_PREFIX . $cookieName,
-                    $this->cookieMetadata->createCookieMetadata(
-                        [
-                            "path" => "/",
-                            "secure" => false,
-                            "http_only" => false
-                        ]
-                    )
-                );
-            }
+        $cookieName = "modal_dismissed_pagebuilder_remove";
+        if ($this->cookieManager->getCookie($cookieName)) {
+            $this->cookieManager->deleteCookie(
+                $cookieName,
+                $this->cookieMetadata->createCookieMetadata(
+                    [
+                        "path" => "/",
+                        "secure" => false,
+                        "http_only" => false
+                    ]
+                )
+            );
         }
     }
 }

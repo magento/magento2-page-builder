@@ -101,7 +101,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
             }
           },
           content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
-          dismissKey: "pagebuilder_remove",
+          dismissKey: "modal_dismissed_pagebuilder_remove",
           dismissible: true,
           title: (0, _translate)("Confirm Item Removal")
         });

@@ -51,7 +51,7 @@ define([
          */
         openModal: function () {
             // If the modal has been dismissed, then run the confirm & always actions
-            if ($.mage.cookies.get('modal_dismissed_' + this.options.dismissKey) === 'true') {
+            if ($.mage.cookies.get(this.options.dismissKey) === 'true') {
                 this.options.actions.confirm();
 
                 return this.options.actions.always(); // Always runs after confirm in confirm.js
@@ -62,13 +62,16 @@ define([
 
         /**
          * Close modal window.
+         *
+         * @param event
+         * @param result
          */
         closeModal: function (event, result) {
             this._super(event, result);
             result = result || false;
 
             if (result && this.dismissed) {
-                $.mage.cookies.set('modal_dismissed_' + this.options.dismissKey, 'true', {});
+                $.mage.cookies.set(this.options.dismissKey, 'true', {});
             }
         }
     });
