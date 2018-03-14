@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../utils/delayed-promise", "../block/factory", "../config", "../event-bus", "./block"], function (_delayedPromise, _factory, _config, _eventBus, _block) {
+define(["../../utils/delayed-promise", "../block/factory", "../config", "../event-bus", "./block", "mage/translate", "../stage/structural/options/option"], function (_delayedPromise, _factory, _config, _eventBus, _block, _translate, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -14,8 +14,21 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
     var _proto = Slider.prototype;
 
     /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _Block.prototype.retrieveOptions.call(this);
+
+      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-slider"], 10));
+      return options;
+    };
+    /**
      * Add a slide into the slider
      */
+
+
     _proto.addSlide = function addSlide() {
       var _this = this;
 

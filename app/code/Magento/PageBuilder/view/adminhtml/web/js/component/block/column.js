@@ -64,7 +64,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
       var newOptions = options.filter(function (option) {
         return option.code !== "move";
       });
-      newOptions.unshift(new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-column"], 10));
+      newOptions.unshift(new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
       return newOptions;
     };
     /**

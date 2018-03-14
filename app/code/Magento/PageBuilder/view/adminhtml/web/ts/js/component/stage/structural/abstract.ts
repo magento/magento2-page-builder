@@ -62,9 +62,25 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public retrieveOptions(): OptionInterface[] {
         return [
-            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
+            new Option(
+                this,
+                "move",
+                "<i class='icon-admin-pagebuilder-handle'></i>",
+                $t("Move"),
+                null,
+                ["move-structural"],
+                10,
+            ),
             new TitleOption(this, this.config.label, 20),
-            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 30),
+            new Option(
+                this,
+                "edit",
+                "<i class='icon-admin-pagebuilder-systems'></i>",
+                $t("Edit"),
+                this.onOptionEdit,
+                ["edit-block"],
+                30
+            ),
             new Option(
                 this,
                 "duplicate",
@@ -74,7 +90,15 @@ export default class Structural extends EditableArea implements StructuralInterf
                 ["duplicate-structural"],
                 40,
             ),
-            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 50),
+            new Option(
+                this,
+                "remove",
+                "<i class='icon-admin-pagebuilder-remove'></i>",
+                $t("Remove"),
+                this.onOptionRemove,
+                ["remove-structural"],
+                50
+            ),
         ];
     }
 
