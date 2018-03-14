@@ -23,9 +23,9 @@ define([], function () {
         display: "inline-block"
       };
 
-      if (element.getAttribute('data-markers')) {
-        var markers = JSON.parse(element.getAttribute('data-markers'))[0];
-        var zoom = element.getAttribute('data-zoom');
+      if (element.getAttribute("data-markers")) {
+        var markers = JSON.parse(element.getAttribute("data-markers"))[0];
+        var zoom = element.getAttribute("data-zoom");
         result.position = markers.lat + "," + markers.lng + "," + zoom;
       }
 

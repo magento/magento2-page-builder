@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/backend/tabs", "./block", "Magento_PageBuilder/js/component/map"], function (_tabs, _block, _map) {
+define(["mage/backend/tabs", "Magento_PageBuilder/js/component/map", "./block"], function (_tabs, _map, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =
@@ -26,21 +26,22 @@ define(["mage/backend/tabs", "./block", "Magento_PageBuilder/js/component/map"],
         preview.updateMap();
       });
     };
-
     /**
      * Generate maps
      *
      * @param {Element} element
      * @returns {void}
      */
+
+
     _proto.generateMap = function generateMap(element) {
       var position = this.data.position();
-      var markers = [],
-          centerCoord = {
+      var markers = [];
+      var centerCoord = {
         lat: 30.2672,
         lng: -97.7431
-      },
-          options = {
+      };
+      var options = {
         zoom: 8
       };
 
@@ -76,14 +77,14 @@ define(["mage/backend/tabs", "./block", "Magento_PageBuilder/js/component/map"],
     _proto.getPosition = function getPosition() {
       var positions = this.data.position().split(",");
       return {
-        markers: [{
-          lat: parseFloat(positions[0]),
-          lng: parseFloat(positions[1])
-        }],
         latLng: {
           lat: parseFloat(positions[0]),
           lng: parseFloat(positions[1])
         },
+        markers: [{
+          lat: parseFloat(positions[0]),
+          lng: parseFloat(positions[1])
+        }],
         zoom: parseInt(positions[2], 10)
       };
     };

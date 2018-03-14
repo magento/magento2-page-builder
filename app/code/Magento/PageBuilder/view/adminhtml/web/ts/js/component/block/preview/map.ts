@@ -5,8 +5,8 @@
 
 import ko from "knockout";
 import "mage/backend/tabs";
-import PreviewBlock from "./block";
 import GMap from "Magento_PageBuilder/js/component/map";
+import PreviewBlock from "./block";
 
 export default class Map extends PreviewBlock {
 
@@ -19,10 +19,10 @@ export default class Map extends PreviewBlock {
     public renderMap(element: Element) {
         const preview = this.preview;
         preview.generateMap(element);
-        preview.data.position.subscribe(()=>{
+        preview.data.position.subscribe(() => {
             preview.updateMap();
         });
-    };
+    }
 
     /**
      * Generate maps
@@ -32,16 +32,16 @@ export default class Map extends PreviewBlock {
      */
     private generateMap(element: Element) {
         const position = this.data.position();
-        let markers: any = [],
-            centerCoord = {
-                lat: 30.2672,
-                lng: -97.7431,
-            },
-            options = {
-                zoom: 8,
-            };
+        let markers: any = [];
+        let centerCoord = {
+            lat: 30.2672,
+            lng: -97.7431,
+        };
+        let options = {
+            zoom: 8,
+        };
 
-        if(position !== "") {
+        if (position !== "") {
             const pos = this.getPosition();
             markers = pos.markers;
             centerCoord = pos.latLng;
@@ -70,15 +70,15 @@ export default class Map extends PreviewBlock {
     private getPosition() {
         const positions = this.data.position().split(",");
         return {
-            markers: [{
-                lat: parseFloat(positions[0]),
-                lng: parseFloat(positions[1]),
-                }],
             latLng: {
                 lat: parseFloat(positions[0]),
                 lng: parseFloat(positions[1]),
             },
+            markers: [{
+                lat: parseFloat(positions[0]),
+                lng: parseFloat(positions[1]),
+                }],
             zoom: parseInt(positions[2], 10),
-        }
+        };
     }
 }

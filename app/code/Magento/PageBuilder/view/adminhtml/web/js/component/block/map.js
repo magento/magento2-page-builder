@@ -25,8 +25,7 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
         if (params.id === _this.id) {
           setTimeout(function () {
             params.block.edit.open();
-          }, 300).toString();
-          ;
+          }, 300);
         }
       });
     };

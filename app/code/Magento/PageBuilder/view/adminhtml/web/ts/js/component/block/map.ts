@@ -19,7 +19,7 @@ export default class Map extends Block {
             if (params.id === this.id) {
                 setTimeout(() => {
                     params.block.edit.open();
-                    }, 300).toString();;
+                }, 300);
             }
         });
     }
@@ -33,14 +33,14 @@ export default class Map extends Block {
         const data = this.getData();
         let result = super.getAttributes();
 
-        if(data.position) {
+        if (data.position) {
             const positions = data.position.split(",");
             const marker = {
                 lat: parseFloat(positions[0]),
                 lng: parseFloat(positions[1]),
             };
-            let markers = "[" + JSON.stringify(marker) + "]";
-            let markerAttributes = {
+            const markers = "[" + JSON.stringify(marker) + "]";
+            const markerAttributes = {
                 "data-markers" : markers,
                 "data-zoom" : positions[2],
             };
