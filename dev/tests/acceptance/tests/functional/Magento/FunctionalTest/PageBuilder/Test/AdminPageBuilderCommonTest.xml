@@ -125,12 +125,12 @@
         </actionGroup>
 
         <!-- Attempt to remove both content types validating the confirmation window is never displayed -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalRow"/>
@@ -168,7 +168,7 @@
         </actionGroup>
 
         <!-- As the row now contains a header it should prompt on removal -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -221,7 +221,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
 
         <!-- As the header has configuration data it should not prompt for removal -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -279,7 +279,7 @@
         </actionGroup>
 
         <!-- Remove the first heading, expect a prompt -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -289,7 +289,7 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
@@ -348,7 +348,7 @@
         </actionGroup>
 
         <!-- Remove the first heading, check to not receive this warning again -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -364,7 +364,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
@@ -418,7 +418,7 @@
         </actionGroup>
 
         <!-- Remove the first heading, check to not receive this warning again -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -429,7 +429,7 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeSecondHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
@@ -463,7 +463,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
 
         <!-- Remove the heading, we should receive the warning again -->
-        <actionGroup ref="removeDefaultStateContentBlockFromStage" stepKey="removeThirdHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeThirdHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible2"/>
