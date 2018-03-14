@@ -4,6 +4,33 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  // Custom Knockout binding for live editing text inputs
+  _knockout.bindingHandlers.liveEdit = {
+    init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
+      var contentTypeInstance = bindingContext.$data;
+      var data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
+
+      var stripHtml = function stripHtml(html) {
+        var tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+        return tempDiv.innerText;
+      };
+
+      var onBlur = function onBlur() {
+        data.button_text = stripHtml(element.innerText);
+        contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+      };
+
+      var onClick = function onClick() {
+        document.execCommand("selectAll", false, "");
+      };
+
+      element.contentEditable = true;
+      element.addEventListener("blur", onBlur);
+      element.addEventListener("click", onClick);
+    }
+  };
+
   var PreviewBlock =
   /*#__PURE__*/
   function () {

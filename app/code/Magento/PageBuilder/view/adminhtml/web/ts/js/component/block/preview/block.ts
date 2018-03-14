@@ -14,6 +14,31 @@ import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/sty
 import Block from "../block";
 import "./sortable/binding";
 
+// Custom Knockout binding for live editing text inputs
+ko.bindingHandlers.liveEdit = {
+
+    init(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        const contentTypeInstance = bindingContext.$data;
+        const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
+
+        const stripHtml = (html) => {
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+            return tempDiv.innerText;
+        };
+        const onBlur = () => {
+            data.button_text = stripHtml(element.innerText);
+            contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+        };
+        const onClick = () => {
+            document.execCommand("selectAll", false, "");
+        };
+        element.contentEditable = true;
+        element.addEventListener("blur", onBlur);
+        element.addEventListener("click", onClick);
+    },
+};
+
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
