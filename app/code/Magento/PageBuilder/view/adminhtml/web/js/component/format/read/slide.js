@@ -18,10 +18,10 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var bgMobileImage = element.querySelector(".pagebuilder-slide-mobile").style.backgroundImage;
+      var bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
       var linkUrl = element.querySelector("a").getAttribute("href");
       var target = element.querySelector("a").getAttribute("target");
-      var bgImage = element.querySelector(".pagebuilder-slide-image").style.backgroundImage;
+      var bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
       var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
       var paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
       var marginSrc = element.style;
