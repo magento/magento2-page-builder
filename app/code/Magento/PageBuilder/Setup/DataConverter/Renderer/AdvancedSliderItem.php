@@ -47,7 +47,6 @@ class AdvancedSliderItem implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'slide',
-            'data-title' => $eavData['title'] ?? '',
             'class' => $eavData['css_classes'] ?? ''
         ];
 
