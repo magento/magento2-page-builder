@@ -251,34 +251,4 @@ export default class Slide extends Block {
         ));
         return newOptions;
     }
-
-    /**
-     * Handle block removal
-     */
-    public onOptionRemove(): void {
-        const removeBlock = () => EventBus.trigger("block:removed", {
-            block: this,
-            index: this.parent.children().indexOf(this),
-            parent: this.parent,
-        });
-        if (this.isConfigured()) {
-            this.stage.parent.confirmationDialog({
-                actions: {
-                    confirm: () => {
-                        const slider = this.parent.preview;
-                        removeBlock();
-                        slider.navigateToSlide(this.parent.children().length - 1);
-                        slider.onAfterRender();
-                    },
-                },
-                content: $t("Are you sure you want to remove this item? " +
-                    "The data within this item is not recoverable once removed."),
-                dismissKey: "modal_dismissed_pagebuilder_remove",
-                dismissible: true,
-                title: $t("Confirm Item Removal"),
-            });
-        } else {
-            removeBlock();
-        }
-    }
 }

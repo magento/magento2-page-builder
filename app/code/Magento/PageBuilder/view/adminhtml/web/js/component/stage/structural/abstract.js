@@ -208,8 +208,6 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
         }
 
         if (_underscore.isObject(field.default)) {
-          debugger;
-
           if (JSON.stringify(field.default) !== fieldValue) {
             hasDataChanges = true;
           }

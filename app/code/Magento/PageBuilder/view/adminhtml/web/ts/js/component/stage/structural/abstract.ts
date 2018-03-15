@@ -210,7 +210,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {boolean}
      */
-    public isConfigured() {
+    private isConfigured() {
         if (this.children().length > 0) {
             return true;
         }
@@ -232,7 +232,6 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
             }
             if (_.isObject(field.default)) {
-                debugger;
                 if (JSON.stringify(field.default) !== fieldValue) {
                     hasDataChanges = true;
                 }

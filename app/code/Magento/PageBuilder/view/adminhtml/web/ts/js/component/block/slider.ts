@@ -44,7 +44,11 @@ export default class Slider extends Block {
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
                 // Mark the previous slide as active
-                this.preview.data.activeSlide(params.index - 1);
+                if (params.index > 0) {
+                    this.preview.navigateToSlide(params.index - 1);
+                } else {
+                    this.preview.navigateToSlide(0);
+                }
             }
         });
     }

@@ -48,7 +48,11 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
       _eventBus.on("block:removed", function (event, params) {
         if (params.parent.id === _this2.id) {
           // Mark the previous slide as active
-          _this2.preview.data.activeSlide(params.index - 1);
+          if (params.index > 0) {
+            _this2.preview.navigateToSlide(params.index - 1);
+          } else {
+            _this2.preview.navigateToSlide(0);
+          }
         }
       });
     };

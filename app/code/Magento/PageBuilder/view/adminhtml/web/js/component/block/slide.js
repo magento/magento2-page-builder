@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block", "../stage/structural/options/option", "../event-bus"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block, _option, _eventBus) {
+define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block", "../stage/structural/options/option"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
@@ -276,41 +276,6 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
 
       newOptions.push(new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
-    };
-    /**
-     * Handle block removal
-     */
-
-
-    _proto.onOptionRemove = function onOptionRemove() {
-      var _this = this;
-
-      var removeBlock = function removeBlock() {
-        return _eventBus.trigger("block:removed", {
-          block: _this,
-          index: _this.parent.children().indexOf(_this),
-          parent: _this.parent
-        });
-      };
-
-      if (this.isConfigured()) {
-        this.stage.parent.confirmationDialog({
-          actions: {
-            confirm: function confirm() {
-              var slider = _this.parent.preview;
-              removeBlock();
-              slider.navigateToSlide(_this.parent.children().length - 1);
-              slider.onAfterRender();
-            }
-          },
-          content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
-          dismissKey: "modal_dismissed_pagebuilder_remove",
-          dismissible: true,
-          title: (0, _translate)("Confirm Item Removal")
-        });
-      } else {
-        removeBlock();
-      }
     };
 
     return Slide;
