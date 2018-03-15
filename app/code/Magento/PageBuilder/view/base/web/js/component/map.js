@@ -50,7 +50,7 @@ define([
             this.map.setZoom(parseInt(zoom, 10));
             this.map.setCenter(latLng);
 
-            this.setMarkers(this.map, newMarkers);
+            this.setMarkers(newMarkers);
         };
 
         /**
@@ -73,7 +73,7 @@ define([
             }, this);
         };
 
-        this.setMarkers(this.map, markers);
+        this.setMarkers(markers);
 
     };
 });
