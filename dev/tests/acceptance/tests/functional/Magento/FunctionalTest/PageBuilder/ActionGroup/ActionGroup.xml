@@ -53,7 +53,6 @@
     <actionGroup name="dragPageBuilderColumnIntoStage">
         <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
-        <seeElement selector="{{PageBuilderColumnSection.column}}" stepKey="seeElementColumn"/>
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
         <arguments>
@@ -75,7 +74,6 @@
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStageAndExpectEditPanel">
         <arguments>
@@ -83,7 +81,6 @@
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
@@ -95,7 +92,6 @@
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerBlockType.role, containerTarget.index)}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="seeContentBlockInStage"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
@@ -104,11 +100,9 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <waitForElement selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelSmall">
@@ -118,10 +112,8 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
@@ -307,7 +299,6 @@
         <selectOption selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="selectPropertyField"/>
         <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
-        <seeElement selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="verifySectionUpdated"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutProperty">
         <arguments>
