@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82841"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -41,6 +42,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82857"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -67,6 +69,7 @@
             <description value="A user should be able to remove a row from the stage"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -98,6 +101,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82859"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -133,6 +137,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -161,6 +166,8 @@
             <description value="A user should see the row height adjust when content is added to the row"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88297"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
             <group value="skip"/>
         </annotations>
         <before>
@@ -190,6 +197,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88325"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -242,6 +250,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -279,6 +288,8 @@
             <title value="Add background tab"/>
             <description value="See that the background tab in row form works"/>
             <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -351,6 +362,7 @@
             <description value="A user should be able to apply parallax to a background image"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -413,6 +425,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84661"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -551,6 +564,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value=""/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -640,6 +654,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-85692"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -723,10 +738,13 @@
             <description value="A user should be able to add an image into slideout of row."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <!-- Note that the below enable and disable pagebuilder should be removed once all tests are updated to disable pagebuilder as an after step -->
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
