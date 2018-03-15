@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="EmptySliderAdminPreview">
+    <test name="EmptySliderAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Empty Slider Admin Preview MAGETWO-87085"/>
@@ -36,7 +36,6 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-
         <comment userInput="User sees Slide configuration first slide open by default with a delay after rendering Slider on the stage" stepKey="AC0"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -44,7 +43,6 @@
         <!-- Adding Slider opens first slide by default-->
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>
-
         <comment userInput="User sees Slider preview that shows Empty slide" stepKey="AC1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Verify Empty Slider with Empty Slide on Admin Preview -->
@@ -54,27 +52,27 @@
             <expectedResult type="string">Edit slide text</expectedResult>
             <actualResult type="variable">grabTitleFromEmptySlide</actualResult>
         </assertEquals>
-
+        <!-- Verify Poster overlay -->
         <comment userInput="User sees Slider preview that contains first slide (poster)" stepKey="AC2"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="verifyEmptySlideTransparentAdmin"/>
-
+        <!-- Verify Add Slide on mouse over -->
         <comment userInput="User sees dot that indicates first slide present and Add Slide button" stepKey="AC3"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="seeDotForFirstSlide"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
         <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddSlideButton"/>
-
+        <!--Empty slide min height -->
         <comment userInput="User sees slider preview with min height is 300 px" stepKey="AC4"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
-
+        <!--Empty slide default margin and paddings -->
         <comment userInput="User sees empty slide with margin to be 0 px and and paddings to be 40 px by default" stepKey="AC5"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
-
+        <!--Empty slide no border -->
         <comment userInput="User sees no slide border by default" stepKey="AC6"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border: none;" stepKey="verifyBorderNone"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
-
+        <!--Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
@@ -82,19 +80,15 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderSliderContentBlock.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <grabTextFrom selector="{{SlideInAdmin.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
-
+        <!--Empty slide background defaults on admin preview-->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
-
         <comment userInput="Verify slide defaults on admin: Background Position defaults to Top Aligned" stepKey="adminDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
-
         <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-size: cover" stepKey="verifyAdminSizeCover"/>
-
         <comment userInput="Verify slide defaults on admin: Background Attachment defaults to Scroll" stepKey="adminDefaultAttachment"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-attachment: scroll" stepKey="verifyAdminScrollAttachment"/>
-
         <!-- Verify Empty Slider with Empty Slide on Storefront -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -102,47 +96,33 @@
         <waitForElementVisible time="10" selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
-
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
-
         <comment userInput="Verify slide defaults on storefront: User sees no slide border by default" stepKey="storefrontDefaultBorder"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="data-border" expectedValue="none" stepKey="verifyBorderNoneStorefront"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0Storefront"/>
-
         <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
-
         <comment userInput="Verify slide defaults on storefront: Minimum Height defaults to 300" stepKey="storefrontDefaultMinHeight"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Color defaults to empty" stepKey="storefrontDefaultColor" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Image defaults to empty" stepKey="storefrontDefaultImage"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="background-image: none;" stepKey="slideStorefrontBackgroundImage"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Position defaults to Top Aligned" stepKey="storefrontDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Size defaults to Cover" stepKey="storefrontDefaultSize"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Repeat defaults to No" stepKey="storefrontDefaultRepeat"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
-
         <comment userInput="Verify slide background defaults on storefront: Background Attachment defaults to Scroll" stepKey="storefrontDefaultAttachment"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
-
         <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
-        <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeInPageSource1"/>
-
+        <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
         <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="data-show-button" expectedValue="never_show" stepKey="slideStorefrontShowButton"/>
-
         <comment userInput="Verify slide content defaults on storefront: Button Type defaults to Primary" stepKey="storefrontDefaultButtonType"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="data-button-type" expectedValue="pagebuilder-button-primary" stepKey="slideStorefrontButtonType"/>
-
         <comment userInput="Verify slide content defaults on storefront: Show Overlay defaults to Never Show" stepKey="storefrontDefaultOverlay"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide1}}" attribute="data-show-overlay" expectedValue="never_show" stepKey="slideStorefrontShowOverlay"/>
     </test>
@@ -180,29 +160,25 @@
         </actionGroup>
         <waitForElementVisible stepKey="waitForPageBuilder" selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default values on Appearance section of Add Slide form-->
+        <!--Verify default and available values on Appearance section of Add Slide form-->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="Poster" stepKey="seePosterAppearanceDefault"/>
-
         <comment userInput="User sees 4 appearances displayed: Poster, Collage Left, Collage Center, Collage Right." stepKey="AC1" />
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabAppearanceDropdownValues"/>
         <assertEquals stepKey="assertAppearanceDropdown" message="Verify 4 appearances displayed">
             <expectedResult type="array">[Poster, Collage Left, Collage Center, Collage Right]</expectedResult>
             <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
         <assertNotContains stepKey="assertNotContains" message="Advanced Content appearance not present">
             <expectedResult type="string">Advanced Content</expectedResult>
             <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
         </assertNotContains>
-
         <comment userInput="User sees Title: input defaults to empty" stepKey="AC3"/>
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemTitle1.section, PageBuilderSlideItemTitle1.fieldName)}}" stepKey="grabTitleDefaultValue"/>
         <assertEmpty stepKey="assertEmptyTitle" message="Title has text: $grabTitleDefaultValue">
             <actualResult type="variable">grabTitleDefaultValue</actualResult>
         </assertEmpty>
-
         <comment userInput="Minimum Height: input defaults to 300" stepKey="AC4"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
             <argument name="property" value="PageBuilderSlideMinHeight"/>
@@ -242,26 +218,22 @@
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default values on background section of Add Slide form-->
+        <!--Verify default and available values on background section of Add Slide form-->
         <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
         <assertEmpty stepKey="assertEmptyBackgroundColor" message="Background Color has text: $grabColorDefaultValue">
             <actualResult type="variable">grabColorDefaultValue</actualResult>
         </assertEmpty>
-
         <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
-
         <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
-
         <comment userInput="Background Position: available values Top Aligned, Centered, Bottom Aligned" stepKey="AC3"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
             <expectedResult type="array">[Top Aligned, Centered, Bottom Aligned]</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
         <comment userInput="Background Size: available values Auto, Cover, Contain" stepKey="AC5"/>
@@ -270,15 +242,12 @@
             <expectedResult type="array">[Auto, Cover, Contain]</expectedResult>
             <actualResult type="variable">grabBackgroundSizeDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="Background Repeat: switch defaults to No" stepKey="AC6"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeBackgroundRepeatPropertyDefaultNo">
             <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
         </actionGroup>
-
         <comment userInput="Background Attachment: dropdown defaults to Scroll" stepKey="AC7"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
-
         <comment userInput="Background Attachment: available values Scroll, Fixed" stepKey="AC8"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
         <assertEquals stepKey="assertBackgroundAttachmentDropdown" message="Background sizes in dropdown">
@@ -320,66 +289,204 @@
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default values on content section of Add Slide form-->
+        <!--Verify default and available values on content section of Add Slide form-->
         <comment userInput="Slide Content: WYSIWYG defaults to empty" stepKey="AC0" />
-        <!-- unable to get content to variable MQE-818 -->
-
+        <!-- unable to get content of WYSIWYG out to variable MQE-818 -->
         <comment userInput="Show Button: dropdown defaults to Never Show " stepKey="AC1"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="Never Show" stepKey="seeShowButtonDefault"/>
-
         <comment userInput="Show Button: available values Always, On Hover, Never Show" stepKey="AC2"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowButtonDropdownValues"/>
-        <assertEquals stepKey="assertShowButtonDropdown" message="Button Types in dropdown">
+        <assertEquals stepKey="assertShowButtonDropdown" message="Verify Button Types dropdown options">
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowButtonDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="Button Text: input defaults to empty." stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemButtonTextDefault.section, PageBuilderSlideItemButtonTextDefault.section)}}" stepKey="grabButtonTextValue"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemButtonTextDefault.section, PageBuilderSlideItemButtonTextDefault.fieldName)}}" stepKey="grabButtonTextValue"/>
         <assertEmpty stepKey="assertEmptyButtonText" message="Button text has text: $grabButtonTextValue">
             <actualResult type="variable">grabButtonTextValue</actualResult>
         </assertEmpty>
-
         <comment userInput="Button Text: Field is disabled by default due to Never show default on Show Button" stepKey="AC4"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateButtonTextAttributeDisabled">
             <argument name="property" value="PageBuilderSlideButtonTextDefaultProperty"/>
         </actionGroup>
-
         <comment userInput="Button Type: dropdown defaults to Primary" stepKey="AC5"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTypeDefaultProperty.value}}" stepKey="seeButtonTypeDefault"/>
-
         <comment userInput="Button Type: available values Primary, Secondary, Link. " stepKey="AC6"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabButtonTypeDropdownValues"/>
-        <assertEquals stepKey="assertButtonTypeDropdown" message="Button Types in dropdown">
+        <assertEquals stepKey="assertButtonTypeDropdown" message="Verify Button Types dropdown options">
             <expectedResult type="array">[Primary, Secondary, Link]</expectedResult>
             <actualResult type="variable">grabButtonTypeDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="Button Type: Field is disabled by default due to Never show default on Show Button" stepKey="AC7"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateButtonTypeDisabled">
             <argument name="property" value="PageBuilderSlideButtonTypeDefaultProperty"/>
         </actionGroup>
-
         <comment userInput="Show Overlay: dropdown defaults to Never Show " stepKey="AC8"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideShowOverlayDefaultProperty.value}}" stepKey="seeShowOverlayDefault"/>
-
         <comment userInput="Show Overlay: available values Always, On hover, Never show" stepKey="AC9"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
         <assertEquals stepKey="assertShowOverlayDropdown" message="Show Overlay in dropdown">
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
-
         <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
         <assertEquals stepKey="assertOverlayColorValue" message="Overlay Color has text: $grabOverlayColorValue">
             <expectedResult type="string">#FFFFFF</expectedResult>
             <actualResult type="variable">grabOverlayColorValue</actualResult>
         </assertEquals>
-
         <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
             <argument name="property" value="PageBuilderSlideOverlayColorDefaultProperty"/>
         </actionGroup>
+    </test>
+    <test name="SlideAdvancedSectionDefaults">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83835"/>
+            <stories value="Bluefoot Slide Configuration MAGETWO-75774"/>
+            <title value="Slide Configuration Settings: Advanced section defaults"/>
+            <description value="New slide has default values on Advanced section"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <testCaseId value="MAGETWO-88732"/>
+        </annotations>
+        <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Text Alignment -->
+        <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeTextAlignmentAttribute">
+            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateTextAlignmentAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateTextAlignmentAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTextAlignmentAttributeValue">
+            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+        </actionGroup>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentDefaultProperty.section, PageBuilderAdvancedAlignmentDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabTextAlignmentOptions"/>
+        <assertEquals expected="{{PageBuilderAdvancedAlignmentDefaultProperty.optionsList}}" expectedType="array" actual="grabTextAlignmentOptions" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextAlignmentDropdownOld"/>
+        <!-- Border -->
+        <comment userInput="Border: dropdown defaults to None" stepKey="AC1"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
+            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderDefaultProperty.section, PageBuilderAdvancedBorderDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <assertEquals expected="{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}" expectedType="array" actual="grabBorderOptions" actualType="variable" message="Verify Border dropdown options" stepKey="assertBorderOptions2"/>
+        <!-- Border Color -->
+        <comment userInput="Border Color: input defaults to empty." stepKey="AC3"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
+        <assertEmpty stepKey="assertBorderColorEmpty" message="Border Color has text: getTextFromBorderColorAttribute">
+            <actualResult type="variable">getTextFromBorderColorAttribute</actualResult>
+        </assertEmpty>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderColorAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Border Color: Field is disabled by default due to None on Border." stepKey="AC4"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateBorderColorAttributeDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <!-- Border Size -->
+        <comment userInput="Border Width: input defaults to 1." stepKey="AC5"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderSizeAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderSizePlaceholderText">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderSizeAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Border Width: Field is disabled by default due to None on Border." stepKey="AC6"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateBorderSizeAttributeDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
+        </actionGroup>
+        <!-- Border Radius -->
+        <comment userInput="Border radius: input defaults to 0." stepKey="AC7"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderRadiusAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderRadiusAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderRadiusAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadiusAttributePlaceholderText">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <!-- CSS Classes -->
+        <comment userInput="CSS classes: input defaults to empty." stepKey="AC8"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeCSSClassesAttribute">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateCSSClassesAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
+        <assertEmpty stepKey="assertGetTextFromCSSClassesAttribute" message="CSS Classes field was not empty. Had text: $getTextFromCSSClassesAttribute">
+            <actualResult type="variable">getTextFromCSSClassesAttribute</actualResult>
+        </assertEmpty>
+        <!-- Margins and Padding -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMarginsAndPaddingAttribute">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateMarginsAndPaddingAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <!-- Assert against values -->
+        <comment userInput="Margins: defaults to 0" stepKey="AC9"/>
+        <comment userInput="Padding: defaults to 40 all sides" stepKey="AC10"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginTop}}" expectedType="string" actual="getTextMarginTop" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextMarginTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getTextMarginRight"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginRight}}" expectedType="string" actual="getTextMarginRight" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextMarginRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getTextMarginLeft"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginLeft}}" expectedType="string" actual="getTextMarginLeft" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextMarginLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getTextMarginBottom"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginBottom}}" expectedType="string" actual="getTextMarginBottom" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextMarginBottom"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getTextPaddingTop"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}" expectedType="string" actual="getTextPaddingTop" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getTextPaddingRight"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}}" expectedType="string" actual="getTextPaddingRight" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getTextPaddingLeft"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}}" expectedType="string" actual="getTextPaddingLeft" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getTextPaddingBottom"/>
+        <assertEquals expected="{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}}" expectedType="string" actual="getTextPaddingBottom" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingBottom"/>
     </test>
 </tests>
