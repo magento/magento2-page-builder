@@ -7,6 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
+import Config from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
@@ -34,6 +35,10 @@ export default class Structural extends EditableArea implements StructuralInterf
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
+    public data = {};
+    private elementConverterPool;
+    private converterPool;
+
     /**
      * Abstract structural constructor
      *
@@ -45,14 +50,20 @@ export default class Structural extends EditableArea implements StructuralInterf
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
+        elementConverterPool,
+        converterPool
     ) {
         super(stage);
         this.setChildren(this.children);
         this.parent = parent;
         this.config = config;
+        this.elementConverterPool = elementConverterPool;
+        this.converterPool = converterPool;
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
+
+        this.setupDataFields();
     }
 
     /**
@@ -146,14 +157,23 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {DataObject}
      */
-    public getCss() {
-        const cssClasses: any = {};
-        if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-            this.getData().css_classes.toString().split(" ").map(
-                (value: any, index: number) => cssClasses[value] = true,
-            );
+    public getCss(element: string) {
+        let css: object = {};
+        let data = this.stage.store.get(this.id);
+        if (element === undefined) {
+            if ("css_classes" in data && data.css_classes !== "") {
+                css = data.css_classes;
+            }
+        } else {
+            const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+            if (config.css.var !== undefined && config.css.var in data) {
+                css = data[config.css.var];
+            }
         }
-        return cssClasses;
+        css.toString().split(" ").map(
+            (value: any, index: number) => css[value] = true,
+        );
+        return css;
     }
 
     /**
@@ -162,14 +182,53 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {DataObject}
      */
-    public getStyle() {
-        const styleAttributes = this.getData();
-        if (typeof styleAttributes.appearance !== "undefined" &&
-            typeof styleAttributes.appearances !== "undefined" &&
-            typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
-            _.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+    public getStyle(element: string) {
+        if (element === undefined) {
+            const styleAttributes = this.getData();
+            if (typeof styleAttributes.appearance !== "undefined" &&
+                typeof styleAttributes.appearances !== "undefined" &&
+                typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
+                _.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+            }
+            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
         }
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
+
+        let data = _.extend({}, this.stage.store.get(this.id));
+
+        const contentTypeConfig = Config.getInitConfig("content_types")[this.config.name];
+        let config = contentTypeConfig["data_mapping"]["elements"][element];
+        let convertersConfig = contentTypeConfig["data_mapping"]["converters"];
+        const appearance = data["appearance"] !== undefined ? data["appearance"] : null;
+        if (appearance
+            && contentTypeConfig["appearances"] !== undefined
+            && contentTypeConfig["appearances"][appearance] !== undefined
+            && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
+        ) {
+            config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"][element];
+            convertersConfig = contentTypeConfig["appearances"][appearance]["data_mapping"]["converters"];
+        }
+
+        for (let key in this.converterPool.getConverters()) {
+            for (let i = 0; i < convertersConfig.length; i++) {
+                if (convertersConfig[i].name === key) {
+                    data = this.converterPool.getConverters()[key].beforeWrite(data, convertersConfig[i].config);
+                }
+            }
+        }
+
+        const result = {};
+        if (config.style !== undefined) {
+            for (let i = 0; i < config.style.length; i++) {
+                let styleProperty = config.style[i];
+                let value = data[styleProperty.var];
+                const mapper = styleProperty.var + styleProperty.name;
+                if (mapper in this.elementConverterPool.getStyleConverters()) {
+                    value = this.elementConverterPool.getStyleConverters()[mapper].toDom(data[styleProperty.var], styleProperty.name, data);
+                }
+                result[this.fromSnakeToCamelCase(styleProperty.name)] = value;
+            }
+        }
+        return result;
     }
 
     /**
@@ -178,13 +237,43 @@ export default class Structural extends EditableArea implements StructuralInterf
      *
      * @returns {DataObject}
      */
-    public getAttributes(extra = {}) {
-        const data: DataObject = this.getData();
-        _.extend(data, this.config);
-        return _.extend(
-            this.attributeMapper.toDom(this.attributeFilter.filter(data)),
-            extra,
-        );
+    public getAttributes(element: string) {
+        if (element === undefined) {
+            const data: DataObject = this.getData();
+            _.extend(data, this.config);
+            return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+        }
+
+        let data = this.stage.store.get(this.id);
+        data = _.extend(data, this.config);
+        const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+        const result = {};
+        if (config.attributes !== undefined) {
+            for (let i = 0; i < config.attributes.length; i++) {
+                let attribute = config.attributes[i];
+                if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
+                    continue;
+                }
+                let value = data[attribute.var];
+                const mapper = attribute.var + attribute.name;
+                if (mapper in this.elementConverterPool.getAttributeConverters()) {
+                    value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(data[attribute.var], attribute.var, data);
+                }
+                result[attribute.name] = value;
+            }
+        }
+
+        return result;
+    }
+
+    public getHtml(element: string) {
+        const data = this.stage.store.get(this.id);
+        const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+        let result = '';
+        if (config.html !== undefined) {
+            result = data[config.html.var];
+        }
+        return result;
     }
 
     /**
@@ -203,5 +292,100 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     private getOptions(): Options {
         return new Options(this, this.retrieveOptions());
+    }
+
+    public updateData(data: object) {
+        const contentTypeConfig = Config.getInitConfig("content_types")[this.config.name];
+        let config = contentTypeConfig["data_mapping"]["elements"];
+        const appearance = data["appearance"] !== undefined ? data["appearance"] : null;
+        if (appearance
+            && contentTypeConfig["appearances"] !== undefined
+            && contentTypeConfig["appearances"][appearance] !== undefined
+            && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
+        ) {
+            config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"];
+        }
+
+        for (const el in config) {
+            if (this.data[el] === undefined) {
+                this.data[el] = {
+                    style: ko.observable({}),
+                    attributes: ko.observable({}),
+                    html: ko.observable({})
+                };
+            }
+            if (config[el].style !== undefined) {
+                const styleObservable = {};
+                for (let i = 0; i < config[el].style.length; i++) {
+                    const styleProperty = config[el].style[i];
+                    let value = data[styleProperty.var];
+                    const mapper = styleProperty.var + styleProperty.name;
+                    if (mapper in this.elementConverterPool.getStylePreviewConverters()) {
+                        value = this.elementConverterPool.getStylePreviewConverters()[mapper].toDom(
+                            value,
+                            styleProperty.name,
+                            this.stage.store.get(this.id)
+                        );
+                    }
+                    styleObservable[this.fromSnakeToCamelCase(styleProperty.name)] = value;
+                }
+                this.data[el].style(styleObservable);
+            }
+
+            if (config[el].attributes !== undefined) {
+                const attributesObservable = {};
+                for (let i = 0; i < config[el].attributes.length; i++) {
+                    const attribute = config[el].attributes[i];
+                    let value = data[attribute.var];
+                    if (attribute.var in this.elementConverterPool.getAttributeConverters()) {
+                        value = this.elementConverterPool.getAttributeConverters()[attribute.var].toDom(data[attribute.var], attribute.var, data);
+                    }
+                    attributesObservable[attribute.name] = value;
+                }
+                this.data[el].attributes(attributesObservable);
+            }
+
+            if (config[el].html !== undefined) {
+                const html = data[config[el].html.var] !== undefined && data[config[el].html.var] !== ""
+                    ? data[config[el].html.var]
+                    : config[el].html.placeholder;
+                this.data[el].html(html);
+            }
+
+            if (config[el].tag !== undefined) {
+                if (this.data[el][config[el].tag.var] === undefined) {
+                    this.data[el][config[el].tag.var] = ko.observable(data[config[el].tag.var]);
+                } else {
+                    this.data[el][config[el].tag.var](data[config[el].tag.var]);
+                }
+            }
+        }
+    }
+
+    private setupDataFields() {
+        // Subscribe to this blocks data in the store
+        this.stage.store.subscribe(
+            (data: DataObject) => {
+                _.forEach(data, (value, key) => {
+                    this.updateData(data);
+                });
+            },
+            this.id,
+        );
+    }
+
+    /**
+     * Convert from snake case to camel case
+     *
+     * @param {string} string
+     * @returns {string}
+     */
+    private fromSnakeToCamelCase(currentString: string): string {
+        const parts: string[] = currentString.split(/[_-]/);
+        let newString: string = "";
+        for (let i = 1; i < parts.length; i++) {
+            newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+        }
+        return parts[0] + newString;
     }
 }

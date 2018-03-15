@@ -45,7 +45,7 @@ export default class Row extends Block {
      *
      * @returns {DataObject}
      */
-    public getStyle() {
+    public getStyle(element: string) {
         const children: any = this.children();
         const styleAttributes: any  = {};
         let isAllColumns: boolean = true;
@@ -62,6 +62,6 @@ export default class Row extends Block {
         if (isAllColumns) {
             styleAttributes.display = "flex";
         }
-        return _.extend(super.getStyle(), styleAttributes);
+        return _.extend(super.getStyle(element), styleAttributes);
     }
 }

@@ -53,7 +53,7 @@
         <element name="collageMinHeightMobile" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
-        <element name="bannerBorderStyle" type="button" selector="div[data-role='banner'][style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderStyle" type="button" selector="//div[@data-role='banner'][contains(@style, 'border-width: {{arg1}}px') and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="bannerBorderRadiusStyle" type="button" selector="div[data-role='banner'][style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="bannerClass" type="button" selector="div[data-role='banner'][class='{{arg1}}']" parameterized="true"/>
     </section>
@@ -95,7 +95,7 @@
         <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="contentSectionName" type="button" selector="/div[@data-index='content']"/>
-        <element name="bannerBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderStyle" type="button" selector="//div[contains(@style, 'border-width: {{arg1}}px') and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="bannerBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>

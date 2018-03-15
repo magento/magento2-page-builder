@@ -120,6 +120,7 @@ class Config
                 ? explode(',', $contentType['allowed_parents']) : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
+            'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
     }

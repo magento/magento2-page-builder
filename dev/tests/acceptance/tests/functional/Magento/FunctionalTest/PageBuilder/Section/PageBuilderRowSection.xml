@@ -29,7 +29,7 @@
 
         <!-- Advanced Section -->
         <element name="textAlign" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'text-align: center')])[1]"/>
-        <element name="border" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border: 10px dotted rgb(255, 255, 255)')])[1]"/>
+        <element name="border" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-width: 10px') and contains(@style, 'border-style: dotted') and contains(@style, 'border-color: rgb(255, 255, 255)')])[1]"/>
         <element name="borderRadius" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-radius: 12px')])[1]"/>
         <element name="margin" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'margin: 5px')])[1]"/>
         <element name="padding" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'padding: 5px')])[1]"/>
@@ -43,11 +43,11 @@
         <element name="backgroundRepeat" type="button" selector="[data-role='row'][style*='background-repeat: repeat']"/>
         <element name="backgroundAttachment" type="button" selector="[data-role='row'][style*='background-attachment: fixed']"/>
         <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax']"/>
-        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-speed='{{arg1}}']" parameterized="true"/>
+        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-parallax-speed='{{arg1}}']" parameterized="true"/>
 
         <!-- Advanced Section -->
         <element name="textAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>
-        <element name="border" type="button" selector="[data-role='row'][style*='border: 10px dotted rgb(255, 255, 255);']"/>
+        <element name="border" type="button" selector="//div[@data-role = 'row' and contains(@style, 'border-width: 10px') and contains(@style, 'border-style: dotted') and contains(@style, 'border-color: rgb(255, 255, 255)')]"/>
         <element name="borderRadius" type="button" selector="[data-role='row'][style*='border-radius: 12px;']"/>
         <element name="marginDefault" type="button" selector="[data-role='row'][style*='margin: 0px 0px 10px;']"/>
         <element name="margin" type="button" selector="[data-role='row'][style*='margin: 5px;']"/>

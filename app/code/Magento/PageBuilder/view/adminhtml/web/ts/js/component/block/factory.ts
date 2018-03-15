@@ -9,6 +9,8 @@ import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
+import elementConverterPoolFactory from "./element-converter-pool-factory";
+import converterPoolFactory from "./converter-pool-factory";
 
 /**
  * Retrieve the block instance from the config object
@@ -38,8 +40,16 @@ export default function createBlock(
     stage = stage || parent.stage;
     formData = formData || {};
     return new Promise((resolve: (blockComponent: any) => void) => {
-        loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
-            resolve(new blockComponent(parent, stage, config, formData));
+        const meppersLoaded: Array<Promise<any>> = [];
+        meppersLoaded.push(elementConverterPoolFactory(config.name));
+        meppersLoaded.push(converterPoolFactory(config.name));
+        Promise.all(meppersLoaded).then((loadedMappers) => {
+            const [elementConverterPool, converterPool] = loadedMappers;
+            loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
+                resolve(new blockComponent(parent, stage, config, formData, elementConverterPool, converterPool));
+            });
+        }).catch((error) => {
+            console.error( error );
         });
     });
 }

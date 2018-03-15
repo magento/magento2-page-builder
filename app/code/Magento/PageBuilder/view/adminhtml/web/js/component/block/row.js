@@ -46,7 +46,7 @@ define(["mage/translate", "underscore", "../stage/structural/options/option", ".
      */
 
 
-    _proto.getStyle = function getStyle() {
+    _proto.getStyle = function getStyle(element) {
       var children = this.children();
       var styleAttributes = {};
       var isAllColumns = true;
@@ -78,7 +78,7 @@ define(["mage/translate", "underscore", "../stage/structural/options/option", ".
         styleAttributes.display = "flex";
       }
 
-      return _underscore.extend(_Block.prototype.getStyle.call(this), styleAttributes);
+      return _underscore.extend(_Block.prototype.getStyle.call(this, element), styleAttributes);
     };
 
     return Row;

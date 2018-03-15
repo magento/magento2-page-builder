@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block"], function (_block) {
+define(["underscore", "./block"], function (_underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Video =
@@ -20,7 +20,7 @@ define(["./block"], function (_block) {
      */
     _proto.getVideoAttributes = function getVideoAttributes() {
       var data = this.getData();
-      return this.getAttributes({
+      return _underscore.extend(this.getAttributes(), {
         src: this.getVideoUrl(data.src)
       });
     };
