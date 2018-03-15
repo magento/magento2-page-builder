@@ -33,9 +33,19 @@ ko.bindingHandlers.liveEdit = {
         const onClick = () => {
             document.execCommand("selectAll", false, "");
         };
+        const onKeyDown = (event) => {
+            switch (event.which) {
+                case 32:
+                    document.execCommand("insertText", false, " "); // fix for space bar
+                    break;
+                default:
+                    return;
+            }
+        };
         element.contentEditable = true;
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
+        element.addEventListener("keydown", onKeyDown);
     },
 };
 

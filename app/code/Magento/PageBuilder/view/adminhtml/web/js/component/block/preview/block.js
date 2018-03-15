@@ -25,9 +25,22 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         document.execCommand("selectAll", false, "");
       };
 
+      var onKeyDown = function onKeyDown(event) {
+        switch (event.which) {
+          case 32:
+            document.execCommand("insertText", false, " "); // fix for space bar
+
+            break;
+
+          default:
+            return;
+        }
+      };
+
       element.contentEditable = true;
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
+      element.addEventListener("keydown", onKeyDown);
     }
   };
 
