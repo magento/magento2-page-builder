@@ -309,7 +309,7 @@
         <!-- Border Size -->
         <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderSizeDefaultProperty.section, PageBuilderAdvancedBorderSizeDefaultProperty.fieldName)}}" stepKey="getTextFromBorderSizeAttribute2"/>
-        <assertEmpty actual="getTextFromBorderSizeAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderSizeAttribute2" stepKey="assertGetTextFromBorderSizeAttribute2"/>
+        <assertNotEmpty actual="getTextFromBorderSizeAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderSizeAttribute2" stepKey="assertGetTextFromBorderSizeAttribute2"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBorderSizeAttributePlaceholderText2">
             <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
         </actionGroup>
@@ -808,6 +808,7 @@
             <testCaseId value="MAGETWO-88789"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
+            <group value="skipped"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
