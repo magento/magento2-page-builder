@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../utils/delayed-promise", "../block/factory", "../config", "../event-bus", "./block"], function (_delayedPromise, _factory, _config, _eventBus, _block) {
+define(["../block/factory", "../config", "../event-bus", "./block"], function (_factory, _config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -37,8 +37,6 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
         _this2.addChild(button);
 
         return button;
-      }).then((0, _delayedPromise)(300)).then(function (button) {
-        button.edit.open();
       }).catch(function (error) {
         console.error(error);
       });

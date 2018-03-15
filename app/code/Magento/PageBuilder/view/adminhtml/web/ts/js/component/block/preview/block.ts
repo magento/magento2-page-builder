@@ -44,6 +44,11 @@ ko.bindingHandlers.liveEdit = {
         };
         const onClick = () => {
             document.execCommand("selectAll", false, "");
+            if ($(element).hasClass("placeholder-text")) {
+                document.execCommand("delete", false, "");
+                $(element).removeClass("placeholder-text");
+            }
+
         };
         const onKeyDown = (event) => {
             switch (event.which) {

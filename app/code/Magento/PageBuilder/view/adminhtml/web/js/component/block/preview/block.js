@@ -35,6 +35,11 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
 
       var onClick = function onClick() {
         document.execCommand("selectAll", false, "");
+
+        if ((0, _jquery)(element).hasClass("placeholder-text")) {
+          document.execCommand("delete", false, "");
+          (0, _jquery)(element).removeClass("placeholder-text");
+        }
       };
 
       var onKeyDown = function onKeyDown(event) {
