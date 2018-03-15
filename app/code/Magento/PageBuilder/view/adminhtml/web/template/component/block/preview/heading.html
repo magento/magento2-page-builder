@@ -6,6 +6,23 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
-    <div data-bind="css: 'pagebuilder-heading-' + data.main.heading_type(), html: data.main.html"></div>
+    <!-- ko if: preview.data.heading_type() == 'h1' -->
+    <h1 data-bind="html:  data.main.html, style: data.main.style()"></h1>
+    <!-- /ko -->
+    <!-- ko if: preview.data.heading_type() == 'h2' -->
+    <h2 data-bind="html:  data.main.html, style: data.main.style()"></h2>
+    <!-- /ko -->
+    <!-- ko if: preview.data.heading_type() == 'h3' -->
+    <h3 data-bind="html:  data.main.html, style: data.main.style()"></h3>
+    <!-- /ko -->
+    <!-- ko if: preview.data.heading_type() == 'h4' -->
+    <h4 data-bind="html:  data.main.html, style: data.main.style()"></h4>
+    <!-- /ko -->
+    <!-- ko if: preview.data.heading_type() == 'h5' -->
+    <h5 data-bind="html:  data.main.html, style: data.main.style()"></h5>
+    <!-- /ko -->
+    <!-- ko if: preview.data.heading_type() == 'h6' -->
+    <h6 data-bind="html:  data.main.html, style: data.main.style()"></h6>
+    <!-- /ko -->
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>
