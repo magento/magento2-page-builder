@@ -9,6 +9,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var contentTypeInstance = bindingContext.$data;
       var data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
+      var value = valueAccessor();
 
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
@@ -17,8 +18,10 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       };
 
       var onBlur = function onBlur() {
-        data.button_text = stripHtml(element.innerText);
-        contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+        if (value in data) {
+          data[value] = stripHtml(element.innerText);
+          contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+        }
       };
 
       var onClick = function onClick() {

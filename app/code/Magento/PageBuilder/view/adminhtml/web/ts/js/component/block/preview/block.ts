@@ -20,6 +20,7 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const contentTypeInstance = bindingContext.$data;
         const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
+        const value = valueAccessor();
 
         const stripHtml = (html) => {
             const tempDiv = document.createElement("div");
@@ -27,8 +28,10 @@ ko.bindingHandlers.liveEdit = {
             return tempDiv.innerText;
         };
         const onBlur = () => {
-            data.button_text = stripHtml(element.innerText);
-            contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+            if (value in data) {
+                data[value] = stripHtml(element.innerText);
+                contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
+            }
         };
         const onClick = () => {
             document.execCommand("selectAll", false, "");
