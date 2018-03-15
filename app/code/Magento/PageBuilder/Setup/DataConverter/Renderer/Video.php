@@ -44,17 +44,20 @@ class Video implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? '',
+            'class' => $eavData['css_classes'] ?? ''
+        ];
+
+        $iframeElementAttributes = [
             'src' => $eavData['video_url']
         ];
 
         $formData = $itemData['formData'] ?? [];
         if (isset($eavData['video_width'])) {
-            $formData['width'] = $this->normalizeSizeDimension($eavData['video_width']);
+            $iframeElementAttributes['width'] = $this->normalizeSizeDimension($eavData['video_width']);
         }
 
-        if (isset($eavData['video_width'])) {
-            $formData['height'] = $this->normalizeSizeDimension($eavData['video_height']);
+        if (isset($eavData['video_height'])) {
+            $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
         }
 
         $style = $this->styleExtractor->extractStyle($formData);
@@ -62,11 +65,15 @@ class Video implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></iframe>';
+        $rootElementHtml .= '><iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
+        foreach ($iframeElementAttributes as $attributeName => $attributeValue) {
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        $rootElementHtml .= '></iframe></div>';
 
         return $rootElementHtml;
     }

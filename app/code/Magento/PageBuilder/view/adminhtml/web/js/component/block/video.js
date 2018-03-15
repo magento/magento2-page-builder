@@ -20,9 +20,11 @@ define(["./block"], function (_block) {
      */
     _proto.getVideoAttributes = function getVideoAttributes() {
       var data = this.getData();
-      return this.getAttributes({
-        src: this.getVideoUrl(data.src)
-      });
+      return {
+        src: this.getVideoUrl(data.video_source),
+        width: data.video_width || null,
+        height: data.video_height || null
+      };
     };
     /**
      * Change video src to correct format
