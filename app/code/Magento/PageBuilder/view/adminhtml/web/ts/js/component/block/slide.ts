@@ -12,7 +12,6 @@ import {Options} from "../stage/structural/options";
 import Block from "./block";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import EventBus from "../event-bus";
 
 export default class Slide extends Block {
 
