@@ -43,20 +43,23 @@ ko.bindingHandlers.liveEdit = {
             }
         };
         const onClick = () => {
-            document.execCommand("selectAll", false, "");
+            document.execCommand("selectAll", false, null);
             if ($(element).hasClass("placeholder-text")) {
-                document.execCommand("delete", false, "");
+                document.execCommand("delete", false, null);
                 $(element).removeClass("placeholder-text");
             }
-
         };
         const onKeyDown = (event) => {
             switch (event.which) {
                 case 32:
                     document.execCommand("insertText", false, " "); // fix for space bar
                     break;
-                default:
-                    return;
+                case 91: // command
+                case 66: // bold
+                case 73: // italic
+                case 85: // underline
+                    event.preventDefault();
+                    break;
             }
         };
         element.contentEditable = true;

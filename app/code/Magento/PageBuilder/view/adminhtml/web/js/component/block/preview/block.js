@@ -34,10 +34,10 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       };
 
       var onClick = function onClick() {
-        document.execCommand("selectAll", false, "");
+        document.execCommand("selectAll", false, null);
 
         if ((0, _jquery)(element).hasClass("placeholder-text")) {
-          document.execCommand("delete", false, "");
+          document.execCommand("delete", false, null);
           (0, _jquery)(element).removeClass("placeholder-text");
         }
       };
@@ -49,8 +49,16 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
 
             break;
 
-          default:
-            return;
+          case 91: // command
+
+          case 66: // bold
+
+          case 73: // italic
+
+          case 85:
+            // underline
+            event.preventDefault();
+            break;
         }
       };
 
