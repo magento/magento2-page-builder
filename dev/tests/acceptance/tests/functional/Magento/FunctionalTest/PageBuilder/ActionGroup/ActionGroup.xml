@@ -102,7 +102,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelSmall">
@@ -114,7 +114,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelByIndex">
@@ -130,8 +130,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForEditButton"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="duplicateContentBlock">

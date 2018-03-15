@@ -11,11 +11,9 @@
     <actionGroup name="openPageBuilderEditColumnPanel">
         <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" x="10" y="0" stepKey="onMouseOverColumn"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditFormTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
 </actionGroups>
