@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
@@ -13,6 +14,7 @@ import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewBlock {
+    public focusedSlide: KnockoutObservable<number> = ko.observable();
     private element: Element;
     private childSubscribe: KnockoutSubscription;
 
@@ -80,6 +82,11 @@ export default class Slider extends PreviewBlock {
                 this.setActiveSlide(params.newPosition);
             }
         });
+
+        // Set the stage to interacting when a slide if focused
+        this.focusedSlide.subscribe((value: number) => {
+            this.parent.stage.interacting(value !== null);
+        });
     }
 
     /**
@@ -107,6 +114,7 @@ export default class Slider extends PreviewBlock {
     public navigateToSlide(slideIndex: number, dontAnimate: boolean = false): void {
         $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
         this.setActiveSlide(slideIndex);
+        this.focusedSlide(slideIndex);
     }
 
     /**

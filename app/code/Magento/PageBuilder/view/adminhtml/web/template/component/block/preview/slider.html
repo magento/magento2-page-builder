@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-slider type-nested children-min-height" data-bind="afterRender: function () { preview.onAfterRender.call(preview); }, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-slider children-min-height" data-bind="afterRender: function () { preview.onAfterRender.call(preview); }, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div class="slider-container" data-bind="style: preview.previewStyle">
         <div class="pagebuilder-empty slider-empty" data-bind="css: {visible: children().length == 0}">
@@ -13,17 +13,15 @@
         </div>
         <!-- ko template: previewChildTemplate --><!-- /ko -->
     </div>
-</div>
-<div class="pagebuilder-content-type pagebuilder-slider">
-    <div class="slider-controls">
+    <div class="slider-controls focus-options">
         <!-- ko if: children().length > 0 -->
-        <div class="slider-navigation" data-bind="previewSortable: {handle: '.navigation-handle', containment: 'parent'}, foreach: getChildren()">
-            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index()}, attr: {id: 'navigation-' + id}">
-                <a href="#" data-bind="click: function () { $parent.preview.navigateToSlide($index()); }"></a>
+        <div class="slider-navigation" data-bind="previewSortable: {handle: '.navigation-handle', containment: 'parent', axis: 'x'}, foreach: getChildren()">
+            <div class="navigation-dot" data-bind="css: {active: $parent.preview.data.activeSlide() === $index(), focused: $parent.preview.focusedSlide() === $index()}, attr: {id: 'navigation-' + id}">
+                <!-- ko template: getOptions().template --><!-- /ko -->
+                <a class="navigation-dot-anchor" href="#" data-bind="click: function () { $parent.preview.navigateToSlide($index()); }, event: { focusin: function () { $parent.preview.focusedSlide($index()) }, focusout: function () { $parent.preview.focusedSlide(null) } }"></a>
                 <!-- ko if: preview.data.title -->
                 <span class="tooltip-content" role="tooltip" data-bind="text: preview.data.title"></span>
                 <!-- /ko -->
-                <span class="navigation-handle"></span>
             </div>
         </div>
         <!-- /ko -->

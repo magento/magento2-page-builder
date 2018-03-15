@@ -5,14 +5,32 @@
 
 .pagebuilder-content-type.pagebuilder-slider {
     border: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
 
     .slider-container {
+        .pagebuilder-system-border;
+
         overflow: hidden;
 
         .slick-list,
         .slick-track,
         .slick-slide {
             min-height: inherit;
+        }
+    }
+
+    &.pagebuilder-content-type-active:hover {
+        outline: 0;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+
+        .slider-container {
+            .pagebuilder-system-border-hover;
         }
     }
 
@@ -44,11 +62,11 @@
             .navigation-dot {
                 display: inline-block;
                 font-size: 12px;
-                line-height: 33px;
-                margin: 0 3px;
+                margin: 0;
                 text-align: center;
                 vertical-align: top;
-                width: 28px;
+                height: 36px;
+                width: 36px;
 
                 .lib-tooltip(
                     @_tooltip-position: top,
@@ -93,49 +111,59 @@
                     }
                 }
 
-                a {
-                    background: white;
-                    border: 1px solid #ccc;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    display: inline-block;
-                    height: 14px;
-                    transition: .3s;
-                    width: 14px;
-                }
-
-                .navigation-handle {
+                .navigation-dot-anchor {
                     display: block;
-                    margin-top: -2px;
-                    opacity: 0;
-                    transition: visibility .3s, opacity .3s;
-                    visibility: hidden;
+                    height: 100%;
+                    width: 100%;
+                    position: relative;
 
-                    &:before {
-                        .abs-icon;
-                        color: @color-gray65;
-                        content: @icon-gripper__content;
-                        cursor: ew-resize;
-                        display: block;
-                        font-size: 2rem;
-                        -webkit-font-smoothing: initial;
-                        transform: rotate(90deg);
+                    &:after {
+                        background: white;
+                        border: 1px solid #ccc;
+                        border-radius: 10px;
+                        content: ' ';
+                        cursor: pointer;
+                        display: inline-block;
+                        height: 14px;
+                        transition: .3s;
+                        width: 14px;
+
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
                     }
                 }
 
                 &.active {
-                    a {
+                    .navigation-dot-anchor:after {
                         background: #373330;
                         border: none;
                     }
                 }
 
-                &:hover {
-                    a {
-                        border: 1px solid #b3b3b3;
+                &.focused {
+                    outline: 1px solid #007bdb;
+
+                    .pagebuilder-options {
+                        .pagebuilder-options-visible;
                     }
 
-                    &.active a {
+                    .tooltip-content {
+                        display: none;
+                    }
+                }
+
+                &:hover {
+                    .navigation-dot-anchor {
+                        text-decoration: none;
+
+                        &:after {
+                            border: 1px solid #b3b3b3;
+                        }
+                    }
+
+                    &.active .navigation-dot-anchor:after {
                         background: #1c1918;
                         border: none;
                     }

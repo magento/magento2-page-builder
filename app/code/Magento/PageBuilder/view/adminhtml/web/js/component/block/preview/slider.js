@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../event-bus", "./block"], function (_jquery, _slick, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../event-bus", "./block"], function (_jquery, _knockout, _slick, _underscore, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -21,6 +21,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.focusedSlide = _knockout.observable();
       _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
@@ -65,6 +66,11 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
           _this.setActiveSlide(params.newPosition);
         }
+      }); // Set the stage to interacting when a slide if focused
+
+
+      _this.focusedSlide.subscribe(function (value) {
+        _this.parent.stage.interacting(value !== null);
       });
 
       return _this;
@@ -104,6 +110,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
       (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
       this.setActiveSlide(slideIndex);
+      this.focusedSlide(slideIndex);
     };
     /**
      * After child render record element

@@ -20,7 +20,8 @@ export default class Slide extends Block {
      */
     public getOptions(): Options {
         const options = super.getOptions();
-        options.removeOption("move");
+        const moveOption = options.getOption("move");
+        moveOption.classes += " navigation-handle";
         return options;
     }
 

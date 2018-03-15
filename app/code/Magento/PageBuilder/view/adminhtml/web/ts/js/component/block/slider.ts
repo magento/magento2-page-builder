@@ -29,7 +29,7 @@ export default class Slider extends Block {
                 $t("Add"),
                 this.addSlide,
                 ["add-slider"],
-                10
+                10,
             ),
         );
         return options;

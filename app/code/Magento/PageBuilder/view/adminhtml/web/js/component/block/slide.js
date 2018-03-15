@@ -21,7 +21,8 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
     _proto.getOptions = function getOptions() {
       var options = _Block.prototype.getOptions.call(this);
 
-      options.removeOption("move");
+      var moveOption = options.getOption("move");
+      moveOption.classes += " navigation-handle";
       return options;
     };
     /**
