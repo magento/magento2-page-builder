@@ -24,7 +24,7 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
-        if (_this.element && _this.element.children.length > 0) {
+        if (_this.element) {
           try {
             (0, _jquery)(_this.element).slick("unslick");
           } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick

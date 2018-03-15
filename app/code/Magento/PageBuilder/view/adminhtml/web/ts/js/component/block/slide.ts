@@ -10,6 +10,9 @@ import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import {Options} from "../stage/structural/options";
 import Block from "./block";
+import {Option} from "../stage/structural/options/option";
+import {OptionInterface} from "../stage/structural/options/option.d";
+import EventBus from "../event-bus";
 
 export default class Slide extends Block {
 
@@ -219,5 +222,63 @@ export default class Slide extends Block {
                 textAlign: "",
             },
         );
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        const newOptions = options.filter((option) => {
+            return (option.code !== "remove");
+        });
+        const removeClasses = ["remove-structural"];
+        let removeFn = this.onOptionRemove;
+        if (this.parent.children().length < 2) {
+            removeFn = () => { return; };
+            removeClasses.push("disabled");
+        }
+        newOptions.push(new Option(
+            this,
+            "remove",
+            "<i></i>",
+            $t("Remove"),
+            removeFn,
+            removeClasses,
+            100,
+        ));
+        return newOptions;
+    }
+
+    /**
+     * Handle block removal
+     */
+    public onOptionRemove(): void {
+        const removeBlock = () => EventBus.trigger("block:removed", {
+            block: this,
+            index: this.parent.children().indexOf(this),
+            parent: this.parent,
+        });
+        if (this.isConfigured()) {
+            this.stage.parent.confirmationDialog({
+                actions: {
+                    confirm: () => {
+                        const slider = this.parent.preview;
+                        removeBlock();
+                        slider.navigateToSlide(this.parent.children().length - 1);
+                        slider.onAfterRender();
+                    },
+                },
+                content: $t("Are you sure you want to remove this item? " +
+                    "The data within this item is not recoverable once removed."),
+                dismissKey: "modal_dismissed_pagebuilder_remove",
+                dismissible: true,
+                title: $t("Confirm Item Removal"),
+            });
+        } else {
+            removeBlock();
+        }
     }
 }

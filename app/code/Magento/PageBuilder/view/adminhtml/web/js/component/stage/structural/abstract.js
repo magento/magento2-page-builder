@@ -96,7 +96,8 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
         this.stage.parent.confirmationDialog({
           actions: {
             confirm: function confirm() {
-              // Call the parent to remove the child element
+              debugger; // Call the parent to remove the child element
+
               removeBlock();
             }
           },
@@ -190,16 +191,33 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       var hasDataChanges = false;
 
       _underscore.each(this.config.fields, function (field, key) {
-        var fieldValue = data[key]; // Default values can only ever be strings
+        var fieldValue = data[key];
+
+        if (!fieldValue) {
+          fieldValue = "";
+        } // Default values can only ever be strings
+
 
         if (_underscore.isObject(fieldValue)) {
-          fieldValue = JSON.stringify(fieldValue);
+          // Empty arrays as default values appear as empty strings
+          if (_underscore.isArray(fieldValue) && fieldValue.length === 0) {
+            fieldValue = "";
+          } else {
+            fieldValue = JSON.stringify(fieldValue);
+          }
         }
 
-        if (field.default !== fieldValue) {
+        if (_underscore.isObject(field.default)) {
+          debugger;
+
+          if (JSON.stringify(field.default) !== fieldValue) {
+            hasDataChanges = true;
+          }
+        } else if (field.default !== fieldValue) {
           hasDataChanges = true;
-          return;
         }
+
+        return;
       });
 
       return hasDataChanges;

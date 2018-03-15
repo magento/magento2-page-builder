@@ -22,7 +22,7 @@ export default class Slider extends PreviewBlock {
      * @type {(() => any) & _.Cancelable}
      */
     private buildSlick = _.debounce(() => {
-        if (this.element && this.element.children.length > 0) {
+        if (this.element) {
             try {
                 $(this.element).slick("unslick");
             } catch (e) {
