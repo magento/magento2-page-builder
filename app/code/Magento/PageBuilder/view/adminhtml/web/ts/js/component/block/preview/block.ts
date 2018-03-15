@@ -17,6 +17,15 @@ import "./sortable/binding";
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
 
+    /**
+     * Init the live edit binding on an element
+     *
+     * @param element
+     * @param valueAccessor
+     * @param allBindings
+     * @param viewModel
+     * @param bindingContext
+     */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const contentTypeInstance = bindingContext.$data;
         const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);

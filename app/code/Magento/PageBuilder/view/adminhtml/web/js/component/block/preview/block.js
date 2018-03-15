@@ -6,6 +6,15 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
 
   // Custom Knockout binding for live editing text inputs
   _knockout.bindingHandlers.liveEdit = {
+    /**
+     * Init the live edit binding on an element
+     *
+     * @param element
+     * @param valueAccessor
+     * @param allBindings
+     * @param viewModel
+     * @param bindingContext
+     */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var contentTypeInstance = bindingContext.$data;
       var data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
