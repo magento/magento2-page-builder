@@ -5,41 +5,41 @@
 
 @border-size: 2px;
 
+.pagebuilder-header {
+    text-align: right;
+}
+
 .admin__fieldset > .admin__field > .admin__control-grouped {
     &.pagebuilder-active {
         float: left;
-        width: 100%;
+        margin: 3rem 0 0;
         padding-left: 3rem;
-        margin: 3rem 0 0 0;
+        width: 100%;
     }
 }
 
 .pagebuilder-stage-wrapper {
     &.stage-full-screen {
-        position: fixed;
+        background: white;
+        height: 100%;
         left: 0;
+        overflow: scroll;
+        padding: 10px;
+        position: fixed;
         top: 0;
         width: 100%;
-        height: 100%;
         z-index: 800;
-        background: white;
-        padding: 10px;
-        overflow: scroll;
     }
 }
 
 .pagebuilder-stage {
-    margin-left: 170px; // temp
-
-    padding: 0 0 60px 0; // 60px to include the add row button
-    min-height: 200px;
-
     font-size: 0;
-
+    margin-left: 170px; // temp
+    min-height: 200px;
+    padding: 0 0 60px; // 60px to include the add row button
     -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
-
     /* Rules below not implemented in browsers yet */
     -o-user-select: none;
     user-select: none;
@@ -65,35 +65,35 @@
     }
 
     .pagebuilder-stage-loading {
+        padding: 90px 0 30px;
         text-align: center;
-        padding: 90px 0 30px 0;
 
         p {
-            margin: 3rem 0 3rem;
             font-size: 14px;
+            margin: 3rem 0;
         }
     }
 
     .pagebuilder-canvas {
         opacity: 0;
-        visibility: hidden;
-        transition: 1s ease-in-out;
-        -moz-transition: 1s ease-in-out;
         -webkit-transition: 1s ease-in-out;
+        -moz-transition: 1s ease-in-out;
+        transition: 1s ease-in-out;
+        visibility: hidden;
 
         &.active {
-            position: relative;
             opacity: 1;
+            position: relative;
             visibility: visible;
         }
     }
 
     /* Remove aspects fo the UI when taking a screenshot for templates */
     &.screengrab {
-        padding: 0;
         border: none;
         height: 80%;
         overflow: hidden;
+        padding: 0;
 
         .pagebuilder-add-row-wrapper {
             display: none
@@ -102,65 +102,67 @@
 }
 
 .pagebuilder-heading-h2 {
-    margin: 0 0 2rem;
     color: #41362f;
+    font-size: 2rem;
     font-weight: 400;
     line-height: 1.2;
-    font-size: 2rem;
+    margin: 0 0 2rem;
 }
 
 .pagebuilder-heading-h3 {
-    margin: 0 0 2rem;
     color: #41362f;
+    font-size: 1.7rem;
     font-weight: 600;
     line-height: 1.2;
-    font-size: 1.7rem;
+    margin: 0 0 2rem;
 }
 
-.pagebuilder-heading-h4, .pagebuilder-heading-h5, .pagebuilder-heading-h6 {
+.pagebuilder-heading-h4,
+.pagebuilder-heading-h5,
+.pagebuilder-heading-h6 {
     font-weight: 600;
     margin-top: 0;
 }
 
 .pagebuilder-heading-h4 {
-    margin: 0 0 2rem;
     color: #41362f;
     display: block;
     font-weight: bold;
+    margin: 0 0 2rem;
 }
 
 .pagebuilder-heading-h5 {
-    margin: 0 0 2rem;
     color: #41362f;
-    line-height: 1.2;
-    font-size: 0.83em;
+    font-size: .83em;
     font-weight: bold;
+    line-height: 1.2;
+    margin: 0 0 2rem;
 }
 
 .pagebuilder-heading-h6 {
-    margin: 0 0 2rem;
     color: #41362f;
     display: block;
-    font-size: 0.67em;
+    font-size: .67em;
     font-weight: bold;
+    margin: 0 0 2rem;
 }
 
 .pagebuilder-add-row-wrapper {
     float: left;
-    width: 100%;
     text-align: center;
+    width: 100%;
 
     .pagebuilder-add-row {
+        background: @rowColor;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        color: white;
         display: inline-block;
-        width: 50px;
+        font-size: 26px;
         height: 50px;
         line-height: 50px;
-        font-size: 26px;
-        background: @rowColor;
-        border-radius: 5px;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        color: white;
+        width: 50px;
 
         &:hover {
             background: darken(@rowColor, 15%);
@@ -168,12 +170,13 @@
     }
 }
 
-.pagebuilder-row-wrapper, .pagebuilder-structure-wrapper {
+.pagebuilder-row-wrapper,
+.pagebuilder-structure-wrapper {
     display: inline-block;
-    width: 100%;
     vertical-align: top;
+    width: 100%;
 
     &.pagebuilder-sorting-original {
-        opacity: 0.4;
+        opacity: .4;
     }
 }

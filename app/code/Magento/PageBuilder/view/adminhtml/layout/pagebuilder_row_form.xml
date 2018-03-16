@@ -6,10 +6,10 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
     <body>
-        <referenceContainer name="before.body.end">
-            <block class="Magento\PageBuilder\Block\Adminhtml\Stage\Init" name="pagebuilder.init" template="Magento_PageBuilder::init.phtml" />
-            <uiComponent name="pagebuilder_modal_form" />
+        <referenceContainer name="content">
+            <uiComponent name="pagebuilder_row_form"/>
         </referenceContainer>
     </body>
 </page>
