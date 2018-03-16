@@ -33,15 +33,6 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         }
       };
 
-      var onClick = function onClick() {
-        document.execCommand("selectAll", false, null);
-
-        if ((0, _jquery)(element).hasClass("placeholder-text")) {
-          document.execCommand("delete", false, null);
-          (0, _jquery)(element).removeClass("placeholder-text");
-        }
-      };
-
       var onKeyDown = function onKeyDown(event) {
         // space bar fix
         if (event.which === 32) {
@@ -57,10 +48,19 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         }
       };
 
+      var onKeyUp = function onKeyUp(event) {
+        if (element.innerText === "") {
+          (0, _jquery)(element).addClass("placeholder-text");
+        } else {
+          (0, _jquery)(element).removeClass("placeholder-text");
+        }
+      };
+
       element.contentEditable = true;
+      element.focus();
       element.addEventListener("blur", onBlur);
-      element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
+      element.addEventListener("keyup", onKeyUp);
     }
   };
 

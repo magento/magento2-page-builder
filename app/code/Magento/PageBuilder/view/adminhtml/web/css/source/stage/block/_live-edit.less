@@ -4,12 +4,15 @@
  */
 
 .pagebuilder-content-type {
-    [contenteditable] {
+    [contenteditable=true] {
         b {
             font-weight: normal;
         }
         i {
             font-style: normal;
+        }
+        &:empty:before {
+            content: attr(data-placeholder);
         }
     }
 }

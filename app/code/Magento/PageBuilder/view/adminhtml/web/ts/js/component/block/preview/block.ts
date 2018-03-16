@@ -42,13 +42,6 @@ ko.bindingHandlers.liveEdit = {
                 contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
             }
         };
-        const onClick = () => {
-            document.execCommand("selectAll", false, null);
-            if ($(element).hasClass("placeholder-text")) {
-                document.execCommand("delete", false, null);
-                $(element).removeClass("placeholder-text");
-            }
-        };
         const onKeyDown = (event) => {
             // space bar fix
             if (event.which === 32) {
@@ -62,10 +55,18 @@ ko.bindingHandlers.liveEdit = {
                 }
             }
         };
+        const onKeyUp = (event) => {
+            if (element.innerText === "") {
+                $(element).addClass("placeholder-text");
+            } else {
+                $(element).removeClass("placeholder-text");
+            }
+        };
         element.contentEditable = true;
+        element.focus();
         element.addEventListener("blur", onBlur);
-        element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
+        element.addEventListener("keyup", onKeyUp);
     },
 };
 
