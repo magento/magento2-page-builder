@@ -7,13 +7,15 @@ define([], function () {
   var ElementConverterPool =
   /*#__PURE__*/
   function () {
-    function ElementConverterPool(styleConverters, styleConvertersPreview, attributeConverters) {
+    function ElementConverterPool(styleConverters, styleConvertersPreview, attributeConverters, attributeConvertersPreview) {
       this.styleConverters = void 0;
       this.styleConvertersPreview = void 0;
       this.attributeConverters = void 0;
+      this.attributeConvertersPreview = void 0;
       this.styleConverters = styleConverters;
       this.styleConvertersPreview = styleConvertersPreview;
       this.attributeConverters = attributeConverters;
+      this.attributeConvertersPreview = attributeConvertersPreview;
     }
 
     var _proto = ElementConverterPool.prototype;
@@ -26,7 +28,11 @@ define([], function () {
       return this.styleConverters;
     };
 
-    _proto.getAttributeConverters = function getAttributeConverters() {
+    _proto.getAttributeConverters = function getAttributeConverters(area) {
+      if ("preview" === area) {
+        return this.attributeConvertersPreview;
+      }
+
       return this.attributeConverters;
     };
 
