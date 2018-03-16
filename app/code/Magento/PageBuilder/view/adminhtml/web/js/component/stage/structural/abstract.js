@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../config", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../utils/string"], function (_knockout, _translate, _underscore, _config, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _string) {
+define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../utils/string", "../../../component/block/appearance-config"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _string, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -124,7 +124,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
           css = data.css_classes;
         }
       } else {
-        var config = _config.getContentType(this.config.name).data_mapping.elements[element];
+        var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
 
         if (config.css.var !== undefined && config.css.var in data) {
           css = data[config.css.var];
@@ -157,8 +157,8 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
 
       var data = _underscore.extend({}, this.stage.store.get(this.id));
 
-      var config = this.getAppearanceConfig(data["appearance"]).elements;
-      var convertersConfig = this.getAppearanceConfig(data["appearance"]).converters;
+      var config = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.elements;
+      var convertersConfig = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.converters;
 
       for (var key in this.converterPool.getConverters()) {
         for (var i = 0; i < convertersConfig.length; i++) {
@@ -222,9 +222,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
 
       var data = this.stage.store.get(this.id);
       data = _underscore.extend(data, this.config);
-
-      var config = _config.getContentType(this.config.name).data_mapping.elements[element];
-
+      var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
       var result = {};
 
       if (config.attributes !== undefined) {
@@ -268,9 +266,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
 
     _proto.getHtml = function getHtml(element) {
       var data = this.stage.store.get(this.id);
-
-      var config = _config.getContentType(this.config.name).data_mapping.elements[element];
-
+      var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
       var result = '';
 
       if (config.html !== undefined) {
@@ -299,28 +295,16 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
     _proto.getOptions = function getOptions() {
       return new _options.Options(this, this.retrieveOptions());
     };
-    /**
-     * Get config for appearance
-     *
-     * @param {string} appearance
-     * @returns {Object}
-     */
-
-
-    _proto.getAppearanceConfig = function getAppearanceConfig(appearance) {
-      var contentTypeConfig = _config.getContentType(this.config.name);
-
-      var config = contentTypeConfig.data_mapping;
-
-      if (appearance !== undefined && contentTypeConfig.appearances !== undefined && contentTypeConfig.appearances[appearance] !== undefined && contentTypeConfig.appearances[appearance].data_mapping !== undefined) {
-        config = contentTypeConfig.appearances[appearance].data_mapping;
-      }
-
-      return config;
-    };
 
     _proto.updateData = function updateData(data) {
-      var config = this.getAppearanceConfig(data["appearance"]).elements;
+      var appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
+      var dataMapping = (0, _appearanceConfig)(this.config.name, appearance).data_mapping;
+
+      if (undefined === dataMapping || undefined === dataMapping.elements) {
+        return;
+      }
+
+      var config = dataMapping.elements;
 
       for (var elementName in config) {
         if (this.data[elementName] === undefined) {
@@ -362,7 +346,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
       var _this3 = this;
 
       this.stage.store.subscribe(function (data) {
-        _this3.updateData(data);
+        _this3.updateData(_this3.stage.store.get(_this3.id));
       }, this.id);
     };
 

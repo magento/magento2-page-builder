@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config", "../../block/element-converter-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array"], function (_config, _elementConverterPoolFactory, _converterPoolFactory, _string, _array) {
+define(["../../block/element-converter-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_elementConverterPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -19,16 +19,20 @@ define(["../../config", "../../block/element-converter-pool-factory", "../../blo
       var _this = this;
 
       var role = element.getAttribute('data-role');
-
-      var contentTypeConfig = _config.getInitConfig("content_types")[role];
-
-      var config = contentTypeConfig["data_mapping"];
-      var appearance = element.getAttribute("data-appearance");
-
-      if (appearance && contentTypeConfig["appearances"] !== undefined && contentTypeConfig["appearances"][appearance] !== undefined && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined) {
-        config = contentTypeConfig["appearances"][appearance]["data_mapping"];
+      /*
+      const contentTypeConfig = Config.getInitConfig("content_types")[role];
+       let config = contentTypeConfig["data_mapping"];
+       const appearance = element.getAttribute("data-appearance");
+       if (appearance
+          && contentTypeConfig["appearances"] !== undefined
+          && contentTypeConfig["appearances"][appearance] !== undefined
+          && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
+      ) {
+          config = contentTypeConfig["appearances"][appearance]["data_mapping"];
       }
+      */
 
+      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
       var mappersLoaded = [(0, _elementConverterPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
         Promise.all(mappersLoaded).then(function (loadedMappers) {

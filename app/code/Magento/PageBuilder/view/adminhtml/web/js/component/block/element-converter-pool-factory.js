@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "../config"], function (_loader, _elementConverterPool, _config) {
+define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "./appearance-config"], function (_loader, _elementConverterPool, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -16,32 +16,33 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
       var styleMappersPreview = [];
       var attributeMapperCodes = [];
       var attributeMappers = [];
+      var config = (0, _appearanceConfig)(contentType, undefined);
 
-      var config = _config.getInitConfig("content_types")[contentType];
+      if (config.data_mapping !== undefined && config.data_mapping.elements !== undefined) {
+        for (var el in config.data_mapping.elements) {
+          if (config.data_mapping.elements[el].style !== undefined) {
+            for (var i = 0; i < config.data_mapping.elements[el].style.length; i++) {
+              var styleProperty = config.data_mapping.elements[el].style[i];
 
-      for (var el in config.data_mapping.elements) {
-        if (config.data_mapping.elements[el].style !== undefined) {
-          for (var i = 0; i < config.data_mapping.elements[el].style.length; i++) {
-            var styleProperty = config.data_mapping.elements[el].style[i];
-
-            if (styleProperty.converter !== '' && styleProperty.converter !== null || styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null) {
-              var mapper = styleProperty.converter !== '' && styleProperty.converter !== null ? styleProperty.converter : null;
-              styleMapperCodes.push(styleProperty.var + styleProperty.name);
-              styleMappers.push(mapper);
-              var mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null ? styleProperty.preview_converter : mapper ? mapper : null;
-              styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
-              styleMappersPreview.push(mapperPreview);
+              if (styleProperty.converter !== '' && styleProperty.converter !== null || styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null) {
+                var mapper = styleProperty.converter !== '' && styleProperty.converter !== null ? styleProperty.converter : null;
+                styleMapperCodes.push(styleProperty.var + styleProperty.name);
+                styleMappers.push(mapper);
+                var mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null ? styleProperty.preview_converter : mapper ? mapper : null;
+                styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
+                styleMappersPreview.push(mapperPreview);
+              }
             }
           }
-        }
 
-        if (config.data_mapping.elements[el].attributes !== undefined) {
-          for (var _i = 0; _i < config.data_mapping.elements[el].attributes.length; _i++) {
-            var attribute = config.data_mapping.elements[el].attributes[_i];
+          if (config.data_mapping.elements[el].attributes !== undefined) {
+            for (var _i = 0; _i < config.data_mapping.elements[el].attributes.length; _i++) {
+              var attribute = config.data_mapping.elements[el].attributes[_i];
 
-            if (attribute.converter !== '' && attribute.converter !== null) {
-              attributeMapperCodes.push(attribute.var + attribute.name);
-              attributeMappers.push(attribute.converter);
+              if (attribute.converter !== '' && attribute.converter !== null) {
+                attributeMapperCodes.push(attribute.var + attribute.name);
+                attributeMappers.push(attribute.converter);
+              }
             }
           }
         }

@@ -11,6 +11,7 @@ import elementConverterPoolFactory from "../../block/element-converter-pool-fact
 import converterPoolFactory from "../../block/converter-pool-factory";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {objectExtend} from "../../../utils/array";
+import appearanceConfig from "../../../component/block/appearance-config";
 
 export default class Configurable implements ReadInterface {
 
@@ -22,6 +23,7 @@ export default class Configurable implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const role = element.getAttribute('data-role');
+        /*
         const contentTypeConfig = Config.getInitConfig("content_types")[role];
 
         let config = contentTypeConfig["data_mapping"];
@@ -35,6 +37,8 @@ export default class Configurable implements ReadInterface {
         ) {
             config = contentTypeConfig["appearances"][appearance]["data_mapping"];
         }
+        */
+        const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
 
         const mappersLoaded: Array<Promise<any>> = [elementConverterPoolFactory(role), converterPoolFactory(role)];
 

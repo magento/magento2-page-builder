@@ -74,6 +74,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                     $dataMappingNode
                                 );
                             }
+                            $appearanceData['default'] = $appearanceNode->hasAttribute('default')
+                                ? $appearanceNode->attributes->getNamedItem('default')->nodeValue
+                                : false;
                             $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
                     } elseif ('data_mapping' === $childNode->nodeName) {

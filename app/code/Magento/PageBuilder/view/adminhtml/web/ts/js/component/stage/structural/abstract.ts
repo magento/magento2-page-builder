@@ -23,6 +23,7 @@ import {Option} from "./options/option";
 import {OptionInterface} from "./options/option.d";
 import {TitleOption} from "./options/title";
 import {fromSnakeToCamelCase} from "../../../utils/string";
+import appearanceConfig from "../../../component/block/appearance-config";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
@@ -166,7 +167,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 css = data.css_classes;
             }
         } else {
-            const config = Config.getContentType(this.config.name).data_mapping.elements[element];
+            const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
             if (config.css.var !== undefined && config.css.var in data) {
                 css = data[config.css.var];
             }
@@ -195,8 +196,8 @@ export default class Structural extends EditableArea implements StructuralInterf
         }
 
         let data = _.extend({}, this.stage.store.get(this.id));
-        const config = this.getAppearanceConfig(data["appearance"]).elements;
-        const convertersConfig = this.getAppearanceConfig(data["appearance"]).converters;
+        const config = appearanceConfig(this.config.name, data["appearance"]).data_mapping.elements;
+        const convertersConfig = appearanceConfig(this.config.name, data["appearance"]).data_mapping.converters;
 
         for (let key in this.converterPool.getConverters()) {
             for (let i = 0; i < convertersConfig.length; i++) {
@@ -254,7 +255,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         let data = this.stage.store.get(this.id);
         data = _.extend(data, this.config);
-        const config = Config.getContentType(this.config.name).data_mapping.elements[element];
+        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = {};
         if (config.attributes !== undefined) {
             result = this.convertAttributes(config, data, "master");
@@ -290,7 +291,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     public getHtml(element: string) {
         const data = this.stage.store.get(this.id);
-        const config = Config.getContentType(this.config.name).data_mapping.elements[element];
+        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = '';
         if (config.html !== undefined) {
             result = data[config.html.var];
@@ -316,27 +317,14 @@ export default class Structural extends EditableArea implements StructuralInterf
         return new Options(this, this.retrieveOptions());
     }
 
-    /**
-     * Get config for appearance
-     *
-     * @param {string} appearance
-     * @returns {Object}
-     */
-    private getAppearanceConfig(appearance: string): object {
-        const contentTypeConfig = Config.getContentType(this.config.name);
-        let config = contentTypeConfig.data_mapping;
-        if (appearance !== undefined
-            && contentTypeConfig.appearances !== undefined
-            && contentTypeConfig.appearances[appearance] !== undefined
-            && contentTypeConfig.appearances[appearance].data_mapping !== undefined
-        ) {
-            config = contentTypeConfig.appearances[appearance].data_mapping;
-        }
-        return config;
-    }
-
     public updateData(data: object) {
-        const config = this.getAppearanceConfig(data["appearance"]).elements;
+        const appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
+        const dataMapping = appearanceConfig(this.config.name, appearance).data_mapping;
+        if (undefined === dataMapping || undefined === dataMapping.elements) {
+            return;
+        }
+
+        const config = dataMapping.elements;
 
         for (const elementName in config) {
             if (this.data[elementName] === undefined) {
@@ -373,7 +361,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     private setupDataFields(): void {
         this.stage.store.subscribe(
             (data: DataObject) => {
-                this.updateData(data);
+                this.updateData(this.stage.store.get(this.id));
             },
             this.id,
         );

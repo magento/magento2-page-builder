@@ -5,18 +5,18 @@
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import ConverterPool from "./converter-pool"
-import Config from "../config";
+import appearanceConfig from "./appearance-config";
 
 /**
  * Create a new instance of converter pool
  */
 export default function create(contentType: string): Promise<> {
-    const config = Config.getInitConfig("content_types")[contentType];
+    const config = appearanceConfig(contentType, undefined);
 
     const converterCodes = [];
     const converters = [];
 
-    if (config.data_mapping.converters !== undefined) {
+    if (config.data_mapping !== undefined && config.data_mapping.converters !== undefined) {
         for (let i = 0; i < config.data_mapping.converters.length; i++) {
             let converter = config.data_mapping.converters[i];
             converterCodes.push(converter.name);

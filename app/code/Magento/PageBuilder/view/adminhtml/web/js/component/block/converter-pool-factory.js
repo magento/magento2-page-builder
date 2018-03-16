@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../config"], function (_loader, _converterPool, _config) {
+define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "./appearance-config"], function (_loader, _converterPool, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,12 +9,11 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../confi
    * Create a new instance of converter pool
    */
   function create(contentType) {
-    var config = _config.getInitConfig("content_types")[contentType];
-
+    var config = (0, _appearanceConfig)(contentType, undefined);
     var converterCodes = [];
     var converters = [];
 
-    if (config.data_mapping.converters !== undefined) {
+    if (config.data_mapping !== undefined && config.data_mapping.converters !== undefined) {
       for (var i = 0; i < config.data_mapping.converters.length; i++) {
         var converter = config.data_mapping.converters[i];
         converterCodes.push(converter.name);

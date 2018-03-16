@@ -5,7 +5,7 @@
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import ElementConverterPool from "./element-converter-pool"
-import Config from "../config";
+import appearanceConfig from "./appearance-config";
 
 /**
  * Create a new instance of element converter pool
@@ -20,36 +20,38 @@ export default function create(contentType: string): Promise<> {
         const attributeMapperCodes = [];
         const attributeMappers = [];
 
-        const config = Config.getInitConfig("content_types")[contentType];
+        const config = appearanceConfig(contentType, undefined);
 
-        for (let el in config.data_mapping.elements) {
-            if (config.data_mapping.elements[el].style !== undefined) {
-                for(let i = 0; i < config.data_mapping.elements[el].style.length; i++) {
-                    let styleProperty = config.data_mapping.elements[el].style[i];
-                    if ((styleProperty.converter !== '' && styleProperty.converter !== null)
-                        || (styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null)
-                    ) {
-                        const mapper = styleProperty.converter !== '' && styleProperty.converter !== null
-                            ? styleProperty.converter
-                            : null;
-                        styleMapperCodes.push(styleProperty.var + styleProperty.name);
-                        styleMappers.push(mapper);
+        if (config.data_mapping !== undefined && config.data_mapping.elements !== undefined) {
+            for (let el in config.data_mapping.elements) {
+                if (config.data_mapping.elements[el].style !== undefined) {
+                    for (let i = 0; i < config.data_mapping.elements[el].style.length; i++) {
+                        let styleProperty = config.data_mapping.elements[el].style[i];
+                        if ((styleProperty.converter !== '' && styleProperty.converter !== null)
+                            || (styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null)
+                        ) {
+                            const mapper = styleProperty.converter !== '' && styleProperty.converter !== null
+                                ? styleProperty.converter
+                                : null;
+                            styleMapperCodes.push(styleProperty.var + styleProperty.name);
+                            styleMappers.push(mapper);
 
-                        const mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null
-                            ? styleProperty.preview_converter
-                            : (mapper ? mapper : null);
-                        styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
-                        styleMappersPreview.push(mapperPreview);
+                            const mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null
+                                ? styleProperty.preview_converter
+                                : (mapper ? mapper : null);
+                            styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
+                            styleMappersPreview.push(mapperPreview);
+                        }
                     }
                 }
-            }
 
-            if (config.data_mapping.elements[el].attributes !== undefined) {
-                for (let i = 0; i < config.data_mapping.elements[el].attributes.length; i++) {
-                    let attribute = config.data_mapping.elements[el].attributes[i];
-                    if (attribute.converter !== '' && attribute.converter !== null) {
-                        attributeMapperCodes.push(attribute.var + attribute.name);
-                        attributeMappers.push(attribute.converter);
+                if (config.data_mapping.elements[el].attributes !== undefined) {
+                    for (let i = 0; i < config.data_mapping.elements[el].attributes.length; i++) {
+                        let attribute = config.data_mapping.elements[el].attributes[i];
+                        if (attribute.converter !== '' && attribute.converter !== null) {
+                            attributeMapperCodes.push(attribute.var + attribute.name);
+                            attributeMappers.push(attribute.converter);
+                        }
                     }
                 }
             }
