@@ -97,7 +97,7 @@
         <seeElementInDOM selector="{{VideoInAdmin.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidthInStage"/>
         <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="video{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{VideoOnFrontend.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoDisplayed"/>
         <seeElementInDOM selector="{{VideoOnFrontend.videoWidth(PageBuilderVideoWidthProperty.value)}}" stepKey="seeVideoWidth"/>
@@ -183,7 +183,7 @@
         <seeElementInDOM selector="{{VideoInAdmin.videoHeight(PageBuilderVideoHeightProperty.value)}}" stepKey="seeVideoHeightInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementNotVisible time="10" selector="{{CmsPageSection.spinner}}" stepKey="waitForCmsPageSpinner" />
+        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStageAfterSave"/>
@@ -241,7 +241,7 @@
         <seeElement selector='{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderVideoContentBlock.role)}}' stepKey="seeVideoPreviewInStage"/>
         <seeElement selector="{{VideoInAdmin.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoSrcInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="video{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{VideoOnFrontend.videoSource(PageBuilderVideoUrlProperty.value)}}" stepKey="seeVideoDisplayed"/>
     </test>
