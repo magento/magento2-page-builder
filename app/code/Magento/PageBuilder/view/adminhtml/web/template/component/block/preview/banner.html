@@ -13,7 +13,7 @@
                 <div data-bind="css: {'pagebuilder-empty-banner': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
                 <!-- ko if: preview.data.show_button() !== 'never_show' -->
                     <button type="button" class="pagebuilder-banner-button" data-bind="css: preview.data.button_type(), attr: {'data-link-url': preview.data.link_url()}, style: preview.getButtonStyles()">
-                        <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+                        <span data-bind="attr: { 'data-placeholder': $t('Edit Button Text') }, css: { 'placeholder-text': !preview.data.button_text() }, liveEdit: 'button_text'"></span>
                     </button>
                 <!-- /ko -->
             </div>
