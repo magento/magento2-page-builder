@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-export interface ElementConverterInterface {
+interface ElementConverterInterface {
     /**
      * Convert value to internal representation format
      *
@@ -24,3 +24,5 @@ export interface ElementConverterInterface {
      */
     toDom(value: string, key: string, data: object): string | object;
 }
+
+export default ElementConverterInterface;

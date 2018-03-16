@@ -16,6 +16,8 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
       var styleMappersPreview = [];
       var attributeMapperCodes = [];
       var attributeMappers = [];
+      var attributeMapperPreviewCodes = [];
+      var attributeMappersPreview = [];
       var config = (0, _appearanceConfig)(contentType, undefined);
 
       if (config.data_mapping !== undefined && config.data_mapping.elements !== undefined) {
@@ -24,11 +26,11 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
             for (var i = 0; i < config.data_mapping.elements[el].style.length; i++) {
               var styleProperty = config.data_mapping.elements[el].style[i];
 
-              if (styleProperty.converter !== '' && styleProperty.converter !== null || styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null) {
-                var mapper = styleProperty.converter !== '' && styleProperty.converter !== null ? styleProperty.converter : null;
+              if (styleProperty.converter !== "" && styleProperty.converter !== null || styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null) {
+                var mapper = styleProperty.converter !== "" && styleProperty.converter !== null ? styleProperty.converter : null;
                 styleMapperCodes.push(styleProperty.var + styleProperty.name);
                 styleMappers.push(mapper);
-                var mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null ? styleProperty.preview_converter : mapper ? mapper : null;
+                var mapperPreview = styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null ? styleProperty.preview_converter : mapper ? mapper : null;
                 styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
                 styleMappersPreview.push(mapperPreview);
               }
@@ -37,11 +39,18 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
 
           if (config.data_mapping.elements[el].attributes !== undefined) {
             for (var _i = 0; _i < config.data_mapping.elements[el].attributes.length; _i++) {
-              var attribute = config.data_mapping.elements[el].attributes[_i];
+              var attributeProperty = config.data_mapping.elements[el].attributes[_i];
 
-              if (attribute.converter !== '' && attribute.converter !== null) {
-                attributeMapperCodes.push(attribute.var + attribute.name);
-                attributeMappers.push(attribute.converter);
+              if (attributeProperty.converter !== "" && attributeProperty.converter !== null || attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null) {
+                var _mapper = attributeProperty.converter !== "" && attributeProperty.converter !== null ? attributeProperty.converter : null;
+
+                attributeMapperCodes.push(attributeProperty.var + attributeProperty.name);
+                attributeMappers.push(_mapper);
+
+                var _mapperPreview = attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null ? attributeProperty.preview_converter : _mapper ? _mapper : null;
+
+                attributeMapperPreviewCodes.push(attributeProperty.var + attributeProperty.name);
+                attributeMappersPreview.push(_mapperPreview);
               }
             }
           }
@@ -93,15 +102,32 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
           resolve(result);
         });
       });
-      var meppersLoaded = [];
-      meppersLoaded.push(styleMappersLoadedPromise);
-      meppersLoaded.push(styleMappersPreviewLoadedPromise);
-      meppersLoaded.push(attributeMappersLoadedPromise);
-      Promise.all(meppersLoaded).then(function (loadedMappers) {
+      var attributeMappersPreviewLoadedPromise = new Promise(function (resolve) {
+        (0, _loader)(attributeMappersPreview, function () {
+          var result = {};
+
+          for (var _len4 = arguments.length, attributeMappersPreviewLoaded = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            attributeMappersPreviewLoaded[_key4] = arguments[_key4];
+          }
+
+          for (var _i5 = 0; _i5 < attributeMapperPreviewCodes.length; _i5++) {
+            result[attributeMapperPreviewCodes[_i5]] = new attributeMappersPreviewLoaded[_i5]();
+          }
+
+          resolve(result);
+        });
+      });
+      var mappersLoaded = [];
+      mappersLoaded.push(styleMappersLoadedPromise);
+      mappersLoaded.push(styleMappersPreviewLoadedPromise);
+      mappersLoaded.push(attributeMappersLoadedPromise);
+      mappersLoaded.push(attributeMappersPreviewLoadedPromise);
+      Promise.all(mappersLoaded).then(function (loadedMappers) {
         var styleMappers = loadedMappers[0],
             styleMappersPreview = loadedMappers[1],
-            attributeMappers = loadedMappers[2];
-        resolve(new _elementConverterPool(styleMappers, styleMappersPreview, attributeMappers));
+            attributeMappers = loadedMappers[2],
+            attributeMappersPreview = loadedMappers[3];
+        resolve(new _elementConverterPool(styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview));
       }).catch(function (error) {
         console.error(error);
       });

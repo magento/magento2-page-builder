@@ -6,8 +6,10 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
+import ConverterPool from "../../../component/block/converter-pool";
+import ElementConverterPool from "../../../component/block/element-converter-pool";
+import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
-import Config from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
@@ -22,7 +24,6 @@ import { Options } from "./options";
 import {Option} from "./options/option";
 import {OptionInterface} from "./options/option.d";
 import {TitleOption} from "./options/title";
-import {fromSnakeToCamelCase} from "../../../utils/string";
 import appearanceConfig from "../../../component/block/appearance-config";
 
 export default class Structural extends EditableArea implements StructuralInterface {
@@ -38,8 +39,8 @@ export default class Structural extends EditableArea implements StructuralInterf
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     public data = {};
-    public elementConverterPool;
-    public converterPool;
+    public elementConverterPool: ElementConverterPool;
+    public converterPool: ConverterPool;
 
     /**
      * Abstract structural constructor
@@ -47,13 +48,15 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
+     * @param elementConverterPool
+     * @param converterPool
      */
     constructor(
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
-        elementConverterPool,
-        converterPool
+        elementConverterPool: ElementConverterPool,
+        converterPool: ConverterPool,
     ) {
         super(stage);
         this.setChildren(this.children);
@@ -161,7 +164,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public getCss(element: string) {
         let css: object = {};
-        let data = this.stage.store.get(this.id);
+        const data = this.stage.store.get(this.id);
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
                 css = data.css_classes;
@@ -199,7 +202,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const config = appearanceConfig(this.config.name, data["appearance"]).data_mapping.elements;
         const convertersConfig = appearanceConfig(this.config.name, data["appearance"]).data_mapping.converters;
 
-        for (let key in this.converterPool.getConverters()) {
+        for (const key in this.converterPool.getConverters()) {
             for (let i = 0; i < convertersConfig.length; i++) {
                 if (convertersConfig[i].name === key) {
                     data = this.converterPool.getConverters()[key].beforeWrite(data, convertersConfig[i].config);
@@ -216,7 +219,7 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Convert style properties
-     * 
+     *
      * @param {object}config
      * @param {object}data
      * @param {string} area
@@ -225,14 +228,14 @@ export default class Structural extends EditableArea implements StructuralInterf
     private convertStyle(config: any, data: any, area: string) {
         const result = {};
         for (let i = 0; i < config.style.length; i++) {
-            let styleProperty = config.style[i];
+            const styleProperty = config.style[i];
             let value = data[styleProperty.var];
             const mapper = styleProperty.var + styleProperty.name;
             if (mapper in this.elementConverterPool.getStyleConverters(area)) {
                 value = this.elementConverterPool.getStyleConverters(area)[mapper].toDom(
                     value,
                     styleProperty.name,
-                    data
+                    data,
                 );
             }
             result[fromSnakeToCamelCase(styleProperty.name)] = value;
@@ -266,8 +269,8 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     /**
      * Convert attributes
-     * 
-     * @param {object}config
+     *
+     * @param {object} config
      * @param {DataObject} data
      * @param {string} area
      * @returns {object}
@@ -275,14 +278,14 @@ export default class Structural extends EditableArea implements StructuralInterf
     private convertAttributes(config: any, data: DataObject, area: string) {
         const result = {};
         for (let i = 0; i < config.attributes.length; i++) {
-            let attribute = config.attributes[i];
-            if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
+            const attribute = config.attributes[i];
+            if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === "false") {
                 continue;
             }
             let value = data[attribute.var];
             const mapper = attribute.var + attribute.name;
-            if (mapper in this.elementConverterPool.getAttributeConverters()) {
-                value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(value, attribute.var, data);
+            if (mapper in this.elementConverterPool.getAttributeConverters(area)) {
+                value = this.elementConverterPool.getAttributeConverters(area)[mapper].toDom(value, attribute.var, data);
             }
             result[attribute.name] = value;
         }
@@ -292,7 +295,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public getHtml(element: string) {
         const data = this.stage.store.get(this.id);
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
-        let result = '';
+        let result = "";
         if (config.html !== undefined) {
             result = data[config.html.var];
         }
@@ -331,7 +334,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 this.data[elementName] = {
                     style: ko.observable({}),
                     attributes: ko.observable({}),
-                    html: ko.observable({})
+                    html: ko.observable({}),
                 };
             }
             if (config[elementName].style !== undefined) {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../utils/string", "../../../component/block/appearance-config"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _string, _appearanceConfig) {
+define(["knockout", "mage/translate", "underscore", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../component/block/appearance-config"], function (_knockout, _translate, _underscore, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -17,6 +17,8 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
      * @param parent
      * @param stage
      * @param config
+     * @param elementConverterPool
+     * @param converterPool
      */
     function Structural(parent, stage, config, elementConverterPool, converterPool) {
       var _this;
@@ -178,7 +180,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     };
     /**
      * Convert style properties
-     * 
+     *
      * @param {object}config
      * @param {object}data
      * @param {string} area
@@ -233,8 +235,8 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     };
     /**
      * Convert attributes
-     * 
-     * @param {object}config
+     *
+     * @param {object} config
      * @param {DataObject} data
      * @param {string} area
      * @returns {object}
@@ -247,15 +249,15 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       for (var i = 0; i < config.attributes.length; i++) {
         var attribute = config.attributes[i];
 
-        if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
+        if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === "false") {
           continue;
         }
 
         var value = data[attribute.var];
         var mapper = attribute.var + attribute.name;
 
-        if (mapper in this.elementConverterPool.getAttributeConverters()) {
-          value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(value, attribute.var, data);
+        if (mapper in this.elementConverterPool.getAttributeConverters(area)) {
+          value = this.elementConverterPool.getAttributeConverters(area)[mapper].toDom(value, attribute.var, data);
         }
 
         result[attribute.name] = value;
@@ -267,7 +269,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     _proto.getHtml = function getHtml(element) {
       var data = this.stage.store.get(this.id);
       var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
-      var result = '';
+      var result = "";
 
       if (config.html !== undefined) {
         result = data[config.html.var];

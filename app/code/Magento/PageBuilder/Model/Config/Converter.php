@@ -161,7 +161,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             ? $attributeNode->attributes->getNamedItem('persist')->nodeValue
                             : null,
                         'preview_converter' => $attributeNode->hasAttribute('preview_converter')
-                            ? $propertyNode->attributes->getNamedItem('preview_converter')->nodeValue
+                            ? $attributeNode->attributes->getNamedItem('preview_converter')->nodeValue
                             : null,
                     ];
                 }

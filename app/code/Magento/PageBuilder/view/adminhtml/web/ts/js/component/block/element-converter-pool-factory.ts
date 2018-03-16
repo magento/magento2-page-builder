@@ -10,33 +10,35 @@ import appearanceConfig from "./appearance-config";
 /**
  * Create a new instance of element converter pool
  */
-export default function create(contentType: string): Promise<> {
-    return new Promise((resolve: (elementConverterPool) => void) => {
+export default function create(contentType: string): Promise<{}> {
+    return new Promise((resolve: (elementConverterPool: any) => void) => {
 
-        const styleMapperCodes = [];
-        const styleMappers = [];
-        const styleMapperPreviewCodes = [];
-        const styleMappersPreview = [];
-        const attributeMapperCodes = [];
-        const attributeMappers = [];
+        const styleMapperCodes: string[] = [];
+        const styleMappers: string[] = [];
+        const styleMapperPreviewCodes: string[] = [];
+        const styleMappersPreview: string[] = [];
+        const attributeMapperCodes: string[] = [];
+        const attributeMappers: string[] = [];
+        const attributeMapperPreviewCodes: string[] = [];
+        const attributeMappersPreview: string[] = [];
 
         const config = appearanceConfig(contentType, undefined);
 
         if (config.data_mapping !== undefined && config.data_mapping.elements !== undefined) {
-            for (let el in config.data_mapping.elements) {
+            for (const el in config.data_mapping.elements) {
                 if (config.data_mapping.elements[el].style !== undefined) {
                     for (let i = 0; i < config.data_mapping.elements[el].style.length; i++) {
-                        let styleProperty = config.data_mapping.elements[el].style[i];
-                        if ((styleProperty.converter !== '' && styleProperty.converter !== null)
-                            || (styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null)
+                        const styleProperty = config.data_mapping.elements[el].style[i];
+                        if ((styleProperty.converter !== "" && styleProperty.converter !== null)
+                            || (styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null)
                         ) {
-                            const mapper = styleProperty.converter !== '' && styleProperty.converter !== null
+                            const mapper = styleProperty.converter !== "" && styleProperty.converter !== null
                                 ? styleProperty.converter
                                 : null;
                             styleMapperCodes.push(styleProperty.var + styleProperty.name);
                             styleMappers.push(mapper);
 
-                            const mapperPreview = styleProperty.preview_converter !== '' && styleProperty.preview_converter !== null
+                            const mapperPreview = styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null
                                 ? styleProperty.preview_converter
                                 : (mapper ? mapper : null);
                             styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
@@ -47,10 +49,21 @@ export default function create(contentType: string): Promise<> {
 
                 if (config.data_mapping.elements[el].attributes !== undefined) {
                     for (let i = 0; i < config.data_mapping.elements[el].attributes.length; i++) {
-                        let attribute = config.data_mapping.elements[el].attributes[i];
-                        if (attribute.converter !== '' && attribute.converter !== null) {
-                            attributeMapperCodes.push(attribute.var + attribute.name);
-                            attributeMappers.push(attribute.converter);
+                        const attributeProperty = config.data_mapping.elements[el].attributes[i];
+                        if ((attributeProperty.converter !== "" && attributeProperty.converter !== null)
+                            || (attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null)
+                        ) {
+                            const mapper = attributeProperty.converter !== "" && attributeProperty.converter !== null
+                                ? attributeProperty.converter
+                                : null;
+                            attributeMapperCodes.push(attributeProperty.var + attributeProperty.name);
+                            attributeMappers.push(mapper);
+
+                            const mapperPreview = attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null
+                                ? attributeProperty.preview_converter
+                                : (mapper ? mapper : null);
+                            attributeMapperPreviewCodes.push(attributeProperty.var + attributeProperty.name);
+                            attributeMappersPreview.push(mapperPreview);
                         }
                     }
                 }
@@ -59,7 +72,7 @@ export default function create(contentType: string): Promise<> {
 
         const styleMappersLoadedPromise = new Promise((resolve: (data: object) => void) => {
             loadModule(styleMappers, (...styleMappersLoaded: any[]) => {
-                const result = {};
+                const result: any = {};
                 for (let i = 0; i < styleMapperCodes.length; i++) {
                     result[styleMapperCodes[i]] = new styleMappersLoaded[i]();
                 }
@@ -69,7 +82,7 @@ export default function create(contentType: string): Promise<> {
 
         const styleMappersPreviewLoadedPromise = new Promise((resolve: (data: object) => void) => {
             loadModule(styleMappersPreview, (...styleMappersPreviewLoaded: any[]) => {
-                const result = {};
+                const result: any = {};
                 for (let i = 0; i < styleMapperPreviewCodes.length; i++) {
                     result[styleMapperPreviewCodes[i]] = new styleMappersPreviewLoaded[i]();
                 }
@@ -79,7 +92,7 @@ export default function create(contentType: string): Promise<> {
 
         const attributeMappersLoadedPromise = new Promise((resolve: (data: object) => void) => {
             loadModule(attributeMappers, (...attributeMappersLoaded: any[]) => {
-                const result = {};
+                const result: any = {};
                 for (let i = 0; i < attributeMapperCodes.length; i++) {
                     result[attributeMapperCodes[i]] = new attributeMappersLoaded[i]();
                 }
@@ -87,14 +100,25 @@ export default function create(contentType: string): Promise<> {
             });
         });
 
-        const meppersLoaded: Array<Promise<any>> = [];
-        meppersLoaded.push(styleMappersLoadedPromise);
-        meppersLoaded.push(styleMappersPreviewLoadedPromise);
-        meppersLoaded.push(attributeMappersLoadedPromise);
+        const attributeMappersPreviewLoadedPromise = new Promise((resolve: (data: object) => void) => {
+            loadModule(attributeMappersPreview, (...attributeMappersPreviewLoaded: any[]) => {
+                const result: any = {};
+                for (let i = 0; i < attributeMapperPreviewCodes.length; i++) {
+                    result[attributeMapperPreviewCodes[i]] = new attributeMappersPreviewLoaded[i]();
+                }
+                resolve(result);
+            });
+        });
 
-        Promise.all(meppersLoaded).then((loadedMappers) => {
-            const [styleMappers, styleMappersPreview, attributeMappers] = loadedMappers;
-                resolve(new ElementConverterPool(styleMappers, styleMappersPreview, attributeMappers));
+        const mappersLoaded: Array<Promise<any>> = [];
+        mappersLoaded.push(styleMappersLoadedPromise);
+        mappersLoaded.push(styleMappersPreviewLoadedPromise);
+        mappersLoaded.push(attributeMappersLoadedPromise);
+        mappersLoaded.push(attributeMappersPreviewLoadedPromise);
+
+        Promise.all(mappersLoaded).then((loadedMappers) => {
+            const [styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview] = loadedMappers;
+            resolve(new ElementConverterPool(styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview));
         }).catch((error) => {
             console.error( error );
         });
