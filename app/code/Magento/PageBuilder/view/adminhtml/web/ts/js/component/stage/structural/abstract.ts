@@ -322,12 +322,15 @@ export default class Structural extends EditableArea implements StructuralInterf
 
     public updateData(data: object) {
         const appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
-        const dataMapping = appearanceConfig(this.config.name, appearance).data_mapping;
-        if (undefined === dataMapping || undefined === dataMapping.elements) {
+        const appearanceConfiguration = appearanceConfig(this.config.name, appearance);
+        if (undefined === appearanceConfiguration
+            || undefined === appearanceConfiguration.data_mapping
+            || undefined === appearanceConfiguration.data_mapping.elements
+        ) {
             return;
         }
 
-        const config = dataMapping.elements;
+        const config = appearanceConfiguration.data_mapping.elements;
 
         for (const elementName in config) {
             if (this.data[elementName] === undefined) {

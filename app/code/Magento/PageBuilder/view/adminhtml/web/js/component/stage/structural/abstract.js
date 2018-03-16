@@ -300,13 +300,13 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
     _proto.updateData = function updateData(data) {
       var appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
-      var dataMapping = (0, _appearanceConfig)(this.config.name, appearance).data_mapping;
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, appearance);
 
-      if (undefined === dataMapping || undefined === dataMapping.elements) {
+      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
         return;
       }
 
-      var config = dataMapping.elements;
+      var config = appearanceConfiguration.data_mapping.elements;
 
       for (var elementName in config) {
         if (this.data[elementName] === undefined) {

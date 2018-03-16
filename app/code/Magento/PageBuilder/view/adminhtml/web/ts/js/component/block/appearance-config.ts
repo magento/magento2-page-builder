@@ -14,7 +14,7 @@ import Config from "../config";
  */
 export default function getAppearanceConfig(contentType: string, appearance: string): object {
     const contentTypeConfig = Config.getContentType(contentType);
-    let config = contentTypeConfig;
+    let config = {};
     if (contentTypeConfig.appearances !== undefined) {
         if (!appearance) {
             for (let key in contentTypeConfig.appearances) {

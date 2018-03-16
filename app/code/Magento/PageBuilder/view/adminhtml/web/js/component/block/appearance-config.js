@@ -15,7 +15,7 @@ define(["../config"], function (_config) {
   function getAppearanceConfig(contentType, appearance) {
     var contentTypeConfig = _config.getContentType(contentType);
 
-    var config = contentTypeConfig;
+    var config = {};
 
     if (contentTypeConfig.appearances !== undefined) {
       if (!appearance) {
