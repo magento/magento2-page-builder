@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
+import "../../../utils/focus-binding";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import Block from "../block";
@@ -15,6 +16,7 @@ import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewBlock {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
+    public activeSlide: KnockoutObservable<number> = ko.observable();
     private element: Element;
     private childSubscribe: KnockoutSubscription;
 
@@ -47,7 +49,7 @@ export default class Slider extends PreviewBlock {
             $(this.element).slick(
                 Object.assign(
                     {
-                        initialSlide: this.data.activeSlide() || 0,
+                        initialSlide: this.activeSlide() || 0,
                     },
                     this.buildSlickConfig(),
                 ),
@@ -102,7 +104,20 @@ export default class Slider extends PreviewBlock {
      * @param slideIndex
      */
     public setActiveSlide(slideIndex: number): void {
-        this.data.activeSlide(slideIndex);
+        this.activeSlide(slideIndex);
+    }
+
+    /**
+     * Set the focused slide
+     *
+     * @param {number} slideIndex
+     * @param {boolean} force
+     */
+    public setFocusedSlide(slideIndex: number, force: boolean = false): void {
+        if (force) {
+            this.focusedSlide(null);
+        }
+        this.focusedSlide(slideIndex);
     }
 
     /**
@@ -114,7 +129,7 @@ export default class Slider extends PreviewBlock {
     public navigateToSlide(slideIndex: number, dontAnimate: boolean = false): void {
         $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
         this.setActiveSlide(slideIndex);
-        this.focusedSlide(slideIndex);
+        this.setFocusedSlide(slideIndex);
     }
 
     /**
@@ -125,14 +140,6 @@ export default class Slider extends PreviewBlock {
     public afterChildrenRender(element: Element): void {
         super.afterChildrenRender(element);
         this.element = element;
-    }
-
-    /**
-     * Setup fields observables within the data class property
-     */
-    protected setupDataFields() {
-        super.setupDataFields();
-        this.updateDataValue("activeSlide", 0);
     }
 
     /**

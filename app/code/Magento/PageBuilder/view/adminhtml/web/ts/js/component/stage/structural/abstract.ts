@@ -147,11 +147,15 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle block removal
      */
     public onOptionRemove(): void {
-        const removeBlock = () => EventBus.trigger("block:removed", {
-            block: this,
-            index: this.parent.children().indexOf(this),
-            parent: this.parent,
-        });
+        const removeBlock = () => {
+            const params = {
+                block: this,
+                index: this.parent.children().indexOf(this),
+                parent: this.parent,
+            };
+            EventBus.trigger("block:removed", params);
+            EventBus.trigger(this.config.name + ":block:removed", params);
+        };
 
         if (this.isConfigured()) {
             this.stage.parent.confirmationDialog({

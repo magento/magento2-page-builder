@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../utils/delayed-promise", "../block/factory", "../config", "../event-bus", "./block", "mage/translate", "../stage/structural/options/option"], function (_delayedPromise, _factory, _config, _eventBus, _block, _translate, _option) {
+define(["mage/translate", "underscore", "../block/factory", "../config", "../event-bus", "../stage/structural/options/option", "./block"], function (_translate, _underscore, _factory, _config, _eventBus, _option, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -33,11 +33,15 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
       var _this = this;
 
       // Set the active slide to the index of the new slide we're creating
-      this.preview.data.activeSlide(this.children().length);
-      (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then((0, _delayedPromise)(300)).then(function (slide) {
+      this.preview.setActiveSlide(this.children().length);
+      (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
         _this.addChild(slide, _this.children().length);
 
-        slide.edit.open();
+        _this.preview.focusedSlide(_this.children().length - 1);
+
+        _underscore.delay(function () {
+          slide.edit.open();
+        }, 500);
       });
     };
     /**
@@ -58,10 +62,22 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
       }); // Block being removed from container
 
 
-      _eventBus.on("block:removed", function (event, params) {
+      _eventBus.on("slide:block:removed", function (event, params) {
         if (params.parent.id === _this2.id) {
           // Mark the previous slide as active
-          _this2.preview.data.activeSlide(params.index - 1);
+          _this2.preview.setActiveSlide(params.index - 1);
+
+          _this2.preview.setFocusedSlide(params.index - 1, true);
+        }
+      }); // Block being removed from container
+
+
+      _eventBus.on("slide:block:duplicate", function (event, params) {
+        if (params.duplicate.parent.id === _this2.id) {
+          // Mark the new duplicate slide as active
+          _this2.preview.setActiveSlide(params.index);
+
+          _this2.preview.setFocusedSlide(params.index, true);
         }
       });
     };

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../event-bus", "./block"], function (_jquery, _knockout, _slick, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../../utils/focus-binding", "../../event-bus", "./block"], function (_jquery, _knockout, _slick, _underscore, _focusBinding, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -22,6 +22,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.focusedSlide = _knockout.observable();
+      _this.activeSlide = _knockout.observable();
       _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
@@ -47,7 +48,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
           _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick); // Build slick
 
           (0, _jquery)(_this.element).slick(Object.assign({
-            initialSlide: _this.data.activeSlide() || 0
+            initialSlide: _this.activeSlide() || 0
           }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
           (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
@@ -93,7 +94,26 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
 
     _proto.setActiveSlide = function setActiveSlide(slideIndex) {
-      this.data.activeSlide(slideIndex);
+      this.activeSlide(slideIndex);
+    };
+    /**
+     * Set the focused slide
+     *
+     * @param {number} slideIndex
+     * @param {boolean} force
+     */
+
+
+    _proto.setFocusedSlide = function setFocusedSlide(slideIndex, force) {
+      if (force === void 0) {
+        force = false;
+      }
+
+      if (force) {
+        this.focusedSlide(null);
+      }
+
+      this.focusedSlide(slideIndex);
     };
     /**
      * Navigate to a slide
@@ -110,7 +130,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
       (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
       this.setActiveSlide(slideIndex);
-      this.focusedSlide(slideIndex);
+      this.setFocusedSlide(slideIndex);
     };
     /**
      * After child render record element
@@ -123,16 +143,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       _PreviewBlock.prototype.afterChildrenRender.call(this, element);
 
       this.element = element;
-    };
-    /**
-     * Setup fields observables within the data class property
-     */
-
-
-    _proto.setupDataFields = function setupDataFields() {
-      _PreviewBlock.prototype.setupDataFields.call(this);
-
-      this.updateDataValue("activeSlide", 0);
     };
     /**
      * Build the slack config object

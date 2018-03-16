@@ -85,6 +85,10 @@ export default class EditableArea implements EditableAreaInterface {
         if (autoAppend) {
             this.addChild(duplicate, index);
         }
+
+        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
+        EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
+
         return duplicate;
     }
 
@@ -171,4 +175,10 @@ export default class EditableArea implements EditableAreaInterface {
 export interface BlockMountEventParams {
     id: string;
     block: Block;
+}
+
+export interface BlockDuplicateEventParams {
+    original: Block,
+    duplicate: Block,
+    index: number;
 }

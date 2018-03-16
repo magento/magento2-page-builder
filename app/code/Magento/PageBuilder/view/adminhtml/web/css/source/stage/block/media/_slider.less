@@ -12,7 +12,6 @@
 
     .slider-container {
         .pagebuilder-system-border;
-
         overflow: hidden;
 
         .slick-list,
@@ -62,10 +61,10 @@
             .navigation-dot {
                 display: inline-block;
                 font-size: 12px;
+                height: 36px;
                 margin: 0;
                 text-align: center;
                 vertical-align: top;
-                height: 36px;
                 width: 36px;
 
                 .lib-tooltip(
@@ -114,8 +113,9 @@
                 .navigation-dot-anchor {
                     display: block;
                     height: 100%;
-                    width: 100%;
                     position: relative;
+                    width: 100%;
+                    transition: all .3s;
 
                     &:after {
                         background: white;
@@ -125,13 +125,12 @@
                         cursor: pointer;
                         display: inline-block;
                         height: 14px;
-                        transition: .3s;
-                        width: 14px;
-
-                        position: absolute;
                         left: 50%;
+                        position: absolute;
                         top: 50%;
                         transform: translate(-50%, -50%);
+                        transition: all .3s;
+                        width: 14px;
                     }
                 }
 
@@ -139,10 +138,11 @@
                     .navigation-dot-anchor:after {
                         background: #373330;
                         border: none;
+                        transition: all .3s;
                     }
                 }
 
-                &.focused {
+                &:focus {
                     outline: 1px solid #007bdb;
 
                     .pagebuilder-options {

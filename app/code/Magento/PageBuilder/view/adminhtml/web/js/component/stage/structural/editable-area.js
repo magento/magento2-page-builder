@@ -77,6 +77,18 @@ define(["mage/translate", "mageUtils", "underscore", "../../../utils/array", "..
         this.addChild(duplicate, index);
       }
 
+      _eventBus.trigger("block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
+
+      _eventBus.trigger(child.config.name + ":block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
+
       return duplicate;
     };
     /**

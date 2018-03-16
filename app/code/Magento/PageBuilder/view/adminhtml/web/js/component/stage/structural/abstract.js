@@ -85,11 +85,15 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       var _this2 = this;
 
       var removeBlock = function removeBlock() {
-        return _eventBus.trigger("block:removed", {
+        var params = {
           block: _this2,
           index: _this2.parent.children().indexOf(_this2),
           parent: _this2.parent
-        });
+        };
+
+        _eventBus.trigger("block:removed", params);
+
+        _eventBus.trigger(_this2.config.name + ":block:removed", params);
       };
 
       if (this.isConfigured()) {
