@@ -68,6 +68,18 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
+    },
+
+    /**
+     * Preprocess live edit binding on an element
+     *
+     * @param value "button_text"
+     * @param name "liveEdit"
+     * @param addBindingCallback
+     */
+    preprocess: function preprocess(value, name, addBindingCallback) {
+      var htmlValue = "preview.data[" + value + "]()";
+      addBindingCallback("html", htmlValue);
     }
   };
 

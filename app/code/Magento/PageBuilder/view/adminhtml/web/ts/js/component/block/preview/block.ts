@@ -74,6 +74,18 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("keyup", onKeyUp);
     },
+
+    /**
+     * Preprocess live edit binding on an element
+     *
+     * @param value "button_text"
+     * @param name "liveEdit"
+     * @param addBindingCallback
+     */
+    preprocess(value, name, addBindingCallback) {
+        const htmlValue = "preview.data[" + value + "]()";
+        addBindingCallback("html", htmlValue);
+    },
 };
 
 interface PreviewData {
