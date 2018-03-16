@@ -207,8 +207,8 @@ export default class Structural extends EditableArea implements StructuralInterf
         }
 
         let result = {};
-        if (config.style !== undefined) {
-            result = this.convertStyle(config, data, "master");
+        if (config[element] !== undefined) {
+            result = this.convertStyle(config[element], data, "master");
         }
         return result;
     }
