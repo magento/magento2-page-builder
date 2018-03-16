@@ -60,7 +60,7 @@ ko.bindingHandlers.liveEdit = {
                 }
             }
         };
-        const onKeyUp = (event) => {
+        const onKeyUp = () => {
             if (element.innerText === "") {
                 $(element).addClass("placeholder-text");
             } else {

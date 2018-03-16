@@ -54,7 +54,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         }
       };
 
-      var onKeyUp = function onKeyUp(event) {
+      var onKeyUp = function onKeyUp() {
         if (element.innerText === "") {
           (0, _jquery)(element).addClass("placeholder-text");
         } else {
