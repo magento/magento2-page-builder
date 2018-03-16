@@ -43,22 +43,17 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       };
 
       var onKeyDown = function onKeyDown(event) {
-        switch (event.which) {
-          case 32:
-            document.execCommand("insertText", false, " "); // fix for space bar
+        // space bar fix
+        if (event.which === 32) {
+          document.execCommand("insertText", false, " ");
+        } // command or control
 
-            break;
 
-          case 91: // command
-
-          case 66: // bold
-
-          case 73: // italic
-
-          case 85:
-            // underline
+        if (event.metaKey || event.ctrlKey) {
+          // b, i, or u
+          if (event.which === 66 || event.which === 73 || event.which === 85) {
             event.preventDefault();
-            break;
+          }
         }
       };
 
