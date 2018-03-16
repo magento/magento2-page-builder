@@ -254,17 +254,66 @@
         <type name="image" translate="label" sortOrder="1">
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
-            <component>Magento_PageBuilder/js/component/block/image</component>
+            <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
+            <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
             <form>pagebuilder_image_form</form>
             <group>media</group>
             <allowed_parents>row,column</allowed_parents>
             <appearances>
                 <appearance name="full-width" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="margins_and_padding" name="margin_top" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="margin_right" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="margin_bottom" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="margin_left" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="padding_top" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="padding_right" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="padding_bottom" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="margins_and_padding" name="padding_left" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                            <element name="desktop_image" path=".//img[1]">
+                                <attributes>
+                                    <attribute var="image" name="src" converter="Magento_PageBuilder/js/converter/default/attribute/src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src"/>
+                                    <attribute var="alt" name="alt"/>
+                                    <attribute var="title_tag" name="title"/>
+                                </attributes>
+                            </element>
+                            <element name="mobile_image" path=".//img[2]">
+                                <attributes>
+                                    <attribute var="mobile_image" name="src" converter="Magento_PageBuilder/js/converter/default/attribute/src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src"/>
+                                    <attribute var="alt" name="alt"/>
+                                    <attribute var="title_tag" name="title"/>
+                                </attributes>
+                            </element>
+                            <element name="link" path=".//a">
+                                <attributes>
+                                    <attribute var="link_url" name="href"/>
+                                    <attribute var="link_target" name="target"/>
+                                    <attribute var="title_tag" name="title"/>
+                                </attributes>
+                            </element>
+                            <element name="caption" path=".//figcaption">
+                                <html var="image_caption"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
                     <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="image" component="Magento_PageBuilder/js/component/format/read/image"/>
+                        <reader name="image" component="Magento_PageBuilder/js/component/format/read/configurable"/>
                     </readers>
                 </appearance>
             </appearances>

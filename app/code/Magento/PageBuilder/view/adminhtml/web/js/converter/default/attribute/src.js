@@ -1,0 +1,34 @@
+/*eslint-disable */
+define(["../../../component/config", "../../../utils/image", "../../../utils/url"], function (_config, _image, _url) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var Src =
+  /*#__PURE__*/
+  function () {
+    function Src() {}
+
+    var _proto = Src.prototype;
+
+    _proto.fromDom = function fromDom(value, key, data) {
+      return (0, _image.decodeUrl)(value);
+    };
+
+    _proto.toDom = function toDom(value, key, data) {
+      if (value[0] === undefined || value[0].url === undefined) {
+        return null;
+      }
+
+      var imageUrl = value[0].url;
+      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
+      var mediaPath = imageUrl.split(mediaUrl);
+      return "{{media url=" + mediaPath[1] + "}}";
+    };
+
+    return Src;
+  }();
+
+  return Src;
+});
+//# sourceMappingURL=src.js.map

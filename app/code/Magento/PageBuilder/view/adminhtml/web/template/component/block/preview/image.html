@@ -5,17 +5,19 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="style: preview.previewStyle(), event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <!-- ko ifnot: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
+    <figure data-bind="style: data.main.style, attr: data.main.attributes">
+        <!-- ko ifnot: data.desktop_image.attributes().src && typeof data.desktop_image.attributes().src !== 'undefined' -->
         <div class="pagebuilder-image-empty-preview">
             <span data-bind="text: $t('Empty Image');"></span>
         </div>
-    <!-- /ko -->
-    <!-- ko if: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-        <img data-bind="attr: {src: preview.data.image()[0].url}, style: { maxWidth: '100%', height: 'auto' }" />
-    <!-- /ko -->
-    <!-- ko if: preview.data.image_caption -->
-        <figcaption data-bind="text: preview.data.image_caption"></figcaption>
-    <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: data.desktop_image.attributes().src && typeof data.desktop_image.attributes().src !== 'undefined' -->
+        <img data-bind="attr: data.desktop_image.attributes, style: { maxWidth: '100%', height: 'auto' }" />
+        <!-- /ko -->
+        <!-- ko if: data.caption.html() -->
+        <figcaption data-bind="text: data.caption.html"></figcaption>
+        <!-- /ko -->
+    </figure>
 </div>
