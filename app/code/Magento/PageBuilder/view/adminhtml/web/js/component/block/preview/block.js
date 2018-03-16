@@ -33,6 +33,12 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         }
       };
 
+      var onClick = function onClick() {
+        if ((0, _jquery)(element).innerText !== "") {
+          document.execCommand("selectAll", false, null);
+        }
+      };
+
       var onKeyDown = function onKeyDown(event) {
         // space bar fix
         if (event.which === 32) {
@@ -59,6 +65,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       element.contentEditable = true;
       element.focus();
       element.addEventListener("blur", onBlur);
+      element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
     }

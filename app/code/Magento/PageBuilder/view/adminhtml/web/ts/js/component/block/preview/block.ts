@@ -42,6 +42,11 @@ ko.bindingHandlers.liveEdit = {
                 contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
             }
         };
+        const onClick = () => {
+            if ($(element).innerText !== "") {
+                document.execCommand("selectAll", false, null);
+            }
+        };
         const onKeyDown = (event) => {
             // space bar fix
             if (event.which === 32) {
@@ -65,6 +70,7 @@ ko.bindingHandlers.liveEdit = {
         element.contentEditable = true;
         element.focus();
         element.addEventListener("blur", onBlur);
+        element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("keyup", onKeyUp);
     },
