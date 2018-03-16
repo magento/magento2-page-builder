@@ -23,25 +23,8 @@ export default class Configurable implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const role = element.getAttribute('data-role');
-        /*
-        const contentTypeConfig = Config.getInitConfig("content_types")[role];
-
-        let config = contentTypeConfig["data_mapping"];
-
-        const appearance = element.getAttribute("data-appearance");
-
-        if (appearance
-            && contentTypeConfig["appearances"] !== undefined
-            && contentTypeConfig["appearances"][appearance] !== undefined
-            && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
-        ) {
-            config = contentTypeConfig["appearances"][appearance]["data_mapping"];
-        }
-        */
         const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
-
         const mappersLoaded: Array<Promise<any>> = [elementConverterPoolFactory(role), converterPoolFactory(role)];
-
         return new Promise((resolve: (data: object) => void) => {
             Promise.all(mappersLoaded).then((loadedMappers) => {
                 const [elementConverterPool, converterPool] = loadedMappers;

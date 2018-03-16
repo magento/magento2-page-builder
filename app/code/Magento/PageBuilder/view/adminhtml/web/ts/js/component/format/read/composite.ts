@@ -8,6 +8,7 @@ import _ from "underscore";
 import Config, {ConfigContentBlocks} from "../../config";
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
+import appearanceConfig from "../../../component/block/appearance-config";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
@@ -30,16 +31,8 @@ export default class AttributeReaderComposite implements ReadInterface {
             if (!this.contentTypeConfig.hasOwnProperty(role)) {
                 resolve(result);
             } else {
-                const contentTypeConfig = this.contentTypeConfig[role];
+                const readerComponents = appearanceConfig(role, element.dataset.appearance).readers;
                 try {
-                    let readerComponents = contentTypeConfig.readers;
-                    if (typeof element.dataset.appearance !== "undefined"
-                        && typeof contentTypeConfig.appearances !== "undefined"
-                        && typeof contentTypeConfig.appearances[element.dataset.appearance] !== "undefined"
-                        && typeof contentTypeConfig.appearances[element.dataset.appearance].readers !== "undefined"
-                    ) {
-                        readerComponents = contentTypeConfig.appearances[element.dataset.appearance].readers;
-                    }
                     loadComponent(readerComponents, (...readers: any[]) => {
                         const readerPromises: Array<Promise<any>> = [];
                         for (const Reader of readers) {

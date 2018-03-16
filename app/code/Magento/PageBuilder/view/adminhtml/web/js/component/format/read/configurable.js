@@ -19,19 +19,6 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
       var _this = this;
 
       var role = element.getAttribute('data-role');
-      /*
-      const contentTypeConfig = Config.getInitConfig("content_types")[role];
-       let config = contentTypeConfig["data_mapping"];
-       const appearance = element.getAttribute("data-appearance");
-       if (appearance
-          && contentTypeConfig["appearances"] !== undefined
-          && contentTypeConfig["appearances"][appearance] !== undefined
-          && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
-      ) {
-          config = contentTypeConfig["appearances"][appearance]["data_mapping"];
-      }
-      */
-
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
       var mappersLoaded = [(0, _elementConverterPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
