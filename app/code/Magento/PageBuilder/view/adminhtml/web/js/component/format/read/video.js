@@ -20,9 +20,9 @@ define([], function () {
     _proto.read = function read(element) {
       var videoIframeElement = element.querySelector("iframe");
       var response = {
+        video_height: videoIframeElement.height || null,
         video_source: videoIframeElement.src || "",
-        video_width: videoIframeElement.width || null,
-        video_height: videoIframeElement.height || null
+        video_width: videoIframeElement.width || null
       };
       return Promise.resolve(response);
     };

@@ -16,9 +16,9 @@ export default class Video extends Block {
     public getVideoAttributes() {
         const data = this.getData();
         return {
+            height: data.video_height || null,
             src: this.getVideoUrl(data.video_source),
             width: data.video_width || null,
-            height: data.video_height || null
         };
     }
 
