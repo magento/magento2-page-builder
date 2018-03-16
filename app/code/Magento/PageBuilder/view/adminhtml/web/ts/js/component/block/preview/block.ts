@@ -85,6 +85,7 @@ ko.bindingHandlers.liveEdit = {
     preprocess(value, name, addBindingCallback) {
         const htmlValue = "preview.data[" + value + "]()";
         addBindingCallback("html", htmlValue);
+        return value;
     },
 };
 

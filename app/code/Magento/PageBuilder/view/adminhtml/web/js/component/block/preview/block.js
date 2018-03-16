@@ -80,6 +80,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
     preprocess: function preprocess(value, name, addBindingCallback) {
       var htmlValue = "preview.data[" + value + "]()";
       addBindingCallback("html", htmlValue);
+      return value;
     }
   };
 
