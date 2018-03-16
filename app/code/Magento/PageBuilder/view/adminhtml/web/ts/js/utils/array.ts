@@ -113,3 +113,21 @@ export function outwardSearch(
 
     return null;
 }
+
+/**
+ * Merge two objects recursively
+ *
+ * @param {object} target
+ * @param {object} source
+ * @returns {object}
+ */
+export function objectExtend(target, source) {
+    for (let property in source) {
+        if (property in target) {
+            objectExtend(target[property], source[property]);
+        } else {
+            target[property] = source[property];
+        }
+    }
+    return target;
+}

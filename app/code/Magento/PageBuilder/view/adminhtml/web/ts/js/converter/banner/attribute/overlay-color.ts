@@ -12,7 +12,7 @@ export default class OverlayColor implements ElementConverterInterface {
         return value === "transparent" ? "" : toHex(value);
     }
 
-    public toDom(value: string, key: string, data: object): string {
+    public toDom(value: string, key: string, data: object): string | object {
         return value;
     }
 }

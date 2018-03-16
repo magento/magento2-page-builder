@@ -18,12 +18,12 @@ define([], function () {
 
     var _proto = ElementConverterPool.prototype;
 
-    _proto.getStyleConverters = function getStyleConverters() {
-      return this.styleConverters;
-    };
+    _proto.getStyleConverters = function getStyleConverters(area) {
+      if ("preview" === area) {
+        return this.styleConvertersPreview;
+      }
 
-    _proto.getStylePreviewConverters = function getStylePreviewConverters() {
-      return this.styleConvertersPreview;
+      return this.styleConverters;
     };
 
     _proto.getAttributeConverters = function getAttributeConverters() {

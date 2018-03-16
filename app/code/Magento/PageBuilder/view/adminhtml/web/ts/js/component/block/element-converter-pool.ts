@@ -14,12 +14,11 @@ export default class ElementConverterPool {
         this.attributeConverters = attributeConverters;
     }
 
-    public getStyleConverters() {
+    public getStyleConverters(area: string) {
+        if ("preview" === area) {
+            return this.styleConvertersPreview;
+        }
         return this.styleConverters;
-    }
-
-    public getStylePreviewConverters() {
-        return this.styleConvertersPreview;
     }
 
     public getAttributeConverters() {

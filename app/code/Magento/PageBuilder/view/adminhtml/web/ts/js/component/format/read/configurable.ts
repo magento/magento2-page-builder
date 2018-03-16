@@ -3,16 +3,19 @@
  * See COPYING.txt for license details.
  */
 
-import loadComponent from "Magento_PageBuilder/js/component/loader";
 import ReadInterface from "../read-interface";
 import Config from "../../config";
+import ElementConverterPool from "../../block/element-converter-pool";
+import ConverterPool from "../../block/converter-pool";
 import elementConverterPoolFactory from "../../block/element-converter-pool-factory";
 import converterPoolFactory from "../../block/converter-pool-factory";
+import {fromSnakeToCamelCase} from "../../../utils/string";
+import {objectExtend} from "../../../utils/array";
 
 export default class Configurable implements ReadInterface {
 
     /**
-     * Read data, style and css properties from the element
+     * Read data from the dom based on configuration
      *
      * @param element HTMLElement
      * @returns {Promise<any>}
@@ -33,126 +36,182 @@ export default class Configurable implements ReadInterface {
             config = contentTypeConfig["appearances"][appearance]["data_mapping"];
         }
 
-        const meppersLoaded: Array<Promise<any>> = [];
-        meppersLoaded.push(elementConverterPoolFactory(role));
-        meppersLoaded.push(converterPoolFactory(role));
+        const mappersLoaded: Array<Promise<any>> = [elementConverterPoolFactory(role), converterPoolFactory(role)];
 
         return new Promise((resolve: (data: object) => void) => {
-            Promise.all(meppersLoaded).then((loadedMappers) => {
+            Promise.all(mappersLoaded).then((loadedMappers) => {
                 const [elementConverterPool, converterPool] = loadedMappers;
                 let data = {};
-                for (let el in config.elements) {
+                for (let elementName: string in config.elements) {
                     let xpathResult = document.evaluate(
-                        config.elements[el].path,
+                        config.elements[elementName].path,
                         element,
                         null,
                         XPathResult.FIRST_ORDERED_NODE_TYPE,
                         null
                     );
-
-                    const e = xpathResult.singleNodeValue;
-
-                    if (e === null || e === undefined) {
+                    const currentElement = xpathResult.singleNodeValue;
+                    if (currentElement === null || currentElement === undefined) {
                         continue;
                     }
-
-                    if (config.elements[el].style !== undefined) {
-                        for (let i = 0; i < config.elements[el].style.length; i++) {
-                            let styleProperty = config.elements[el].style[i];
-                            if (true === !!styleProperty.virtual) {
-                                continue;
-                            }
-                            let value = e.style[this.fromSnakeToCamelCase(styleProperty.name)];
-                            const mapper = styleProperty.var + styleProperty.name;
-                            if (mapper in elementConverterPool.getStyleConverters()) {
-                                value = elementConverterPool.getStyleConverters()[mapper].fromDom(value, styleProperty.name);
-                            }
-                            if (typeof data[styleProperty.var] === "object") {
-                                value = deepObjectExtend(data[styleProperty.var], value);
-                            }
-                            data[styleProperty.var] = value;
-                        }
+                    if (config.elements[elementName].style !== undefined) {
+                        data = this.readStyle(
+                            config.elements[elementName].style,
+                            currentElement,
+                            data,
+                            elementConverterPool
+                        );
                     }
-
-                    if (config.elements[el].attributes !== undefined) {
-                        for (let i = 0; i < config.elements[el].attributes.length; i++) {
-                            let attribute = config.elements[el].attributes[i];
-                            let value = e.getAttribute(attribute.name);
-                            const mapper = attribute.var + attribute.name;
-                            if (mapper in elementConverterPool.getAttributeConverters()) {
-                                value = elementConverterPool.getAttributeConverters()[mapper].fromDom(value);
-                            }
-                            if (data[attribute.var] === "object") {
-                                value = deepObjectExtend(value, data[attribute.var]);
-                            }
-                            data[attribute.var] = value;
-                        }
+                    if (config.elements[elementName].attributes !== undefined) {
+                        data = this.readAttributes(
+                            config.elements[elementName].attributes,
+                            currentElement,
+                            data,
+                            elementConverterPool
+                        );
                     }
-
-                    if (config.elements[el].html !== undefined) {
-                        data[config.elements[el].html.var] = e.innerHTML;
+                    if (config.elements[elementName].html !== undefined) {
+                        data = this.readHtml(config.elements[elementName], currentElement, data);
                     }
-
-                    if (config.elements[el].tag !== undefined) {
-                        data[config.elements[el].tag.var] = e.nodeName.toLowerCase();
+                    if (config.elements[elementName].tag !== undefined) {
+                        data = this.readHtmlTag(config.elements[elementName], currentElement, data);
                     }
-
-                    if (config.elements[el].css !== undefined) {
-                        let css: string = e.getAttribute("class") !== null
-                            ? e.getAttribute("class")
-                            : "";
-                        if (config.elements[el].css !== undefined
-                            && config.elements[el].css.filter !== undefined
-                            && config.elements[el].css.filter.length
-                        ) {
-                            for (let i = 0; i < config.elements[el].css.filter.length; i++) {
-                                css = css.replace(data[config.elements[el].css.filter[i]], "");
-                            }
-                        }
-                        data[config.elements[el].css.var] = css;
+                    if (config.elements[elementName].css !== undefined) {
+                        data = this.readCss(config.elements[elementName], currentElement, data);
                     }
                 }
-
-                for (let key in converterPool.getConverters()) {
-                    for (let i = 0; i < config.converters.length; i++) {
-                        if (config.converters[i].name === key) {
-                            data = converterPool.getConverters()[key].afterRead(data, config.converters[i].config);
-                        }
-                    }
-                }
-
-                console.log(data);
-
+                data = this.convertData(config, data, converterPool);
                 resolve(data);
             }).catch((error) => {
-                console.error( error );
+                console.error(error);
             });
         });
     }
 
     /**
-     * Convert from snake case to camel case
+     * Read element's css
      *
-     * @param {string} string
-     * @returns {string}
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @returns {object}
      */
-    private fromSnakeToCamelCase(currentString: string): string {
-        const parts: string[] = currentString.split(/[_-]/);
-        let newString: string = "";
-        for (let i = 1; i < parts.length; i++) {
-            newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+    private readCss(config: any, element: Node, data: object) {
+        const result = {};
+        let css: string = element.getAttribute("class") !== null
+            ? element.getAttribute("class")
+            : "";
+        if (config.css !== undefined
+            && config.css.filter !== undefined
+            && config.css.filter.length
+        ) {
+            for (let i = 0; i < config.css.filter.length; i++) {
+                css = css.replace(data[config.css.filter[i]], "");
+            }
         }
-        return parts[0] + newString;
+        result[config.css.var] = css;
+        return _.extend(data, result);
     }
-}
 
-function deepObjectExtend(target, source) {
-    for (let prop in source) {
-        if (prop in target) {
-            deepObjectExtend(target[prop], source[prop]);
-        } else {
-            target[prop] = source[prop];
-        }
+    /**
+     * Read element's tag
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @returns {object}
+     */
+    private readHtmlTag(config: any, e: Node, data: object) {
+        const result = {};
+        result[config.tag.var] = e.nodeName.toLowerCase();
+        return _.extend(data, result);
     }
-    return target;
+
+    /**
+     * Read element's content
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @returns {object}
+     */
+    private readHtml(config: any, element: Node, data: object) {
+        const result = {};
+        result[config.html.var] = element.innerHTML;
+        return _.extend(data, result);
+    }
+
+    /**
+     * Read attributes for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {ElementConverterPool} elementConverterPool
+     * @returns {object}
+     */
+    private readAttributes(config: any, element: Node, data: object, elementConverterPool: ElementConverterPool) {
+        const result = {};
+        for (let i = 0; i < config.length; i++) {
+            let attribute = config[i];
+            let value = element.getAttribute(attribute.name);
+            const mapper = attribute.var + attribute.name;
+            if (mapper in elementConverterPool.getAttributeConverters()) {
+                value = elementConverterPool.getAttributeConverters()[mapper].fromDom(value);
+            }
+            if (data[attribute.var] === "object") {
+                value = objectExtend(value, data[attribute.var]);
+            }
+            result[attribute.var] = value;
+        }
+        return _.extend(data, result);
+    }
+
+    /**
+     * Read style properties for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {ElementConverterPool} elementConverterPool
+     * @returns {object}
+     */
+    private readStyle(config: any, element, data: object, elementConverterPool: ElementConverterPool) {
+        const result: object = _.extend({}, data);
+        for (let i = 0; i < config.length; i++) {
+            let property = config[i];
+            if (true === !!property.virtual) {
+                continue;
+            }
+            let value = element.style[fromSnakeToCamelCase(property.name)];
+            const mapper = property.var + property.name;
+            if (mapper in elementConverterPool.getStyleConverters()) {
+                value = elementConverterPool.getStyleConverters()[mapper].fromDom(value, property.name);
+            }
+            if (typeof result[property.var] === "object") {
+                value = objectExtend(result[property.var], value);
+            }
+            result[property.var] = value;
+        }
+        return result;
+    }
+
+    /**
+     * Convert data after it's read for all elements
+     *
+     * @param {object} config
+     * @param {object} data
+     * @param {ConverterPool} converterPool
+     * @returns {object}
+     */
+    private convertData(config: any, data: object, converterPool: ConverterPool) {
+        for (let key in converterPool.getConverters()) {
+            for (let i = 0; i < config.converters.length; i++) {
+                if (config.converters[i].name === key) {
+                    data = converterPool.getConverters()[key].afterRead(data, config.converters[i].config);
+                }
+            }
+        }
+        return data;
+    }
 }

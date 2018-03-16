@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../config", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _config, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "underscore", "../../config", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../utils/string"], function (_knockout, _translate, _underscore, _config, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _string) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -124,7 +124,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
           css = data.css_classes;
         }
       } else {
-        var config = _config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+        var config = _config.getContentType(this.config.name).data_mapping.elements[element];
 
         if (config.css.var !== undefined && config.css.var in data) {
           css = data[config.css.var];
@@ -157,16 +157,8 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
 
       var data = _underscore.extend({}, this.stage.store.get(this.id));
 
-      var contentTypeConfig = _config.getInitConfig("content_types")[this.config.name];
-
-      var config = contentTypeConfig["data_mapping"]["elements"][element];
-      var convertersConfig = contentTypeConfig["data_mapping"]["converters"];
-      var appearance = data["appearance"] !== undefined ? data["appearance"] : null;
-
-      if (appearance && contentTypeConfig["appearances"] !== undefined && contentTypeConfig["appearances"][appearance] !== undefined && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined) {
-        config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"][element];
-        convertersConfig = contentTypeConfig["appearances"][appearance]["data_mapping"]["converters"];
-      }
+      var config = this.getAppearanceConfig(data["appearance"]).elements;
+      var convertersConfig = this.getAppearanceConfig(data["appearance"]).converters;
 
       for (var key in this.converterPool.getConverters()) {
         for (var i = 0; i < convertersConfig.length; i++) {
@@ -179,17 +171,34 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
       var result = {};
 
       if (config.style !== undefined) {
-        for (var _i = 0; _i < config.style.length; _i++) {
-          var styleProperty = config.style[_i];
-          var value = data[styleProperty.var];
-          var mapper = styleProperty.var + styleProperty.name;
+        result = this.convertStyle(config, data, "master");
+      }
 
-          if (mapper in this.elementConverterPool.getStyleConverters()) {
-            value = this.elementConverterPool.getStyleConverters()[mapper].toDom(data[styleProperty.var], styleProperty.name, data);
-          }
+      return result;
+    };
+    /**
+     * Convert style properties
+     * 
+     * @param {object}config
+     * @param {object}data
+     * @param {string} area
+     * @returns {object}
+     */
 
-          result[this.fromSnakeToCamelCase(styleProperty.name)] = value;
+
+    _proto.convertStyle = function convertStyle(config, data, area) {
+      var result = {};
+
+      for (var i = 0; i < config.style.length; i++) {
+        var styleProperty = config.style[i];
+        var value = data[styleProperty.var];
+        var mapper = styleProperty.var + styleProperty.name;
+
+        if (mapper in this.elementConverterPool.getStyleConverters(area)) {
+          value = this.elementConverterPool.getStyleConverters(area)[mapper].toDom(value, styleProperty.name, data);
         }
+
+        result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
       }
 
       return result;
@@ -214,27 +223,44 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
       var data = this.stage.store.get(this.id);
       data = _underscore.extend(data, this.config);
 
-      var config = _config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+      var config = _config.getContentType(this.config.name).data_mapping.elements[element];
 
       var result = {};
 
       if (config.attributes !== undefined) {
-        for (var i = 0; i < config.attributes.length; i++) {
-          var attribute = config.attributes[i];
+        result = this.convertAttributes(config, data, "master");
+      }
 
-          if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
-            continue;
-          }
+      return result;
+    };
+    /**
+     * Convert attributes
+     * 
+     * @param {object}config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {object}
+     */
 
-          var value = data[attribute.var];
-          var mapper = attribute.var + attribute.name;
 
-          if (mapper in this.elementConverterPool.getAttributeConverters()) {
-            value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(data[attribute.var], attribute.var, data);
-          }
+    _proto.convertAttributes = function convertAttributes(config, data, area) {
+      var result = {};
 
-          result[attribute.name] = value;
+      for (var i = 0; i < config.attributes.length; i++) {
+        var attribute = config.attributes[i];
+
+        if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
+          continue;
         }
+
+        var value = data[attribute.var];
+        var mapper = attribute.var + attribute.name;
+
+        if (mapper in this.elementConverterPool.getAttributeConverters()) {
+          value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(value, attribute.var, data);
+        }
+
+        result[attribute.name] = value;
       }
 
       return result;
@@ -243,7 +269,7 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
     _proto.getHtml = function getHtml(element) {
       var data = this.stage.store.get(this.id);
 
-      var config = _config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+      var config = _config.getContentType(this.config.name).data_mapping.elements[element];
 
       var result = '';
 
@@ -273,103 +299,71 @@ define(["knockout", "mage/translate", "underscore", "../../config", "../../event
     _proto.getOptions = function getOptions() {
       return new _options.Options(this, this.retrieveOptions());
     };
+    /**
+     * Get config for appearance
+     *
+     * @param {string} appearance
+     * @returns {Object}
+     */
 
-    _proto.updateData = function updateData(data) {
-      var contentTypeConfig = _config.getInitConfig("content_types")[this.config.name];
 
-      var config = contentTypeConfig["data_mapping"]["elements"];
-      var appearance = data["appearance"] !== undefined ? data["appearance"] : null;
+    _proto.getAppearanceConfig = function getAppearanceConfig(appearance) {
+      var contentTypeConfig = _config.getContentType(this.config.name);
 
-      if (appearance && contentTypeConfig["appearances"] !== undefined && contentTypeConfig["appearances"][appearance] !== undefined && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined) {
-        config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"];
+      var config = contentTypeConfig.data_mapping;
+
+      if (appearance !== undefined && contentTypeConfig.appearances !== undefined && contentTypeConfig.appearances[appearance] !== undefined && contentTypeConfig.appearances[appearance].data_mapping !== undefined) {
+        config = contentTypeConfig.appearances[appearance].data_mapping;
       }
 
-      for (var el in config) {
-        if (this.data[el] === undefined) {
-          this.data[el] = {
+      return config;
+    };
+
+    _proto.updateData = function updateData(data) {
+      var config = this.getAppearanceConfig(data["appearance"]).elements;
+
+      for (var elementName in config) {
+        if (this.data[elementName] === undefined) {
+          this.data[elementName] = {
             style: _knockout.observable({}),
             attributes: _knockout.observable({}),
             html: _knockout.observable({})
           };
         }
 
-        if (config[el].style !== undefined) {
-          var styleObservable = {};
-
-          for (var i = 0; i < config[el].style.length; i++) {
-            var styleProperty = config[el].style[i];
-            var value = data[styleProperty.var];
-            var mapper = styleProperty.var + styleProperty.name;
-
-            if (mapper in this.elementConverterPool.getStylePreviewConverters()) {
-              value = this.elementConverterPool.getStylePreviewConverters()[mapper].toDom(value, styleProperty.name, this.stage.store.get(this.id));
-            }
-
-            styleObservable[this.fromSnakeToCamelCase(styleProperty.name)] = value;
-          }
-
-          this.data[el].style(styleObservable);
+        if (config[elementName].style !== undefined) {
+          this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
         }
 
-        if (config[el].attributes !== undefined) {
-          var attributesObservable = {};
-
-          for (var _i2 = 0; _i2 < config[el].attributes.length; _i2++) {
-            var attribute = config[el].attributes[_i2];
-            var _value = data[attribute.var];
-
-            if (attribute.var in this.elementConverterPool.getAttributeConverters()) {
-              _value = this.elementConverterPool.getAttributeConverters()[attribute.var].toDom(data[attribute.var], attribute.var, data);
-            }
-
-            attributesObservable[attribute.name] = _value;
-          }
-
-          this.data[el].attributes(attributesObservable);
+        if (config[elementName].attributes !== undefined) {
+          this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
         }
 
-        if (config[el].html !== undefined) {
-          var html = data[config[el].html.var] !== undefined && data[config[el].html.var] !== "" ? data[config[el].html.var] : config[el].html.placeholder;
-          this.data[el].html(html);
+        if (config[elementName].html !== undefined) {
+          var html = data[config[elementName].html.var] !== undefined && data[config[elementName].html.var] !== "" ? data[config[elementName].html.var] : config[elementName].html.placeholder;
+          this.data[elementName].html(html);
         }
 
-        if (config[el].tag !== undefined) {
-          if (this.data[el][config[el].tag.var] === undefined) {
-            this.data[el][config[el].tag.var] = _knockout.observable(data[config[el].tag.var]);
-          } else {
-            this.data[el][config[el].tag.var](data[config[el].tag.var]);
+        if (config[elementName].tag !== undefined) {
+          if (this.data[elementName][config[elementName].tag.var] === undefined) {
+            this.data[elementName][config[elementName].tag.var] = _knockout.observable("");
           }
+
+          this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
     };
+    /**
+     * Attach event to updating data in data store to update observables
+     */
+
 
     _proto.setupDataFields = function setupDataFields() {
       var _this3 = this;
 
-      // Subscribe to this blocks data in the store
       this.stage.store.subscribe(function (data) {
-        _underscore.forEach(data, function (value, key) {
-          _this3.updateData(data);
-        });
+        _this3.updateData(data);
       }, this.id);
-    };
-    /**
-     * Convert from snake case to camel case
-     *
-     * @param {string} string
-     * @returns {string}
-     */
-
-
-    _proto.fromSnakeToCamelCase = function fromSnakeToCamelCase(currentString) {
-      var parts = currentString.split(/[_-]/);
-      var newString = "";
-
-      for (var i = 1; i < parts.length; i++) {
-        newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-      }
-
-      return parts[0] + newString;
     };
 
     _createClass(Structural, [{

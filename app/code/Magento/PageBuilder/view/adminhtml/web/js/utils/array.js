@@ -108,12 +108,33 @@ define([], function () {
 
     return null;
   }
+  /**
+   * Merge two objects recursively
+   *
+   * @param {object} target
+   * @param {object} source
+   * @returns {object}
+   */
+
+
+  function objectExtend(target, source) {
+    for (var property in source) {
+      if (property in target) {
+        objectExtend(target[property], source[property]);
+      } else {
+        target[property] = source[property];
+      }
+    }
+
+    return target;
+  }
 
   return {
     moveArrayItem: moveArrayItem,
     moveArrayItemIntoArray: moveArrayItemIntoArray,
     removeArrayItem: removeArrayItem,
-    outwardSearch: outwardSearch
+    outwardSearch: outwardSearch,
+    objectExtend: objectExtend
   };
 });
 //# sourceMappingURL=array.js.map

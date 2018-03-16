@@ -22,6 +22,7 @@ import { Options } from "./options";
 import {Option} from "./options/option";
 import {OptionInterface} from "./options/option.d";
 import {TitleOption} from "./options/title";
+import {fromSnakeToCamelCase} from "../../../utils/string";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
@@ -36,8 +37,8 @@ export default class Structural extends EditableArea implements StructuralInterf
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     public data = {};
-    private elementConverterPool;
-    private converterPool;
+    public elementConverterPool;
+    public converterPool;
 
     /**
      * Abstract structural constructor
@@ -165,7 +166,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 css = data.css_classes;
             }
         } else {
-            const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+            const config = Config.getContentType(this.config.name).data_mapping.elements[element];
             if (config.css.var !== undefined && config.css.var in data) {
                 css = data[config.css.var];
             }
@@ -194,19 +195,8 @@ export default class Structural extends EditableArea implements StructuralInterf
         }
 
         let data = _.extend({}, this.stage.store.get(this.id));
-
-        const contentTypeConfig = Config.getInitConfig("content_types")[this.config.name];
-        let config = contentTypeConfig["data_mapping"]["elements"][element];
-        let convertersConfig = contentTypeConfig["data_mapping"]["converters"];
-        const appearance = data["appearance"] !== undefined ? data["appearance"] : null;
-        if (appearance
-            && contentTypeConfig["appearances"] !== undefined
-            && contentTypeConfig["appearances"][appearance] !== undefined
-            && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
-        ) {
-            config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"][element];
-            convertersConfig = contentTypeConfig["appearances"][appearance]["data_mapping"]["converters"];
-        }
+        const config = this.getAppearanceConfig(data["appearance"]).elements;
+        const convertersConfig = this.getAppearanceConfig(data["appearance"]).converters;
 
         for (let key in this.converterPool.getConverters()) {
             for (let i = 0; i < convertersConfig.length; i++) {
@@ -216,17 +206,35 @@ export default class Structural extends EditableArea implements StructuralInterf
             }
         }
 
-        const result = {};
+        let result = {};
         if (config.style !== undefined) {
-            for (let i = 0; i < config.style.length; i++) {
-                let styleProperty = config.style[i];
-                let value = data[styleProperty.var];
-                const mapper = styleProperty.var + styleProperty.name;
-                if (mapper in this.elementConverterPool.getStyleConverters()) {
-                    value = this.elementConverterPool.getStyleConverters()[mapper].toDom(data[styleProperty.var], styleProperty.name, data);
-                }
-                result[this.fromSnakeToCamelCase(styleProperty.name)] = value;
+            result = this.convertStyle(config, data, "master");
+        }
+        return result;
+    }
+
+    /**
+     * Convert style properties
+     * 
+     * @param {object}config
+     * @param {object}data
+     * @param {string} area
+     * @returns {object}
+     */
+    private convertStyle(config: any, data: any, area: string) {
+        const result = {};
+        for (let i = 0; i < config.style.length; i++) {
+            let styleProperty = config.style[i];
+            let value = data[styleProperty.var];
+            const mapper = styleProperty.var + styleProperty.name;
+            if (mapper in this.elementConverterPool.getStyleConverters(area)) {
+                value = this.elementConverterPool.getStyleConverters(area)[mapper].toDom(
+                    value,
+                    styleProperty.name,
+                    data
+                );
             }
+            result[fromSnakeToCamelCase(styleProperty.name)] = value;
         }
         return result;
     }
@@ -246,29 +254,43 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         let data = this.stage.store.get(this.id);
         data = _.extend(data, this.config);
-        const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
-        const result = {};
+        const config = Config.getContentType(this.config.name).data_mapping.elements[element];
+        let result = {};
         if (config.attributes !== undefined) {
-            for (let i = 0; i < config.attributes.length; i++) {
-                let attribute = config.attributes[i];
-                if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
-                    continue;
-                }
-                let value = data[attribute.var];
-                const mapper = attribute.var + attribute.name;
-                if (mapper in this.elementConverterPool.getAttributeConverters()) {
-                    value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(data[attribute.var], attribute.var, data);
-                }
-                result[attribute.name] = value;
-            }
+            result = this.convertAttributes(config, data, "master");
         }
 
         return result;
     }
 
+    /**
+     * Convert attributes
+     * 
+     * @param {object}config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {object}
+     */
+    private convertAttributes(config: any, data: DataObject, area: string) {
+        const result = {};
+        for (let i = 0; i < config.attributes.length; i++) {
+            let attribute = config.attributes[i];
+            if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === 'false') {
+                continue;
+            }
+            let value = data[attribute.var];
+            const mapper = attribute.var + attribute.name;
+            if (mapper in this.elementConverterPool.getAttributeConverters()) {
+                value = this.elementConverterPool.getAttributeConverters()[mapper].toDom(value, attribute.var, data);
+            }
+            result[attribute.name] = value;
+        }
+        return result;
+    }
+
     public getHtml(element: string) {
         const data = this.stage.store.get(this.id);
-        const config = Config.getInitConfig("content_types")[this.config.name]['data_mapping']["elements"][element];
+        const config = Config.getContentType(this.config.name).data_mapping.elements[element];
         let result = '';
         if (config.html !== undefined) {
             result = data[config.html.var];
@@ -294,98 +316,66 @@ export default class Structural extends EditableArea implements StructuralInterf
         return new Options(this, this.retrieveOptions());
     }
 
-    public updateData(data: object) {
-        const contentTypeConfig = Config.getInitConfig("content_types")[this.config.name];
-        let config = contentTypeConfig["data_mapping"]["elements"];
-        const appearance = data["appearance"] !== undefined ? data["appearance"] : null;
-        if (appearance
-            && contentTypeConfig["appearances"] !== undefined
-            && contentTypeConfig["appearances"][appearance] !== undefined
-            && contentTypeConfig["appearances"][appearance]["data_mapping"] !== undefined
+    /**
+     * Get config for appearance
+     *
+     * @param {string} appearance
+     * @returns {Object}
+     */
+    private getAppearanceConfig(appearance: string): object {
+        const contentTypeConfig = Config.getContentType(this.config.name);
+        let config = contentTypeConfig.data_mapping;
+        if (appearance !== undefined
+            && contentTypeConfig.appearances !== undefined
+            && contentTypeConfig.appearances[appearance] !== undefined
+            && contentTypeConfig.appearances[appearance].data_mapping !== undefined
         ) {
-            config = contentTypeConfig["appearances"][appearance]["data_mapping"]["elements"];
+            config = contentTypeConfig.appearances[appearance].data_mapping;
         }
+        return config;
+    }
 
-        for (const el in config) {
-            if (this.data[el] === undefined) {
-                this.data[el] = {
+    public updateData(data: object) {
+        const config = this.getAppearanceConfig(data["appearance"]).elements;
+
+        for (const elementName in config) {
+            if (this.data[elementName] === undefined) {
+                this.data[elementName] = {
                     style: ko.observable({}),
                     attributes: ko.observable({}),
                     html: ko.observable({})
                 };
             }
-            if (config[el].style !== undefined) {
-                const styleObservable = {};
-                for (let i = 0; i < config[el].style.length; i++) {
-                    const styleProperty = config[el].style[i];
-                    let value = data[styleProperty.var];
-                    const mapper = styleProperty.var + styleProperty.name;
-                    if (mapper in this.elementConverterPool.getStylePreviewConverters()) {
-                        value = this.elementConverterPool.getStylePreviewConverters()[mapper].toDom(
-                            value,
-                            styleProperty.name,
-                            this.stage.store.get(this.id)
-                        );
-                    }
-                    styleObservable[this.fromSnakeToCamelCase(styleProperty.name)] = value;
-                }
-                this.data[el].style(styleObservable);
+            if (config[elementName].style !== undefined) {
+               this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
             }
-
-            if (config[el].attributes !== undefined) {
-                const attributesObservable = {};
-                for (let i = 0; i < config[el].attributes.length; i++) {
-                    const attribute = config[el].attributes[i];
-                    let value = data[attribute.var];
-                    if (attribute.var in this.elementConverterPool.getAttributeConverters()) {
-                        value = this.elementConverterPool.getAttributeConverters()[attribute.var].toDom(data[attribute.var], attribute.var, data);
-                    }
-                    attributesObservable[attribute.name] = value;
-                }
-                this.data[el].attributes(attributesObservable);
+            if (config[elementName].attributes !== undefined) {
+                this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
             }
-
-            if (config[el].html !== undefined) {
-                const html = data[config[el].html.var] !== undefined && data[config[el].html.var] !== ""
-                    ? data[config[el].html.var]
-                    : config[el].html.placeholder;
-                this.data[el].html(html);
+            if (config[elementName].html !== undefined) {
+                const html = data[config[elementName].html.var] !== undefined && data[config[elementName].html.var] !== ""
+                    ? data[config[elementName].html.var]
+                    : config[elementName].html.placeholder;
+                this.data[elementName].html(html);
             }
-
-            if (config[el].tag !== undefined) {
-                if (this.data[el][config[el].tag.var] === undefined) {
-                    this.data[el][config[el].tag.var] = ko.observable(data[config[el].tag.var]);
-                } else {
-                    this.data[el][config[el].tag.var](data[config[el].tag.var]);
+            if (config[elementName].tag !== undefined) {
+                if (this.data[elementName][config[elementName].tag.var] === undefined) {
+                    this.data[elementName][config[elementName].tag.var] = ko.observable("");
                 }
+                this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
         }
-    }
-
-    private setupDataFields() {
-        // Subscribe to this blocks data in the store
-        this.stage.store.subscribe(
-            (data: DataObject) => {
-                _.forEach(data, (value, key) => {
-                    this.updateData(data);
-                });
-            },
-            this.id,
-        );
     }
 
     /**
-     * Convert from snake case to camel case
-     *
-     * @param {string} string
-     * @returns {string}
+     * Attach event to updating data in data store to update observables
      */
-    private fromSnakeToCamelCase(currentString: string): string {
-        const parts: string[] = currentString.split(/[_-]/);
-        let newString: string = "";
-        for (let i = 1; i < parts.length; i++) {
-            newString += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-        }
-        return parts[0] + newString;
+    private setupDataFields(): void {
+        this.stage.store.subscribe(
+            (data: DataObject) => {
+                this.updateData(data);
+            },
+            this.id,
+        );
     }
 }
