@@ -57,71 +57,7 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
         }
       }
 
-      var styleMappersLoadedPromise = new Promise(function (resolve) {
-        (0, _loader)(styleMappers, function () {
-          var result = {};
-
-          for (var _len = arguments.length, styleMappersLoaded = new Array(_len), _key = 0; _key < _len; _key++) {
-            styleMappersLoaded[_key] = arguments[_key];
-          }
-
-          for (var _i2 = 0; _i2 < styleMapperCodes.length; _i2++) {
-            result[styleMapperCodes[_i2]] = new styleMappersLoaded[_i2]();
-          }
-
-          resolve(result);
-        });
-      });
-      var styleMappersPreviewLoadedPromise = new Promise(function (resolve) {
-        (0, _loader)(styleMappersPreview, function () {
-          var result = {};
-
-          for (var _len2 = arguments.length, styleMappersPreviewLoaded = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            styleMappersPreviewLoaded[_key2] = arguments[_key2];
-          }
-
-          for (var _i3 = 0; _i3 < styleMapperPreviewCodes.length; _i3++) {
-            result[styleMapperPreviewCodes[_i3]] = new styleMappersPreviewLoaded[_i3]();
-          }
-
-          resolve(result);
-        });
-      });
-      var attributeMappersLoadedPromise = new Promise(function (resolve) {
-        (0, _loader)(attributeMappers, function () {
-          var result = {};
-
-          for (var _len3 = arguments.length, attributeMappersLoaded = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            attributeMappersLoaded[_key3] = arguments[_key3];
-          }
-
-          for (var _i4 = 0; _i4 < attributeMapperCodes.length; _i4++) {
-            result[attributeMapperCodes[_i4]] = new attributeMappersLoaded[_i4]();
-          }
-
-          resolve(result);
-        });
-      });
-      var attributeMappersPreviewLoadedPromise = new Promise(function (resolve) {
-        (0, _loader)(attributeMappersPreview, function () {
-          var result = {};
-
-          for (var _len4 = arguments.length, attributeMappersPreviewLoaded = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-            attributeMappersPreviewLoaded[_key4] = arguments[_key4];
-          }
-
-          for (var _i5 = 0; _i5 < attributeMapperPreviewCodes.length; _i5++) {
-            result[attributeMapperPreviewCodes[_i5]] = new attributeMappersPreviewLoaded[_i5]();
-          }
-
-          resolve(result);
-        });
-      });
-      var mappersLoaded = [];
-      mappersLoaded.push(styleMappersLoadedPromise);
-      mappersLoaded.push(styleMappersPreviewLoadedPromise);
-      mappersLoaded.push(attributeMappersLoadedPromise);
-      mappersLoaded.push(attributeMappersPreviewLoadedPromise);
+      var mappersLoaded = [getConvertersLoadedPromise(styleMapperCodes, styleMappers), getConvertersLoadedPromise(styleMapperPreviewCodes, styleMappersPreview), getConvertersLoadedPromise(attributeMapperCodes, attributeMappers), getConvertersLoadedPromise(attributeMapperPreviewCodes, attributeMappersPreview)];
       Promise.all(mappersLoaded).then(function (loadedMappers) {
         var styleMappers = loadedMappers[0],
             styleMappersPreview = loadedMappers[1],
@@ -130,6 +66,32 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
         resolve(new _elementConverterPool(styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview));
       }).catch(function (error) {
         console.error(error);
+      });
+    });
+  }
+  /**
+   * Get converters loaded promise
+   *
+   * @param converterCodes
+   * @param converters
+   * @returns {Promise<any>}
+   */
+
+
+  function getConvertersLoadedPromise(converterCodes, converters) {
+    return new Promise(function (resolve) {
+      (0, _loader)(converters, function () {
+        var result = {};
+
+        for (var _len = arguments.length, convertersLoaded = new Array(_len), _key = 0; _key < _len; _key++) {
+          convertersLoaded[_key] = arguments[_key];
+        }
+
+        for (var i = 0; i < converterCodes.length; i++) {
+          result[converterCodes[i]] = new convertersLoaded[i]();
+        }
+
+        resolve(result);
       });
     });
   }

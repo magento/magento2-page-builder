@@ -70,57 +70,37 @@ export default function create(contentType: string): Promise<{}> {
             }
         }
 
-        const styleMappersLoadedPromise = new Promise((resolve: (data: object) => void) => {
-            loadModule(styleMappers, (...styleMappersLoaded: any[]) => {
-                const result: any = {};
-                for (let i = 0; i < styleMapperCodes.length; i++) {
-                    result[styleMapperCodes[i]] = new styleMappersLoaded[i]();
-                }
-                resolve(result);
-            });
-        });
-
-        const styleMappersPreviewLoadedPromise = new Promise((resolve: (data: object) => void) => {
-            loadModule(styleMappersPreview, (...styleMappersPreviewLoaded: any[]) => {
-                const result: any = {};
-                for (let i = 0; i < styleMapperPreviewCodes.length; i++) {
-                    result[styleMapperPreviewCodes[i]] = new styleMappersPreviewLoaded[i]();
-                }
-                resolve(result);
-            });
-        });
-
-        const attributeMappersLoadedPromise = new Promise((resolve: (data: object) => void) => {
-            loadModule(attributeMappers, (...attributeMappersLoaded: any[]) => {
-                const result: any = {};
-                for (let i = 0; i < attributeMapperCodes.length; i++) {
-                    result[attributeMapperCodes[i]] = new attributeMappersLoaded[i]();
-                }
-                resolve(result);
-            });
-        });
-
-        const attributeMappersPreviewLoadedPromise = new Promise((resolve: (data: object) => void) => {
-            loadModule(attributeMappersPreview, (...attributeMappersPreviewLoaded: any[]) => {
-                const result: any = {};
-                for (let i = 0; i < attributeMapperPreviewCodes.length; i++) {
-                    result[attributeMapperPreviewCodes[i]] = new attributeMappersPreviewLoaded[i]();
-                }
-                resolve(result);
-            });
-        });
-
-        const mappersLoaded: Array<Promise<any>> = [];
-        mappersLoaded.push(styleMappersLoadedPromise);
-        mappersLoaded.push(styleMappersPreviewLoadedPromise);
-        mappersLoaded.push(attributeMappersLoadedPromise);
-        mappersLoaded.push(attributeMappersPreviewLoadedPromise);
+        const mappersLoaded: Array<Promise<any>> = [
+            getConvertersLoadedPromise(styleMapperCodes, styleMappers),
+            getConvertersLoadedPromise(styleMapperPreviewCodes, styleMappersPreview),
+            getConvertersLoadedPromise(attributeMapperCodes, attributeMappers),
+            getConvertersLoadedPromise(attributeMapperPreviewCodes, attributeMappersPreview)
+        ];
 
         Promise.all(mappersLoaded).then((loadedMappers) => {
             const [styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview] = loadedMappers;
             resolve(new ElementConverterPool(styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview));
         }).catch((error) => {
             console.error( error );
+        });
+    });
+}
+
+/**
+ * Get converters loaded promise
+ *
+ * @param converterCodes
+ * @param converters
+ * @returns {Promise<any>}
+ */
+function getConvertersLoadedPromise(converterCodes, converters): Promise<any> {
+    return new Promise((resolve: (data: object) => void) => {
+        loadModule(converters, (...convertersLoaded: any[]) => {
+            const result: any = {};
+            for (let i = 0; i < converterCodes.length; i++) {
+                result[converterCodes[i]] = new convertersLoaded[i]();
+            }
+            resolve(result);
         });
     });
 }
