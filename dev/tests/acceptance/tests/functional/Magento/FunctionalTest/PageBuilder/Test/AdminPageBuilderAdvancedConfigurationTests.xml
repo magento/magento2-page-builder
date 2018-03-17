@@ -1,0 +1,1164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationEditPanelVisual">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Advanced Configuration - Edit Panel Visual"/>
+            <description value="Tests the following for each attribute under Advanced Configuration: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89330"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfiguration"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Check Field Labels -->
+        <comment userInput="Check Field Labels" stepKey="CommentFieldLabels"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelMarginsAndPadding">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <!-- Check Values -->
+        <comment userInput="Check Values" stepKey="CommentFieldValues"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getValueBorderColor"/>
+        <assertEmpty actual="getValueBorderColor" actualType="variable" message="Text field has text: $getValueBorderColor" stepKey="assertValueBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getValueCssClasses"/>
+        <assertEmpty actual="getValueCssClasses" actualType="variable" message="Text field was not empty. Had text: $getValueCssClasses" stepKey="assertValueCssClasses"/>
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkValueMarginAndPadding">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+        </actionGroup>
+        <!-- Check Required -->
+        <comment userInput="Check Required" stepKey="CommentCheckRequired"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredMarginsAndPadding">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <!-- Check Disabled -->
+        <comment userInput="Check Disabled" stepKey="CommentCheckDisabled"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="checkDisabledBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="checkDisabledBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <!-- Check Drop Down Counts -->
+        <comment userInput="Check Drop Down Counts" stepKey="CommentCheckDropDownCounts"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
+        <assertCount actual="getDropDownCountAlignment" actualType="variable" expected="4" expectedType="int" stepKey="assertDropDownCountAlignment"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
+        <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
+        <!-- Check Placeholder Text -->
+        <comment userInput="Check Placeholder Text" stepKey="CommentCheckPlaceholderText"/>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="checkPlaceholderTextBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="checkPlaceholderTextBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="checkPlaceholderTextBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldNoPlaceholderText" stepKey="checkPlaceholderTextCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsAndPaddingPlaceholderTextSlideOutPanel" stepKey="checkPlaceholderTextMarginsAndPadding"/>
+        <!-- Check Field After Labels & Field Notes -->
+        <comment userInput="Check Field After Labels and Field Notes" stepKey="CommentFieldAfterLabels"/>
+        <actionGroup ref="validateSlideOutPanelFieldAfterLabelText" stepKey="validateSlideOutPanelFieldAfterLabelTextBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldAfterLabelText" stepKey="validateSlideOutPanelFieldAfterLabelTextBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldAfterLabelText" stepKey="validateSlideOutPanelFieldAfterLabelTextBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldNoAfterLabelText" stepKey="validateSlideOutPanelFieldNoAfterLabelTextCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedConfigurationNotes" stepKey="validateAdvancedConfigurationNotes"/>
+        <!-- Save page and verify fields (because some of them change) -->
+        <comment userInput="Save page and verify fields (because some of them change)" stepKey="CommentSavePage"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <!-- Check Values After Save -->
+        <comment userInput="Check Values After Save" stepKey="CommentFieldValues2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getValueBorderColor2"/>
+        <assertEmpty actual="getValueBorderColor2" actualType="variable" message="Text field has text: $getValueBorderColor2" stepKey="assertValueBorderColor2"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderWidthPropertyDefault.section, PageBuilderAdvancedBorderWidthPropertyDefault.fieldName)}}" stepKey="getTextFromBorderWidthAttribute2"/>
+        <assertEmpty actual="getTextFromBorderWidthAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderWidthAttribute2" stepKey="assertGetTextFromBorderWidthAttribute2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getValueCssClasses2"/>
+        <assertEmpty actual="getValueCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getValueCssClasses2" stepKey="assertValueCssClasses2"/>
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkValueMarginAndPadding2">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+        </actionGroup>
+        <!-- Enable Border And Check Other Fields Now Enabled -->
+        <comment userInput="Enable Border And Check Other Fields Now Enabled" stepKey="CommentEnableBorder"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enableBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderColorAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderWidthAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+    </test>
+    <test name="TextAdvancedConfigurationFunctionalAlignment">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Text - Advanced Configuration Functional - Alignment"/>
+            <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89331"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <!-- Add A Row For Each Text Alignment Type -->
+        <comment userInput="Add Rows" stepKey="commentAddRows"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Add Default Alignment -->
+        <comment userInput="Add Default Alignment" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectAlignmentDefault1">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add Left Alignment -->
+        <comment userInput="Add Left Alignment" stepKey="commentAddAlignmentLeft"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Center Alignment -->
+        <comment userInput="Add Center Alignment" stepKey="commentAddAlignmentCenter"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Add Right Alignment -->
+        <comment userInput="Add Right Alignment" stepKey="commentAddAlignmentRight"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectAlignmentRight">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Check Default Alignment -->
+        <comment userInput="Stage: Check Default Alignment" stepKey="commentStageCheckDefault"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Left Alignment -->
+        <comment userInput="Stage: Check Left Alignment" stepKey="commentStageCheckLeft"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageLeft">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Center Alignment -->
+        <comment userInput="Stage: Check Center Alignment" stepKey="commentStageCheckCenter"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageCenter">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Right Alignment -->
+        <comment userInput="Stage: Check Right Alignment" stepKey="commentStageCheckRight"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageRight">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Default Alignment -->
+        <comment userInput="Stage: Check Default Alignment 2" stepKey="commentStageCheckDefault2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Left Alignment -->
+        <comment userInput="Stage: Check Left Alignment 2" stepKey="commentStageCheckLeft2"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageLeft2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Center Alignment -->
+        <comment userInput="Stage: Check Center Alignment 2" stepKey="commentStageCheckCenter2"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageCenter2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Right Alignment -->
+        <comment userInput="Stage: Check Right Alignment 2" stepKey="commentStageCheckRight2"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageRight2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <!-- Storefront: Check Default Alignment -->
+        <comment userInput="Storefront: Check Default Alignment" stepKey="commentStorefrontCheckDefault"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Left Alignment -->
+        <comment userInput="Storefront: Check Left Alignment" stepKey="commentStorefrontCheckLeft"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontLeft">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Check Center Alignment -->
+        <comment userInput="Storefront: Check Center Alignment" stepKey="commentStorefrontCheckCenter"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontCenter">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Storefront: Check Right Alignment -->
+        <comment userInput="Storefront: Check Right Alignment" stepKey="commentStorefrontCheckRight"/>
+        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontRight">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="TextAdvancedConfigurationFunctionalBorder">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Text - Advanced Configuration Functional - Border"/>
+            <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <!-- Add A Row For Each Text Border Type -->
+        <comment userInput="Add Rows" stepKey="commentAddRows"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage6">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage7">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage8">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage9">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Add Border None -->
+        <comment userInput="Add Border: None" stepKey="commentAddBorderNone"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add Border Default -->
+        <comment userInput="Add Border: Default" stepKey="commentAddBorderDefault"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Border Dotted -->
+        <comment userInput="Add Border: Dotted" stepKey="commentAddBorderDotted"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth3">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Add Border Dashed -->
+        <comment userInput="Add Border: Dashed" stepKey="commentAddBorderDashed"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDashed"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth4">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Add Border Solid -->
+        <comment userInput="Add Border: Solid" stepKey="commentAddBorderSolid"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="5"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="5"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth5">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <!-- Add Border Double -->
+        <comment userInput="Add Border: Double" stepKey="commentAddBorderDouble"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="6"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="6"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText6">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder6">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth6">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
+        <!-- Add Border Groove -->
+        <comment userInput="Add Border: Groove" stepKey="commentAddBorderGroove"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage7">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="7"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage7">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="7"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText7">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection7"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder7">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyGroove"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth7">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings7"/>
+        <!-- Add Border Ridge -->
+        <comment userInput="Add Border: Ridge" stepKey="commentAddBorderRidge"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage8">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="8"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage8">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="8"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText8">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection8"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder8">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth8">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings8"/>
+        <!-- Add Border Inset -->
+        <comment userInput="Add Border: Inset" stepKey="commentAddBorderInset"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage9">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="9"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage9">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="9"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText9">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection9"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder9">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyInset"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth9">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings9"/>
+        <!-- Add Border Outset -->
+        <comment userInput="Add Border: Inset" stepKey="commentAddBorderOutset"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage10">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="10"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage10">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="10"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText10">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection10"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder10">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyOutset"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth10">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings10"/>
+        <!-- Stage: Check Border None -->
+        <comment userInput="Stage: Check Border None" stepKey="commentStageCheckNone"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageNone">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Default -->
+        <comment userInput="Stage: Check Border Default" stepKey="commentStageCheckDefault"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border Dotted -->
+        <comment userInput="Stage: Check Border Dotted" stepKey="commentStageCheckDotted"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDotted">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border Dashed -->
+        <comment userInput="Stage: Check Border Dashed" stepKey="commentStageCheckDashed"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDashed">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Stage: Check Border Solid -->
+        <comment userInput="Stage: Check Border Solid" stepKey="commentStageCheckSolid"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageSolid">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+        <!-- Stage: Check Border Double -->
+        <comment userInput="Stage: Check Border Double" stepKey="commentStageCheckDouble"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDouble">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="6"/>
+        </actionGroup>
+        <!-- Stage: Check Border Groove -->
+        <comment userInput="Stage: Check Border Groove" stepKey="commentStageCheckGroove"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageGroove">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="7"/>
+        </actionGroup>
+        <!-- Stage: Check Border Ridge -->
+        <comment userInput="Stage: Check Border Ridge" stepKey="commentStageCheckRidge"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageRidge">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="8"/>
+        </actionGroup>
+        <!-- Stage: Check Border Inset -->
+        <comment userInput="Stage: Check Border Inset" stepKey="commentStageCheckInset"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInset">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="9"/>
+        </actionGroup>
+        <!-- Stage: Check Border Outset -->
+        <comment userInput="Stage: Check Border Outset" stepKey="commentStageCheckOutset"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOutset">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="10"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border None -->
+        <comment userInput="Stage: Check Border None" stepKey="commentStageCheckNone2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageNone2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Default -->
+        <comment userInput="Stage: Check Border Default" stepKey="commentStageCheckDefault2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border Dotted -->
+        <comment userInput="Stage: Check Border Dotted" stepKey="commentStageCheckDotted2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDotted2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border Dashed -->
+        <comment userInput="Stage: Check Border Dashed" stepKey="commentStageCheckDashed2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDashed2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Stage: Check Border Solid -->
+        <comment userInput="Stage: Check Border Solid" stepKey="commentStageCheckSolid2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageSolid2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+        <!-- Stage: Check Border Double -->
+        <comment userInput="Stage: Check Border Double" stepKey="commentStageCheckDouble2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDouble2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="6"/>
+        </actionGroup>
+        <!-- Stage: Check Border Groove -->
+        <comment userInput="Stage: Check Border Groove" stepKey="commentStageCheckGroove2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageGroove2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="7"/>
+        </actionGroup>
+        <!-- Stage: Check Border Ridge -->
+        <comment userInput="Stage: Check Border Ridge" stepKey="commentStageCheckRidge2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageRidge2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="8"/>
+        </actionGroup>
+        <!-- Stage: Check Border Inset -->
+        <comment userInput="Stage: Check Border Inset" stepKey="commentStageCheckInset2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInset2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="9"/>
+        </actionGroup>
+        <!-- Stage: Check Border Outset -->
+        <comment userInput="Stage: Check Border Outset" stepKey="commentStageCheckOutset2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOutset2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="10"/>
+        </actionGroup>
+        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <!-- Storefront: Check Default Alignment -->
+        <comment userInput="Storefront: Check Default Alignment" stepKey="commentStorefrontCheckDefault"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Border None -->
+        <comment userInput="Storefront: Check Border None" stepKey="commentStorefrontCheckNone2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontNone2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Default -->
+        <comment userInput="Storefront: Check Border Default" stepKey="commentStorefrontCheckDefault2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Dotted -->
+        <comment userInput="Storefront: Check Border Dotted" stepKey="commentStorefrontCheckDotted2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDotted2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Dashed -->
+        <comment userInput="Storefront: Check Border Dashed" stepKey="commentStorefrontCheckDashed2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDashed2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Solid -->
+        <comment userInput="Storefront: Check Border Solid" stepKey="commentStorefrontCheckSolid2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontSolid2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Double -->
+        <comment userInput="Storefront: Check Border Double" stepKey="commentStorefrontCheckDouble2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDouble2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="6"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Groove -->
+        <comment userInput="Storefront: Check Border Groove" stepKey="commentStorefrontCheckGroove2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontGroove2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="7"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Ridge -->
+        <comment userInput="Storefront: Check Border Ridge" stepKey="commentStorefrontCheckRidge2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontRidge2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="8"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Inset -->
+        <comment userInput="Storefront: Check Border Inset" stepKey="commentStorefrontCheckInset2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontInset2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="9"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Outset -->
+        <comment userInput="Storefront: Check Border Outset" stepKey="commentStorefrontCheckOutset2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontOutset2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="10"/>
+        </actionGroup>
+    </test>
+    <test name="TextAdvancedConfigurationFunctionalBorderColor">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Text - Advanced Configuration Functional - Border Color"/>
+            <description value="Tests that the Border Color attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89333"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <!-- Add A Row For Each Text Border Color Test -->
+        <comment userInput="Add Rows" stepKey="commentAddRows"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Add Border Color PlainText -->
+        <comment userInput="Add Border Color: PlainText Green" stepKey="commentAddBorderColorPlainText"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth1">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor1">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add Border Color #FF0000 -->
+        <comment userInput="Add Border Color: Hex #FF0000" stepKey="commentAddBorderColorHex"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Border Color rgb(0,0,255) -->
+        <comment userInput="Add Border Color: RGB rgb(0,0,255)" stepKey="commentAddBorderColorRGB"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth3">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor3">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Add Border Color Invalid -->
+        <comment userInput="Add Border Color: Invalid" stepKey="commentAddBorderColorInvalid"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth4">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor4">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Check Border Color Plaintext -->
+        <comment userInput="Stage: Check Border Color Plaintext" stepKey="commentStageCheckPlaintext"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStagePlaintext">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color Hex -->
+        <comment userInput="Stage: Check Border Color Hex" stepKey="commentStageCheckHex"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageHex">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color RGB -->
+        <comment userInput="Stage: Check Border Color RGB" stepKey="commentStageCheckRGB"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageRGB">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color Invalid -->
+        <comment userInput="Stage: Check Border Color Invalid" stepKey="commentStageCheckInvalid"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border Color Plaintext 2 -->
+        <comment userInput="Stage: Check Border Color Plaintext" stepKey="commentStageCheckPlaintext2"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStagePlaintext2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color Hex 2 -->
+        <comment userInput="Stage: Check Border Color Hex" stepKey="commentStageCheckHex2"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageHex2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color RGB 2 -->
+        <comment userInput="Stage: Check Border Color RGB" stepKey="commentStageCheckRGB2"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageRGB2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border Color Invalid 2 -->
+        <comment userInput="Stage: Check Border Color Invalid" stepKey="commentStageCheckInvalid2"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <!-- Storefront: Check Border Color Plaintext -->
+        <comment userInput="Storefront: Check Border Color Plaintext" stepKey="commentStorefrontCheckPlaintext"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontPlaintext">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Color Hex -->
+        <comment userInput="Storefront: Check Border Color Hex" stepKey="commentStorefrontCheckHex"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontHex">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Color RGB -->
+        <comment userInput="Storefront: Check Border Color RGB" stepKey="commentStorefrontCheckRGB"/>
+        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontRGB">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Color Invalid -->
+        <comment userInput="Storefront: Check Border Color Invalid" stepKey="commentStorefrontCheckInvalid"/>
+        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontInvalid">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!--todo: Border Width -->
+        <!--todo: Border Radius -->
+        <!--todo: CSS Classes -->
+        <!--todo: Margins -->
+        <!--todo: Paddings -->
+        <!--todo: All -->
+        <!--todo: Check Uniqueness for each content type -->
+        <!--todo: Smoke Per Content Type -->
+        <!--todo: Fix failing tests that need updating -->
+    </test>
+</tests>

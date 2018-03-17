@@ -121,7 +121,13 @@
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
         <element name="panelFieldControl" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
         <element name="panelFieldOptions" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/option' parameterized="true"/>
-        <element name="panelFieldPlaceholderText" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @placeholder="{{arg3}}"]' parameterized="true"/>
+        <!--todo: move these to main action section-->
+        <element name="panelFieldPlaceholderText" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @placeholder="{{arg3}}"]' parameterized="true"/>
+        <element name="panelFieldNoPlaceholderText" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@placeholder)]' parameterized="true"/>
+        <element name="panelFieldAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter' and .='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldNoAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter']" parameterized="true"/>
+        <element name="panelFieldAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter' and .='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter' and .='{{arg2}}']" parameterized="true"/>
         <element name="fileUploadButton" type="button" selector='.file-uploader-button'/>
         <element name="uploadBackgroundImage" type="input" selector='.admin__field-control .file-uploader-area input[name="{{arg1}}"]' parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
@@ -186,6 +192,9 @@
         <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
         <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
         <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="cssClassesNote" type="text" selector="//div[@data-index='css_classes']//span[.='Space separated list of classes.']"/>
+        <element name="marginNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Margin']"/>
+        <element name="paddingNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Padding']"/>
         <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
         <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
         <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>

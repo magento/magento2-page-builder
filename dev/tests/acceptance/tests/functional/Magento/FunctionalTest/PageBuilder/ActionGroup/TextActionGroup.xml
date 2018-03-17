@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillTextFieldOnTextEditPanel">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{TextOnConfiguration.textIFrame}}" stepKey="waitForIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.textIFrameId}}" stepKey="switchToIFrame"/>
+        <fillField selector="{{TextOnConfiguration.textInputInIFrame}}" userInput="{{property.value}}" stepKey="fillField"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
+        <switchToIFrame selector="" stepKey="exitIFrame"/>
+    </actionGroup>
+    <actionGroup name="validateTextActiveAlignment">
+        <arguments>
+            <argument name="page" defaultValue="TextOnStage"/>
+            <argument name="text" defaultValue="PageBuilderTextContentBlockDefault"/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.textInstanceByIndex(index)}}" stepKey="waitForTextVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceAlignmentByIndex(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderByIndex(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderRadiusByIndex(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceMarginByIndex(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.textInstancePaddingByIndex(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+        <see userInput="{{text.value}}" selector="{{page.textInstanceTextByIndex(index)}}" stepKey="seeText"/>
+    </actionGroup>
+    <actionGroup name="validateTextNoAlignment">
+        <arguments>
+            <argument name="page" defaultValue="TextOnStage"/>
+            <argument name="text" defaultValue="PageBuilderTextContentBlockDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.textInstanceByIndex(index)}}" stepKey="waitForTextVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceNoAlignmentByIndex(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderByIndex(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderRadiusByIndex(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceMarginByIndex(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.textInstancePaddingByIndex(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+        <see userInput="{{text.value}}" selector="{{page.textInstanceTextByIndex(index)}}" stepKey="seeText"/>
+    </actionGroup>
+    <actionGroup name="validateTextActiveBorderWithColor">
+        <arguments>
+            <argument name="page" defaultValue="TextOnStage"/>
+            <argument name="text" defaultValue="PageBuilderTextContentBlockDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.textInstanceByIndex(index)}}" stepKey="waitForTextVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceNoAlignmentByIndex(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderWithColorByIndex(index, border.value, borderColor.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceBorderRadiusByIndex(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.textInstanceMarginByIndex(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.textInstancePaddingByIndex(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+        <see userInput="{{text.value}}" selector="{{page.textInstanceTextByIndex(index)}}" stepKey="seeText"/>
+    </actionGroup>
+    <!--todo: finish new action groups-->
+        <!--<actionGroup name="validateTextActiveBorderWithSize">-->
+        <!--<arguments>-->
+            <!--<argument name="page" defaultValue="TextOnStage"/>-->
+            <!--<argument name="text" defaultValue="PageBuilderTextContentBlockDefault"/>-->
+            <!--<argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>-->
+            <!--<argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>-->
+            <!--<argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>-->
+            <!--<argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>-->
+            <!--<argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>-->
+            <!--<argument name="index" defaultValue="1" type="string"/>-->
+        <!--</arguments>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceByIndex(index)}}" stepKey="waitForTextVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceAlignmentByIndex(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceBorderByIndex(index, border.value)}}" stepKey="waitForBorderVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceBorderRadiusByIndex(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceMarginByIndex(index, margin.value)}}" stepKey="waitForMarginVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstancePaddingByIndex(index, padding.value)}}" stepKey="waitForPaddingVisible"/>-->
+        <!--<see userInput="{{text.value}}" selector="{{page.textInstanceTextByIndex(index)}}" stepKey="seeText"/>-->
+    <!--</actionGroup>-->
+    <!--<actionGroup name="validateTextActiveBorderWithSizeAndColor">-->
+        <!--<arguments>-->
+            <!--<argument name="page" defaultValue="TextOnStage"/>-->
+            <!--<argument name="text" defaultValue="PageBuilderTextContentBlockDefault"/>-->
+            <!--<argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>-->
+            <!--<argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>-->
+            <!--<argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>-->
+            <!--<argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>-->
+            <!--<argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>-->
+            <!--<argument name="index" defaultValue="1" type="string"/>-->
+        <!--</arguments>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceByIndex(index)}}" stepKey="waitForTextVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceAlignmentByIndex(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceBorderByIndex(index, border.value)}}" stepKey="waitForBorderVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceBorderRadiusByIndex(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstanceMarginByIndex(index, margin.value)}}" stepKey="waitForMarginVisible"/>-->
+        <!--<waitForElementVisible selector="{{page.textInstancePaddingByIndex(index, padding.value)}}" stepKey="waitForPaddingVisible"/>-->
+        <!--<see userInput="{{text.value}}" selector="{{page.textInstanceTextByIndex(index)}}" stepKey="seeText"/>-->
+    <!--</actionGroup>-->
+</actionGroups>

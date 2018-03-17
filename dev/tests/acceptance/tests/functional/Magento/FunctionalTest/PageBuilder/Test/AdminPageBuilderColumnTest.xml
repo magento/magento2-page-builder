@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82860"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -44,6 +45,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82861"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -82,6 +84,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82227"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -143,6 +146,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -159,7 +163,7 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <waitForElementVisible time="5" selector="{{PageBuilderColumnSection.empty}}" stepKey="waitForEmptyColumn"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.empty}}" stepKey="seeEmptyColumn"/>
@@ -172,6 +176,8 @@
             <description value="A user should be able to edit the width of a column and see it update."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87273"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
             <!-- Test skipped as we can't reliably add a 3rd column -->
             <group value="skip"/>
         </annotations>
@@ -190,14 +196,14 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <wait time="2" stepKey="waitBefore"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.displayLabel('3/6')}}" stepKey="findBeforeLabel"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
+            <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <wait time="2" stepKey="waitAfter"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.displayLabel('1/6')}}" stepKey="findAfterLabel"/>
@@ -211,6 +217,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82862"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -230,7 +237,6 @@
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="seeEditForm"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
@@ -248,6 +254,7 @@
             <description value="A user should be able to preview column configuration settings."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -296,7 +303,7 @@
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
@@ -335,6 +342,7 @@
             <description value="Validate selected column settings appear on the frontend"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -354,7 +362,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -386,7 +393,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -416,6 +423,8 @@
             <title value="Column appearance settings show on frontend"/>
             <description value="Validate column appearance settings appear on the frontend"/>
             <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
             <group value="skip"/>
         </annotations>
         <before>
@@ -433,17 +442,16 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
+            <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
@@ -454,7 +462,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearancePropertyCentered">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -466,7 +474,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -490,6 +498,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value=""/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -515,7 +524,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -564,7 +572,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderAppearanceMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -594,6 +602,7 @@
             <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -612,7 +621,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <wait time="1" stepKey="wait3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
@@ -632,6 +640,7 @@
             <description value="Validate background image appears on the frontend"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -675,6 +684,7 @@
             <description value="Validate column background color is preserved on edit"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -695,7 +705,6 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
@@ -703,12 +712,11 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderSecondRowInStage" />
+            <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn1"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearanceProperty1">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
@@ -722,7 +730,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAppearanceProperty2">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -737,7 +745,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
@@ -786,7 +794,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow2" />
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderColumn2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -819,6 +827,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -846,13 +855,13 @@
 
         <!-- Check for alignment -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Check for border -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderDefaultProperty.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertDefaultBorderValue"/>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyNone.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertDefaultBorderValue"/>
         <!-- Check for border colour -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderColorProperty">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
@@ -862,10 +871,10 @@
         </actionGroup>
         <!-- Check for border width -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderWidthProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderWidthPropertyIsDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <!-- Check for border radius -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
@@ -889,10 +898,10 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <!-- Validate the default values in the fields -->
-        <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderWidthDefaultValue"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderWidthDefaultValue"/>
 
         <!-- Add test data into form -->
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
@@ -908,7 +917,7 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
@@ -927,7 +936,7 @@
         <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentProperty.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInColumn"/>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInColumn"/>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderSizeSavedInColumn"/>
@@ -960,6 +969,8 @@
             <description value="Removing a column distributes column widths"/>
             <severity value="CRITICAL"/>
             <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
             <group value="skip"/>
         </annotations>
         <before>
@@ -976,12 +987,12 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage" />
+            <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
@@ -1001,6 +1012,7 @@
             <description value="Validate columns are the same height on the frontend"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1016,22 +1028,22 @@
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstRowInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading1ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading2ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading3ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTarget" value="PageBuilderFirstColumnInStage"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
         <wait time="1" stepKey="wait1"/>
@@ -1048,6 +1060,7 @@
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1122,7 +1135,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />

@@ -188,18 +188,18 @@
         <assertEmpty actual="getTextFromCSSClassesAttribute" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute" stepKey="assertGetTextFromCSSClassesAttribute"/>
         <!-- Alignment -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAlignmentAttribute">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateAlignmentAttributeNotRequired">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateAlignmentAttributeNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAlignmentAttributeValue">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentDefaultProperty.section, PageBuilderAdvancedAlignmentDefaultProperty.fieldName)}}" userInput="value" stepKey="grabAlignmentOptions"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="grabAlignmentOptions"/>
         <assertCount actual="grabAlignmentOptions" actualType="variable" expected="4" expectedType="int" stepKey="assertAlignmentOptions"/>
         <!-- Margins and Padding -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMarginsAndPaddingAttribute">
@@ -225,7 +225,7 @@
         <assertEmpty actual="getTextFromCSSClassesAttribute2" actualType="variable" message="Text field was not empty. Had text: $getTextFromCSSClassesAttribute2" stepKey="assertGetTextFromCSSClassesAttribute2"/>
         <!-- Alignment -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAlignmentAttributeValue2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <!-- Margins and Padding -->
         <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeMarginsAndPaddingValues2">
@@ -552,7 +552,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
@@ -579,7 +579,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
@@ -593,7 +593,7 @@
         <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="seeMapWithPin"/>
         <seeElement selector="{{MapOnStage.mapHeight(PageBuilderMapHeightProperty350.value)}}" stepKey="seeMapHeight"/>
         <seeElement selector="{{MapOnStage.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidth"/>
-        <seeElement selector="{{MapOnStage.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignment"/>
+        <seeElement selector="{{MapOnStage.mapAlignment(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeMapAlignment"/>
         <seeElement selector="{{MapOnStage.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMargin"/>
         <seeElement selector="{{MapOnStage.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPadding"/>
         <!-- Validate Storefront -->
@@ -603,7 +603,7 @@
         <seeElement selector="{{MapOnFrontend.mapZoom(PageBuilderMapPinDefaultProperty.zoom)}}" stepKey="seeMapZoomOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidthOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapHeight(PageBuilderMapHeightProperty350.value)}}" stepKey="seeMapHeightOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignmentOnFrontend"/>
+        <seeElement selector="{{MapOnFrontend.mapAlignment(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeMapAlignmentOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapCssClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seeMapCssClassOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMarginOnFrontend"/>
         <seeElement selector="{{MapOnFrontend.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPaddingOnFrontend"/>
@@ -665,7 +665,7 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterMarginsAndPaddings">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
@@ -681,7 +681,7 @@
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
+        <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentPropertyLeft.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
         <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
             <argument name="contentIndex" value="PageBuilderMapIndex2"/>
@@ -696,7 +696,7 @@
         <!-- Scroll To Duplicate -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderMapIndex2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
         <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="seeMapPinOnEditPanel"/>
@@ -717,7 +717,7 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="seeTextAlignment">
-        <argument name="property" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+        <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeMarginsAndPaddings">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
@@ -727,7 +727,7 @@
         <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Storefront -->
-        <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentPropertyLeft.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
         <actionGroup ref="validateMapToolTipStoreFront" stepKey="validateMapToolTipStoreFront">
             <argument name="property" value="PageBuilderMapMovedPinProperty"/>
             <argument name="contentIndex" value="PageBuilderMapIndex2"/>

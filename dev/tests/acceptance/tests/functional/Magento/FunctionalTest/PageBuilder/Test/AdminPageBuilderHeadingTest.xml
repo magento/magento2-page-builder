@@ -41,14 +41,14 @@
         </actionGroup>
         <!-- Verify Default Heading in Stage -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
-        <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder"/>
+        <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderPropertyNone.value, '1')}}" stepKey="seeStageHeadingStyleBorder"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Verify Default Heading in Stage After Page Save -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
-        <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorder2"/>
+        <seeElement selector="{{HeadingOnStage.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderPropertyNone.value, '1')}}" stepKey="seeStageHeadingStyleBorder2"/>
         <seeElement selector="{{HeadingOnStage.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, '1')}}" stepKey="seeStageHeadingStyleBorderRadius2"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -56,7 +56,7 @@
         <!-- Verify Default Heading in Storefront -->
         <waitForElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
-        <seeElementInDOM selector="{{HeadingOnFrontend.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderDefaultProperty.value,'1')}}" stepKey="seeStorefrontBorderInDOM"/>
+        <seeElementInDOM selector="{{HeadingOnFrontend.headingBorder(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderPropertyNone.value,'1')}}" stepKey="seeStorefrontBorderInDOM"/>
         <seeElementInDOM selector="{{HeadingOnFrontend.headingBorderRadius(PageBuilderHeadingTypeDefaultProperty.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value,'1')}}" stepKey="seeStorefrontBorderRadiusInDOM"/>
         <dontSeeElement selector="{{HeadingOnFrontend.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeStorefrontHeading"/>
     </test>
@@ -172,34 +172,34 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeTextAlignmentAttribute">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateTextAlignmentAttributeNotRequired">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateTextAlignmentAttributeNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTextAlignmentAttributeValue">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentDefaultProperty.section, PageBuilderAdvancedAlignmentDefaultProperty.fieldName)}}" userInput="value" stepKey="grabTextAlignmentOptions"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="grabTextAlignmentOptions"/>
         <assertCount actual="grabTextAlignmentOptions" actualType="variable" expected="4" expectedType="int" stepKey="assertTextAlignmentOptions"/>
         <!-- Border -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderAttributeNotRequired">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderAttributeNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <!-- Refactor in MAGETWO-88795 -->
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderDefaultProperty.section, PageBuilderAdvancedBorderDefaultProperty.fieldName)}}" userInput="value" stepKey="grabBorderOptions"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="grabBorderOptions"/>
         <assertCount actual="grabBorderOptions" actualType="variable" expected="10" expectedType="int" stepKey="assertBorderOptions"/>
         <!-- Border Color -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderColorAttribute">
@@ -293,11 +293,11 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Text Alignment -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTextAlignmentAttributeValue2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <!-- Border -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue2">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <!-- Border Color -->
         <!-- Refactor in MAGETWO-88795 -->
@@ -840,7 +840,7 @@
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterTextAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
@@ -865,11 +865,11 @@
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeading">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{HeadingOnStage.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedAlignmentProperty.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateHeadingStage"/>
+        <seeElement selector="{{HeadingOnStage.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateHeadingStage"/>
         <!-- Verify Edit Panel Values -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderHeadingIndex2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingText">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -879,7 +879,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="seeTextAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
@@ -904,7 +904,7 @@
         <amOnPage url="heading{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <!-- Verify Storefront -->
-        <waitForElementVisible selector="{{HeadingOnFrontend.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedCssClassesProperty.value, PageBuilderAdvancedAlignmentProperty.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateHeadingStorefront"/>
+        <waitForElementVisible selector="{{HeadingOnFrontend.headingAll(PageBuilderHeadingTypeProperty_H3.value, PageBuilderHeadingTextProperty.value, PageBuilderAdvancedCssClassesProperty.value, PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderRadiusProperty12.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateHeadingStorefront"/>
     </test>
     <test name="HeadingDelete">
         <annotations>
