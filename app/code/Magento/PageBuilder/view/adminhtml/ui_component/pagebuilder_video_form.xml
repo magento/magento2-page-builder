@@ -35,12 +35,7 @@
         <settings>
             <label/>
         </settings>
-        <field name="src" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                </item>
-            </argument>
+        <field name="video_source" formElement="input">
             <settings>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
@@ -51,10 +46,9 @@
                 <tooltip>
                     <description translate="true">Please enter the full embed URL for the video e.g. https://www.youtube.com/embed/slOtnjsbff0. You can retrieve this URL via the "Share" option under the video.</description>
                 </tooltip>
-                <dataScope>src</dataScope>
             </settings>
         </field>
-        <field name="width" formElement="input">
+        <field name="video_width" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">block</item>
@@ -63,12 +57,11 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Width</label>
-                <dataScope>width</dataScope>
                 <addAfter>px or %</addAfter>
                 <notice translate="true">Example: 50px or 100%</notice>
             </settings>
         </field>
-        <field name="height" formElement="input">
+        <field name="video_height" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">block</item>
@@ -77,7 +70,6 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Height</label>
-                <dataScope>height</dataScope>
                 <addAfter>px or %</addAfter>
                 <notice translate="true">Example: 50px or 100%</notice>
             </settings>

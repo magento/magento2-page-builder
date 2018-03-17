@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import Block from "./block";
 
 export default class Video extends Block {
@@ -14,7 +15,11 @@ export default class Video extends Block {
      */
     public getVideoAttributes() {
         const data = this.getData();
-        return this.getAttributes({src: this.getVideoUrl(data.src)});
+        return {
+            height: data.video_height || null,
+            src: this.getVideoUrl(data.video_source),
+            width: data.video_width || null,
+        };
     }
 
     /**
