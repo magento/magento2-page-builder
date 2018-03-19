@@ -16,7 +16,7 @@ import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewBlock {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
-    public activeSlide: KnockoutObservable<number> = ko.observable();
+    public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
     private childSubscribe: KnockoutSubscription;
 

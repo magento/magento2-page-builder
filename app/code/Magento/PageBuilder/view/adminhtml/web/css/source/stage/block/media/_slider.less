@@ -76,7 +76,7 @@
                     background: #fffbbb;
                     border: 1px solid #afadac;
                     border-radius: 1px;
-                    bottom: 110%;
+                    bottom: 97.5%;
                     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
                     font-size: 14px;
                     left: 50%;
@@ -114,23 +114,57 @@
                     display: block;
                     height: 100%;
                     position: relative;
-                    width: 100%;
                     transition: all .3s;
+                    width: 100%;
+
+                    &:active {
+                        cursor: grabbing;
+                        cursor: -moz-grabbing;
+                        cursor: -webkit-grabbing;
+                    }
 
                     &:after {
                         background: white;
                         border: 1px solid #ccc;
                         border-radius: 10px;
                         content: ' ';
-                        cursor: pointer;
                         display: inline-block;
-                        height: 14px;
+                        height: 12px;
                         left: 50%;
                         position: absolute;
                         top: 50%;
                         transform: translate(-50%, -50%);
                         transition: all .3s;
-                        width: 14px;
+                        width: 12px;
+                    }
+
+                    &:before {
+                        .abs-icon;
+                        bottom: 0;
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
+                        color: @color-dark-gray0;
+                        content: @icon-gripper__content;
+                        display: block;
+                        font-size: 12px;
+                        left: 50%;
+                        opacity: 0;
+                        position: absolute;
+                        transform: rotate(90deg) translateY(50%);
+                        transition: all .3s;
+                    }
+
+                    &:hover:before {
+                        opacity: 1;
+                        transition: all .3s;
+                    }
+
+                    &:active:before {
+                        cursor: grabbing;
+                        cursor: -moz-grabbing;
+                        cursor: -webkit-grabbing;
                     }
                 }
 
