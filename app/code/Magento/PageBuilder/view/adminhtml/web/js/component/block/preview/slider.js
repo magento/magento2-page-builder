@@ -25,6 +25,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
       _this.childSubscribe = void 0;
+      _this.blockHeightReset = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
           // Force the height to ensure no weird paint effects / content jumps are produced
@@ -55,10 +56,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
           (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
             _this.setActiveSlide(nextSlide);
           }).on("afterChange", function () {
-            (0, _jquery)(_this.element).css({
-              height: "",
-              overflow: ""
-            });
+            if (!_this.blockHeightReset) {
+              (0, _jquery)(_this.element).css({
+                height: "",
+                overflow: ""
+              });
+              _this.blockHeightReset = null;
+            }
           });
         }
       }, 10);
@@ -144,17 +148,22 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
      *
      * @param {number} slideIndex
      * @param {boolean} dontAnimate
+     * @param {boolean} force
      */
 
 
-    _proto.navigateToSlide = function navigateToSlide(slideIndex, dontAnimate) {
+    _proto.navigateToSlide = function navigateToSlide(slideIndex, dontAnimate, force) {
       if (dontAnimate === void 0) {
         dontAnimate = false;
       }
 
+      if (force === void 0) {
+        force = false;
+      }
+
       (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
       this.setActiveSlide(slideIndex);
-      this.setFocusedSlide(slideIndex);
+      this.setFocusedSlide(slideIndex, force);
     };
     /**
      * After child render record element
@@ -178,6 +187,23 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
         height: (0, _jquery)(this.element).outerHeight(),
         overflow: "hidden"
       });
+    };
+    /**
+     * On sort start force the container height, also focus to that slide
+     *
+     * @param {Event} event
+     * @param {JQueryUI.SortableUIParams} params
+     */
+
+
+    _proto.onSortStart = function onSortStart(event, params) {
+      this.forceContainerHeight();
+
+      if (this.activeSlide() !== params.item.index() || this.focusedSlide() !== params.item.index()) {
+        this.navigateToSlide(params.item.index(), false, true); // As we've completed a navigation request we need to ensure we don't remove the forced height
+
+        this.blockHeightReset = true;
+      }
     };
     /**
      * Build the slack config object

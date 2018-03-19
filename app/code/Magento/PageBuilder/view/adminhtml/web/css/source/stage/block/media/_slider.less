@@ -141,12 +141,12 @@
                     &:before {
                         .abs-icon;
                         bottom: 0;
+                        color: @color-dark-gray0;
+                        content: @icon-gripper__content;
                         cursor: move; /* fallback if grab cursor is unsupported */
                         cursor: grab;
                         cursor: -moz-grab;
                         cursor: -webkit-grab;
-                        color: @color-dark-gray0;
-                        content: @icon-gripper__content;
                         display: block;
                         font-size: 12px;
                         left: 50%;
@@ -156,15 +156,32 @@
                         transition: all .3s;
                     }
 
-                    &:hover:before {
-                        opacity: 1;
-                        transition: all .3s;
-                    }
-
                     &:active:before {
                         cursor: grabbing;
                         cursor: -moz-grabbing;
                         cursor: -webkit-grabbing;
+                    }
+                }
+
+                &.ui-sortable-helper .navigation-dot-anchor {
+                    opacity: .65;
+                }
+
+                &.sortable-placeholder {
+                    &:after {
+                        background: #373330;
+                        border: none;
+                        border-radius: 10px;
+                        content: ' ';
+                        display: inline-block;
+                        height: 12px;
+                        left: 50%;
+                        opacity: .15;
+                        position: absolute;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        transition: all .3s;
+                        width: 12px;
                     }
                 }
 
@@ -186,6 +203,11 @@
                     .tooltip-content {
                         display: none;
                     }
+
+                    .navigation-dot-anchor:before {
+                        opacity: 1;
+                        transition: all .3s;
+                    }
                 }
 
                 &:hover {
@@ -200,12 +222,6 @@
                     &.active .navigation-dot-anchor:after {
                         background: #1c1918;
                         border: none;
-                    }
-
-                    .navigation-handle {
-                        opacity: 1;
-                        transition: visibility 0s, opacity .3s;
-                        visibility: visible;
                     }
                 }
             }

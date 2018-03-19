@@ -23,6 +23,7 @@ export default class Slider extends PreviewBlock {
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
     private childSubscribe: KnockoutSubscription;
+    private blockHeightReset: boolean;
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -61,18 +62,19 @@ export default class Slider extends PreviewBlock {
             );
 
             // Update our KO pointer to the active slide on change
-            $(this.element).on("beforeChange", (
-                event: Event,
-                slick: {},
-                currentSlide: any,
-                nextSlide: any,
-            ) => {
-                this.setActiveSlide(nextSlide);
-            }).on("afterChange", () => {
-                $(this.element).css({
-                    height: "",
-                    overflow: "",
-                });
+            $(this.element).on(
+                "beforeChange",
+                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                    this.setActiveSlide(nextSlide);
+                },
+            ).on("afterChange", () => {
+                if (!this.blockHeightReset) {
+                    $(this.element).css({
+                        height: "",
+                        overflow: "",
+                    });
+                    this.blockHeightReset = null;
+                }
             });
         }
     }, 10);
@@ -148,11 +150,12 @@ export default class Slider extends PreviewBlock {
      *
      * @param {number} slideIndex
      * @param {boolean} dontAnimate
+     * @param {boolean} force
      */
-    public navigateToSlide(slideIndex: number, dontAnimate: boolean = false): void {
+    public navigateToSlide(slideIndex: number, dontAnimate: boolean = false, force: boolean = false): void {
         $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
         this.setActiveSlide(slideIndex);
-        this.setFocusedSlide(slideIndex);
+        this.setFocusedSlide(slideIndex, force);
     }
 
     /**
@@ -173,6 +176,21 @@ export default class Slider extends PreviewBlock {
             height: $(this.element).outerHeight(),
             overflow: "hidden",
         });
+    }
+
+    /**
+     * On sort start force the container height, also focus to that slide
+     *
+     * @param {Event} event
+     * @param {JQueryUI.SortableUIParams} params
+     */
+    public onSortStart(event: Event, params: JQueryUI.SortableUIParams): void {
+        this.forceContainerHeight();
+        if (this.activeSlide() !== params.item.index() || this.focusedSlide() !== params.item.index()) {
+            this.navigateToSlide(params.item.index(), false, true);
+            // As we've completed a navigation request we need to ensure we don't remove the forced height
+            this.blockHeightReset = true;
+        }
     }
 
     /**
