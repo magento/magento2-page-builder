@@ -235,7 +235,7 @@ export default class Slide extends Block {
         });
         const removeClasses = ["remove-structural"];
         let removeFn = this.onOptionRemove;
-        if (this.parent.children().length < 2) {
+        if (this.parent.children().length <= 1) {
             removeFn = () => { return; };
             removeClasses.push("disabled");
         }

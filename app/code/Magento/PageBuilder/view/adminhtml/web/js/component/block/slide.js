@@ -266,7 +266,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
       var removeClasses = ["remove-structural"];
       var removeFn = this.onOptionRemove;
 
-      if (this.parent.children().length < 2) {
+      if (this.parent.children().length <= 1) {
         removeFn = function removeFn() {
           return;
         };
