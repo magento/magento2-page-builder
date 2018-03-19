@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "./appearance-config"], function (_loader, _elementConverterPool, _appearanceConfig) {
+define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "./appearance-config"], function (_loader, _converterPool, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,14 +10,7 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
    */
   function create(contentType) {
     return new Promise(function (resolve) {
-      var styleMapperCodes = [];
-      var styleMappers = [];
-      var styleMapperPreviewCodes = [];
-      var styleMappersPreview = [];
-      var attributeMapperCodes = [];
-      var attributeMappers = [];
-      var attributeMapperPreviewCodes = [];
-      var attributeMappersPreview = [];
+      var converters = [];
       var config = (0, _appearanceConfig)(contentType, undefined);
 
       if (config.data_mapping !== undefined && config.data_mapping.elements !== undefined) {
@@ -25,14 +18,16 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
           if (config.data_mapping.elements[el].style !== undefined) {
             for (var i = 0; i < config.data_mapping.elements[el].style.length; i++) {
               var styleProperty = config.data_mapping.elements[el].style[i];
+              var converter = styleProperty.converter ? styleProperty.converter : null;
 
-              if (styleProperty.converter !== "" && styleProperty.converter !== null || styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null) {
-                var mapper = styleProperty.converter !== "" && styleProperty.converter !== null ? styleProperty.converter : null;
-                styleMapperCodes.push(styleProperty.var + styleProperty.name);
-                styleMappers.push(mapper);
-                var mapperPreview = styleProperty.preview_converter !== "" && styleProperty.preview_converter !== null ? styleProperty.preview_converter : mapper ? mapper : null;
-                styleMapperPreviewCodes.push(styleProperty.var + styleProperty.name);
-                styleMappersPreview.push(mapperPreview);
+              if (converters.indexOf(converter) == -1 && !_converterPool.getConverter(converter)) {
+                converters.push(converter);
+              }
+
+              var previewConverter = styleProperty.preview_converter ? styleProperty.preview_converter : null;
+
+              if (converters.indexOf(previewConverter) == -1 && !_converterPool.getConverter(previewConverter)) {
+                converters.push(previewConverter);
               }
             }
           }
@@ -41,57 +36,34 @@ define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool", "
             for (var _i = 0; _i < config.data_mapping.elements[el].attributes.length; _i++) {
               var attributeProperty = config.data_mapping.elements[el].attributes[_i];
 
-              if (attributeProperty.converter !== "" && attributeProperty.converter !== null || attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null) {
-                var _mapper = attributeProperty.converter !== "" && attributeProperty.converter !== null ? attributeProperty.converter : null;
+              var _converter = attributeProperty.converter ? attributeProperty.converter : null;
 
-                attributeMapperCodes.push(attributeProperty.var + attributeProperty.name);
-                attributeMappers.push(_mapper);
+              if (converters.indexOf(_converter) == -1 && !_converterPool.getConverter(_converter)) {
+                converters.push(_converter);
+              }
 
-                var _mapperPreview = attributeProperty.preview_converter !== "" && attributeProperty.preview_converter !== null ? attributeProperty.preview_converter : _mapper ? _mapper : null;
+              var _previewConverter = attributeProperty.preview_converter ? attributeProperty.preview_converter : null;
 
-                attributeMapperPreviewCodes.push(attributeProperty.var + attributeProperty.name);
-                attributeMappersPreview.push(_mapperPreview);
+              if (converters.indexOf(_previewConverter) == -1 && !_converterPool.getConverter(_previewConverter)) {
+                converters.push(_previewConverter);
               }
             }
           }
         }
       }
 
-      var mappersLoaded = [getConvertersLoadedPromise(styleMapperCodes, styleMappers), getConvertersLoadedPromise(styleMapperPreviewCodes, styleMappersPreview), getConvertersLoadedPromise(attributeMapperCodes, attributeMappers), getConvertersLoadedPromise(attributeMapperPreviewCodes, attributeMappersPreview)];
-      Promise.all(mappersLoaded).then(function (loadedMappers) {
-        var styleMappers = loadedMappers[0],
-            styleMappersPreview = loadedMappers[1],
-            attributeMappers = loadedMappers[2],
-            attributeMappersPreview = loadedMappers[3];
-        resolve(new _elementConverterPool(styleMappers, styleMappersPreview, attributeMappers, attributeMappersPreview));
-      }).catch(function (error) {
-        console.error(error);
-      });
-    });
-  }
-  /**
-   * Get converters loaded promise
-   *
-   * @param converterCodes
-   * @param converters
-   * @returns {Promise<any>}
-   */
+      return new Promise(function (resolve) {
+        (0, _loader)(converters, function () {
+          for (var _len = arguments.length, loadedConverters = new Array(_len), _key = 0; _key < _len; _key++) {
+            loadedConverters[_key] = arguments[_key];
+          }
 
+          for (var _i2 = 0; _i2 < converters.length; _i2++) {
+            _converterPool.registerConverter(converters[_i2], new loadedConverters[_i2]());
+          }
 
-  function getConvertersLoadedPromise(converterCodes, converters) {
-    return new Promise(function (resolve) {
-      (0, _loader)(converters, function () {
-        var result = {};
-
-        for (var _len = arguments.length, convertersLoaded = new Array(_len), _key = 0; _key < _len; _key++) {
-          convertersLoaded[_key] = arguments[_key];
-        }
-
-        for (var i = 0; i < converterCodes.length; i++) {
-          result[converterCodes[i]] = new convertersLoaded[i]();
-        }
-
-        resolve(result);
+          resolve(_converterPool);
+        });
       });
     });
   }

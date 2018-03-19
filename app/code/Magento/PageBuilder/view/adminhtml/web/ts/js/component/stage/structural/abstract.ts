@@ -39,7 +39,6 @@ export default class Structural extends EditableArea implements StructuralInterf
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     public data = {};
-    public elementConverterPool: ElementConverterPool;
     public converterPool: ConverterPool;
 
     /**
@@ -48,21 +47,18 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
-     * @param elementConverterPool
      * @param converterPool
      */
     constructor(
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
-        elementConverterPool: ElementConverterPool,
         converterPool: ConverterPool,
     ) {
         super(stage);
         this.setChildren(this.children);
         this.parent = parent;
         this.config = config;
-        this.elementConverterPool = elementConverterPool;
         this.converterPool = converterPool;
 
         // Create a new instance of edit for our editing needs
@@ -202,12 +198,11 @@ export default class Structural extends EditableArea implements StructuralInterf
         const config = appearanceConfig(this.config.name, data["appearance"]).data_mapping.elements;
         const convertersConfig = appearanceConfig(this.config.name, data["appearance"]).data_mapping.converters;
 
-        for (const key in this.converterPool.getConverters()) {
-            for (let i = 0; i < convertersConfig.length; i++) {
-                if (convertersConfig[i].name === key) {
-                    data = this.converterPool.getConverters()[key].beforeWrite(data, convertersConfig[i].config);
-                }
-            }
+        for (let i = 0; i < convertersConfig.length; i++) {
+            data = this.converterPool.getConverter(convertersConfig[i].component).beforeWrite(
+                data,
+                convertersConfig[i].config
+            );
         }
 
         let result = {};
@@ -229,14 +224,22 @@ export default class Structural extends EditableArea implements StructuralInterf
         const result = {};
         for (let i = 0; i < config.style.length; i++) {
             const styleProperty = config.style[i];
-            let value = data[styleProperty.var];
-            const mapper = styleProperty.var + styleProperty.name;
-            if (mapper in this.elementConverterPool.getStyleConverters(area)) {
-                value = this.elementConverterPool.getStyleConverters(area)[mapper].toDom(
-                    value,
-                    styleProperty.name,
-                    data,
-                );
+            let value = "";
+            if (!!styleProperty.static) {
+                value = styleProperty.value;
+            } else {
+                value = data[styleProperty.var];
+                let converter = styleProperty.converter;
+                if ("preview" === area && styleProperty.preview_converter) {
+                    converter = styleProperty.preview_converter;
+                }
+                if (this.converterPool.getConverter(converter)) {
+                    value = this.converterPool.getConverter(converter).toDom(
+                        value,
+                        styleProperty.name,
+                        data,
+                    );
+                }
             }
             result[fromSnakeToCamelCase(styleProperty.name)] = value;
         }
@@ -283,9 +286,12 @@ export default class Structural extends EditableArea implements StructuralInterf
                 continue;
             }
             let value = data[attribute.var];
-            const mapper = attribute.var + attribute.name;
-            if (mapper in this.elementConverterPool.getAttributeConverters(area)) {
-                value = this.elementConverterPool.getAttributeConverters(area)[mapper].toDom(value, attribute.var, data);
+            let converter = attribute.converter;
+            if ("preview" === area && attribute.preview_converter) {
+                converter = attribute.preview_converter;
+            }
+            if (this.converterPool.getConverter(converter)) {
+                value = this.converterPool.getConverter(converter).toDom(value, attribute.var, data);
             }
             result[attribute.name] = value;
         }

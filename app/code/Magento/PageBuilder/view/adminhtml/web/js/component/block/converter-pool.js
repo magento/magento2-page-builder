@@ -7,20 +7,25 @@ define([], function () {
   var ConverterPool =
   /*#__PURE__*/
   function () {
-    function ConverterPool(converters) {
-      this.converters = void 0;
-      this.converters = converters;
+    function ConverterPool() {
+      this.converters = {};
     }
 
     var _proto = ConverterPool.prototype;
 
-    _proto.getConverters = function getConverters() {
-      return this.converters;
+    _proto.getConverter = function getConverter(name) {
+      return this.converters[name] !== undefined ? this.converters[name] : false;
+    };
+
+    _proto.registerConverter = function registerConverter(name, converter) {
+      this.converters[name] = converter;
     };
 
     return ConverterPool;
   }();
 
-  return ConverterPool;
+  var _default = new ConverterPool();
+
+  return _default;
 });
 //# sourceMappingURL=converter-pool.js.map

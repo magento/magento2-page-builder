@@ -3,14 +3,16 @@
  * See COPYING.txt for license details.
  */
 
-export default class ConverterPool {
-    private converters: object;
+class ConverterPool {
+    private converters: object = {};
 
-    constructor(converters: object) {
-        this.converters = converters;
+    public getConverter(name: string) {
+        return this.converters[name] !== undefined ? this.converters[name] : false;
     }
 
-    public getConverters() {
-        return this.converters;
+    public registerConverter(name: string, converter: object) {
+        this.converters[name] = converter;
     }
 }
+
+export default new ConverterPool();

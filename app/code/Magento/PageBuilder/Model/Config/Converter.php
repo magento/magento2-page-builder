@@ -144,6 +144,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             : null,
                     ];
                 }
+                foreach ($stylePropertiesNode->getElementsByTagName('static_property') as $propertyNode) {
+                    $elementData[$elementName]['style'][] = [
+                        'name' => $propertyNode->attributes->getNamedItem('name')->nodeValue,
+                        'value' => $propertyNode->attributes->getNamedItem('value')->nodeValue,
+                        'static' => true
+                    ];
+                }
             }
             $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
             if ($attributesNode) {
@@ -163,6 +170,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                         'preview_converter' => $attributeNode->hasAttribute('preview_converter')
                             ? $attributeNode->attributes->getNamedItem('preview_converter')->nodeValue
                             : null,
+                    ];
+                }
+                foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
+                    $elementData[$elementName]['attributes'][] = [
+                        'name' => $attributeNode->attributes->getNamedItem('name')->nodeValue,
+                        'value' => $attributeNode->attributes->getNamedItem('value')->nodeValue,
+                        'static' => true
                     ];
                 }
             }

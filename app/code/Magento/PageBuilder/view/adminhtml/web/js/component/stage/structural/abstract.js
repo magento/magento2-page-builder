@@ -17,10 +17,9 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
      * @param parent
      * @param stage
      * @param config
-     * @param elementConverterPool
      * @param converterPool
      */
-    function Structural(parent, stage, config, elementConverterPool, converterPool) {
+    function Structural(parent, stage, config, converterPool) {
       var _this;
 
       _this = _EditableArea.call(this, stage) || this;
@@ -37,14 +36,12 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.data = {};
-      _this.elementConverterPool = void 0;
       _this.converterPool = void 0;
 
       _this.setChildren(_this.children);
 
       _this.parent = parent;
       _this.config = config;
-      _this.elementConverterPool = elementConverterPool;
       _this.converterPool = converterPool; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
@@ -162,12 +159,8 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       var config = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.elements;
       var convertersConfig = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.converters;
 
-      for (var key in this.converterPool.getConverters()) {
-        for (var i = 0; i < convertersConfig.length; i++) {
-          if (convertersConfig[i].name === key) {
-            data = this.converterPool.getConverters()[key].beforeWrite(data, convertersConfig[i].config);
-          }
-        }
+      for (var i = 0; i < convertersConfig.length; i++) {
+        data = this.converterPool.getConverter(convertersConfig[i].component).beforeWrite(data, convertersConfig[i].config);
       }
 
       var result = {};
@@ -193,11 +186,21 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
       for (var i = 0; i < config.style.length; i++) {
         var styleProperty = config.style[i];
-        var value = data[styleProperty.var];
-        var mapper = styleProperty.var + styleProperty.name;
+        var value = "";
 
-        if (mapper in this.elementConverterPool.getStyleConverters(area)) {
-          value = this.elementConverterPool.getStyleConverters(area)[mapper].toDom(value, styleProperty.name, data);
+        if (!!styleProperty.static) {
+          value = styleProperty.value;
+        } else {
+          value = data[styleProperty.var];
+          var converter = styleProperty.converter;
+
+          if ("preview" === area && styleProperty.preview_converter) {
+            converter = styleProperty.preview_converter;
+          }
+
+          if (this.converterPool.getConverter(converter)) {
+            value = this.converterPool.getConverter(converter).toDom(value, styleProperty.name, data);
+          }
         }
 
         result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
@@ -254,10 +257,14 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
         }
 
         var value = data[attribute.var];
-        var mapper = attribute.var + attribute.name;
+        var converter = attribute.converter;
 
-        if (mapper in this.elementConverterPool.getAttributeConverters(area)) {
-          value = this.elementConverterPool.getAttributeConverters(area)[mapper].toDom(value, attribute.var, data);
+        if ("preview" === area && attribute.preview_converter) {
+          converter = attribute.preview_converter;
+        }
+
+        if (this.converterPool.getConverter(converter)) {
+          value = this.converterPool.getConverter(converter).toDom(value, attribute.var, data);
         }
 
         result[attribute.name] = value;

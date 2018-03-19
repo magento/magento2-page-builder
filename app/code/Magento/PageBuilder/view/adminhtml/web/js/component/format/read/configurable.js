@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../block/element-converter-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_elementConverterPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
+define(["../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPoolFactory, _string, _array, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -20,11 +20,8 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
 
       var role = element.getAttribute('data-role');
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
-      var mappersLoaded = [(0, _elementConverterPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
-        Promise.all(mappersLoaded).then(function (loadedMappers) {
-          var elementConverterPool = loadedMappers[0],
-              converterPool = loadedMappers[1];
+        (0, _converterPoolFactory)(role).then(function (ConverterPool) {
           var data = {};
 
           for (var elementName in config.elements) {
@@ -36,11 +33,11 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
             }
 
             if (config.elements[elementName].style !== undefined) {
-              data = _this.readStyle(config.elements[elementName].style, currentElement, data, elementConverterPool);
+              data = _this.readStyle(config.elements[elementName].style, currentElement, data, ConverterPool);
             }
 
             if (config.elements[elementName].attributes !== undefined) {
-              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, elementConverterPool);
+              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, ConverterPool);
             }
 
             if (config.elements[elementName].html !== undefined) {
@@ -56,7 +53,7 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
             }
           }
 
-          data = _this.convertData(config, data, converterPool);
+          data = _this.convertData(config, data, ConverterPool);
           resolve(data);
         }).catch(function (error) {
           console.error(error);
@@ -122,21 +119,20 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
      * @param {object} config
      * @param {Node} element
      * @param {object} data
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
 
 
-    _proto.readAttributes = function readAttributes(config, element, data, elementConverterPool) {
+    _proto.readAttributes = function readAttributes(config, element, data, converterPool) {
       var result = {};
 
       for (var i = 0; i < config.length; i++) {
         var attribute = config[i];
         var value = element.getAttribute(attribute.name);
-        var mapper = attribute.var + attribute.name;
 
-        if (mapper in elementConverterPool.getAttributeConverters()) {
-          value = elementConverterPool.getAttributeConverters()[mapper].fromDom(value);
+        if (converterPool.getConverter(attribute.converter)) {
+          value = converterPool.getConverter(attribute.converter).fromDom(value);
         }
 
         if (data[attribute.var] === "object") {
@@ -154,12 +150,12 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
      * @param {object} config
      * @param {Node} element
      * @param {object} data
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
 
 
-    _proto.readStyle = function readStyle(config, element, data, elementConverterPool) {
+    _proto.readStyle = function readStyle(config, element, data, converterPool) {
       var result = _.extend({}, data);
 
       for (var i = 0; i < config.length; i++) {
@@ -170,10 +166,9 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
         }
 
         var value = element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
-        var mapper = property.var + property.name;
 
-        if (mapper in elementConverterPool.getStyleConverters()) {
-          value = elementConverterPool.getStyleConverters()[mapper].fromDom(value, property.name);
+        if (converterPool.getConverter(property.converter)) {
+          value = converterPool.getConverter(property.converter).fromDom(value, property.name);
         }
 
         if (_typeof(result[property.var]) === "object") {
@@ -196,11 +191,9 @@ define(["../../block/element-converter-pool-factory", "../../block/converter-poo
 
 
     _proto.convertData = function convertData(config, data, converterPool) {
-      for (var key in converterPool.getConverters()) {
-        for (var i = 0; i < config.converters.length; i++) {
-          if (config.converters[i].name === key) {
-            data = converterPool.getConverters()[key].afterRead(data, config.converters[i].config);
-          }
+      for (var i = 0; i < config.converters.length; i++) {
+        if (converterPool.getConverter(config.converters[i].component)) {
+          data = converterPool.getConverter(config.converters[i].component).afterRead(data, config.converters[i].config);
         }
       }
 

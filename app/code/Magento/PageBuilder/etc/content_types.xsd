@@ -154,6 +154,7 @@
     <xs:complexType name="style_properties">
         <xs:sequence>
             <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="static_property" name="static_property" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="property">
@@ -165,9 +166,14 @@
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
     </xs:complexType>
+    <xs:complexType name="static_property">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="value" use="required"/>
+    </xs:complexType>
     <xs:complexType name="attributes">
         <xs:sequence>
             <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="attribute">
@@ -177,6 +183,10 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="static_attribute">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="value" use="required"/>
     </xs:complexType>
     <xs:complexType name="html">
         <xs:attribute type="xs:string" name="var" use="required"/>
