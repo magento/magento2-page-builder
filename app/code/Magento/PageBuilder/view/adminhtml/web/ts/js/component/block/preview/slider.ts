@@ -16,6 +16,7 @@ import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 import {BlockDuplicateEventParams, BlockMountEventParams} from "../../stage/structural/editable-area";
 import {BlockCreateEventParams} from "../factory";
 import Slide from "../slide";
+import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 
 export default class Slider extends PreviewBlock {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
@@ -93,12 +94,17 @@ export default class Slider extends PreviewBlock {
                 this.setActiveSlide(params.newPosition);
             }
         });
+        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+                const data = this.parent.children().slice(0);
+                this.parent.children([]);
+                this.parent.children(data);
+            }
+        });
         EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
             if (this.element && params.block.parent.id === this.parent.id) {
-                $(this.element).css({
-                    height: $(this.element).outerHeight(),
-                    overflow: "hidden",
-                });
+                this.forceContainerHeight();
             }
         });
 
@@ -157,6 +163,16 @@ export default class Slider extends PreviewBlock {
     public afterChildrenRender(element: Element): void {
         super.afterChildrenRender(element);
         this.element = element;
+    }
+
+    /**
+     * To ensure smooth animations we need to lock the container height
+     */
+    public forceContainerHeight(): void {
+        $(this.element).css({
+            height: $(this.element).outerHeight(),
+            overflow: "hidden",
+        });
     }
 
     /**

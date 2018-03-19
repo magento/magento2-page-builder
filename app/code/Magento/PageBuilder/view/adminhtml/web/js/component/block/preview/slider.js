@@ -75,12 +75,21 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
         }
       });
 
+      _eventBus.on("slide:block:removed", function (event, params) {
+        if (params.block.parent.id === _this.parent.id) {
+          _this.forceContainerHeight();
+
+          var data = _this.parent.children().slice(0);
+
+          _this.parent.children([]);
+
+          _this.parent.children(data);
+        }
+      });
+
       _eventBus.on("slide:block:create", function (event, params) {
         if (_this.element && params.block.parent.id === _this.parent.id) {
-          (0, _jquery)(_this.element).css({
-            height: (0, _jquery)(_this.element).outerHeight(),
-            overflow: "hidden"
-          });
+          _this.forceContainerHeight();
         }
       }); // Set the stage to interacting when a slide if focused
 
@@ -158,6 +167,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       _PreviewBlock.prototype.afterChildrenRender.call(this, element);
 
       this.element = element;
+    };
+    /**
+     * To ensure smooth animations we need to lock the container height
+     */
+
+
+    _proto.forceContainerHeight = function forceContainerHeight() {
+      (0, _jquery)(this.element).css({
+        height: (0, _jquery)(this.element).outerHeight(),
+        overflow: "hidden"
+      });
     };
     /**
      * Build the slack config object
