@@ -12,82 +12,8 @@ import EventBus from "../../event-bus";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
+import "./live-edit";
 import "./sortable/binding";
-
-// Custom Knockout binding for live editing text inputs
-ko.bindingHandlers.liveEdit = {
-
-    /**
-     * Init the live edit binding on an element
-     *
-     * @param element
-     * @param valueAccessor
-     * @param allBindings
-     * @param viewModel
-     * @param bindingContext
-     */
-    init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const contentTypeInstance = bindingContext.$data;
-        const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
-        const value = valueAccessor();
-
-        const stripHtml = (html) => {
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = html;
-            return tempDiv.innerText;
-        };
-        const onBlur = () => {
-            if (value in data) {
-                data[value] = stripHtml(element.innerText);
-                contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
-            }
-        };
-        const onClick = () => {
-            if ($(element).innerText !== "") {
-                document.execCommand("selectAll", false, null);
-            }
-        };
-        const onKeyDown = (event) => {
-            // space bar fix
-            if (event.which === 32) {
-                document.execCommand("insertText", false, " ");
-            }
-            // command or control
-            if (event.metaKey || event.ctrlKey) {
-                // b, i, or u
-                if (event.which === 66 || event.which === 73 || event.which === 85) {
-                    event.preventDefault();
-                }
-            }
-        };
-        const onKeyUp = () => {
-            if (element.innerText === "") {
-                $(element).addClass("placeholder-text");
-            } else {
-                $(element).removeClass("placeholder-text");
-            }
-        };
-        element.contentEditable = true;
-        element.focus();
-        element.addEventListener("blur", onBlur);
-        element.addEventListener("click", onClick);
-        element.addEventListener("keydown", onKeyDown);
-        element.addEventListener("keyup", onKeyUp);
-    },
-
-    /**
-     * Preprocess live edit binding on an element
-     *
-     * @param value "button_text"
-     * @param name "liveEdit"
-     * @param addBindingCallback
-     */
-    preprocess(value, name, addBindingCallback) {
-        const htmlValue = "preview.data[" + value + "]()";
-        addBindingCallback("html", htmlValue);
-        return value;
-    },
-};
 
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;

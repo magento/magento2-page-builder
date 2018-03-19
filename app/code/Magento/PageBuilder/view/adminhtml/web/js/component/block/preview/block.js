@@ -1,88 +1,8 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
+define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./live-edit", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _liveEdit, _binding) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  // Custom Knockout binding for live editing text inputs
-  _knockout.bindingHandlers.liveEdit = {
-    /**
-     * Init the live edit binding on an element
-     *
-     * @param element
-     * @param valueAccessor
-     * @param allBindings
-     * @param viewModel
-     * @param bindingContext
-     */
-    init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var contentTypeInstance = bindingContext.$data;
-      var data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
-      var value = valueAccessor();
-
-      var stripHtml = function stripHtml(html) {
-        var tempDiv = document.createElement("div");
-        tempDiv.innerHTML = html;
-        return tempDiv.innerText;
-      };
-
-      var onBlur = function onBlur() {
-        if (value in data) {
-          data[value] = stripHtml(element.innerText);
-          contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
-        }
-      };
-
-      var onClick = function onClick() {
-        if ((0, _jquery)(element).innerText !== "") {
-          document.execCommand("selectAll", false, null);
-        }
-      };
-
-      var onKeyDown = function onKeyDown(event) {
-        // space bar fix
-        if (event.which === 32) {
-          document.execCommand("insertText", false, " ");
-        } // command or control
-
-
-        if (event.metaKey || event.ctrlKey) {
-          // b, i, or u
-          if (event.which === 66 || event.which === 73 || event.which === 85) {
-            event.preventDefault();
-          }
-        }
-      };
-
-      var onKeyUp = function onKeyUp() {
-        if (element.innerText === "") {
-          (0, _jquery)(element).addClass("placeholder-text");
-        } else {
-          (0, _jquery)(element).removeClass("placeholder-text");
-        }
-      };
-
-      element.contentEditable = true;
-      element.focus();
-      element.addEventListener("blur", onBlur);
-      element.addEventListener("click", onClick);
-      element.addEventListener("keydown", onKeyDown);
-      element.addEventListener("keyup", onKeyUp);
-    },
-
-    /**
-     * Preprocess live edit binding on an element
-     *
-     * @param value "button_text"
-     * @param name "liveEdit"
-     * @param addBindingCallback
-     */
-    preprocess: function preprocess(value, name, addBindingCallback) {
-      var htmlValue = "preview.data[" + value + "]()";
-      addBindingCallback("html", htmlValue);
-      return value;
-    }
-  };
 
   var PreviewBlock =
   /*#__PURE__*/
