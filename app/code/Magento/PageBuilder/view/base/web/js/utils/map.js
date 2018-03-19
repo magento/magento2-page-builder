@@ -13,6 +13,7 @@ define([
 
         /**
          * Generates a google map usuable lat and lng object
+         *
          * @param {Object} latLng
          * @return {google.maps.LatLng}
          */
@@ -74,6 +75,5 @@ define([
         };
 
         this.setMarkers(markers);
-
     };
 });

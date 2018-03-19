@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import "mage/backend/tabs";
-import GMap from "Magento_PageBuilder/js/component/map";
+import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import PreviewBlock from "./block";
 
 export default class Map extends PreviewBlock {
@@ -49,7 +49,7 @@ export default class Map extends PreviewBlock {
               zoom: pos.zoom,
             };
         }
-        this.map = new GMap(element, markers, centerCoord, options);
+        this.map = new GoogleMap(element, markers, centerCoord, options);
     }
 
     /**

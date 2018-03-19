@@ -8,10 +8,10 @@
 requirejs([
     'jquery',
     'highlight',
-    'Magento_PageBuilder/js/component/map',
+    'Magento_PageBuilder/js/utils/map',
     'slick',
     'bg-parallax'
-    ], function ($, hljs, GMap) {
+    ], function ($, hljs, GoogleMap) {
     'use strict';
 
     $(document).ready(function () {
@@ -95,7 +95,7 @@ requirejs([
             centerCoord = markers[0];
             zoom = element.getAttribute('data-zoom');
             mapOptions.zoom = parseInt(zoom, 10);
-            new GMap(element, markers, centerCoord, mapOptions);
+            new GoogleMap(element, markers, centerCoord, mapOptions);
         }
     });
 

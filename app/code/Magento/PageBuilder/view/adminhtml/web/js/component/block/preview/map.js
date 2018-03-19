@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/backend/tabs", "Magento_PageBuilder/js/component/map", "./block"], function (_tabs, _map, _block) {
+define(["mage/backend/tabs", "Magento_PageBuilder/js/utils/map", "./block"], function (_tabs, _map, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =
