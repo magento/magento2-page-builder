@@ -274,7 +274,7 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         removeClasses.push("disabled");
       }
 
-      newOptions.push(new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
     };
 

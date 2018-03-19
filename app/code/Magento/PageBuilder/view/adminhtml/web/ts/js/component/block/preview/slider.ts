@@ -30,7 +30,7 @@ export default class Slider extends PreviewBlock {
      * @type {(() => any) & _.Cancelable}
      */
     private buildSlick = _.debounce(() => {
-        if (this.element) {
+        if (this.element && this.element.children.length > 0) {
             // Force the height to ensure no weird paint effects / content jumps are produced
             try {
                 $(this.element).slick("unslick");

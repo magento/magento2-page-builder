@@ -242,7 +242,7 @@ export default class Slide extends Block {
         newOptions.push(new Option(
             this,
             "remove",
-            "<i></i>",
+            "<i class='icon-admin-pagebuilder-remove'></i>",
             $t("Remove"),
             removeFn,
             removeClasses,
