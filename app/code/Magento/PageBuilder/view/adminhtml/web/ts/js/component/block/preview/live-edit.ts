@@ -56,7 +56,6 @@ ko.bindingHandlers.liveEdit = {
             }
         };
         element.contentEditable = true;
-        element.focus({preventScroll: false});
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
