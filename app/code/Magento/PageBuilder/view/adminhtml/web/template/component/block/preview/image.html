@@ -14,7 +14,7 @@
         </div>
         <!-- /ko -->
         <!-- ko if: data.desktop_image.attributes().src && typeof data.desktop_image.attributes().src !== 'undefined' -->
-        <img data-bind="attr: data.desktop_image.attributes, style: { maxWidth: '100%', height: 'auto' }" />
+        <img data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style" />
         <!-- /ko -->
         <!-- ko if: data.caption.html() -->
         <figcaption data-bind="text: data.caption.html"></figcaption>

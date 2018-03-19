@@ -9,20 +9,16 @@
     <!-- ko if: getAttributes('link').href -->
         <a data-bind="attr: getAttributes('link')">
             <!-- ko if: getData('desktop_image').image.length -->
-                <img data-bind="attr: getAttributes('desktop_image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image.length}, style: { maxWidth: '100%', height: 'auto' }" />
+                <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image')" class="pagebuilder-mobile-hidden" />
             <!-- /ko -->
-            <!-- ko if: getData('mobile_image').mobile_image.length -->
-                <img data-bind="attr: getAttributes('mobile_image'), style: { maxWidth: '100%', height: 'auto' }" class="pagebuilder-mobile-only" />
-            <!-- /ko -->
+            <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image')" class="pagebuilder-mobile-only" />
         </a>
     <!-- /ko -->
     <!-- ko ifnot: getAttributes('link').href -->
         <!-- ko if: getData('desktop_image').image.length -->
-            <img data-bind="attr: getAttributes('desktop_image'), css: {'pagebuilder-mobile-hidden': getData('mobile_image').mobile_image.length}, style: { maxWidth: '100%', height: 'auto' }" />
+            <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image')" class="pagebuilder-mobile-hidden" />
         <!-- /ko -->
-        <!-- ko if: getData('mobile_image').mobile_image.length -->
-            <img data-bind="attr: getAttributes('mobile_image'), style: { maxWidth: '100%', height: 'auto' }" class="pagebuilder-mobile-only" />
-        <!-- /ko -->
+        <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image')" class="pagebuilder-mobile-only" />
     <!-- /ko -->
     <!-- ko if: getData('caption').image_caption -->
         <figcaption data-bind="text: getHtml('caption')"></figcaption>

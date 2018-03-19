@@ -286,6 +286,10 @@
                                 <css var="css_classes"/>
                             </element>
                             <element name="desktop_image" path=".//img[1]">
+                                <style_properties>
+                                    <static_property name="min-width" value="100%"/>
+                                    <static_property name="height" value="auto"/>
+                                </style_properties>
                                 <attributes>
                                     <attribute var="image" name="src" converter="Magento_PageBuilder/js/converter/default/attribute/src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src"/>
                                     <attribute var="alt" name="alt"/>
@@ -293,6 +297,10 @@
                                 </attributes>
                             </element>
                             <element name="mobile_image" path=".//img[2]">
+                                <style_properties>
+                                    <static_property name="min-width" value="100%"/>
+                                    <static_property name="height" value="auto"/>
+                                </style_properties>
                                 <attributes>
                                     <attribute var="mobile_image" name="src" converter="Magento_PageBuilder/js/converter/default/attribute/src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src"/>
                                     <attribute var="alt" name="alt"/>
@@ -310,6 +318,14 @@
                                 <html var="image_caption"/>
                             </element>
                         </elements>
+                        <converters>
+                            <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
+                                <config>
+                                    <item name="desktop_image_variable" value="image"/>
+                                    <item name="mobile_image_variable" value="mobile_image"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
