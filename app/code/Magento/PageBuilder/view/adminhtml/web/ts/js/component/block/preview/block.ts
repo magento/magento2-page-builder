@@ -124,7 +124,7 @@ export default class PreviewBlock {
             optionsMenu = optionsMenu.first();
         }
 
-        optionsMenu.addClass("pagebuilder-options-visible");
+        optionsMenu.parent().addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
@@ -145,7 +145,7 @@ export default class PreviewBlock {
                     optionsMenu = optionsMenu.first();
                 }
 
-                optionsMenu.removeClass("pagebuilder-options-visible");
+                optionsMenu.parent().removeClass("pagebuilder-options-visible");
                 $(currentTarget).removeClass("pagebuilder-content-type-active");
             }
         }, 100); // 100 ms delay to allow for users hovering over other elements

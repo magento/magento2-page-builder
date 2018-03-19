@@ -59,7 +59,7 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $wrapperDivElementAttributes = [
-            'class' => 'pagebuilder-slide-wrapper pagebuilder-slide-mobile pagebuilder-mobile-only'
+            'class' => 'pagebuilder-slide-wrapper pagebuilder-mobile-only'
         ];
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
@@ -108,7 +108,7 @@ class AdvancedSliderItem implements RendererInterface
             . '</div></div></div>';
 
         // non-mobile wrapper div
-        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper pagebuilder-slide-image ' .
+        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper ' .
             'pagebuilder-mobile-hidden';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)

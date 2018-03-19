@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../event-bus", "./block"], function (_jquery, _slick, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "../../../utils/focus-binding", "../../event-bus", "./block"], function (_jquery, _knockout, _slick, _underscore, _focusBinding, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -21,10 +21,14 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.focusedSlide = _knockout.observable();
+      _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
       _this.childSubscribe = void 0;
+      _this.blockHeightReset = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
+          // Force the height to ensure no weird paint effects / content jumps are produced
           try {
             (0, _jquery)(_this.element).slick("unslick");
           } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
@@ -46,11 +50,19 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
           _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick); // Build slick
 
           (0, _jquery)(_this.element).slick(Object.assign({
-            initialSlide: _this.data.activeSlide() || 0
+            initialSlide: _this.activeSlide() || 0
           }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
           (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
             _this.setActiveSlide(nextSlide);
+          }).on("afterChange", function () {
+            if (!_this.blockHeightReset) {
+              (0, _jquery)(_this.element).css({
+                height: "",
+                overflow: ""
+              });
+              _this.blockHeightReset = null;
+            }
           });
         }
       }, 10);
@@ -65,6 +77,29 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
           _this.setActiveSlide(params.newPosition);
         }
+      });
+
+      _eventBus.on("slide:block:removed", function (event, params) {
+        if (params.block.parent.id === _this.parent.id) {
+          _this.forceContainerHeight();
+
+          var data = _this.parent.children().slice(0);
+
+          _this.parent.children([]);
+
+          _this.parent.children(data);
+        }
+      });
+
+      _eventBus.on("slide:block:create", function (event, params) {
+        if (_this.element && params.block.parent.id === _this.parent.id) {
+          _this.forceContainerHeight();
+        }
+      }); // Set the stage to interacting when a slide if focused
+
+
+      _this.focusedSlide.subscribe(function (value) {
+        _this.parent.stage.interacting(value !== null);
       });
 
       return _this;
@@ -87,23 +122,48 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
 
     _proto.setActiveSlide = function setActiveSlide(slideIndex) {
-      this.data.activeSlide(slideIndex);
+      this.activeSlide(slideIndex);
+    };
+    /**
+     * Set the focused slide
+     *
+     * @param {number} slideIndex
+     * @param {boolean} force
+     */
+
+
+    _proto.setFocusedSlide = function setFocusedSlide(slideIndex, force) {
+      if (force === void 0) {
+        force = false;
+      }
+
+      if (force) {
+        this.focusedSlide(null);
+      }
+
+      this.focusedSlide(slideIndex);
     };
     /**
      * Navigate to a slide
      *
      * @param {number} slideIndex
      * @param {boolean} dontAnimate
+     * @param {boolean} force
      */
 
 
-    _proto.navigateToSlide = function navigateToSlide(slideIndex, dontAnimate) {
+    _proto.navigateToSlide = function navigateToSlide(slideIndex, dontAnimate, force) {
       if (dontAnimate === void 0) {
         dontAnimate = false;
       }
 
+      if (force === void 0) {
+        force = false;
+      }
+
       (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
       this.setActiveSlide(slideIndex);
+      this.setFocusedSlide(slideIndex, force);
     };
     /**
      * After child render record element
@@ -118,14 +178,32 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
       this.element = element;
     };
     /**
-     * Setup fields observables within the data class property
+     * To ensure smooth animations we need to lock the container height
      */
 
 
-    _proto.setupDataFields = function setupDataFields() {
-      _PreviewBlock.prototype.setupDataFields.call(this);
+    _proto.forceContainerHeight = function forceContainerHeight() {
+      (0, _jquery)(this.element).css({
+        height: (0, _jquery)(this.element).outerHeight(),
+        overflow: "hidden"
+      });
+    };
+    /**
+     * On sort start force the container height, also focus to that slide
+     *
+     * @param {Event} event
+     * @param {JQueryUI.SortableUIParams} params
+     */
 
-      this.updateDataValue("activeSlide", 0);
+
+    _proto.onSortStart = function onSortStart(event, params) {
+      this.forceContainerHeight();
+
+      if (this.activeSlide() !== params.item.index() || this.focusedSlide() !== params.item.index()) {
+        this.navigateToSlide(params.item.index(), false, true); // As we've completed a navigation request we need to ensure we don't remove the forced height
+
+        this.blockHeightReset = true;
+      }
     };
     /**
      * Build the slack config object

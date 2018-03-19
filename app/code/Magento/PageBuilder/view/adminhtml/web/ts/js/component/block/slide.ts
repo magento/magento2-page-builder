@@ -10,6 +10,8 @@ import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import {Options} from "../stage/structural/options";
 import Block from "./block";
+import {Option} from "../stage/structural/options/option";
+import {OptionInterface} from "../stage/structural/options/option.d";
 
 export default class Slide extends Block {
 
@@ -219,5 +221,33 @@ export default class Slide extends Block {
                 textAlign: "",
             },
         );
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        const newOptions = options.filter((option) => {
+            return (option.code !== "remove");
+        });
+        const removeClasses = ["remove-structural"];
+        let removeFn = this.onOptionRemove;
+        if (this.parent.children().length <= 1) {
+            removeFn = () => { return; };
+            removeClasses.push("disabled");
+        }
+        newOptions.push(new Option(
+            this,
+            "remove",
+            "<i class='icon-admin-pagebuilder-remove'></i>",
+            $t("Remove"),
+            removeFn,
+            removeClasses,
+            100,
+        ));
+        return newOptions;
     }
 }

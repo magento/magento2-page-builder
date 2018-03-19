@@ -17,10 +17,10 @@ export default class Slide implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<object> {
-        let bgMobileImage = element.querySelector(".pagebuilder-slide-mobile").style.backgroundImage;
+        let bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
         const linkUrl = element.querySelector("a").getAttribute("href");
         const target = element.querySelector("a").getAttribute("target");
-        const bgImage = element.querySelector(".pagebuilder-slide-image").style.backgroundImage;
+        const bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
         const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
         const marginSrc = element.style;

@@ -71,7 +71,30 @@ define(["mage/translate", "mageUtils", "underscore", "../../../utils/array", "..
             duplicate.addChild(createDuplicate, childIndex);
           }
         });
-      }
+      } // As a new block is being created, we need to fire that event as well
+
+
+      _eventBus.trigger("block:create", {
+        id: duplicate.id,
+        block: duplicate
+      });
+
+      _eventBus.trigger(child.config.name + ":block:create", {
+        id: duplicate.id,
+        block: duplicate
+      });
+
+      _eventBus.trigger("block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
+
+      _eventBus.trigger(child.config.name + ":block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
 
       if (autoAppend) {
         this.addChild(duplicate, index);

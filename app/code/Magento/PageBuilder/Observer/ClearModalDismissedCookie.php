@@ -22,20 +22,20 @@ class ClearModalDismissedCookie implements ObserverInterface
     /**
      * @var CookieMetadataFactory
      */
-    private $cookieMetadata;
+    private $cookieMetadataFactory;
 
     /**
      * ClearModalDismissedCookie constructor.
      *
      * @param CookieManagerInterface $cookieManager
-     * @param CookieMetadataFactory $cookieMetadata
+     * @param CookieMetadataFactory $cookieMetadataFactory
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
-        CookieMetadataFactory $cookieMetadata
+        CookieMetadataFactory $cookieMetadataFactory
     ) {
         $this->cookieManager = $cookieManager;
-        $this->cookieMetadata = $cookieMetadata;
+        $this->cookieMetadataFactory = $cookieMetadataFactory;
     }
 
     /**
@@ -53,7 +53,7 @@ class ClearModalDismissedCookie implements ObserverInterface
         if ($this->cookieManager->getCookie($cookieName)) {
             $this->cookieManager->deleteCookie(
                 $cookieName,
-                $this->cookieMetadata->createCookieMetadata(
+                $this->cookieMetadataFactory->createCookieMetadata(
                     [
                         "path" => "/",
                         "secure" => false,
