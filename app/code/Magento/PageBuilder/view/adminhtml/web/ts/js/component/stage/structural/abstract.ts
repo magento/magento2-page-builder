@@ -246,14 +246,26 @@ export default class Structural extends EditableArea implements StructuralInterf
         let hasDataChanges = false;
         _.each(this.config.fields, (field, key: string) => {
             let fieldValue = data[key];
+            if (!fieldValue) {
+                fieldValue = "";
+            }
             // Default values can only ever be strings
             if (_.isObject(fieldValue)) {
-                fieldValue = JSON.stringify(fieldValue);
+                // Empty arrays as default values appear as empty strings
+                if (_.isArray(fieldValue) && fieldValue.length === 0) {
+                    fieldValue = "";
+                } else {
+                    fieldValue = JSON.stringify(fieldValue);
+                }
             }
-            if (field.default !== fieldValue) {
+            if (_.isObject(field.default)) {
+                if (JSON.stringify(field.default) !== fieldValue) {
+                    hasDataChanges = true;
+                }
+            } else if (field.default !== fieldValue) {
                 hasDataChanges = true;
-                return;
             }
+            return;
         });
         return hasDataChanges;
     }
