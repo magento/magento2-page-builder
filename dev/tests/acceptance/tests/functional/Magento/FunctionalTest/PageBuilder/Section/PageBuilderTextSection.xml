@@ -11,12 +11,16 @@
         <element name="textInstanceByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}]" parameterized="true"/>
         <element name="textInstanceTextByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}]//p" parameterized="true"/>
         <element name="textInstanceBorderByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}};')]" parameterized="true"/>
-        <!--<element name="textInstanceBorderWithSizeByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
+        <element name="textInstanceBorderWithWidthByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>
         <element name="textInstanceBorderWithColorByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}} {{arg3}};')]" parameterized="true"/>
-        <!--<element name="textInstanceBorderWithSizeAndColorByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
+        <!--<element name="textInstanceBorderWithWidthAndColorByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
         <element name="textInstanceBorderRadiusByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="textInstanceMarginByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoBorderRadiusByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="textInstanceNoCSSClassesByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}]" parameterized="true"/>
+        <element name="textInstanceMarginsByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoMarginsByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][not(contains(@style,'margin:'))]" parameterized="true"/>
         <element name="textInstancePaddingByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoPaddingByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
         <element name="textInstanceAlignmentByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="textInstanceNoAlignmentByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
     </section>
@@ -31,12 +35,17 @@
         <element name="textInstanceByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}]" parameterized="true"/>
         <element name="textInstanceTextByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//p" parameterized="true"/>
         <element name="textInstanceBorderByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}};')]" parameterized="true"/>
-        <!--<element name="textInstanceBorderWithSizeByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
+        <element name="textInstanceBorderWithWidthByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>
         <element name="textInstanceBorderWithColorByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}} {{arg3}};')]" parameterized="true"/>
-        <!--<element name="textInstanceBorderWithSizeAndColorByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
+        <!--<element name="textInstanceBorderWithWidthAndColorByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border: {{arg2}}px {{arg3}};')]" parameterized="true"/>-->
         <element name="textInstanceBorderRadiusByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="textInstanceMarginByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoBorderRadiusByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="textInstanceNoCSSClassesByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="textInstanceCSSClassesByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][@class='{{arg2}}']" parameterized="true"/>
+        <element name="textInstanceMarginsByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoMarginsByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'margin:'))]" parameterized="true"/>
         <element name="textInstancePaddingByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="textInstanceNoPaddingByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
         <element name="textInstanceAlignmentByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="textInstanceNoAlignmentByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
     </section>

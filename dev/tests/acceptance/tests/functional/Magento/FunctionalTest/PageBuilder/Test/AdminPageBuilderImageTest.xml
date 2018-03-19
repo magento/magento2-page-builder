@@ -106,7 +106,7 @@
             <argument name="property" value="PageBuilderImageTitleTagProperty"/>
         </actionGroup>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesProperty.fieldName}}']" stepKey="cssPropertiesValue"/>
+        <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesPropertyThreeClasses.fieldName}}']" stepKey="cssPropertiesValue"/>
         <assertEmpty actual="cssPropertiesValue" actualType="variable" message="pass" stepKey="assertCssPropertiesIsEmpty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -193,7 +193,7 @@
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
