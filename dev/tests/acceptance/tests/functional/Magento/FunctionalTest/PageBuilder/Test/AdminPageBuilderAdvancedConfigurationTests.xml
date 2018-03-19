@@ -8,6 +8,8 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <!--todo: Smoke Per Content Type (just check default values only) -->
+    <!--todo: Fix failing tests that need updating -->
     <test name="AdvancedConfigurationEditPanelVisual">
         <annotations>
             <features value="Pagebuilder"/>
@@ -206,11 +208,11 @@
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalAlignment">
+    <test name="AdvancedConfigurationFunctionalAlignment">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Alignment"/>
+            <title value="Advanced Configuration - Functional - Alignment"/>
             <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89331"/>
@@ -411,11 +413,11 @@
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalBorder">
+    <test name="AdvancedConfigurationFunctionalBorder">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Border"/>
+            <title value="Advanced Configuration - Functional - Border"/>
             <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89332"/>
@@ -907,11 +909,11 @@
             <argument name="index" value="10"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalBorderColor">
+    <test name="AdvancedConfigurationFunctionalBorderColor">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Border Color"/>
+            <title value="Advanced Configuration - Functional - Border Color"/>
             <description value="Tests that the Border Color attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89333"/>
@@ -1198,14 +1200,14 @@
             <argument name="index" value="5"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalBorderWidth">
+    <test name="AdvancedConfigurationFunctionalBorderWidth">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Border Width"/>
+            <title value="Advanced Configuration - Functional - Border Width"/>
             <description value="Tests that the Border Width attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-89333"/>-->
+            <testCaseId value="MAGETWO-89355"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <group value="pagebuilder-text"/>
@@ -1474,14 +1476,14 @@
             <argument name="index" value="5"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalBorderRadius">
+    <test name="AdvancedConfigurationFunctionalBorderRadius">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Border Radius"/>
+            <title value="Advanced Configuration - Functional - Border Radius"/>
             <description value="Tests that the Border Radius attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-89333"/>-->
+            <testCaseId value="MAGETWO-89356"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <group value="pagebuilder-text"/>
@@ -1720,14 +1722,14 @@
             <argument name="index" value="5"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalCSSClasses">
+    <test name="AdvancedConfigurationFunctionalCSSClasses">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - CSS Classes"/>
+            <title value="Advanced Configuration - Functional - CSS Classes"/>
             <description value="Tests that the CSS Classes attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-89333"/>-->
+            <testCaseId value="MAGETWO-89357"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <group value="pagebuilder-text"/>
@@ -1877,14 +1879,14 @@
             <argument name="index" value="3"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalMargins">
+    <test name="AdvancedConfigurationFunctionalMargins">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Margins"/>
+            <title value="Advanced Configuration - Functional - Margins"/>
             <description value="Tests that the Margin attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-89333"/>-->
+            <testCaseId value="MAGETWO-89358"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <group value="pagebuilder-text"/>
@@ -2167,28 +2169,28 @@
             <argument name="index" value="6"/>
         </actionGroup>
     </test>
-    <test name="TextAdvancedConfigurationFunctionalPadding">
+    <test name="AdvancedConfigurationFunctionalPadding">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83415"/>
-            <title value="Text - Advanced Configuration Functional - Padding"/>
+            <title value="Advanced Configuration - Functional - Padding"/>
             <description value="Tests that the Padding attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
-            <!--<testCaseId value="MAGETWO-89333"/>-->
+            <testCaseId value="MAGETWO-89359"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <!--<actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>-->
-            <!--<actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>-->
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <!--<actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>-->
-            <!--<actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>-->
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -2457,8 +2459,117 @@
             <argument name="index" value="6"/>
         </actionGroup>
     </test>
-        <!--todo: All -->
-        <!--todo: Smoke Per Content Type (just check default values only) -->
-        <!--todo: Fix failing tests that need updating -->
-    <!--</test>-->
+    <test name="AdvancedConfigurationFunctionalAllAttributes">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Advanced Configuration - Functional - All Attributes"/>
+            <description value="Tests that all attributes function as expected together on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89360"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <!-- Add Text To Stage -->
+        <comment userInput="Add Text To Stage" stepKey="commentAddText"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check All Attributes -->
+        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck1"/>
+        <actionGroup ref="validateTextAllActive" stepKey="validateStage1">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check All Attributes -->
+        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck2"/>
+        <actionGroup ref="validateTextAllActive" stepKey="validateStage2">
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <!-- Storefront: Check All Attributes -->
+        <comment userInput="Storefront: Check All Attributes" stepKey="commentStorefrontCheck"/>
+        <actionGroup ref="validateTextAllActive" stepKey="validateStorefront">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="text" value="PageBuilderTextContentBlock"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+    </test>
 </tests>
