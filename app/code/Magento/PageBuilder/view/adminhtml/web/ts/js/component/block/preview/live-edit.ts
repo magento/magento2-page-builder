@@ -29,8 +29,8 @@ ko.bindingHandlers.liveEdit = {
             return tempDiv.innerText;
         };
         const onBlur = () => {
-            if (value in data) {
-                data[value] = stripHtml(element.innerText);
+            if (value.key in data) {
+                data[value.key] = stripHtml(element.innerText);
                 contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
             }
         };
