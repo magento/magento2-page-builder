@@ -14,7 +14,8 @@ import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
 import {BlockChildrenRenderedEventParams} from "./preview/block";
 import {default as SliderPreview} from "./preview/slider";
-import {BlockDuplicateEventParams} from "../stage/structural/editable-area";
+import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
+import Slide from "./slide";
 
 export default class Slider extends Block {
 
@@ -43,19 +44,22 @@ export default class Slider extends Block {
      * Add a slide into the slider
      */
     public addSlide() {
-        // Set the active slide to the index of the new slide we're creating
-        (this.preview as SliderPreview).setActiveSlide(this.children().length);
-
         createBlock(
             Config.getInitConfig("content_types").slide,
             this,
             this.stage,
         ).then((slide) => {
+            const mountFn = (event: Event, params: BlockMountEventParams) => {
+                if (params.id === slide.id) {
+                    (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
+                    _.delay(() => {
+                        slide.edit.open();
+                    }, 500);
+                    EventBus.off("slide:block:mount", mountFn);
+                }
+            };
+            EventBus.on("slide:block:mount", mountFn);
             this.addChild(slide, this.children().length);
-            (this.preview as SliderPreview).focusedSlide(this.children().length - 1);
-            _.delay(() => {
-                slide.edit.open();
-            }, 500);
         });
     }
 
@@ -70,20 +74,33 @@ export default class Slider extends Block {
                 this.addSlide();
             }
         });
+
         // Block being removed from container
         EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
                 // Mark the previous slide as active
-                (this.preview as SliderPreview).setActiveSlide(params.index - 1);
-                (this.preview as SliderPreview).setFocusedSlide(params.index - 1, true);
+                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                (this.preview as SliderPreview).setActiveSlide(newIndex);
+                (this.preview as SliderPreview).setFocusedSlide(newIndex, true);
             }
         });
-        // Block being removed from container
+
+        // Capture when a block is duplicated within the container
+        let duplicatedSlide: Slide;
+        let duplicatedSlideIndex: number;
         EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             if (params.duplicate.parent.id === this.id) {
+                duplicatedSlide = (params.duplicate as Slide);
+                duplicatedSlideIndex = params.index;
+            }
+        });
+        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParams) => {
+            if (duplicatedSlide && params.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
-                (this.preview as SliderPreview).setActiveSlide(params.index);
-                (this.preview as SliderPreview).setFocusedSlide(params.index, true);
+                (this.preview as SliderPreview).navigateToSlide(duplicatedSlideIndex);
+                // Force the focus of the slide, as the previous slide will have focus
+                (this.preview as SliderPreview).setFocusedSlide(duplicatedSlideIndex, true);
+                duplicatedSlide = duplicatedSlideIndex = null;
             }
         });
     }

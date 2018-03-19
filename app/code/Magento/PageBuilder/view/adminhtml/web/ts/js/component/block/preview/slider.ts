@@ -13,6 +13,9 @@ import EventBus from "../../event-bus";
 import Block from "../block";
 import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
+import {BlockDuplicateEventParams, BlockMountEventParams} from "../../stage/structural/editable-area";
+import {BlockCreateEventParams} from "../factory";
+import Slide from "../slide";
 
 export default class Slider extends PreviewBlock {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
@@ -27,6 +30,7 @@ export default class Slider extends PreviewBlock {
      */
     private buildSlick = _.debounce(() => {
         if (this.element && this.element.children.length > 0) {
+            // Force the height to ensure no weird paint effects / content jumps are produced
             try {
                 $(this.element).slick("unslick");
             } catch (e) {
@@ -63,6 +67,11 @@ export default class Slider extends PreviewBlock {
                 nextSlide: any,
             ) => {
                 this.setActiveSlide(nextSlide);
+            }).on("afterChange", () => {
+                $(this.element).css({
+                    height: "",
+                    overflow: "",
+                });
             });
         }
     }, 10);
@@ -82,6 +91,14 @@ export default class Slider extends PreviewBlock {
             if (params.instance.id === this.parent.id) {
                 $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(params.newPosition);
+            }
+        });
+        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
+            if (this.element && params.block.parent.id === this.parent.id) {
+                $(this.element).css({
+                    height: $(this.element).outerHeight(),
+                    overflow: "hidden",
+                });
             }
         });
 

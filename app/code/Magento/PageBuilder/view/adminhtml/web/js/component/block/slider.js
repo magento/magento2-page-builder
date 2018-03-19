@@ -32,16 +32,22 @@ define(["mage/translate", "underscore", "../block/factory", "../config", "../eve
     _proto.addSlide = function addSlide() {
       var _this = this;
 
-      // Set the active slide to the index of the new slide we're creating
-      this.preview.setActiveSlide(this.children().length);
       (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
+        var mountFn = function mountFn(event, params) {
+          if (params.id === slide.id) {
+            _this.preview.navigateToSlide(_this.children().length - 1);
+
+            _underscore.delay(function () {
+              slide.edit.open();
+            }, 500);
+
+            _eventBus.off("slide:block:mount", mountFn);
+          }
+        };
+
+        _eventBus.on("slide:block:mount", mountFn);
+
         _this.addChild(slide, _this.children().length);
-
-        _this.preview.focusedSlide(_this.children().length - 1);
-
-        _underscore.delay(function () {
-          slide.edit.open();
-        }, 500);
       });
     };
     /**
@@ -65,19 +71,34 @@ define(["mage/translate", "underscore", "../block/factory", "../config", "../eve
       _eventBus.on("slide:block:removed", function (event, params) {
         if (params.parent.id === _this2.id) {
           // Mark the previous slide as active
-          _this2.preview.setActiveSlide(params.index - 1);
+          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
 
-          _this2.preview.setFocusedSlide(params.index - 1, true);
+          _this2.preview.setActiveSlide(newIndex);
+
+          _this2.preview.setFocusedSlide(newIndex, true);
         }
-      }); // Block being removed from container
+      }); // Capture when a block is duplicated within the container
 
+
+      var duplicatedSlide;
+      var duplicatedSlideIndex;
 
       _eventBus.on("slide:block:duplicate", function (event, params) {
         if (params.duplicate.parent.id === _this2.id) {
-          // Mark the new duplicate slide as active
-          _this2.preview.setActiveSlide(params.index);
+          duplicatedSlide = params.duplicate;
+          duplicatedSlideIndex = params.index;
+        }
+      });
 
-          _this2.preview.setFocusedSlide(params.index, true);
+      _eventBus.on("slide:block:mount", function (event, params) {
+        if (duplicatedSlide && params.id === duplicatedSlide.id) {
+          // Mark the new duplicate slide as active
+          _this2.preview.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus
+
+
+          _this2.preview.setFocusedSlide(duplicatedSlideIndex, true);
+
+          duplicatedSlide = duplicatedSlideIndex = null;
         }
       });
     };

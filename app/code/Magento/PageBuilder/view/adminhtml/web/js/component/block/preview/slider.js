@@ -27,6 +27,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       _this.childSubscribe = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
+          // Force the height to ensure no weird paint effects / content jumps are produced
           try {
             (0, _jquery)(_this.element).slick("unslick");
           } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
@@ -53,6 +54,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
           (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
             _this.setActiveSlide(nextSlide);
+          }).on("afterChange", function () {
+            (0, _jquery)(_this.element).css({
+              height: "",
+              overflow: ""
+            });
           });
         }
       }, 10);
@@ -66,6 +72,15 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
           (0, _jquery)(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
           _this.setActiveSlide(params.newPosition);
+        }
+      });
+
+      _eventBus.on("slide:block:create", function (event, params) {
+        if (_this.element && params.block.parent.id === _this.parent.id) {
+          (0, _jquery)(_this.element).css({
+            height: (0, _jquery)(_this.element).outerHeight(),
+            overflow: "hidden"
+          });
         }
       }); // Set the stage to interacting when a slide if focused
 

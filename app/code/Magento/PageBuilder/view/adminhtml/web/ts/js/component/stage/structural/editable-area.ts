@@ -82,12 +82,16 @@ export default class EditableArea implements EditableAreaInterface {
             });
         }
 
-        if (autoAppend) {
-            this.addChild(duplicate, index);
-        }
+        // As a new block is being created, we need to fire that event as well
+        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
+        EventBus.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
 
         EventBus.trigger("block:duplicate", {original: child, duplicate, index});
         EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
+
+        if (autoAppend) {
+            this.addChild(duplicate, index);
+        }
 
         return duplicate;
     }
