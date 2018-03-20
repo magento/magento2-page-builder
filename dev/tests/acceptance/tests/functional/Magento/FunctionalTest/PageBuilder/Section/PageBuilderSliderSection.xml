@@ -30,8 +30,7 @@
         <element name="slideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="slideNavigationDotTitleTooltip" type="button" selector="(//span[contains(@class, 'tooltip-content')])"/>
         <element name="slideNavigationHandle" type="button" selector="(//span[contains(@class, 'navigation-handle')])"/>
-        <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
-
+        <element name="nextSlide" type="button" selector="div.slider-container .slick-next"/>
         <element name="Fade" type="button" selector=".slick-slide[data-slick-index='1'][style*='transition: opacity 500ms ease']" />
         <element name="ShowArrows" type="button" selector="button.slick-arrow.slick-prev"/>
         <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
@@ -46,9 +45,26 @@
     <section name="SlideInAdmin">
         <element name="emptySlide" type="button" selector=".pagebuilder-empty-slide"/>
         <element name="optionTitle" type="button" selector=".pagebuilder-slide .option-title"/>
+        <element name="collageOverlay" type="button" selector=".pagebuilder-collage-overlay"/>
+        <element name="slideAppearancePoster" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-poster-content" parameterized="true"/>
+        <element name="slideAppearanceCollageLeft" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(50% + 40px) 40px 40px']" parameterized="true"/>
+        <element name="slideAppearanceCollageCenter" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(25% + 40px)']" parameterized="true"/>
+        <element name="slideAppearanceCollageRight" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px 40px 40px calc(50% + 40px)']" parameterized="true"/>
+        <element name="slideTitle" type="button" selector="[data-slick-index='{{arg1}}'] [data-bind='text: preview.data.title']" parameterized="true"/>
+        <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide div p" parameterized="true"/>
+        <element name="slideButtonText" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide-button span" parameterized="true"/>
+        <element name="slideLinkURL1" type="button" selector="[data-slick-index='0'] .pagebuilder-slide-button[data-link-url='{{arg1}}']" parameterized="true"/>
+        <element name="slideLinkURL2" type="button" selector="[data-slick-index='1'] .pagebuilder-slide-button[data-link-url='{{arg1}}']" parameterized="true"/>
+        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide div:nth-child(2)[style*='background-image: url'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
+        <element name="slide" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide" parameterized="true"/>
     </section>
     <section name="SlideOnFrontend">
         <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
+        <element name="slideTitle" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div h3" parameterized="true"/>
+        <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div div p" parameterized="true"/>
+        <element name="slideButtonText" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden div div button.pagebuilder-slide-button" parameterized="true"/>
+        <element name="slideLinkURL1" type="text" selector="[data-slick-index='0'] a[href*='{{arg1}}']" parameterized="true"/>
+        <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
         <element name="slideTitle1" type="text" selector="[data-slick-index='0'][data-role='slide'] div.pagebuilder-poster-content > h3:nth-child(1)"/>
         <element name="slideContent1" type="text" selector="[data-slick-index='0'][data-role='slide'] div.pagebuilder-poster-content div:nth-child(2) > p:nth-child(1)"/>
         <element name="slideButtonText1" type="text" selector="[data-slick-index='0'][data-role='slide'] div.pagebuilder-poster-content > button.pagebuilder-slide-button"/>
@@ -56,12 +72,15 @@
         <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
         <element name="slide2" type="button" selector="[data-slick-index='1'][data-role='slide']"/>
         <element name="slideTitle2" type="text" selector="[data-slick-index='1'][data-role='slide'] div.pagebuilder-poster-content > h3:nth-child(1)" />
-        <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide']  div.pagebuilder-poster-content div:nth-child(2) > p:nth-child(1)"/>
+        <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide'] div.pagebuilder-poster-content div:nth-child(2) > p:nth-child(1)"/>
         <element name="slideButtonText2" type="text" selector="[data-slick-index='1'][data-role='slide'] div.pagebuilder-poster-content > button.pagebuilder-slide-button"/>
         <element name="slideLinkURL2" type="text" selector="[data-slick-index='1'] a[href*='{{arg1}}']" parameterized="true"/>
         <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide-wrapper:not(.pagebuilder-mobile-only)[style*='background-image: url'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
         <element name="slideDefaultImage" type="text" selector="[data-slick-index='0'] .pagebuilder-slide-wrapper:not(.pagebuilder-mobile-only)"/>
         <element name="slideDefaultOverlay" type="text" selector="[data-slick-index='0'] .pagebuilder-slide-wrapper:not(.pagebuilder-mobile-only) .pagebuilder-overlay"/>
-
+        <element name="slideAppearanceCollageLeft" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
+        <element name="slideAppearanceCollageCenter" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
+        <element name="slideAppearanceCollageRight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
+        <element name="slideAppearancePoster" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-poster-content" parameterized="true"/>
     </section>
 </sections>
