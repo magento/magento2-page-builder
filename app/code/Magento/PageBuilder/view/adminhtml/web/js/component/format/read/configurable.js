@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../block/converter-pool", "../../block/property-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPool, _propertyPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
+define(["../../block/converter-pool", "../../block/property-reader-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPool, _propertyReaderPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -20,10 +20,10 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
 
       var role = element.getAttribute('data-role');
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
-      var componentsPromise = [(0, _propertyPoolFactory)(role), (0, _converterPoolFactory)(role)];
+      var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
         Promise.all(componentsPromise).then(function (loadedComponents) {
-          var propertyPool = loadedComponents[0],
+          var propertyReaderPool = loadedComponents[0],
               converterPool = loadedComponents[1];
           var data = {};
 
@@ -36,11 +36,11 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
             }
 
             if (config.elements[elementName].style !== undefined) {
-              data = _this.readStyle(config.elements[elementName].style, currentElement, data, converterPool, propertyPool);
+              data = _this.readStyle(config.elements[elementName].style, currentElement, data, converterPool, propertyReaderPool);
             }
 
             if (config.elements[elementName].attributes !== undefined) {
-              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, converterPool, propertyPool);
+              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, converterPool, propertyReaderPool);
             }
 
             if (config.elements[elementName].html !== undefined) {
@@ -127,15 +127,15 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
      */
 
 
-    _proto.readAttributes = function readAttributes(config, element, data, converterPool, propertyPool) {
+    _proto.readAttributes = function readAttributes(config, element, data, converterPool, propertyReaderPool) {
       var result = {};
 
       for (var i = 0; i < config.length; i++) {
         var attribute = config[i];
         var value = element.getAttribute(attribute.name);
 
-        if (converterPool.getConverter(attribute.converter)) {
-          value = converterPool.getConverter(attribute.converter).fromDom(value);
+        if (converterPool.get(attribute.converter)) {
+          value = converterPool.get(attribute.converter).fromDom(value);
         }
 
         if (data[attribute.var] === "object") {
@@ -158,7 +158,7 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
      */
 
 
-    _proto.readStyle = function readStyle(config, element, data, converterPool, propertyPool) {
+    _proto.readStyle = function readStyle(config, element, data, converterPool, propertyReaderPool) {
       var result = _.extend({}, data);
 
       for (var i = 0; i < config.length; i++) {
@@ -168,16 +168,10 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
           continue;
         }
 
-        var value = null;
+        var value = !!property.complex ? propertyReaderPool.get(property.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
 
-        if (!!property.complex) {
-          value = propertyPool.getProperty(property.component).read(element);
-        } else {
-          value = element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
-
-          if (converterPool.getConverter(property.converter)) {
-            value = converterPool.getConverter(property.converter).fromDom(value);
-          }
+        if (converterPool.get(property.converter)) {
+          value = converterPool.get(property.converter).fromDom(value);
         }
 
         if (_typeof(result[property.var]) === "object") {
@@ -201,8 +195,8 @@ define(["../../block/converter-pool", "../../block/property-pool-factory", "../.
 
     _proto.convertData = function convertData(config, data, converterPool) {
       for (var i = 0; i < config.converters.length; i++) {
-        if (converterPool.getConverter(config.converters[i].component)) {
-          data = converterPool.getConverter(config.converters[i].component).afterRead(data, config.converters[i].config);
+        if (converterPool.get(config.converters[i].component)) {
+          data = converterPool.get(config.converters[i].component).afterRead(data, config.converters[i].config);
         }
       }
 

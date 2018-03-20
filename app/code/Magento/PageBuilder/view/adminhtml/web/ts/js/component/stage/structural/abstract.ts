@@ -6,7 +6,6 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
-import PropertyPool from "../../block/property-pool";
 import ConverterPool from "../../../component/block/converter-pool";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
@@ -31,16 +30,14 @@ export default class Structural extends EditableArea implements StructuralInterf
     public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
     public title: string;
+    public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
-
-    public data = {};
-    public propertyPool: PropertyPool;
-    public converterPool: ConverterPool;
+    private converterPool: ConverterPool;
 
     /**
      * Abstract structural constructor
@@ -54,14 +51,12 @@ export default class Structural extends EditableArea implements StructuralInterf
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
-        propertyPool: PropertyPool,
         converterPool: ConverterPool,
     ) {
         super(stage);
         this.setChildren(this.children);
         this.parent = parent;
         this.config = config;
-        this.propertyPool = propertyPool;
         this.converterPool = converterPool;
 
         // Create a new instance of edit for our editing needs
@@ -200,7 +195,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const convertersConfig = appearanceConfig(this.config.name, data["appearance"]).data_mapping.converters;
 
         for (let i = 0; i < convertersConfig.length; i++) {
-            data = this.converterPool.getConverter(convertersConfig[i].component).beforeWrite(
+            data = this.converterPool.get(convertersConfig[i].component).beforeWrite(
                 data,
                 convertersConfig[i].config
             );
@@ -233,12 +228,8 @@ export default class Structural extends EditableArea implements StructuralInterf
                 const converter = "preview" === area && styleProperty.preview_converter
                     ? styleProperty.preview_converter
                     : styleProperty.converter;
-                if (!!styleProperty.complex) {
-                    value = this.propertyPool.getProperty(styleProperty.component).write(styleProperty.var, data);
-                } else {
-                    if (this.converterPool.getConverter(converter)) {
-                        value = this.converterPool.getConverter(converter).toDom(styleProperty.var, data);
-                    }
+                if (this.converterPool.get(converter)) {
+                    value = this.converterPool.get(converter).toDom(styleProperty.var, data);
                 }
             }
             if (typeof value === "object") {
@@ -292,8 +283,8 @@ export default class Structural extends EditableArea implements StructuralInterf
             const converter = "preview" === area && attribute.preview_converter
                 ? attribute.preview_converter
                 : attribute.converter;
-            if (this.converterPool.getConverter(converter)) {
-                value = this.converterPool.getConverter(converter).toDom(attribute.var, data);
+            if (this.converterPool.get(converter)) {
+                value = this.converterPool.get(converter).toDom(attribute.var, data);
             }
             result[attribute.name] = value;
         }

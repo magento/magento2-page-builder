@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./property-pool", "../config"], function (_loader, _propertyPool, _config) {
+define(["Magento_PageBuilder/js/component/loader", "./property-reader-pool", "../config"], function (_loader, _propertyReaderPool, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -22,8 +22,8 @@ define(["Magento_PageBuilder/js/component/loader", "./property-pool", "../config
             for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
               var styleProperty = dataMapping.elements[elementName].style[i];
 
-              if (!!styleProperty.complex && properties.indexOf(styleProperty.component) == -1 && !_propertyPool.get(styleProperty.component)) {
-                properties.push(styleProperty.component);
+              if (!!styleProperty.complex && properties.indexOf(styleProperty.reader) == -1 && !_propertyReaderPool.get(styleProperty.reader)) {
+                properties.push(styleProperty.reader);
               }
             }
           }
@@ -32,8 +32,8 @@ define(["Magento_PageBuilder/js/component/loader", "./property-pool", "../config
             for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
               var attributeProperty = dataMapping.elements[elementName].attributes[_i];
 
-              if (!!attributeProperty.complex && properties.indexOf(attributeProperty.component) == -1 && !_propertyPool.get(attributeProperty.component)) {
-                properties.push(attributeProperty.component);
+              if (!!attributeProperty.complex && properties.indexOf(attributeProperty.reader) == -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
+                properties.push(attributeProperty.reader);
               }
             }
           }
@@ -48,14 +48,14 @@ define(["Magento_PageBuilder/js/component/loader", "./property-pool", "../config
         }
 
         for (var _i2 = 0; _i2 < properties.length; _i2++) {
-          _propertyPool.registerProperty(properties[_i2], new loadedProperties[_i2]());
+          _propertyReaderPool.register(properties[_i2], new loadedProperties[_i2]());
         }
 
-        resolve(_propertyPool);
+        resolve(_propertyReaderPool);
       });
     });
   }
 
   return create;
 });
-//# sourceMappingURL=property-pool-factory.js.map
+//# sourceMappingURL=property-reader-pool-factory.js.map

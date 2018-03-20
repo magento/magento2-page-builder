@@ -13,7 +13,7 @@ define([], function () {
 
     var _proto = PropertyPool.prototype;
 
-    _proto.getProperty = function getProperty(name) {
+    _proto.get = function get(name) {
       return this.properties[name] !== undefined ? this.properties[name] : false;
     };
 

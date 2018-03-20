@@ -13,9 +13,19 @@ define([], function () {
 
     var _proto = Src.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value;
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       var value = data[name];

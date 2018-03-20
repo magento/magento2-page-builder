@@ -6,11 +6,11 @@
 class ConverterPool {
     private converters: object = {};
 
-    public getConverter(name: string) {
+    public get(name: string) {
         return this.converters[name] !== undefined ? this.converters[name] : false;
     }
 
-    public registerConverter(name: string, converter: object) {
+    public register(name: string, converter: object) {
         this.converters[name] = converter;
     }
 }

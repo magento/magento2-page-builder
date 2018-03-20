@@ -24,16 +24,6 @@ define(["./margins", "./paddings"], function (_margins, _paddings) {
     _proto.read = function read(element) {
       return Object.assign(this.margins.read(element), this.paddings.read(element));
     };
-    /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {string | Object}
-     */
-
-
-    _proto.write = function write(name, data) {
-      return Object.assign(this.margins.write(name, data), this.paddings.write(name, data));
-    };
 
     return MarginsAndPaddings;
   }();

@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var MarginsAndPaddings =
+  var Margins =
   /*#__PURE__*/
   function () {
-    function MarginsAndPaddings() {}
+    function Margins() {}
 
-    var _proto = MarginsAndPaddings.prototype;
+    var _proto = Margins.prototype;
 
     /**
      * @param {string} value
@@ -24,15 +24,6 @@ define([], function () {
           "top": value.margin.top.replace("px", ""),
           "right": value.margin.right.replace("px", ""),
           "bottom": value.margin.bottom.replace("px", "")
-        };
-      }
-
-      if (undefined !== value.padding) {
-        result["padding"] = {
-          "left": value.padding.left.replace("px", ""),
-          "top": value.padding.top.replace("px", ""),
-          "right": value.padding.right.replace("px", ""),
-          "bottom": value.padding.bottom.replace("px", "")
         };
       }
 
@@ -56,19 +47,12 @@ define([], function () {
         result["marginBottom"] = value.margin.bottom + "px";
       }
 
-      if (undefined !== value.padding) {
-        result["paddingLeft"] = value.padding.left + "px";
-        result["paddingTop"] = value.padding.top + "px";
-        result["paddingRight"] = value.padding.right + "px";
-        result["paddingBottom"] = value.margin.bottom + "px";
-      }
-
       return result;
     };
 
-    return MarginsAndPaddings;
+    return Margins;
   }();
 
-  return MarginsAndPaddings;
+  return Margins;
 });
-//# sourceMappingURL=margins-and-paddings.js.map
+//# sourceMappingURL=margins.js.map

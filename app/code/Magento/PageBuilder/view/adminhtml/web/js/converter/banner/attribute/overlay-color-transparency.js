@@ -11,9 +11,19 @@ define(["../../../utils/extract-alpha-from-rgba", "../../../utils/color-converte
 
     var _proto = OverlayColorTransparency.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       var overlayColor = "transparent";

@@ -24,13 +24,13 @@ export default function create(contentType: string): Promise<> {
                         const styleProperty = dataMapping.elements[elementName].style[i];
                         if (!!styleProperty.converter
                             && converters.indexOf(styleProperty.converter) == -1
-                            && !ConverterPool.getConverter(styleProperty.converter)
+                            && !ConverterPool.get(styleProperty.converter)
                         ) {
                             converters.push(styleProperty.converter);
                         }
                         if (!!styleProperty.preview_converter
                             && converters.indexOf(styleProperty.preview_converter) == -1
-                            && !ConverterPool.getConverter(styleProperty.preview_converter)
+                            && !ConverterPool.get(styleProperty.preview_converter)
                         ) {
                             converters.push(styleProperty.preview_converter);
                         }
@@ -42,13 +42,13 @@ export default function create(contentType: string): Promise<> {
                         const attributeProperty = dataMapping.elements[elementName].attributes[i];
                         if (!!attributeProperty.converter
                             && converters.indexOf(attributeProperty.converter) == -1
-                            && !ConverterPool.getConverter(attributeProperty.converter)
+                            && !ConverterPool.get(attributeProperty.converter)
                         ) {
                             converters.push(attributeProperty.converter);
                         }
                         if (!!attributeProperty.preview_converter
                             && converters.indexOf(attributeProperty.preview_converter) == -1
-                            && !ConverterPool.getConverter(attributeProperty.preview_converter)
+                            && !ConverterPool.get(attributeProperty.preview_converter)
                         ) {
                             converters.push(attributeProperty.preview_converter);
                         }
@@ -60,7 +60,7 @@ export default function create(contentType: string): Promise<> {
         if (dataMapping !== undefined && dataMapping.converters !== undefined) {
             for (let i = 0; i < dataMapping.converters.length; i++) {
                 let converter = dataMapping.converters[i];
-                if (!!converter.component && !ConverterPool.getConverter(converter.component)) {
+                if (!!converter.component && !ConverterPool.get(converter.component)) {
                     converters.push(converter.component);
                 }
             }
@@ -70,7 +70,7 @@ export default function create(contentType: string): Promise<> {
     return new Promise((resolve: (converterPool: object) => void) => {
         loadModule(converters, (...loadedConverters: any[]) => {
             for (let i = 0; i < converters.length; i++) {
-                ConverterPool.registerConverter(converters[i], new loadedConverters[i]());
+                ConverterPool.register(converters[i], new loadedConverters[i]());
             }
             resolve(ConverterPool);
         });

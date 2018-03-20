@@ -31,8 +31,8 @@ export default class Block extends Structural implements BlockInterface {
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, propertyPool, converterPool) {
-        super(parent, stage, config, propertyPool, converterPool);
+    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, converterPool) {
+        super(parent, stage, config, converterPool);
 
         this.preview = getPreviewInstance(this, config);
 

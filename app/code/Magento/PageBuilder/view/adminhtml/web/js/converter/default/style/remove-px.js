@@ -11,9 +11,19 @@ define([], function () {
 
     var _proto = RemovePx.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value.replace("px", "");
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       return data[name] + 'px';

@@ -11,6 +11,10 @@ define([], function () {
 
     var _proto = Color.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       if (value === "default" || value === "initial" || value === "") {
         value = "";
@@ -25,6 +29,12 @@ define([], function () {
 
       return value;
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       return data[name];

@@ -13,11 +13,11 @@ define([], function () {
 
     var _proto = ConverterPool.prototype;
 
-    _proto.getConverter = function getConverter(name) {
+    _proto.get = function get(name) {
       return this.converters[name] !== undefined ? this.converters[name] : false;
     };
 
-    _proto.registerConverter = function registerConverter(name, converter) {
+    _proto.register = function register(name, converter) {
       this.converters[name] = converter;
     };
 

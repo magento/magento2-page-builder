@@ -11,9 +11,19 @@ define([], function () {
 
     var _proto = ButtonOpacity.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value;
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       return data.show_button === "always" ? "1" : "0";

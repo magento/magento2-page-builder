@@ -5,7 +5,7 @@
 
 export interface ElementConverterInterface {
     /**
-     * Convert value to internal representation format
+     * Convert value to internal format
      *
      * @param value string
      * @returns {string | object}
@@ -13,7 +13,7 @@ export interface ElementConverterInterface {
     fromDom(value: string): string | object;
 
     /**
-     * Convert value to format that will be used when saving to dom
+     * Convert value to dom format
      *
      * @param name string
      * @param data object

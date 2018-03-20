@@ -21,7 +21,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
      * @param config
      * @param converterPool
      */
-    function Structural(parent, stage, config, propertyPool, converterPool) {
+    function Structural(parent, stage, config, converterPool) {
       var _this;
 
       _this = _EditableArea.call(this, stage) || this;
@@ -29,6 +29,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       _this.children = _knockout.observableArray([]);
       _this.edit = void 0;
       _this.title = void 0;
+      _this.data = {};
       _this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
@@ -37,15 +38,12 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       _this.attributeMapper = new _attributeMapper();
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
-      _this.data = {};
-      _this.propertyPool = void 0;
       _this.converterPool = void 0;
 
       _this.setChildren(_this.children);
 
       _this.parent = parent;
       _this.config = config;
-      _this.propertyPool = propertyPool;
       _this.converterPool = converterPool; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
@@ -162,7 +160,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       var convertersConfig = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.converters;
 
       for (var i = 0; i < convertersConfig.length; i++) {
-        data = this.converterPool.getConverter(convertersConfig[i].component).beforeWrite(data, convertersConfig[i].config);
+        data = this.converterPool.get(convertersConfig[i].component).beforeWrite(data, convertersConfig[i].config);
       }
 
       var result = {};
@@ -196,12 +194,8 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
           value = data[styleProperty.var];
           var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
 
-          if (!!styleProperty.complex) {
-            value = this.propertyPool.getProperty(styleProperty.component).write(styleProperty.var, data);
-          } else {
-            if (this.converterPool.getConverter(converter)) {
-              value = this.converterPool.getConverter(converter).toDom(styleProperty.var, data);
-            }
+          if (this.converterPool.get(converter)) {
+            value = this.converterPool.get(converter).toDom(styleProperty.var, data);
           }
         }
 
@@ -264,8 +258,8 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
         var value = data[attribute.var];
         var converter = "preview" === area && attribute.preview_converter ? attribute.preview_converter : attribute.converter;
 
-        if (this.converterPool.getConverter(converter)) {
-          value = this.converterPool.getConverter(converter).toDom(attribute.var, data);
+        if (this.converterPool.get(converter)) {
+          value = this.converterPool.get(converter).toDom(attribute.var, data);
         }
 
         result[attribute.name] = value;

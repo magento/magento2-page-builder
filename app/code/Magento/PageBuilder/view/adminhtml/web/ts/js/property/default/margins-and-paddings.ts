@@ -3,10 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import PropertyReaderInterface from "../property-reader-interface";
 import Margins from "./margins";
 import Paddings from "./paddings";
 
-export default class MarginsAndPaddings {
+export default class MarginsAndPaddings implements PropertyReaderInterface {
     private margins: Margins;
     private paddings: Paddings;
 
@@ -23,18 +24,6 @@ export default class MarginsAndPaddings {
         return Object.assign(
             this.margins.read(element),
             this.paddings.read(element),
-        );
-    }
-
-    /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {string | Object}
-     */
-    public write(name: string, data: object): string | object {
-        return Object.assign(
-            this.margins.write(name, data),
-            this.paddings.write(name, data),
         );
     }
 }

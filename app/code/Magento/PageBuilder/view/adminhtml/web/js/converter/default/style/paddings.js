@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var MarginsAndPaddings =
+  var Paddings =
   /*#__PURE__*/
   function () {
-    function MarginsAndPaddings() {}
+    function Paddings() {}
 
-    var _proto = MarginsAndPaddings.prototype;
+    var _proto = Paddings.prototype;
 
     /**
      * @param {string} value
@@ -17,15 +17,6 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       var result = {};
-
-      if (undefined !== value.margin) {
-        result["margin"] = {
-          "left": value.margin.left.replace("px", ""),
-          "top": value.margin.top.replace("px", ""),
-          "right": value.margin.right.replace("px", ""),
-          "bottom": value.margin.bottom.replace("px", "")
-        };
-      }
 
       if (undefined !== value.padding) {
         result["padding"] = {
@@ -49,26 +40,19 @@ define([], function () {
       var value = data[name];
       var result = {};
 
-      if (undefined !== value.margin) {
-        result["marginLeft"] = value.margin.left + "px";
-        result["marginTop"] = value.margin.top + "px";
-        result["marginRight"] = value.margin.right + "px";
-        result["marginBottom"] = value.margin.bottom + "px";
-      }
-
       if (undefined !== value.padding) {
         result["paddingLeft"] = value.padding.left + "px";
         result["paddingTop"] = value.padding.top + "px";
         result["paddingRight"] = value.padding.right + "px";
-        result["paddingBottom"] = value.margin.bottom + "px";
+        result["paddingBottom"] = value.padding.bottom + "px";
       }
 
       return result;
     };
 
-    return MarginsAndPaddings;
+    return Paddings;
   }();
 
-  return MarginsAndPaddings;
+  return Paddings;
 });
-//# sourceMappingURL=margins-and-paddings.js.map
+//# sourceMappingURL=paddings.js.map

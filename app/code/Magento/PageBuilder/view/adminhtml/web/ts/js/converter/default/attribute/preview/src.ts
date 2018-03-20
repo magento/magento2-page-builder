@@ -6,11 +6,19 @@
 import ElementConverterInterface from "../../../element-converter-interface";
 
 export default class Src implements ElementConverterInterface {
-
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     public fromDom(value: string): string | object {
         return value;
     }
 
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
     public toDom(name: string, data: object): string | object {
         const value = data[name];
         if (value && typeof value[0] === "object") {

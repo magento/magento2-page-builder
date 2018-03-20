@@ -6,7 +6,11 @@
 import ConverterInterface from "converter-interface";
 
 export default class EmptyMobileImage implements ConverterInterface {
-
+    /**
+     * @param {Object} data
+     * @param {Object} config
+     * @returns {Object}
+     */
     public afterRead(data: object, config: object): object {
         const desktopImage = data[config.desktop_image_variable];
         const mobileImage = data[config.mobile_image_variable];
@@ -19,6 +23,11 @@ export default class EmptyMobileImage implements ConverterInterface {
         return data;
     }
 
+    /**
+     * @param {Object} data
+     * @param {Object} config
+     * @returns {Object}
+     */
     public beforeWrite(data: object, config: object): object {
         if (data[config.mobile_image_variable] === undefined
             || data[config.mobile_image_variable][0] === undefined

@@ -3,7 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-export default class Paddings {
+import PropertyReaderInterface from "../property-reader-interface";
+
+export default class Paddings implements PropertyReaderInterface {
     /**
      * @param {HTMLElement} element
      * @returns {string | Object}
@@ -11,27 +13,11 @@ export default class Paddings {
     public read(element: HTMLElement): string | object {
         return {
             padding: {
-                left: element.style.paddingLeft.replace("px", ""),
-                top: element.style.paddingTop.replace("px", ""),
-                right: element.style.paddingRight.replace("px", ""),
-                bottom: element.style.paddingBottom.replace("px", ""),
+                left: element.style.paddingLeft,
+                top: element.style.paddingTop,
+                right: element.style.paddingRight,
+                bottom: element.style.paddingBottom,
             }
         };
-    }
-
-    /**
-     * @param {HTMLElement} element
-     * @returns {string | Object}
-     */
-    public write(name: string, data: object): string | object {
-        if (data[name].padding === undefined) {
-            return {};
-        }
-        return {
-            paddingLeft: data[name].padding.left + "px",
-            paddingTop: data[name].padding.top + "px",
-            paddingRight: data[name].padding.right + "px",
-            paddingBottom: data[name].padding.bottom + "px",
-        }
     }
 }

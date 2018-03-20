@@ -22,11 +22,11 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../confi
             for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
               var styleProperty = dataMapping.elements[elementName].style[i];
 
-              if (!!styleProperty.converter && converters.indexOf(styleProperty.converter) == -1 && !_converterPool.getConverter(styleProperty.converter)) {
+              if (!!styleProperty.converter && converters.indexOf(styleProperty.converter) == -1 && !_converterPool.get(styleProperty.converter)) {
                 converters.push(styleProperty.converter);
               }
 
-              if (!!styleProperty.preview_converter && converters.indexOf(styleProperty.preview_converter) == -1 && !_converterPool.getConverter(styleProperty.preview_converter)) {
+              if (!!styleProperty.preview_converter && converters.indexOf(styleProperty.preview_converter) == -1 && !_converterPool.get(styleProperty.preview_converter)) {
                 converters.push(styleProperty.preview_converter);
               }
             }
@@ -36,11 +36,11 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../confi
             for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
               var attributeProperty = dataMapping.elements[elementName].attributes[_i];
 
-              if (!!attributeProperty.converter && converters.indexOf(attributeProperty.converter) == -1 && !_converterPool.getConverter(attributeProperty.converter)) {
+              if (!!attributeProperty.converter && converters.indexOf(attributeProperty.converter) == -1 && !_converterPool.get(attributeProperty.converter)) {
                 converters.push(attributeProperty.converter);
               }
 
-              if (!!attributeProperty.preview_converter && converters.indexOf(attributeProperty.preview_converter) == -1 && !_converterPool.getConverter(attributeProperty.preview_converter)) {
+              if (!!attributeProperty.preview_converter && converters.indexOf(attributeProperty.preview_converter) == -1 && !_converterPool.get(attributeProperty.preview_converter)) {
                 converters.push(attributeProperty.preview_converter);
               }
             }
@@ -52,7 +52,7 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../confi
         for (var _i2 = 0; _i2 < dataMapping.converters.length; _i2++) {
           var converter = dataMapping.converters[_i2];
 
-          if (!!converter.component && !_converterPool.getConverter(converter.component)) {
+          if (!!converter.component && !_converterPool.get(converter.component)) {
             converters.push(converter.component);
           }
         }
@@ -66,7 +66,7 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool", "../confi
         }
 
         for (var _i3 = 0; _i3 < converters.length; _i3++) {
-          _converterPool.registerConverter(converters[_i3], new loadedConverters[_i3]());
+          _converterPool.register(converters[_i3], new loadedConverters[_i3]());
         }
 
         resolve(_converterPool);

@@ -11,9 +11,19 @@ define([], function () {
 
     var _proto = BackgroundRepeat.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value === "repeat" ? "1" : "0";
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       return data[name] === "1" ? "repeat" : "no-repeat";

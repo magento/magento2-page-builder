@@ -10,11 +10,19 @@ import {toDataUrl} from "../../../utils/directives";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../../utils/url";
 
 export default class BackgroundImage implements ElementConverterInterface {
-
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     public fromDom(value: string): string | object {
         return decodeUrl(value);
     }
 
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
     public toDom(name: string, data: object): string | object {
         const value = data[name];
         if (value[0] === undefined || value[0].url === undefined) {

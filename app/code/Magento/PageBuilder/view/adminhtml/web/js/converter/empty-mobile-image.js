@@ -11,6 +11,11 @@ define([], function () {
 
     var _proto = EmptyMobileImage.prototype;
 
+    /**
+     * @param {Object} data
+     * @param {Object} config
+     * @returns {Object}
+     */
     _proto.afterRead = function afterRead(data, config) {
       var desktopImage = data[config.desktop_image_variable];
       var mobileImage = data[config.mobile_image_variable];
@@ -21,6 +26,12 @@ define([], function () {
 
       return data;
     };
+    /**
+     * @param {Object} data
+     * @param {Object} config
+     * @returns {Object}
+     */
+
 
     _proto.beforeWrite = function beforeWrite(data, config) {
       if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {

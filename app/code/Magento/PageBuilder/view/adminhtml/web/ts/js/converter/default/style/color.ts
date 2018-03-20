@@ -6,7 +6,10 @@
 import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Color implements ElementConverterInterface {
-
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     public fromDom(value: string): string | object {
         if (value === "default" || value === "initial" || value === "") {
             value = "";
@@ -23,6 +26,11 @@ export default class Color implements ElementConverterInterface {
         return value;
     }
 
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
     public toDom(name: string, data:object): string {
         return data[name];
     }

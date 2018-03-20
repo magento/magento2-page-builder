@@ -11,9 +11,19 @@ define(["../../../utils/color-converter"], function (_colorConverter) {
 
     var _proto = OverlayColor.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       return data[name];

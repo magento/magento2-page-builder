@@ -143,7 +143,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 foreach ($stylePropertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
                     $elementData[$elementName]['style'][] = [
                         'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
-                        'component' => $propertyNode->attributes->getNamedItem('component')->nodeValue,
+                        'reader' => $propertyNode->attributes->getNamedItem('reader')->nodeValue,
                         'converter' => $propertyNode->hasAttribute('converter')
                             ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
                             : null,

@@ -11,9 +11,19 @@ define(["../../../component/config", "../../../utils/image", "../../../utils/dir
 
     var _proto = BackgroundImage.prototype;
 
+    /**
+     * @param {string} value
+     * @returns {Object | string}
+     */
     _proto.fromDom = function fromDom(value) {
       return (0, _image.decodeUrl)(value);
     };
+    /**
+     * @param {string} name
+     * @param {Object} data
+     * @returns {Object | string}
+     */
+
 
     _proto.toDom = function toDom(name, data) {
       var value = data[name];

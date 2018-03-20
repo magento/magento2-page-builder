@@ -4,7 +4,7 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import PropertyPool from "./property-pool"
+import PropertyReaderPool from "./property-reader-pool"
 import Config from "../config";
 
 /**
@@ -23,10 +23,10 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
                         const styleProperty = dataMapping.elements[elementName].style[i];
                         if (!!styleProperty.complex
-                            && properties.indexOf(styleProperty.component) == -1
-                            && !PropertyPool.getProperty(styleProperty.component)
+                            && properties.indexOf(styleProperty.reader) == -1
+                            && !PropertyReaderPool.get(styleProperty.reader)
                         ) {
-                            properties.push(styleProperty.component);
+                            properties.push(styleProperty.reader);
                         }
                     }
                 }
@@ -35,10 +35,10 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
                         const attributeProperty = dataMapping.elements[elementName].attributes[i];
                         if (!!attributeProperty.complex
-                            && properties.indexOf(attributeProperty.component) == -1
-                            && !PropertyPool.getProperty(attributeProperty.component)
+                            && properties.indexOf(attributeProperty.reader) == -1
+                            && !PropertyReaderPool.get(attributeProperty.reader)
                         ) {
-                            properties.push(attributeProperty.component);
+                            properties.push(attributeProperty.reader);
                         }
                     }
                 }
@@ -46,12 +46,12 @@ export default function create(contentType: string): Promise<> {
         }
     }
 
-    return new Promise((resolve: (PropertyPool: object) => void) => {
+    return new Promise((resolve: (PropertyReaderPool: object) => void) => {
         loadModule(properties, (...loadedProperties: any[]) => {
             for (let i = 0; i < properties.length; i++) {
-                PropertyPool.registerProperty(properties[i], new loadedProperties[i]());
+                PropertyReaderPool.register(properties[i], new loadedProperties[i]());
             }
-            resolve(PropertyPool);
+            resolve(PropertyReaderPool);
         });
     });
 }
