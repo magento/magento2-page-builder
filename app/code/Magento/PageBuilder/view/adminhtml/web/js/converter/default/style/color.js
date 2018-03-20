@@ -11,7 +11,7 @@ define([], function () {
 
     var _proto = Color.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       if (value === "default" || value === "initial" || value === "") {
         value = "";
       } else {
@@ -25,6 +25,10 @@ define([], function () {
 
       return value;
     };
+
+    _proto.toDom = function toDom(name, data) {
+      return data[name];
+    };
     /**
      * Convert from int to hex
      *
@@ -33,13 +37,9 @@ define([], function () {
      */
 
 
-    _proto.fromIntToHex = function fromIntToHex(value, key, data) {
+    _proto.fromIntToHex = function fromIntToHex(value) {
       var hex = value.toString(16);
       return hex.length === 1 ? "0" + hex : hex;
-    };
-
-    _proto.toDom = function toDom(value) {
-      return value;
     };
 
     return Color;

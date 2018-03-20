@@ -11,12 +11,12 @@ define([], function () {
 
     var _proto = Target.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value === "_blank" ? "1" : "0";
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      return value === "1" ? "_blank" : null;
+    _proto.toDom = function toDom(name, data) {
+      return data[name] === "1" ? "_blank" : null;
     };
 
     return Target;

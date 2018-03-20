@@ -10,11 +10,11 @@ import {percentToDecimal} from "../../../utils/number-converter";
 
 export default class OverlayColorTransparency implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return value === "transparent" ? "0" : extractAlphaFromRgba(value);
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
+    public toDom(name: string, data: object): string | object {
         let overlayColor: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {

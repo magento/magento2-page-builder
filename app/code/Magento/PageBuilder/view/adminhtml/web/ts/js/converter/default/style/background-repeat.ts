@@ -7,11 +7,11 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class BackgroundRepeat implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return value === "repeat" ? "1" : "0";
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
-        return value === "1" ? "repeat" : "no-repeat";
+    public toDom(name: string, data: object): string | object {
+        return data[name] === "1" ? "repeat" : "no-repeat";
     }
 }

@@ -13,7 +13,13 @@ define([], function () {
 
     var _proto = BackgroundImage.prototype;
 
-    _proto.toDom = function toDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
+      return value;
+    };
+
+    _proto.toDom = function toDom(name, data) {
+      var value = data[name];
+
       if (value && _typeof(value[0]) === "object") {
         return "url(" + value[0].url + ")";
       }

@@ -1,5 +1,7 @@
 /*eslint-disable */
 define(["knockout", "mage/translate", "underscore", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../component/block/appearance-config"], function (_knockout, _translate, _underscore, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _appearanceConfig) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -19,7 +21,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
      * @param config
      * @param converterPool
      */
-    function Structural(parent, stage, config, converterPool) {
+    function Structural(parent, stage, config, propertyPool, converterPool) {
       var _this;
 
       _this = _EditableArea.call(this, stage) || this;
@@ -36,12 +38,14 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
       _this.data = {};
+      _this.propertyPool = void 0;
       _this.converterPool = void 0;
 
       _this.setChildren(_this.children);
 
       _this.parent = parent;
       _this.config = config;
+      _this.propertyPool = propertyPool;
       _this.converterPool = converterPool; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
@@ -107,8 +111,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       });
     };
     /**
-     * Get css classes for an block
-     * Example {"class-name": true}
+     * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
      */
@@ -136,8 +139,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       return css;
     };
     /**
-     * Get stype properties for an block
-     * Example {"backgroundColor": "#cccccc"}
+     * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
@@ -192,25 +194,28 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
           value = styleProperty.value;
         } else {
           value = data[styleProperty.var];
-          var converter = styleProperty.converter;
+          var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
 
-          if ("preview" === area && styleProperty.preview_converter) {
-            converter = styleProperty.preview_converter;
-          }
-
-          if (this.converterPool.getConverter(converter)) {
-            value = this.converterPool.getConverter(converter).toDom(value, styleProperty.name, data);
+          if (!!styleProperty.complex) {
+            value = this.propertyPool.getProperty(styleProperty.component).write(styleProperty.var, data);
+          } else {
+            if (this.converterPool.getConverter(converter)) {
+              value = this.converterPool.getConverter(converter).toDom(styleProperty.var, data);
+            }
           }
         }
 
-        result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
+        if (_typeof(value) === "object") {
+          _underscore.extend(result, value);
+        } else {
+          result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
+        }
       }
 
       return result;
     };
     /**
-     * Get attributes for an block
-     * Example {"data-role": "element"}
+     * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
@@ -257,14 +262,10 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
         }
 
         var value = data[attribute.var];
-        var converter = attribute.converter;
-
-        if ("preview" === area && attribute.preview_converter) {
-          converter = attribute.preview_converter;
-        }
+        var converter = "preview" === area && attribute.preview_converter ? attribute.preview_converter : attribute.converter;
 
         if (this.converterPool.getConverter(converter)) {
-          value = this.converterPool.getConverter(converter).toDom(value, attribute.var, data);
+          value = this.converterPool.getConverter(converter).toDom(attribute.var, data);
         }
 
         result[attribute.name] = value;
@@ -272,6 +273,13 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
       return result;
     };
+    /**
+     * Get data for html binding
+     *
+     * @param {string} element
+     * @returns {object}
+     */
+
 
     _proto.getHtml = function getHtml(element) {
       var data = this.stage.store.get(this.id);
@@ -304,6 +312,12 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
     _proto.getOptions = function getOptions() {
       return new _options.Options(this, this.retrieveOptions());
     };
+    /**
+     * Update bindings after data changed in data store
+     *
+     * @param {object} data
+     */
+
 
     _proto.updateData = function updateData(data) {
       var appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;

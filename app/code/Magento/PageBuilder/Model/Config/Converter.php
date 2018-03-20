@@ -39,12 +39,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             $childNode->nodeValue
                         ) != '')
                 ) {
-                    if ('readers' === $childNode->nodeName) {
-                        foreach ($childNode->getElementsByTagName('reader') as $reader) {
-                            $component = $reader->attributes->getNamedItem('component')->nodeValue;
-                            $output['types'][$name][$childNode->nodeName][] = $component;
-                        }
-                    } elseif ('appearances' === $childNode->nodeName) {
+                    if ('appearances' === $childNode->nodeName) {
                         foreach ($childNode->getElementsByTagName('appearance') as $appearanceNode) {
                             $appearanceName = $appearanceNode->attributes->getNamedItem('name')->nodeValue;
                             $appearanceData = [];
@@ -60,8 +55,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             if ($renderTemplateNode) {
                                 $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
                             }
-                            $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
-                            if ($readersNode) {
+                            $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
+                            if ($readerNode) {
+                                $appearanceData['readers'] = [$readerNode->nodeValue];
+                            } else {
+                                $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
                                 $readers = [];
                                 foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
                                     $readers[] = $readerNode->attributes->getNamedItem('component')->nodeValue;
@@ -79,8 +77,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 : false;
                             $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
-                    } elseif ('data_mapping' === $childNode->nodeName) {
-                        $output['types'][$name]['data_mapping'] = $this->convertDataMappingConfiguration($childNode);
                     } else {
                         $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -133,15 +129,25 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     $elementData[$elementName]['style'][] = [
                         'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
                         'name' => $propertyNode->attributes->getNamedItem('name')->nodeValue,
-                        'virtual' => $propertyNode->hasAttribute('virtual')
-                            ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
-                            : null,
                         'converter' => $propertyNode->hasAttribute('converter')
                             ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
                             : null,
                         'preview_converter' => $propertyNode->hasAttribute('preview_converter')
                             ? $propertyNode->attributes->getNamedItem('preview_converter')->nodeValue
                             : null,
+                        'virtual' => $propertyNode->hasAttribute('virtual')
+                            ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
+                            : null,
+                    ];
+                }
+                foreach ($stylePropertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
+                    $elementData[$elementName]['style'][] = [
+                        'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
+                        'component' => $propertyNode->attributes->getNamedItem('component')->nodeValue,
+                        'converter' => $propertyNode->hasAttribute('converter')
+                            ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
+                            : null,
+                        'complex' => true
                     ];
                 }
                 foreach ($stylePropertiesNode->getElementsByTagName('static_property') as $propertyNode) {

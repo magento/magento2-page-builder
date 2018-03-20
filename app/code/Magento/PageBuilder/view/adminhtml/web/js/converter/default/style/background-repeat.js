@@ -11,12 +11,12 @@ define([], function () {
 
     var _proto = BackgroundRepeat.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value === "repeat" ? "1" : "0";
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      return value === "1" ? "repeat" : "no-repeat";
+    _proto.toDom = function toDom(name, data) {
+      return data[name] === "1" ? "repeat" : "no-repeat";
     };
 
     return BackgroundRepeat;

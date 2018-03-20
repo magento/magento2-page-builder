@@ -11,12 +11,12 @@ define(["../../../utils/color-converter"], function (_colorConverter) {
 
     var _proto = OverlayColor.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      return value;
+    _proto.toDom = function toDom(name, data) {
+      return data[name];
     };
 
     return OverlayColor;

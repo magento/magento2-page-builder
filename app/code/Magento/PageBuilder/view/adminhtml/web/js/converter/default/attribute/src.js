@@ -11,11 +11,13 @@ define(["../../../component/config", "../../../utils/image", "../../../utils/url
 
     var _proto = Src.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return (0, _image.decodeUrl)(value);
     };
 
-    _proto.toDom = function toDom(value, key, data) {
+    _proto.toDom = function toDom(name, data) {
+      var value = data[name];
+
       if (value[0] === undefined || value[0].url === undefined) {
         return null;
       }

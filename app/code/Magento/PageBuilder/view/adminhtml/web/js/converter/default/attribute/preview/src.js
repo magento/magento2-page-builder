@@ -13,11 +13,13 @@ define([], function () {
 
     var _proto = Src.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
-      return;
+    _proto.fromDom = function fromDom(value) {
+      return value;
     };
 
-    _proto.toDom = function toDom(value, key, data) {
+    _proto.toDom = function toDom(name, data) {
+      var value = data[name];
+
       if (value && _typeof(value[0]) === "object") {
         return value[0].url;
       }

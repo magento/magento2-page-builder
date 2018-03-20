@@ -11,10 +11,10 @@ define([], function () {
 
     var _proto = MarginsAndPaddings.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
-      var _key$split = key.split('_'),
-          type = _key$split[0],
-          direction = _key$split[1];
+    _proto.fromDom = function fromDom(name, value) {
+      var _name$split = name.split('_'),
+          type = _name$split[0],
+          direction = _name$split[1];
 
       var result = {};
       result[type] = {};
@@ -22,8 +22,9 @@ define([], function () {
       return result;
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      var parts = key.split("_");
+    _proto.toDom = function toDom(name, data) {
+      var parts = name.split("_");
+      var value = data[name];
 
       if (typeof value === "string" && value !== "") {
         value = JSON.parse(value);

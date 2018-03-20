@@ -76,7 +76,8 @@
             <xs:element type="data_mapping" name="data_mapping" minOccurs="0"/>
             <xs:element type="xs:string" name="preview_template" minOccurs="1" maxOccurs="1"/>
             <xs:element type="xs:string" name="render_template" minOccurs="1" maxOccurs="1"/>
-            <xs:element type="readers" name="readers" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:string" name="reader" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="readers" name="readers" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="default"/>
@@ -85,6 +86,10 @@
         <xs:sequence>
             <xs:element type="reader" name="reader" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reader">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="component" use="required"/>
     </xs:complexType>
     <xs:complexType name="data_mapping">
         <xs:sequence>
@@ -101,10 +106,6 @@
         <xs:sequence>
             <xs:element type="converter" name="converter" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="reader">
-        <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="component" use="required"/>
     </xs:complexType>
     <xs:complexType name="converter">
         <xs:sequence>
@@ -154,13 +155,22 @@
     <xs:complexType name="style_properties">
         <xs:sequence>
             <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="complex_property" name="complex_property" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="static_property" name="static_property" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="property">
         <xs:attribute type="xs:string" name="var" use="required"/>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="dom_name" use="optional"/>
+        <xs:attribute type="xs:string" name="component" use="optional"/>
+        <xs:attribute type="xs:string" name="converter" use="optional"/>
+        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
+        <xs:attribute type="xs:string" name="virtual" use="optional"/>
+        <xs:attribute type="xs:string" name="persist" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="complex_property">
+        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="component" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
@@ -193,9 +203,11 @@
         <xs:attribute type="xs:string" name="placeholder" use="optional"/>
     </xs:complexType>
     <xs:complexType name="css">
+        <xs:sequence>
+            <xs:element type="filter" name="filter" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
         <xs:attribute type="xs:string" name="var" use="required"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
-        <xs:element type="filter" name="filter"/>
     </xs:complexType>
     <xs:complexType name="filter">
         <xs:sequence>

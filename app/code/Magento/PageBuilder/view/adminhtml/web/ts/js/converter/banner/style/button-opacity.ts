@@ -7,11 +7,11 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class ButtonOpacity implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return value;
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
+    public toDom(name: string, data: object): string | object {
         return data.show_button === "always" ? "1" : "0";
     }
 }

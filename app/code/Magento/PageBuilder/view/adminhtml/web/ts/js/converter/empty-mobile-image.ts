@@ -6,6 +6,7 @@
 import ConverterInterface from "converter-interface";
 
 export default class EmptyMobileImage implements ConverterInterface {
+
     public afterRead(data: object, config: object): object {
         const desktopImage = data[config.desktop_image_variable];
         const mobileImage = data[config.mobile_image_variable];

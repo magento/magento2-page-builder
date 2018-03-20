@@ -7,11 +7,11 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class RemovePx implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): object | string {
+    public fromDom(value: string): object | string {
         return value.replace("px", "");
     }
 
-    public toDom(value: string, key: string, data: object): object | string {
-        return value + 'px';
+    public toDom(name: string, data: object): object | string {
+        return data[name] + 'px';
     }
 }

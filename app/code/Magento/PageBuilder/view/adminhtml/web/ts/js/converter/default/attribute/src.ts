@@ -11,11 +11,12 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Src implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return decodeUrl(value);
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
+    public toDom(name: string, data: object): string | object {
+        const value = data[name];
         if (value[0] === undefined || value[0].url === undefined) {
             return null;
         }

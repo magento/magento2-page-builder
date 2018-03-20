@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPoolFactory, _string, _array, _appearanceConfig) {
+define(["../../block/converter-pool", "../../block/property-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPool, _propertyPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -20,8 +20,11 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
 
       var role = element.getAttribute('data-role');
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
+      var componentsPromise = [(0, _propertyPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
-        (0, _converterPoolFactory)(role).then(function (ConverterPool) {
+        Promise.all(componentsPromise).then(function (loadedComponents) {
+          var propertyPool = loadedComponents[0],
+              converterPool = loadedComponents[1];
           var data = {};
 
           for (var elementName in config.elements) {
@@ -33,11 +36,11 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
             }
 
             if (config.elements[elementName].style !== undefined) {
-              data = _this.readStyle(config.elements[elementName].style, currentElement, data, ConverterPool);
+              data = _this.readStyle(config.elements[elementName].style, currentElement, data, converterPool, propertyPool);
             }
 
             if (config.elements[elementName].attributes !== undefined) {
-              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, ConverterPool);
+              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, converterPool, propertyPool);
             }
 
             if (config.elements[elementName].html !== undefined) {
@@ -53,7 +56,7 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
             }
           }
 
-          data = _this.convertData(config, data, ConverterPool);
+          data = _this.convertData(config, data, _converterPool);
           resolve(data);
         }).catch(function (error) {
           console.error(error);
@@ -124,7 +127,7 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
      */
 
 
-    _proto.readAttributes = function readAttributes(config, element, data, converterPool) {
+    _proto.readAttributes = function readAttributes(config, element, data, converterPool, propertyPool) {
       var result = {};
 
       for (var i = 0; i < config.length; i++) {
@@ -155,7 +158,7 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
      */
 
 
-    _proto.readStyle = function readStyle(config, element, data, converterPool) {
+    _proto.readStyle = function readStyle(config, element, data, converterPool, propertyPool) {
       var result = _.extend({}, data);
 
       for (var i = 0; i < config.length; i++) {
@@ -165,10 +168,16 @@ define(["../../block/converter-pool-factory", "../../../utils/string", "../../..
           continue;
         }
 
-        var value = element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
+        var value = null;
 
-        if (converterPool.getConverter(property.converter)) {
-          value = converterPool.getConverter(property.converter).fromDom(value, property.name);
+        if (!!property.complex) {
+          value = propertyPool.getProperty(property.component).read(element);
+        } else {
+          value = element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
+
+          if (converterPool.getConverter(property.converter)) {
+            value = converterPool.getConverter(property.converter).fromDom(value);
+          }
         }
 
         if (_typeof(result[property.var]) === "object") {

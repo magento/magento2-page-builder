@@ -11,12 +11,12 @@ define([], function () {
 
     var _proto = RemovePx.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value.replace("px", "");
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      return value + 'px';
+    _proto.toDom = function toDom(name, data) {
+      return data[name] + 'px';
     };
 
     return RemovePx;

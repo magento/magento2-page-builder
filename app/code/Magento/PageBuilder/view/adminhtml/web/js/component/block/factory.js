@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./converter-pool-factory"], function (_loader, _converterPoolFactory) {
+define(["Magento_PageBuilder/js/component/loader", "./property-pool-factory", "./converter-pool-factory"], function (_loader, _propertyPoolFactory, _converterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -28,10 +28,13 @@ define(["Magento_PageBuilder/js/component/loader", "./converter-pool-factory"], 
   function createBlock(config, parent, stage, formData) {
     stage = stage || parent.stage;
     formData = formData || {};
+    var componentsPromise = [(0, _propertyPoolFactory)(config.name), (0, _converterPoolFactory)(config.name)];
     return new Promise(function (resolve) {
-      (0, _converterPoolFactory)(config.name).then(function (converterPool) {
+      Promise.all(componentsPromise).then(function (loadedComponents) {
+        var propertyPool = loadedComponents[0],
+            converterPool = loadedComponents[1];
         (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
-          resolve(new blockComponent(parent, stage, config, formData, converterPool));
+          resolve(new blockComponent(parent, stage, config, formData, propertyPool, converterPool));
         });
       }).catch(function (error) {
         console.error(error);

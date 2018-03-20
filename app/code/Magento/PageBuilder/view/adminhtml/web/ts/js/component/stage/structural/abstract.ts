@@ -6,8 +6,8 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
+import PropertyPool from "../../block/property-pool";
 import ConverterPool from "../../../component/block/converter-pool";
-import ElementConverterPool from "../../../component/block/element-converter-pool";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
@@ -39,6 +39,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     public data = {};
+    public propertyPool: PropertyPool;
     public converterPool: ConverterPool;
 
     /**
@@ -53,12 +54,14 @@ export default class Structural extends EditableArea implements StructuralInterf
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
+        propertyPool: PropertyPool,
         converterPool: ConverterPool,
     ) {
         super(stage);
         this.setChildren(this.children);
         this.parent = parent;
         this.config = config;
+        this.propertyPool = propertyPool;
         this.converterPool = converterPool;
 
         // Create a new instance of edit for our editing needs
@@ -153,8 +156,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * Get css classes for an block
-     * Example {"class-name": true}
+     * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
      */
@@ -178,8 +180,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * Get stype properties for an block
-     * Example {"backgroundColor": "#cccccc"}
+     * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
@@ -229,26 +230,28 @@ export default class Structural extends EditableArea implements StructuralInterf
                 value = styleProperty.value;
             } else {
                 value = data[styleProperty.var];
-                let converter = styleProperty.converter;
-                if ("preview" === area && styleProperty.preview_converter) {
-                    converter = styleProperty.preview_converter;
-                }
-                if (this.converterPool.getConverter(converter)) {
-                    value = this.converterPool.getConverter(converter).toDom(
-                        value,
-                        styleProperty.name,
-                        data,
-                    );
+                const converter = "preview" === area && styleProperty.preview_converter
+                    ? styleProperty.preview_converter
+                    : styleProperty.converter;
+                if (!!styleProperty.complex) {
+                    value = this.propertyPool.getProperty(styleProperty.component).write(styleProperty.var, data);
+                } else {
+                    if (this.converterPool.getConverter(converter)) {
+                        value = this.converterPool.getConverter(converter).toDom(styleProperty.var, data);
+                    }
                 }
             }
-            result[fromSnakeToCamelCase(styleProperty.name)] = value;
+            if (typeof value === "object") {
+                _.extend(result, value);
+            } else {
+                result[fromSnakeToCamelCase(styleProperty.name)] = value;
+            }
         }
         return result;
     }
 
     /**
-     * Get attributes for an block
-     * Example {"data-role": "element"}
+     * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
@@ -286,18 +289,23 @@ export default class Structural extends EditableArea implements StructuralInterf
                 continue;
             }
             let value = data[attribute.var];
-            let converter = attribute.converter;
-            if ("preview" === area && attribute.preview_converter) {
-                converter = attribute.preview_converter;
-            }
+            const converter = "preview" === area && attribute.preview_converter
+                ? attribute.preview_converter
+                : attribute.converter;
             if (this.converterPool.getConverter(converter)) {
-                value = this.converterPool.getConverter(converter).toDom(value, attribute.var, data);
+                value = this.converterPool.getConverter(converter).toDom(attribute.var, data);
             }
             result[attribute.name] = value;
         }
         return result;
     }
 
+    /**
+     * Get data for html binding
+     *
+     * @param {string} element
+     * @returns {object}
+     */
     public getHtml(element: string) {
         const data = this.stage.store.get(this.id);
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
@@ -326,6 +334,11 @@ export default class Structural extends EditableArea implements StructuralInterf
         return new Options(this, this.retrieveOptions());
     }
 
+    /**
+     * Update bindings after data changed in data store
+     *
+     * @param {object} data
+     */
     public updateData(data: object) {
         const appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
         const appearanceConfiguration = appearanceConfig(this.config.name, appearance);

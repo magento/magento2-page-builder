@@ -7,11 +7,11 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class BorderWidth implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return value === "initial" ? "" : value.replace("px", "");
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
-        return value + "px";
+    public toDom(name: string, data: object): string | object {
+        return data[name] + "px";
     }
 }

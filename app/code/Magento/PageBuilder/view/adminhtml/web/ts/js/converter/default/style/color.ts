@@ -7,7 +7,7 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Color implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         if (value === "default" || value === "initial" || value === "") {
             value = "";
         } else {
@@ -23,18 +23,18 @@ export default class Color implements ElementConverterInterface {
         return value;
     }
 
+    public toDom(name: string, data:object): string {
+        return data[name];
+    }
+
     /**
      * Convert from int to hex
      *
      * @param {number} value
      * @returns {string}
      */
-    private fromIntToHex(value: number, key: string, data: object): string | object {
+    private fromIntToHex(value: number): string {
         const hex = value.toString(16);
         return hex.length === 1 ? "0" + hex : hex;
-    }
-
-    public toDom(value: string): string {
-        return value;
     }
 }

@@ -11,11 +11,11 @@ define([], function () {
 
     var _proto = ButtonVisibility.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value;
     };
 
-    _proto.toDom = function toDom(value, key, data) {
+    _proto.toDom = function toDom(name, data) {
       return data.show_button === "always" ? "visible" : "hidden";
     };
 

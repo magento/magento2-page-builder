@@ -11,11 +11,11 @@ define(["../../../utils/color-converter", "../../../utils/number-converter"], fu
 
     var _proto = OverlayBackgroundColor.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value;
     };
 
-    _proto.toDom = function toDom(value, key, data) {
+    _proto.toDom = function toDom(name, data) {
       var overlayColor = "transparent";
 
       if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {

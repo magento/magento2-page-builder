@@ -7,11 +7,11 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Target implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
+    public fromDom(value: string): string | object {
         return value === "_blank" ? "1" : "0";
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
-        return value === "1" ? "_blank" : null;
+    public toDom(name: string, data: object): string | object {
+        return data[name] === "1" ? "_blank" : null;
     }
 }

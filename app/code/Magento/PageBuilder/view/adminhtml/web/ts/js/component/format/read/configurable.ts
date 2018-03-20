@@ -4,9 +4,9 @@
  */
 
 import ReadInterface from "../read-interface";
-import Config from "../../config";
+import PropertyPool from "../../block/converter-pool";
 import ConverterPool from "../../block/converter-pool";
-import elementConverterPoolFactory from "../../block/element-converter-pool-factory";
+import propertyPoolFactory from "../../block/property-pool-factory";
 import converterPoolFactory from "../../block/converter-pool-factory";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {objectExtend} from "../../../utils/array";
@@ -23,8 +23,13 @@ export default class Configurable implements ReadInterface {
     public read(element: HTMLElement): Promise<any> {
         const role = element.getAttribute('data-role');
         const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
+        const componentsPromise: Array<Promise<any>> = [
+            propertyPoolFactory(role),
+            converterPoolFactory(role)
+        ];
         return new Promise((resolve: (data: object) => void) => {
-            converterPoolFactory(role).then((ConverterPool) => {
+            Promise.all(componentsPromise).then((loadedComponents) => {
+                const [propertyPool, converterPool] = loadedComponents;
                 let data = {};
                 for (let elementName: string in config.elements) {
                     let xpathResult = document.evaluate(
@@ -43,7 +48,8 @@ export default class Configurable implements ReadInterface {
                             config.elements[elementName].style,
                             currentElement,
                             data,
-                            ConverterPool
+                            converterPool,
+                            propertyPool
                         );
                     }
                     if (config.elements[elementName].attributes !== undefined) {
@@ -51,7 +57,8 @@ export default class Configurable implements ReadInterface {
                             config.elements[elementName].attributes,
                             currentElement,
                             data,
-                            ConverterPool
+                            converterPool,
+                            propertyPool
                         );
                     }
                     if (config.elements[elementName].html !== undefined) {
@@ -134,7 +141,7 @@ export default class Configurable implements ReadInterface {
      * @param {ConverterPool} converterPool
      * @returns {object}
      */
-    private readAttributes(config: any, element: Node, data: object, converterPool: ConverterPool) {
+    private readAttributes(config: any, element: Node, data: object, converterPool: ConverterPool, propertyPool: PropertyPool) {
         const result = {};
         for (let i = 0; i < config.length; i++) {
             let attribute = config[i];
@@ -159,16 +166,21 @@ export default class Configurable implements ReadInterface {
      * @param {ConverterPool} converterPool
      * @returns {object}
      */
-    private readStyle(config: any, element, data: object, converterPool: ConverterPool) {
+    private readStyle(config: any, element, data: object, converterPool: ConverterPool, propertyPool: PropertyPool) {
         const result: object = _.extend({}, data);
         for (let i = 0; i < config.length; i++) {
             let property = config[i];
             if (true === !!property.virtual) {
                 continue;
             }
-            let value = element.style[fromSnakeToCamelCase(property.name)];
-            if (converterPool.getConverter(property.converter)) {
-                value = converterPool.getConverter(property.converter).fromDom(value, property.name);
+            let value = null;
+            if (!!property.complex) {
+                value = propertyPool.getProperty(property.component).read(element);
+            } else {
+                value = element.style[fromSnakeToCamelCase(property.name)];
+                if (converterPool.getConverter(property.converter)) {
+                    value = converterPool.getConverter(property.converter).fromDom(value);
+                }
             }
             if (typeof result[property.var] === "object") {
                 value = objectExtend(result[property.var], value);
@@ -189,7 +201,10 @@ export default class Configurable implements ReadInterface {
     private convertData(config: any, data: object, converterPool: ConverterPool) {
         for (let i = 0; i < config.converters.length; i++) {
             if (converterPool.getConverter(config.converters[i].component)) {
-                data = converterPool.getConverter(config.converters[i].component).afterRead(data, config.converters[i].config);
+                data = converterPool.getConverter(config.converters[i].component).afterRead(
+                    data,
+                    config.converters[i].config
+                );
             }
         }
         return data;

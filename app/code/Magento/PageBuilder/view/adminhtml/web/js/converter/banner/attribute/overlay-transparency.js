@@ -11,12 +11,12 @@ define(["../../../utils/extract-alpha-from-rgba"], function (_extractAlphaFromRg
 
     var _proto = OverlayTransparency.prototype;
 
-    _proto.fromDom = function fromDom(value, key, data) {
+    _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
     };
 
-    _proto.toDom = function toDom(value, key, data) {
-      return value;
+    _proto.toDom = function toDom(name, data) {
+      return data[name];
     };
 
     return OverlayTransparency;

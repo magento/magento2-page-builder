@@ -7,11 +7,12 @@ import ElementConverterInterface from "../../../element-converter-interface";
 
 export default class Src implements ElementConverterInterface {
 
-    public fromDom(value: string, key: string, data: object): string | object {
-        return;
+    public fromDom(value: string): string | object {
+        return value;
     }
 
-    public toDom(value: string, key: string, data: object): string | object {
+    public toDom(name: string, data: object): string | object {
+        const value = data[name];
         if (value && typeof value[0] === "object") {
             return value[0].url;
         }
