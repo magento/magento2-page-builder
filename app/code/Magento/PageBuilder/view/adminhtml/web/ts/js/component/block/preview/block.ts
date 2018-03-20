@@ -12,6 +12,7 @@ import EventBus from "../../event-bus";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
+import "./live-edit";
 import "./sortable/binding";
 
 interface PreviewData {

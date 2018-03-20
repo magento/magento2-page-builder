@@ -3,6 +3,20 @@
  * See COPYING.txt for license details.
  */
 
+.pagebuilder-content-type {
+    [contenteditable=true] {
+        b {
+            font-weight: normal;
+        }
+        i {
+            font-style: normal;
+        }
+        &:empty:before {
+            content: attr(data-placeholder);
+        }
+    }
+}
+
 .pagebuilder-live-edit-wrapper {
     position: absolute !important;
     top: -43px !important;
