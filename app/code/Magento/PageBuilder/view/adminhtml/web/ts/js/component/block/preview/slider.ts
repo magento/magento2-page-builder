@@ -14,7 +14,7 @@ import Block from "../block";
 import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 import {BlockDuplicateEventParams, BlockMountEventParams} from "../../stage/structural/editable-area";
-import {BlockCreateEventParams} from "../factory";
+import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import Slide from "../slide";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 
@@ -32,7 +32,6 @@ export default class Slider extends PreviewBlock {
      */
     private buildSlick = _.debounce(() => {
         if (this.element && this.element.children.length > 0) {
-            // Force the height to ensure no weird paint effects / content jumps are produced
             try {
                 $(this.element).slick("unslick");
             } catch (e) {
@@ -86,6 +85,15 @@ export default class Slider extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
+        // We only start forcing the containers height once the slider is ready
+        let sliderReady: boolean = false;
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
+            if (params.id === this.parent.id) {
+                console.log("ready");
+                sliderReady = true;
+            }
+        });
+
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
 
@@ -96,6 +104,7 @@ export default class Slider extends PreviewBlock {
                 this.setActiveSlide(params.newPosition);
             }
         });
+        // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
         EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
             if (params.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
@@ -104,8 +113,9 @@ export default class Slider extends PreviewBlock {
                 this.parent.children(data);
             }
         });
+        // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
         EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
+            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });

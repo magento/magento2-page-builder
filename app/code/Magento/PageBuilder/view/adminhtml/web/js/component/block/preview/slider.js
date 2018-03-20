@@ -20,7 +20,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
     function Slider(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config) || this; // We only start forcing the containers height once the slider is ready
+
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
@@ -28,7 +29,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       _this.blockHeightReset = void 0;
       _this.buildSlick = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
-          // Force the height to ensure no weird paint effects / content jumps are produced
           try {
             (0, _jquery)(_this.element).slick("unslick");
           } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
@@ -66,6 +66,15 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
           });
         }
       }, 10);
+      var sliderReady = false;
+
+      _eventBus.on("slider:block:ready", function (event, params) {
+        if (params.id === _this.parent.id) {
+          console.log("ready");
+          sliderReady = true;
+        }
+      });
+
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
       _this.parent.stage.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
@@ -77,7 +86,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
           _this.setActiveSlide(params.newPosition);
         }
-      });
+      }); // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
+
 
       _eventBus.on("slide:block:removed", function (event, params) {
         if (params.block.parent.id === _this.parent.id) {
@@ -89,10 +99,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
           _this.parent.children(data);
         }
-      });
+      }); // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
+
 
       _eventBus.on("slide:block:create", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
+        if (_this.element && sliderReady && params.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
         }
       }); // Set the stage to interacting when a slide if focused
