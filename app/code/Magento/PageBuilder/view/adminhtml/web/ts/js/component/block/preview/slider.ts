@@ -203,6 +203,16 @@ export default class Slider extends PreviewBlock {
     }
 
     /**
+     * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
+     * operation
+     */
+    public onSortStop(): void {
+        if (this.activeSlide() !== this.focusedSlide()) {
+            this.setFocusedSlide(this.activeSlide(), true);
+        }
+    }
+
+    /**
      * Build the slack config object
      *
      * @returns {{autoplay: boolean; autoplaySpeed: (any | number);

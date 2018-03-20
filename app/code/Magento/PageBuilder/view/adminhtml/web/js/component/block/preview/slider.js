@@ -216,6 +216,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       }
     };
     /**
+     * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
+     * operation
+     */
+
+
+    _proto.onSortStop = function onSortStop() {
+      if (this.activeSlide() !== this.focusedSlide()) {
+        this.setFocusedSlide(this.activeSlide(), true);
+      }
+    };
+    /**
      * Build the slack config object
      *
      * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
