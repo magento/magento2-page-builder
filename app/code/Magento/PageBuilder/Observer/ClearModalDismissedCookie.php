@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Observer;
 
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
-use Magento\Framework\Message\ManagerInterface;
+use Psr\Log\LoggerInterface;
 use Magento\Framework\Event\ObserverInterface;
 
 class ClearModalDismissedCookie implements ObserverInterface
@@ -26,25 +26,25 @@ class ClearModalDismissedCookie implements ObserverInterface
     private $cookieMetadataFactory;
 
     /**
-     * @var ManagerInterface
+     * @var LoggerInterface
      */
-    private $messageManager;
+    private $logger;
 
     /**
      * ClearModalDismissedCookie constructor.
      *
      * @param CookieManagerInterface $cookieManager
      * @param CookieMetadataFactory $cookieMetadataFactory
-     * @param ManagerInterface $messageManager
+     * @param LoggerInterface $logger
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
         CookieMetadataFactory $cookieMetadataFactory,
-        ManagerInterface $messageManager
+        LoggerInterface $logger
     ) {
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
-        $this->messageManager = $messageManager
+        $this->logger = $logger;
     }
 
     /**
@@ -70,10 +70,8 @@ class ClearModalDismissedCookie implements ObserverInterface
                     )
                 );
             }
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->messageManager->addError($e->getMessage());
         } catch (\Exception $e) {
-            $this->messageManager->addException($e, __('Load customer quote error'));
+            $this->logger->error($e);
         }
     }
 }
