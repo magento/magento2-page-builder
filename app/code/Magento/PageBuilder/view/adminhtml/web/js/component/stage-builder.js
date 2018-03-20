@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "./block/factory", "./config", "./event-bus", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _eventBus, _formatValidator, _composite, _stage) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite", "Magento_PageBuilder/js/component/stage"], function (_translate, _, _factory, _config, _eventBus, _formatValidator, _composite, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

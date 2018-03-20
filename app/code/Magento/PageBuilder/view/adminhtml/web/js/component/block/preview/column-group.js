@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../config", "../../event-bus", "../../stage/panel/group/block", "./block", "./column-group/dragdrop", "./column-group/registry", "./column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _eventBus, _block, _block2, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _eventBus, _block, _block2, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =

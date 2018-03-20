@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "mageUtils", "underscore", "../../../utils/array", "../../event-bus"], function (_translate, _mageUtils, _underscore, _array, _eventBus) {
+define(["mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_translate, _mageUtils, _underscore, _array, _eventBus) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }

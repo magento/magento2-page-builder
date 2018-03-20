@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./live-edit", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _liveEdit, _binding) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/block/preview/live-edit", "Magento_PageBuilder/js/component/block/preview/sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _liveEdit, _binding) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }

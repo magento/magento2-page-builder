@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config", "./block"], function (_config, _block) {
+define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/preview/block"], function (_config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Product =

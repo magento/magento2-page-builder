@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "uiRegistry", "./edit/persistence-client"], function (_translate, _uiRegistry, _persistenceClient) {
+define(["mage/translate", "uiRegistry", "Magento_PageBuilder/js/component/stage/edit/persistence-client"], function (_translate, _uiRegistry, _persistenceClient) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

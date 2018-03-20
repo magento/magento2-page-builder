@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
