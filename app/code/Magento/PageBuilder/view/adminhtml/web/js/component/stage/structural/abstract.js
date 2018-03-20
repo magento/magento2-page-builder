@@ -126,7 +126,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
       } else {
         var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
 
-        if (config.css.var !== undefined && config.css.var in data) {
+        if (config.css && config.css.var !== undefined && config.css.var in data) {
           css = data[config.css.var];
         }
       }
@@ -184,25 +184,27 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
     _proto.convertStyle = function convertStyle(config, data, area) {
       var result = {};
 
-      for (var i = 0; i < config.style.length; i++) {
-        var styleProperty = config.style[i];
-        var value = "";
+      if (config.style) {
+        for (var i = 0; i < config.style.length; i++) {
+          var styleProperty = config.style[i];
+          var value = "";
 
-        if (!!styleProperty.static) {
-          value = styleProperty.value;
-        } else {
-          value = data[styleProperty.var];
-          var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
+          if (!!styleProperty.static) {
+            value = styleProperty.value;
+          } else {
+            value = data[styleProperty.var];
+            var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
 
-          if (this.converterPool.get(converter)) {
-            value = this.converterPool.get(converter).toDom(styleProperty.var, data);
+            if (this.converterPool.get(converter)) {
+              value = this.converterPool.get(converter).toDom(styleProperty.var, data);
+            }
           }
-        }
 
-        if (_typeof(value) === "object") {
-          _underscore.extend(result, value);
-        } else {
-          result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
+          if (_typeof(value) === "object") {
+            _underscore.extend(result, value);
+          } else {
+            result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
+          }
         }
       }
 

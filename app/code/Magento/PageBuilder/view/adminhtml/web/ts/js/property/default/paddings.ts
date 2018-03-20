@@ -13,10 +13,10 @@ export default class Paddings implements PropertyReaderInterface {
     public read(element: HTMLElement): string | object {
         return {
             padding: {
-                left: element.style.paddingLeft,
-                top: element.style.paddingTop,
-                right: element.style.paddingRight,
-                bottom: element.style.paddingBottom,
+                left: element.style.paddingLeft.replace("px", ""),
+                top: element.style.paddingTop.replace("px", ""),
+                right: element.style.paddingRight.replace("px", ""),
+                bottom: element.style.paddingBottom.replace("px", ""),
             }
         };
     }

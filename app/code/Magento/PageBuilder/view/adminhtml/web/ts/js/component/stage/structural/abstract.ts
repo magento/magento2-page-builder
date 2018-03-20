@@ -164,7 +164,7 @@ export default class Structural extends EditableArea implements StructuralInterf
             }
         } else {
             const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
-            if (config.css.var !== undefined && config.css.var in data) {
+            if (config.css && config.css.var !== undefined && config.css.var in data) {
                 css = data[config.css.var];
             }
         }
@@ -218,24 +218,26 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     private convertStyle(config: any, data: any, area: string) {
         const result = {};
-        for (let i = 0; i < config.style.length; i++) {
-            const styleProperty = config.style[i];
-            let value = "";
-            if (!!styleProperty.static) {
-                value = styleProperty.value;
-            } else {
-                value = data[styleProperty.var];
-                const converter = "preview" === area && styleProperty.preview_converter
-                    ? styleProperty.preview_converter
-                    : styleProperty.converter;
-                if (this.converterPool.get(converter)) {
-                    value = this.converterPool.get(converter).toDom(styleProperty.var, data);
+        if (config.style) {
+            for (let i = 0; i < config.style.length; i++) {
+                const styleProperty = config.style[i];
+                let value = "";
+                if (!!styleProperty.static) {
+                    value = styleProperty.value;
+                } else {
+                    value = data[styleProperty.var];
+                    const converter = "preview" === area && styleProperty.preview_converter
+                        ? styleProperty.preview_converter
+                        : styleProperty.converter;
+                    if (this.converterPool.get(converter)) {
+                        value = this.converterPool.get(converter).toDom(styleProperty.var, data);
+                    }
                 }
-            }
-            if (typeof value === "object") {
-                _.extend(result, value);
-            } else {
-                result[fromSnakeToCamelCase(styleProperty.name)] = value;
+                if (typeof value === "object") {
+                    _.extend(result, value);
+                } else {
+                    result[fromSnakeToCamelCase(styleProperty.name)] = value;
+                }
             }
         }
         return result;
