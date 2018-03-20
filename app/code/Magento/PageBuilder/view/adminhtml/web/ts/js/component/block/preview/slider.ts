@@ -89,7 +89,6 @@ export default class Slider extends PreviewBlock {
         let sliderReady: boolean = false;
         EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.parent.id) {
-                console.log("ready");
                 sliderReady = true;
             }
         });

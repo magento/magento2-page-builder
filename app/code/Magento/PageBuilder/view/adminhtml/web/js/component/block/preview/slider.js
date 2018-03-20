@@ -70,7 +70,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
       _eventBus.on("slider:block:ready", function (event, params) {
         if (params.id === _this.parent.id) {
-          console.log("ready");
           sliderReady = true;
         }
       });
