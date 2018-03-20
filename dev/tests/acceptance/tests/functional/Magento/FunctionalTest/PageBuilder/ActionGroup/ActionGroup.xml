@@ -372,6 +372,13 @@
         <wait time="1" stepKey="waitForClick"/>
         <seeElement selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="verifySectionUpdated"/>
     </actionGroup>
+    <actionGroup name="scrollToSlideOutPanelField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <scrollTo selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="scrollToField"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForScroll" />
+    </actionGroup>
     <actionGroup name="selectSlideOutPanelField">
         <arguments>
             <argument name="property" defaultValue=""/>
