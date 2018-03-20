@@ -32,7 +32,7 @@ define([], function () {
 
 
     _proto.write = function write(name, data) {
-      if (data[name].padding === undefined) {
+      if (!data[name] || data[name].padding === undefined) {
         return {};
       }
 

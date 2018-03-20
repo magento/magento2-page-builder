@@ -24,7 +24,7 @@ export default class Paddings {
      * @returns {string | Object}
      */
     public write(name: string, data: object): string | object {
-        if (data[name].padding === undefined) {
+        if (!data[name] || data[name].padding === undefined) {
             return {};
         }
         return {

@@ -25,7 +25,7 @@ export default class Margins {
      * @returns {string | Object}
      */
     public write(name: string, data: object): string | object {
-        if (data[name].margin === undefined) {
+        if (!data[name] || data[name].margin === undefined) {
             return {};
         }
         return {
