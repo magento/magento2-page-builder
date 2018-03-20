@@ -23,7 +23,7 @@ ko.bindingHandlers.liveEdit = {
         const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
         const value = valueAccessor();
 
-        const stripHtml = (html) => {
+        const stripHtml = (html: string) => {
             const tempDiv = document.createElement("div");
             tempDiv.innerHTML = html;
             return tempDiv.innerText;
@@ -39,7 +39,7 @@ ko.bindingHandlers.liveEdit = {
                 document.execCommand("selectAll", false, null);
             }
         };
-        const onKeyDown = (event) => {
+        const onKeyDown = (event: any) => {
             // command or control
             if (event.metaKey || event.ctrlKey) {
                 // b, i, or u
@@ -61,7 +61,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("keyup", onKeyUp);
 
-        $(element).parent().css("cursor","text");
+        $(element).parent().css("cursor", "text");
         if (element.innerText === "") {
             $(element).addClass("placeholder-text");
         }
@@ -75,7 +75,7 @@ ko.bindingHandlers.liveEdit = {
      * @param addBindingCallback
      */
     preprocess(value, name, addBindingCallback) {
-        let attrValue = "{" + value.split(",")[1];
+        const attrValue = "{" + value.split(",")[1];
         let textValue = value.split(",")[0].split("'")[1];
         textValue = "preview.data." + textValue + "()";
 
