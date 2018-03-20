@@ -89,7 +89,6 @@ export default class Slider extends PreviewBlock {
         let sliderReady: boolean = false;
         EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.parent.id) {
-                console.log("ready");
                 sliderReady = true;
             }
         });
@@ -200,6 +199,16 @@ export default class Slider extends PreviewBlock {
             this.navigateToSlide(params.item.index(), false, true);
             // As we've completed a navigation request we need to ensure we don't remove the forced height
             this.blockHeightReset = true;
+        }
+    }
+
+    /**
+     * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
+     * operation
+     */
+    public onSortStop(): void {
+        if (this.activeSlide() !== this.focusedSlide()) {
+            this.setFocusedSlide(this.activeSlide(), true);
         }
     }
 

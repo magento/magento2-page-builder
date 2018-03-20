@@ -70,7 +70,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
 
       _eventBus.on("slider:block:ready", function (event, params) {
         if (params.id === _this.parent.id) {
-          console.log("ready");
           sliderReady = true;
         }
       });
@@ -214,6 +213,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
         this.navigateToSlide(params.item.index(), false, true); // As we've completed a navigation request we need to ensure we don't remove the forced height
 
         this.blockHeightReset = true;
+      }
+    };
+    /**
+     * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
+     * operation
+     */
+
+
+    _proto.onSortStop = function onSortStop() {
+      if (this.activeSlide() !== this.focusedSlide()) {
+        this.setFocusedSlide(this.activeSlide(), true);
       }
     };
     /**
