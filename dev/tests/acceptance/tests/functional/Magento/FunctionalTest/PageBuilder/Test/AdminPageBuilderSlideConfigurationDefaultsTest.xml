@@ -40,7 +40,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!-- Adding Slider opens first slide by default-->
+        <!-- Adding Slider opens first slide by default -->
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>
         <comment userInput="User sees Slider preview that shows Empty slide" stepKey="AC1"/>
@@ -61,18 +61,18 @@
         <seeElement selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="seeDotForFirstSlide"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
         <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddSlideButton"/>
-        <!--Empty slide min height -->
+        <!-- Empty slide min height -->
         <comment userInput="User sees slider preview with min height is 300 px" stepKey="AC4"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
-        <!--Empty slide default margin and paddings -->
+        <!-- Empty slide default margin and paddings -->
         <comment userInput="User sees empty slide with margin to be 0 px and and paddings to be 40 px by default" stepKey="AC5"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
-        <!--Empty slide no border -->
+        <!-- Empty slide no border -->
         <comment userInput="User sees no slide border by default" stepKey="AC6"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border: none;" stepKey="verifyBorderNone"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
-        <!--Slide order in option panel -->
+        <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
@@ -80,7 +80,7 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderSliderContentBlock.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <grabTextFrom selector="{{SlideInAdmin.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
-        <!--Empty slide background defaults on admin preview-->
+        <!-- Empty slide background defaults on admin preview -->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
         <comment userInput="Verify slide defaults on admin: Background Position defaults to Top Aligned" stepKey="adminDefaultPosition"/>
@@ -160,7 +160,7 @@
         </actionGroup>
         <waitForElementVisible stepKey="waitForPageBuilder" selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default and available values on Appearance section of Add Slide form-->
+        <!-- Verify default and available values on Appearance section of Add Slide form -->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="Poster" stepKey="seePosterAppearanceDefault"/>
         <comment userInput="User sees 4 appearances displayed: Poster, Collage Left, Collage Center, Collage Right." stepKey="AC1" />
@@ -218,7 +218,7 @@
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default and available values on background section of Add Slide form-->
+        <!-- Verify default and available values on background section of Add Slide form -->
         <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
         <assertEmpty stepKey="assertEmptyBackgroundColor" message="Background Color has text: $grabColorDefaultValue">
@@ -289,7 +289,7 @@
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
-        <!--Verify default and available values on content section of Add Slide form-->
+        <!-- Verify default and available values on content section of Add Slide form -->
         <comment userInput="Slide Content: WYSIWYG defaults to empty" stepKey="AC0" />
         <!-- unable to get content of WYSIWYG out to variable MQE-818 -->
         <comment userInput="Show Button: dropdown defaults to Never Show " stepKey="AC1"/>
