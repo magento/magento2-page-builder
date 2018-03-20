@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Observer;
 
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Event\ObserverInterface;
 
 class ClearModalDismissedCookie implements ObserverInterface
@@ -25,17 +26,25 @@ class ClearModalDismissedCookie implements ObserverInterface
     private $cookieMetadataFactory;
 
     /**
+     * @var ManagerInterface
+     */
+    private $messageManager;
+
+    /**
      * ClearModalDismissedCookie constructor.
      *
      * @param CookieManagerInterface $cookieManager
      * @param CookieMetadataFactory $cookieMetadataFactory
+     * @param ManagerInterface $messageManager
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
-        CookieMetadataFactory $cookieMetadataFactory
+        CookieMetadataFactory $cookieMetadataFactory,
+        ManagerInterface $messageManager
     ) {
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
+        $this->messageManager = $messageManager
     }
 
     /**
@@ -43,24 +52,28 @@ class ClearModalDismissedCookie implements ObserverInterface
      *
      * @param \Magento\Framework\Event\Observer $observer
      *
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Stdlib\Cookie\FailureToSendException
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $cookieName = "modal_dismissed_pagebuilder_remove";
-        if ($this->cookieManager->getCookie($cookieName)) {
-            $this->cookieManager->deleteCookie(
-                $cookieName,
-                $this->cookieMetadataFactory->createCookieMetadata(
-                    [
-                        "path" => "/",
-                        "secure" => false,
-                        "http_only" => false
-                    ]
-                )
-            );
+        try {
+            $cookieName = "pagebuilder_modal_dismissed";
+            if ($this->cookieManager->getCookie($cookieName)) {
+                $this->cookieManager->deleteCookie(
+                    $cookieName,
+                    $this->cookieMetadataFactory->createCookieMetadata(
+                        [
+                            "path" => "/",
+                            "secure" => false,
+                            "http_only" => false
+                        ]
+                    )
+                );
+            }
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $this->messageManager->addError($e->getMessage());
+        } catch (\Exception $e) {
+            $this->messageManager->addException($e, __('Load customer quote error'));
         }
     }
 }
