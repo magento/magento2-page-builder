@@ -35,7 +35,7 @@ ko.bindingHandlers.liveEdit = {
             }
         };
         const onClick = () => {
-            if ($(element).innerText !== "") {
+            if (element.innerText !== "") {
                 document.execCommand("selectAll", false, null);
             }
         };

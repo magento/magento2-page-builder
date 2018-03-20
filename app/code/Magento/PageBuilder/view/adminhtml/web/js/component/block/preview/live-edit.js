@@ -41,7 +41,7 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
       };
 
       var onClick = function onClick() {
-        if ((0, _jquery.default)(element).innerText !== "") {
+        if (element.innerText !== "") {
           document.execCommand("selectAll", false, null);
         }
       };
