@@ -33,7 +33,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
      * Show button on hover of specific elements
      *
      * @param {JQuery<Element>[]} $elements
-     * @param {string} buttonClass
+     * @param {String} buttonClass
      */
     function showButtonOnHover($elements, buttonClass) {
         $elements.each(function (index, element) {
