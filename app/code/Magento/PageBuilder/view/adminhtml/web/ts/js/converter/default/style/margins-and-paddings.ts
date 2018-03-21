@@ -38,7 +38,7 @@ export default class MarginsAndPaddings implements ElementConverterInterface {
      */
     public toDom(name: string, data:object): string | object {
         let value = data[name];
-        if (typeof value === "string") {
+        if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
         const result = {};
