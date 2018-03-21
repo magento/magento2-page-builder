@@ -9,12 +9,11 @@ import createBlock, {BlockReadyEventParams} from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
+import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
-import {BlockChildrenRenderedEventParams} from "./preview/block";
 import {default as SliderPreview} from "./preview/slider";
-import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
 import Slide from "./slide";
 
 export default class Slider extends Block {
