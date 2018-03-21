@@ -80,14 +80,20 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
             value = JSON.parse(value);
           }
 
-          result.marginTop = value.margin.top ? value.margin.top + "px" : null;
-          result.marginRight = value.margin.right ? value.margin.right + "px" : null;
-          result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
-          result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
-          result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
-          result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
-          result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
-          result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
+          if (value.margin) {
+            result.marginTop = value.margin.top ? value.margin.top + "px" : null;
+            result.marginRight = value.margin.right ? value.margin.right + "px" : null;
+            result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
+            result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
+          }
+
+          if (value.padding) {
+            result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
+            result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
+            result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;
+            result.paddingLeft = value.padding.left ? value.padding.left + "px" : null;
+          }
+
           return;
         }
 

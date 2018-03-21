@@ -6,28 +6,26 @@
 -->
 
 <div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
-    <a data-bind="attr: getAttributes('link')">
-        <div data-bind="style: Object.assign(getStyle('desktop_image'), {
-                paddingTop: getData().margins_and_padding.padding.top + 'px',
-                paddingBottom: getData().margins_and_padding.padding.bottom + 'px',
-                paddingLeft: 'calc(25% + ' + getData().margins_and_padding.padding.left + 'px)',
-                paddingRight: 'calc(25% + ' + getData().margins_and_padding.padding.right + 'px)'})"
-             class="pagebuilder-mobile-hidden pagebuilder-banner-wrapper">
-            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay')">
+    <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getCss('link')">
+        <div data-bind="css: getCss('desktop_image'), attr: getAttributes('desktop_image'), style: Object.assign(getStyle('desktop_image'),{
+            paddingLeft: 'calc(25% + ' + getStyle('desktop_image').paddingLeft + ')',
+            paddingRight: 'calc(25% + ' + getStyle('desktop_image').paddingRight + ')'})"
+            class="pagebuilder-mobile-hidden pagebuilder-banner-wrapper">
+            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-collage-content">
-                    <div data-bind="html: getHtml('content')"></div>
-                    <!-- ko if: getData().show_button !== 'never_show' -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getStyle('button'), css: getCss('button')"></button>
+                    <div data-bind="html: getHtml('content'), style: getStyle('content'), css: getCss('content'), attr: getAttributes('content')"></div>
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="html: getHtml('button'), style: getStyle('button'), css: getCss('button'), attr: getAttributes('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>
         </div>
-        <div data-bind="style: Object.assign(getStyle('mobile_image'))" class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
-            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay')">
+        <div class="pagebuilder-mobile-only pagebuilder-banner-wrapper" data-bind="style: getStyle('mobile_image'), attr: getAttributes('mobile_image'), css: getCss('mobile_image')">
+            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-collage-content">
-                    <div data-bind="html: getHtml('content')"></div>
-                    <!-- ko if: getData().show_button !== 'never_show' -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getStyle('button'), css: getCss('button')"></button>
+                    <div data-bind="html: getHtml('content'), style: getStyle('content'), css: getCss('content'), attr: getAttributes('content')"></div>
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="html: getHtml('button'), style: getStyle('button'), css: getCss('button'), attr: getAttributes('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>

@@ -41,7 +41,7 @@
                                         <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="form"/>
                                         <xs:element type="xs:string" name="group"/>
-                                        <xs:element type="xs:string" name="allowed_parents" minOccurs="0"/>
+                                        <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -81,6 +81,14 @@
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="default"/>
+    </xs:complexType>
+    <xs:complexType name="allowed_parents">
+        <xs:sequence>
+            <xs:element type="parent" name="parent" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="parent">
+        <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
     <xs:complexType name="readers">
         <xs:sequence>

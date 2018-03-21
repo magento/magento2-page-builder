@@ -39,6 +39,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             $childNode->nodeValue
                         ) != '')
                 ) {
+
                     if ('appearances' === $childNode->nodeName) {
                         foreach ($childNode->getElementsByTagName('appearance') as $appearanceNode) {
                             $appearanceName = $appearanceNode->attributes->getNamedItem('name')->nodeValue;
@@ -77,6 +78,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 : false;
                             $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
+                    } elseif ('allowed_parents' === $childNode->nodeName){
+                        $parentData = [];
+                        foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
+                            $parentData[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
+                        }
+                        $output['types'][$name][$childNode->nodeName] = $parentData;
                     } else {
                         $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
                     }

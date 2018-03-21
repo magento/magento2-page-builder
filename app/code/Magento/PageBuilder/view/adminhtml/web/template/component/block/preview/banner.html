@@ -7,13 +7,13 @@
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <div class="pagebuilder-banner-wrapper" data-bind="style: Object.assign(data.main.style(), data.desktop_image.style()), event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }">
-        <div class="pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style">
+    <div class="pagebuilder-banner-wrapper" data-bind="css: data.main.css, attr: data.main.attributes, style: Object.assign(data.main.style(), data.desktop_image.style()), event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }">
+        <div class="pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
             <div class="pagebuilder-poster-content">
-                <div data-bind="css: {'pagebuilder-empty-banner': data.content.html()}, html: data.content.html"></div>
+                <div data-bind="css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html()}), html: data.content.html, attr: data.content.attributes, style: data.content.style"></div>
                 <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
-                    <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css()">
-                        <span data-bind="html: data.button.html(), css: {'placeholder-text': !data.button.html()}"></span>
+                    <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
+                        <span data-bind="html: data.button.html, css: {'placeholder-text': !data.button.html()}"></span>
                     </button>
                 <!-- /ko -->
             </div>

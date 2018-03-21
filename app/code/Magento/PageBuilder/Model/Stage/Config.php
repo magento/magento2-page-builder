@@ -116,8 +116,7 @@ class Config
                 : self::DEFAULT_PREVIEW_COMPONENT),
             'component' => (isset($contentType['component'])
                 ? $contentType['component'] : self::DEFAULT_COMPONENT),
-            'allowed_parents' => isset($contentType['allowed_parents'])
-                ? explode(',', $contentType['allowed_parents']) : [],
+            'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
             'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
