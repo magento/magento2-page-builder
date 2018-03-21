@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="TextOnStage">
+        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
         <element name="textInstanceByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}]" parameterized="true"/>
         <element name="textInstanceTextByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}]//p" parameterized="true"/>
         <element name="textInstanceBorderByIndex" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[@class='pagebuilder-html'])[{{arg1}}][contains(@style,'border: {{arg2}};')]" parameterized="true"/>

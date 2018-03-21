@@ -8,8 +8,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <!--todo: Smoke Per Content Type (just check default values only) -->
-    <!--todo: Fix failing tests that need updating -->
     <test name="AdvancedConfigurationEditPanelVisual">
         <annotations>
             <features value="Pagebuilder"/>
@@ -31,7 +29,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -66,27 +63,6 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelMarginsAndPadding">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
-        </actionGroup>
-        <!-- Check Values -->
-        <comment userInput="Check Values" stepKey="CommentFieldValues"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getValueBorderColor"/>
-        <assertEmpty actual="getValueBorderColor" actualType="variable" message="Text field has text: $getValueBorderColor" stepKey="assertValueBorderColor"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderWidth">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderRadius">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getValueCssClasses"/>
-        <assertEmpty actual="getValueCssClasses" actualType="variable" message="Text field was not empty. Had text: $getValueCssClasses" stepKey="assertValueCssClasses"/>
-        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkValueMarginAndPadding">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
         <!-- Check Required -->
         <comment userInput="Check Required" stepKey="CommentCheckRequired"/>
@@ -167,35 +143,6 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedConfigurationNotes" stepKey="validateAdvancedConfigurationNotes"/>
-        <!-- Save page and verify fields (because some of them change) -->
-        <comment userInput="Save page and verify fields (because some of them change)" stepKey="CommentSavePage"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <!-- Check Values After Save -->
-        <comment userInput="Check Values After Save" stepKey="CommentFieldValues2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueAlignment2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getValueBorderColor2"/>
-        <assertEmpty actual="getValueBorderColor2" actualType="variable" message="Text field has text: $getValueBorderColor2" stepKey="assertValueBorderColor2"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderWidthPropertyDefault.section, PageBuilderAdvancedBorderWidthPropertyDefault.fieldName)}}" stepKey="getTextFromBorderWidthAttribute2"/>
-        <assertEmpty actual="getTextFromBorderWidthAttribute2" actualType="variable" message="Text field has text: $getTextFromBorderWidthAttribute2" stepKey="assertGetTextFromBorderWidthAttribute2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkValueBorderRadius2">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getValueCssClasses2"/>
-        <assertEmpty actual="getValueCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getValueCssClasses2" stepKey="assertValueCssClasses2"/>
-        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkValueMarginAndPadding2">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
-        </actionGroup>
         <!-- Enable Border And Check Other Fields Now Enabled -->
         <comment userInput="Enable Border And Check Other Fields Now Enabled" stepKey="CommentEnableBorder"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enableBorder">
@@ -206,6 +153,35 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderWidthAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <!-- Save page and verify fields (because some of them change) -->
+        <comment userInput="Save page and verify fields (because some of them change)" stepKey="CommentSavePage"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <!-- Check Values After Save -->
+        <comment userInput="Check Values After Save" stepKey="CommentFieldValues"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderWidthPropertyDefault.section, PageBuilderAdvancedBorderWidthPropertyDefault.fieldName)}}" stepKey="getBorderWidth"/>
+        <assertEmpty actual="getBorderWidth" actualType="variable" message="Text field has text: $getBorderWidth" stepKey="assertBorderWidth"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkMarginAndPadding">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalAlignment">
@@ -229,7 +205,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -434,7 +409,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -694,7 +668,7 @@
         <comment userInput="Stage: Check Border: Default" stepKey="commentStageCheckDefault"/>
         <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault">
             <argument name="text" value="PageBuilderTextContentBlock"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border: Dotted -->
@@ -767,7 +741,7 @@
         <comment userInput="Stage: Check Border: Default" stepKey="commentStageCheckDefault2"/>
         <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault2">
             <argument name="text" value="PageBuilderTextContentBlock"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border: Dotted -->
@@ -841,7 +815,7 @@
         <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault2">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="text" value="PageBuilderTextContentBlock"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border: Dotted -->
@@ -930,7 +904,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1221,7 +1194,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1497,7 +1469,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1743,7 +1714,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1900,7 +1870,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -2190,7 +2159,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -2480,7 +2448,6 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
