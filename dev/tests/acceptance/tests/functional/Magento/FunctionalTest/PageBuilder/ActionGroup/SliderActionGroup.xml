@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addSlide">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderSliderContentBlock.role, index)}}" stepKey="waitForSliderVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderSliderContentBlock.role, index)}}" stepKey="moveMouseOverSlider"/>
+        <waitForElementVisible selector="{{SliderInAdmin.addNewSlide}}" stepKey="waitForAddSlide"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddSlide"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditFormTitle"/>
+    </actionGroup>
+</actionGroups>
