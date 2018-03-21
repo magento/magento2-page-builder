@@ -6,13 +6,13 @@
 import $ from "jquery";
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import "../../../utils/live-edit";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
-import "../../../utils/live-edit";
 import "./sortable/binding";
 
 interface PreviewData {

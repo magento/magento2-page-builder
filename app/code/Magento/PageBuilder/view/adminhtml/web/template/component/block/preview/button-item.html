@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" data-bind="hasFocus: $parent.preview.isLiveEditing() && parent.children().length === $index() + 1, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, afterRender: function (element) { preview.onAfterRender.call(preview, element); }">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <a data-bind="attr: { class: preview.data.button_type() }, style: preview.previewStyle()">
         <span data-bind="liveEdit: {key: 'button_text', 'data-placeholder': $t('Edit Button Text')}"></span>

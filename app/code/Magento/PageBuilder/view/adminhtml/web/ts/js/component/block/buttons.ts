@@ -35,6 +35,7 @@ export default class Buttons extends Block {
 
         createBlockPromise.then((button: Block) => {
             this.addChild(button);
+            this.preview.isLiveEditing(true);
             return button;
         }).catch((error: Error) => {
             console.error(error);
