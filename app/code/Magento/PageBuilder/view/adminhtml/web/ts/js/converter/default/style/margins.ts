@@ -13,11 +13,11 @@ export default class Margins implements ElementConverterInterface {
     public fromDom(value: string): string | object {
         const result = {};
         if (undefined !== value.margin) {
-            result["margin"] = {
-                "left": value.margin.left.replace("px", ""),
-                "top": value.margin.top.replace("px", ""),
-                "right": value.margin.right.replace("px", ""),
-                "bottom": value.margin.bottom.replace("px", ""),
+            result.margin = {
+                bottom: value.margin.bottom.replace("px", ""),
+                left: value.margin.left.replace("px", ""),
+                right: value.margin.right.replace("px", ""),
+                top: value.margin.top.replace("px", ""),
             };
         }
         return result;
@@ -28,17 +28,17 @@ export default class Margins implements ElementConverterInterface {
      * @param {Object} data
      * @returns {Object | string}
      */
-    public toDom(name: string, data:object): string | object {
+    public toDom(name: string, data: object): string | object {
         let value = data[name];
         if (typeof value === "string") {
             value = JSON.parse(value);
         }
         const result = {};
         if (undefined !== value && undefined !== value.margin) {
-            result["marginLeft"] = value.margin.left + "px";
-            result["marginTop"] = value.margin.top + "px";
-            result["marginRight"] = value.margin.right + "px";
-            result["marginBottom"] = value.margin.bottom + "px";
+            result.marginLeft = value.margin.left + "px";
+            result.marginTop = value.margin.top + "px";
+            result.marginRight = value.margin.right + "px";
+            result.marginBottom = value.margin.bottom + "px";
         }
         return result;
     }

@@ -19,11 +19,11 @@ define([], function () {
       var result = {};
 
       if (undefined !== value.margin) {
-        result["margin"] = {
-          "left": value.margin.left.replace("px", ""),
-          "top": value.margin.top.replace("px", ""),
-          "right": value.margin.right.replace("px", ""),
-          "bottom": value.margin.bottom.replace("px", "")
+        result.margin = {
+          left: value.margin.left.replace("px", ""),
+          top: value.margin.top.replace("px", ""),
+          right: value.margin.right.replace("px", ""),
+          bottom: value.margin.bottom.replace("px", "")
         };
       }
 
@@ -46,10 +46,10 @@ define([], function () {
       var result = {};
 
       if (undefined !== value && undefined !== value.margin) {
-        result["marginLeft"] = value.margin.left + "px";
-        result["marginTop"] = value.margin.top + "px";
-        result["marginRight"] = value.margin.right + "px";
-        result["marginBottom"] = value.margin.bottom + "px";
+        result.marginLeft = value.margin.left + "px";
+        result.marginTop = value.margin.top + "px";
+        result.marginRight = value.margin.right + "px";
+        result.marginBottom = value.margin.bottom + "px";
       }
 
       return result;

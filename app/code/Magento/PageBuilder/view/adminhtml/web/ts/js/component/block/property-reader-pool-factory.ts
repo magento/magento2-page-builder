@@ -4,8 +4,8 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import PropertyReaderPool from "./property-reader-pool"
 import Config from "../config";
+import PropertyReaderPool from "./property-reader-pool";
 
 /**
  * Create a new instance of converter pool
@@ -23,7 +23,7 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
                         const styleProperty = dataMapping.elements[elementName].style[i];
                         if (!!styleProperty.complex
-                            && properties.indexOf(styleProperty.reader) == -1
+                            && properties.indexOf(styleProperty.reader) === -1
                             && !PropertyReaderPool.get(styleProperty.reader)
                         ) {
                             properties.push(styleProperty.reader);
@@ -35,7 +35,7 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
                         const attributeProperty = dataMapping.elements[elementName].attributes[i];
                         if (!!attributeProperty.complex
-                            && properties.indexOf(attributeProperty.reader) == -1
+                            && properties.indexOf(attributeProperty.reader) === -1
                             && !PropertyReaderPool.get(attributeProperty.reader)
                         ) {
                             properties.push(attributeProperty.reader);

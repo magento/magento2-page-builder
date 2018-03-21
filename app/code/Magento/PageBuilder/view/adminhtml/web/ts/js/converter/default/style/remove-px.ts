@@ -20,6 +20,6 @@ export default class RemovePx implements ElementConverterInterface {
      * @returns {Object | string}
      */
     public toDom(name: string, data: object): object | string {
-        return data[name] + 'px';
+        return data[name] + "px";
     }
 }

@@ -4,8 +4,8 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import ConverterPool from "./converter-pool"
 import Config from "../config";
+import ConverterPool from "./converter-pool";
 
 /**
  * Create a new instance of converter pool
@@ -23,13 +23,13 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
                         const styleProperty = dataMapping.elements[elementName].style[i];
                         if (!!styleProperty.converter
-                            && converters.indexOf(styleProperty.converter) == -1
+                            && converters.indexOf(styleProperty.converter) === -1
                             && !ConverterPool.get(styleProperty.converter)
                         ) {
                             converters.push(styleProperty.converter);
                         }
                         if (!!styleProperty.preview_converter
-                            && converters.indexOf(styleProperty.preview_converter) == -1
+                            && converters.indexOf(styleProperty.preview_converter) === -1
                             && !ConverterPool.get(styleProperty.preview_converter)
                         ) {
                             converters.push(styleProperty.preview_converter);
@@ -41,13 +41,13 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
                         const attributeProperty = dataMapping.elements[elementName].attributes[i];
                         if (!!attributeProperty.converter
-                            && converters.indexOf(attributeProperty.converter) == -1
+                            && converters.indexOf(attributeProperty.converter) === -1
                             && !ConverterPool.get(attributeProperty.converter)
                         ) {
                             converters.push(attributeProperty.converter);
                         }
                         if (!!attributeProperty.preview_converter
-                            && converters.indexOf(attributeProperty.preview_converter) == -1
+                            && converters.indexOf(attributeProperty.preview_converter) === -1
                             && !ConverterPool.get(attributeProperty.preview_converter)
                         ) {
                             converters.push(attributeProperty.preview_converter);
@@ -59,7 +59,7 @@ export default function create(contentType: string): Promise<> {
 
         if (dataMapping !== undefined && dataMapping.converters !== undefined) {
             for (let i = 0; i < dataMapping.converters.length; i++) {
-                let converter = dataMapping.converters[i];
+                const converter = dataMapping.converters[i];
                 if (!!converter.component && !ConverterPool.get(converter.component)) {
                     converters.push(converter.component);
                 }

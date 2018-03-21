@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./property-reader-pool", "../config"], function (_loader, _propertyReaderPool, _config) {
+define(["Magento_PageBuilder/js/component/loader", "../config", "./property-reader-pool"], function (_loader, _config, _propertyReaderPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

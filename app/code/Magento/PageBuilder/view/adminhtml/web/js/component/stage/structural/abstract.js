@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title", "../../../component/block/appearance-config"], function (_knockout, _translate, _underscore, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _appearanceConfig) {
+define(["knockout", "mage/translate", "underscore", "../../../component/block/appearance-config", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -156,11 +156,12 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
       var data = _underscore.extend({}, this.stage.store.get(this.id));
 
-      var config = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.elements;
-      var convertersConfig = (0, _appearanceConfig)(this.config.name, data["appearance"]).data_mapping.converters;
+      var appearanceConfig = appearanceConfig(this.config.name, data.appearance);
+      var config = appearanceConfig.data_mapping.elements;
+      var convertersConfig = appearanceConfig.data_mapping.converters;
 
       for (var i = 0; i < convertersConfig.length; i++) {
-        data = this.converterPool.get(convertersConfig[i].component).beforeWrite(data, convertersConfig[i].config);
+        data = this.converterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
       }
 
       var result = {};
@@ -318,7 +319,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
     _proto.updateData = function updateData(data) {
       var _this3 = this;
 
-      var appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
+      var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, appearance);
 
       if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
@@ -346,7 +347,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
         }
 
         if (config[elementName].html !== undefined) {
-          var html = data[config[elementName].html.var] !== undefined && data[config[elementName].html.var] !== "" ? data[config[elementName].html.var] : config[elementName].html.placeholder;
+          var html = data[config[elementName].html.var] ? data[config[elementName].html.var] : config[elementName].html.placeholder;
           this.data[elementName].html(html);
         }
 

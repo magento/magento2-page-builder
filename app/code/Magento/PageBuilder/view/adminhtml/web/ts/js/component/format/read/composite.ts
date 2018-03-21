@@ -5,10 +5,10 @@
 
 import loadComponent from "Magento_PageBuilder/js/component/loader";
 import _ from "underscore";
+import appearanceConfig from "../../../component/block/appearance-config";
 import Config, {ConfigContentBlocks} from "../../config";
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
-import appearanceConfig from "../../../component/block/appearance-config";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types

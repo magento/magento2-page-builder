@@ -19,7 +19,7 @@ define(["./block"], function (_block) {
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
         this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
-          "data-background-color-orig": this.data.overlay.style()['backgroundColor']
+          "data-background-color-orig": this.data.overlay.style().backgroundColor
         }));
         this.data.overlay.style(Object.assign(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-overlay-color"]

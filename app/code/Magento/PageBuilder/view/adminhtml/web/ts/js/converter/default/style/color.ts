@@ -31,7 +31,7 @@ export default class Color implements ElementConverterInterface {
      * @param {Object} data
      * @returns {Object | string}
      */
-    public toDom(name: string, data:object): string {
+    public toDom(name: string, data: object): string {
         return data[name];
     }
 

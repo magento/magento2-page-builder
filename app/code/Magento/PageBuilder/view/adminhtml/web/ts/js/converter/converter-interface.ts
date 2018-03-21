@@ -9,12 +9,12 @@ export interface ConverterInterface {
      * @param config object
      * @returns {object}
      */
-    afterRead(data: object, config: object): object;
+    fromDom(data: object, config: object): object;
 
     /**
      * @param data object
      * @param config object
      * @returns {object}
      */
-    beforeWrite(data: object, config: object): object;
+    toDom(data: object, config: object): object;
 }

@@ -14,22 +14,22 @@ export default class Banner extends PreviewBlock {
             this.data.overlay.attributes(
                 Object.assign(
                     this.data.overlay.attributes(),
-                    {"data-background-color-orig": this.data.overlay.style()['backgroundColor']}
-                )
+                    {"data-background-color-orig": this.data.overlay.style().backgroundColor},
+                ),
             );
             this.data.overlay.style(
                 Object.assign(
                     this.data.overlay.style(),
-                    {backgroundColor: this.data.overlay.attributes()["data-overlay-color"]}
-                )
+                    {backgroundColor: this.data.overlay.attributes()["data-overlay-color"]},
+                ),
             );
         }
         if (this.data.main.attributes()["data-show-button"] === "on_hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),
-                    {opacity: 1, visibility: "visible"}
-                )
+                    {opacity: 1, visibility: "visible"},
+                ),
             );
         }
     }
@@ -42,16 +42,16 @@ export default class Banner extends PreviewBlock {
             this.data.overlay.style(
                 Object.assign(
                     this.data.overlay.style(),
-                    {backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]}
-                )
+                    {backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]},
+                ),
             );
         }
         if (this.data.main.attributes()["data-show-button"] === "on_hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),
-                    {opacity: 0, visibility: "hidden"}
-                )
+                    {opacity: 0, visibility: "hidden"},
+                ),
             );
         }
     }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "underscore", "../../config", "../../../component/block/appearance-config"], function (_loader, _underscore, _config, _appearanceConfig) {
+define(["Magento_PageBuilder/js/component/loader", "underscore", "../../../component/block/appearance-config", "../../config"], function (_loader, _underscore, _appearanceConfig, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

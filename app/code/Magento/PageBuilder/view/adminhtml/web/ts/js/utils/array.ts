@@ -122,7 +122,7 @@ export function outwardSearch(
  * @returns {object}
  */
 export function objectExtend(target, source) {
-    for (let property in source) {
+    for (const property in source) {
         if (property in target) {
             objectExtend(target[property], source[property]);
         } else {

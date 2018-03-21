@@ -19,11 +19,11 @@ define([], function () {
       var result = {};
 
       if (undefined !== value.padding) {
-        result["padding"] = {
-          "left": value.padding.left.replace("px", ""),
-          "top": value.padding.top.replace("px", ""),
-          "right": value.padding.right.replace("px", ""),
-          "bottom": value.padding.bottom.replace("px", "")
+        result.padding = {
+          left: value.padding.left.replace("px", ""),
+          top: value.padding.top.replace("px", ""),
+          right: value.padding.right.replace("px", ""),
+          bottom: value.padding.bottom.replace("px", "")
         };
       }
 
@@ -46,10 +46,10 @@ define([], function () {
       var result = {};
 
       if (undefined !== value && undefined !== value.padding) {
-        result["paddingLeft"] = value.padding.left + "px";
-        result["paddingTop"] = value.padding.top + "px";
-        result["paddingRight"] = value.padding.right + "px";
-        result["paddingBottom"] = value.padding.bottom + "px";
+        result.paddingLeft = value.padding.left + "px";
+        result.paddingTop = value.padding.top + "px";
+        result.paddingRight = value.padding.right + "px";
+        result.paddingBottom = value.padding.bottom + "px";
       }
 
       return result;

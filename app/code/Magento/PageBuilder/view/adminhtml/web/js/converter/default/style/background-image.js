@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/config", "../../../utils/image", "../../../utils/directives", "../../../utils/url"], function (_config, _image, _directives, _url) {
+define(["../../../component/config", "../../../utils/directives", "../../../utils/image", "../../../utils/url"], function (_config, _directives, _image, _url) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

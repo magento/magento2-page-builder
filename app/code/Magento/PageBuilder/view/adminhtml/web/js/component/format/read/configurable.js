@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../block/converter-pool", "../../block/property-reader-pool-factory", "../../block/converter-pool-factory", "../../../utils/string", "../../../utils/array", "../../../component/block/appearance-config"], function (_converterPool, _propertyReaderPoolFactory, _converterPoolFactory, _string, _array, _appearanceConfig) {
+define(["../../../component/block/appearance-config", "../../../utils/array", "../../../utils/string", "../../block/converter-pool", "../../block/converter-pool-factory", "../../block/property-reader-pool-factory"], function (_appearanceConfig, _array, _string, _converterPool, _converterPoolFactory, _propertyReaderPoolFactory) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -18,7 +18,7 @@ define(["../../block/converter-pool", "../../block/property-reader-pool-factory"
     _proto.read = function read(element) {
       var _this = this;
 
-      var role = element.getAttribute('data-role');
+      var role = element.getAttribute("data-role");
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role)];
       return new Promise(function (resolve) {
@@ -196,7 +196,7 @@ define(["../../block/converter-pool", "../../block/property-reader-pool-factory"
     _proto.convertData = function convertData(config, data, converterPool) {
       for (var i = 0; i < config.converters.length; i++) {
         if (converterPool.get(config.converters[i].component)) {
-          data = converterPool.get(config.converters[i].component).afterRead(data, config.converters[i].config);
+          data = converterPool.get(config.converters[i].component).fromDom(data, config.converters[i].config);
         }
       }
 

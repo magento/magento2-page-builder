@@ -13,11 +13,11 @@ export default class Paddings implements ElementConverterInterface {
     public fromDom(value: string): string | object {
         const result = {};
         if (undefined !== value.padding) {
-            result["padding"] = {
-                "left": value.padding.left.replace("px", ""),
-                "top": value.padding.top.replace("px", ""),
-                "right": value.padding.right.replace("px", ""),
-                "bottom": value.padding.bottom.replace("px", ""),
+            result.padding = {
+                bottom: value.padding.bottom.replace("px", ""),
+                left: value.padding.left.replace("px", ""),
+                right: value.padding.right.replace("px", ""),
+                top: value.padding.top.replace("px", ""),
             };
         }
         return result;
@@ -28,17 +28,17 @@ export default class Paddings implements ElementConverterInterface {
      * @param {Object} data
      * @returns {Object | string}
      */
-    public toDom(name: string, data:object): string | object {
+    public toDom(name: string, data: object): string | object {
         let value = data[name];
         if (typeof value === "string") {
             value = JSON.parse(value);
         }
         const result = {};
         if (undefined !== value && undefined !== value.padding) {
-            result["paddingLeft"] = value.padding.left + "px";
-            result["paddingTop"] = value.padding.top + "px";
-            result["paddingRight"] = value.padding.right + "px";
-            result["paddingBottom"] = value.padding.bottom + "px";
+            result.paddingLeft = value.padding.left + "px";
+            result.paddingTop = value.padding.top + "px";
+            result.paddingRight = value.padding.right + "px";
+            result.paddingBottom = value.padding.bottom + "px";
         }
         return result;
     }

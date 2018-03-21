@@ -17,7 +17,7 @@ export default function getAppearanceConfig(contentType: string, appearance: str
     let config = {};
     if (contentTypeConfig.appearances !== undefined) {
         if (!appearance) {
-            for (let key in contentTypeConfig.appearances) {
+            for (const key in contentTypeConfig.appearances) {
                 if (!!contentTypeConfig.appearances[key].default) {
                     appearance = key;
                     break;

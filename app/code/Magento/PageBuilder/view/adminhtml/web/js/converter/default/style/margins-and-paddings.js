@@ -19,20 +19,20 @@ define([], function () {
       var result = {};
 
       if (undefined !== value.margin) {
-        result["margin"] = {
-          "left": value.margin.left.replace("px", ""),
-          "top": value.margin.top.replace("px", ""),
-          "right": value.margin.right.replace("px", ""),
-          "bottom": value.margin.bottom.replace("px", "")
+        result.margin = {
+          left: value.margin.left.replace("px", ""),
+          top: value.margin.top.replace("px", ""),
+          right: value.margin.right.replace("px", ""),
+          bottom: value.margin.bottom.replace("px", "")
         };
       }
 
       if (undefined !== value.padding) {
-        result["padding"] = {
-          "left": value.padding.left.replace("px", ""),
-          "top": value.padding.top.replace("px", ""),
-          "right": value.padding.right.replace("px", ""),
-          "bottom": value.padding.bottom.replace("px", "")
+        result.padding = {
+          left: value.padding.left.replace("px", ""),
+          top: value.padding.top.replace("px", ""),
+          right: value.padding.right.replace("px", ""),
+          bottom: value.padding.bottom.replace("px", "")
         };
       }
 
@@ -55,17 +55,17 @@ define([], function () {
       var result = {};
 
       if (undefined !== value && undefined !== value.margin) {
-        result["marginLeft"] = value.margin.left + "px";
-        result["marginTop"] = value.margin.top + "px";
-        result["marginRight"] = value.margin.right + "px";
-        result["marginBottom"] = value.margin.bottom + "px";
+        result.marginLeft = value.margin.left + "px";
+        result.marginTop = value.margin.top + "px";
+        result.marginRight = value.margin.right + "px";
+        result.marginBottom = value.margin.bottom + "px";
       }
 
       if (undefined !== value && undefined !== value.padding) {
-        result["paddingLeft"] = value.padding.left + "px";
-        result["paddingTop"] = value.padding.top + "px";
-        result["paddingRight"] = value.padding.right + "px";
-        result["paddingBottom"] = value.padding.bottom + "px";
+        result.paddingLeft = value.padding.left + "px";
+        result.paddingTop = value.padding.top + "px";
+        result.paddingRight = value.padding.right + "px";
+        result.paddingBottom = value.padding.bottom + "px";
       }
 
       return result;
