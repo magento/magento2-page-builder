@@ -21,12 +21,12 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       _this.showButtonHover = _knockout.observable(false);
       var slider = _this.parent.parent;
 
-      _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
+      _this.displayLabel((0, _translate)("Slide") + (slider.children().indexOf(_this.parent) + 1));
 
       slider.children.subscribe(function (children) {
         var index = children.indexOf(_this.parent);
 
-        _this.displayLabel((0, _translate)("Slide " + (index + 1)));
+        _this.displayLabel((0, _translate)("Slide") + (index + 1));
       });
       return _this;
     }

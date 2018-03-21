@@ -17,19 +17,18 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84920"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -40,26 +39,32 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <comment userInput="Edit first Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
+        <!--Edit First Slide -->
+        <comment userInput="First Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <scrollTo selector="#pagebuilder_slide_form_content" stepKey="scrollToContent"/>
+        <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToLink">
+            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+        </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButton1">
-            <argument name="property" value="PageBuilderShowButton1"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
             <argument name="property" value="PageBuilderSlideItemButtonText1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+        <!--Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -118,6 +123,7 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!--Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot0"/>
@@ -133,8 +139,8 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways2">
-            <argument name="property" value="PageBuilderShowButton1"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty2">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText2">
             <argument name="property" value="PageBuilderSlideItemButtonText2"/>
@@ -142,7 +148,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <comment userInput="View slider and slides on stage" stepKey="viewSliderOnStage"/>
+        <!--Verify slider and slide settings on stage after page save-->
+        <comment userInput="View slides on stage after page save" stepKey="viewSliderOnStage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
@@ -158,6 +165,22 @@
         <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
+        <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
+        <seeElement selector="{{SlideOnBackend.slide('1')}}" stepKey="seeSlide2InSliderAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnBackend.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2BackgroundAdmin"/>
+        <!--View slider and slides on storefront as Poster-->
         <comment userInput="View slider and slides on storefront" stepKey="viewSliderOnStorefront"/>
         <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
@@ -170,19 +193,21 @@
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
         <seeElement selector="{{SlideOnFrontend.slide1}}" stepKey="seeSlide1InSlider"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle1}}" stepKey="seeSlide1TitleDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent1}}" stepKey="seeSlide1ContentDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText1}}" stepKey="seeSlide1ButtonTextDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
+        <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
         <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle2}}" stepKey="seeSlide2TitleDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent2}}" stepKey="seeSlide2ContentDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText2}}" stepKey="seeSlide2LinkTextDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
+        <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearanceOnStorefront"/>
     </test>
     <test name="RemoveSliderFromStage">
         <annotations>
@@ -193,19 +218,18 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
@@ -222,54 +246,6 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="SliderHasAdvancedFormSection">
-        <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Slider MAGETWO-83933"/>
-            <title value="Slider has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for slider"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
-            <group value="pagebuilder"/>
-            <group value="skip"/>
-        </annotations>
-        <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-    </test>
     <test name="CanAddImageToSlide">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>
@@ -281,15 +257,12 @@
             <group value="skip"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="createPreReqCategory" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>

@@ -167,7 +167,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 },
                 content: $t("Are you sure you want to remove this item? " +
                     "The data within this item is not recoverable once removed."),
-                dismissKey: "modal_dismissed_pagebuilder_remove",
+                dismissKey: "pagebuilder_modal_dismissed",
                 dismissible: true,
                 title: $t("Confirm Item Removal"),
             });

@@ -11,7 +11,7 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     /**
      * Show the overlay on hover of specific elements
      *
-     * @param $elements
+     * @param {JQuery<Element>[]} $elements
      */
     function showOverlayOnHover($elements) {
         $elements.each(function (index, element) {
@@ -32,8 +32,8 @@ requirejs(['jquery', 'highlight', 'slick', 'jarallax'], function ($, hljs) {
     /**
      * Show button on hover of specific elements
      *
-     * @param $elements
-     * @param buttonClass
+     * @param {JQuery<Element>[]} $elements
+     * @param {string} buttonClass
      */
     function showButtonOnHover($elements, buttonClass) {
         $elements.each(function (index, element) {

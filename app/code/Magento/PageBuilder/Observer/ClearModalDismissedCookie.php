@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Observer;
 
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
+use Psr\Log\LoggerInterface;
 use Magento\Framework\Event\ObserverInterface;
 
 class ClearModalDismissedCookie implements ObserverInterface
@@ -25,17 +26,25 @@ class ClearModalDismissedCookie implements ObserverInterface
     private $cookieMetadataFactory;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * ClearModalDismissedCookie constructor.
      *
      * @param CookieManagerInterface $cookieManager
      * @param CookieMetadataFactory $cookieMetadataFactory
+     * @param LoggerInterface $logger
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
-        CookieMetadataFactory $cookieMetadataFactory
+        CookieMetadataFactory $cookieMetadataFactory,
+        LoggerInterface $logger
     ) {
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
+        $this->logger = $logger;
     }
 
     /**
@@ -43,24 +52,26 @@ class ClearModalDismissedCookie implements ObserverInterface
      *
      * @param \Magento\Framework\Event\Observer $observer
      *
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Stdlib\Cookie\FailureToSendException
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $cookieName = "modal_dismissed_pagebuilder_remove";
-        if ($this->cookieManager->getCookie($cookieName)) {
-            $this->cookieManager->deleteCookie(
-                $cookieName,
-                $this->cookieMetadataFactory->createCookieMetadata(
-                    [
-                        "path" => "/",
-                        "secure" => false,
-                        "http_only" => false
-                    ]
-                )
-            );
+        try {
+            $cookieName = "pagebuilder_modal_dismissed";
+            if ($this->cookieManager->getCookie($cookieName)) {
+                $this->cookieManager->deleteCookie(
+                    $cookieName,
+                    $this->cookieMetadataFactory->createCookieMetadata(
+                        [
+                            "path" => "/",
+                            "secure" => false,
+                            "http_only" => false
+                        ]
+                    )
+                );
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e);
         }
     }
 }
