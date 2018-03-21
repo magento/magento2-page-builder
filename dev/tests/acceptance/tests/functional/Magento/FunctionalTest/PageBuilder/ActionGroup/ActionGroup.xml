@@ -486,11 +486,12 @@
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask1"/>
         <waitForElementVisible time="10" selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="waitForSaveAndContinueVisibility"/>
         <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>

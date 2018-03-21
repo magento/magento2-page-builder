@@ -20,16 +20,15 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -56,8 +55,8 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways">
-            <argument name="property" value="PageBuilderShowButtonAlways"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
             <argument name="property" value="PageBuilderSlideItemButtonText1"/>
@@ -138,8 +137,8 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways2">
-            <argument name="property" value="PageBuilderShowButtonAlways"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty2">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText2">
             <argument name="property" value="PageBuilderSlideItemButtonText2"/>
@@ -164,21 +163,21 @@
         <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideInAdmin.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideInAdmin.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideInAdmin.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
-        <seeElement selector="{{SlideInAdmin.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
-        <waitForElementVisible time="2" selector="{{SlideInAdmin.slide('1')}}" stepKey="waitForSlide2Admin" />
-        <seeElement selector="{{SlideInAdmin.slide('1')}}" stepKey="seeSlide2InSliderAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideInAdmin.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideInAdmin.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideInAdmin.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
-        <seeElement selector="{{SlideInAdmin.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURLAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2BackgroundAdmin"/>
+        <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
+        <seeElement selector="{{SlideOnBackend.slide('1')}}" stepKey="seeSlide2InSliderAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnBackend.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2BackgroundAdmin"/>
         <!--View slider and slides on storefront as Poster-->
         <comment userInput="View slider and slides on storefront" stepKey="viewSliderOnStorefront"/>
         <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -220,16 +219,15 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
@@ -260,11 +258,9 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="createPreReqCategory" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>

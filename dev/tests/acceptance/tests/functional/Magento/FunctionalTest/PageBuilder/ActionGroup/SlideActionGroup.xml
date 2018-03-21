@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openSlideOptions">
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.slideOptions}}" stepKey="waitForOptions" />
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
+</actionGroups>

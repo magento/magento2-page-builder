@@ -23,13 +23,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -46,15 +44,15 @@
         <comment userInput="User sees Slider preview that shows Empty slide" stepKey="AC1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Verify Empty Slider with Empty Slide on Admin Preview -->
-        <waitForElementVisible stepKey="wait2" selector="{{SlideInAdmin.emptySlide}}" time="10"/>
-        <grabTextFrom selector="{{SlideInAdmin.emptySlide}}" stepKey="grabTitleFromEmptySlide"/>
+        <waitForElementVisible stepKey="wait2" selector="{{SlideOnBackend.emptyslide}}" time="10"/>
+        <grabTextFrom selector="{{SlideOnBackend.emptyslide}}" stepKey="grabTitleFromEmptySlide"/>
         <assertEquals stepKey="assertEditSlideOnEmptyPreview" message="Empty slide says Edit slide text on admin preview">
             <expectedResult type="string">Edit slide text</expectedResult>
             <actualResult type="variable">grabTitleFromEmptySlide</actualResult>
         </assertEquals>
         <!-- Verify Poster overlay -->
         <comment userInput="User sees Slider preview that contains first slide (poster)" stepKey="AC2"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="verifyEmptySlideTransparentAdmin"/>
+        <assertElementContainsAttribute selector="{{SlideOnBackend.posterOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="verifyEmptySlideTransparentAdmin"/>
         <!-- Verify Add Slide on mouse over -->
         <comment userInput="User sees dot that indicates first slide present and Add Slide button" stepKey="AC3"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
@@ -63,11 +61,11 @@
         <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddSlideButton"/>
         <!-- Empty slide min height -->
         <comment userInput="User sees slider preview with min height is 300 px" stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
+        <assertElementContainsAttribute selector="{{SlideOnBackend.posterOverlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
         <!-- Empty slide default margin and paddings -->
         <comment userInput="User sees empty slide with margin to be 0 px and and paddings to be 40 px by default" stepKey="AC5"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
+        <assertElementContainsAttribute selector="{{SlideOnBackend.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
         <!-- Empty slide no border -->
         <comment userInput="User sees no slide border by default" stepKey="AC6"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border: none;" stepKey="verifyBorderNone"/>
@@ -78,11 +76,11 @@
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderSliderContentBlock.role)}}" stepKey="waitForOptions" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderSliderContentBlock.role)}}" stepKey="seeContentBlockOptionsMenu"/>
-        <grabTextFrom selector="{{SlideInAdmin.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
+        <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
         <!-- Empty slide background defaults on admin preview -->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
+        <assertElementContainsAttribute selector="{{SlideOnBackend.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
         <comment userInput="Verify slide defaults on admin: Background Position defaults to Top Aligned" stepKey="adminDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
         <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
@@ -142,13 +140,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -200,13 +196,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">

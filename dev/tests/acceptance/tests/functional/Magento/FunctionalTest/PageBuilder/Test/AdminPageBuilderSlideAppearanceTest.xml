@@ -24,13 +24,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -42,9 +40,10 @@
         </actionGroup>
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="editFirstSlide"/>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <comment userInput="Select Collage Left appearance on Edit Slide" stepKey="selectCollageLeft"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageLeftAppearance">
-            <argument name="property" value="PageBuilderSlideAppearanceCollageLeftProperty"/>
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
@@ -60,22 +59,22 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways">
-            <argument name="property" value="PageBuilderShowButtonAlways"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
             <argument name="property" value="PageBuilderSlideItemButtonText1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!--View slider and slide on stage -->
-        <comment userInput="Verify Collage Left appearance on Slide in Admin" stepKey="verifySlideInAdmin"/>
-        <waitForElementVisible time="2" selector="{{SlideInAdmin.slideAppearanceCollageLeft('0')}}" stepKey="waitForCollageLeftInAdmin" />
-        <seeElement selector="{{SlideInAdmin.slideAppearanceCollageLeft('0')}}" stepKey="verifySlideCollageLeftinAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideInAdmin.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
-        <see userInput="Slide Appearance Collage Left" selector="{{SlideInAdmin.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideInAdmin.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <comment userInput="Verify Collage Left appearance on Slide in Admin" stepKey="verifySlideOnBackend"/>
+        <waitForElementVisible time="2" selector="{{SlideOnBackend.slideAppearanceCollageLeft('0')}}" stepKey="waitForCollageLeftInAdmin" />
+        <seeElement selector="{{SlideOnBackend.slideAppearanceCollageLeft('0')}}" stepKey="verifySlideCollageLeftinAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="Slide Appearance Collage Left" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!--View slider and slides on storefront -->
         <comment userInput="Verify Collage Left appearance on Slide on Storefront" stepKey="verifySlideOnStorefront"/>
@@ -104,13 +103,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -122,9 +119,10 @@
         </actionGroup>
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="editFirstSlide"/>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <comment userInput="Select Collage Left appearance on Edit Slide" stepKey="selectCollageCenter"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageCenterAppearance">
-            <argument name="property" value="PageBuilderSlideAppearanceCollageCenterProperty"/>
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
@@ -140,22 +138,22 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways">
-            <argument name="property" value="PageBuilderShowButtonAlways"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
             <argument name="property" value="PageBuilderSlideItemButtonText1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!--View slider and slide on stage -->
-        <comment userInput="Verify Collage Center appearance on Slide in Admin" stepKey="verifySlideInAdmin"/>
-        <waitForElementVisible time="2" selector="{{SlideInAdmin.slideAppearanceCollageCenter('0')}}" stepKey="waitForCollageCenterInAdmin" />
-        <seeElement selector="{{SlideInAdmin.slideAppearanceCollageCenter('0')}}" stepKey="verifySlideCollageCenterinAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideInAdmin.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
-        <see userInput="Slide Appearance Collage Center" selector="{{SlideInAdmin.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideInAdmin.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <comment userInput="Verify Collage Center appearance on Slide in Admin" stepKey="verifySlideOnBackend"/>
+        <waitForElementVisible time="2" selector="{{SlideOnBackend.slideAppearanceCollageCenter('0')}}" stepKey="waitForCollageCenterInAdmin" />
+        <seeElement selector="{{SlideOnBackend.slideAppearanceCollageCenter('0')}}" stepKey="verifySlideCollageCenterinAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="Slide Appearance Collage Center" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!--View slider and slides on storefront -->
         <comment userInput="Verify Collage Center appearance on Slide on Storefront" stepKey="verifySlideOnStorefront"/>
@@ -184,13 +182,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -202,9 +198,10 @@
         </actionGroup>
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="editFirstSlide"/>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <comment userInput="Select Collage Right appearance on Edit Slide" stepKey="selectCollageRight"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageRightAppearance">
-            <argument name="property" value="PageBuilderSlideAppearanceCollageRightProperty"/>
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
@@ -220,22 +217,22 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderShowButtonAlways">
-            <argument name="property" value="PageBuilderShowButtonAlways"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
             <argument name="property" value="PageBuilderSlideItemButtonText1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!--View slider and slide on stage -->
-        <comment userInput="Verify Collage Right appearance on Slide in Admin" stepKey="verifySlideInAdmin"/>
-        <waitForElementVisible time="2" selector="{{SlideInAdmin.slideAppearanceCollageRight('0')}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideInAdmin.slideAppearanceCollageRight('0')}}" stepKey="verifySlideCollageRightinAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideInAdmin.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
-        <see userInput="Slide Appearance Collage Right" selector="{{SlideInAdmin.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideInAdmin.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
-        <seeElement selector="{{SlideInAdmin.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <comment userInput="Verify Collage Right appearance on Slide in Admin" stepKey="verifySlideOnBackend"/>
+        <waitForElementVisible time="2" selector="{{SlideOnBackend.slideAppearanceCollageRight('0')}}" stepKey="waitForCollageRightInAdmin" />
+        <seeElement selector="{{SlideOnBackend.slideAppearanceCollageRight('0')}}" stepKey="verifySlideCollageRightinAdmin"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="Slide Appearance Collage Right" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!--View slider and slides on storefront -->
         <comment userInput="Verify Collage Right appearance on Slide on Storefront" stepKey="verifySlideOnStorefront"/>
