@@ -7,17 +7,17 @@
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <figure data-bind="style: data.main.style, attr: data.main.attributes">
+    <figure data-bind="style: data.main.style, attr: data.main.attributes, css: data.main.css">
         <!-- ko ifnot: data.desktop_image.attributes().src && typeof data.desktop_image.attributes().src !== 'undefined' -->
         <div class="pagebuilder-image-empty-preview">
             <span data-bind="text: $t('Empty Image');"></span>
         </div>
         <!-- /ko -->
         <!-- ko if: data.desktop_image.attributes().src && typeof data.desktop_image.attributes().src !== 'undefined' -->
-        <img data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style" />
+        <img data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style, css: data.desktop_image.css" />
         <!-- /ko -->
         <!-- ko if: data.caption.html() -->
-        <figcaption data-bind="text: data.caption.html"></figcaption>
+        <figcaption data-bind="html: data.caption.html, attr: data.caption.attributes, style: data.caption.style, css: data.caption.css"></figcaption>
         <!-- /ko -->
     </figure>
 </div>
