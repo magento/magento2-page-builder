@@ -80,7 +80,7 @@
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
         <!-- Empty slide background defaults on admin preview -->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
         <comment userInput="Verify slide defaults on admin: Background Position defaults to Top Aligned" stepKey="adminDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
         <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
@@ -265,13 +265,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -350,13 +348,11 @@
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>

@@ -41,14 +41,16 @@
         </actionGroup>
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToContent">
-            <argument name="property" value="PageBuilderSlideItemContent1"/>
+        <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToLink">
+            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
