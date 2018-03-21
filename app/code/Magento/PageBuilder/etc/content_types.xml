@@ -638,11 +638,11 @@
                                     <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/default/attribute/target"/>
                                 </attributes>
                             </element>
-                            <element name="overlay" path=".//a/div[1]/div">
+                            <element name="overlay" path=".//a/div[2]/div">
                                 <style_properties>
                                     <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
                                     <property var="background_color" name="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
-                                    <complex_property var="margins_and_padding" virtual="true" reader="Magento_PageBuilder/js/property/default/paddings" converter="Magento_PageBuilder/js/converter/default/style/paddings"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/paddings" converter="Magento_PageBuilder/js/converter/default/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute var="overlay_color" name="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
@@ -650,7 +650,7 @@
                                     <attribute var="overlay_transparency" name="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
                                 </attributes>
                             </element>
-                            <element name="desktop_image" path=".//a/div[2]">
+                            <element name="desktop_image" path=".//a/div[1]">
                                 <style_properties>
                                     <property var="text_align" name="text_align"/>
                                     <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
@@ -661,7 +661,7 @@
                                     <property var="background_attachment" name="background_attachment"/>
                                 </style_properties>
                             </element>
-                            <element name="mobile_image" path=".//a/div[1]">
+                            <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
                                     <property var="text_align" name="text_align"/>
                                     <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
@@ -672,10 +672,10 @@
                                     <property var="background_attachment" name="background_attachment"/>
                                 </style_properties>
                             </element>
-                            <element name="content" path=".//a/div[1]/div/div/div[1]">
+                            <element name="content" path=".//a/div[2]/div/div/div[1]">
                                 <html var="message" placeholder="Edit banner text"/>
                             </element>
-                            <element name="button" path=".//a/div[1]/div/div/button">
+                            <element name="button" path=".//a/div[2]/div/div/button">
                                 <style_properties>
                                     <property var="opacity" name="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
                                     <property var="visibility" name="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
