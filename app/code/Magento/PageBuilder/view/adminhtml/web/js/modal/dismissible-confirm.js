@@ -48,7 +48,7 @@ define([
         /**
          * Close modal window.
          *
-         * @param {boolean} result
+         * @param {Boolean} result
          */
         closeModal: function (result) {
             this._super(result);
