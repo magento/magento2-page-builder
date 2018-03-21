@@ -13,8 +13,8 @@
             <a href="" class="close" click="clearSearch" attr="title: searchTitle" visible="searching"></a>
             <input type="text" id="search-blocks-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder"/>
         </div>
-        <ul id="search-results" data-bind="draggable" visible="searching() && !!searchResults().length" each="searchResults">
-            <li class="pagebuilder-draggable-block" attr="id: 'block-' + identifier">
+        <ul id="search-results" visible="searching() && searchResults().length" each="searchResults">
+            <li class="pagebuilder-draggable-block" attr="id: 'block-' + identifier()" data-bind="draggable">
                 <a class="pagebuilder-panel-block">
                     <span class="block-icon">
                         <i attr="class: icon"></i>
