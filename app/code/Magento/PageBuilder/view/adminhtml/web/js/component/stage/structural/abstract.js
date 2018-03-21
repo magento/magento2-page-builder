@@ -316,6 +316,8 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
 
     _proto.updateData = function updateData(data) {
+      var _this3 = this;
+
       var appearance = data && data["appearance"] !== undefined ? data["appearance"] : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, appearance);
 
@@ -330,6 +332,7 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
           this.data[elementName] = {
             style: _knockout.observable({}),
             attributes: _knockout.observable({}),
+            css: _knockout.observable({}),
             html: _knockout.observable({})
           };
         }
@@ -347,6 +350,17 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
           this.data[elementName].html(html);
         }
 
+        if (config[elementName].css !== undefined && config[elementName].css.var in data) {
+          (function () {
+            var css = data[config[elementName].css.var];
+            css.toString().split(" ").map(function (value, index) {
+              return css[value] = true;
+            });
+
+            _this3.data[elementName].css(css);
+          })();
+        }
+
         if (config[elementName].tag !== undefined) {
           if (this.data[elementName][config[elementName].tag.var] === undefined) {
             this.data[elementName][config[elementName].tag.var] = _knockout.observable("");
@@ -362,10 +376,10 @@ define(["knockout", "mage/translate", "underscore", "../../../utils/string", "..
 
 
     _proto.setupDataFields = function setupDataFields() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.stage.store.subscribe(function (data) {
-        _this3.updateData(_this3.stage.store.get(_this3.id));
+        _this4.updateData(_this4.stage.store.get(_this4.id));
       }, this.id);
     };
 

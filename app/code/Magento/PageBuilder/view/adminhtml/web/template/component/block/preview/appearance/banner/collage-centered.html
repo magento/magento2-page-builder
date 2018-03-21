@@ -12,7 +12,7 @@
         paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'}), afterRender: function() {console.log(data.mobile_image.style())}, event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }, afterRender: function() {console.log(data.overlay.style())}">
         <div class="pagebuilder-collage-overlay" data-bind="style: data.overlay.style()">
             <div data-bind="css: {'pagebuilder-empty-banner': data.content.html}, html: data.content.html"></div>
-            <!-- ko if: preview.data.show_button() !== 'never_show' -->
+            <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
                 <button type="button" class="pagebuilder-banner-button" data-bind="css: preview.data.button_type(), attr: data.button.attributes, style: data.button.style()">
                     <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
                 </button>

@@ -6,12 +6,12 @@
 -->
 
 <div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
-    <a data-bind="attr: getAttributes('link')">
+    <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getCss('link')">
         <div class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only" data-bind="style: getStyle('mobile_image')">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getAttributes('overlay'), style: getStyle('overlay')">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('button')">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getHtml('content')"></div>
-                    <!-- ko if: getData('main').show_button !== 'never_show' -->
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
                         <button type="button" class="pagebuilder-banner-button" data-bind="text: getHtml('button'), style: getStyle('button'), css: getCss('button')"></button>
                     <!-- /ko -->
                 </div>
@@ -21,7 +21,7 @@
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getAttributes('overlay'), style: getStyle('overlay')">
                 <div class="pagebuilder-poster-content">
                     <div data-bind="html: getHtml('content')"></div>
-                    <!-- ko if: getData('main').show_button !== 'never_show' -->
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
                         <button type="button" class="pagebuilder-banner-button" data-bind="text: getHtml('button'), style: getStyle('button'), css: getCss('button')"></button>
                     <!-- /ko -->
                 </div>

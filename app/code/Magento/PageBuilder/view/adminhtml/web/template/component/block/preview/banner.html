@@ -11,9 +11,9 @@
         <div class="pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style">
             <div class="pagebuilder-poster-content">
                 <div data-bind="css: {'pagebuilder-empty-banner': data.content.html()}, html: data.content.html"></div>
-                <!-- ko if: preview.data.show_button() !== 'never_show' -->
-                    <button type="button" class="pagebuilder-banner-button" data-bind="css: preview.data.button_type(), attr: data.button.attributes, style: data.button.style">
-                        <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+                <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
+                    <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css()">
+                        <span data-bind="html: data.button.html(), css: {'placeholder-text': !data.button.html()}"></span>
                     </button>
                 <!-- /ko -->
             </div>

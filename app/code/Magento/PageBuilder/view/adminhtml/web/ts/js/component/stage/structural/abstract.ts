@@ -349,6 +349,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 this.data[elementName] = {
                     style: ko.observable({}),
                     attributes: ko.observable({}),
+                    css: ko.observable({}),
                     html: ko.observable({}),
                 };
             }
@@ -363,6 +364,13 @@ export default class Structural extends EditableArea implements StructuralInterf
                     ? data[config[elementName].html.var]
                     : config[elementName].html.placeholder;
                 this.data[elementName].html(html);
+            }
+            if (config[elementName].css !== undefined && config[elementName].css.var in data) {
+                let css = data[config[elementName].css.var];
+                css.toString().split(" ").map(
+                    (value: any, index: number) => css[value] = true,
+                );
+                this.data[elementName].css(css);
             }
             if (config[elementName].tag !== undefined) {
                 if (this.data[elementName][config[elementName].tag.var] === undefined) {
