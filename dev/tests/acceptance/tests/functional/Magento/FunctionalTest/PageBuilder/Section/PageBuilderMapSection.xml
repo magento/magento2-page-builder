@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//iframe[@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; height: {{arg7}};']" parameterized="true"/>
         <element name="emptyMap" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]/*[contains(@src, 'center={{arg1}}') and contains(@src,',{{arg2}}')]" parameterized="true"/>
         <element name="map" type="button" selector="//div[contains(@class, 'pagebuilder-map')][1]"/>
         <element name="mapByIndex" type="button" selector="(//div[contains(@class, 'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
