@@ -22,7 +22,7 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
             for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
               var styleProperty = dataMapping.elements[elementName].style[i];
 
-              if (!!styleProperty.complex && properties.indexOf(styleProperty.reader) == -1 && !_propertyReaderPool.get(styleProperty.reader)) {
+              if (!!styleProperty.complex && properties.indexOf(styleProperty.reader) === -1 && !_propertyReaderPool.get(styleProperty.reader)) {
                 properties.push(styleProperty.reader);
               }
             }
@@ -32,7 +32,7 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
             for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
               var attributeProperty = dataMapping.elements[elementName].attributes[_i];
 
-              if (!!attributeProperty.complex && properties.indexOf(attributeProperty.reader) == -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
+              if (!!attributeProperty.complex && properties.indexOf(attributeProperty.reader) === -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
                 properties.push(attributeProperty.reader);
               }
             }

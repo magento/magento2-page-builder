@@ -6,7 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
-import getAppearanceConfig from "../../../component/block/appearance-config";
+import appearanceConfig from "../../../component/block/appearance-config";
 import ConverterPool from "../../../component/block/converter-pool";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
@@ -163,7 +163,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 css = data.css_classes;
             }
         } else {
-            const config = getAppearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+            const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
             if (config.css && config.css.var !== undefined && config.css.var in data) {
                 css = data[config.css.var];
             }
@@ -191,9 +191,9 @@ export default class Structural extends EditableArea implements StructuralInterf
         }
 
         let data = _.extend({}, this.stage.store.get(this.id));
-        const appearanceConfig = getAppearanceConfig(this.config.name, data.appearance);
-        const config = appearanceConfig.data_mapping.elements;
-        const convertersConfig = appearanceConfig.data_mapping.converters;
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+        const convertersConfig = appearanceConfiguration.data_mapping.converters;
 
         for (let i = 0; i < convertersConfig.length; i++) {
             data = this.converterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
@@ -212,13 +212,13 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getAttributes(element: string) {
+        let data = this.stage.store.get(this.id);
         data = _.extend(data, this.config);
         if (element === undefined) {
             return this.attributeMapper.toDom(this.attributeFilter.filter(data));
         }
 
-        let data = this.stage.store.get(this.id);
-        const config = getAppearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = {};
         if (config.attributes !== undefined) {
             result = this.convertAttributes(config, data, "master");
@@ -235,7 +235,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public getHtml(element: string) {
         const data = this.stage.store.get(this.id);
-        const config = getAppearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (config.html !== undefined) {
             result = data[config.html.var];
@@ -330,7 +330,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     private updateData(data: object) {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
-        const appearanceConfiguration = getAppearanceConfig(this.config.name, appearance);
+        const appearanceConfiguration = appearanceConfig(this.config.name, appearance);
         if (undefined === appearanceConfiguration
             || undefined === appearanceConfiguration.data_mapping
             || undefined === appearanceConfiguration.data_mapping.elements

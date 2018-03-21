@@ -22,11 +22,11 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./converter-poo
             for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
               var styleProperty = dataMapping.elements[elementName].style[i];
 
-              if (!!styleProperty.converter && converters.indexOf(styleProperty.converter) == -1 && !_converterPool.get(styleProperty.converter)) {
+              if (!!styleProperty.converter && converters.indexOf(styleProperty.converter) === -1 && !_converterPool.get(styleProperty.converter)) {
                 converters.push(styleProperty.converter);
               }
 
-              if (!!styleProperty.preview_converter && converters.indexOf(styleProperty.preview_converter) == -1 && !_converterPool.get(styleProperty.preview_converter)) {
+              if (!!styleProperty.preview_converter && converters.indexOf(styleProperty.preview_converter) === -1 && !_converterPool.get(styleProperty.preview_converter)) {
                 converters.push(styleProperty.preview_converter);
               }
             }
@@ -36,11 +36,11 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./converter-poo
             for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
               var attributeProperty = dataMapping.elements[elementName].attributes[_i];
 
-              if (!!attributeProperty.converter && converters.indexOf(attributeProperty.converter) == -1 && !_converterPool.get(attributeProperty.converter)) {
+              if (!!attributeProperty.converter && converters.indexOf(attributeProperty.converter) === -1 && !_converterPool.get(attributeProperty.converter)) {
                 converters.push(attributeProperty.converter);
               }
 
-              if (!!attributeProperty.preview_converter && converters.indexOf(attributeProperty.preview_converter) == -1 && !_converterPool.get(attributeProperty.preview_converter)) {
+              if (!!attributeProperty.preview_converter && converters.indexOf(attributeProperty.preview_converter) === -1 && !_converterPool.get(attributeProperty.preview_converter)) {
                 converters.push(attributeProperty.preview_converter);
               }
             }

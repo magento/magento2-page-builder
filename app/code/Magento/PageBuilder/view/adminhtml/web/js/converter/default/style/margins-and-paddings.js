@@ -20,19 +20,19 @@ define([], function () {
 
       if (undefined !== value.margin) {
         result.margin = {
+          bottom: value.margin.bottom.replace("px", ""),
           left: value.margin.left.replace("px", ""),
-          top: value.margin.top.replace("px", ""),
           right: value.margin.right.replace("px", ""),
-          bottom: value.margin.bottom.replace("px", "")
+          top: value.margin.top.replace("px", "")
         };
       }
 
       if (undefined !== value.padding) {
         result.padding = {
+          bottom: value.padding.bottom.replace("px", ""),
           left: value.padding.left.replace("px", ""),
-          top: value.padding.top.replace("px", ""),
           right: value.padding.right.replace("px", ""),
-          bottom: value.padding.bottom.replace("px", "")
+          top: value.padding.top.replace("px", "")
         };
       }
 
