@@ -41,8 +41,6 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageToSave1"/>
@@ -73,7 +71,7 @@
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForPageLoad stepKey="waitForEditCmsPage" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
@@ -110,6 +108,10 @@
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
         <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton2"/>
         <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickAddButton"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex2"/>
+        </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForModalToLoad"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
@@ -157,7 +159,7 @@
         <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
         <waitForPageLoad stepKey="waitForEditCmsPage2" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm2"/>
@@ -205,7 +207,7 @@
         <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow2"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
         <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm3"/>
@@ -243,17 +245,10 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormToShow"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeEditForm"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonItemContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
     <test name="ButtonsHasAdvancedFormSection">
         <annotations>
@@ -280,7 +275,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
@@ -321,7 +318,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
