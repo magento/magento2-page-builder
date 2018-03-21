@@ -44,14 +44,6 @@
         <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
         <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
     </actionGroup>
-    <actionGroup name="enablePageBuilder">
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnPagePagesGrid"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <click selector="{{CmsPagesPageActionsSection.addNewPage}}" stepKey="clickAddNewPage"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <click selector="{{PageBuilderActionsSection.openPageBuilder}}" stepKey="clickEnableAdvancedCMS"/>
-        <wait time="1" stepKey="wait1"/>
-    </actionGroup>
     <actionGroup name="navigateToAPageWithPageBuilder">
         <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{PageBuilderCmsPage.url}}" stepKey="amOnPageBuilderPage"/>
