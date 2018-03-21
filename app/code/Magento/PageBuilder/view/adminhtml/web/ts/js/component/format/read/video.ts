@@ -5,8 +5,10 @@
 
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
+import Default from "./default";
 
 export default class Video implements ReadInterface {
+    private defaultReader: Default = new Default();
 
     /**
      * Read video configuration out of element
@@ -16,12 +18,11 @@ export default class Video implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const videoIframeElement = element.querySelector("iframe");
-        const response: DataObject = {
-            video_height: videoIframeElement.height || null,
-            video_source: videoIframeElement.src || "",
-            video_width: videoIframeElement.width || null,
-        };
+        const iframeAttributesPromise = this.defaultReader.read(videoIframeElement);
 
-        return Promise.resolve(response);
+        return iframeAttributesPromise.then((iframeAttributes) => {
+            iframeAttributes.video_source = iframeAttributes.src || "";
+            return iframeAttributes;
+        });
     }
 }

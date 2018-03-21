@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["./default"], function (_default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,9 @@ define([], function () {
   var Video =
   /*#__PURE__*/
   function () {
-    function Video() {}
+    function Video() {
+      this.defaultReader = new _default();
+    }
 
     var _proto = Video.prototype;
 
@@ -19,12 +21,11 @@ define([], function () {
      */
     _proto.read = function read(element) {
       var videoIframeElement = element.querySelector("iframe");
-      var response = {
-        video_height: videoIframeElement.height || null,
-        video_source: videoIframeElement.src || "",
-        video_width: videoIframeElement.width || null
-      };
-      return Promise.resolve(response);
+      var iframeAttributesPromise = this.defaultReader.read(videoIframeElement);
+      return iframeAttributesPromise.then(function (iframeAttributes) {
+        iframeAttributes.video_source = iframeAttributes.src || "";
+        return iframeAttributes;
+      });
     };
 
     return Video;

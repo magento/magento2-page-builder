@@ -34,6 +34,9 @@ class Video implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = [])
     {
@@ -43,11 +46,11 @@ class Video implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'video',
-            'class' => $eavData['css_classes'] ?? ''
+            'data-role' => 'video'
         ];
 
         $iframeElementAttributes = [
+            'class' => $eavData['css_classes'] ?? '',
             'src' => $eavData['video_url']
         ];
 
@@ -60,9 +63,14 @@ class Video implements RendererInterface
             $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
         }
 
+        if (isset($formData['align']) && $formData['align'] !== '') {
+            $rootElementAttributes['style'] = 'text-align: ' . $formData['align'] . ';';
+            unset($formData['align']);
+        }
+
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] = $style;
+            $iframeElementAttributes['style'] = $style;
         }
 
         $rootElementHtml = '<div';
