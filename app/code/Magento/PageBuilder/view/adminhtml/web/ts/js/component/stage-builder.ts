@@ -99,7 +99,6 @@ function getElementData(element: HTMLElement, config: ConfigContentBlock) {
     const result = _.mapObject(config.fields, () => {
         return "";
     });
-    debugger;
     const attributeReaderComposite = new AttributeReaderComposite();
     const readPromise = attributeReaderComposite.read(element);
     return readPromise.then((data) => {

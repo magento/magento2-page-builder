@@ -85,7 +85,6 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./event-
       return "";
     });
 
-    debugger;
     var attributeReaderComposite = new _composite();
     var readPromise = attributeReaderComposite.read(element);
     return readPromise.then(function (data) {
