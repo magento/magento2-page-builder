@@ -18,30 +18,11 @@ define([], function () {
     _proto.read = function read(element) {
       return {
         margin: {
-          left: element.style.marginLeft.replace("px", ""),
-          top: element.style.marginTop.replace("px", ""),
-          right: element.style.marginRight.replace("px", ""),
-          bottom: element.style.marginBottom.replace("px", "")
+          left: element.style.marginLeft,
+          top: element.style.marginTop,
+          right: element.style.marginRight,
+          bottom: element.style.marginBottom
         }
-      };
-    };
-    /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {string | Object}
-     */
-
-
-    _proto.write = function write(name, data) {
-      if (!data[name] || data[name].margin === undefined) {
-        return {};
-      }
-
-      return {
-        marginLeft: data[name].margin.left + "px",
-        marginTop: data[name].margin.top + "px",
-        marginRight: data[name].margin.right + "px",
-        marginBottom: data[name].margin.bottom + "px"
       };
     };
 

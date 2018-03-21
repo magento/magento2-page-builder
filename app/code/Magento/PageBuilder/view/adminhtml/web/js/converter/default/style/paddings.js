@@ -38,9 +38,14 @@ define([], function () {
 
     _proto.toDom = function toDom(name, data) {
       var value = data[name];
+
+      if (typeof value === "string") {
+        value = JSON.parse(value);
+      }
+
       var result = {};
 
-      if (undefined !== value.padding) {
+      if (undefined !== value && undefined !== value.padding) {
         result["paddingLeft"] = value.padding.left + "px";
         result["paddingTop"] = value.padding.top + "px";
         result["paddingRight"] = value.padding.right + "px";

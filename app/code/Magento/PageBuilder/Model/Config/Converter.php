@@ -147,6 +147,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                         'converter' => $propertyNode->hasAttribute('converter')
                             ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
                             : null,
+                        'virtual' => $propertyNode->hasAttribute('virtual')
+                            ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
+                            : null,
                         'complex' => true
                     ];
                 }
