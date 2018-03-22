@@ -3,26 +3,23 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable vars-on-top, strict*/
-
 define([
-    'underscore',
     'Magento_Ui/js/form/provider',
-    'uiRegistry'
-], function (_, provider, registry) {
+    'uiEvents'
+], function (Provider, events) {
     'use strict';
 
-    return provider.extend({
-        /**
-         * Initializes provider component.
-         *
-         * @returns {Provider} Chainable.
-         */
-        initialize: function () {
-            // Set the data for the current provider from the global state
-            this.set('data', registry.get('_pagebuilder_edit_data'));
+    return Provider.extend({
+        /** @inheritdoc **/
+        initClient: function () {
+            return this;
+        },
 
-            return this._super();
+        /** @inheritdoc **/
+        save: function () {
+            events.trigger('form:save:' + this.id, this.get('data'));
+
+            return this;
         }
     });
 });
