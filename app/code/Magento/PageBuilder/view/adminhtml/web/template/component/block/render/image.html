@@ -20,7 +20,7 @@
         <!-- /ko -->
         <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
     <!-- /ko -->
-    <!-- ko if: getHtml('caption').length -->
-        <figcaption data-bind="text: getHtml('caption'), attr: getAttributes('caption'), style: getStyle('caption'), css: getCss('caption')"></figcaption>
+    <!-- ko if: getHtml('caption') -->
+        <figcaption data-bind="attr: getAttributes('caption'), style: getStyle('caption'), css: getCss('caption'), text: getHtml('caption')"></figcaption>
     <!-- /ko -->
 </figure>

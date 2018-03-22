@@ -7,22 +7,22 @@
 
 <div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
     <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getCss('link')">
-        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-hidden" data-bind="style: getStyle('desktop_image'), css: getCss('desktop_image'), attr: getAttributes('desktop_image'), ">
+        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-hidden" data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image'), css: getCss('desktop_image')">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="html: getHtml('content'), style: getStyle('content'), css: getCss('content'), attr: getAttributes('content')"></div>
+                    <div data-bind="attr: getAttributes('content'), style: getStyle('content'), css: getCss('content'), html: getHtml('content')"></div>
                     <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
-                    <button type="button" class="pagebuilder-banner-button" data-bind="html: getHtml('button'), style: getStyle('button'), css: getCss('button'), attr: getAttributes('button')"></button>
+                    <button type="button" class="pagebuilder-banner-button" data-bind="attr: getAttributes('button'), style: getStyle('button'), css: getCss('button'), html: getHtml('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>
         </div>
-        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" data-bind="style: getStyle('mobile_image'), attr: getAttributes('mobile_image'), css: getCss('mobile_image')">
+        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="html: getHtml('content'), attr: getAttributes('content'), style: getStyle('content'), css: getCss('content')"></div>
+                    <div data-bind="attr: getAttributes('content'), style: getStyle('content'), css: getCss('content'), html: getHtml('content')"></div>
                     <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="html: getHtml('button'), style: getStyle('button'), css: getCss('button')"></button>
+                        <button type="button" class="pagebuilder-banner-button" data-bind="attr: getAttributes('button'), style: getStyle('button'), css: getCss('button'), html: getHtml('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>
