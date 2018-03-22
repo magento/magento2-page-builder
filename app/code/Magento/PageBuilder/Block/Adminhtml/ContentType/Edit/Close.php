@@ -7,8 +7,23 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-class CloseButton implements ButtonProviderInterface
+class Close implements ButtonProviderInterface
 {
+    /**
+     * @var string
+     */
+    private $targetName;
+
+    /**
+     * Constructor
+     *
+     * @param $targetName
+     */
+    public function __construct(string $targetName)
+    {
+        $this->targetName = $targetName;
+    }
+
     /**
      * Retrieve button data
      *
@@ -25,7 +40,7 @@ class CloseButton implements ButtonProviderInterface
                     'buttonAdapter' => [
                         'actions' => [
                             [
-                                'targetName' => 'pagebuilder_modal_form.pagebuilder_modal_form.modal',
+                                'targetName' => $this->targetName,
                                 'actionName' => 'closeModal',
                                 'params' => [
                                     false,
@@ -36,7 +51,7 @@ class CloseButton implements ButtonProviderInterface
                 ],
                 'form-role' => 'close',
             ],
-            'sort_order' => 30
+            'sort_order' => 90
         ];
     }
 }
