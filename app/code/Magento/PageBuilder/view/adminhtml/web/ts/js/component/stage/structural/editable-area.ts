@@ -67,6 +67,7 @@ export default class EditableArea implements EditableAreaInterface {
             child.config,
             child.getData(),
             child.elementConverterPool,
+            child.dataConverterPool,
         );
         const index = child.parent.children.indexOf(child) + 1 || null;
         // Copy the data from the data store

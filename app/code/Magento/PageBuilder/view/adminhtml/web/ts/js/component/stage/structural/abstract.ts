@@ -68,7 +68,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
 
-        this.setupDataFields();
+        this.bindUpdatePreviewObservablesOnChange();
     }
 
     /**
@@ -202,11 +202,8 @@ export default class Structural extends EditableArea implements StructuralInterf
         let data = _.extend({}, this.stage.store.get(this.id));
         const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
-        const convertersConfig = appearanceConfiguration.data_mapping.converters;
 
-        for (const converterConfig of convertersConfig) {
-            data = this.dataConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
-        }
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters)
 
         let result = {};
         if (config[element] !== undefined) {
@@ -232,10 +229,14 @@ export default class Structural extends EditableArea implements StructuralInterf
             return this.attributeMapper.toDom(this.attributeFilter.filter(data));
         }
 
-        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
         let result = {};
-        if (config.attributes !== undefined) {
-            result = this.convertAttributes(config, data, "master");
+        if (config[element].attributes !== undefined) {
+            result = this.convertAttributes(config[element], data, "master");
         }
 
         return result;
@@ -260,10 +261,26 @@ export default class Structural extends EditableArea implements StructuralInterf
     /**
      * Get block data
      *
+     * @param {string} element
      * @returns {DataObject}
      */
-    public getData() {
-        return this.stage.store.get(this.id);
+    public getData(element: string) {
+        let data = this.stage.store.get(this.id);
+
+        if (undefined === element) {
+            return data;
+        }
+
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+        const result = {};
+        if (undefined !== config[element].tag.var) {
+            result[config[element].tag.var] = data[config[element].tag.var];
+        }
+        return result;
     }
 
     /**
@@ -286,9 +303,9 @@ export default class Structural extends EditableArea implements StructuralInterf
     private convertAttributes(config: any, data: DataObject, area: string) {
         const result = {};
         for (const attributeConfig of config.attributes) {
-             if (attributeConfig.persist !== undefined
-                 && attributeConfig.persist !== null
-                 && attributeConfig.persist === "false"
+             if (undefined !== attributeConfig.persist
+                 && null !== attributeConfig.persist
+                 && false === !!attributeConfig.persist
              ) {
                 continue;
             }
@@ -316,9 +333,9 @@ export default class Structural extends EditableArea implements StructuralInterf
         const result = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
-                if (propertyConfig.persist !== undefined
-                    && propertyConfig.persist !== null
-                    && propertyConfig.persist === "false"
+                if (undefined !== propertyConfig.persist
+                    && null !== propertyConfig.persist
+                    && false === !!propertyConfig.persist
                 ) {
                     continue;
                 }
@@ -345,11 +362,25 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * Update bindings after data changed in data store
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     */
+    private convertData(data: object, convertersConfig: object) {
+        for (const converterConfig of convertersConfig) {
+            data = this.dataConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+        }
+        return data;
+    }
+
+    /**
+     * Update preview observables after data changed in data store
      *
      * @param {object} data
      */
-    private updateData(data: object) {
+    private updatePreviewObservables(data: object) {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
         const appearanceConfiguration = appearanceConfig(this.config.name, appearance);
         if (undefined === appearanceConfiguration
@@ -370,6 +401,9 @@ export default class Structural extends EditableArea implements StructuralInterf
                     html: ko.observable({}),
                 };
             }
+
+            data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
             if (config[elementName].style !== undefined) {
                this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
             }
@@ -401,10 +435,10 @@ export default class Structural extends EditableArea implements StructuralInterf
     /**
      * Attach event to updating data in data store to update observables
      */
-    private setupDataFields(): void {
+    private bindUpdatePreviewObservablesOnChange(): void {
         this.stage.store.subscribe(
             (data: DataObject) => {
-                this.updateData(this.stage.store.get(this.id));
+                this.updatePreviewObservables(this.stage.store.get(this.id));
             },
             this.id,
         );

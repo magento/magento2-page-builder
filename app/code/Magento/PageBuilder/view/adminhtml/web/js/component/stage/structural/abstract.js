@@ -51,7 +51,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
       _this.edit = new _edit(_this, _this.stage.store);
 
-      _this.setupDataFields();
+      _this.bindUpdatePreviewObservablesOnChange();
 
       return _this;
     }
@@ -165,24 +165,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
-      var convertersConfig = appearanceConfiguration.data_mapping.converters;
-
-      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
-
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          _ref = _iterator[_i++];
-        } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          _ref = _i.value;
-        }
-
-        var _converterConfig = _ref;
-        data = this.dataConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
-      }
-
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
       if (config[element] !== undefined) {
@@ -210,11 +193,13 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         return this.attributeMapper.toDom(this.attributeFilter.filter(data));
       }
 
-      var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
+      var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
-      if (config.attributes !== undefined) {
-        result = this.convertAttributes(config, data, "master");
+      if (config[element].attributes !== undefined) {
+        result = this.convertAttributes(config[element], data, "master");
       }
 
       return result;
@@ -241,12 +226,28 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
     /**
      * Get block data
      *
+     * @param {string} element
      * @returns {DataObject}
      */
 
 
-    _proto.getData = function getData() {
-      return this.stage.store.get(this.id);
+    _proto.getData = function getData(element) {
+      var data = this.stage.store.get(this.id);
+
+      if (undefined === element) {
+        return data;
+      }
+
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
+      var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var result = {};
+
+      if (undefined !== config[element].tag.var) {
+        result[config[element].tag.var] = data[config[element].tag.var];
+      }
+
+      return result;
     };
     /**
      * Get the options instance
@@ -271,21 +272,21 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
     _proto.convertAttributes = function convertAttributes(config, data, area) {
       var result = {};
 
-      for (var _iterator2 = config.attributes, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-        var _ref2;
+      for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
 
-        if (_isArray2) {
-          if (_i2 >= _iterator2.length) break;
-          _ref2 = _iterator2[_i2++];
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
         } else {
-          _i2 = _iterator2.next();
-          if (_i2.done) break;
-          _ref2 = _i2.value;
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
         }
 
-        var _attributeConfig = _ref2;
+        var _attributeConfig = _ref;
 
-        if (_attributeConfig.persist !== undefined && _attributeConfig.persist !== null && _attributeConfig.persist === "false") {
+        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && false === !!_attributeConfig.persist) {
           continue;
         }
 
@@ -315,21 +316,21 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var result = {};
 
       if (config.style) {
-        for (var _iterator3 = config.style, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-          var _ref3;
+        for (var _iterator2 = config.style, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+          var _ref2;
 
-          if (_isArray3) {
-            if (_i3 >= _iterator3.length) break;
-            _ref3 = _iterator3[_i3++];
+          if (_isArray2) {
+            if (_i2 >= _iterator2.length) break;
+            _ref2 = _iterator2[_i2++];
           } else {
-            _i3 = _iterator3.next();
-            if (_i3.done) break;
-            _ref3 = _i3.value;
+            _i2 = _iterator2.next();
+            if (_i2.done) break;
+            _ref2 = _i2.value;
           }
 
-          var _propertyConfig = _ref3;
+          var _propertyConfig = _ref2;
 
-          if (_propertyConfig.persist !== undefined && _propertyConfig.persist !== null && _propertyConfig.persist === "false") {
+          if (undefined !== _propertyConfig.persist && null !== _propertyConfig.persist && false === !!_propertyConfig.persist) {
             continue;
           }
 
@@ -357,13 +358,41 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       return result;
     };
     /**
-     * Update bindings after data changed in data store
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     */
+
+
+    _proto.convertData = function convertData(data, convertersConfig) {
+      for (var _iterator3 = convertersConfig, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+        var _ref3;
+
+        if (_isArray3) {
+          if (_i3 >= _iterator3.length) break;
+          _ref3 = _iterator3[_i3++];
+        } else {
+          _i3 = _iterator3.next();
+          if (_i3.done) break;
+          _ref3 = _i3.value;
+        }
+
+        var _converterConfig = _ref3;
+        data = this.dataConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+      }
+
+      return data;
+    };
+    /**
+     * Update preview observables after data changed in data store
      *
      * @param {object} data
      */
 
 
-    _proto.updateData = function updateData(data) {
+    _proto.updatePreviewObservables = function updatePreviewObservables(data) {
       var _this3 = this;
 
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
@@ -388,6 +417,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
             html: _knockout.observable({})
           };
         }
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         if (config[elementName].style !== undefined) {
           this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
@@ -427,11 +458,11 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
      */
 
 
-    _proto.setupDataFields = function setupDataFields() {
+    _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
       var _this4 = this;
 
       this.stage.store.subscribe(function (data) {
-        _this4.updateData(_this4.stage.store.get(_this4.id));
+        _this4.updatePreviewObservables(_this4.stage.store.get(_this4.id));
       }, this.id);
     };
 
