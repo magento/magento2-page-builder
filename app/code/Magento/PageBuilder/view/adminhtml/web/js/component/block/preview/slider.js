@@ -105,7 +105,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
         if (_this.element && sliderReady && params.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
         }
-      }); // Set the stage to interacting when a slide if focused
+      }); // Set the stage to interacting when a slide is focused
 
 
       _this.focusedSlide.subscribe(function (value) {
@@ -188,17 +188,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       this.element = element;
     };
     /**
-     * To ensure smooth animations we need to lock the container height
-     */
-
-
-    _proto.forceContainerHeight = function forceContainerHeight() {
-      (0, _jquery)(this.element).css({
-        height: (0, _jquery)(this.element).outerHeight(),
-        overflow: "hidden"
-      });
-    };
-    /**
      * On sort start force the container height, also focus to that slide
      *
      * @param {Event} event
@@ -225,6 +214,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick", "un
       if (this.activeSlide() !== this.focusedSlide()) {
         this.setFocusedSlide(this.activeSlide(), true);
       }
+    };
+    /**
+     * To ensure smooth animations we need to lock the container height
+     */
+
+
+    _proto.forceContainerHeight = function forceContainerHeight() {
+      (0, _jquery)(this.element).css({
+        height: (0, _jquery)(this.element).outerHeight(),
+        overflow: "hidden"
+      });
     };
     /**
      * Build the slack config object

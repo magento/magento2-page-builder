@@ -119,7 +119,7 @@ export default class Slider extends PreviewBlock {
             }
         });
 
-        // Set the stage to interacting when a slide if focused
+        // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
             this.parent.stage.interacting(value !== null);
         });
@@ -178,16 +178,6 @@ export default class Slider extends PreviewBlock {
     }
 
     /**
-     * To ensure smooth animations we need to lock the container height
-     */
-    public forceContainerHeight(): void {
-        $(this.element).css({
-            height: $(this.element).outerHeight(),
-            overflow: "hidden",
-        });
-    }
-
-    /**
      * On sort start force the container height, also focus to that slide
      *
      * @param {Event} event
@@ -210,6 +200,16 @@ export default class Slider extends PreviewBlock {
         if (this.activeSlide() !== this.focusedSlide()) {
             this.setFocusedSlide(this.activeSlide(), true);
         }
+    }
+
+    /**
+     * To ensure smooth animations we need to lock the container height
+     */
+    private forceContainerHeight(): void {
+        $(this.element).css({
+            height: $(this.element).outerHeight(),
+            overflow: "hidden",
+        });
     }
 
     /**
