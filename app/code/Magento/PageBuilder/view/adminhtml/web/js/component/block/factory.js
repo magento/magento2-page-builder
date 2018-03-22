@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./element-converter-pool-factory", "./data-converter-pool-factory"], function (_loader, _elementConverterPoolFactory, _dataConverterPoolFactory) {
+define(["Magento_PageBuilder/js/component/loader", "./data-converter-pool-factory", "./element-converter-pool-factory"], function (_loader, _dataConverterPoolFactory, _elementConverterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

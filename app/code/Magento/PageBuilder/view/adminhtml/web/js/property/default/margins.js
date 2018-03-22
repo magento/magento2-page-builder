@@ -20,10 +20,10 @@ define([], function () {
     _proto.read = function read(element) {
       return {
         margin: {
-          bottom: element.style.marginBottom,
           left: element.style.marginLeft,
+          top: element.style.marginTop,
           right: element.style.marginRight,
-          top: element.style.marginTop
+          bottom: element.style.marginBottom
         }
       };
     };

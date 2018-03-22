@@ -13,10 +13,11 @@ import PropertyReaderPool from "./property-reader-pool";
 export default function create(contentType: string): Promise<> {
     const config = Config.getContentType(contentType);
     const propertyReaders = [];
-    for (const appearance of config.appearances) {
-        const dataMapping = appearance.data_mapping;
+    for (const appearanceName: string of Object.keys(config.appearances)) {
+        const dataMapping = config.appearances[appearanceName].data_mapping;
         if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const element of dataMapping.elements) {
+            for (const elementName: string of Object.keys(dataMapping.elements)) {
+                const element = dataMapping.elements[elementName];
                 if (element.style !== undefined) {
                     for (const propertyConfig of element.style) {
                         if (!!propertyConfig.complex

@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import DataConverterPool from "../../../component/block/data-converter-pool";

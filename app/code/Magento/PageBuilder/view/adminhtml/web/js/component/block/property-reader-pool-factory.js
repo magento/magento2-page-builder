@@ -13,27 +13,57 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
 
     var propertyReaders = [];
 
-    for (key in config.appearances) {
-      var dataMapping = config.appearances[key].data_mapping;
+    var _arr = Object.keys(config.appearances);
+
+    for (var _i = 0; _i < _arr.length; _i++) {
+      var appearanceName = _arr[_i];
+      var dataMapping = config.appearances[appearanceName].data_mapping;
 
       if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-        for (var elementName in dataMapping.elements) {
-          if (dataMapping.elements[elementName].style !== undefined) {
-            for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
-              var styleProperty = dataMapping.elements[elementName].style[i];
+        var _arr2 = Object.keys(dataMapping.elements);
 
-              if (!!styleProperty.complex && styleProperty.reader && propertyReaders.indexOf(styleProperty.reader) === -1 && !_propertyReaderPool.get(styleProperty.reader)) {
-                propertyReaders.push(styleProperty.reader);
+        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+          var elementName = _arr2[_i2];
+          var element = dataMapping.elements[elementName];
+
+          if (element.style !== undefined) {
+            for (var _iterator = element.style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+              var _ref;
+
+              if (_isArray) {
+                if (_i3 >= _iterator.length) break;
+                _ref = _iterator[_i3++];
+              } else {
+                _i3 = _iterator.next();
+                if (_i3.done) break;
+                _ref = _i3.value;
+              }
+
+              var _propertyConfig = _ref;
+
+              if (!!_propertyConfig.complex && _propertyConfig.reader && propertyReaders.indexOf(_propertyConfig.reader) === -1 && !_propertyReaderPool.get(_propertyConfig.reader)) {
+                propertyReaders.push(_propertyConfig.reader);
               }
             }
           }
 
-          if (dataMapping.elements[elementName].attributes !== undefined) {
-            for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
-              var attributeProperty = dataMapping.elements[elementName].attributes[_i];
+          if (element.attributes !== undefined) {
+            for (var _iterator2 = element.attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+              var _ref2;
 
-              if (!!attributeProperty.complex && attributeProperty.reader && propertyReaders.indexOf(attributeProperty.reader) === -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
-                propertyReaders.push(attributeProperty.reader);
+              if (_isArray2) {
+                if (_i4 >= _iterator2.length) break;
+                _ref2 = _iterator2[_i4++];
+              } else {
+                _i4 = _iterator2.next();
+                if (_i4.done) break;
+                _ref2 = _i4.value;
+              }
+
+              var _attributeConfig = _ref2;
+
+              if (!!_attributeConfig.complex && _attributeConfig.reader && propertyReaders.indexOf(_attributeConfig.reader) === -1 && !_propertyReaderPool.get(_attributeConfig.reader)) {
+                propertyReaders.push(_attributeConfig.reader);
               }
             }
           }
@@ -47,8 +77,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
           loadedPropertyReaders[_key] = arguments[_key];
         }
 
-        for (var _i2 = 0; _i2 < propertyReaders.length; _i2++) {
-          _propertyReaderPool.register(propertyReaders[_i2], new loadedPropertyReaders[_i2]());
+        for (var i = 0; i < propertyReaders.length; i++) {
+          _propertyReaderPool.register(propertyReaders[i], new loadedPropertyReaders[i]());
         }
 
         resolve(_propertyReaderPool);

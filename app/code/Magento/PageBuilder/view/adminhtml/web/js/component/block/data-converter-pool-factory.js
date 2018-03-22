@@ -13,15 +13,29 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./data-converte
 
     var converters = [];
 
-    for (key in config.appearances) {
-      var dataMapping = config.appearances[key].data_mapping;
+    var _arr = Object.keys(config.appearances);
 
-      if (dataMapping !== undefined && dataMapping.converters !== undefined) {
-        for (var i = 0; i < dataMapping.converters.length; i++) {
-          var converter = dataMapping.converters[i];
+    for (var _i = 0; _i < _arr.length; _i++) {
+      var appearanceName = _arr[_i];
+      var dataMapping = config.appearances[appearanceName].data_mapping;
 
-          if (!!converter.component && !_dataConverterPool.get(converter.component)) {
-            converters.push(converter.component);
+      if (undefined !== dataMapping && undefined !== dataMapping.converters) {
+        for (var _iterator = dataMapping.converters, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref;
+
+          if (_isArray) {
+            if (_i2 >= _iterator.length) break;
+            _ref = _iterator[_i2++];
+          } else {
+            _i2 = _iterator.next();
+            if (_i2.done) break;
+            _ref = _i2.value;
+          }
+
+          var _converterConfig = _ref;
+
+          if (!!_converterConfig.component && !_dataConverterPool.get(_converterConfig.component)) {
+            converters.push(_converterConfig.component);
           }
         }
       }
@@ -33,8 +47,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./data-converte
           loadedConverters[_key] = arguments[_key];
         }
 
-        for (var _i = 0; _i < converters.length; _i++) {
-          _dataConverterPool.register(converters[_i], new loadedConverters[_i]());
+        for (var i = 0; i < converters.length; i++) {
+          _dataConverterPool.register(converters[i], new loadedConverters[i]());
         }
 
         resolve(_dataConverterPool);

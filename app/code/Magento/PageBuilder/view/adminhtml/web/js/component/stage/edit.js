@@ -21,7 +21,7 @@ define(["uiEvents"], function (_uiEvents) {
       this.instance = instance;
       this.store = store;
 
-      _uiEvents.on('form:save:' + this.instance.id, function (data) {
+      _uiEvents.on("form:save:" + this.instance.id, function (data) {
         _this.store.update(_this.instance.id, data);
       });
     }
@@ -33,11 +33,11 @@ define(["uiEvents"], function (_uiEvents) {
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
-      _uiEvents.trigger('form:render', {
-        namespace: this.instance.config.form,
-        title: this.instance.config.label,
+      _uiEvents.trigger("form:render", {
         data: this.store.get(this.instance.id),
-        id: this.instance.id
+        id: this.instance.id,
+        namespace: this.instance.config.form,
+        title: this.instance.config.label
       });
     };
 

@@ -20,10 +20,10 @@ define([], function () {
     _proto.read = function read(element) {
       return {
         padding: {
-          bottom: element.style.paddingBottom,
           left: element.style.paddingLeft,
+          top: element.style.paddingTop,
           right: element.style.paddingRight,
-          top: element.style.paddingTop
+          bottom: element.style.paddingBottom
         }
       };
     };

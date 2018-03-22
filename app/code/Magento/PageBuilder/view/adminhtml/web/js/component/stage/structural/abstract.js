@@ -167,8 +167,20 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var config = appearanceConfiguration.data_mapping.elements;
       var convertersConfig = appearanceConfiguration.data_mapping.converters;
 
-      for (var i = 0; i < convertersConfig.length; i++) {
-        data = this.dataConverterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
+      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
+
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
+        } else {
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
+        }
+
+        var _converterConfig = _ref;
+        data = this.dataConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
       }
 
       var result = {};
@@ -259,21 +271,32 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
     _proto.convertAttributes = function convertAttributes(config, data, area) {
       var result = {};
 
-      for (var i = 0; i < config.attributes.length; i++) {
-        var attribute = config.attributes[i];
+      for (var _iterator2 = config.attributes, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+        var _ref2;
 
-        if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === "false") {
+        if (_isArray2) {
+          if (_i2 >= _iterator2.length) break;
+          _ref2 = _iterator2[_i2++];
+        } else {
+          _i2 = _iterator2.next();
+          if (_i2.done) break;
+          _ref2 = _i2.value;
+        }
+
+        var _attributeConfig = _ref2;
+
+        if (_attributeConfig.persist !== undefined && _attributeConfig.persist !== null && _attributeConfig.persist === "false") {
           continue;
         }
 
-        var value = data[attribute.var];
-        var converter = "preview" === area && attribute.preview_converter ? attribute.preview_converter : attribute.converter;
+        var value = data[_attributeConfig.var];
+        var converter = "preview" === area && _attributeConfig.preview_converter ? _attributeConfig.preview_converter : _attributeConfig.converter;
 
         if (this.elementConverterPool.get(converter)) {
-          value = this.elementConverterPool.get(converter).toDom(attribute.var, data);
+          value = this.elementConverterPool.get(converter).toDom(_attributeConfig.var, data);
         }
 
-        result[attribute.name] = value;
+        result[_attributeConfig.name] = value;
       }
 
       return result;
@@ -292,30 +315,41 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var result = {};
 
       if (config.style) {
-        for (var i = 0; i < config.style.length; i++) {
-          var styleProperty = config.style[i];
+        for (var _iterator3 = config.style, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+          var _ref3;
 
-          if (styleProperty.persist !== undefined && styleProperty.persist !== null && styleProperty.persist === "false") {
+          if (_isArray3) {
+            if (_i3 >= _iterator3.length) break;
+            _ref3 = _iterator3[_i3++];
+          } else {
+            _i3 = _iterator3.next();
+            if (_i3.done) break;
+            _ref3 = _i3.value;
+          }
+
+          var _propertyConfig = _ref3;
+
+          if (_propertyConfig.persist !== undefined && _propertyConfig.persist !== null && _propertyConfig.persist === "false") {
             continue;
           }
 
           var value = "";
 
-          if (!!styleProperty.static) {
-            value = styleProperty.value;
+          if (!!_propertyConfig.static) {
+            value = _propertyConfig.value;
           } else {
-            value = data[styleProperty.var];
-            var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
+            value = data[_propertyConfig.var];
+            var converter = "preview" === area && _propertyConfig.preview_converter ? _propertyConfig.preview_converter : _propertyConfig.converter;
 
             if (this.elementConverterPool.get(converter)) {
-              value = this.elementConverterPool.get(converter).toDom(styleProperty.var, data);
+              value = this.elementConverterPool.get(converter).toDom(_propertyConfig.var, data);
             }
           }
 
           if (_typeof(value) === "object") {
             _underscore.extend(result, value);
           } else {
-            result[(0, _string.fromSnakeToCamelCase)(styleProperty.name)] = value;
+            result[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)] = value;
           }
         }
       }
@@ -341,12 +375,16 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
       var config = appearanceConfiguration.data_mapping.elements;
 
-      for (var elementName in config) {
+      var _arr = Object.keys(config);
+
+      for (var _i4 = 0; _i4 < _arr.length; _i4++) {
+        var elementName = _arr[_i4];
+
         if (this.data[elementName] === undefined) {
           this.data[elementName] = {
             attributes: _knockout.observable({}),
-            css: _knockout.observable({}),
             style: _knockout.observable({}),
+            css: _knockout.observable({}),
             html: _knockout.observable({})
           };
         }

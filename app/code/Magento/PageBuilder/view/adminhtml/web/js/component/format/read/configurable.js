@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/block/appearance-config", "../../../utils/array", "../../../utils/string", "../../block/element-converter-pool-factory", "../../block/data-converter-pool-factory", "../../block/property-reader-pool-factory"], function (_appearanceConfig, _array, _string, _elementConverterPoolFactory, _dataConverterPoolFactory, _propertyReaderPoolFactory) {
+define(["mageUtils", "../../../component/block/appearance-config", "../../../utils/string", "../../block/data-converter-pool-factory", "../../block/element-converter-pool-factory", "../../block/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _string, _dataConverterPoolFactory, _elementConverterPoolFactory, _propertyReaderPoolFactory) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -28,32 +28,36 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
               dataConverterPool = loadedComponents[2];
           var data = {};
 
-          for (var elementName in config.elements) {
-            var xpathResult = document.evaluate(config.elements[elementName].path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+          var _arr = Object.keys(config.elements);
+
+          for (var _i = 0; _i < _arr.length; _i++) {
+            var elementName = _arr[_i];
+            var elementConfig = config.elements[elementName];
+            var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
             var currentElement = xpathResult.singleNodeValue;
 
             if (currentElement === null || currentElement === undefined) {
               continue;
             }
 
-            if (config.elements[elementName].style !== undefined) {
-              data = _this.readStyle(config.elements[elementName].style, currentElement, data, propertyReaderPool, elementConverterPool);
+            if (elementConfig.style !== undefined) {
+              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, elementConverterPool);
             }
 
-            if (config.elements[elementName].attributes !== undefined) {
-              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, propertyReaderPool, elementConverterPool);
+            if (elementConfig.attributes !== undefined) {
+              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, elementConverterPool);
             }
 
-            if (config.elements[elementName].html !== undefined) {
-              data = _this.readHtml(config.elements[elementName], currentElement, data);
+            if (elementConfig.html !== undefined) {
+              data = _this.readHtml(elementConfig, currentElement, data);
             }
 
-            if (config.elements[elementName].tag !== undefined) {
-              data = _this.readHtmlTag(config.elements[elementName], currentElement, data);
+            if (elementConfig.tag !== undefined) {
+              data = _this.readHtmlTag(elementConfig, currentElement, data);
             }
 
-            if (config.elements[elementName].css !== undefined) {
-              data = _this.readCss(config.elements[elementName], currentElement, data);
+            if (elementConfig.css !== undefined) {
+              data = _this.readCss(elementConfig, currentElement, data);
             }
           }
 
@@ -79,24 +83,35 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
     _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, elementConverterPool) {
       var result = {};
 
-      for (var i = 0; i < config.length; i++) {
-        var attribute = config[i];
+      for (var _iterator = config, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
 
-        if (true === !!attribute.virtual) {
+        if (_isArray) {
+          if (_i2 >= _iterator.length) break;
+          _ref = _iterator[_i2++];
+        } else {
+          _i2 = _iterator.next();
+          if (_i2.done) break;
+          _ref = _i2.value;
+        }
+
+        var _attributeConfig = _ref;
+
+        if (true === !!_attributeConfig.virtual) {
           continue;
         }
 
-        var value = !!attribute.complex ? propertyReaderPool.get(attribute.reader).read(element) : element.getAttribute(attribute.name);
+        var value = !!_attributeConfig.complex ? propertyReaderPool.get(_attributeConfig.reader).read(element) : element.getAttribute(_attributeConfig.name);
 
-        if (elementConverterPool.get(attribute.converter)) {
-          value = elementConverterPool.get(attribute.converter).fromDom(value);
+        if (elementConverterPool.get(_attributeConfig.converter)) {
+          value = elementConverterPool.get(_attributeConfig.converter).fromDom(value);
         }
 
-        if (data[attribute.var] === "object") {
-          value = (0, _array.objectExtend)(value, data[attribute.var]);
+        if (data[_attributeConfig.var] === "object") {
+          value = _mageUtils.extend(value, data[_attributeConfig.var]);
         }
 
-        result[attribute.var] = value;
+        result[_attributeConfig.var] = value;
       }
 
       return _.extend(data, result);
@@ -116,24 +131,35 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
     _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, elementConverterPool) {
       var result = _.extend({}, data);
 
-      for (var i = 0; i < config.length; i++) {
-        var property = config[i];
+      for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+        var _ref2;
 
-        if (true === !!property.virtual) {
+        if (_isArray2) {
+          if (_i3 >= _iterator2.length) break;
+          _ref2 = _iterator2[_i3++];
+        } else {
+          _i3 = _iterator2.next();
+          if (_i3.done) break;
+          _ref2 = _i3.value;
+        }
+
+        var _propertyConfig = _ref2;
+
+        if (true === !!_propertyConfig.virtual) {
           continue;
         }
 
-        var value = !!property.complex ? propertyReaderPool.get(property.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
+        var value = !!_propertyConfig.complex ? propertyReaderPool.get(_propertyConfig.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)];
 
-        if (elementConverterPool.get(property.converter)) {
-          value = elementConverterPool.get(property.converter).fromDom(value);
+        if (elementConverterPool.get(_propertyConfig.converter)) {
+          value = elementConverterPool.get(_propertyConfig.converter).fromDom(value);
         }
 
-        if (_typeof(result[property.var]) === "object") {
-          value = (0, _array.objectExtend)(result[property.var], value);
+        if (_typeof(result[_propertyConfig.var]) === "object") {
+          value = _mageUtils.extend(result[_propertyConfig.var], value);
         }
 
-        result[property.var] = value;
+        result[_propertyConfig.var] = value;
       }
 
       return result;
@@ -168,8 +194,20 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
       var css = element.getAttribute("class") !== null ? element.getAttribute("class") : "";
 
       if (config.css !== undefined && config.css.filter !== undefined && config.css.filter.length) {
-        for (var i = 0; i < config.css.filter.length; i++) {
-          css = css.replace(data[config.css.filter[i]], "");
+        for (var _iterator3 = config.css.filter, _isArray3 = Array.isArray(_iterator3), _i4 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+          var _ref3;
+
+          if (_isArray3) {
+            if (_i4 >= _iterator3.length) break;
+            _ref3 = _iterator3[_i4++];
+          } else {
+            _i4 = _iterator3.next();
+            if (_i4.done) break;
+            _ref3 = _i4.value;
+          }
+
+          var _filterClass = _ref3;
+          css = css.replace(_filterClass, "");
         }
       }
 
@@ -202,9 +240,22 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
 
 
     _proto.convertData = function convertData(config, data, dataConverterPool) {
-      for (var i = 0; i < config.converters.length; i++) {
-        if (dataConverterPool.get(config.converters[i].component)) {
-          data = dataConverterPool.get(config.converters[i].component).fromDom(data, config.converters[i].config);
+      for (var _iterator4 = config.converters, _isArray4 = Array.isArray(_iterator4), _i5 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
+        var _ref4;
+
+        if (_isArray4) {
+          if (_i5 >= _iterator4.length) break;
+          _ref4 = _iterator4[_i5++];
+        } else {
+          _i5 = _iterator4.next();
+          if (_i5.done) break;
+          _ref4 = _i5.value;
+        }
+
+        var _converterConfig = _ref4;
+
+        if (dataConverterPool.get(_converterConfig.component)) {
+          data = dataConverterPool.get(_converterConfig.component).fromDom(data, _converterConfig.config);
         }
       }
 

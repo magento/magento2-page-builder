@@ -13,12 +13,12 @@ import DataConverterPool from "./data-converter-pool";
 export default function create(contentType: string): Promise<> {
     const config = Config.getContentType(contentType);
     const converters = [];
-    for (const appearance of config.appearances) {
-        const dataMapping = appearance.data_mapping;
-        if (dataMapping !== undefined && dataMapping.converters !== undefined) {
-            for (const converter of dataMapping.converters) {
-                 if (!!converter.component && !DataConverterPool.get(converter.component)) {
-                    converters.push(converter.component);
+    for (const appearanceName: string of Object.keys(config.appearances)) {
+        const dataMapping = config.appearances[appearanceName].data_mapping;
+        if (undefined !== dataMapping && undefined !== dataMapping.converters) {
+            for (const converterConfig of dataMapping.converters) {
+                if (!!converterConfig.component && !DataConverterPool.get(converterConfig.component)) {
+                    converters.push(converterConfig.component);
                 }
             }
         }

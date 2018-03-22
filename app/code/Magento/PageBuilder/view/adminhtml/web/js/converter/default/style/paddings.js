@@ -22,10 +22,10 @@ define([], function () {
 
       if (undefined !== value.padding) {
         result.padding = {
-          bottom: value.padding.bottom.replace("px", ""),
+          top: value.padding.top.replace("px", ""),
           left: value.padding.left.replace("px", ""),
           right: value.padding.right.replace("px", ""),
-          top: value.padding.top.replace("px", "")
+          bottom: value.padding.bottom.replace("px", "")
         };
       }
 

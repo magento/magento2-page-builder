@@ -13,35 +13,64 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./element-conve
 
     var converters = [];
 
-    for (key in config.appearances) {
-      var dataMapping = config.appearances[key].data_mapping;
+    var _arr = Object.keys(config.appearances);
+
+    for (var _i = 0; _i < _arr.length; _i++) {
+      var appearanceName = _arr[_i];
+      var dataMapping = config.appearances[appearanceName].data_mapping;
 
       if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-        for (var elementName in dataMapping.elements) {
-          if (dataMapping.elements[elementName].style !== undefined) {
-            for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
-              var styleProperty = dataMapping.elements[elementName].style[i];
+        var _arr2 = Object.keys(dataMapping.elements);
 
-              if (!!styleProperty.converter && converters.indexOf(styleProperty.converter) === -1 && !_elementConverterPool.get(styleProperty.converter)) {
-                converters.push(styleProperty.converter);
+        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+          var elementName = _arr2[_i2];
+
+          if (dataMapping.elements[elementName].style !== undefined) {
+            for (var _iterator = dataMapping.elements[elementName].style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+              var _ref;
+
+              if (_isArray) {
+                if (_i3 >= _iterator.length) break;
+                _ref = _iterator[_i3++];
+              } else {
+                _i3 = _iterator.next();
+                if (_i3.done) break;
+                _ref = _i3.value;
               }
 
-              if (!!styleProperty.preview_converter && converters.indexOf(styleProperty.preview_converter) === -1 && !_elementConverterPool.get(styleProperty.preview_converter)) {
-                converters.push(styleProperty.preview_converter);
+              var _propertyConfig = _ref;
+
+              if (!!_propertyConfig.converter && converters.indexOf(_propertyConfig.converter) === -1 && !_elementConverterPool.get(_propertyConfig.converter)) {
+                converters.push(_propertyConfig.converter);
+              }
+
+              if (!!_propertyConfig.preview_converter && converters.indexOf(_propertyConfig.preview_converter) === -1 && !_elementConverterPool.get(_propertyConfig.preview_converter)) {
+                converters.push(_propertyConfig.preview_converter);
               }
             }
           }
 
           if (dataMapping.elements[elementName].attributes !== undefined) {
-            for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
-              var attributeProperty = dataMapping.elements[elementName].attributes[_i];
+            for (var _iterator2 = dataMapping.elements[elementName].attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+              var _ref2;
 
-              if (!!attributeProperty.converter && converters.indexOf(attributeProperty.converter) === -1 && !_elementConverterPool.get(attributeProperty.converter)) {
-                converters.push(attributeProperty.converter);
+              if (_isArray2) {
+                if (_i4 >= _iterator2.length) break;
+                _ref2 = _iterator2[_i4++];
+              } else {
+                _i4 = _iterator2.next();
+                if (_i4.done) break;
+                _ref2 = _i4.value;
               }
 
-              if (!!attributeProperty.preview_converter && converters.indexOf(attributeProperty.preview_converter) === -1 && !_elementConverterPool.get(attributeProperty.preview_converter)) {
-                converters.push(attributeProperty.preview_converter);
+              var _attributeConfig = _ref2;
+
+              if (!!_attributeConfig.converter && converters.indexOf(_attributeConfig.converter) === -1 && !_elementConverterPool.get(_attributeConfig.converter)) {
+                converters.push(_attributeConfig.converter);
+              }
+
+              if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_elementConverterPool.get(_attributeConfig.preview_converter)) {
+                converters.push(_attributeConfig.preview_converter);
               }
             }
           }
@@ -55,8 +84,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./element-conve
           loadedConverters[_key] = arguments[_key];
         }
 
-        for (var _i2 = 0; _i2 < converters.length; _i2++) {
-          _elementConverterPool.register(converters[_i2], new loadedConverters[_i2]());
+        for (var i = 0; i < converters.length; i++) {
+          _elementConverterPool.register(converters[i], new loadedConverters[i]());
         }
 
         resolve(_elementConverterPool);

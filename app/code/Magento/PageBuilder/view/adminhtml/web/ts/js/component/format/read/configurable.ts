@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import mageUtils from "mageUtils";
 import appearanceConfig from "../../../component/block/appearance-config";
-import {objectExtend} from "../../../utils/array";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import DataConverterPool from "../../block/data-converter-pool";
 import dataConverterPoolFactory from "../../block/data-converter-pool-factory";
@@ -34,7 +34,8 @@ export default class Configurable implements ReadInterface {
             Promise.all(componentsPromise).then((loadedComponents) => {
                 const [propertyReaderPool, elementConverterPool, dataConverterPool] = loadedComponents;
                 let data = {};
-                for (const elementConfig of config.elements) {
+                for (const elementName of Object.keys(config.elements)) {
+                    const elementConfig = config.elements[elementName];
                     const xpathResult = document.evaluate(
                         elementConfig.path,
                         element,
@@ -111,7 +112,7 @@ export default class Configurable implements ReadInterface {
                 value = elementConverterPool.get(attributeConfig.converter).fromDom(value);
             }
             if (data[attributeConfig.var] === "object") {
-                value = objectExtend(value, data[attributeConfig.var]);
+                value = mageUtils.extend(value, data[attributeConfig.var]);
             }
             result[attributeConfig.var] = value;
         }
@@ -147,7 +148,7 @@ export default class Configurable implements ReadInterface {
                 value = elementConverterPool.get(propertyConfig.converter).fromDom(value);
             }
             if (typeof result[propertyConfig.var] === "object") {
-                value = objectExtend(result[propertyConfig.var], value);
+                value = mageUtils.extend(result[propertyConfig.var], value);
             }
             result[propertyConfig.var] = value;
         }
