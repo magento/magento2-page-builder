@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-export interface ConverterInterface {
+export interface DataConverterInterface {
     /**
      * @param data object
      * @param config object
