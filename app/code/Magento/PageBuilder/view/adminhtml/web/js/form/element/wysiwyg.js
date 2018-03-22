@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable vars-on-top, strict, max-len */
-
 define([
     'underscore',
     'Magento_Ui/js/form/element/wysiwyg',
@@ -13,29 +11,22 @@ define([
     'Magento_Ui/js/modal/alert',
     'mage/translate',
     'mage/apply/main',
-    'ko',
-    'uiRegistry',
     'jquery',
     'mageUtils',
     'Magento_PageBuilder/js/component/event-bus',
-    'Magento_PageBuilder/js/component/format/format-validator',
     'Magento_PageBuilder/js/component/stage-builder',
     'Magento_PageBuilder/js/component/stage/panel',
     'Magento_PageBuilder/js/utils/directives'
 ], function (
     _,
     Wysiwyg,
-    $,
     confirmationPrompt,
     alertPrompt,
     $t,
     applyMain,
-    ko,
-    registry,
-    jQuery,
+    $,
     utils,
     EventBus,
-    validateFormat,
     buildStage,
     Panel,
     directives
@@ -47,6 +38,7 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            stageTemplate: 'Magento_PageBuilder/component/stage.html',
             domNode: false,
             elementSelector: 'textarea.textarea',
             stageActive: false,
@@ -59,9 +51,10 @@ define([
             isFullScreen: false,
             originalScrollTop: false,
             isComponentInitialized: false,
-            isButtonEnable: ko.observable(false),
             wysiwygConfigData: {},
             interacting: false,
+            templateManagerTitle: $t('Template Manager'),
+            stageLoadingMessage: $t('Please hold! we\'re just retrieving your content...'),
             links: {
                 stageActive: false,
                 stage: {},
@@ -73,15 +66,15 @@ define([
                 isFullScreen: false,
                 wysiwygConfigData: {}
             },
+            listens: {
+                isFullScreen: 'onFullScreenChange'
+            },
             config: {
                 name: 'stage'
             }
         },
 
-        /**
-         *
-         * @returns {} Chainable.
-         */
+        /** @inheritdoc */
         initialize: function () {
             this._super();
             this.getPanel();
@@ -89,45 +82,42 @@ define([
             return this;
         },
 
-        /**
-         *
-         * @returns {exports}
-         */
+        /** @inheritdoc */
         initObservable: function () {
-            var self = this;
-
             this._super()
-                .observe('value stageId stageActive stageContent showBorders loading userSelect ' +
-                    'isFullScreen wysiwygConfigData interacting');
+               .observe('value stageId stageActive stageContent showBorders loading userSelect')
+               .observe('isFullScreen wysiwygConfigData interacting');
 
             // Modify the scroll position based on an update
             this.isFullScreen.subscribe(function (fullScreen) {
                 if (!fullScreen) {
-                    self.originalScrollTop = jQuery(window).scrollTop();
+                    this.originalScrollTop = $(window).scrollTop();
                     _.defer(function () {
-                        jQuery(window).scrollTop(0);
+                        $(window).scrollTop(0);
                     });
                 }
             }, this, 'beforeChange');
-            this.isFullScreen.subscribe(function (fullScreen) {
-                if (!fullScreen) {
-                    _.defer(function () {
-                        jQuery(window).scrollTop(self.originalScrollTop);
-                        //hide page builder area in case if we open full screen mode from button
-                        self.hidePageBuilderArea();
-                    });
-                }
-            }, this);
 
             return this;
         },
 
         /**
-         * @param {HTMLElement} node
-         * @return void
+         * Full screen changes handler.
+         *
+         * @param {Boolean} fullScreen
          */
-        setElementNode: function (node) {
+        onFullScreenChange: function (fullScreen) {
+            if (!fullScreen) {
+                _.defer(function () {
+                    $(window).scrollTop(this.originalScrollTop);
+                    //hide page builder area in case if we open full screen mode from button
+                    this.hidePageBuilderArea();
+                }.bind(this));
+            }
+        },
 
+        /** @inheritdoc */
+        setElementNode: function (node) {
             this.domNode = node;
 
             if (!this.isComponentInitialized) {
@@ -145,9 +135,8 @@ define([
 
                 return;
             }
-            $(node).bindings({
-                value: this.value
-            });
+
+            this._super();
         },
 
         /**
@@ -156,10 +145,7 @@ define([
          * @return {Panel}
          */
         getPanel: function () {
-            if (!this.panel) {
-
-                this.panel = new Panel();
-            }
+            this.panel = this.panel || new Panel();
 
             return this.panel;
         },
@@ -170,7 +156,6 @@ define([
          * @return void
          */
         hidePageBuilderArea: function () {
-
             if (this.wysiwygConfigData()['pagebuilder_button']) {
                 this.isComponentInitialized = false;
                 this.stageActive(false);
@@ -180,22 +165,12 @@ define([
         },
 
         /**
-         * Any events fired on the WYSIWYG component should be ran on the stage
-         *
-         * @param {String} eventName
-         * @param {String} params
-         */
-        emit: function (eventName, params) {
-            return this.stage.emit(eventName, params);
-        },
-
-        /**
          * Bind a click event to the PageBuilder init button
          *
          * @param {HTMLElement} node
          */
         bindPageBuilderButton: function (node) {
-
+            //Move selectors to configuration
             $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')
                 .on('click', this.displayPageBuilderInFullScreenMode.bind(this));
         },
@@ -206,6 +181,7 @@ define([
          * @param {HTMLElement} node
          */
         handleUseDefaultButton: function (node) {
+            //Move selectors to configuration
             var defaultButton = $('div.admin__field-service input[id="' + this.uid + '_default"]'),
                 editPageBuilderButton = $(node).prevAll('.buttons-set').find('.init-magento-pagebuilder')[0];
 
@@ -234,8 +210,7 @@ define([
 
             this.isComponentInitialized = true;
 
-            if (!$.isEmptyObject(this.stage)) {
-
+            if (!_.isEmpty(this.stage)) {
                 this.isFullScreen(isFullScreen);
                 //handle case, when pagebuilder was previously opened
                 this.stageActive(true);
@@ -292,7 +267,7 @@ define([
          * @returns {String}
          */
         getStageTemplate: function () {
-            return 'Magento_PageBuilder/component/stage.html';
+            return this.stageTemplate;
         },
 
         /**
@@ -309,7 +284,8 @@ define([
             ) {
                 confirmationPrompt(options);
             } else {
-                throw new Error('Wysiwyg.confirmationDialog: options.actions must include at least one \"always\", \"confirm\", or \"cancel\" callback');
+                throw new Error('Wysiwyg.confirmationDialog: options.actions' +
+                    ' must include at least one "always", "confirm", or "cancel" callback');
             }
         },
 
@@ -330,14 +306,6 @@ define([
             } else {
                 throw new Error('Wysiwyg.alertDialog: options.message must be provided');
             }
-        },
-
-        /**
-         * Run the apply function to load modules detected in the DOM.
-         */
-        applyConfigFor: function () {
-            return applyMain.applyFor.apply(null, arguments);
         }
-
     });
 });

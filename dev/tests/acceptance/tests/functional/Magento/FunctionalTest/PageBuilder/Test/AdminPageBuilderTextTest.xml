@@ -29,7 +29,7 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{PageBuilderTextContentBlock.cmsPageLinkName}}" stepKey="enterCmsPageLinkTitle"/>
+        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderTextContentBlock.cmsPageLinkName}}" stepKey="enterCmsPageLinkTitle"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageLink"/>
         <!-- Current implementation does not support string literals and variables. Re-factor once this feature is supported
         <grabFromCurrentUrl url="~/page_id/(\d+)/~" stepKey="grabFromCurrentUrlCmsPageId"/> -->
@@ -76,7 +76,7 @@
              stepKey="seeWidgetCodeInStage"/>
         <see selector="div.pagebuilder-html" userInput="This is some text" stepKey="seeTypedTextInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="{{PageBuilderTextContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="div.block-cms-link a[href*='{{PageBuilderTextContentBlock.cmsPageLinkName}}']" stepKey="seeHomePageWidgetOnStorefront"/>
         <see userInput="This is some text" stepKey="seeTypedTextOnStorefront"/>

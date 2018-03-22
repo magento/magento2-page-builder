@@ -50,11 +50,11 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="switchToPageBuilderStage">
-        <waitForElement time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
-        <waitForElementVisible time="10" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElementVisible" />
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElementVisible" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
     <actionGroup name="dragPageBuilderColumnIntoStage">
         <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
@@ -73,7 +73,7 @@
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
-        <fillField selector="{{CmsPageSection.pageTitle}}" userInput="{{contentBlockType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{contentBlockType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStage">
         <arguments>
@@ -468,42 +468,43 @@
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="closeEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForCloseButton" />
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="clickCloseButton"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask1"/>
-        <waitForElementVisible time="10" selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="waitForSaveAndContinueVisibility"/>
-        <click selector="{{CmsPageSection.cmsPageSaveAndContinueEditButton}}" stepKey="clickSaveAndContinueEditCmsPage"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForSaveAndContinueVisibility"/>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
-        <waitForElementVisible time="1" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
-        <click selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="clickSaveCmsPage"/>
-        <waitForElementVisible time="1" selector="{{CmsPageGrid.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
-        <see userInput="You saved the page." selector="{{CmsMessagesSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
+        <click selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="expandSplitButton"/>
+        <click selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="clickSaveCmsPage"/>
+        <waitForElementVisible time="1" selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="waitForCmsPageSaveButton" />
+        <see userInput="You saved the page." selector="{{CmsPagesPageActionsSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="searchAndViewCmsPage">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPagesPageActionsSection"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
         <click selector="{{CmsPagesPageActionsSection.filterButton}}" stepKey="clickFiltersBtn" />
         <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="{{contentBlockType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
         <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
         <waitForPageLoad stepKey="waitForSearchResults" />
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForPageLoad stepKey="waitForEditCmsPage" />
     </actionGroup>
     <actionGroup name="enablePageBuilderSetting">
