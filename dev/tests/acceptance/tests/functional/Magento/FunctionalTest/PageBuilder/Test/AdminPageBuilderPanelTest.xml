@@ -29,13 +29,16 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
         </after>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper']" stepKey="stageWrapperFullScreen1"/>
-        <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreen"/>
-        <wait time="1" stepKey="wait2"/>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper stage-full-screen']" stepKey="stageWrapperFullScreen2"/>
-        <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreenAgain"/>
-        <wait time="1" stepKey="wait3"/>
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapper}}" parameterArray="['class' => 'pagebuilder-stage-wrapper']" stepKey="stageWrapperFullScreen3"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
+        <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <click selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="clickExitFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage2"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
     <test name="ShowPanelGroups">
         <annotations>
